@@ -1,4 +1,4 @@
-; Puck carrier assignments: carry, pass or shoot, nearest player, faceoff entry (94G logic94).
+; Puck carrier assignments: carry, pass or shoot, nearest player, faceoff entry.
 bits 32
 %include "hockey.inc"
 section s_4C6F3 progbits alloc exec nowrite align=1
@@ -179,8 +179,9 @@ asspuckc:
 ;-----------------------------------------------------------------------------
 ; BehindNetMateDir                               4C8BD  95 PC, low confidence
 ; With p's predicted spot (position + velocity 512) deep in its own end (|y|
-; AAh..E8h on p's own side, |x| <= 50h) and its current assignment slot (byte
-; +1Eh + assnum) not 11h: when the team's player slot +FAh is set, and
+; AAh..E8h on p's own side, |x| <= 50h) and its current assignment slot
+;
+; (byte +1Eh + assnum) not 11h: when the team's player slot +FAh is set, and
 ; regd1.w is within 20 (checked twice - the EXE tests regd1 rather than the
 ; gaps), regd0.w = vtoa of the gap to that player's predicted spot.
 ;-----------------------------------------------------------------------------
@@ -305,7 +306,7 @@ BehindNetMateDir:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; asspuckc_chkdir                  4C9FD  93G logic93_3.asm, medium confidence
-; 93G asspuckc .chkdir: the skateto collision routine asspuckc passes (mov
+; asspuckc .chkdir: the skateto collision routine asspuckc passes (mov
 ; edx, asspuckc_chkdir), picks a direction with vtoa / randomd0
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckcarrier/asspuckc_chkdir.c
@@ -572,9 +573,7 @@ asspuckc_chkdir:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assnearest                         4CD4B  94G logic94.asm, medium confidence
-; Asstab slot 17; field alignment 61% of 28 known-field accesses; content
-; rank 1/34 vs other slot routines; 1 known Genesis callees present, 0
-; missing, 0 extra
+; Assignment table slot 11h: the player nearest the puck goes after it
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goalie/assgoalie.c (assnearest)
 %ifdef CBUILD
@@ -1118,9 +1117,7 @@ assnearest:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assshoot                           4D3F8  94G logic94.asm, medium confidence
-; Asstab slot 18; field alignment 100% of 3 known-field accesses; content
-; rank 1/34 vs other slot routines; 0 known Genesis callees present, 0
-; missing, 1 extra
+; Assignment table slot 12h: the player taking a shot
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckcarrier/assshoot.c
 %ifdef CBUILD
@@ -1227,9 +1224,7 @@ assshoot_ret:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assfaceoff                         4D4F0  94G logic94.asm, medium confidence
-; Asstab slot 22; field alignment 100% of 1 known-field accesses; content
-; rank 1/34 vs other slot routines; 0 known Genesis callees present, 0
-; missing, 0 extra
+; Assignment table slot 16h: take a faceoff position
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckcarrier/assshoot.c (assfaceoff)
 %ifdef CBUILD
@@ -1245,11 +1240,11 @@ assfaceoff:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assexit                                               4D509  94G logic94.asm
-; assexit (4D509; 93G logic93 assexit): finish the current assignment of
-; player p. Steps to the next entry of the player's 8-deep assignment stack
-; (assnum + 1, wrapped to 0-7) and sets pflags bit 1 ('new assignment') so
-; the assignment dispatcher starts it on the next pass. p: the player. No
-; result.
+; assexit: finish the current assignment of player p.
+;
+; Steps to the next entry of the player's 8-deep assignment stack (assnum + 1,
+; wrapped to 0-7) and sets pflags bit 1 ('new assignment') so the assignment
+; dispatcher starts it on the next pass. p: the player. No result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckcarrier/assshoot.c (assexit)
 %ifdef CBUILD
@@ -1270,9 +1265,8 @@ assexit:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assfaceoffpl                                        4D528  95G faceoff95.asm
-; 95G assfaceoffpl (93G logic93.asm): the faceoff participant. pflags bit 5
-; returns; faceoff flag clear calls assexit; bit 1 clears temp1 and sets the
-; faceoff frame
+; assfaceoffpl: the faceoff participant. pflags bit 5 returns; faceoff flag
+; clear calls assexit; bit 1 clears temp1 and sets the faceoff frame
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckcarrier/assfaceoffpl.c
 %ifdef CBUILD

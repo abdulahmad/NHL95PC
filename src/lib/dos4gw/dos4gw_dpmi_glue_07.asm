@@ -4,6 +4,10 @@ bits 32
 section s_A18FB progbits alloc exec nowrite align=1
 extern IntrLoadRegs
 global _DoINTR_
+;-----------------------------------------------------------------------------
+; _DoINTR_                                                      A18FB  library
+; Run-time library: the intr call helper
+;-----------------------------------------------------------------------------
 _DoINTR_:
         pusha
         push gs

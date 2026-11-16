@@ -1,4 +1,4 @@
-; Goal scored: control, pass assignment, team energy, team resets (95G goal95).
+; Goal scored: control, pass assignment, team energy, team resets.
 bits 32
 %include "hockey.inc"
 section s_5AAAE progbits alloc exec nowrite align=1
@@ -72,10 +72,14 @@ PenTeamScored:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Goal                                         5AB36  95 PC, medium confidence
-; (puck in goal). eax = the goal struct the puck went into.
-; esi = scoring team, ebp = the other (puck Ypos sign xor gmdir). Puck stopped in the net, assreplace
-; puck 1Ah. Offside (tmflags bit 4) -> AddPenalty 8 + AddPenalty2 1Bh; PenTeamScored (delayed penalty) -> no goal
-; else tmscore+1 and the scoring bookkeeping (goal/assist counts, PenGoalStuff).
+; (puck in goal). eax = the goal struct the puck went into. esi = scoring
+; team, ebp = the other (puck Ypos sign xor gmdir).
+;
+; Puck stopped in the net, assreplace puck 1Ah.
+;
+; Offside (tmflags bit 4) -> AddPenalty 8 + AddPenalty2 1Bh; PenTeamScored
+; (delayed penalty) -> no goal else tmscore+1 and the scoring bookkeeping
+; (goal/assist counts, PenGoalStuff).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (Goal)
 %ifdef CBUILD
@@ -638,8 +642,9 @@ GiveControl:
 ; Setplass                         5B298  94G collide94.asm, medium confidence
 ; Set player p's initial assignment from his position: for positions 0-6,
 ; assreplace(p, Setplass_alist[position]) (goalie: assgoalie, defence:
-; assdefd, wings: asswingd, centre: asscenterd). Other positions (negative,
-; or above 6 on the PC) are left alone.
+;
+; assdefd, wings: asswingd, centre: asscenterd). Other positions (negative, or
+; above 6 on the PC) are left alone.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goal/Setplass.c
 %ifdef CBUILD
@@ -664,8 +669,10 @@ Setplass:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; setplayer                                         5B2C5  93G hockey93_05.asm
-; (bring player onto the ice and set his stats). eax = sort object, edx = roster
-; number. pnum = edx, tmpdst entry -1 (ice), roster status byte 4, then the attribute bytes from the roster record.
+; (bring player onto the ice and set his stats). eax = sort object, edx =
+; roster number. pnum = edx, tmpdst entry -1 (ice), roster status byte 4,
+;
+; then the attribute bytes from the roster record.
 ;-----------------------------------------------------------------------------
 setplayer:
         push dword 34h
@@ -1156,7 +1163,7 @@ setplayer:
         jmp near changeplayer_ret5
 ;-----------------------------------------------------------------------------
 ; reenergizeteam                                      5B826  94G penalty94.asm
-; 93G reenergizeteam: refill energy of the whole roster (1000h)
+; reenergizeteam: refill energy of the whole roster (1000h)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (reenergizeteam)
 %ifdef CBUILD

@@ -26,7 +26,7 @@ extern ClearScreen, VgaSetPalette, SetScreenTarget, SetClipWindow, CreateBitmap,
 extern WaitClickTimeout, WaitTickDeadline
 global GameSummaryScreen_jt, GameSummaryScreen, GameSummaryScreen_p1, GameSummaryScreen_p2, GameSummaryScreen_p3, GameSummaryScreen_ot, GameSummaryScreen_finalot, GameSummaryScreen_final
 global GameSummaryScreen_period, PickOtherGames, UpdateOtherScores, UpdateOtherScores_x, PrintClampedText, GameStatsScreen
-GameSummaryScreen_jt:
+GameSummaryScreen_jt:                           ; used by GameSummaryScreen
         dd GameSummaryScreen_p1
         dd GameSummaryScreen_p2
         dd GameSummaryScreen_p3
@@ -34,8 +34,9 @@ GameSummaryScreen_jt:
         dd GameSummaryScreen_finalot
 ;-----------------------------------------------------------------------------
 ; GameSummaryScreen                                               2D35A  95 PC
-; (mode, ...): gsummary / gamesum screen with crests, period-by-period goals
-; / shots, scoring summary (" PP" / " SH", "%02d:%02d") and penalty summary
+; (mode, ...): gsummary / gamesum screen with crests, period-by-period goals /
+; shots, scoring summary (" PP" / " SH", "%02d:%02d") and penalty summary
+;
 ; ("No Scoring." / "No Penalties."); called by DeskScoringSummary,
 ; DeskPenaltySummary and the intermission desk
 ;-----------------------------------------------------------------------------
@@ -2070,9 +2071,10 @@ GameSummaryScreen_period:
         ret
 ;-----------------------------------------------------------------------------
 ; PickOtherGames                               2F2B1  95 PC, medium confidence
-; (home, visitor): picks 6 random pairs of other teams (rand % 26, no
-; repeats, not the two playing, teamstartlag <= home's) and clears their
-; scores and periods
+; (home, visitor): picks 6 random pairs of other teams (rand % 26, no repeats,
+; not the two playing, teamstartlag <= home's) and clears their scores
+;
+; and periods
 ;-----------------------------------------------------------------------------
 ; C: src/front/summary/PickOtherGames.c
 %ifdef CBUILD
@@ -2196,8 +2198,9 @@ PickOtherGames:
 ;-----------------------------------------------------------------------------
 ; UpdateOtherScores                            2F3D7  95 PC, medium confidence
 ; (period): advances the 6 other games to period + teamstartlag difference,
-; adding rand % 3 goals per period; ties go to OT (70% chance each side
-; scores) and finish as 5 (final OT) or 6 (final)
+; adding rand % 3 goals per period; ties go to OT
+;
+; (70% chance each side scores) and finish as 5 (final OT) or 6 (final)
 ;-----------------------------------------------------------------------------
 ; C: src/front/summary/UpdateOtherScores.c
 %ifdef CBUILD
@@ -2388,8 +2391,10 @@ PrintClampedText:
 ;-----------------------------------------------------------------------------
 ; GameStatsScreen                                                 2F5EE  95 PC
 ; DeskGameStats: gsta / leaguetm screen listing gamestatlabels with both
-; teams' values (score, shots, one timers, PP goals/chances, PP time and
-; shots, penalties/min, faceoffs, body checks, attack zone time, passing %)
+; teams' values (score, shots, one timers, PP goals/chances, PP time
+;
+; and shots, penalties/min, faceoffs, body checks, attack zone time, passing
+; %)
 ;-----------------------------------------------------------------------------
 ; C: src/front/summary/UpdateOtherScores.c (GameStatsScreen)
 %ifdef CBUILD

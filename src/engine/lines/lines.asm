@@ -1,5 +1,5 @@
 ; Building lines. Sorting the players by position, the default lines, filling and refilling each slot,
-; and which players can be removed (95G engine/lines95).
+; and which players can be removed.
 bits 32
 %include "hockey.inc"
 section s_644A8 progbits alloc exec nowrite align=1
@@ -35,6 +35,7 @@ global lines_popx2, PickGoalie, PickExtraSkater, RefillLineSlots, RemoveFromLine
 ; SortPlayersByPos                             644A8  95 PC, medium confidence
 ; (team, outlist, scores, poschar): for the 19h roster players whose position
 ; byte (hmrosterpos) is poschar takes their score, others -1; sorts
+;
 ; (SortIndices) and writes the ranked roster indices to outlist;
 ; BuildDefaultLines calls it for D, R, L, C
 ;-----------------------------------------------------------------------------
@@ -193,9 +194,10 @@ SortNonDefPlayers:
 ;-----------------------------------------------------------------------------
 ; BuildDefaultLines                               64614  95 PC, low confidence
 ; Ranks each team's players by position (SortPlayersByPos D/R/L/C,
-; SortNonDefPlayers) into defsort_d / offsort_fwd and fills hmlinetab /
-; awlinetab and the dressed flags dressflags; called from SetupGame and the
-; game load path
+; SortNonDefPlayers) into defsort_d / offsort_fwd
+;
+; and fills hmlinetab / awlinetab and the dressed flags dressflags; called
+; from SetupGame and the game load path
 ;-----------------------------------------------------------------------------
 ; C: src/engine/lines/BuildDefaultLines.c
 %ifdef CBUILD
@@ -492,9 +494,10 @@ lines_popx:
 ;-----------------------------------------------------------------------------
 ; CanFillLineSlot                                 64A0B  95 PC, low confidence
 ; (team, slot, roster idx): 0 when the player's status (dressbystatus of
-; hmroster) is 0, or 2 without a dressed flag 2, or he already holds 2 of the
-; same-position slots (slot mod 3) in hmlinetab / awlinetab; else checks the
-; position byte (hmrosterpos) against the slot
+; hmroster) is 0, or 2 without a dressed flag 2,
+;
+; or he already holds 2 of the same-position slots (slot mod 3) in hmlinetab /
+; awlinetab; else checks the position byte (hmrosterpos) against the slot
 ;-----------------------------------------------------------------------------
 CanFillLineSlot:
         push dword 24h
@@ -890,8 +893,9 @@ FillDressedSlots:
 ;-----------------------------------------------------------------------------
 ; PickForLineSlot                                 64E60  95 PC, low confidence
 ; (team, slot): walks the position preference list lineslotgroups from
-; lineslotgroupstart[slot] and returns the first ranked player that
-; CanFillLineSlot accepts
+; lineslotgroupstart[slot]
+;
+; and returns the first ranked player that CanFillLineSlot accepts
 ;-----------------------------------------------------------------------------
 PickForLineSlot:
         push dword 24h
@@ -1303,9 +1307,9 @@ lines_popx2:
 ;-----------------------------------------------------------------------------
 ; PickGoalie                                      652D6  95 PC, low confidence
 ; (team, slot, force): for slot 24h copies the backup (+25h) to the starter;
-; then the first roster player other than +24h/+25h with status 1 becomes
-; +25h (status 2 is promoted to 3 when forced and cleared from slots
-; 28h..2Fh)
+; then the first roster player other than +24h/+25h with status 1 becomes +25h
+;
+; (status 2 is promoted to 3 when forced and cleared from slots 28h..2Fh)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/lines/PickGoalie.c
 %ifdef CBUILD
@@ -1547,6 +1551,7 @@ PickExtraSkater:
 ; RefillLineSlots                                 6552E  95 PC, low confidence
 ; (team, first slot, i, count, step): clears the dressed flag of the slot's
 ; current player, then fills count slots (step apart) with PickForLineSlot
+;
 ; and clears their flags below slot 12h; ret 4
 ;-----------------------------------------------------------------------------
 ; C: src/engine/lines/RefillLineSlots.c
@@ -1619,9 +1624,10 @@ RefillLineSlots:
 ;-----------------------------------------------------------------------------
 ; RemoveFromLines                                 655CC  95 PC, low confidence
 ; Team eax, roster player edx (pnum): takes the player out of the team's line
-; table (hmlinetab home / awlinetab away) and refills the slot from the
-; dressed lists; called when a player is injured or ejected (player logic
-; 4AD5E, physics 56012)
+; table (hmlinetab home / awlinetab away) and refills the slot
+;
+; from the dressed lists; called when a player is injured or ejected (player
+; logic 4AD5E, physics 56012)
 ;-----------------------------------------------------------------------------
 RemoveFromLines:
         push dword 28h
@@ -1908,9 +1914,11 @@ RemoveFromLines:
 ;-----------------------------------------------------------------------------
 ; SetupTeamLines                                  658F3  95 PC, low confidence
 ; Team eax: counts the available players (dressbystatus by roster status) of
-; the two dressed lists (defsort_d / offsort_fwd) into dresseddefs /
-; dressedfwds, then fills the line table (hmlinetab / awlinetab); called for
-; both teams at game start / load after BuildDefaultLines
+; the two dressed lists
+;
+; (defsort_d / offsort_fwd) into dresseddefs / dressedfwds, then fills the
+; line table (hmlinetab / awlinetab); called for both teams at game start /
+; load after BuildDefaultLines
 ;-----------------------------------------------------------------------------
 ; C: src/engine/lines/BuildDefaultLines.c (SetupTeamLines)
 %ifdef CBUILD
@@ -2164,11 +2172,14 @@ NormalizeDressFlags:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CanRemovePlayer                              65B83  95 PC, medium confidence
-; Rejects the auto proposal setInjuryType (that is 55E72). Player eax (team
-; by pflags bit 6, roster pnum +47h): counts roster players with status 3 or
-; 4 in the team's dressed list (defsort_d, 19h per team) and returns count >
-; 2 when he is in it, else the count in the second list (offsort_fwd) > 4;
-; injury / penalty code calls it before taking a player out (with PBnum < 8)
+; Rejects the auto proposal setInjuryType (that is 55E72).
+;
+; Player eax (team by pflags bit 6, roster pnum +47h): counts roster players
+; with status 3 or 4 in the team's dressed list (defsort_d, 19h per team) and
+; returns count > 2 when he is in it, else the count in the second list
+;
+; (offsort_fwd) > 4; injury / penalty code calls it before taking a player out
+; (with PBnum < 8)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/lines/BuildDefaultLines.c (CanRemovePlayer)
 %ifdef CBUILD

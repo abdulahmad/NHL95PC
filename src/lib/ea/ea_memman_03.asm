@@ -4,6 +4,10 @@ bits 32
 section s_8DCC0 progbits alloc exec nowrite align=1
 extern _nexpand_, _nfree_, _nmalloc_, _nmsize_
 global GrabLargestBlock
+;-----------------------------------------------------------------------------
+; GrabLargestBlock                             8DCC0  95 PC, medium confidence
+; Allocates the largest block the memory manager gives, trying smaller sizes
+;-----------------------------------------------------------------------------
 GrabLargestBlock:
         mov edx, 4000000h
 .1:

@@ -422,8 +422,9 @@ WriteKeyRec:
 ;-----------------------------------------------------------------------------
 ; CopyFile                                                        1466B  95 PC
 ; Builds the source and destination paths with MakePath, FileOpenRead /
-; FileCreate, copies in 400h-byte _dos_read / _dos_write blocks; returns 0
-; ok, else the error
+; FileCreate, copies in 400h-byte _dos_read / _dos_write blocks; returns 0 ok,
+;
+; else the error
 ;-----------------------------------------------------------------------------
 ; C: src/pc/file_utils/ReadKeyRec.c (CopyFile)
 %ifdef CBUILD
@@ -607,8 +608,9 @@ ReadGSummaryRec:
 ;-----------------------------------------------------------------------------
 ; DiskSpaceShort                               14825  95 PC, medium confidence
 ; (drive, 0-terminated file-size list): _dos_getdiskfree ("error getting disk
-; space free" -> FatalError), rounds each size up to clusters; returns 0 when
-; they fit, else the bytes needed
+; space free" -> FatalError), rounds each size up to clusters; returns 0
+;
+; when they fit, else the bytes needed
 ;-----------------------------------------------------------------------------
 ; C: src/pc/file_utils/DiskSpaceShort.c
 %ifdef CBUILD
@@ -676,8 +678,9 @@ DiskSpaceShort:
 ;-----------------------------------------------------------------------------
 ; CheckGameDiskSpace                           148A5  95 PC, medium confidence
 ; Free space on the current drive against the growth of <league>\gsummary.db;
-; when short, centres the mouse and shows the "To play the game, you require
-; %2d Kbytes" MessageBox and returns 1, else 0
+; when short, centres the mouse and shows the "To play the game,
+;
+; you require %2d Kbytes" MessageBox and returns 1, else 0
 ;-----------------------------------------------------------------------------
 ; C: src/pc/file_utils/CheckGameDiskSpace.c
 %ifdef CBUILD
@@ -783,8 +786,9 @@ CheckGameDiskSpace:
 ;-----------------------------------------------------------------------------
 ; GetLeagueDBSizes                                                149BF  95 PC
 ; (out[7], ?, league dir): size in Kbytes of each of the 7 league DB files
-; (leaguedbnames: KEY, CAREER, ATT, CARTEAMS, TEAMS, SEASON, SCHEDULE) via
-; _dos_findfirst
+; (leaguedbnames: KEY, CAREER, ATT, CARTEAMS, TEAMS, SEASON, SCHEDULE)
+;
+; via _dos_findfirst
 ;-----------------------------------------------------------------------------
 ; C: src/pc/file_utils/GetLeagueDBSizes.c
 %ifdef CBUILD

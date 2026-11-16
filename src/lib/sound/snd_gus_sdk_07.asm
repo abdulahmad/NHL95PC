@@ -4,6 +4,11 @@ bits 32
 section s_B195C progbits alloc exec nowrite align=1
 extern kaufmfont, GusInitTable
 global GusRunInitTable
+;-----------------------------------------------------------------------------
+; GusRunInitTable                              B195C  95 PC, medium confidence
+; Calls each entry of the toolkit's init table in priority order until one
+; fails
+;-----------------------------------------------------------------------------
 GusRunInitTable:
         push ebx
         push ecx

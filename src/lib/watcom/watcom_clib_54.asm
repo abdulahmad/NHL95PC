@@ -3,9 +3,17 @@ bits 32
 %include "hockey.inc"
 section s_B297E progbits alloc exec nowrite align=1
 global BigIntNullHook, frexp_
+;-----------------------------------------------------------------------------
+; BigIntNullHook                                                  B297E  95 PC
+; Empty big-integer compare hook
+;-----------------------------------------------------------------------------
 BigIntNullHook:
         pop edi
         ret
+;-----------------------------------------------------------------------------
+; frexp_                                                        B2980  library
+; Run-time library frexp: splits a double into mantissa and exponent
+;-----------------------------------------------------------------------------
 frexp_:
         push eax
         push ebx

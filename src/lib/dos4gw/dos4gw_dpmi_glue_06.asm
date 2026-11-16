@@ -4,6 +4,10 @@ bits 32
 section s_A189E progbits alloc exec nowrite align=1
 extern IntrLoadSegRegs
 global __int386x_
+;-----------------------------------------------------------------------------
+; __int386x_                                                    A189E  library
+; Run-time library: inner part of int386x
+;-----------------------------------------------------------------------------
 __int386x_:
         push ebp
         push es

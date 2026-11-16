@@ -37,23 +37,24 @@ global UnpackHook, KbdIdleHook, TextFont, joycalprehook, joycalposthook, randsee
 global FindFileName, FindFilePattern, DefaultFont, DefaultFontOffsets, DefaultFontWidths, SavedKbdVecSelector, SavedInt16Selector, SavedRealKbdSegment
 global KbdDataSelector, saved_ss, oldint8sel, MouseSavedSensX, MouseSavedSensY, MouseSavedThreshold, SavedBreakSelector, BreakDataSelector
 global EmuHookFlags, SavedEsSelector
-BiosKeyFunc:
+BiosKeyFunc:                                    ; used by InstallKeyboardHandler, KbdGetKey, KbdPeekKey ...
         dd BiosKeyCall
         db 00h,00h,00h,00h
-KeyBuffer:
+KeyBuffer:                                      ; used by Int16Service, KeyboardIrqHandler
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-KeyBufferHead:
+KeyBufferHead:                                  ; used by Int16Service, KeyboardIrqHandler
         db 00h,00h,00h,00h
-KeyBufferTail:
+KeyBufferTail:                                  ; used by Int16Service
         db 00h,00h,00h,00h
-CapsLockState:
+CapsLockState:                                  ; Caps Lock on/off; toggled by the keyboard handler which also
+                                                ; sets the LED; used by KeyboardIrqHandler
         db 00h,00h,00h,00h
-KeyBufferMask:
+KeyBufferMask:                                  ; used by Int16Service, KeyboardIrqHandler
         db 01h,00h,00h,00h
-KeyStateTable:
+KeyStateTable:                                  ; used by Int16Service, KeyDown, KeyboardIrqHandler
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -64,233 +65,297 @@ KeyStateTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-SavedKbdVecOffset:
+SavedKbdVecOffset:                              ; Previous keyboard interrupt offset; used by
+                                                ; InstallKeyboardHandler, RemoveKeyboardHandler
         db 00h,00h,00h,00h
-SavedKbdVecSelector:
+SavedKbdVecSelector:                            ; Previous keyboard interrupt selector; used by
+                                                ; InstallKeyboardHandler, RemoveKeyboardHandler
         db 00h,00h
-SavedInt16Offset:
+SavedInt16Offset:                               ; Previous INT 16h offset; used by InstallKeyboardHandler,
+                                                ; RemoveKeyboardHandler
         db 00h,00h,00h,00h
-SavedInt16Selector:
+SavedInt16Selector:                             ; Previous INT 16h selector; used by InstallKeyboardHandler,
+                                                ; RemoveKeyboardHandler
         db 00h,00h
-SavedRealKbdOffset:
+SavedRealKbdOffset:                             ; Previous real mode keyboard handler offset; used by
+                                                ; InstallKeyboardHandler, RemoveKeyboardHandler
         db 00h,00h,00h,00h
-SavedRealKbdSegment:
+SavedRealKbdSegment:                            ; Previous real mode keyboard handler segment; used by
+                                                ; InstallKeyboardHandler, RemoveKeyboardHandler
         db 00h,00h
-KbdDataSelector:
+KbdDataSelector:                                ; Data selector used by the keyboard handler
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h
-KeyMapNormal:
+KeyMapNormal:                                   ; Scan code to ASCII with no shift key down; used by
+                                                ; KeyboardIrqHandler
         db 00h,01Bh,031h,032h,033h,034h,035h,036h,037h,038h,039h,030h,02Dh,03Dh,08h,09h
         db 071h,077h,065h,072h,074h,079h,075h,069h,06Fh,070h,05Bh,05Dh,0Dh,00h,061h,073h
         db 064h,066h,067h,068h,06Ah,06Bh,06Ch,03Bh,027h,060h,00h,05Ch,07Ah,078h,063h,076h
         db 062h,06Eh,06Dh,02Ch,02Eh,02Fh,00h,02Ah,00h,020h,00h,0BBh,0BCh,0BDh,0BEh,0BFh
         db 0C0h,0C1h,0C2h,0C3h,0C4h,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
         db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,087h,088h,00h,00h
-KeyMapShift:
+KeyMapShift:                                    ; Scan code to ASCII with Shift down; used by
+                                                ; KeyboardIrqHandler
         db 00h,01Bh,021h,040h,023h,024h,025h,05Eh,026h,02Ah,028h,029h,05Fh,02Bh,08h,08Fh
         db 051h,057h,045h,052h,054h,059h,055h,049h,04Fh,050h,07Bh,07Dh,0Dh,00h,041h,053h
         db 044h,046h,047h,048h,04Ah,04Bh,04Ch,03Ah,022h,07Eh,00h,07Ch,05Ah,058h,043h,056h
         db 042h,04Eh,04Dh,03Ch,03Eh,03Fh,00h,00h,00h,020h,00h,0D4h,0D5h,0D6h,0D7h,0D8h
         db 0D9h,0DAh,0DBh,0DCh,0DDh,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
         db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,089h,08Ah,00h,00h
-KeyMapCaps:
+KeyMapCaps:                                     ; Scan code to ASCII with Caps Lock on; used by
+                                                ; KeyboardIrqHandler
         db 00h,01Bh,031h,032h,033h,034h,035h,036h,037h,038h,039h,030h,02Dh,03Dh,08h,08Fh
         db 051h,057h,045h,052h,054h,059h,055h,049h,04Fh,050h,05Bh,05Dh,0Dh,00h,041h,053h
         db 044h,046h,047h,048h,04Ah,04Bh,04Ch,03Bh,027h,060h,00h,05Ch,05Ah,058h,043h,056h
         db 042h,04Eh,04Dh,02Ch,02Eh,02Fh,00h,00h,00h,020h,00h,0D4h,0D5h,0D6h,0D7h,0D8h
         db 0D9h,0DAh,0DBh,0DCh,0DDh,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
         db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,089h,08Ah,00h,00h
-KeyMapCtrl:
+KeyMapCtrl:                                     ; Scan code to ASCII with Ctrl down; used by
+                                                ; KeyboardIrqHandler
         db 00h,01Bh,021h,00h,023h,024h,025h,01Eh,026h,02Ah,028h,029h,01Fh,0B3h,07Fh,09h
         db 011h,017h,05h,012h,014h,019h,015h,09h,0Fh,010h,01Bh,01Dh,0Dh,00h,01h,013h
         db 04h,06h,07h,08h,0Ah,0Bh,0Ch,03Bh,02Ch,060h,00h,01Ch,01Ah,018h,03h,016h
         db 02h,0Eh,0B2h,03Ch,03Eh,03Fh,00h,00h,00h,020h,00h,0DEh,0DFh,0E0h,0E1h,0E2h
         db 0E3h,0E4h,0E5h,0E6h,0E7h,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
         db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,08Bh,08Ch,00h,00h
-KeyMapAlt:
+KeyMapAlt:                                      ; Scan code to key code with Alt down; used by
+                                                ; KeyboardIrqHandler
         db 00h,01Bh,021h,040h,023h,024h,025h,05Eh,026h,02Ah,028h,029h,05Fh,02Bh,08h,08Fh
         db 090h,091h,092h,093h,094h,095h,096h,097h,098h,099h,07Bh,07Dh,0Dh,00h,09Eh,09Fh
         db 0A0h,0A1h,0A2h,0A3h,0A4h,0A5h,0A6h,03Ah,022h,07Eh,00h,07Ch,0ACh,0ADh,0AEh,0AFh
         db 0B0h,0B1h,0B2h,03Ch,03Eh,03Fh,00h,00h,00h,020h,00h,0F8h,0F9h,0FAh,0FBh,0FCh
         db 0FDh,0FEh,0FFh,080h,081h,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
         db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,08Dh,08Eh,00h,00h,00h
-saved_ss:
+saved_ss:                                       ; SS saved by SaveSS; used by SaveSS, __STK
         db 00h,00h
-str_StackOverflow:
+str_StackOverflow:                              ; "Stack Overflow!\r\n" string literal; used by __STKOVF
         db 053h,074h,061h,063h,06Bh,020h,04Fh,076h,065h,072h,066h,06Ch,06Fh,077h,021h,0Dh
         db 0Ah,00h
-memblocklist:
+memblocklist:                                   ; EA memory manager: the block list the port checks a pointer
+                                                ; against before FreeMemBlock; used by CompactDownLocked,
+                                                ; CompactUpLocked, FindCachedFile ...
         dd memlist1
-RowTableSize:
+RowTableSize:                                   ; Number of entries in the screen row table buffer (default
+                                                ; 0E00h; at least 0CCh); used by SetRowTableBuffer, initmemman
         db 00h,0Eh,00h,00h
-RowTableBuffer:
+RowTableBuffer:                                 ; Buffer for screen row tables; defaults to the static buffer;
+                                                ; used by FillRowTable, SetRowTableBuffer, initmemman ...
         db 00h,00h,00h,00h
-FreeSpaceList:
+FreeSpaceList:                                  ; used by FindFreeSpace, MergeFreeSpace, reservemem
         db 00h,00h,00h,00h
-ExitHook:
+ExitHook:                                       ; used by atexit_, exit_
         dd __null_int23_exit_
-Int23Hook:
+Int23Hook:                                      ; used by _exit_, exit_
         dd __null_int23_exit_
-FpuExitHook:
+FpuExitHook:                                    ; FPU shutdown routine called at exit; used by _exit_
         dd __null_int23_exit_
-FatalErrorHook:
+FatalErrorHook:                                 ; Routine FatalError returns into instead of the boxed
+                                                ; message; used by FatalError, FatalErrorEnd
         db 00h,00h,00h,00h
-StartupCs:
+StartupCs:                                      ; Code selector shown by the memory viewer; used by
+                                                ; MemViewerDrawList
         db 00h,00h
-StartupDs:
+StartupDs:                                      ; Data selector shown by the memory viewer; used by
+                                                ; MemViewerDrawList
         db 00h,00h
-MemDescriptorsEnd:
+MemDescriptorsEnd:                              ; End of the memory descriptor array; used by initmemman
         db 00h,00h,00h,00h
-MemDescriptors:
+MemDescriptors:                                 ; Memory descriptor array allocated by initmemman; used by
+                                                ; MemViewerDrawTitle, initgraphics, initmemman
         db 00h,00h,00h,00h
-SnapFormat:
+SnapFormat:                                     ; Screenshot format; 7 selects the alternate layout; used by
+                                                ; SnapScreenToShape
         db 06h,00h,00h,00h
-VesaProbed:
+VesaProbed:                                     ; Set once the VESA BIOS has been probed; used by initgraphics
         db 00h,00h,00h,00h
-ModeWidthTable:
+ModeWidthTable:                                 ; Screen width per video mode (8-byte entries with the
+                                                ; height); used by initgraphics
         db 080h,02h,00h,00h
-ModeHeightTable:
+ModeHeightTable:                                ; Screen height per video mode; used by initgraphics
         db 090h,01h,00h,00h,080h,02h,00h,00h,0E0h,01h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,020h,03h,00h,00h,058h,02h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,04h,00h,00h,00h,03h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,05h,00h,00h,00h,04h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h
-joycalactive:
+joycalactive:                                   ; 1 while JoystickCalScreen runs; used by JoystickCalScreen,
+                                                ; ShowMessageBox, ShowPromptBox
         db 00h,00h,00h,00h
-tickcount:
+tickcount:                                      ; used by GetTicks, ResetTicks, SetTickDeadline ...
         db 00h,00h,00h,00h
-slowtickcount:
+slowtickcount:                                  ; used by DebugLineCount, FindNextFile, SetSlowDeadline ...
         db 00h,00h,00h,00h
-oldint8off:
+oldint8off:                                     ; offset of the saved int 08h vector: InstallTimer stores
+                                                ; _dos_getvect_(8) eax here, RestoreTimer passes it back to
+                                                ; _dos_setvect_, TimerISR far-calls through it with
+                                                ; oldint8sel; used by InstallTimer, RestoreTimer, TimerISR
         db 00h,00h,00h,00h
-oldint8sel:
+oldint8sel:                                     ; selector of the saved int 08h vector: InstallTimer stores
+                                                ; the _dos_getvect_(8) selector (dx) here, RestoreTimer passes
+                                                ; it back in cx; used by InstallTimer, RestoreTimer
         db 00h,00h,00h,00h
-mouseminx:
+mouseminx:                                      ; mouse library: pointer range, left; used by MouseReadMotion,
+                                                ; MouseSetXRange, SetViewRect
         db 00h,00h,00h,00h
-mouseminy:
+mouseminy:                                      ; mouse library: pointer range, top; used by MouseReadMotion,
+                                                ; MouseSetXRange, SetViewRect
         db 00h,00h,00h,00h
-mousemaxx:
+mousemaxx:                                      ; mouse library: pointer range, right (exclusive); used by
+                                                ; MouseReadMotion, MouseSetXRange, SetViewRect
         db 040h,01h,00h,00h
-mousemaxy:
+mousemaxy:                                      ; mouse library: pointer range, bottom (exclusive); used by
+                                                ; MouseReadMotion, MouseSetXRange, SetViewRect
         db 0C8h,00h,00h,00h
-MouseDeltaX:
+MouseDeltaX:                                    ; Mouse motion X since the last read; used by MouseReadMotion
         db 00h,00h,00h,00h
-MouseButtonState:
+MouseButtonState:                               ; used by MouseReadButtons, MouseReadMotion
         db 01h,00h,00h,00h
-MouseSavedSensX:
+MouseSavedSensX:                                ; Mouse X sensitivity saved at start up; used by InitMouse,
+                                                ; MouseRestoreSensitivity
         db 00h,00h
-MouseSavedSensY:
+MouseSavedSensY:                                ; Mouse Y sensitivity saved at start up; used by InitMouse,
+                                                ; MouseRestoreSensitivity
         db 00h,00h
-MouseSavedThreshold:
+MouseSavedThreshold:                            ; Mouse double speed threshold saved at start up; used by
+                                                ; InitMouse, MouseRestoreSensitivity
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-MouseForceTwoButtons:
+MouseForceTwoButtons:                           ; Treat the mouse as two buttons; used by InitMouse
         db 00h,00h,00h,00h,01h,00h,00h,00h
-GraphicsReady:
+GraphicsReady:                                  ; used by DumpMemoryMap, FatalError, MemViewer ...
         db 00h,00h,00h,00h
-MousePresent:
+MousePresent:                                   ; used by InitMouse, MouseReadButtons, MouseReadMotion ...
         db 00h,00h,00h,00h
-mousex:
+mousex:                                         ; string ''; used by DrawRinkOverlays, EventToPointer,
+                                                ; Gameloop ...
         db 00h,00h,00h,00h
-mousey:
+mousey:                                         ; string ''; used by DrawRinkOverlays, EventToPointer,
+                                                ; Gameloop ...
         db 00h,00h,00h,00h
-mousebtns:
+mousebtns:                                      ; string ''; used by AnyInputPressed, MouseReadMotion,
+                                                ; PollMouseEvent ...
         db 00h,00h,00h,00h
-PointerCount:
+PointerCount:                                   ; Pointer show count; used by InitMouse, PointerCountDown,
+                                                ; PointerCountUp
         db 00h,00h,00h,00h
-MouseButtons:
+MouseButtons:                                   ; Mouse buttons; used by InitMouse
         db 00h,00h,00h,00h
-joyenablemask:
+joyenablemask:                                  ; enabled joystick bits (cleared on failed calibration); used
+                                                ; by JoyDefaultCalib1, JoyDefaultCalib2, JoyResetCentres ...
         db 00h,00h,00h,00h
-ViewScreenWidth:
+ViewScreenWidth:                                ; Width of the current screen mode; used by InitMouse,
+                                                ; MemViewerDrawList, ShapeInfo ...
         db 00h,00h,00h,00h
-ViewScreenHeight:
+ViewScreenHeight:                               ; Full screen height the game view is sized against; used by
+                                                ; InitMouse, MemViewerDrawList, ShapeInfo ...
         db 00h,00h,00h,00h
-ViewMarginX:
+ViewMarginX:                                    ; Horizontal margin taken off the screen width; used by
+                                                ; initgraphics
         db 00h,00h,00h,00h
-ViewMarginY:
+ViewMarginY:                                    ; Vertical margin taken off the screen height; used by
+                                                ; initgraphics
         db 00h,00h,00h,00h
-ViewMaxX:
+ViewMaxX:                                       ; Screen width less the horizontal margin; used by
+                                                ; initgraphics
         db 040h,01h,00h,00h
-ViewMaxY:
+ViewMaxY:                                       ; Screen height less the vertical margin; used by initgraphics
         db 0C8h,00h,00h,00h
-cpuinfo_d0:
+cpuinfo_d0:                                     ; DetectCPU result, first dword (1 on a 486 in protected
+                                                ; mode); used by DetectCPU
         db 00h,00h,00h,00h
-cpuinfo_d1:
+cpuinfo_d1:                                     ; DetectCPU result, second dword; used by DetectCPU
         db 00h,00h,00h,00h
-cpuinfo_b0:
+cpuinfo_b0:                                     ; DetectCPU result, first flag byte; used by DetectCPU
         db 00h,00h,00h,00h
-cpuinfo_b1:
+cpuinfo_b1:                                     ; DetectCPU result, second flag byte; used by DetectCPU
         db 00h,00h,00h,00h
-HidePointerKeepHook:
+HidePointerKeepHook:                            ; Hides the pointer keeping the screen; used by InitMouse,
+                                                ; ShowMessageBox, ShowPromptBox
         dd ReturnZero
-HidePointerHook:
+HidePointerHook:                                ; Hides the pointer; used by InitMouse, ShowMessageBox,
+                                                ; ShowPromptBox
         dd ReturnZero
-ShowPointerHook:
+ShowPointerHook:                                ; Shows the pointer; used by InitMouse, ShowMessageBox,
+                                                ; ShowPromptBox
         dd ReturnZero
-mousepollfn:
+mousepollfn:                                    ; mouse driver poll hook; used by AnyInputPressed,
+                                                ; CreatePlayerLoop, EditRosters ...
         dd ReturnZero
         dd ReturnZero
         dd ReturnZero
         dd ReturnZero
-UnpackedSizeHook:
+UnpackedSizeHook:                               ; Hook asked first for the unpacked size; returns 0 to fall
+                                                ; through; used by UnpackedSize
         dd ReturnZero
-UnpackHook:
+UnpackHook:                                     ; Hook asked first to unpack; returns 0 to fall through; used
+                                                ; by unpack
         dd ReturnZero
-SavedBreakOffset:
+SavedBreakOffset:                               ; Previous ctrl-break handler offset; used by
+                                                ; InstallBreakHandler, RemoveBreakHandler
         db 00h,00h,00h,00h
-SavedBreakSelector:
+SavedBreakSelector:                             ; Previous ctrl-break handler selector; used by
+                                                ; InstallBreakHandler, RemoveBreakHandler
         db 00h,00h
-BreakCallFunc:
+BreakCallFunc:                                  ; Ctrl-break chain routine; used by ClearNumLock,
+                                                ; InstallBreakHandler
         db 00h,00h,00h,00h
-BreakDataSelector:
+BreakDataSelector:                              ; Data selector for the ctrl-break handler; used by
+                                                ; InstallBreakHandler
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-ScreenWidth:
+ScreenWidth:                                    ; used by DrawArtOpaque, DrawShapeClippedKeyed, FillRect ...
         db 080h,02h,00h,00h
-ScreenHeight:
+ScreenHeight:                                   ; Screen height; used by PrintStringAtCursor, ResetClipWindow,
+                                                ; SetClipWindow ...
         db 0E0h,01h,00h,00h
-cliprect_x0:
+cliprect_x0:                                    ; DrawSprite / ea_gfx clip left (0); used by BlitShapeClipped,
+                                                ; ClearScreen, DrawArtAnd ...
         db 00h,00h,00h,00h
-cliprect_y0:
+cliprect_y0:                                    ; clip top (0); used by AndPixelClipped, BlitArt,
+                                                ; BlitArtKeyColour ...
         db 00h,00h,00h,00h
-cliprect_x1:
+cliprect_x1:                                    ; clip right (640); used by BlitShapeClipped, ClearScreen,
+                                                ; DrawArtAnd ...
         db 080h,02h,00h,00h
-cliprect_y1:
+cliprect_y1:                                    ; clip bottom (480); used by AndPixelClipped, BlitArt,
+                                                ; BlitArtKeyColour ...
         db 0E0h,01h,00h,00h
-DrawClipLeft:
+DrawClipLeft:                                   ; Left edge of the draw target's clip rectangle; x below it is
+                                                ; not drawn; used by AndPixelClipped, BlitArt,
+                                                ; BlitArtKeyColour ...
         db 00h,00h,00h,00h
-DrawClipRight:
+DrawClipRight:                                  ; Right edge of the draw target's clip rectangle (exclusive);
+                                                ; used by AndPixelClipped, BlitArt, BlitArtKeyColour ...
         db 080h,02h,00h,00h
-DrawRowBytes:
+DrawRowBytes:                                   ; used by BlitArt, BlitArtKeyColour, BlitArtKeyFF ...
         db 080h,02h,00h,00h
-KeyedDraw:
+KeyedDraw:                                      ; used by AndPixel, DrawArt, DrawArtAnd ...
         db 00h,00h,00h,00h
-DrawDestBuffer:
+DrawDestBuffer:                                 ; used by AndPixel, BlitArt, BlitArtKeyColour ...
         dd ScreenRowTable
-DrawVideoBase:
+DrawVideoBase:                                  ; used by AndPixel, BlitArt, BlitArtKeyColour ...
         db 00h,00h,0Ah,00h
-BackBufferWidth:
+BackBufferWidth:                                ; used by SetScreenTarget, ShowMessageBox, ShowPromptBox ...
         db 080h,02h,00h,00h
-ScreenBmHeight:
+ScreenBmHeight:                                 ; Screen bitmap height; used by initgraphics
         db 0E0h,01h,00h,00h
-ScreenBmClipX0:
+ScreenBmClipX0:                                 ; Screen bitmap clip left; used by initgraphics
         db 00h,00h,00h,00h
-ScreenBmClipY0:
+ScreenBmClipY0:                                 ; Screen bitmap clip top; used by initgraphics
         db 00h,00h,00h,00h
-ScreenBmClipX1:
+ScreenBmClipX1:                                 ; Screen bitmap clip right; used by initgraphics
         db 080h,02h,00h,00h
-ScreenBmClipY1:
+ScreenBmClipY1:                                 ; Screen bitmap clip bottom; used by initgraphics
         db 0E0h,01h,00h,00h
-ScreenBmOffset:
+ScreenBmOffset:                                 ; Screen bitmap start offset; used by initgraphics
         db 00h,00h,00h,00h
-ScreenBmRowBytes:
+ScreenBmRowBytes:                               ; Screen bitmap bytes per row; used by initgraphics
         db 080h,02h,00h,00h
-ScreenBmPitch:
+ScreenBmPitch:                                  ; Screen bitmap pitch; used by initgraphics
         db 080h,02h,00h,00h
-ScreenBmBanked:
+ScreenBmBanked:                                 ; 1 when the screen is a banked VESA mode, 0 for mode 13h;
+                                                ; used by initgraphics
         db 00h,00h,00h,00h
         dd ScreenRowTable
         db 00h,00h,0Ah,00h
-ScreenRowTable:
+ScreenRowTable:                                 ; used by AndPixel, DrawArtOpaque, DrawShapeClippedKeyed ...
         db 00h,00h,00h,00h,080h,02h,00h,00h,00h,05h,00h,00h,080h,07h,00h,00h
         db 00h,0Ah,00h,00h,080h,0Ch,00h,00h,00h,0Fh,00h,00h,080h,011h,00h,00h
         db 00h,014h,00h,00h,080h,016h,00h,00h,00h,019h,00h,00h,080h,01Bh,00h,00h
@@ -548,214 +613,261 @@ ScreenRowTable:
         db 00h,0ECh,09h,00h,080h,0EEh,09h,00h,00h,0F1h,09h,00h,080h,0F3h,09h,00h
         db 00h,0F6h,09h,00h,080h,0F8h,09h,00h,00h,0FBh,09h,00h,080h,0FDh,09h,00h
         db 00h,00h,0Ah,00h
-PutBlockScaleSteps:
+PutBlockScaleSteps:                             ; Block scale steps; used by FillRect, PutBlock, initgraphics
         db 066h,00h,00h,00h,0CCh,00h,00h,00h,033h,01h,00h,00h,099h,01h,00h,00h
         db 00h,02h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
         db 00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
         db 00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
         db 00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
-JoyRawX1:
+JoyRawX1:                                       ; Timed count for joystick 1 X; used by CalibrateJoystick,
+                                                ; main_
         db 00h,00h,00h,00h
-JoyRawY1:
+JoyRawY1:                                       ; Timed count for joystick 1 Y; used by CalibrateJoystick,
+                                                ; main_
         db 00h,00h,00h,00h
-JoyRawX2:
+JoyRawX2:                                       ; Timed count for joystick 2 X; used by CalibrateJoystick,
+                                                ; main_
         db 00h,00h,00h,00h
-JoyRawY2:
+JoyRawY2:                                       ; Timed count for joystick 2 Y; used by CalibrateJoystick,
+                                                ; main_
         db 00h,00h,00h,00h
-JoyButtonBits:
+JoyButtonBits:                                  ; Joystick button bits from the last read; used by
+                                                ; CalibrateJoystick
         db 00h,00h
-JoyPortMask:
+JoyPortMask:                                    ; Axis bits still present on port 201h; used by
+                                                ; CalibrateJoystick, PollJoystickEvent, main_
         db 0Fh,00h
-JoyAxisY2:
+JoyAxisY2:                                      ; used by JoyScaledX, ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyAxisMask:
+JoyAxisMask:                                    ; used by JoyScaledX, ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyButtons:
+JoyButtons:                                     ; Last joystick button byte; used by ReadJoystickPorts
         db 00h
-JoyButtonsPrev:
+JoyButtonsPrev:                                 ; Previous joystick button byte; used by ReadJoystickPorts
         db 00h
-JoyDirection:
+JoyDirection:                                   ; Joystick direction bits built from the axes; used by
+                                                ; ReadJoystickPorts
         db 00h
-JoyX1Threshold:
+JoyX1Threshold:                                 ; used by JoyResetCentres, JoyScaledX, ReadJoystickPorts
         db 050h,00h,00h,00h
-JoyX1Min:
+JoyX1Min:                                       ; Joystick 1 X axis minimum seen; used by ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyX1Center:
+JoyX1Center:                                    ; used by JoyResetCentres, ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyX1Max:
+JoyX1Max:                                       ; Joystick 1 X axis maximum seen; used by ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyX1Settle:
+JoyX1Settle:                                    ; Reads left before the joystick 1 X range is trusted; used by
+                                                ; ReadJoystickPorts
         db 014h,00h,00h,00h
-JoyY1Min:
+JoyY1Min:                                       ; Joystick 1 Y axis minimum seen; used by ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyY1Max:
+JoyY1Max:                                       ; Joystick 1 Y axis maximum seen; used by ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyY1Threshold:
+JoyY1Threshold:                                 ; used by JoyResetCentres, JoyScaledX, ReadJoystickPorts
         db 050h,00h,00h,00h
-JoyY1MinSeen:
+JoyY1MinSeen:                                   ; Joystick 1 Y axis lowest reading this pass; used by
+                                                ; ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyY1Center:
+JoyY1Center:                                    ; used by JoyResetCentres, ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyY1MaxSeen:
+JoyY1MaxSeen:                                   ; Joystick 1 Y axis highest reading this pass; used by
+                                                ; ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyY1Settle:
+JoyY1Settle:                                    ; Reads left before the joystick 1 Y range is trusted; used by
+                                                ; ReadJoystickPorts
         db 014h,00h,00h,00h
-JoyX2Min:
+JoyX2Min:                                       ; Joystick 2 X axis minimum seen; used by ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyX2Max:
+JoyX2Max:                                       ; Joystick 2 X axis maximum seen; used by ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyXScale:
+JoyXScale:                                      ; used by JoyScaledX, ReadJoystickPorts
         db 00h,00h,00h,00h
-JoyYScale:
+JoyYScale:                                      ; used by JoyScaledX, ReadJoystickPorts
         db 00h,00h,00h,00h
-joyedgedir:
+joyedgedir:                                     ; joystick library table: direction for each edge mask (1 up,
+                                                ; 2 down, 4 right, 8 left); used by JoyButtonMap
         db 00h,01h,05h,00h,03h,02h,04h,03h,07h,08h,06h,07h,00h,01h,05h,00h
         db 00h
-randseed:
+randseed:                                       ; used by GetRandState
         db 01h,00h,00h,00h
-SndInitDone:
+SndInitDone:                                    ; Set once the sound system has been set up; used by SndInit
         db 00h
-SndBigEndian:
+SndBigEndian:                                   ; Byte order flag for timbre and patch data; used by
+                                                ; LinkPatchTimbres, LoadTimbreFile, SetSoundByteOrder
         db 00h
-SampleChunkSize:
+SampleChunkSize:                                ; Chunk size used when loading samples; used by LoadSample
         db 00h,02h,00h,00h
-DefaultSampleInfo:
+DefaultSampleInfo:                              ; Default six-dword sample description copied by LoadSample;
+                                                ; used by LoadSample
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0C8h,00h,00h,00h
         db 00h,07Fh,03Fh,00h,00h,00h,00h,00h
-PlayPatchHandle:
+PlayPatchHandle:                                ; Handle of the last patch played; used by PlayPatch
         db 00h,00h,00h,00h,00h,00h
-bailout_vec:
+bailout_vec:                                    ; called on the debug 'bail' key in DebugMonitor, from
+                                                ; main_startup and from the keyboard handler; exit/abort
+                                                ; vector; used by AskExitToDos, DebugMonitor, DeskExitGame ...
         dd ExitProgram
-FpuFlags:
+FpuFlags:                                       ; used by InitFpuFlags, __saved_DS, __sys_fini_387_emulator
         db 00h,00h,00h,00h
-EmuHookFlags:
+EmuHookFlags:                                   ; used by InitFpuFlags, __saved_DS, __sys_fini_387_emulator
         db 020h,00h
-SavedEsSelector:
+SavedEsSelector:                                ; ES selector saved at start up; used by InitFpuFlags
         db 00h,00h
-Joy2RawX:
+Joy2RawX:                                       ; Joystick 2 raw X; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2RawY:
+Joy2RawY:                                       ; Joystick 2 raw Y; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2XMin:
+Joy2XMin:                                       ; Joystick 2 X minimum; used by Joy2ScaledX, JoyDefaultCalib2,
+                                                ; ReadJoyRaw
         db 050h,00h,00h,00h
-Joy2XMax:
+Joy2XMax:                                       ; Joystick 2 X maximum; used by JoyDefaultCalib2, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2XCenter:
+Joy2XCenter:                                    ; Joystick 2 X centre; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2XSettle:
+Joy2XSettle:                                    ; Joystick 2 X settle countdown; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2XMinSeen:
+Joy2XMinSeen:                                   ; Lowest joystick 2 X seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2XMaxSeen:
+Joy2XMaxSeen:                                   ; Highest joystick 2 X seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2YMin:
+Joy2YMin:                                       ; Joystick 2 Y minimum; used by Joy2ScaledX, JoyDefaultCalib2,
+                                                ; ReadJoyRaw
         db 050h,00h,00h,00h
-Joy2YMax:
+Joy2YMax:                                       ; Joystick 2 Y maximum; used by JoyDefaultCalib2, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2YCenter:
+Joy2YCenter:                                    ; Joystick 2 Y centre; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2YSettle:
+Joy2YSettle:                                    ; Joystick 2 Y settle countdown; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2YMinSeen:
+Joy2YMinSeen:                                   ; Lowest joystick 2 Y seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2YMaxSeen:
+Joy2YMaxSeen:                                   ; Highest joystick 2 Y seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2XScale:
+Joy2XScale:                                     ; Joystick 2 X scale factor; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy2YScale:
+Joy2YScale:                                     ; Joystick 2 Y scale factor; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1RawX:
+Joy1RawX:                                       ; Joystick 1 raw X; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1RawY:
+Joy1RawY:                                       ; Joystick 1 raw Y; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-JoyRawButtons:
+JoyRawButtons:                                  ; Button bits from the raw joystick read; used by ReadJoyRaw
         db 00h
-Joy1RawDirection:
+Joy1RawDirection:                               ; Direction bits for joystick 1 from the raw read; used by
+                                                ; ReadJoyRaw
         db 00h
-Joy2RawDirection:
+Joy2RawDirection:                               ; Direction bits for joystick 2 from the raw read; used by
+                                                ; ReadJoyRaw
         db 00h,00h
-Joy1XMin:
+Joy1XMin:                                       ; Joystick 1 X minimum; used by Joy2ScaledX, JoyDefaultCalib1,
+                                                ; ReadJoyRaw
         db 050h,00h,00h,00h
-Joy1XMax:
+Joy1XMax:                                       ; Joystick 1 X maximum; used by JoyDefaultCalib1, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1XCenter:
+Joy1XCenter:                                    ; Joystick 1 X centre; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1XSettle:
+Joy1XSettle:                                    ; Joystick 1 X settle countdown; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1XMinSeen:
+Joy1XMinSeen:                                   ; Lowest joystick 1 X seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1XMaxSeen:
+Joy1XMaxSeen:                                   ; Highest joystick 1 X seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1YMin:
+Joy1YMin:                                       ; Joystick 1 Y minimum; used by Joy2ScaledX, JoyDefaultCalib1,
+                                                ; ReadJoyRaw
         db 050h,00h,00h,00h
-Joy1YMax:
+Joy1YMax:                                       ; Joystick 1 Y maximum; used by JoyDefaultCalib1, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1YCenter:
+Joy1YCenter:                                    ; Joystick 1 Y centre; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1YSettle:
+Joy1YSettle:                                    ; Joystick 1 Y settle countdown; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1YMinSeen:
+Joy1YMinSeen:                                   ; Lowest joystick 1 Y seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1YMaxSeen:
+Joy1YMaxSeen:                                   ; Highest joystick 1 Y seen; used by ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1XScale:
+Joy1XScale:                                     ; Joystick 1 X scale factor; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-Joy1YScale:
+Joy1YScale:                                     ; Joystick 1 Y scale factor; used by Joy2ScaledX, ReadJoyRaw
         db 00h,00h,00h,00h
-JoyDirLookup:
+JoyDirLookup:                                   ; Direction bits to direction code table; used by ReadJoyRaw
         db 00h,03h,0Ch,0Fh,00h,01h,05h,00h,03h,02h,04h,03h,07h,08h,06h,07h
         db 00h,01h,05h,00h
-tickdeadline:
+tickdeadline:                                   ; SetTickDeadline writes tickcount + n; WaitTickDeadline and
+                                                ; TickDeadlinePassed compare tickcount with it; used by
+                                                ; SetTickDeadline, TickDeadlinePassed, WaitTickDeadline
         db 00h,00h,00h,00h
-ticklast:
+ticklast:                                       ; TicksSinceLastCall: tickcount at the previous call; used by
+                                                ; TicksSinceLastCall
         db 00h,00h,00h,00h
-RetraceTimeout:
+RetraceTimeout:                                 ; Loop count before giving up on vertical retrace; used by
+                                                ; ResetRetraceTimeout, WaitRetrace, WaitRetraceEnd ...
         db 0A0h,086h,01h,00h
-KbdIdleHook:
+KbdIdleHook:                                    ; used by KbdIdleWait, KbdPeekKey, PollKey ...
         dd PollHotkeys
-TextFont:
+TextFont:                                       ; Current text font; used by PrintStringAtCursor, TextPrint,
+                                                ; TextRestoreState ...
         dd DefaultFont
-fontcolor:
+fontcolor:                                      ; current font colour read by the text blitter (PrintString);
+                                                ; the Print* routines set it from textshadow / textcolor; used
+                                                ; by DrawCalendarDay, DrawEditCursor, HilightSaveToDlg ...
         db 0Fh,00h,00h,00h
-TextBackColor:
+TextBackColor:                                  ; Text background colour; used by DrawEditText, InputDialog,
+                                                ; TextPrint ...
         db 00h,00h,00h,00h
-TextOriginX:
+TextOriginX:                                    ; X of the text drawing position; used by PrintStringAtCursor,
+                                                ; TextPrint, TextSetCursor
         db 00h,00h,00h,00h
-TextOriginY:
+TextOriginY:                                    ; Text origin Y; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetCursor
         db 00h,00h,00h,00h
-TextShadowOn:
+TextShadowOn:                                   ; Text shadow is on; used by TextSetFont
         db 00h,00h,00h,00h
-TextFontTag:
+TextFontTag:                                    ; Text font tag; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetFont
         db 031h,044h,033h,046h
-TextFirstChar:
+TextFirstChar:                                  ; First character in the font; used by PrintStringAtCursor,
+                                                ; TextPrint, TextSetFont ...
         db 020h
-TextLastChar:
+TextLastChar:                                   ; Last character in the font; used by PrintStringAtCursor,
+                                                ; TextPrint, TextSetFont ...
         db 08Eh
-TextCharW:
+TextCharW:                                      ; Font character width; used by PrintStringAtCursor,
+                                                ; TextPrint, TextSetFont ...
         db 08h
-TextCharH:
+TextCharH:                                      ; Font character height; used by DrawButton, DrawListItem,
+                                                ; DrawRosterList ...
         db 08h
-TextSpacing:
+TextSpacing:                                    ; Font spacing; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetFont ...
         db 00h
-TextFontH:
+TextFontH:                                      ; Font height; used by DrawEditCursor, DrawEditText,
+                                                ; TextSetFont
         db 08h
-TextFontAscent:
+TextFontAscent:                                 ; Font ascent of the current font; used by TextSetFont
         db 07h,00h
-TextWidthTable:
+TextWidthTable:                                 ; Font width table; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetFont ...
         dd DefaultFontWidths
-TextCursorX:
+TextCursorX:                                    ; Text cursor x; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetFont
         db 00h,00h,00h,00h
-TextCursorY:
+TextCursorY:                                    ; Text cursor y; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetFont ...
         db 00h,00h,00h,00h
-TextLeft:
+TextLeft:                                       ; Left edge of the text window; used by PrintStringAtCursor,
+                                                ; TextPrint, TextSetFont
         db 00h,00h,00h,00h
-TextTop:
+TextTop:                                        ; Text window top; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetFont
         db 00h,00h,00h,00h
-TextRight:
+TextRight:                                      ; Text window right; used by PrintStringAtCursor, TextPrint,
+                                                ; TextSetFont
         db 00h,00h,00h,00h
-TextBottom:
+TextBottom:                                     ; Carried name by usage; used by PrintStringAtCursor,
+                                                ; TextPrint, TextSetFont
         dd DefaultFontOffsets
-ColourRemap:
+ColourRemap:                                    ; 256-entry colour remap table; used by BlitArtKeyColour,
+                                                ; BlitArtMasked, CopyRowRemapKeyed ...
         db 00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
         db 010h,011h,012h,013h,014h,015h,016h,017h,018h,019h,01Ah,01Bh,01Ch,01Dh,01Eh,01Fh
         db 020h,021h,022h,023h,024h,025h,026h,027h,028h,029h,02Ah,02Bh,02Ch,02Dh,02Eh,02Fh
@@ -772,30 +884,32 @@ ColourRemap:
         db 0D0h,0D1h,0D2h,0D3h,0D4h,0D5h,0D6h,0D7h,0D8h,0D9h,0DAh,0DBh,0DCh,0DDh,0DEh,0DFh
         db 0E0h,0E1h,0E2h,0E3h,0E4h,0E5h,0E6h,0E7h,0E8h,0E9h,0EAh,0EBh,0ECh,0EDh,0EEh,0EFh
         db 0F0h,0F1h,0F2h,0F3h,0F4h,0F5h,0F6h,0F7h,0F8h,0F9h,0FAh,0FBh,0FCh,0FDh,0FEh,0FFh
-RowCopyFunc:
+RowCopyFunc:                                    ; used by DrawArt, DrawArtKeyColour, DrawArtKeyFF ...
         dd bcopy
-HeapList:
+HeapList:                                       ; used by __ExpandDGROUP_, __FreeDPMIBlocks_,
+                                                ; __HeapManager_expand_ ...
         db 00h,00h,00h,00h
-HeapRover:
+HeapRover:                                      ; used by __unlink_, _nfree_, _nmalloc_
         db 00h,00h,00h,00h
-HeapLargestFree:
+HeapLargestFree:                                ; used by _nfree_, _nmalloc_
         db 00h,00h,00h,00h
-str_OpenhandleSFILEERROR:
+str_OpenhandleSFILEERROR:                       ; "openhandle - %s FILE ERROR\r" string literal; used by
+                                                ; openhandle
         db 06Fh,070h,065h,06Eh,068h,061h,06Eh,064h,06Ch,065h,020h,02Dh,020h,025h,073h,020h
         db 046h,049h,04Ch,045h,020h,045h,052h,052h,04Fh,052h,0Dh,00h
-ResourceArchiveName:
+ResourceArchiveName:                            ; used by openhandle
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h
-ArchiveHandle:
+ArchiveHandle:                                  ; used by openhandle
         db 00h,00h,00h,00h
-ArchiveOpenFn:
+ArchiveOpenFn:                                  ; used by openhandle
         db 00h,00h,00h,00h
-ArchiveCount:
+ArchiveCount:                                   ; used by openhandle
         db 00h,00h,00h,00h
-ResourceArchive:
+ResourceArchive:                                ; used by openhandle
         db 00h,00h,00h,00h
-FindFileDta:
+FindFileDta:                                    ; Find file data block; used by FindFirstFile
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -803,12 +917,12 @@ FindFileDta:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-FindFilePtr:
+FindFilePtr:                                    ; Find file pointer; used by FindFirstFile
         db 00h,00h,00h,00h
-FindFileName:
+FindFileName:                                   ; Find file name; used by FindFirstFile, FindNextFile
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-FindFilePattern:
+FindFilePattern:                                ; Find file pattern; used by FindFirstFile
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -816,21 +930,24 @@ FindFilePattern:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h
-SlowDeadline:
+SlowDeadline:                                   ; Slow-tick deadline; used by SetSlowDeadline,
+                                                ; SlowDeadlinePassed, WaitSlowDeadline
         db 00h,00h,00h,00h
-DebugMode:
+DebugMode:                                      ; used by DebugClearScreen, DebugLog, DebugLogPrintf ...
         db 02h,00h,00h,00h,00h,00h,00h,00h
-DebugScreenBase:
+DebugScreenBase:                                ; used by DebugClearScreen, DebugScrollUp, DebugSetPage ...
         db 00h,00h,0Bh,00h
-DebugLineWidth:
+DebugLineWidth:                                 ; used by DebugScrollUp, DebugSetLine, DebugShowLines
         db 080h,07h,00h,00h
-DebugRow:
+DebugRow:                                       ; used by DebugScrollUp, DebugSetRow, DebugShowLines ...
         db 00h
-DebugBackColor:
+DebugBackColor:                                 ; Debug background colour; used by DebugSetAttr,
+                                                ; DebugShowLines
         db 07h
-DebugTabWidth:
+DebugTabWidth:                                  ; Debug monitor tab width; used by DebugSetTabWidth,
+                                                ; DebugShowLines
         db 08h,02Fh
-DebugLogOn:
+DebugLogOn:                                     ; used by DebugLog, DebugLogClose, DebugLogOpen ...
         db 00h,00h,00h,00h
         dd str_Jan
         dd str_Feb2
@@ -844,33 +961,41 @@ DebugLogOn:
         dd str_Oct
         dd str_Nov
         dd str_Dec
-MemViewBlack:
+MemViewBlack:                                   ; used by MemViewer, MemViewerBlockInfo, MemViewerDrawList ...
         db 00h,00h,00h,00h
-MemViewWhite:
+MemViewWhite:                                   ; used by MemViewer, MemViewerBlockInfo, MemViewerSelectRow
+                                                ; ...
         db 03h,00h,00h,00h
-MemViewYellow:
+MemViewYellow:                                  ; used by MemViewer, MemViewerBlockInfo, MemViewerDrawList ...
         db 03h,00h,00h,00h
-MemViewGreen:
+MemViewGreen:                                   ; used by MemViewer, MemViewerDrawList
         db 01h,00h,00h,00h
-MemViewRed:
+MemViewRed:                                     ; used by MemViewer, MemViewerBlockInfo, MemViewerDrawList
         db 02h,00h,00h,00h
-MemViewShowDetail:
+MemViewShowDetail:                              ; used by MemViewerDrawList, MemViewerDrawRows, WriteMemMap
         db 00h,00h,00h,00h
-MemViewOpen:
+MemViewOpen:                                    ; Non-zero while the memory viewer is open; used by MemViewer,
+                                                ; MemViewerGetMode, MemViewerStart
         db 00h,00h,00h,00h
-MemViewCursor:
+MemViewCursor:                                  ; Memory viewer cursor; used by MemViewerDrawTitle,
+                                                ; MemViewerListHead
         db 00h,00h,00h,00h
-MemViewRowY:
+MemViewRowY:                                    ; Screen Y of the memory viewer row being drawn; used by
+                                                ; MemViewer, MemViewerDrawRows
         db 00h,00h,00h,00h
-MemViewRowX:
+MemViewRowX:                                    ; Screen X of the memory viewer row being drawn; used by
+                                                ; MemViewer, MemViewerDrawRows
         db 00h,00h,00h,00h
-PaletteCursorColours:
+PaletteCursorColours:                           ; Palette viewer cursor xor colours; used by PaletteViewer
         db 0FFh,0FFh,00h,00h,0AAh,0AAh,00h,00h,055h,055h,00h,00h
-DebugLastKey:
+DebugLastKey:                                   ; Last key read by the debug key reader; used by
+                                                ; DebugGetKeyUpper
         db 00h,00h,00h,00h
-joycalprehook:
+joycalprehook:                                  ; called before calibration; used by JoystickCalScreen,
+                                                ; ShowPromptBox
         dd ReturnZero
-joycalposthook:
+joycalposthook:                                 ; called after calibration; used by JoystickCalScreen,
+                                                ; ShowPromptBox
         dd ReturnZero
         dd ReturnZero
         dd ReturnZero
@@ -879,10 +1004,10 @@ joycalposthook:
         dd ReturnZero
         dd ReturnZero
         db 00h,00h,00h,00h
-DefaultFont:
+DefaultFont:                                    ; used by JoystickCalScreen, MemViewer, ShowMessageBox ...
         db 046h,050h,043h,031h,020h,08Eh,08h,08h,00h,08h,06h,01h,00h,00h,00h,0FFh
         db 00h,00h,0DCh,01h,00h,00h,00h,00h,00h,00h,00h,00h,053h,048h,041h,057h
-DefaultFontOffsets:
+DefaultFontOffsets:                             ; Character offset table of the built-in font
         db 04Bh,02h,00h,00h,053h,02h,00h,00h,05Bh,02h,00h,00h,063h,02h,00h,00h
         db 06Bh,02h,00h,00h,073h,02h,00h,00h,07Bh,02h,00h,00h,083h,02h,00h,00h
         db 08Bh,02h,00h,00h,093h,02h,00h,00h,09Bh,02h,00h,00h,0A3h,02h,00h,00h
@@ -911,7 +1036,7 @@ DefaultFontOffsets:
         db 06Bh,05h,00h,00h,073h,05h,00h,00h,07Bh,05h,00h,00h,083h,05h,00h,00h
         db 08Bh,05h,00h,00h,093h,05h,00h,00h,09Bh,05h,00h,00h,0A3h,05h,00h,00h
         db 0ABh,05h,00h,00h,0B3h,05h,00h,00h,0BBh,05h,00h,00h
-DefaultFontWidths:
+DefaultFontWidths:                              ; Character width table of the built-in font
         db 08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h
         db 08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h
         db 08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h,08h
@@ -975,7 +1100,7 @@ DefaultFontWidths:
         db 020h,060h,0FEh,0FEh,060h,020h,00h,00h,00h,00h,00h,00h,00h,00h,0FFh,080h
         db 0C0h,0E0h,0F0h,0E0h,0C0h,080h,00h,00h,0F0h,088h,084h,084h,084h,07Ch,00h,030h
         db 048h,048h,0FCh,0FCh,0FCh,0FCh,00h,00h
-__8087:
+__8087:                                         ; used by InitFpuFlags, __chk8087_
         db 00h
-FpuType:
+FpuType:                                        ; used by __chk8087_, __init_8087_, _fpreset_
         db 00h,00h,00h

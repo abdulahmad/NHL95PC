@@ -18,8 +18,9 @@ global assrefsignal, assrefgoalpa, assrefdrop, assrefgoalline
 ;-----------------------------------------------------------------------------
 ; assrefatdot                                  4DFF7  95 PC, medium confidence
 ; Asstab 1Eh (StartHL2, puckfaceoff2): while play is stopped (injurystop 0,
-; clock running) holds the referee at the faceoff spot fox/C90B4 offset
-; +-0Fh, facing 2/6
+; clock running) holds the referee at the faceoff spot fox/C90B4 offset +-0Fh,
+;
+; facing 2/6
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefatdot.c
 %ifdef CBUILD
@@ -88,6 +89,7 @@ assrefatdot:
 ; assreffollow                                 4E0BD  95 PC, medium confidence
 ; Asstab 1Fh (StartHL2, Endfaceoff, Goal): picks a spot by puck zone (x
 ; +-46h/78h/90h, y +-0EDh/0E8h or camy) and skates the referee there; idles
+;
 ; (doplayeracc 8) when the clock is stopped
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (assreffollow)
@@ -258,8 +260,9 @@ assreffollow:
 ;-----------------------------------------------------------------------------
 ; SkateToSpot                                  4E292  95 PC, medium confidence
 ; Player eax skates to regd0/regd1; within 8 in x and y it snaps there and
-; stops (Xvel/Yvel 0), else skateto with SetSPA / vtoa facing; used by the PC
-; scripted assignments
+; stops (Xvel/Yvel 0), else skateto with SetSPA / vtoa facing; used
+;
+; by the PC scripted assignments
 ;-----------------------------------------------------------------------------
 SkateToSpot:
         push dword 2Ch
@@ -652,9 +655,10 @@ SkateToSpot:
         ret
 ;-----------------------------------------------------------------------------
 ; CrowdOnStoppage                                 4E71A  95 PC, low confidence
-; On a whistle (ovltimer -1, not replay) picks crowd/music reactions by
-; RefPen and clock: PlayCrowdSample 2 late in the period, 5 at period end,
-; team music when musicon and gameopts+1 bit 0
+; On a whistle (ovltimer -1, not replay) picks crowd/music reactions by RefPen
+; and clock: PlayCrowdSample 2 late in the period, 5 at period end, team music
+;
+; when musicon and gameopts+1 bit 0
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/CrowdOnStoppage.c
 %ifdef CBUILD
@@ -965,6 +969,7 @@ ass_skate_temp34:
 ; assrefsignal                                 4EB04  95 PC, medium confidence
 ; Asstab 20h: skates to x 0A0h,y 0 (the timekeeper side), plays 0A5Bh; when
 ; RefPen is 7 (goal) posts PostGoalEvent with scorer/assists and period time;
+;
 ; then assreplace 21h
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goalie/assgoalie.c (assrefsignal)
@@ -1162,6 +1167,7 @@ assrefsignal:
 ; assrefgoalpa                                 4ED7C  95 PC, medium confidence
 ; Asstab 21h (assrefsignal, EndPenaltyShot, assrefpenshot): once ovltimer >=
 ; 0ECh and goalevent == 1, calls PaGoal with the scorer/assist jerseys
+;
 ; (goalevent_b1..E9AD7) and team abbrev, then clears E9AD3
 ;-----------------------------------------------------------------------------
 assrefgoalpa:

@@ -4,6 +4,11 @@ bits 32
 section s_9D521 progbits alloc exec nowrite align=1
 extern _Extender, FpuSystemFlags, OldFpuVectorOffset, OldFpuVectorSelector, FpuCr0Bits
 global EmuRestoreFpuVector, EmuRestoreRealVector, __save_8087_
+;-----------------------------------------------------------------------------
+; EmuRestoreFpuVector                          9D521  95 PC, medium confidence
+; Puts back the original coprocessor-missing vector and CR0 coprocessor bits
+; when the emulator shuts down
+;-----------------------------------------------------------------------------
 EmuRestoreFpuVector:
         mov cl, 7
         mov ax, 2504h
@@ -24,6 +29,10 @@ EmuRestoreFpuVector:
         mov cr0, ecx
 .2:
         ret
+;-----------------------------------------------------------------------------
+; EmuRestoreRealVector                         9D55C  95 PC, medium confidence
+; Restores the saved real-mode vector through the DOS extender
+;-----------------------------------------------------------------------------
 EmuRestoreRealVector:
         xor ebx, ebx
         lea edx, [FpuSystemFlags]
@@ -35,6 +44,10 @@ EmuRestoreRealVector:
         inc ebx
         int 21h
         ret
+;-----------------------------------------------------------------------------
+; __save_8087_                                                    9D57D  95 PC
+; Run-time library: saves the FPU state
+;-----------------------------------------------------------------------------
 __save_8087_:
         wait
         fnsave [eax]

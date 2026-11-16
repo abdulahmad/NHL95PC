@@ -18,10 +18,19 @@ global ReadJoystickPorts, JoyResetCentres, JoyButtonMap, JoyScaledX, AddExitHand
 global JoyDefaultCalib2, Joy2ScaledX, ClearScreen, GetTicks, TicksSince, TicksSinceLastCall, ResetTicks, SetTickDeadline
 global WaitTickDeadline, TickDeadlinePassed, WaitTicks, KbdGetKey, PollKey, KbdPeekKey, WaitKey, KbdFlush
 global KbdIdleWait, SaveDrawState, RestoreDrawState, bcopy
+;-----------------------------------------------------------------------------
+; ReturnZero                                   B300C  95 PC, medium confidence
+; Returns 0; default for the joystick and mouse hooks
+;-----------------------------------------------------------------------------
 ReturnZero:
         LD xor, eax, eax
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; ClearNumLock                                 B3010  95 PC, medium confidence
+; Clears the BIOS Num Lock flag; followed by the real-mode Ctrl-Break stub
+; that calls the installed handler
+;-----------------------------------------------------------------------------
 ClearNumLock:
         sti
         push ebx
@@ -47,6 +56,10 @@ ClearNumLock:
         pop ecx
         pop ebx
         iret
+;-----------------------------------------------------------------------------
+; InstallBreakHandler                          B3036  95 PC, medium confidence
+; Hooks the critical-error vector and registers its removal at exit
+;-----------------------------------------------------------------------------
 InstallBreakHandler:
         push ebp
         LD mov, ebp, esp
@@ -71,6 +84,10 @@ InstallBreakHandler:
 .1:
         leave
         ret
+;-----------------------------------------------------------------------------
+; RemoveBreakHandler                                              B308B  95 PC
+; Frees the DOS memory of the Ctrl-Break callback and clears its selector
+;-----------------------------------------------------------------------------
 RemoveBreakHandler:
         pusha
         mov ebx, 24h
@@ -84,9 +101,19 @@ RemoveBreakHandler:
         popa
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; FindShape                                    B30B4  95 PC, medium confidence
+; Graphics library: find the named art in a bank (bank, name), returns its
+; pointer; 243 calls
+;-----------------------------------------------------------------------------
 FindShape:
         mov ebx, str_LocateshapeSHAPENOTFOUND
         jmp short FindShapeQuiet+02h
+;-----------------------------------------------------------------------------
+; FindShapeQuiet                               B30BB  95 PC, medium confidence
+; Finds a shape by id in a shape bank (bank, &id); returns 0 when it is
+; missing
+;-----------------------------------------------------------------------------
 FindShapeQuiet:
         LD xor, ebx, ebx
         mov edx, dword [byte esp+04h]
@@ -113,6 +140,10 @@ FindShapeQuiet:
 .3:
         LD xor, eax, eax
         ret
+;-----------------------------------------------------------------------------
+; CalibrateJoystick                               B30F4  95 PC, low confidence
+; Times the four joystick axes on port 201h and keeps the button bits
+;-----------------------------------------------------------------------------
 CalibrateJoystick:
         push ebp
         push esi
@@ -161,6 +192,10 @@ CalibrateJoystick:
         mov byte [JoyPortMask], ah
         jmp short .3
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; ReadJoystickPorts                            B3168  95 PC, medium confidence
+; Reads the joystick buttons and axes by timing the port
+;-----------------------------------------------------------------------------
 ReadJoystickPorts:
         mov byte [JoyDirection], 0
         test byte [joyenablemask], 1
@@ -341,6 +376,10 @@ ReadJoystickPorts:
 .27:
         or byte [JoyDirection], 1
         jmp short .23
+;-----------------------------------------------------------------------------
+; JoyResetCentres                              B33DB  95 PC, medium confidence
+; Resets the joystick centres and enables the first joystick
+;-----------------------------------------------------------------------------
 JoyResetCentres:
         mov byte [joyenablemask], 1
         mov dword [JoyX1Threshold], 50h
@@ -348,6 +387,10 @@ JoyResetCentres:
         mov dword [JoyY1Threshold], 50h
         mov dword [JoyY1Center], 0
         ret
+;-----------------------------------------------------------------------------
+; JoyButtonMap                                 B340B  95 PC, medium confidence
+; Maps joystick button bits to pad buttons through a table
+;-----------------------------------------------------------------------------
 JoyButtonMap:
         push ebp
         LD mov, ebp, esp
@@ -358,6 +401,10 @@ JoyButtonMap:
         movzx eax, ax
         leave
         ret
+;-----------------------------------------------------------------------------
+; JoyScaledX                                      B3421  95 PC, low confidence
+; Joystick 1 X scaled to -31..+31
+;-----------------------------------------------------------------------------
 JoyScaledX:
         mov eax, dword [JoyAxisY2]
         sub eax, dword [JoyX1Threshold]
@@ -376,12 +423,24 @@ JoyScaledX:
         sub eax, byte 1Fh
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; AddExitHandler                               B3454  95 PC, medium confidence
+; Registers an exit handler
+;-----------------------------------------------------------------------------
 AddExitHandler:
         mov eax, dword [byte esp+04h]
         jmp near atexit_
+;-----------------------------------------------------------------------------
+; ExitProgram                                  B345D  95 PC, medium confidence
+; Exits with code 0
+;-----------------------------------------------------------------------------
 ExitProgram:
         LD xor, eax, eax
         call exit_
+;-----------------------------------------------------------------------------
+; ReadJoyRaw                                   B3464  95 PC, medium confidence
+; Joystick library: read the raw joystick bits (joyrawbits)
+;-----------------------------------------------------------------------------
 ReadJoyRaw:
         mov bl, byte [joyenablemask]
         LD or, bl, bl
@@ -683,6 +742,10 @@ ReadJoyRaw:
 .47:
         or byte [Joy2RawDirection], 1
         jmp short .45
+;-----------------------------------------------------------------------------
+; JoyDefaultCalib1                                B384E  95 PC, low confidence
+; Enables joystick 1 with the default calibration
+;-----------------------------------------------------------------------------
 JoyDefaultCalib1:
         or byte [joyenablemask], 1
         mov dword [Joy1XMin], 50h
@@ -690,6 +753,10 @@ JoyDefaultCalib1:
         mov dword [Joy1YMin], 50h
         mov dword [Joy1YMax], 0
         ret
+;-----------------------------------------------------------------------------
+; JoyDefaultCalib2                                B387E  95 PC, low confidence
+; Enables joystick 2 with the default calibration
+;-----------------------------------------------------------------------------
 JoyDefaultCalib2:
         or byte [joyenablemask], 2
         mov dword [Joy2XMin], 50h
@@ -697,6 +764,10 @@ JoyDefaultCalib2:
         mov dword [Joy2YMin], 50h
         mov dword [Joy2YMax], 0
         ret
+;-----------------------------------------------------------------------------
+; Joy2ScaledX                                     B38AE  95 PC, low confidence
+; Second joystick X scaled to -31..+31
+;-----------------------------------------------------------------------------
 Joy2ScaledX:
         mov eax, dword [Joy1RawX]
         sub eax, dword [Joy1XMin]
@@ -743,6 +814,10 @@ Joy2ScaledX:
         cwde
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; ClearScreen                                  B392C  95 PC, medium confidence
+; Graphics library: clear the screen to a colour
+;-----------------------------------------------------------------------------
 ClearScreen:
         mov eax, dword [byte esp+04h]
         push eax
@@ -760,40 +835,77 @@ ClearScreen:
         add sp, byte 14h
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; GetTicks                                                        B395C  95 PC
+; Returns tickcount (the 100 Hz TimerISR count)
+;-----------------------------------------------------------------------------
 GetTicks:
         mov eax, dword [tickcount]
         ret
+;-----------------------------------------------------------------------------
+; TicksSince                                                      B3962  95 PC
+; Cdecl: returns tickcount minus the stack argument
+;-----------------------------------------------------------------------------
 TicksSince:
         mov ecx, dword [byte esp+04h]
         mov eax, dword [tickcount]
         LD sub, eax, ecx
         ret
+;-----------------------------------------------------------------------------
+; TicksSinceLastCall                                              B396E  95 PC
+; Returns tickcount - ticklast and stores tickcount in ticklast
+; (frontend_desk, gamesave_io GameLoop)
+;-----------------------------------------------------------------------------
 TicksSinceLastCall:
         mov ebx, dword [ticklast]
         mov eax, dword [tickcount]
         mov dword [ticklast], eax
         LD sub, eax, ebx
         ret
+;-----------------------------------------------------------------------------
+; ResetTicks                                                      B3981  95 PC
+; Tickcount = 0; no caller in the EXE
+;-----------------------------------------------------------------------------
 ResetTicks:
         LD xor, eax, eax
         mov dword [tickcount], eax
         ret
+;-----------------------------------------------------------------------------
+; SetTickDeadline                                                 B3989  95 PC
+; Cdecl: tickdeadline = tickcount + the stack argument; paired with
+; WaitTickDeadline (CrowdFadeOut, FadeOutPalCycle, ShowLoadingScreen,
+;
+; SetScreenSize)
+;-----------------------------------------------------------------------------
 SetTickDeadline:
         mov eax, dword [byte esp+04h]
         add eax, dword [tickcount]
         mov dword [tickdeadline], eax
         ret
+;-----------------------------------------------------------------------------
+; WaitTickDeadline                                                B3999  95 PC
+; Busy-waits while tickcount - tickdeadline is negative
+;-----------------------------------------------------------------------------
 WaitTickDeadline:
         mov eax, dword [tickcount]
         sub eax, dword [tickdeadline]
         js short WaitTickDeadline
         ret
+;-----------------------------------------------------------------------------
+; TickDeadlinePassed                                              B39A7  95 PC
+; Returns 1 when tickcount >= tickdeadline (unsigned sub / sbb / inc), else 0
+;-----------------------------------------------------------------------------
 TickDeadlinePassed:
         mov ebx, dword [tickcount]
         sub ebx, dword [tickdeadline]
         LD sbb, eax, eax
         inc eax
         ret
+;-----------------------------------------------------------------------------
+; WaitTicks                                                       B39B7  95 PC
+; Cdecl: busy-waits until tickcount reaches tickcount-at-entry + the stack
+; argument; no caller in the EXE
+;-----------------------------------------------------------------------------
 WaitTicks:
         mov eax, dword [byte esp+04h]
         mov ebx, dword [tickcount]
@@ -804,6 +916,10 @@ WaitTicks:
         js short .1
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; KbdGetKey                                    B39D0  95 PC, medium confidence
+; Reads a key from the keyboard, or 0 when none is waiting
+;-----------------------------------------------------------------------------
 KbdGetKey:
         mov ah, 1
         call dword [BiosKeyFunc]
@@ -818,8 +934,17 @@ KbdGetKey:
         LD xor, ah, ah
 .2:
         ret
+;-----------------------------------------------------------------------------
+; PollKey                                      B39ED  95 PC, medium confidence
+; Jmp through the keyboard read vector KbdIdleHook (returns 0 when no key);
+; DebugMonitor's non-stepping key read
+;-----------------------------------------------------------------------------
 PollKey:
         jmp dword [KbdIdleHook]
+;-----------------------------------------------------------------------------
+; KbdPeekKey                                                      B39F3  95 PC
+; Returns the next key without removing it, or 0
+;-----------------------------------------------------------------------------
 KbdPeekKey:
         mov ah, 1
         call dword [BiosKeyFunc]
@@ -837,16 +962,30 @@ KbdPeekKey:
         ret
         mov eax, dword [KbdIdleHook]
         ret
+;-----------------------------------------------------------------------------
+; WaitKey                                      B3A18  95 PC, medium confidence
+; Loops calling the keyboard read vector KbdIdleHook until it returns
+; non-zero; DebugMonitor uses it in single-step mode
+;-----------------------------------------------------------------------------
 WaitKey:
         call dword [KbdIdleHook]
         LD or, ax, ax
         je short WaitKey
         ret
+;-----------------------------------------------------------------------------
+; KbdFlush                                     B3A24  95 PC, medium confidence
+; Reads keys until none are left; followed by the timed wait for a key
+;-----------------------------------------------------------------------------
 KbdFlush:
         call KbdGetKey
         LD or, ax, ax
         jne short KbdFlush
         ret
+;-----------------------------------------------------------------------------
+; KbdIdleWait                                     B3A2F  95 PC, low confidence
+; Calls the keyboard idle hook until it returns a key or the tick deadline
+; passes
+;-----------------------------------------------------------------------------
 KbdIdleWait:
         call dword [KbdIdleHook]
         LD or, ax, ax
@@ -895,6 +1034,11 @@ KbdIdleWait:
         pop ebx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; SaveDrawState                                B3A88  95 PC, medium confidence
+; Copies the drawing state (screen sizes, clip rectangle, target) into a
+; buffer
+;-----------------------------------------------------------------------------
 SaveDrawState:
         push ebp
         LD mov, ebp, esp
@@ -909,6 +1053,10 @@ SaveDrawState:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; RestoreDrawState                             B3AA1  95 PC, medium confidence
+; Copies a saved drawing state back
+;-----------------------------------------------------------------------------
 RestoreDrawState:
         push ebp
         LD mov, ebp, esp
@@ -924,6 +1072,10 @@ RestoreDrawState:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; bcopy                                        B3ABC  95 PC, medium confidence
+; (src, dst, n): copies n bytes, backwards when they overlap (BSD order)
+;-----------------------------------------------------------------------------
 bcopy:
         push ebp
         LD mov, ebp, esp

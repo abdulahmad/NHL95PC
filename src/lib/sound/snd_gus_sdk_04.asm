@@ -5,6 +5,10 @@ section s_B0100 progbits alloc exec nowrite align=1
 extern RemapTable, KeyedDraw, RowCopyFunc, DmaDefaultMode, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
 global GetBytesLE, GetBytesBE, PutBytesLE, PutBytesBE, CopyRowShadowKeyed, DrawArtKeyedRemap, DrawArtKeyedRemapOwnPos, RemapBytes
 global SetDmaDefaultMode
+;-----------------------------------------------------------------------------
+; GetBytesLE                                   B0100  95 PC, medium confidence
+; Reads an n-byte value stored low byte first
+;-----------------------------------------------------------------------------
 GetBytesLE:
         push esi
         push edi
@@ -28,6 +32,10 @@ GetBytesLE:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; GetBytesBE                                   B0128  95 PC, medium confidence
+; Reads an n-byte value stored high byte first
+;-----------------------------------------------------------------------------
 GetBytesBE:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -46,6 +54,10 @@ GetBytesBE:
         mov eax, ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; PutBytesLE                                   B0148  95 PC, medium confidence
+; Stores n bytes of a value low byte first
+;-----------------------------------------------------------------------------
 PutBytesLE:
         sub esp, byte 4
         mov eax, dword [byte esp+08h]
@@ -65,6 +77,10 @@ PutBytesLE:
         add esp, byte 4
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; PutBytesBE                                   B0170  95 PC, medium confidence
+; Stores n bytes of a value high byte first
+;-----------------------------------------------------------------------------
 PutBytesBE:
         sub esp, byte 4
         mov edx, dword [byte esp+08h]
@@ -91,6 +107,11 @@ PutBytesBE:
         add esp, byte 4
         ret
         db 00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; CopyRowShadowKeyed                              B01B0  95 PC, low confidence
+; Copies a row skipping colour 0FFh and darkening the screen under colour
+; 0FEh
+;-----------------------------------------------------------------------------
 CopyRowShadowKeyed:
         push esi
         mov ecx, dword [byte esp+010h]
@@ -119,6 +140,10 @@ CopyRowShadowKeyed:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DrawArtKeyedRemap                            B01E4  95 PC, medium confidence
+; Draws art through the remap; keyed path uses the shadow row copy
+;-----------------------------------------------------------------------------
 DrawArtKeyedRemap:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
@@ -141,6 +166,10 @@ DrawArtKeyedRemap:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtKeyedRemapOwnPos                      B0228  95 PC, medium confidence
+; Draws art through the remap at the position stored in its header
+;-----------------------------------------------------------------------------
 DrawArtKeyedRemapOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -168,6 +197,10 @@ DrawArtKeyedRemapOwnPos:
         call DrawArtKeyedRemap
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; RemapBytes                                   B026C  95 PC, medium confidence
+; Translates a run of bytes through a 256-entry table
+;-----------------------------------------------------------------------------
 RemapBytes:
         push ebp
         LD mov, ebp, esp
@@ -186,6 +219,10 @@ RemapBytes:
         pop edi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SetDmaDefaultMode                               B0288  95 PC, low confidence
+; Sets the default DMA mode value; unused
+;-----------------------------------------------------------------------------
 SetDmaDefaultMode:
         mov dword [DmaDefaultMode], eax
         ret

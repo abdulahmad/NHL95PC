@@ -23,6 +23,7 @@ global FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
 ; ExportTeamToFloppy                           3BB87  95 PC, medium confidence
 ; Writes the league DBs, PINFO.DB and PLAYER.ID for one team to a floppy
 ; (wrong disk / "Are you sure you want to use a new floppy disk?"); "Error
+;
 ; while exporting player! Player not exported!"
 ;-----------------------------------------------------------------------------
 ExportTeamToFloppy:
@@ -588,8 +589,9 @@ CopyLeagueFiles:
 ;-----------------------------------------------------------------------------
 ; ImportMasterLeague                                              3C3AF  95 PC
 ; "Importing Master Databases.": mkdir + CopyLeagueFiles from floppy, master
-; password; "Can not import master league! The league already exists!",
-; "Error while importing league!"
+; password; "Can not import master league!
+;
+; The league already exists!", "Error while importing league!"
 ;-----------------------------------------------------------------------------
 ; C: src/pc/floppy_export/ImportMasterLeague.c
 %ifdef CBUILD
@@ -850,10 +852,11 @@ ImportMasterLeague_ret:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ImportPlayerTeam                             3C6E2  95 PC, medium confidence
-; Imports one player's team from floppy: "The league X already exists for",
-; "X has not been exported for the league", "X is in a save game in the
-; league ... can not be imported until the game is finished!", stale-copy
-; check
+; Imports one player's team from floppy: "The league X already exists for", "X
+; has not been exported for the league",
+;
+; "X is in a save game in the league ... can not be imported until the game is
+; finished!", stale-copy check
 ;-----------------------------------------------------------------------------
 ; C: src/pc/floppy_export/ImportMasterLeague.c (ImportPlayerTeam)
 %ifdef CBUILD
@@ -1432,9 +1435,10 @@ ImportPlayerTeam:
 ;-----------------------------------------------------------------------------
 ; ImportDbs                                                       3CF5B  95 PC
 ; MenuImportDbs: "Put disk with league to import in any drive.",
-; SelectFloppyDrive, "Import master copy of league or import for player on
-; floppy disk?" (Master / Player) -> ImportMasterLeague / ImportPlayerTeam,
-; then reloads the league
+; SelectFloppyDrive, "Import master copy of league or import
+;
+; for player on floppy disk?" (Master / Player) -> ImportMasterLeague /
+; ImportPlayerTeam, then reloads the league
 ;-----------------------------------------------------------------------------
 ; C: src/pc/floppy_export/ImportDbs.c
 %ifdef CBUILD
@@ -1569,6 +1573,7 @@ ImportDbs:
 ; ExportDbs                                                       3D108  95 PC
 ; MenuExportDbs: "Select a team to export." (LeagueTeamSelect), "X has not
 ; been imported for Y / Do you want to force an export?", master password,
+;
 ; SelectFloppyDrive, ExportTeamToFloppy, bumps the entry export count
 ;-----------------------------------------------------------------------------
 ; C: src/pc/floppy_export/ImportMasterLeague.c (ExportDbs)
@@ -1828,9 +1833,11 @@ ExportDbs:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SelectFloppyDrive                                               3D46D  95 PC
-; Probes A: and B: (_dos_getdiskfree_), prefers a disk whose PLAYER.ID
-; matches league/team, else "Please put a floppy disk in any drive." / "Use
-; floppy drive A or B?"; sets str_floppydrv
+; Probes A: and B: (_dos_getdiskfree_), prefers a disk whose PLAYER.ID matches
+; league/team,
+;
+; else "Please put a floppy disk in any drive." / "Use floppy drive A or B?";
+; sets str_floppydrv
 ;-----------------------------------------------------------------------------
 ; C: src/pc/floppy_export/SelectFloppyDrive.c
 %ifdef CBUILD
@@ -2203,8 +2210,9 @@ WaitLeagueFloppy:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ReadLeagueInfo                               3D8DD  95 PC, medium confidence
-; Opens <league>\PINFO.DB and reads the fields WriteLeagueInfo writes into
-; the caller's pointers (humancount, leaguemaster, leaguesaved, leagueflags,
+; Opens <league>\PINFO.DB and reads the fields WriteLeagueInfo writes into the
+; caller's pointers (humancount, leaguemaster, leaguesaved, leagueflags,
+;
 ; leagueteams, masterpw, savedname)
 ;-----------------------------------------------------------------------------
 ; C: src/pc/floppy_export/ReadLeagueInfo.c

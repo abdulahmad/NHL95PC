@@ -24,16 +24,17 @@ extern SetScreenTarget, TextRestoreState, TextSaveState, TextSetColors, TextSetF
 global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
 global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
 global CmpRosterSkaters, CmpRosterGoalies, MenuRegSeasonStats, MenuRegSeasonStats_common, MenuPlayoffStats, ShowRosterStats
-str_RosterIncomplete:
+str_RosterIncomplete:                           ; code string "Your Roster is incomplete."; used by
+                                                ; CheckRosterComplete
         db 059h,06Fh,075h,072h,020h,052h,06Fh,073h,074h,065h,072h,020h,069h,073h,020h,069h
         db 06Eh,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h,02Eh,00h
-str_Scratch:
+str_Scratch:                                    ; string "Scratch"; used by CheckRosterComplete
         db 053h,063h,072h,061h,074h,063h,068h,00h
-str_Dress:
+str_Dress:                                      ; string "Dress"; used by CheckRosterComplete
         db 044h,072h,065h,073h,073h,00h
-str_Player:
+str_Player:                                     ; string "Player"; used by CheckRosterComplete
         db 050h,06Ch,061h,079h,065h,072h,00h
-str_GoalieW:
+str_GoalieW:                                    ; string "Goalie"; used by CheckRosterComplete
         db 047h,06Fh,061h,06Ch,069h,065h,00h
 ;-----------------------------------------------------------------------------
 ; DbLineEditor                                                    737E1  95 PC
@@ -2356,6 +2357,7 @@ DrawLineJerseys:
 ; CheckRosterComplete                                             751FC  95 PC
 ; Dressed (status 3) players must be 18 skaters and 2 goalies, else "Your
 ; Roster is incomplete." with the counts ("%s %2d %s%s", Scratch / Dress,
+;
 ; Player / Goalie)
 ;-----------------------------------------------------------------------------
 ; C: src/front/lines/CheckRosterComplete.c
@@ -2590,8 +2592,9 @@ CheckRosterComplete:
 ;-----------------------------------------------------------------------------
 ; LineEdDone                                                      75456  95 PC
 ; Line editor "Done": CheckRosterComplete, maps the 40 line slots and the 8
-; extra (scratched) slots back to roster slots, copies the team record lines
-; +0BCh to +0ECh
+; extra (scratched) slots back to roster slots,
+;
+; copies the team record lines +0BCh to +0ECh
 ;-----------------------------------------------------------------------------
 ; C: src/front/lines/MenuShowPlayerStats.c (LineEdDone)
 %ifdef CBUILD

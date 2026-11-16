@@ -21,11 +21,12 @@ extern threat, VisTeam, WaitKey, SortPending, xc1, yc1
 global DebugMonitor, DebugMonitor_pop, DumpStatsLog
 ;-----------------------------------------------------------------------------
 ; DebugMonitor                                 688A4  95 PC, medium confidence
-; Unreferenced PC debug monitor: when debugstep is set prints a state line
-; per frame through DebugPrintf (clin=, ps<>, HVpos<>, ref<>, pb[],
-; puckc/gmclock) and one line per SortCords object (17 entries, skipping
-; 0Ch/0Dh/0Fh); flags 'debError' on a bad SPA/SCnum; then reads a key: '0'
-; bail, 'm' MemViewerStart, 'd' DumpStatsLog("stats.log"), '\' toggles debugstep
+; Unreferenced PC debug monitor: when debugstep is set prints a state line per
+; frame through DebugPrintf (clin=, ps<>, HVpos<>, ref<>, pb[], puckc/gmclock)
+;
+; and one line per SortCords object (17 entries, skipping 0Ch/0Dh/0Fh); flags
+; 'debError' on a bad SPA/SCnum; then reads a key: '0' bail, 'm'
+; MemViewerStart, 'd' DumpStatsLog("stats.log"), '\' toggles debugstep
 ;-----------------------------------------------------------------------------
 ; C: src/pc/debug_dump/DebugMonitor.c
 %ifdef CBUILD
@@ -543,8 +544,9 @@ DebugMonitor_pop:
 ;-----------------------------------------------------------------------------
 ; DumpStatsLog                                                    68E7B  95 PC
 ; Fopen(name,"a+t") ('error dump stats' on failure), then fprintf of pool/gm
-; header, both team structs (E8h bytes), SortCords (11h x 48h bytes and a
-; field line), team stat lines (shts score ppg pp pen penmin atop pass
+; header, both team structs (E8h bytes), SortCords (11h x 48h bytes
+;
+; and a field line), team stat lines (shts score ppg pp pen penmin atop pass
 ; passcomp), skater and goalie stat tables; called by DebugMonitor with
 ; "stats.log"
 ;-----------------------------------------------------------------------------

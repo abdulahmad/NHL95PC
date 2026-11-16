@@ -1,5 +1,5 @@
 ; Penalties. The time left in the period, calling a penalty, the box, who is released, the power play,
-; and the penalty shot (95G engine/penalty95).
+; and the penalty shot.
 bits 32
 %include "hockey.inc"
 section s_62CD7 progbits alloc exec nowrite align=1
@@ -37,7 +37,7 @@ global updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPe
 global QuickShotChk, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
 ;-----------------------------------------------------------------------------
 ; GetPeriodTimeRemaining                              62CD7  94G collide94.asm
-; The 94G GetPeriodTimeRemaining: (gsp << 14 | PerTimeTotal) - gameclock, for
+; GetPeriodTimeRemaining: (gsp << 14 | PerTimeTotal) - gameclock, for
 ; the scoring and penalty summaries
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/GetPeriodTimeRemaining.c
@@ -55,11 +55,14 @@ GetPeriodTimeRemaining:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; AddPenalty                       62CF9  94G penalty94.asm, medium confidence
-; Call penalty pen on player p (AddPenalty2) unless the clock is stopped, p
-; is SCnum 10h or a penalty shot is on. Penalty 6 always goes through; 8
-; (offside) only with the offsides option, 1Dh (two-line pass) only with that
-; option; the others need the penalties option (gameopts bit 0), fewer than 8
-; players in p's team's box (PBnum) and CanRemovePlayer.
+; Call penalty pen on player p (AddPenalty2) unless the clock is stopped, p is
+; SCnum 10h or a penalty shot is on.
+;
+; Penalty 6 always goes through; 8 (offside) only with the offsides option,
+; 1Dh (two-line pass) only with that option; the others need the penalties
+; option (gameopts bit 0), fewer than 8 players in p's team's box (PBnum)
+;
+; and CanRemovePlayer.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/AddPenalty.c
 %ifdef CBUILD
@@ -112,11 +115,13 @@ AddPenalty:
 ; AddPenalty2                      62D80  94G penalty94.asm, medium confidence
 ; Call penalty pen on player p (not in a replay, sflags bit 7, or with
 ; SortPending): outside a penalty shot raise the banner (penbannertab[pen],
+;
 ; timer 50h unless none 6); major penalties (pen >= 7) raise the crowd (+400
-; up to 800; flag 40h side: CwdExciteLvl +20 and sound 7Dh, else A0h). Then
-; the penalty goes into the first free PenBuf slot (pen, SCnum); a penalty
-; with time (penmintab) marks the player (pflags2 bit 4) or, when he already
-; has one, frees the slot again.
+; up to 800; flag 40h side: CwdExciteLvl +20 and sound 7Dh, else A0h).
+;
+; Then the penalty goes into the first free PenBuf slot (pen, SCnum); a
+; penalty with time (penmintab) marks the player (pflags2 bit 4) or, when he
+; already has one, frees the slot again.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/AddPenalty2.c
 %ifdef CBUILD
@@ -214,8 +219,9 @@ AddPenalty2:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SetPA                          62EA2  93G penalty93_1.asm, medium confidence
-; 93G SetPA (start ref animation): RefPen = eax, RefStep = 0 (93G clr
-; RefStep); PC: no animation for 5 and 1Ch, else the referee sort object
+; SetPA (start ref animation): RefPen = eax, RefStep = 0;
+; PC: no animation for 5 and 1Ch, else the referee sort object
+;
 ; (SortCords+800h) gets assignment 20h (23h for penalty 7) instead of the ref
 ; window
 ;-----------------------------------------------------------------------------
@@ -250,9 +256,10 @@ SetPA:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; InProgress                                        62EE9  93G penalty93_1.asm
-; 93G InProgress (ref in progress: update graphics, stats and penalty
-; information), reached from chkprogress when Pencntdwn < 0; sprintf
-; messages, assreplace, SetPA
+; InProgress (ref in progress: update graphics, stats and penalty
+; information), reached from chkprogress when Pencntdwn < 0; sprintf messages,
+;
+; assreplace, SetPA
 ;-----------------------------------------------------------------------------
 InProgress:
         push dword 3Ch
@@ -753,15 +760,20 @@ chkprogress_x:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Stop4Pen                         63543  94G penalty94.asm, medium confidence
-; Stop play for penalty entry n of PenBuf (penalty, player). Unless already
-; stopped (gmode bit 0): pick the faceoff spot fox foy - centre for 7, the
-; last touch (ltx lty) for 3 1Dh, else the puck; for 8 (offside-like) the
-; nearer end dot (y +-4Eh) when inside the blue lines, for 6 the offender's
-; end (y -258h 258h); the penalty shot spot when penshotstart. Clamp x to
-; +-60h and pull deep spots to the end dots (+-60h, y +-B8h); then for every
-; queued penalty move the dot out of the offender's zone (y -3Dh / 3Dh, x
-; +-100). Then Pencntdwn 0, gmode bit 2, the whistle (sfx A4h) and the ref
-; (SetPA 5).
+; Stop play for penalty entry n of PenBuf (penalty, player).
+;
+; Unless already stopped (gmode bit 0): pick the faceoff spot fox foy - centre
+; for 7, the last touch (ltx lty) for 3 1Dh, else the puck; for 8
+; (offside-like) the nearer end dot (y +-4Eh) when inside the blue lines,
+;
+; for 6 the offender's end (y -258h 258h); the penalty shot spot when
+; penshotstart.
+;
+; Clamp x to +-60h and pull deep spots to the end dots (+-60h, y +-B8h); then
+; for every queued penalty move the dot out of the offender's zone (y -3Dh /
+; 3Dh, x +-100).
+;
+; Then Pencntdwn 0, gmode bit 2, the whistle (sfx A4h) and the ref (SetPA 5).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/Stop4Pen.c
 %ifdef CBUILD
@@ -935,10 +947,11 @@ Stop4Pen:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; checkfornewpen                                    637B5  93G penalty93_1.asm
-; 93G checkfornewpen: unless sfhor (sflags bit 7): for each PenBuf entry,
-; Stop4Pen at once for penalties without minutes (penmintab) or when the
-; guilty team has the puck, else delayed penalty (gmode bit 3 gmpendel, SetPA
-; 1Ch; 93G $2C); marks the entry called (bit 7) and raises Pencntdwn to
+; checkfornewpen: unless sfhor (sflags bit 7): for each PenBuf entry, Stop4Pen
+; at once for penalties without minutes (penmintab) or
+;
+; when the guilty team has the puck, else delayed penalty (gmode bit 3
+; gmpendel, SetPA 1Ch); marks the entry called (bit 7) and raises Pencntdwn to
 ; pendelaytab*32
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/checkfornewpen.c
@@ -1051,9 +1064,10 @@ checkfornewpen:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; releasepl                                         6392A  93G penalty93_1.asm
-; 93G releasepl: first sort object of the team (tmsort) not on the ice, tmap
-; += 1, tmflags bit 0 on both teams, position from priolist (priolist_m1) by
-; tmgoalie (team+38h) sign, Setplass, setplayer, pflags2 bit 2 (sort object
+; releasepl: first sort object of the team (tmsort) not on the ice, tmap += 1,
+; tmflags bit 0 on both teams, position from priolist (priolist_m1)
+;
+; by tmgoalie (team+38h) sign, Setplass, setplayer, pflags2 bit 2 (sort object
 ; +45h); PC also sets bit 6 of team byte D4h on both teams
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/releasepl.c
@@ -1096,9 +1110,8 @@ releasepl:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; chkatop                                           639A4  93G penalty93_1.asm
-; 93G chkatop (attack time of possession): puck y beyond the blue line
-; (+-4Eh; 93G $58) picks the attacking team (gmode bit 1 flips), tmATOP
-; (team+0Eh; 93G $A) += 1; skipped in highlight mode
+; chkatop (attack time of possession): puck y beyond the blue line picks the
+; attacking team (gmode bit 1 flips), tmATOP += 1; skipped in highlight mode
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/chkatop.c
 %ifdef CBUILD
@@ -1140,7 +1153,7 @@ chkatop:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updatepentime_ut_chk                                639F9  94G penalty94.asm
-; The 93G ProcessPenaltyList .chk part, under the 94G name of its parent
+; The check part of updatepentime_ut
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/updatepentime_ut_chk.c
 %ifdef CBUILD
@@ -1173,7 +1186,7 @@ updatepentime_ut_chk:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updatepentime_ut                                    63A37  94G penalty94.asm
-; 94G renamed the 93G ProcessPenaltyList to updatepentime_ut (94G name_map)
+; Counts down the penalty times and releases players whose time is up
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/InProgress.c (updatepentime_ut)
 %ifdef CBUILD
@@ -1276,9 +1289,8 @@ updatepentime_ut:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updatePPTeamTime                                     63B57  94G period94.asm
-; Same body as 94G period94 updatePPTeamTime: when gmode2 bit 5 (power play)
-; is set adds 1 to the power-play team's time word (+08h; home unless bit 6);
-; called once a second from updatepentime
+; When gmode2 bit 5 (power play) is set adds 1 to the power-play team's time
+; word (+08h; home unless bit 6); called once a second from updatepentime
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/updatePPTeamTime.c
 %ifdef CBUILD
@@ -1303,10 +1315,11 @@ updatePPTeamTime:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updatepentime                                     63B85  93G penalty93_1.asm
-; 93G updatepentime: clears sflags3 bit 6 (sflags3), returns while the clock
-; is stopped (gmode bit 0) or a penalty shot is live; Penaltytimer -= 1, at <
-; 0 += 18h, sets the bit, chkatop, (PC) ChkPowerPlayTime, ProcessPenaltyList
-; for both teams
+; updatepentime: clears sflags3 bit 6 (sflags3), returns while the clock is
+; stopped (gmode bit 0) or a penalty shot is live; Penaltytimer -= 1,
+;
+; at < 0 += 18h, sets the bit, chkatop, (PC) ChkPowerPlayTime,
+; ProcessPenaltyList for both teams
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/updatepentime.c
 %ifdef CBUILD
@@ -1344,9 +1357,8 @@ updatepentime:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; PenaltyManager                                    63BF8  93G penalty93_1.asm
-; 93G PenaltyManager (called periodically): updatepentime, checkfornewpen,
-; then falls into chkprogress (93G: bsr updatepentime / checkfornewpen /
-; chkprogress, bra UpdatePA); called from the engine core frame
+; PenaltyManager (called periodically): updatepentime, checkfornewpen,
+; then falls into chkprogress; called from the engine core frame
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/InProgress.c (PenaltyManager)
 %ifdef CBUILD
@@ -1359,10 +1371,11 @@ PenaltyManager:
         call checkfornewpen
 ;-----------------------------------------------------------------------------
 ; chkprogress                                       63C0C  93G penalty93_1.asm
-; 93G chkprogress (fall-through from PenaltyManager): with gmpen (gmode bit
-; 2): Pencntdwn >= 0 -> chkprogress_go, else InProgress; PC first (clock
-; stopped) calls UpdateTextOverlay and counts Pencntdwn2 down to set gmode2
-; bit 2
+; chkprogress (fall-through from PenaltyManager): with gmpen (gmode bit 2):
+; Pencntdwn >= 0 -> chkprogress_go, else InProgress; PC first
+;
+; (clock stopped) calls UpdateTextOverlay and counts Pencntdwn2 down to set
+; gmode2 bit 2
 ;-----------------------------------------------------------------------------
 chkprogress:
         push dword 14h
@@ -1475,7 +1488,7 @@ UpdatePowerPlayFlags:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ClearPenaltyBuffer                                63D3C  93G penalty93_1.asm
-; 93G ClearPenaltyBuffer: clears the 32 byte pairs of PenBuf (E9A16); called
+; ClearPenaltyBuffer: clears the 32 byte pairs of PenBuf (E9A16); called
 ; from the clock code, PenGoalStuff role code and game_frame
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/ClearPenaltyBuffer.c
@@ -1504,10 +1517,10 @@ ClearPenaltyBuffer:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; PenGoalStuff                     63D69  94G penalty94.asm, medium confidence
-; Same role as 94G penalty94 PenGoalStuff (after a goal, scored-on team):
-; drops finished minor penalties from PenBuf (penmintab 2, or 5 / not -1),
-; clears the box flag of released players and returns a player to the ice
-; when the team is short
+; After a goal, for the scored-on team: drops finished minor penalties from
+; PenBuf (penmintab 2, or 5 / not -1), clears the box flag of released players
+;
+; and returns a player to the ice when the team is short
 ;-----------------------------------------------------------------------------
 PenGoalStuff:
         push dword 20h
@@ -1933,6 +1946,7 @@ ShotLaneOpen:
 ; QuickShotChk                                    6427F  95 PC, low confidence
 ; Human-controlled carrier with gameopts bit 0, shotongoal set and
 ; moving/facing toward the net within E4h of the goal line with a goalie in:
+;
 ; re-checks ShotLaneOpen and returns 1
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/QuickShotChk.c
@@ -2012,8 +2026,9 @@ QuickShotChk:
 ;-----------------------------------------------------------------------------
 ; CountShotOnGoal                              64338  95 PC, medium confidence
 ; ShotLaneOpen decides whether the shot is on goal (shotontarget ->
-; shotongoal); if so crowdlevel +64h and, outside penshotmode, the shooting
-; team's +1Ch shots count is incremented
+; shotongoal); if so crowdlevel +64h and, outside penshotmode,
+;
+; the shooting team's +1Ch shots count is incremented
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/CountShotOnGoal.c
 %ifdef CBUILD

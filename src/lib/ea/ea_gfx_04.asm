@@ -4,6 +4,11 @@ bits 32
 section s_90C0F progbits alloc exec nowrite align=1
 extern _Extender
 global CopyDtaIn
+;-----------------------------------------------------------------------------
+; CopyDtaIn                                    90C0F  95 PC, medium confidence
+; Copies the caller's find record into the DOS transfer area under the
+; DOS/4GW extender
+;-----------------------------------------------------------------------------
 CopyDtaIn:
         cmp byte [_Extender], 9
         jne short .1

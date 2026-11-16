@@ -3,5 +3,5 @@ bits 32
 %include "hockey.inc"
 section s_F21FC nobits alloc noexec write align=1
 global MidiOutQueue
-MidiOutQueue:
+MidiOutQueue:                                   ; MIDI output ring buffer used by every MIDI driver
         resb 256

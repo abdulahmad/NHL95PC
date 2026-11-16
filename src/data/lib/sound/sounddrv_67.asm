@@ -9,7 +9,8 @@ global OplRegDelay, OplDataDelay, NotePitchTable
 global OplDefaultVoice, OplRegShadow
 global PcSpkVoiceTable
 global OplPort, OplFNumTable, OplVolumeTable, OplVelocityTable
-PcSpkVoiceTable:
+PcSpkVoiceTable:                                ; PC speaker voice records indexed by voice; used by
+                                                ; PcSpkVoiceNote, PcSpkVoiceUpdate
         db 00h,00h,00h,00h,0F1h,0FDh,0B0h,0EFh,03Dh,0E2h,08Ah,0D5h,08Eh,0C9h,03Eh,0BEh
         db 090h,0B3h,07Ch,0A9h,0F9h,09Fh,0FFh,096h,085h,08Eh,085h,086h,0F9h,07Eh,0D8h,077h
         db 01Eh,071h,0C5h,06Ah,0C7h,064h,01Fh,05Fh,0C8h,059h,0BEh,054h,0FDh,04Fh,07Fh,04Bh
@@ -33,9 +34,11 @@ PcSpkVoiceTable:
         db 034h,029h,0A7h,02Bh,040h,02Eh,00h,031h,0EAh,033h,00h,037h,045h,03Ah,0BCh,03Dh
         db 068h,041h,04Ch,045h,06Bh,049h,0C8h,04Dh,068h,052h,04Fh,057h,080h,05Ch,00h,062h
         db 0D4h,067h,00h,06Eh,08Ah,074h,079h,07Bh
-PcSpkState:
+PcSpkState:                                     ; PC speaker driver state bytes; used by PcSpkHwInit,
+                                                ; PcSpkOutput, PcSpkSilence ...
         db 00h,00h,00h,00h
-PcSpkVoiceLevel:
+PcSpkVoiceLevel:                                ; Level per PC speaker voice; used by PcSpkOutput,
+                                                ; PcSpkVoiceNote, PcSpkVoiceOff
         db 00h
         db 00h
         db 00h
@@ -51,38 +54,41 @@ PcSpkVoiceLevel:
         db 00h
         db 00h
         db 00h,00h,00h
-PcSpkOutLevel:
+PcSpkOutLevel:                                  ; Output level per PC speaker voice; used by PcSpkOutput
         db 00h
         db 00h
         db 00h
         db 00h
         db 00h,00h,00h,09Ch,02Eh,00h,00h,00h,00h,00h
         db 00h,00h
-OplPort:
+OplPort:                                        ; OPL base port (388h); used by OplCalibrate, OplFlush,
+                                                ; OplHwInit ...
         db 088h,03h,00h,00h
-OplRegDelay:
+OplRegDelay:                                    ; Delay count after writing an OPL register number; used by
+                                                ; OplOpen, OplWrite
         db 020h,00h,00h,00h
-OplDataDelay:
+OplDataDelay:                                   ; Delay count after writing an OPL data byte; used by OplOpen,
+                                                ; OplWrite
         db 08Ch,00h,00h,00h
-OplOperatorOffsets:
+OplOperatorOffsets:                             ; OPL operator register offset per voice; used by OplLoadVoice
         db 00h,01h,02h,08h,09h,0Ah,010h,011h,012h,00h,00h,00h
-OplDefaultVoice:
+OplDefaultVoice:                                ; Default OPL voice register values; used by OplLoadVoice
         db 023h,043h,063h,083h,0E3h,020h,040h,060h,080h,0E0h,0C0h,0A0h,0B0h,00h,00h,00h
         db 015h,00h,017h,00h,018h,00h,019h,00h,01Bh,00h,01Dh,00h,01Eh,00h,020h,00h
         db 022h,00h,024h,00h,026h,00h,028h,00h,02Bh,00h,02Dh,00h,030h,00h,033h,00h
         db 036h,00h,039h,00h,03Dh,00h,040h,00h,044h,00h,048h,00h,04Ch,00h,051h,00h
-OplFNumTable:
+OplFNumTable:                                   ; OPL F-number per semitone; used by OplNoteFNum
         db 056h,00h,05Bh,00h,060h,00h,066h,00h,06Ch,00h,072h,00h,079h,00h,080h,00h
         db 088h,00h,090h,00h,099h,00h,0A2h,00h,0ABh,00h,0B6h,00h,0C0h,00h,0CCh,00h
         db 0D8h,00h,0E5h,00h,0F2h,00h,01h,01h,010h,01h,020h,01h,032h,01h,044h,01h
         db 057h,01h,06Bh,01h,081h,01h,098h,01h,0B0h,01h,0CAh,01h,0E5h,01h,02h,02h
         db 020h,02h,041h,02h,063h,02h,087h,02h
-OplVolumeTable:
+OplVolumeTable:                                 ; Volume to OPL attenuation; used by OplVolumeLevel
         db 028h,028h,015h,029h,0FEh,029h,0E4h,02Ah,0C7h,02Bh,0A7h,02Ch,084h,02Dh,05Eh,02Eh
         db 035h,02Fh,0Ah,030h,0DBh,030h,0AAh,031h,077h,032h,040h,033h,08h,034h,0CDh,034h
         db 090h,035h,050h,036h,0Eh,037h,0CAh,037h,084h,038h,03Ch,039h,0F1h,039h,0A5h,03Ah
         db 057h,03Bh,07h,03Ch,0B5h,03Ch,061h,03Dh,0Bh,03Eh,0B4h,03Eh,05Bh,03Fh,00h,040h
-OplVelocityTable:
+OplVelocityTable:                               ; Velocity to OPL attenuation; used by OplVelocityLevel
         db 00h,00h,0D0h,04h,09Fh,09h,06Fh,0Eh,03Eh,013h,0Eh,018h,0DDh,01Ch,0ADh,021h
         db 07Ch,026h,04Ch,027h,017h,028h,0DEh,028h,0A1h,029h,060h,02Ah,01Bh,02Bh,0D2h,02Bh
         db 086h,02Ch,037h,02Dh,0E4h,02Dh,08Eh,02Eh,035h,02Fh,0D9h,02Fh,07Bh,030h,019h,031h
@@ -91,7 +97,8 @@ OplVelocityTable:
         db 04Ah,03Ah,0C4h,03Ah,03Ch,03Bh,0B2h,03Bh,027h,03Ch,09Bh,03Ch,0Dh,03Dh,07Eh,03Dh
         db 0EDh,03Dh,05Ch,03Eh,0C8h,03Eh,034h,03Fh,09Fh,03Fh,00h,040h,00h,040h,00h,040h
         db 00h,040h,00h,040h,00h,040h,00h,040h,00h,040h,00h,040h,00h,040h,00h,040h
-OplRegShadow:
+OplRegShadow:                                   ; Shadow copy of the OPL registers and the pending-write
+                                                ; buffers; used by OplFlush, OplGetReg, OplReset ...
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -126,7 +133,8 @@ OplRegShadow:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-NotePitchTable:
+NotePitchTable:                                 ; Pitch step per note for the sample streams; used by
+                                                ; GusStreamApplyBend, GusStreamPlayNote, SbStreamApplyBend ...
         db 00h,08h,00h,00h,079h,08h,00h,00h,0FAh,08h,00h,00h,083h,09h,00h,00h
         db 014h,0Ah,00h,00h,0ADh,0Ah,00h,00h,050h,0Bh,00h,00h,0FCh,0Bh,00h,00h
         db 0B3h,0Ch,00h,00h,074h,0Dh,00h,00h,041h,0Eh,00h,00h,01Ah,0Fh,00h,00h
@@ -157,7 +165,8 @@ NotePitchTable:
         db 06h,00h,010h,00h,096h,0F3h,010h,00h,0A1h,0F5h,011h,00h,05h,07h,013h,00h
         db 0AAh,028h,014h,00h,089h,05Bh,015h,00h,0A7h,0A0h,016h,00h,01Ah,0F9h,017h,00h
         db 08h,066h,019h,00h,0AAh,0E8h,01Ah,00h,049h,082h,01Ch,00h,043h,034h,01Eh,00h
-SbStreamChannels:
+SbStreamChannels:                               ; Four Sound Blaster stream channel records of 144h bytes;
+                                                ; used by SbMixChannels
         db 00h
         db 00h,00h
         db 00h

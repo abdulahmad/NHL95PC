@@ -4,6 +4,10 @@ bits 32
 section s_AFAE0 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, DrawDestBuffer, ScaledRowBuffer, SetBlitSource, CopyRowFast
 global RasterMappedTriangle
+;-----------------------------------------------------------------------------
+; RasterMappedTriangle                            AFAE0  95 PC, low confidence
+; Texture maps a triangle of art onto the screen row by row
+;-----------------------------------------------------------------------------
 RasterMappedTriangle:
         push esi
         push edi

@@ -20,6 +20,11 @@ global SongReleased, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic, DisableMidi
 global PlayDigiBlockLoop, PlayDigiPtr, PlayDigiPtrLoop, SndQuery, StopDigiChannel, SetDigiChannelVolume, QueryDigiChannel, MidiProgramChange
 global MidiSetVolume, MidiPitchBend, MidiNoteOn, MidiNoteOff, SetSoundByteOrder, FindSoundChunk, ReplaceFileExt, FreeMemPtr
 global ReleaseMemPtr, SwapBytes16, SwapBytes32, SetPalette
+;-----------------------------------------------------------------------------
+; SndInit                                      8EB5B  95 PC, medium confidence
+; Sound library start: shuts down first, adds the sound timer callback and
+; the exit handler once
+;-----------------------------------------------------------------------------
 SndInit:
         push ebx
         push ecx
@@ -40,6 +45,11 @@ SndInit:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SndShutdown                                  8EB93  95 PC, medium confidence
+; Removes the sound timer, closes every driver handle, frees the songs and
+; the music bank, clears the tables
+;-----------------------------------------------------------------------------
 SndShutdown:
         push ebx
         push ecx
@@ -73,6 +83,11 @@ SndShutdown:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SndClearTables                               8EBE2  95 PC, medium confidence
+; Clears the track, voice, timbre bank, MIDI channel, song and digital
+; channel tables
+;-----------------------------------------------------------------------------
 SndClearTables:
         push ebx
         push ecx
@@ -159,6 +174,11 @@ SndClearTables:
         mov dword [sndhandlecount], esi
         mov dword [SndTimerHandle], 0FFFFFFFFh
         jmp near LoadSample+0BDh
+;-----------------------------------------------------------------------------
+; LoadMusicBank                                   8ECC0  95 PC, low confidence
+; Loads a .SCN music bank: its header, the PAT patch file and the TIM timbre
+; files
+;-----------------------------------------------------------------------------
 LoadMusicBank:
         push ebx
         push ecx
@@ -256,6 +276,10 @@ LoadMusicBank:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FreeMusicBank                                   8EDD2  95 PC, low confidence
+; Frees the timbre files and the patch file of the loaded music bank
+;-----------------------------------------------------------------------------
 FreeMusicBank:
         push ecx
         push edx
@@ -288,6 +312,10 @@ FreeMusicBank:
         pop edx
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; LoadPatchFile                                   8EE2F  95 PC, low confidence
+; Loads the patch file of a music bank
+;-----------------------------------------------------------------------------
 LoadPatchFile:
         push edx
         mov edx, eax
@@ -296,12 +324,21 @@ LoadPatchFile:
         mov dword [PatchFile], eax
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; FreeSoundBlock                                  8EE43  95 PC, low confidence
+; Frees the memory block whose handle is passed by value
+;-----------------------------------------------------------------------------
 FreeSoundBlock:
         push eax
         mov eax, esp
         call FreeMemPtr
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; LoadTimbreFile                                  8EE4F  95 PC, low confidence
+; Loads a timbre file and its digital sample data, and links each timbre to
+; its sample
+;-----------------------------------------------------------------------------
 LoadTimbreFile:
         push ebx
         push ecx
@@ -392,6 +429,10 @@ LoadTimbreFile:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AddTimbreBank                                   8EF50  95 PC, low confidence
+; Puts a timbre file in the first free slot of the 10-entry bank list
+;-----------------------------------------------------------------------------
 AddTimbreBank:
         push ebx
         push edx
@@ -413,6 +454,10 @@ AddTimbreBank:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FreeTimbreFile                                  8EF76  95 PC, low confidence
+; Removes a timbre file from the bank list and frees it and its samples
+;-----------------------------------------------------------------------------
 FreeTimbreFile:
         push eax
         push edx
@@ -423,6 +468,10 @@ FreeTimbreFile:
         call ReleaseMemPtr
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; RemoveTimbreBank                                8EF91  95 PC, low confidence
+; Clears the bank list slot that holds a timbre file
+;-----------------------------------------------------------------------------
 RemoveTimbreBank:
         push ebx
         push edx
@@ -448,6 +497,10 @@ RemoveTimbreBank:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; LinkPatchTimbres                                8EFBB  95 PC, low confidence
+; Finds the timbre of each of the 256 patches in the loaded banks
+;-----------------------------------------------------------------------------
 LinkPatchTimbres:
         push ebx
         push ecx
@@ -548,6 +601,10 @@ LinkPatchTimbres:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GetPatchEntry                                   8F0D7  95 PC, low confidence
+; (patch): the patch file entry of a patch number, 0 when none
+;-----------------------------------------------------------------------------
 GetPatchEntry:
         push ds
         call __GETDS
@@ -575,6 +632,10 @@ GetPatchEntry:
         add eax, ebx
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GetPatchTimbre                                  8F114  95 PC, low confidence
+; (patch): the timbre a patch uses
+;-----------------------------------------------------------------------------
 GetPatchTimbre:
         push ds
         call __GETDS
@@ -592,6 +653,10 @@ GetPatchTimbre:
         mov eax, dword [byte eax+010h]
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; LoadSample                                   8F13B  95 PC, medium confidence
+; Sound library: load the sample file at path, returns its handle
+;-----------------------------------------------------------------------------
 LoadSample:
         push ebx
         push ecx
@@ -663,6 +728,10 @@ LoadSample:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FreeSample                                   8F1FE  95 PC, medium confidence
+; Sound library: free a sample loaded by LoadSample
+;-----------------------------------------------------------------------------
 FreeSample:
         push ebx
         push edx
@@ -691,6 +760,10 @@ FreeSample:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FindSongSlot                                    8F247  95 PC, low confidence
+; The song table slot (0-12) that holds a song id, -1 when none
+;-----------------------------------------------------------------------------
 FindSongSlot:
         push ecx
         push edx
@@ -714,12 +787,21 @@ FindSongSlot:
         pop edx
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; PlaySong                                        8F270  95 PC, low confidence
+; Starts a loaded song once
+;-----------------------------------------------------------------------------
 PlaySong:
         push ebx
         xor ebx, ebx
         call StartSong
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; StartSongTracks                                 8F27A  95 PC, low confidence
+; Body of StartSong: gives each track of the song a free track slot and MIDI
+; channel and starts it
+;-----------------------------------------------------------------------------
 StartSongTracks:
         mov ebx, eax
         shl eax, 2
@@ -860,6 +942,10 @@ StartSongTracks:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; FindFreeTrack                                   8F433  95 PC, low confidence
+; The first unused track slot of the 24, 0 when none
+;-----------------------------------------------------------------------------
 FindFreeTrack:
         push edx
         mov eax, SeqTracks
@@ -877,6 +963,10 @@ FindFreeTrack:
 .3:
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; FindFreeMidiChannel                             8F451  95 PC, low confidence
+; The first free MIDI channel of the 16 that a mask allows, -1 when none
+;-----------------------------------------------------------------------------
 FindFreeMidiChannel:
         push ebx
         push ecx
@@ -907,6 +997,10 @@ FindFreeMidiChannel:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; LoadAndPlaySong                                 8F48F  95 PC, low confidence
+; Loads a song and starts it
+;-----------------------------------------------------------------------------
 LoadAndPlaySong:
         push ebx
         call LoadSample
@@ -918,6 +1012,10 @@ LoadAndPlaySong:
         pop ebx
         ret
         call LoadSample
+;-----------------------------------------------------------------------------
+; StartSong                                       8F4A7  95 PC, low confidence
+; (song, loops): starts a loaded song through StartSongTracks
+;-----------------------------------------------------------------------------
 StartSong:
         push ecx
         push esi
@@ -931,6 +1029,10 @@ StartSong:
         jge near StartSongTracks
         xor eax, eax
         jmp near StartSongTracks+01B1h
+;-----------------------------------------------------------------------------
+; PlayPatch                                       8F4C4  95 PC, low confidence
+; Plays a patch as a sound effect note on the MIDI driver
+;-----------------------------------------------------------------------------
 PlayPatch:
         push ecx
         push esi
@@ -1049,6 +1151,10 @@ PlayPatch:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; PlayPatchFull                                   8F61D  95 PC, low confidence
+; Plays a patch at full volume
+;-----------------------------------------------------------------------------
 PlayPatchFull:
         push ebx
         push edx
@@ -1059,6 +1165,10 @@ PlayPatchFull:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ReleaseAllVoices                                8F633  95 PC, low confidence
+; Marks every playing patch voice for release
+;-----------------------------------------------------------------------------
 ReleaseAllVoices:
         push ebx
         push ecx
@@ -1089,6 +1199,10 @@ ReleaseAllVoices:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; StopSongId                                      8F67D  95 PC, low confidence
+; Stops a patch voice or every track of a song, all notes off
+;-----------------------------------------------------------------------------
 StopSongId:
         push ebx
         push ecx
@@ -1188,6 +1302,10 @@ StopSongId:
 .11:
         dec word [ActiveSongCount]
         jmp near LoadSample+0BCh
+;-----------------------------------------------------------------------------
+; ReleaseSong                                     8F7AE  95 PC, low confidence
+; (song, fade): sets the release count of a song's tracks
+;-----------------------------------------------------------------------------
 ReleaseSong:
         push ebx
         push ecx
@@ -1230,6 +1348,10 @@ ReleaseSong:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SongFinished                                    8F80E  95 PC, low confidence
+; 1 when no track of the song is playing
+;-----------------------------------------------------------------------------
 SongFinished:
         push ebx
         push edx
@@ -1259,6 +1381,10 @@ SongFinished:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SongReleased                                    8F846  95 PC, low confidence
+; 1 when no track of the song is in its release
+;-----------------------------------------------------------------------------
 SongReleased:
         push ebx
         push edx
@@ -1384,24 +1510,45 @@ SongReleased:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; EnableMidiSfx                                   8F963  95 PC, low confidence
+; Lets patches play as sound effects
+;-----------------------------------------------------------------------------
 EnableMidiSfx:
         mov dword [MidiSfxEnabled], 1
         ret
+;-----------------------------------------------------------------------------
+; DisableMidiSfx                                  8F96E  95 PC, low confidence
+; Stops patches playing as sound effects
+;-----------------------------------------------------------------------------
 DisableMidiSfx:
         push edx
         xor edx, edx
         mov dword [MidiSfxEnabled], edx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; EnableMidiMusic                                 8F979  95 PC, low confidence
+; Lets the song tracks play notes
+;-----------------------------------------------------------------------------
 EnableMidiMusic:
         mov dword [MidiMusicEnabled], 1
         ret
+;-----------------------------------------------------------------------------
+; DisableMidiMusic                                8F984  95 PC, low confidence
+; Stops the song tracks playing notes
+;-----------------------------------------------------------------------------
 DisableMidiMusic:
         push edx
         xor edx, edx
         mov dword [MidiMusicEnabled], edx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; LoadDigiFile                                    8F98F  95 PC, low confidence
+; Loads a digital sound file, reads its header (RIFF or EA) and decodes the
+; samples
+;-----------------------------------------------------------------------------
 LoadDigiFile:
         push ebx
         push ecx
@@ -1528,6 +1675,10 @@ LoadDigiFile:
 .7:
         add esp, byte 5Ch
         jmp near LoadSample+0BCh
+;-----------------------------------------------------------------------------
+; FindSubstring                                   8FAF2  95 PC, low confidence
+; The position just after the first match of a string inside another
+;-----------------------------------------------------------------------------
 FindSubstring:
         push ebx
         push ecx
@@ -1558,6 +1709,10 @@ FindSubstring:
 .4:
         lea eax, [byte esi+01h]
         jmp near LoadTimbreFile+0FBh
+;-----------------------------------------------------------------------------
+; PlayDigiBlock                                   8FB24  95 PC, low confidence
+; Plays a loaded digital sample on a driver channel
+;-----------------------------------------------------------------------------
 PlayDigiBlock:
         push esi
         push edi
@@ -1604,6 +1759,10 @@ PlayDigiBlock:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; PlayDigiBlockLoop                               8FB8E  95 PC, low confidence
+; Plays a loaded digital sample on a driver channel, looping
+;-----------------------------------------------------------------------------
 PlayDigiBlockLoop:
         push esi
         push edi
@@ -1643,6 +1802,10 @@ PlayDigiBlockLoop:
         shr edx, 1
         push edx
         jmp short PlayDigiBlock+04Eh
+;-----------------------------------------------------------------------------
+; PlayDigiPtr                                     8FBE5  95 PC, low confidence
+; Plays digital sample data at a pointer on a driver channel
+;-----------------------------------------------------------------------------
 PlayDigiPtr:
         push esi
         push edi
@@ -1681,6 +1844,10 @@ PlayDigiPtr:
         pop edi
         pop esi
         ret 8
+;-----------------------------------------------------------------------------
+; PlayDigiPtrLoop                                 8FC37  95 PC, low confidence
+; Plays digital sample data at a pointer on a driver channel, looping
+;-----------------------------------------------------------------------------
 PlayDigiPtrLoop:
         push esi
         push edi
@@ -1719,6 +1886,11 @@ PlayDigiPtrLoop:
         mov edx, edi
         call SndHandlePlayDigi
         jmp short PlayDigiPtr+04Ch
+;-----------------------------------------------------------------------------
+; SndQuery                                     8FC8A  95 PC, medium confidence
+; EA sound library: query a sound handle (handle, what); what 3 = has its
+; digital music finished
+;-----------------------------------------------------------------------------
 SndQuery:
         cmp eax, dword [sndhandlecount]
         jge short .1
@@ -1732,6 +1904,10 @@ SndQuery:
         add edx, byte 9
         and eax, 0FFh
         jmp near SndDriverCall
+;-----------------------------------------------------------------------------
+; StopDigiChannel                                 8FCAC  95 PC, low confidence
+; Stops a digital channel of a driver
+;-----------------------------------------------------------------------------
 StopDigiChannel:
         push ebx
         push ecx
@@ -1756,6 +1932,11 @@ StopDigiChannel:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SetDigiChannelVolume                            8FCDF  95 PC, low confidence
+; (handle, channel, volume): sets the volume of a digital channel, stops it
+; at 0
+;-----------------------------------------------------------------------------
 SetDigiChannelVolume:
         push ecx
         push esi
@@ -1807,6 +1988,10 @@ SetDigiChannelVolume:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; QueryDigiChannel                                8FD67  95 PC, low confidence
+; Driver function 33h for a channel
+;-----------------------------------------------------------------------------
 QueryDigiChannel:
         push ebx
         call SndDriverHandle
@@ -1821,6 +2006,10 @@ QueryDigiChannel:
 .1:
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; MidiProgramChange                            8FD84  95 PC, medium confidence
+; Sends a MIDI program change
+;-----------------------------------------------------------------------------
 MidiProgramChange:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
@@ -1837,6 +2026,10 @@ MidiProgramChange:
 .1:
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; MidiSetVolume                                8FDB2  95 PC, medium confidence
+; Sends a MIDI channel volume controller
+;-----------------------------------------------------------------------------
 MidiSetVolume:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
@@ -1854,6 +2047,10 @@ MidiSetVolume:
 .1:
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; MidiPitchBend                                8FDE5  95 PC, medium confidence
+; Sends a MIDI pitch bend
+;-----------------------------------------------------------------------------
 MidiPitchBend:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
@@ -1873,6 +2070,10 @@ MidiPitchBend:
 .1:
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; MidiNoteOn                                   8FE1C  95 PC, medium confidence
+; Sends a MIDI note on at full velocity
+;-----------------------------------------------------------------------------
 MidiNoteOn:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
@@ -1890,6 +2091,10 @@ MidiNoteOn:
 .1:
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; MidiNoteOff                                  8FE4F  95 PC, medium confidence
+; Sends a MIDI note off
+;-----------------------------------------------------------------------------
 MidiNoteOff:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
@@ -1908,9 +2113,17 @@ MidiNoteOff:
 .1:
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; SetSoundByteOrder                               8FE83  95 PC, low confidence
+; Sets the byte order flag of the sound files
+;-----------------------------------------------------------------------------
 SetSoundByteOrder:
         mov byte [SndBigEndian], al
         ret
+;-----------------------------------------------------------------------------
+; FindSoundChunk                                  8FE89  95 PC, low confidence
+; Finds a chunk by id in a sound bank's directory
+;-----------------------------------------------------------------------------
 FindSoundChunk:
         push ebx
         push ecx
@@ -1946,6 +2159,10 @@ FindSoundChunk:
         jl short .1
         xor eax, eax
         jmp near LoadTimbreFile+0FBh
+;-----------------------------------------------------------------------------
+; ReplaceFileExt                               8FED2  95 PC, medium confidence
+; Builds a file name with another extension (splitpath and makepath)
+;-----------------------------------------------------------------------------
 ReplaceFileExt:
         push ecx
         push esi
@@ -1970,6 +2187,10 @@ ReplaceFileExt:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; FreeMemPtr                                   8FF1E  95 PC, medium confidence
+; Frees the memory block a pointer variable holds and clears it
+;-----------------------------------------------------------------------------
 FreeMemPtr:
         push ebx
         push ecx
@@ -1989,6 +2210,10 @@ FreeMemPtr:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ReleaseMemPtr                                   8FF3E  95 PC, low confidence
+; Releases the memory descriptor a pointer variable holds and clears it
+;-----------------------------------------------------------------------------
 ReleaseMemPtr:
         push ebx
         push ecx
@@ -2008,6 +2233,10 @@ ReleaseMemPtr:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SwapBytes16                                  8FF5E  95 PC, medium confidence
+; Swaps the two bytes of a word
+;-----------------------------------------------------------------------------
 SwapBytes16:
         push edx
         mov edx, eax
@@ -2021,6 +2250,10 @@ SwapBytes16:
         mov eax, edx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; SwapBytes32                                  8FF7C  95 PC, medium confidence
+; Reverses the four bytes of a dword
+;-----------------------------------------------------------------------------
 SwapBytes32:
         push ebx
         push edx
@@ -2041,6 +2274,10 @@ SwapBytes32:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SetPalette                                   8FFB0  95 PC, medium confidence
+; Graphics library: set palette colours (first, count, rgb)
+;-----------------------------------------------------------------------------
 SetPalette:
         push ebp
         LD mov, ebp, esp

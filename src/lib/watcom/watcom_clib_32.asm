@@ -6,6 +6,10 @@ extern __qwrite_, __set_errno_, __SetIOMode_, _nfree_, _nmalloc_, __OpenStreams,
 extern FillRectSpans, FillRectSpans, lseek_, memset_, tell_, __iob, __NFiles, _psp
 global tolower_, __allocfp_, __freefp_, __update_buffer_, fseek_, __chktty_, GetPsp, __flush_
 global ftell_, __close_, __ioalloc_, fputc_, FillRectSpansModeTable
+;-----------------------------------------------------------------------------
+; tolower_                                                      9AFB0  library
+; Run-time library tolower: a character to lower case
+;-----------------------------------------------------------------------------
 tolower_:
         cmp eax, byte 41h
         jl short .1
@@ -14,6 +18,10 @@ tolower_:
         add eax, byte 20h
 .1:
         ret
+;-----------------------------------------------------------------------------
+; __allocfp_                                                    9AFBE  library
+; Run-time library: allocates a stream record
+;-----------------------------------------------------------------------------
 __allocfp_:
         push ebx
         push ecx
@@ -79,6 +87,10 @@ __allocfp_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __freefp_                                                     9B066  library
+; Run-time library: frees a stream record
+;-----------------------------------------------------------------------------
 __freefp_:
         push ebx
         push ecx
@@ -121,6 +133,10 @@ __freefp_:
 .5:
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; __update_buffer_                                              9B0BD  library
+; Run-time library: syncs a stream's buffer after a seek
+;-----------------------------------------------------------------------------
 __update_buffer_:
         push ebx
         push ecx
@@ -155,6 +171,10 @@ __update_buffer_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; fseek_                                                        9B0FF  library
+; Run-time library fseek: moves a stream's file position
+;-----------------------------------------------------------------------------
 fseek_:
         push ecx
         push esi
@@ -269,6 +289,10 @@ fseek_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; __chktty_                                                     9B1FB  library
+; Run-time library: marks a stream that is a terminal
+;-----------------------------------------------------------------------------
 __chktty_:
         push ebx
         push ecx
@@ -293,9 +317,17 @@ __chktty_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GetPsp                                       9B22C  95 PC, medium confidence
+; Returns the program segment prefix
+;-----------------------------------------------------------------------------
 GetPsp:
         mov eax, dword [_psp]
         ret
+;-----------------------------------------------------------------------------
+; __flush_                                                      9B232  library
+; Run-time library: writes out a stream's buffer
+;-----------------------------------------------------------------------------
 __flush_:
         push ebx
         push ecx
@@ -369,6 +401,10 @@ __flush_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ftell_                                                        9B2F1  library
+; Run-time library ftell: a stream's file position
+;-----------------------------------------------------------------------------
 ftell_:
         push ebx
         push ecx
@@ -397,6 +433,10 @@ ftell_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __close_                                                      9B321  library
+; Run-time library: closes a file handle
+;-----------------------------------------------------------------------------
 __close_:
         push ebx
         push edx
@@ -422,6 +462,10 @@ __close_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __ioalloc_                                                    9B353  library
+; Run-time library: allocates a stream's buffer
+;-----------------------------------------------------------------------------
 __ioalloc_:
         push ecx
         push edx
@@ -466,6 +510,10 @@ __ioalloc_:
         pop edx
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; fputc_                                                        9B3CA  library
+; Run-time library fputc: writes a character to a stream
+;-----------------------------------------------------------------------------
 fputc_:
         push ebx
         push ecx
@@ -541,7 +589,7 @@ fputc_:
         pop ebx
         ret
         db 00h,00h
-FillRectSpansModeTable:
+FillRectSpansModeTable:                         ; used by FillRectSpans
         dd FillRectSpans+0ACh
         dd FillRectSpans+0ACh
         dd FillRectSpans+0CDh

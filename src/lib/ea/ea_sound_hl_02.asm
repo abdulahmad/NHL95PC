@@ -3,10 +3,18 @@ bits 32
 %include "hockey.inc"
 section s_90354 progbits alloc exec nowrite align=1
 global ShapeBankCount, ShapeBankEntry, ShapeBankEntryId
+;-----------------------------------------------------------------------------
+; ShapeBankCount                               90354  95 PC, medium confidence
+; Returns the number of shapes in a shape bank
+;-----------------------------------------------------------------------------
 ShapeBankCount:
         mov ebx, dword [byte esp+04h]
         mov eax, dword [byte ebx+08h]
         ret
+;-----------------------------------------------------------------------------
+; ShapeBankEntry                               9035C  95 PC, medium confidence
+; Returns a shape in a bank by index, or 0
+;-----------------------------------------------------------------------------
 ShapeBankEntry:
         mov eax, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
@@ -18,6 +26,10 @@ ShapeBankEntry:
 .1:
         LD xor, eax, eax
         ret
+;-----------------------------------------------------------------------------
+; ShapeBankEntryId                             90373  95 PC, medium confidence
+; Stores a shape's id in a bank by index, or 0
+;-----------------------------------------------------------------------------
 ShapeBankEntryId:
         mov ebx, dword [byte esp+04h]
         mov eax, dword [byte esp+08h]

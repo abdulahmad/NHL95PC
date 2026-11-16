@@ -4,6 +4,10 @@ bits 32
 section s_A1877 progbits alloc exec nowrite align=1
 extern WVideoActive
 global __EnterWVIDEO_
+;-----------------------------------------------------------------------------
+; __EnterWVIDEO_                                                A1877  library
+; Run-time library: debugger hook (WVIDEO entry)
+;-----------------------------------------------------------------------------
 __EnterWVIDEO_:
         cmp byte [WVideoActive], 0
         je short .2

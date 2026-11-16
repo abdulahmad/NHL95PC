@@ -5,6 +5,11 @@ section s_9BA18 progbits alloc exec nowrite align=1
 extern __FDFS, CharClassTable, ScanBitMasks, memset_, __EFG_scanf, tolower_
 global ScanFormat, ScanParseSpec, ScanSkipSpace, ScanStoreCount, ScanChars, ScanStoreInt, ScanBuildCharSet, ScanCharSet
 global ScanFloatField, ScanIntegerField, HexDigitValue, ScanGetCharWidth
+;-----------------------------------------------------------------------------
+; ScanFormat                                   9BA18  95 PC, medium confidence
+; Scanf engine: reads input under control of a format string and stores the
+; fields
+;-----------------------------------------------------------------------------
 ScanFormat:
         push ecx
         push esi
@@ -215,6 +220,11 @@ ScanFormat:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; ScanParseSpec                                9BC3A  95 PC, medium confidence
+; Parses one scanf field spec: assignment suppression, width and size
+; modifiers
+;-----------------------------------------------------------------------------
 ScanParseSpec:
         push ebx
         push ecx
@@ -310,6 +320,11 @@ ScanParseSpec:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ScanSkipSpace                                9BD13  95 PC, medium confidence
+; Skips white space in the scanf input; returns how many characters were
+; skipped
+;-----------------------------------------------------------------------------
 ScanSkipSpace:
         push ebx
         push ecx
@@ -340,6 +355,10 @@ ScanSkipSpace:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ScanStoreCount                               9BD48  95 PC, medium confidence
+; Stores the number of characters read so far for a %n field
+;-----------------------------------------------------------------------------
 ScanStoreCount:
         push ebx
         push ecx
@@ -408,6 +427,10 @@ ScanStoreCount:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ScanChars                                    9BDCE  95 PC, medium confidence
+; Reads a %c or %s field into the caller's buffer
+;-----------------------------------------------------------------------------
 ScanChars:
         push ebx
         push ecx
@@ -518,6 +541,10 @@ ScanChars:
         mov eax, esi
         add esp, byte 4
         jmp near ScanStoreCount+080h
+;-----------------------------------------------------------------------------
+; ScanStoreInt                                 9BEBC  95 PC, medium confidence
+; Stores a converted integer into the caller's argument with the field's size
+;-----------------------------------------------------------------------------
 ScanStoreInt:
         push ecx
         push esi
@@ -570,6 +597,10 @@ ScanStoreInt:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; ScanBuildCharSet                             9BF1A  95 PC, medium confidence
+; Builds the 256-bit set of characters from a %[...] scanset
+;-----------------------------------------------------------------------------
 ScanBuildCharSet:
         push ebx
         push ecx
@@ -604,6 +635,10 @@ ScanBuildCharSet:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ScanCharSet                                  9BF5D  95 PC, medium confidence
+; Reads a %[...] field: the longest run of characters in (or not in) the set
+;-----------------------------------------------------------------------------
 ScanCharSet:
         push ecx
         push esi
@@ -704,6 +739,10 @@ ScanCharSet:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; ScanFloatField                               9C043  95 PC, medium confidence
+; Reads a floating-point field and converts it
+;-----------------------------------------------------------------------------
 ScanFloatField:
         push ebx
         push ecx
@@ -977,6 +1016,10 @@ ScanFloatField:
         add esp, byte 70h
         pop ebp
         jmp near ScanStoreCount+080h
+;-----------------------------------------------------------------------------
+; ScanIntegerField                             9C321  95 PC, medium confidence
+; Reads a signed or unsigned integer field in base 8, 10 or 16
+;-----------------------------------------------------------------------------
 ScanIntegerField:
         push esi
         push edi
@@ -1178,6 +1221,10 @@ ScanIntegerField:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; HexDigitValue                                9C519  95 PC, medium confidence
+; Returns the value of a hex digit, or 16 for a non-digit
+;-----------------------------------------------------------------------------
 HexDigitValue:
         cmp eax, byte 30h
         jl short .1
@@ -1196,6 +1243,11 @@ HexDigitValue:
 .2:
         mov eax, 10h
         ret
+;-----------------------------------------------------------------------------
+; ScanGetCharWidth                             9C540  95 PC, medium confidence
+; Reads one character while the field width allows; returns -1 at the width
+; limit
+;-----------------------------------------------------------------------------
 ScanGetCharWidth:
         push ebx
         push edx

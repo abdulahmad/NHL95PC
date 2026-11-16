@@ -11,10 +11,14 @@ global doplayeracc, EvadePlayers, EvadePlayers_popebp, EvadePlayers_popedi, Evad
 global playeracc, avdgoal_box, avdgoal_jt, avdgoal, dostop, stopna, goalieacc, noturn0
 ;-----------------------------------------------------------------------------
 ; doplayeracc                        5E16D  94G logic94.asm, medium confidence
-; player gets acc. in a direction (player a3 gets acc. in d0 dir).
-; eax = player struct, edx = direction (low nibble: 0-7 skate, 8 none, 9 stop). No result.
-; Goalie -> goalieacc. Picks the glide animation, turns facedir by doplayeracc_ftab at a rate of $300-speed (min $180),
-; sets/clears pfrev (skating backwards in own zone), then playeracc. PC: struct 10h (the referee) has its own animations.
+; player gets acc. in a direction (player a3 gets acc. in d0 dir). eax =
+; player struct, edx = direction (low nibble: 0-7 skate, 8 none, 9 stop).
+;
+; No result. Goalie -> goalieacc. Picks the glide animation, turns facedir by
+; doplayeracc_ftab at a rate of $300-speed (min $180), sets/clears pfrev
+; (skating backwards in own zone), then playeracc.
+;
+; PC: struct 10h (the referee) has its own animations.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/doplayeracc.c
 %ifdef CBUILD
@@ -297,10 +301,14 @@ doplayeracc:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; EvadePlayers                                 5E4C4  95 PC, medium confidence
-; skateto collision routine.
-; eax = player struct. Behind the net (|Ypos|>F2h, |Xpos|<32h): regd0 = a direction round the net from the Xpos/Yvel signs.
-; Else for every other SortCords entry (0-14, not the goalies 12/13): if the predicted x and y gaps (pos + Xvel/Yvel high
-; byte) are both within 28h and the closest so far, regd0 = a sidestep direction from vtoa of the gap. No result.
+; skateto collision routine. eax = player struct. Behind the net (|Ypos|>F2h,
+; |Xpos|<32h): regd0 = a direction round the net from the Xpos/Yvel signs.
+;
+; Else for every other SortCords entry (0-14, not the goalies 12/13): if the
+; predicted x and y gaps (pos + Xvel/Yvel high byte) are both within 28h and
+; the closest so far, regd0 = a sidestep direction from vtoa of the gap.
+;
+; No result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/EvadePlayers.c
 %ifdef CBUILD
@@ -670,10 +678,16 @@ EvadePC_x:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; skateto                                               5E93B  94G logic94.asm
-; player skates to the point regd0/regd1 (;a0 = extra routine for collision avoidance,
-; d0/d1 = x/y cord to skate to). eax = player, edx = routine to call (0 = none), regd0/regd1 = target.
-; Every 12 ticks (temp2+1 countdown): avdgoal, aim with the velocity lead, vtoa (9 = close enough), the routine,
-; keep the direction in temp2; stopped with no direction -> face the puck (or xc1/yc1 in a fight). Then doplayeracc.
+; player skates to the point regd0/regd1 (;a0 = extra routine for collision
+; avoidance, d0/d1 = x/y cord to skate to). eax = player, edx = routine
+;
+; to call (0 = none), regd0/regd1 = target.
+;
+; Every 12 ticks (temp2+1 countdown): avdgoal, aim with the velocity lead,
+; vtoa (9 = close enough), the routine, keep the direction in temp2; stopped
+; with no direction -> face the puck (or xc1/yc1 in a fight).
+;
+; Then doplayeracc.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/EvadePlayers.c (skateto)
 %ifdef CBUILD
@@ -837,8 +851,11 @@ skateto:
 ;-----------------------------------------------------------------------------
 ; skatetopuck                                           5EB17  94G logic94.asm
 ; player skates to the puck (player a3 should skate to puck). eax = player.
-; skatetopuckinit inline (puck pos + half its velocity high byte), every 10 ticks (goalie 5): avdgoal, aim (PC: straight
-; at the puck when it is slow and within 18h, else GetHot + velocity lead), then the sweep check (vecdist 900..1444 -> Sweepcheck).
+; skatetopuckinit inline (puck pos + half its velocity high byte),
+;
+; every 10 ticks (goalie 5): avdgoal, aim (PC: straight at the puck when it is
+; slow and within 18h, else GetHot + velocity lead), then the sweep check
+; (vecdist 900..1444 -> Sweepcheck).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/EvadePlayers.c (skatetopuck)
 %ifdef CBUILD
@@ -1053,8 +1070,11 @@ skatetopuck:
 ;-----------------------------------------------------------------------------
 ; playeracc                                             5EDAD  94G logic94.asm
 ; accelerate player in direction edx (;d2 = direction of acc). eax = player.
-; dirtab x/y times (legstr+30h)/64 (PC), wall push test, accel factor 32-weight/8+legstr (+legstr+20 goalie), max speed
-; check against MaxSpeed (referee: fixed 0Fh/0Ch), then the energy drain when fatigue is on (getpde/setpde inline).
+; dirtab x/y times (legstr+30h)/64 (PC), wall push test,
+;
+; accel factor 32-weight/8+legstr (+legstr+20 goalie), max speed check against
+; MaxSpeed (referee: fixed 0Fh/0Ch), then the energy drain when fatigue is on
+; (getpde/setpde inline).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/EvadePlayers.c (playeracc)
 %ifdef CBUILD
@@ -1273,8 +1293,10 @@ playeracc:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; avdgoal_box                                  5F04E  95 PC, medium confidence
-; helper of avdgoal. eax = player, edx/ebx = goal x limits, ecx = goal y, [esp+4]/[esp+8] = int* for
-; the side bits of the player and the target (1/4 x, 2/8 y). Returns eax 1 when the line player->target (regd0/regd1)
+; helper of avdgoal. eax = player, edx/ebx = goal x limits, ecx = goal y,
+; [esp+4]/[esp+8] = int* for the side bits of the player and the target
+;
+; (1/4 x, 2/8 y). Returns eax 1 when the line player->target (regd0/regd1)
 ; crosses this goal's box, else 0. ret 8.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/EvadePlayers.c (avdgoal_box)
@@ -1363,7 +1385,7 @@ avdgoal_box:
 %endif ; C
         db 08Bh,0C0h
 ; avdgoal_jt: switch table of avdgoal, indexed by the player's side bits (0-12).
-avdgoal_jt:
+avdgoal_jt:                                     ; used by avdgoal
         dd avdgoal.c0
         dd avdgoal.c1
         dd avdgoal.c2
@@ -1379,9 +1401,12 @@ avdgoal_jt:
         dd avdgoal.c12
 ;-----------------------------------------------------------------------------
 ; avdgoal                          5F151  93G logic93_5.asm, medium confidence
-; don't try to skate thru goal (;if d0/d1 cords intersect thru goal then provide new d0/d1 cords).
-; eax = player, regd0/regd1 = target, changed in place. PC rewrite: goal line 0E8h, half-width 2Ch (goalie: tighter box),
-; avdgoal_box for each goal, then a 13-case switch on the side bits picks the corner to skate to.
+; don't try to skate thru goal (;if d0/d1 cords intersect thru goal then
+; provide new d0/d1 cords). eax = player, regd0/regd1 = target,
+;
+; changed in place. PC rewrite: goal line 0E8h, half-width 2Ch (goalie:
+; tighter box), avdgoal_box for each goal, then a 13-case switch on the side
+; bits picks the corner to skate to.
 ;-----------------------------------------------------------------------------
 avdgoal:
         push dword 5Ch
@@ -2079,9 +2104,11 @@ stopna:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; goalieacc                                           5F8B2  93G logic93_5.asm
-; goalie gets acc. in direction edx. eax = goalie.
-; Turns facedir one step toward the direction, SPAgskate, playeracc. PC: when the clock runs, he has no puck and his
-; assignment is 0Fh, he turns toward the direction byte at +52h instead.
+; goalie gets acc. in direction edx. eax = goalie. Turns facedir one step
+; toward the direction, SPAgskate, playeracc.
+;
+; PC: when the clock runs, he has no puck and his assignment is 0Fh, he turns
+; toward the direction byte at +52h instead.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/goalieacc.c
 %ifdef CBUILD
@@ -2173,9 +2200,12 @@ goalieacc:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; noturn0                            5F98A  94G logic94.asm, medium confidence
-; doplayeracc when the wanted direction needs no turn. eax = player, edx = direction
-; minus facedir (0-7), ebx = facedir. Skating against the motion -> dostop; else skate animation (SPAskate/skatewp/skateback)
-; and the inline noturn (reverse when pfrev), then playeracc.
+; doplayeracc when the wanted direction needs no turn. eax = player, edx =
+; direction minus facedir (0-7), ebx = facedir.
+;
+; Skating against the motion -> dostop; else skate animation
+; (SPAskate/skatewp/skateback) and the inline noturn (reverse when pfrev),
+; then playeracc.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/skate/noturn0.c
 %ifdef CBUILD

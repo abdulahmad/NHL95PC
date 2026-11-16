@@ -4,6 +4,10 @@ bits 32
 section s_91350 progbits alloc exec nowrite align=1
 extern __STOSB
 global memset_
+;-----------------------------------------------------------------------------
+; memset_                                                       91350  library
+; Run-time library memset: fills a block of memory
+;-----------------------------------------------------------------------------
 memset_:
         push eax
         push ecx

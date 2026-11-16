@@ -4,6 +4,10 @@ bits 32
 section s_987C0 progbits alloc exec nowrite align=1
 extern __int386x_
 global segread_, int386x_
+;-----------------------------------------------------------------------------
+; segread_                                                      987C0  library
+; Run-time library segread: reads the segment registers
+;-----------------------------------------------------------------------------
 segread_:
         push edx
         mov edx, eax
@@ -21,6 +25,10 @@ segread_:
         mov word [byte edx+0Ah], ax
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; int386x_                                                      987E8  library
+; Run-time library int386x: calls an interrupt with segment registers
+;-----------------------------------------------------------------------------
 int386x_:
         push esi
         push edi

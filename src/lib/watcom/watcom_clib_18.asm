@@ -4,6 +4,11 @@ bits 32
 section s_92EF9 progbits alloc exec nowrite align=1
 extern __fsetbits_, CLibBitMasks
 global _fstrcspn_
+;-----------------------------------------------------------------------------
+; _fstrcspn_                                                    92EF9  library
+; C run-time: far strcspn, length of the leading part of a string without any
+; of the given characters
+;-----------------------------------------------------------------------------
 _fstrcspn_:
         push esi
         push es

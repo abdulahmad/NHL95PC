@@ -31,8 +31,10 @@ global DeskAwayGoalieNone
 ;-----------------------------------------------------------------------------
 ; OutputCurrentData                                               18D7F  95 PC
 ; "Output Current Data ..." sports desk item: prompts "Please enter output
-; file name" (TextInputDialog text entry with temporary boxfillcolor..C71DC
-; colours) and, unless Esc or empty, WriteScreenTextFile
+; file name" (TextInputDialog text entry
+;
+; with temporary boxfillcolor..C71DC colours) and, unless Esc or empty,
+; WriteScreenTextFile
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk/OutputCurrentData.c
 %ifdef CBUILD
@@ -226,9 +228,10 @@ MenuCallbackTrue2:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; PlayRandomHighlight                          18F8D  95 PC, medium confidence
-; Marks the highlights already shown (otherperiod state >= 5 and unchanged)
-; in hlplayedmask, picks a random unplayed one of the 6 and plays it with
-; StartHL2; returns -1 / its result
+; Marks the highlights already shown (otherperiod state >= 5 and unchanged) in
+; hlplayedmask, picks a random unplayed one of the 6 and plays it
+;
+; with StartHL2; returns -1 / its result
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk/PlayRandomHighlight.c
 %ifdef CBUILD
@@ -339,6 +342,7 @@ PlayRandomHighlight:
 ; IntermissionDesk                             190BE  95 PC, medium confidence
 ; Between periods (called from IntermissionPC): in an exhibition between real
 ; teams plays the period highlights (UpdateOtherScores, PlayRandomHighlight),
+;
 ; then the sports desk in intermission mode (SportsDesk 1), clears the goal /
 ; shot counters and restores 320x200
 ;-----------------------------------------------------------------------------
@@ -437,6 +441,7 @@ IntermissionDesk:
 ; PostGameDesk                                 1920F  95 PC, medium confidence
 ; End of game (from PlayGame): fade, 640x480, game summary
 ; (GameSummaryScreen), in an exhibition between real teams the highlights
+;
 ; (PlayRandomHighlight), then SportsDesk 2 and gameresult = 1
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk/PostGameDesk.c
@@ -528,10 +533,11 @@ PostGameDesk:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SportsDesk                                   1935D  95 PC, medium confidence
-; (mode): the PC "EA Sports desk" menu screen ("eadesk%1d" art by mode,
-; "desk" / "!pal", "Pointer" cursor, "pause" and "menubuff" buffers); mode 0
-; is the pause menu from GameLoop (Esc), 1 the intermission, 2 after the
-; game; runs the desk menus until an item returns to the game
+; (mode): the PC "EA Sports desk" menu screen ("eadesk%1d" art by mode, "desk"
+; / "!pal", "Pointer" cursor, "pause" and "menubuff" buffers);
+;
+; mode 0 is the pause menu from GameLoop (Esc), 1 the intermission, 2 after
+; the game; runs the desk menus until an item returns to the game
 ;-----------------------------------------------------------------------------
 SportsDesk:
         push dword 434h
@@ -1651,8 +1657,9 @@ SportsDesk:
 ;-----------------------------------------------------------------------------
 ; DeskReloadGame                                  1A534  95 PC, low confidence
 ; Reloads the home team art (LoadRink, team 0Ch for the all-star teams) and
-; LoadPlayerPhotos, fades in and flags a desk redraw (DeskRedrawFlag /
-; DeskRedrawAll); SportsDesk
+; LoadPlayerPhotos, fades in and flags a desk redraw
+;
+; (DeskRedrawFlag / DeskRedrawAll); SportsDesk
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskReloadGame.c
 %ifdef CBUILD
@@ -1728,6 +1735,7 @@ DeskToSportsDesk:
 ; DeskReturnConfirm                                               1A5D4  95 PC
 ; "Sports Desk" item in a game: MessageBox "Returning to sports central" /
 ; "Returning out of the game" / "Returning to the playoff tree" (by gamemode)
+;
 ; "Do you wish to return?"; yes returns 5, else 0
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskReturnConfirm.c

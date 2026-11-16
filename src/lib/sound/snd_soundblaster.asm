@@ -11,6 +11,10 @@ global ParseBlasterEnv, ParseHexValue, SbPopArgsReturn, SbOpen, SbInit, SbClose,
 global SbSetTrack, SbPlayDigi, SbNoteOff, SbNoteOn, SbStartVoice, SbVoiceStartSample, SbVoiceSetVolume, SbController
 global SbVoiceController, SbSetVoiceOwner, SbFreeVoice, SbStopVoice, SbProgramChange, SbPitchBend, SbAllocDosBuffer, SbFreeDosBuffer
 global SbSetMixerVolumes
+;-----------------------------------------------------------------------------
+; ParseBlasterEnv                              9F226  95 PC, medium confidence
+; Parses the BLASTER environment string
+;-----------------------------------------------------------------------------
 ParseBlasterEnv:
         push ds
         call __GETDS
@@ -112,6 +116,10 @@ ParseBlasterEnv:
         add esp, byte 10h
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; ParseHexValue                                9F34C  95 PC, medium confidence
+; Parses a hexadecimal setting value
+;-----------------------------------------------------------------------------
 ParseHexValue:
         push ecx
         push esi
@@ -138,12 +146,21 @@ ParseHexValue:
         call strtoul_
         mov dword [edi], eax
         mov eax, ecx
+;-----------------------------------------------------------------------------
+; SbPopArgsReturn                                 9F380  95 PC, low confidence
+; Shared exit that drops three stacked arguments and returns
+;-----------------------------------------------------------------------------
 SbPopArgsReturn:
         add esp, byte 0Ch
         pop edi
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SbOpen                                       9F387  95 PC, medium confidence
+; Sound Blaster driver open entry: allocates the DOS DMA buffer and opens the
+; card
+;-----------------------------------------------------------------------------
 SbOpen:
         push ds
         call __GETDS
@@ -190,6 +207,11 @@ SbOpen:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; SbInit                                       9F418  95 PC, medium confidence
+; Sound Blaster driver init entry: resets the four voices and sixteen MIDI
+; channels
+;-----------------------------------------------------------------------------
 SbInit:
         push ds
         call __GETDS
@@ -235,6 +257,10 @@ SbInit:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; SbClose                                      9F4A0  95 PC, medium confidence
+; Sound Blaster driver close entry: closes the card and frees the DOS buffer
+;-----------------------------------------------------------------------------
 SbClose:
         push ds
         call __GETDS
@@ -248,6 +274,10 @@ SbClose:
 .1:
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; SbService                                       9F4C8  95 PC, low confidence
+; Sound Blaster driver timer service entry: frees finished voices
+;-----------------------------------------------------------------------------
 SbService:
         push ds
         call __GETDS
@@ -320,6 +350,10 @@ SbService:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; SbQuery                                         9F577  95 PC, low confidence
+; Sound Blaster driver query entry
+;-----------------------------------------------------------------------------
 SbQuery:
         push ds
         call __GETDS
@@ -390,6 +424,10 @@ SbQuery:
         push eax
         call SbSetStereo
         jmp short .7
+;-----------------------------------------------------------------------------
+; SbSetTrack                                      9F622  95 PC, low confidence
+; Sound Blaster driver track setup entry
+;-----------------------------------------------------------------------------
 SbSetTrack:
         push ds
         call __GETDS
@@ -401,6 +439,10 @@ SbSetTrack:
         mov word [nosplit eax*2+SbChanTrack], dx
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; SbPlayDigi                                      9F642  95 PC, low confidence
+; Sound Blaster driver playback entry
+;-----------------------------------------------------------------------------
 SbPlayDigi:
         push ds
         call __GETDS
@@ -431,6 +473,10 @@ SbPlayDigi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; SbNoteOff                                       9F685  95 PC, low confidence
+; MIDI note off: releases the voice playing the note
+;-----------------------------------------------------------------------------
 SbNoteOff:
         push ebx
         push ecx
@@ -495,6 +541,11 @@ SbNoteOff:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SbNoteOn                                        9F725  95 PC, low confidence
+; MIDI note on: channel 10 drums use their own patches; picks a voice and
+; starts it
+;-----------------------------------------------------------------------------
 SbNoteOn:
         push ecx
         push esi
@@ -648,6 +699,10 @@ SbNoteOn:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SbStartVoice                                    9F8C5  95 PC, low confidence
+; Starts a note's sample on a voice
+;-----------------------------------------------------------------------------
 SbStartVoice:
         push esi
         push edi
@@ -725,6 +780,10 @@ SbStartVoice:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; SbVoiceStartSample                              9F9C4  95 PC, low confidence
+; Sets up a voice's sample and starts it
+;-----------------------------------------------------------------------------
 SbVoiceStartSample:
         push esi
         push edi
@@ -760,6 +819,10 @@ SbVoiceStartSample:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; SbVoiceSetVolume                                9FA1A  95 PC, low confidence
+; Sets a voice's volume (at most 127)
+;-----------------------------------------------------------------------------
 SbVoiceSetVolume:
         push ecx
         push esi
@@ -788,6 +851,10 @@ SbVoiceSetVolume:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SbController                                    9FA5D  95 PC, low confidence
+; MIDI control change: modulation, volume, pan, sustain, all notes off
+;-----------------------------------------------------------------------------
 SbController:
         push ecx
         push esi
@@ -905,6 +972,10 @@ SbController:
         cmp cx, byte 4
         jl short .14
         jmp near SbPopArgsReturn
+;-----------------------------------------------------------------------------
+; SbVoiceController                               9FB93  95 PC, low confidence
+; Controller on a voice: controller 7 sets its volume
+;-----------------------------------------------------------------------------
 SbVoiceController:
         push ecx
         cmp dx, byte 7
@@ -918,11 +989,19 @@ SbVoiceController:
 .1:
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SbSetVoiceOwner                                 9FBAA  95 PC, low confidence
+; Stores the owner of a voice
+;-----------------------------------------------------------------------------
 SbSetVoiceOwner:
         cwde
         imul eax, byte 16h
         mov dword [dword eax+SbMidiVoices+088h], edx
         ret
+;-----------------------------------------------------------------------------
+; SbFreeVoice                                     9FBB5  95 PC, low confidence
+; Stops a voice and returns it to the free voice mask
+;-----------------------------------------------------------------------------
 SbFreeVoice:
         push ebx
         push edx
@@ -949,6 +1028,10 @@ SbFreeVoice:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SbStopVoice                                     9FC04  95 PC, low confidence
+; Stops one voice
+;-----------------------------------------------------------------------------
 SbStopVoice:
         push ebx
         push ecx
@@ -964,6 +1047,10 @@ SbStopVoice:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SbProgramChange                              9FC24  95 PC, medium confidence
+; MIDI program change: sets the patch of a channel
+;-----------------------------------------------------------------------------
 SbProgramChange:
         push ebx
         push ecx
@@ -1012,6 +1099,10 @@ SbProgramChange:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SbPitchBend                                  9FC94  95 PC, medium confidence
+; MIDI pitch bend: stores the bend of a channel
+;-----------------------------------------------------------------------------
 SbPitchBend:
         push ebx
         mov ebx, edx
@@ -1022,6 +1113,10 @@ SbPitchBend:
         mov word [nosplit eax*2+SbChanBend], bx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SbAllocDosBuffer                             9FCAB  95 PC, medium confidence
+; Allocates DOS memory through DPMI
+;-----------------------------------------------------------------------------
 SbAllocDosBuffer:
         push ecx
         push esi
@@ -1054,6 +1149,10 @@ SbAllocDosBuffer:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SbFreeDosBuffer                              9FD01  95 PC, medium confidence
+; Frees DOS memory through DPMI
+;-----------------------------------------------------------------------------
 SbFreeDosBuffer:
         push ebx
         push ecx
@@ -1076,6 +1175,10 @@ SbFreeDosBuffer:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SbSetMixerVolumes                            9FD3D  95 PC, medium confidence
+; Sets the Sound Blaster voice, master and FM mixer volumes
+;-----------------------------------------------------------------------------
 SbSetMixerVolumes:
         push ebx
         push ecx

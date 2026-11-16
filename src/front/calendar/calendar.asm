@@ -731,8 +731,9 @@ SetGameSides:
 ;-----------------------------------------------------------------------------
 ; CalendarScreen                                                  34821  95 PC
 ; League calendar (calendar / callogo): month grid of the human team's games,
-; Play / Game / Statistics menu, picks and plays the next game; called from
-; import_export
+; Play / Game / Statistics menu, picks and plays the next game; called
+;
+; from import_export
 ;-----------------------------------------------------------------------------
 CalendarScreen:
         push dword 7F8h

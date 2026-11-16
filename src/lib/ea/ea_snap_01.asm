@@ -6,6 +6,10 @@ extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, SnapFormat, Scree
 extern DrawRowBytes, SnapShapeSizes, SnapFileExts, SnapShapeTags, SetDrawBitmap, strncpy_, AllocMemHandle, PushMemDescriptorLocked
 extern MemDescPtr, SetPalette, DrawShapeAtOwnPos, WriteFileQuiet, FindShape, SaveDrawState, RestoreDrawState, SetScreenTarget
 global SnapScreenToShape, SelectBitmap
+;-----------------------------------------------------------------------------
+; SnapScreenToShape                               9D090  95 PC, low confidence
+; Copies the screen into a new shape for the screenshot file
+;-----------------------------------------------------------------------------
 SnapScreenToShape:
         push esi
         push edi
@@ -188,6 +192,10 @@ SnapScreenToShape:
         pop esi
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; SelectBitmap                                    9D2E0  95 PC, low confidence
+; Points a bitmap at its pixel data and makes it the draw target
+;-----------------------------------------------------------------------------
 SelectBitmap:
         push esi
         mov esi, dword [byte esp+08h]

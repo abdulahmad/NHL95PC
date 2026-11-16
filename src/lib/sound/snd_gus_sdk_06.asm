@@ -9,6 +9,11 @@ extern GusRegSelectPort, GusDataHighPort, GusDramPort, GusIrqFlags, GusCriticalD
 global GusWaveIrqHandler, GusMidiIrqHandler, GusDelay, GusSetBasePort, GusClearCallbacks, GusClaimCallback, GusClaimVoiceCallback, GusSetDmaCallbacks
 global GusClaimVoiceCallbacks, GusClaimTimerCallbacks, GusSetVoiceCallbacks, GusClaimMidiRecvCallback, GusClaimMidiXmitCallback, GusClaimTimerCallback, GusMidiIrqService, GusReadIrqSource
 global GusServiceIrq
+;-----------------------------------------------------------------------------
+; GusWaveIrqHandler                                               B12A0  95 PC
+; Hardware handler for the card's wave IRQ: services it now or defers it
+; while the card is busy
+;-----------------------------------------------------------------------------
 GusWaveIrqHandler:
         pusha
         push ds
@@ -48,6 +53,10 @@ GusWaveIrqHandler:
         popa
         iret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusMidiIrqHandler                                               B131C  95 PC
+; Hardware handler for the card's MIDI IRQ line
+;-----------------------------------------------------------------------------
 GusMidiIrqHandler:
         pusha
         push ds
@@ -90,6 +99,10 @@ GusMidiIrqHandler:
         popa
         iret
         db 00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusDelay                                     B13A1  95 PC, medium confidence
+; Waits a few port reads so the card can settle between register writes
+;-----------------------------------------------------------------------------
 GusDelay:
         push ecx
         push edx
@@ -101,6 +114,10 @@ GusDelay:
         pop edx
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; GusSetBasePort                               B13B5  95 PC, medium confidence
+; Checks a base port (210h..260h) and moves the card's port table to it
+;-----------------------------------------------------------------------------
 GusSetBasePort:
         push ebx
         push ecx
@@ -142,6 +159,10 @@ GusSetBasePort:
         pop ebx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; GusClearCallbacks                            B1400  95 PC, medium confidence
+; Clears every interrupt callback slot
+;-----------------------------------------------------------------------------
 GusClearCallbacks:
         push ebp
         mov ebp, esp
@@ -165,6 +186,11 @@ GusClearCallbacks:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusClaimCallback                             B145C  95 PC, medium confidence
+; Stores a callback in a slot when the slot is free or the callback is being
+; cleared
+;-----------------------------------------------------------------------------
 GusClaimCallback:
         push ebp
         mov ebp, esp
@@ -189,6 +215,11 @@ GusClaimCallback:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusClaimVoiceCallback                        B1484  95 PC, medium confidence
+; Stores a voice callback in a slot when the slot is free or the callback is
+; being cleared
+;-----------------------------------------------------------------------------
 GusClaimVoiceCallback:
         push ebp
         mov ebp, esp
@@ -213,6 +244,10 @@ GusClaimVoiceCallback:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusSetDmaCallbacks                           B14AC  95 PC, medium confidence
+; Sets the DMA-done callbacks; returns 8 when they are already taken
+;-----------------------------------------------------------------------------
 GusSetDmaCallbacks:
         push ebp
         mov ebp, esp
@@ -240,6 +275,10 @@ GusSetDmaCallbacks:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusClaimVoiceCallbacks                       B14E4  95 PC, medium confidence
+; Claims the wave and volume callbacks
+;-----------------------------------------------------------------------------
 GusClaimVoiceCallbacks:
         push ebp
         mov ebp, esp
@@ -267,6 +306,10 @@ GusClaimVoiceCallbacks:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusClaimTimerCallbacks                       B151C  95 PC, medium confidence
+; Claims the timer 1 and timer 2 callbacks
+;-----------------------------------------------------------------------------
 GusClaimTimerCallbacks:
         push ebp
         mov ebp, esp
@@ -294,6 +337,11 @@ GusClaimTimerCallbacks:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusSetVoiceCallbacks                         B1554  95 PC, medium confidence
+; Sets the wave, volume and timer callbacks; returns 8 when they are already
+; taken
+;-----------------------------------------------------------------------------
 GusSetVoiceCallbacks:
         push ebp
         mov ebp, esp
@@ -324,6 +372,10 @@ GusSetVoiceCallbacks:
         mov esp, ebp
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusClaimMidiRecvCallback                     B1598  95 PC, medium confidence
+; Claims the MIDI receive callback
+;-----------------------------------------------------------------------------
 GusClaimMidiRecvCallback:
         push ebp
         mov ebp, esp
@@ -340,6 +392,10 @@ GusClaimMidiRecvCallback:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusClaimMidiXmitCallback                     B15B8  95 PC, medium confidence
+; Claims the MIDI transmit callback
+;-----------------------------------------------------------------------------
 GusClaimMidiXmitCallback:
         push ebp
         mov ebp, esp
@@ -356,6 +412,10 @@ GusClaimMidiXmitCallback:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusClaimTimerCallback                        B15D8  95 PC, medium confidence
+; Claims the timer callback
+;-----------------------------------------------------------------------------
 GusClaimTimerCallback:
         push ebp
         mov ebp, esp
@@ -372,6 +432,10 @@ GusClaimTimerCallback:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusMidiIrqService                            B15F8  95 PC, medium confidence
+; Reads the MIDI status and calls the MIDI transmit or receive callbacks
+;-----------------------------------------------------------------------------
 GusMidiIrqService:
         push ebp
         mov ebp, esp
@@ -423,6 +487,11 @@ GusMidiIrqService:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusReadIrqSource                             B1680  95 PC, medium confidence
+; Reads the card's IRQ status register and services MIDI interrupts on a
+; shared line
+;-----------------------------------------------------------------------------
 GusReadIrqSource:
         push ebp
         mov ebp, esp
@@ -450,6 +519,11 @@ GusReadIrqSource:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusServiceIrq                                B16BC  95 PC, medium confidence
+; Services every pending card interrupt: DMA done, timers, voice wave and
+; volume ends
+;-----------------------------------------------------------------------------
 GusServiceIrq:
         push ebp
         mov ebp, esp

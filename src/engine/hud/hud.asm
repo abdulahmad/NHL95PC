@@ -83,10 +83,10 @@ DitherRect:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; checkwindow                       65D01  94G replay94.asm, medium confidence
-; 93G/94G checkwindow role (set the scroll position to follow the puck):
-; works on yc1/xc1 (93G: locked coordinates or puck carrier Ypos + Yvel
-; lead), camx/camy with clamps, sflags and puckc; called once a frame from
-; DoGameFrame. PC code differs (gmode bit 7 fixed view at -64h/0Fh)
+; Sets the scroll position to follow the puck: works on yc1/xc1, camx/camy
+; with clamps, sflags and puckc; called once a frame from DoGameFrame.
+;
+; PC code differs (gmode bit 7 fixed view at -64h/0Fh)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hud/checkwindow.c
 %ifdef CBUILD
@@ -624,8 +624,9 @@ checkwindow_popx:
 ;-----------------------------------------------------------------------------
 ; LoadTeamPPV                                     66497  95 PC, low confidence
 ; Team: when MemLargestFree() >= ovlmemneed[team], opens the team's .PPV (name
-; ovlartnames[team], CD flag via ovlartfiles into fileoncd) with OpenArtArchiveErr;
-; joysampling held off while loading
+; ovlartnames[team], CD flag via ovlartfiles into fileoncd)
+;
+; with OpenArtArchiveErr; joysampling held off while loading
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hud/checkwindow.c (LoadTeamPPV)
 %ifdef CBUILD
@@ -713,8 +714,7 @@ LoadTeamPPV:
 ;-----------------------------------------------------------------------------
 ; DrawTextOverlay                              665AD  95 PC, medium confidence
 ; Draws the textline1..5 overlay sliding in/out with the ovltimer timer (<10h
-; in, 100h..258h out) and clears the call banner (bannermsg -1, bannertimer
-; 0)
+; in, 100h..258h out) and clears the call banner (bannermsg -1, bannertimer 0)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hud/checkwindow.c (DrawTextOverlay)
 %ifdef CBUILD
@@ -1373,8 +1373,9 @@ CloseTextOverlay:
 ;-----------------------------------------------------------------------------
 ; UpdateTextOverlay                            66E06  95 PC, medium confidence
 ; Per frame: crowd boost while a sequence runs; steps the overlay script
-; ovlscript (ovlseq sequence, ovlstep step, ovlstepidx/ovlsteptimer from
-; ovlsteptime), frees the script buffer (ovlartbank) at the end; advances
+; ovlscript (ovlseq sequence, ovlstep step, ovlstepidx/ovlsteptimer
+;
+; from ovlsteptime), frees the script buffer (ovlartbank) at the end; advances
 ; ovltimer and clears textline1..5 after 268h
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hud/checkwindow.c (UpdateTextOverlay)
@@ -1498,8 +1499,10 @@ UpdateTextOverlay:
 ;-----------------------------------------------------------------------------
 ; DrawCallBanner                               66FE2  95 PC, medium confidence
 ; Draws the referee call banner bannermsg (bannerstrs: RETURN GOALIE, PULL
-; GOALIE, FACE-OFF, 2 LINE PASS, OFFSIDE, ICING, PENALTY, PENALTY SHOT) with
-; scor3font at scrolly+95h; called from the engine frame when bannermsg != -1
+; GOALIE, FACE-OFF, 2 LINE PASS, OFFSIDE, ICING, PENALTY, PENALTY SHOT)
+;
+; with scor3font at scrolly+95h; called from the engine frame when bannermsg
+; != -1
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hud/checkwindow.c (DrawCallBanner)
 %ifdef CBUILD
@@ -1763,6 +1766,7 @@ ShowGoalieBanner:
 ; SetTeamGoalie                                672F9  95 PC, medium confidence
 ; (team, goalie): for a controller-owned team writes hmtmgoalie(+team*100h);
 ; negative = pulled (OR 0FFF0h); settings_dialogs calls it from the goalie
+;
 ; menu
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hud/SetTeamGoalie.c

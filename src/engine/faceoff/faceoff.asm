@@ -1,5 +1,5 @@
 ; Faceoffs and the penalty shot. Who lines up, when the puck is dropped, and the penalty-shot
-; assignments (95G engine/faceoff95).
+; assignments.
 bits 32
 %include "hockey.inc"
 section s_51115 progbits alloc exec nowrite align=1
@@ -100,8 +100,9 @@ TakePlayerFromBox_ret5:
 ;-----------------------------------------------------------------------------
 ; PenShotStart                                    511B4  95 PC, low confidence
 ; With penshotmode off: for the team in eax, when penshotstart is set moves
-; players in assignment 2Dh to 29h; else re-assigns skaters with no
-; newpos/newpnum; puckfaceoff caller
+; players in assignment 2Dh to 29h; else re-assigns skaters
+;
+; with no newpos/newpnum; puckfaceoff caller
 ;-----------------------------------------------------------------------------
 ; C: src/engine/faceoff/TakePlayerFromBox.c (PenShotStart)
 %ifdef CBUILD
@@ -385,6 +386,7 @@ AllInPlace:
 ; assleavebox                                     5147D  95 PC, low confidence
 ; Asstab slot 28h: check4bench, then skates from the penalty box area
 ; (temp3/temp4 targets as asspsclear) and brings the released player on
+;
 ; (TakePlayerFromBox, setplayer, skateto)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/faceoff/assleavebox.c
@@ -593,8 +595,11 @@ assleavebox:
 ;-----------------------------------------------------------------------------
 ; puckfaceoff                                           516E1  94G logic94.asm
 ; (asstab 1Bh, puck assignment at a stoppage, 'this is where the action
-; starts'): end of period (clockcont_0), penalties (Stop4Pen), computer line choice (CompLine, setpersonel),
-; ReturnGoalies, restorepl, then the faceoff set-up. PC adds the penalty shot (PenShotStart) and ForceStartLineup.
+; starts'): end of period (clockcont_0), penalties (Stop4Pen),
+;
+; computer line choice (CompLine, setpersonel), ReturnGoalies, restorepl, then
+; the faceoff set-up. PC adds the penalty shot (PenShotStart) and
+; ForceStartLineup.
 ;-----------------------------------------------------------------------------
 puckfaceoff:
         push dword 28h
@@ -938,9 +943,7 @@ puckfaceoff:
         jmp near TakePlayerFromBox_ret6
 ;-----------------------------------------------------------------------------
 ; puckfaceoff2                       51BDB  94G logic94.asm, medium confidence
-; Asstab slot 28; field alignment 69% of 29 known-field accesses; content
-; rank 1/34 vs other slot routines; 3 known Genesis callees present, 0
-; missing, 0 extra
+; Assignment table slot 1Ch: the puck while the faceoff is set up
 ;-----------------------------------------------------------------------------
 puckfaceoff2:
         push dword 20h
@@ -1690,6 +1693,7 @@ assbenchwait:
 ; asstakeposition                                 52720  95 PC, low confidence
 ; Asstab 27h (assintrostand, assbench, PenShotStart/Assign): goalie -> 0Dh;
 ; else skates to the position slot from apl by position and team tmap, exits
+;
 ; when done
 ;-----------------------------------------------------------------------------
 ; C: src/engine/faceoff/TakePlayerFromBox.c (asstakeposition)
@@ -2051,18 +2055,23 @@ asstakeposition:
 ; check4bench                                           52BB6  94G logic94.asm
 ; 0 when p should stay, 1 when a line change was applied. A joystick player
 ; (pflags bit 3) stays while the clock runs. pflags2 bit 4 stays. The
+;
 ; penalty-shot player stays, and so does an assignment of 7 or 9 once a
 ; penalty shot has started. No pending change (newpos and newpnum both
 ; negative) stays. At the start of a period, assignment 27h on the same spot
+;
 ; stays, and assignment 29h stays while that team's line-change box is on. A
 ; different player, or the same player on 29h or 2Dh during a penalty shot,
 ; goes to the bench (assignment 0Bh) unless that is already the assignment or
+;
 ; p has the puck: pflags2 bit 2 is set, pflags bit 2 is cleared, temp1 is
 ; cleared, and temp5 is cleared while the clock is stopped. Otherwise the
 ; change is taken. pflags2 bit 2 and pflags bit 2 are cleared. A non-negative
+;
 ; newpos is copied to position when (pnum < 19h) differs from (newpos == 0).
 ; Setplass runs. While the clock is stopped and the period is not just
 ; starting, temp5 is cleared and assignment 28h (a positive position with the
+;
 ; line-change box on) or 27h is inserted. newpnum and newpos become -1.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/faceoff/check4bench.c
@@ -2241,8 +2250,9 @@ check4bench:
 ;-----------------------------------------------------------------------------
 ; asspsclear                                   52DB0  95 PC, medium confidence
 ; Asstab slot 2Dh, penalty shot (penshotmode): skaters skate to a spot by the
-; side boards (x -A8h, y -32h/41h +-random) and stop facing the play (SPA
-; 289h; 7BFh / 0D2Dh)
+; side boards (x -A8h, y -32h/41h +-random) and stop facing the play
+;
+; (SPA 289h; 7BFh / 0D2Dh)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/faceoff/asspsclear.c
 %ifdef CBUILD

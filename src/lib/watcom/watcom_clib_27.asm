@@ -4,6 +4,10 @@ bits 32
 section s_98801 progbits alloc exec nowrite align=1
 extern __ExpandDGROUP_, _nfree_, _Extender, _ExtenderSubtype, __HeapFlags, HeapList
 global _nexpand_, __HeapManager_expand_, __HeapManager_expand_, __HeapManager_expand_, _nmsize_
+;-----------------------------------------------------------------------------
+; _nexpand_                                                     98801  library
+; Run-time library: grows a near heap block in place
+;-----------------------------------------------------------------------------
 _nexpand_:
         push ebx
         push ecx
@@ -26,6 +30,10 @@ _nexpand_:
         jne near __HeapManager_expand_+018Fh
         mov eax, esi
         jmp near __HeapManager_expand_+01EAh
+;-----------------------------------------------------------------------------
+; __HeapManager_expand_                                         98839  library
+; Run-time heap: grows a block in place
+;-----------------------------------------------------------------------------
 __HeapManager_expand_:
         push esi
         push edi
@@ -225,6 +233,10 @@ __HeapManager_expand_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; _nmsize_                                                      98A2B  library
+; Run-time library: the size of a near heap block
+;-----------------------------------------------------------------------------
 _nmsize_:
         mov eax, dword [byte eax-04h]
         and al, 0FEh

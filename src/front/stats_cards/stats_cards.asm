@@ -1,4 +1,4 @@
-; Skater and goalie stats cards (95G stats95).
+; Skater and goalie stats cards.
 bits 32
 %include "hockey.inc"
 section s_21CDE progbits alloc exec nowrite align=1
@@ -21,6 +21,7 @@ global SkaterStatsCard, GoalieStatsCard
 ; SkaterStatsCard                                                 21CDE  95 PC
 ; Player Stats card for statsplayer (skater): reads career/season.db + att.db
 ; + team record, emb<team> background, PORTR photo, position name,
+;
 ; G/A/Pt/PIM/+-/PPG/SHG/Shots/Pct, Ratings, Shoots L/R
 ;-----------------------------------------------------------------------------
 SkaterStatsCard:

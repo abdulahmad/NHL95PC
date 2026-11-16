@@ -369,13 +369,15 @@ InputDialog:
         pop esi
         ret 14h
 %endif ; C
-unk13_722FE:
+unk13_722FE:                                    ; 13 zero bytes in code (empty path template); used by
+                                                ; OpenSelectedDb
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 ;-----------------------------------------------------------------------------
 ; LoadDbDialogShapes                                              7230B  95 PC
 ; Loads db_but (once) and its button shapes none / del / open / can / noar /
-; up / down / arro and the tab shapes dbno / dbcu / dbtm / dbor into the
-; fdlg_* slots
+; up / down / arro
+;
+; and the tab shapes dbno / dbcu / dbtm / dbor into the fdlg_* slots
 ;-----------------------------------------------------------------------------
 ; C: src/pc/database_dialogs/LoadDbDialogShapes.c
 %ifdef CBUILD
@@ -763,7 +765,7 @@ DrawDbDialogButtons:
         ret
 %endif ; C
         db 090h
-DrawDbDialog_jt:
+DrawDbDialog_jt:                                ; used by DrawDbDialog
         dd DrawDbDialog_n1
         dd DrawDbDialog_n2
         dd DrawDbDialog_n3
@@ -1014,7 +1016,7 @@ DbDialogHitTest:
         pop ecx
         ret
 %endif ; C
-DrawDbList_jt:
+DrawDbList_jt:                                  ; used by DrawDbList
         dd DrawDbList_n1
         dd DrawDbList_n2
         dd DrawDbList_n3
@@ -1315,6 +1317,7 @@ DrawDbList_n1:
 ; DbDialogLoop                                 72DE7  95 PC, medium confidence
 ; Database dialog input loop: tabs, list selection / scrolling, Open
 ; (OpenSelectedDb, LoadBothRosterLists, DrawEditRosters), Delete
+;
 ; (DeleteSelectedDb), Done
 ;-----------------------------------------------------------------------------
 ; C: src/pc/database_dialogs/LoadDbDialogShapes.c (DbDialogLoop)

@@ -1,4 +1,4 @@
-; Animation set and the controlled player change (94G chgplayer94).
+; Animation set and the controlled player change.
 bits 32
 %include "hockey.inc"
 section s_59D9A progbits alloc exec nowrite align=1
@@ -7,7 +7,7 @@ extern puckvy, puckx, pucky, sflags, SortCords, Sweepcheck, Ylist
 global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl
 ;-----------------------------------------------------------------------------
 ; SetSPA                                                59D9A  94G logic94.asm
-; Genesis comment (logic94.asm): set sprite animation on struct a3. d1 = new
+; set sprite animation on struct a3. d1 = new
 ; animation
 ;-----------------------------------------------------------------------------
 ; C: src/engine/chgplayer/SetSPA.c

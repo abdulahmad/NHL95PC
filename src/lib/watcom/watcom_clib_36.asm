@@ -5,6 +5,10 @@ section s_9D4A7 progbits alloc exec nowrite align=1
 extern __unhook387, _Extender, Is8087, __real87, FpuFlags, EmuRestoreFpuVector, EmuRestoreRealVector, EmuHookFlags
 extern FpuCr0Bits
 global __sys_fini_387_emulator
+;-----------------------------------------------------------------------------
+; __sys_fini_387_emulator                                       9D4A7  library
+; Run-time library: removes the x87 emulator
+;-----------------------------------------------------------------------------
 __sys_fini_387_emulator:
         cmp byte [__real87], 1
         je short .1

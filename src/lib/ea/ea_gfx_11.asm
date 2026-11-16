@@ -4,6 +4,10 @@ bits 32
 section s_92F50 progbits alloc exec nowrite align=1
 extern FillRectClipped, XorRectClipped
 global XorRectOutline, DrawFrameClipped
+;-----------------------------------------------------------------------------
+; XorRectOutline                               92F50  95 PC, medium confidence
+; XORs the outline of a rectangle as four edges
+;-----------------------------------------------------------------------------
 XorRectOutline:
         push esi
         push edi
@@ -78,6 +82,10 @@ XorRectOutline:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; DrawFrameClipped                             93000  95 PC, medium confidence
+; Draws a rectangle outline with four clipped fills
+;-----------------------------------------------------------------------------
 DrawFrameClipped:
         push esi
         push edi

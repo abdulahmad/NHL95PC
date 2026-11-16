@@ -1,5 +1,5 @@
 ; What the pads do during a game: the timer queue that records buttons between frames, skating,
-; passing and shooting input, line changes, the one-timer and receiving a pass (95G engine/input95).
+; passing and shooting input, line changes, the one-timer and receiving a pass.
 bits 32
 %include "hockey.inc"
 section s_4FCE8 progbits alloc exec nowrite align=1
@@ -31,9 +31,13 @@ global CanBlockShot_ret5, OppInReach, Holdplayer, lcselect, doinput, getlchoice,
 global Readjoy_tail, ReadJoy2, CenterMouse, PassCompleted, assonetimer, OneTimerChk, asspassrec, SetPenaltyStrength
 ;-----------------------------------------------------------------------------
 ; joyq_pop                                                        4FCE8  95 PC
-; Input queue. The timer ISR (main_startup SampleInputTick) samples both pads every 5 ticks
-; into joyqueue (50 records of 3 bytes) while joysampling is set. The main loop takes the
-; frame's record with joyq_peek (-> joyrec, read by ReadJoy1/ReadJoy2) and drops it with joyq_pop.
+; Input queue.
+;
+; The timer ISR (main_startup SampleInputTick) samples both pads every 5 ticks
+; into joyqueue (50 records of 3 bytes) while joysampling is set.
+;
+; The main loop takes the frame's record with joyq_peek (-> joyrec, read by
+; ReadJoy1/ReadJoy2) and drops it with joyq_pop.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/joyq_pop.c
 %ifdef CBUILD
@@ -119,9 +123,11 @@ joyq_peek:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; lineinput                                             4FD8E  94G logic94.asm
-; role. The PC line change box is one-button: the highlighted choice
-; (lcsel lcline) cycles every 60 frames (lctimer) and blinks every 12 (lcblink); a press takes it
-; through lcfound. Otherwise the player skates (doplayeracc).
+; role.
+;
+; The PC line change box is one-button: the highlighted choice (lcsel lcline)
+; cycles every 60 frames (lctimer) and blinks every 12 (lcblink); a press
+; takes it through lcfound. Otherwise the player skates (doplayeracc).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/CanBlockShot.c (lineinput)
 %ifdef CBUILD
@@ -300,9 +306,11 @@ faceoffinput:
 ;-----------------------------------------------------------------------------
 ; Acheck                             4FFAE  94G logic94.asm, medium confidence
 ; start the hold-check animation of player p against player q: lock the
-; animation (pfalock); the normal hold check, or the stick-in-the-air hold
-; check when p has an impact and q is not behind p relative to the goal p
-; shoots at (pfgoal; dy = p's Ypos - q's Ypos, negated when shooting up).
+; animation (pfalock); the normal hold check,
+;
+; or the stick-in-the-air hold check when p has an impact and q is not behind
+; p relative to the goal p shoots at (pfgoal; dy = p's Ypos - q's Ypos,
+; negated when shooting up).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/Acheck.c
 %ifdef CBUILD
@@ -336,10 +344,14 @@ Acheck:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CanBlockShot                                 4FFEE  95 PC, medium confidence
-; may this player dive to block a shot? Shooter = puck carrier, or
-; shotplayer if the puck is loose and heading at his goal; shooter must be in a shooting SPA, the
-; player between him and the puck, facing him, and closer than the puck. Returns 0, or the dive
-; direction+1 (0Ah = straight), direction also in [esi+4Ah]; Holdplayer passes it to BlockShotDive.
+; may this player dive to block a shot?
+;
+; Shooter = puck carrier, or shotplayer if the puck is loose and heading at
+; his goal; shooter must be in a shooting SPA, the player between him and the
+; puck, facing him, and closer than the puck.
+;
+; Returns 0, or the dive direction+1 (0Ah = straight), direction also in
+; [esi+4Ah]; Holdplayer passes it to BlockShotDive.
 ;-----------------------------------------------------------------------------
 CanBlockShot:
         push dword 34h
@@ -634,8 +646,9 @@ CanBlockShot_ret5:
 ;-----------------------------------------------------------------------------
 ; OppInReach                                   5033D  95 PC, medium confidence
 ; Returns 1 if one of the 6 opponents is within 30 px in x and y and in the
-; front half of facedir (vtoa); holdplayer then plays the hold anim (873h)
-; directly
+; front half of facedir (vtoa); holdplayer then plays the hold anim
+;
+; (873h) directly
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/CanBlockShot.c (OppInReach)
 %ifdef CBUILD
@@ -838,12 +851,15 @@ lcselect:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; doinput                                               504DA  94G logic94.asm
-; from.0 on (the PC reads the pads in ReadJoy1/2 and calls this per
-; controlled player; regd0 dpad, regd1 new presses, regd2 changes, regd3 held; bit 4 B, 5 C, 6 A):
-; PC line change request -> lcselect; faceoff -> faceoffinput; pf2lcm -> lineinput; pfjoycon
-; pfalock: B -> changeplayer, else the PC one-timer switch of control to passplayer
-; puck carrier (.pc1): passmode ShotMode B setpassmode A SetLCmode C SetShotMode skate
-; other (.notpc): A Holdplayer, B changeplayer, C burst, else skate.
+; from.0 on (the PC reads the pads in ReadJoy1/2 and calls this per controlled
+; player; regd0 dpad, regd1 new presses, regd2 changes, regd3 held; bit 4 B,
+;
+; 5 C, 6 A): PC line change request -> lcselect; faceoff -> faceoffinput;
+; pf2lcm -> lineinput; pfjoycon pfalock: B -> changeplayer, else the PC
+; one-timer switch of control to passplayer puck carrier (.pc1):
+;
+; passmode ShotMode B setpassmode A SetLCmode C SetShotMode skate other
+; (.notpc): A Holdplayer, B changeplayer, C burst, else skate.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/doinput.c
 %ifdef CBUILD
@@ -1189,8 +1205,8 @@ doinput:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; getlchoice                                            50908  94G logic94.asm
-; As 93G getlchoice: regd0 choice -> line via lchoicetab; +20h/+40h when the
-; tmap of the two teams differ (93G +15h/+2Ah), + tmline*4 (93G *3)
+; getlchoice: regd0 choice -> line via lchoicetab; +20h/+40h when the
+; tmap of the two teams differ, + tmline*4
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/getlchoice.c
 %ifdef CBUILD
@@ -1231,7 +1247,7 @@ getlchoice:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; lcfound                                               50975  94G logic94.asm
-; As 93G lcfound: getlchoice(regd2), if >= 0 clear pf2lcm, set pfjoycon,
+; lcfound: getlchoice(regd2), if >= 0 clear pf2lcm, set pfjoycon,
 ; clear tmflags bit 1, tmline = line, setpersonel
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/lcfound.c
@@ -1336,7 +1352,7 @@ Readjoy_tail:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ReadJoy2                                             50A84  94G middle94.asm
-; 94G spelling of the 93G Readjoy2
+; Reads the second controller
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/ReadJoy1.c (ReadJoy2)
 %ifdef CBUILD
@@ -1396,6 +1412,7 @@ CenterMouse:
 ; PassCompleted                                50AFE  95 PC, medium confidence
 ; Pass received: when passplayer is on the receiver's team (and not in
 ; highlight mode) the team pass counter (team+28h) goes up; passplayer = -1.
+;
 ; Called from PassRecOneTimer and physics
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/PassCompleted.c
@@ -1430,7 +1447,7 @@ PassCompleted:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assonetimer                     50B55  94G onetimer94.asm, medium confidence
-; Role match: the one-timer shot when the pass arrives (94G assignment 23h)
+; Role match: the one-timer shot when the pass arrives
 ;-----------------------------------------------------------------------------
 assonetimer:
         push dword 18h
@@ -1662,8 +1679,9 @@ assonetimer:
 ;-----------------------------------------------------------------------------
 ; OneTimerChk                                     50E5C  95 PC, low confidence
 ; Receiver eax in the attacking zone (|y| between the blue line 4Eh and DEh,
-; attacking side), opposing goalie present: scans teammates for a one-timer
-; chance; asspassrec caller
+; attacking side), opposing goalie present: scans teammates
+;
+; for a one-timer chance; asspassrec caller
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/OneTimerChk.c
 %ifdef CBUILD

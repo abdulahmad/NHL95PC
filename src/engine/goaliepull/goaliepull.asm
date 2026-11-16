@@ -1,4 +1,4 @@
-; Computer goalie control and pulling the goalie (94G logic94).
+; Computer goalie control and pulling the goalie.
 bits 32
 %include "hockey.inc"
 section s_591C7 progbits alloc exec nowrite align=1
@@ -9,11 +9,11 @@ global CPgoalie, ChkGoalies, ReturnGoalies, ChkPullGoalieLate
 ;-----------------------------------------------------------------------------
 ; CPgoalie                           591C7  94G logic94.asm, medium confidence
 ; Computer team t pulls its goalie when no penalty shot runs, gsp is 2 (third
-; period), t trails o by 1-2 goals (up to gsp), at most 60 s are left and the
-; puck y is on the attacking side (sign flipped by the first SortCords
+; period), t trails o by 1-2 goals (up to gsp), at most 60 s are left
+;
+; and the puck y is on the attacking side (sign flipped by the first SortCords
 ; entry's pflags bit 7). The goalie byte gets -1, the goalie's menu item is
-; unchecked (2) and "pulled" checked (1) in goaliemenuflags, then
-; setpersonel.
+; unchecked (2) and "pulled" checked (1) in goaliemenuflags, then setpersonel.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goaliepull/CPgoalie.c
 %ifdef CBUILD
@@ -216,8 +216,9 @@ ReturnGoalies:
 ;-----------------------------------------------------------------------------
 ; ChkPullGoalieLate                            593F5  95 PC, medium confidence
 ; Player logic caller: 0 unless 3rd period (gsp 2) with at most 60 s left and
-; the team is not human-controlled; then a team-struct check (likely the
-; score: pull the goalie late, not fully traced)
+; the team is not human-controlled; then a team-struct check
+;
+; (likely the score: pull the goalie late, not fully traced)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goaliepull/ChkPullGoalieLate.c
 %ifdef CBUILD

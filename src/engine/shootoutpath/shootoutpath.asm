@@ -1,4 +1,4 @@
-; Shootout skate paths and the penalty shooter (94G shootoutpath94).
+; Shootout skate paths and the penalty shooter.
 bits 32
 %include "hockey.inc"
 section s_4F990 progbits alloc exec nowrite align=1
@@ -9,9 +9,7 @@ extern vtoa
 global rtss, NextPathPoint, StartShootoutPath, asspenshooter
 ;-----------------------------------------------------------------------------
 ; rtss                             4F990  94G collide94.asm, medium confidence
-; Asstab slot 0; field alignment n/a of 0 known-field accesses; content rank
-; 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 0: empty assignment, returns at once
 ;-----------------------------------------------------------------------------
 ; C: src/engine/shootoutpath/rtss.c
 %ifdef CBUILD
@@ -24,9 +22,10 @@ rtss:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; NextPathPoint               4F99B  94G shootoutpath94.asm, medium confidence
-; Same role as 94G shootoutpath94 NextPathPoint: advances the path index
-; (sopathpoint) and loads the next point x/y/end from the 3-dword table
-; ShootoutPathData (x negated by the path side); called by asspenshooter
+; Advances the path index (sopathpoint) and loads the next point x/y/end from
+; the 3-dword table ShootoutPathData (x negated by the path side); called
+;
+; by asspenshooter
 ;-----------------------------------------------------------------------------
 ; C: src/engine/shootoutpath/NextPathPoint.c
 %ifdef CBUILD
@@ -58,8 +57,8 @@ NextPathPoint:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StartShootoutPath           4F9EF  94G shootoutpath94.asm, medium confidence
-; Role match: starts the shootout / penalty shot skate path (PC builds the
-; path, 94G picks one)
+; Role match: starts the shootout / penalty shot skate path (builds the
+; path)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/shootoutpath/StartShootoutPath.c
 %ifdef CBUILD
@@ -148,6 +147,7 @@ StartShootoutPath:
 ; asspenshooter                                4FAE8  95 PC, medium confidence
 ; Asstab 2Eh (asspuckc, SetupPenaltyShot): penalty-shot carrier: assexit if
 ; not carrying; PickShotAim, then dekes and shoots on the goal (passdir,
+;
 ; passspeed)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/shootoutpath/asspenshooter.c

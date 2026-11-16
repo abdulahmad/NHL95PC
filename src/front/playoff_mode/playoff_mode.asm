@@ -28,12 +28,14 @@ global LoadScheduleDB, LoadScheduleDB_x, SaveScheduleDB
 ;-----------------------------------------------------------------------------
 ; CreatePlayoffs                                                  86696  95 PC
 ; Main-menu handler (frontend menu table CDxxx dd entry): asks 'Please Enter
-; New Play-Off Name' (TextInputDialog), confirms replacing an existing .PO
-; dir (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO,
-; checks free disk space ('Insufficient disk space to setup a Playoff
-; Series'), copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds
-; schedule.db (POCreateSchedule) and installs PlayoffModeLoop as the mode
-; loop (menuact_nextpo)
+; New Play-Off Name' (TextInputDialog), confirms replacing an existing .PO dir
+;
+; (msg 'There is already a Play-Off with that name!'), mkdir <name>.PO, checks
+; free disk space ('Insufficient disk space to setup a Playoff Series'),
+; copies the 7 league DBs, seeds 16 teams (POSeedTeams), builds schedule.db
+;
+; (POCreateSchedule) and installs PlayoffModeLoop as the mode loop
+; (menuact_nextpo)
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_mode/POSeedRound2.c (CreatePlayoffs)
 %ifdef CBUILD
@@ -572,8 +574,9 @@ CreatePlayoffs:
 ; POSeedTeams                                  86E8B  95 PC, medium confidence
 ; Fills the 16 seed slots: 8 placeholders per conference (-3 west / -12 east,
 ; random slots), puts HomeTeam and VisTeam into their conference's slots
-; (opposite ends if same conference), then POPickConfTeams fills the
-; remaining placeholders with random teams of each conference
+;
+; (opposite ends if same conference), then POPickConfTeams fills the remaining
+; placeholders with random teams of each conference
 ;-----------------------------------------------------------------------------
 POSeedTeams:
         push dword 20h
@@ -785,9 +788,10 @@ POSeedTeams:
 ;-----------------------------------------------------------------------------
 ; POPickConfTeams                              870B6  95 PC, medium confidence
 ; (slots, confflag, first, count): picks 8 distinct random teams from
-; confteams[first..first+count) excluding HomeTeam/VisTeam, keeps the first
-; two from different divisions, and writes them over the -confflag
-; placeholders
+; confteams[first..first+count) excluding HomeTeam/VisTeam,
+;
+; keeps the first two from different divisions, and writes them over the
+; -confflag placeholders
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_mode/POPickConfTeams.c
 %ifdef CBUILD
@@ -931,6 +935,7 @@ POPickConfTeams:
 ; POCreateSchedule                                                8721F  95 PC
 ; Allocates schedule.db, POInitSchedule; if HomeTeam and VisTeam are in
 ; different conferences pre-simulates rounds 1-3 with them winning
+;
 ; (POPreSimRound1/2/ConfFinals) so they meet in the final; finds their game
 ; (+40h current game, +44h current series) and writes schedule.db
 ;-----------------------------------------------------------------------------
@@ -1169,8 +1174,9 @@ POCreateSchedule_x:
 ;-----------------------------------------------------------------------------
 ; POSetSeriesTeams                                                87520  95 PC
 ; (series, team A, team B): writes home/away into the 7 game records of a
-; 7-game series (A home in games 1,2,5,7 = 2-2-1-1-1, or games 1,2,6,7 =
-; 2-3-2 when the two teams' teamdivflags OR to 3), clears the scores to FFh
+; 7-game series (A home in games 1,2,5,7 = 2-2-1-1-1, or games 1,2,6,7 = 2-3-2
+;
+; when the two teams' teamdivflags OR to 3), clears the scores to FFh
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_mode/POSetSeriesTeams.c
 %ifdef CBUILD
@@ -1227,7 +1233,9 @@ POSetSeriesTeams:
 ;-----------------------------------------------------------------------------
 ; POInitSchedule                                                  875A3  95 PC
 ; Copies the 16 seeds, dates the round-1 games (every other day from Apr
-; 17/16), pairs seeds 1v8 .. 4v5 per conference into the 8 round-1 series at
+; 17/16),
+;
+; pairs seeds 1v8 .. 4v5 per conference into the 8 round-1 series at
 ; +1998h/+1A40h and clears the 7 later series (31h records)
 ;-----------------------------------------------------------------------------
 POInitSchedule:
@@ -2060,8 +2068,9 @@ POSeedFinal:
 ;-----------------------------------------------------------------------------
 ; POSimSeriesTeamWins                          87D5A  95 PC, medium confidence
 ; Simulates a series (SimulateGame on TEAMS/CARTEAMS) forcing the given team
-; to win whenever it is not ahead, until it has 4 wins (used to pre-advance
-; the human teams)
+; to win whenever it is not ahead, until it has 4 wins (used
+;
+; to pre-advance the human teams)
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_mode/POCreateSchedule.c (POSimSeriesTeamWins)
 %ifdef CBUILD
@@ -2446,9 +2455,11 @@ POPreSimConfFinals:
 ;-----------------------------------------------------------------------------
 ; POHandleElimination                                             88096  95 PC
 ; (result, sched): 0 = just redraw the playoff tree; 1 = asks 'Your team has
-; been eliminated ... see the final results?' and simulates every remaining
-; series ('Generating the final results.'); 2 = 'The X have been eliminated
-; ... The Y will continue'; updates playofftree / pochampion and saves
+; been eliminated ... see the final results?'
+;
+; and simulates every remaining series ('Generating the final results.'); 2 =
+; 'The X have been eliminated ... The Y will continue'; updates playofftree /
+; pochampion and saves
 ;-----------------------------------------------------------------------------
 POHandleElimination:
         push dword 9Ch
@@ -2989,10 +3000,12 @@ POSimSeriesTo:
 ;-----------------------------------------------------------------------------
 ; POAfterGame                                                     8873C  95 PC
 ; After a human playoff game: stores hmscore/awscore in the current game,
-; simulates the other series of the round up to the same game number, seeds
-; the next round when the human series is decided, picks the next human game
-; (+40h/+44h, HomeTeam/VisTeam), builds the series-status line ('tied' /
+; simulates the other series of the round up to the same game number,
+;
+; seeds the next round when the human series is decided, picks the next human
+; game (+40h/+44h, HomeTeam/VisTeam), builds the series-status line ('tied' /
 ; leads) and updates the controller teams; returns 1 when all humans are out,
+;
 ; 2 when one is
 ;-----------------------------------------------------------------------------
 POAfterGame:

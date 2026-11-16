@@ -7,6 +7,10 @@ extern PutBlockScaleSteps, RowCopyFunc, FreeMemBlock, PushMemDescriptorLocked, r
 extern bcopy, FillMem, SetScreenTarget, VesaSetBankArg, FillRectCore, XorRectCore, BlitArtOpaque, BlitArtKeyFF
 global FillRect, FillRectClipped, FillRectClipped, XorRowBytes, XorBar, XorRectClipped, ClearScreenColour, DrawArtOpaque
 global DrawArtOpaqueAtOwnPos, DrawArtOpaqueHotspot, DrawArtKeyFF, DrawArtKeyFFAtOwnPos, DrawArtKeyFFHotspot, FreeWindowBitmap, FreeBitmap
+;-----------------------------------------------------------------------------
+; FillRect                                     90D20  95 PC, medium confidence
+; Graphics library: fill a rectangle (x, y, w, h, colour)
+;-----------------------------------------------------------------------------
 FillRect:
         push esi
         push edi
@@ -151,6 +155,10 @@ FillRect:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; FillRectClipped                              90EC0  95 PC, medium confidence
+; Fills a rectangle clipped to the clip window
+;-----------------------------------------------------------------------------
 FillRectClipped:
         push esi
         mov esi, dword [byte esp+08h]
@@ -199,6 +207,10 @@ FillRectClipped:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; XorRowBytes                                     90F2C  95 PC, low confidence
+; XORs a run of bytes with a colour
+;-----------------------------------------------------------------------------
 XorRowBytes:
         dec edx
         cmp edx, byte 0FFFFFFFFh
@@ -207,6 +219,11 @@ XorRowBytes:
         inc eax
         jmp short XorRowBytes
         db 090h
+;-----------------------------------------------------------------------------
+; XorBar                                       90F38  95 PC, medium confidence
+; Graphics library: xor a bar on the screen (selection highlight of the stats
+; and standings grids)
+;-----------------------------------------------------------------------------
 XorBar:
         push esi
         push edi
@@ -299,6 +316,10 @@ XorBar:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; XorRectClipped                               91044  95 PC, medium confidence
+; XORs a rectangle clipped to the clip window
+;-----------------------------------------------------------------------------
 XorRectClipped:
         push esi
         mov esi, dword [byte esp+08h]
@@ -347,6 +368,10 @@ XorRectClipped:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; ClearScreenColour                            910B0  95 PC, medium confidence
+; Fills the whole screen with a colour
+;-----------------------------------------------------------------------------
 ClearScreenColour:
         sub esp, byte 60h
         mov eax, esp
@@ -365,6 +390,10 @@ ClearScreenColour:
         add esp, byte 60h
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; DrawArtOpaque                                910E0  95 PC, medium confidence
+; Graphics library: draw art at x, y without transparency
+;-----------------------------------------------------------------------------
 DrawArtOpaque:
         push esi
         push edi
@@ -471,6 +500,10 @@ DrawArtOpaque:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtOpaqueAtOwnPos                        9121C  95 PC, medium confidence
+; DrawArtOpaque at the shape's own position
+;-----------------------------------------------------------------------------
 DrawArtOpaqueAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -483,6 +516,10 @@ DrawArtOpaqueAtOwnPos:
         call DrawArtOpaque
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; DrawArtOpaqueHotspot                         91238  95 PC, medium confidence
+; DrawArtOpaque at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 DrawArtOpaqueHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
@@ -518,6 +555,10 @@ DrawArtOpaqueHotspot:
         jb short .1
 .3:
         ret
+;-----------------------------------------------------------------------------
+; DrawArtKeyFF                                    91284  95 PC, low confidence
+; Draws art skipping colour FFh
+;-----------------------------------------------------------------------------
 DrawArtKeyFF:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
@@ -540,6 +581,10 @@ DrawArtKeyFF:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtKeyFFAtOwnPos                            912C8  95 PC, low confidence
+; DrawArtKeyFF at the shape's own position
+;-----------------------------------------------------------------------------
 DrawArtKeyFFAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -552,6 +597,10 @@ DrawArtKeyFFAtOwnPos:
         call DrawArtKeyFF
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; DrawArtKeyFFHotspot                             912E4  95 PC, low confidence
+; DrawArtKeyFF at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 DrawArtKeyFFHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
@@ -569,6 +618,10 @@ DrawArtKeyFFHotspot:
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; FreeWindowBitmap                                91310  95 PC, low confidence
+; Removes a bitmap's window and frees its block
+;-----------------------------------------------------------------------------
 FreeWindowBitmap:
         mov edx, dword [byte esp+04h]
         mov eax, dword [edx]
@@ -580,6 +633,10 @@ FreeWindowBitmap:
         add esp, byte 4
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; FreeBitmap                                   9132C  95 PC, medium confidence
+; Removes a bitmap's window and frees its memory
+;-----------------------------------------------------------------------------
 FreeBitmap:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+028h]

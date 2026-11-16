@@ -4,6 +4,10 @@ bits 32
 section s_9805E progbits alloc exec nowrite align=1
 extern fgetc_
 global _fmemmove_, _Alphabet, utoa_, itoa_, fgets_
+;-----------------------------------------------------------------------------
+; _fmemmove_                                                    9805E  library
+; C run-time: far memmove, copies memory that may overlap
+;-----------------------------------------------------------------------------
 _fmemmove_:
         push esi
         push edi
@@ -58,10 +62,14 @@ _fmemmove_:
         pop edi
         pop esi
         ret 4
-_Alphabet:
+_Alphabet:                                      ; used by utoa_
         db 030h,031h,032h,033h,034h,035h,036h,037h,038h,039h,061h,062h,063h,064h,065h,066h
         db 067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh,070h,071h,072h,073h,074h,075h,076h
         db 077h,078h,079h,07Ah,00h
+;-----------------------------------------------------------------------------
+; utoa_                                                         980E5  library
+; Run-time library utoa: an unsigned integer to a string
+;-----------------------------------------------------------------------------
 utoa_:
         push ecx
         push esi
@@ -100,6 +108,10 @@ utoa_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; itoa_                                                         9812F  library
+; Run-time library itoa: an integer to a string
+;-----------------------------------------------------------------------------
 itoa_:
         push ecx
         mov ecx, edx
@@ -115,6 +127,10 @@ itoa_:
         mov eax, ecx
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; fgets_                                                        9814A  library
+; Run-time library fgets: reads a line from a stream
+;-----------------------------------------------------------------------------
 fgets_:
         push ecx
         push esi

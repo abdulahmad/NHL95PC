@@ -4,6 +4,10 @@ bits 32
 section s_9A874 progbits alloc exec nowrite align=1
 extern HeapList, HeapRover
 global __MemAllocator, __MemFree, __MemFree, __unlink_
+;-----------------------------------------------------------------------------
+; __MemAllocator                                                9A874  library
+; Run-time heap: allocates from a heap segment
+;-----------------------------------------------------------------------------
 __MemAllocator:
         push esi
         push edi
@@ -85,6 +89,10 @@ __MemAllocator:
         pop esi
         ret
         jmp near __MemFree+0106h
+;-----------------------------------------------------------------------------
+; __MemFree                                                     9A91C  library
+; Run-time heap: frees into a heap segment
+;-----------------------------------------------------------------------------
 __MemFree:
         push esi
         push edi
@@ -218,6 +226,10 @@ __MemFree:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; __unlink_                                                     9AA27  library
+; Run-time library: deletes a file
+;-----------------------------------------------------------------------------
 __unlink_:
         push ebx
         push edx

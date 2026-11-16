@@ -5,6 +5,10 @@ section s_B028E progbits alloc exec nowrite align=1
 extern __CHP, __cvt_, __Nan_Inf_, __set_ERANGE_, _Scale10V_, HugeValLo, HugeValHi, floor_
 extern memset_, DecimalToInt64
 global DoEFormat_, DoEFormat_, DoFFormat_, AdjField_, _FtoS_, strtod_
+;-----------------------------------------------------------------------------
+; DoEFormat_                                                    B028E  library
+; Run-time library: formats a float in %e style
+;-----------------------------------------------------------------------------
 DoEFormat_:
         push esi
         push edi
@@ -85,6 +89,10 @@ DoEFormat_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; DoFFormat_                                                    B0335  library
+; Run-time library: formats a float in %f style
+;-----------------------------------------------------------------------------
 DoFFormat_:
         push esi
         mov esi, ebx
@@ -150,6 +158,10 @@ DoFFormat_:
         mov byte [eax], 30h
         inc eax
         jmp short .8
+;-----------------------------------------------------------------------------
+; AdjField_                                                     B0398  library
+; Run-time library: pads a formatted number to its field width
+;-----------------------------------------------------------------------------
 AdjField_:
         push ebp
         mov ebp, esp
@@ -205,6 +217,10 @@ AdjField_:
         pop ecx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; _FtoS_                                                        B0403  library
+; Run-time library: a float to a string
+;-----------------------------------------------------------------------------
 _FtoS_:
         push ebp
         mov ebp, esp
@@ -449,6 +465,10 @@ _FtoS_:
         pop esi
         pop ebp
         ret 14h
+;-----------------------------------------------------------------------------
+; strtod_                                                       B0627  library
+; Run-time library strtod: a string to a double
+;-----------------------------------------------------------------------------
 strtod_:
         push ebp
         mov ebp, esp

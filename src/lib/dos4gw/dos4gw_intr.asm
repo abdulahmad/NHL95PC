@@ -3,6 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_A1948 progbits alloc exec nowrite align=1
 global IntrLoadRegs, IntrStubs, __Slash_C_
+;-----------------------------------------------------------------------------
+; IntrLoadRegs                                                    A1948  95 PC
+; Loads the full register set from a REGPACK and selects the interrupt stub
+; to call
+;-----------------------------------------------------------------------------
 IntrLoadRegs:
         and eax, 0FFh
         lea eax, [eax+eax*2]
@@ -23,7 +28,7 @@ IntrLoadRegs:
         mov ebx, dword [byte ebx+04h]
         pop ds
         ret
-IntrStubs:
+IntrStubs:                                      ; used by IntrLoadRegs, IntrLoadSegRegs
         db 0CDh,00h,0C3h,0CDh,01h,0C3h,0CDh,02h,0C3h,0CCh,090h,0C3h,0CDh,04h,0C3h,0CDh
         db 05h,0C3h,0CDh,06h,0C3h,0CDh,07h,0C3h,0CDh,08h,0C3h,0CDh,09h,0C3h,0CDh,0Ah
         db 0C3h,0CDh,0Bh,0C3h,0CDh,0Ch,0C3h,0CDh,0Dh,0C3h,0CDh,0Eh,0C3h,0CDh,0Fh,0C3h
@@ -72,6 +77,11 @@ IntrStubs:
         db 0CDh,0F0h,0C3h,0CDh,0F1h,0C3h,0CDh,0F2h,0C3h,0CDh,0F3h,0C3h,0CDh,0F4h,0C3h,0CDh
         db 0F5h,0C3h,0CDh,0F6h,0C3h,0CDh,0F7h,0C3h,0CDh,0F8h,0C3h,0CDh,0F9h,0C3h,0CDh,0FAh
         db 0C3h,0CDh,0FBh,0C3h,0CDh,0FCh,0C3h,0CDh,0FDh,0C3h,0CDh,0FEh,0C3h,0CDh,0FFh,0C3h
+;-----------------------------------------------------------------------------
+; __Slash_C_                                                    A1C7C  library
+; C run-time: returns the switch character used to build the COMMAND.COM /C
+; argument
+;-----------------------------------------------------------------------------
 __Slash_C_:
         push ebx
         mov ebx, eax

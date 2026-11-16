@@ -23,8 +23,10 @@ global MergeSeasonRecDelta, MergeGoalieRecDelta
 ;-----------------------------------------------------------------------------
 ; ChooseLeagueController                                          380E9  95 PC
 ; New league: "Who will control the league?" ListDialog of the human teams,
-; then master controller password entry + verify (re-asks on "The password
-; was entered differently the second time!"), stored EncryptPassword'ed
+; then master controller password entry + verify
+;
+; (re-asks on "The password was entered differently the second time!"), stored
+; EncryptPassword'ed
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_setup/ChooseLeagueController.c
 %ifdef CBUILD
@@ -352,9 +354,8 @@ AskExportToFloppy:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; BuildStandingsGrid                           384B8  95 PC, medium confidence
-; Reads the 26 team records and orders each division (divisionteams) by
-; points (2 x rec+29h + rec+2Bh, then the +2Ch/+2Eh words) into the 4 x 7
-; grid
+; Reads the 26 team records and orders each division (divisionteams) by points
+; (2 x rec+29h + rec+2Bh, then the +2Ch/+2Eh words) into the 4 x 7 grid
 ;-----------------------------------------------------------------------------
 BuildStandingsGrid:
         push dword 7A8h
@@ -791,9 +792,10 @@ TeamSelCancel:
 ;-----------------------------------------------------------------------------
 ; LeagueTeamSelect                                                38B4F  95 PC
 ; League team grid screen (TPI / embnhl / leaguetm): standings-ordered
-; division grid, pick a team ("Select a team to play.", "Who will play the
-; <team>?"), remove confirmation, Settings menu; used by PlayLeagueGame,
-; schedule and trades
+; division grid, pick a team ("Select a team to play.",
+;
+; "Who will play the <team>?"), remove confirmation, Settings menu; used by
+; PlayLeagueGame, schedule and trades
 ;-----------------------------------------------------------------------------
 LeagueTeamSelect:
         push dword 2B4h
@@ -2425,7 +2427,7 @@ ReadDbRec2Ch:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; AskTeamPassword                              3A395  95 PC, medium confidence
-; 'Enter password for <team>' input and check (sub_3A597), 'Incorrect
+; 'Enter password for <team>' input and check (EncryptPassword), 'Incorrect
 ; password!' on mismatch; TradePlayers asks it for both teams
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_setup/AskTeamPassword.c

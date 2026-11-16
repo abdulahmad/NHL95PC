@@ -4,6 +4,11 @@ bits 32
 section s_9C563 progbits alloc exec nowrite align=1
 extern __fprtf_, __prtf_
 global mem_putc__0, vsprintf_, j___fprtf_
+;-----------------------------------------------------------------------------
+; mem_putc__0                                                   9C563  library
+; Run-time library: stores one character into a memory string stream
+; (vsprintf output)
+;-----------------------------------------------------------------------------
 mem_putc__0:
         push ebx
         push ecx
@@ -16,6 +21,10 @@ mem_putc__0:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; vsprintf_                                                     9C576  library
+; Run-time library vsprintf: formats into a string
+;-----------------------------------------------------------------------------
 vsprintf_:
         push ecx
         push esi
@@ -27,6 +36,10 @@ vsprintf_:
         pop ecx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; j___fprtf_                                                    9C58C  library
+; Jump to the run-time formatted print to a file
+;-----------------------------------------------------------------------------
 j___fprtf_:
         jmp near __fprtf_
         db 00h,00h,00h

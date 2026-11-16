@@ -33,404 +33,412 @@ global str_ShowTeamRoster, str_ReturnTo3, str_PlayerStatistics3, str_StatisticsT
 global str_StatisticsType6, str_PlayersSortedBy, str_StatisticsType7, str_GoaliesSortedBy, str_Print, str_OutputCurrentData, filemenu, leaguemgrmenu
 global gamemenu, statsmenu, TeamStatsSortMenu, SkaterStatsSortMenu, GoalieStatsSortMenu, deskmenubar, deskmenubar_lg, DeskFileMenu
 global DeskLeagueFileMenu, DeskSettingsMenu
-joycalx:
+joycalx:                                        ; puck x per stick direction; used by JoystickCalScreen
         db 01Dh,01h,00h,00h,01Dh,01h,00h,00h,09Dh,01h,00h,00h,09Dh,01h,00h,00h
         db 09Dh,01h,00h,00h,01Dh,01h,00h,00h,09Bh,00h,00h,00h,09Bh,00h,00h,00h
         db 09Bh,00h,00h,00h
-joycaly:
+joycaly:                                        ; puck y per stick direction; used by JoystickCalScreen
         db 0E6h,00h,00h,00h,096h,00h,00h,00h,096h,00h,00h,00h,0E6h,00h,00h,00h
         db 036h,01h,00h,00h,036h,01h,00h,00h,036h,01h,00h,00h,0E6h,00h,00h,00h
         db 096h,00h,00h,00h,00h,00h,00h,00h
-inputinstalled:
+inputinstalled:                                 ; string ''; used by InputInstall, InputRemove
         db 00h,00h,00h,00h
-ptrstep:
+ptrstep:                                        ; pointer step for key / joystick movement; used by
+                                                ; EventToPointer, InputInstall, InputRemove
         db 00h,00h,00h,00h
-InputResetWord:
+InputResetWord:                                 ; Cleared with ptrstep when the input handler is installed or
+                                                ; removed; never read; used by InputInstall, InputRemove
         db 00h,00h,00h,00h
-inputqcount:
+inputqcount:                                    ; string ''; used by ClearInputQueue, GetInputEvent,
+                                                ; InputPollTick
         db 00h,00h,00h,00h
-inputqtail:
+inputqtail:                                     ; read index (0..1Fh); used by ClearInputQueue, GetInputEvent
         db 01Fh,00h,00h,00h
-inputqhead:
+inputqhead:                                     ; write index (0..1Fh); used by ClearInputQueue, InputPollTick
         db 00h,00h,00h,00h
-inputpolldiv:
+inputpolldiv:                                   ; poll every 5 ticks; used by InputPollTick
         db 0Ah,00h,00h,00h
-InputQueueSpare:
+InputQueueSpare:                                ; Cleared with the input queue; never read; used by
+                                                ; ClearInputQueue
         db 00h,00h,00h,00h
-joybtnheld:
+joybtnheld:                                     ; string ''; used by ClearInputQueue, PollJoystickEvent
         db 00h,00h,00h,00h
-enterheld:
+enterheld:                                      ; string ''; used by ClearInputQueue, PollKeyboardEvent
         db 00h,00h,00h,00h
-lastmousebtns:
+lastmousebtns:                                  ; string ''; used by PollMouseEvent
         db 00h,00h,00h,00h
-lastmousex:
+lastmousex:                                     ; string ''; used by PollMouseEvent
         db 00h,00h,00h,00h
-lastmousey:
+lastmousey:                                     ; string ''; used by PollMouseEvent
         db 00h,00h,00h,00h
-str_File:
+str_File:                                       ; "File" string literal
         db 046h,069h,06Ch,065h,00h
-str_Game6:
+str_Game6:                                      ; "Game" string literal
         db 047h,061h,06Dh,065h,00h
-str_Statistics3:
+str_Statistics3:                                ; "Statistics" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,00h
-str_Open5:
+str_Open5:                                      ; "Open ..." string literal
         db 04Fh,070h,065h,06Eh,020h,02Eh,02Eh,02Eh,00h
-str_FileMenuDivider:
+str_FileMenuDivider:                            ; Dashed divider text in the File pull-downs
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,02Dh,02Dh,02Dh,00h
-str_NewExhibitionGame:
+str_NewExhibitionGame:                          ; "New Exhibition Game ..." string literal
         db 04Eh,065h,077h,020h,045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,020h,047h
         db 061h,06Dh,065h,020h,02Eh,02Eh,02Eh,00h
-str_NewPlayOffSeries:
+str_NewPlayOffSeries:                           ; "New Play-Off Series ..." string literal
         db 04Eh,065h,077h,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,053h,065h,072h
         db 069h,065h,073h,020h,02Eh,02Eh,02Eh,00h
-str_NextPlayOffGame:
+str_NextPlayOffGame:                            ; "Next Play-Off Game ..." string literal
         db 04Eh,065h,078h,074h,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,047h,061h
         db 06Dh,065h,020h,02Eh,02Eh,02Eh,00h
-str_PlayOffSettings:
+str_PlayOffSettings:                            ; "Play-Off Settings ..." string literal
         db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,053h,065h,074h,074h,069h,06Eh,067h
         db 073h,020h,02Eh,02Eh,02Eh,00h
-str_PlayOffHilights:
+str_PlayOffHilights:                            ; "Play-Off Hilights ..." string literal
         db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,048h,069h,06Ch,069h,067h,068h,074h
         db 073h,020h,02Eh,02Eh,02Eh,00h
-str_NewLeague:
+str_NewLeague:                                  ; "New League ..." string literal
         db 04Eh,065h,077h,020h,04Ch,065h,061h,067h,075h,065h,020h,02Eh,02Eh,02Eh,00h
-str_ImportDatabases:
+str_ImportDatabases:                            ; "Import Databases ..." string literal
         db 049h,06Dh,070h,06Fh,072h,074h,020h,044h,061h,074h,061h,062h,061h,073h,065h,073h
         db 020h,02Eh,02Eh,02Eh,00h
-str_ExportDatabases:
+str_ExportDatabases:                            ; "Export Databases ..." string literal
         db 045h,078h,070h,06Fh,072h,074h,020h,044h,061h,074h,061h,062h,061h,073h,065h,073h
         db 020h,02Eh,02Eh,02Eh,00h
-str_NextLeagueGame:
+str_NextLeagueGame:                             ; "Next League Game ..." string literal
         db 04Eh,065h,078h,074h,020h,04Ch,065h,061h,067h,075h,065h,020h,047h,061h,06Dh,065h
         db 020h,02Eh,02Eh,02Eh,00h
-str_LeagueManager:
+str_LeagueManager:                              ; Menu text: League Manager
         db 04Ch,065h,061h,067h,075h,065h,020h,04Dh,061h,06Eh,061h,067h,065h,072h,020h,03h
         db 00h
-str_CentralRegistry:
+str_CentralRegistry:                            ; "Central Registry ..." string literal
         db 043h,065h,06Eh,074h,072h,061h,06Ch,020h,052h,065h,067h,069h,073h,074h,072h,079h
         db 020h,02Eh,02Eh,02Eh,00h
-str_Exit:
+str_Exit:                                       ; "Exit" string literal
         db 045h,078h,069h,074h,00h
-str_GameLabel:
+str_GameLabel:                                  ; Menu text: Game: prefix before the matchup
         db 047h,061h,06Dh,065h,03Ah,020h
-str_LAAtMTL:
+str_LAAtMTL:                                    ; "LA at MTL ..." label template; used by LoadModeState,
+                                                ; LockerRoomLoop_n6, SelectSavedFile
         db 04Ch,041h
         db 020h,020h,061h,074h,020h
         db 04Dh,054h
         db 04Ch,020h,02Eh,02Eh,02Eh,00h
-str_Dashes2:
+str_Dashes2:                                    ; string '-------------------'
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,02Dh,02Dh,00h
-str_Player1Controls2:
+str_Player1Controls2:                           ; "Player 1 Controls ..." string literal
         db 050h,06Ch,061h,079h,065h,072h,020h,031h,020h,043h,06Fh,06Eh,074h,072h,06Fh,06Ch
         db 073h,020h,02Eh,02Eh,02Eh,00h
-str_Player2Controls2:
+str_Player2Controls2:                           ; "Player 2 Controls ..." string literal
         db 050h,06Ch,061h,079h,065h,072h,020h,032h,020h,043h,06Fh,06Eh,074h,072h,06Fh,06Ch
         db 073h,020h,02Eh,02Eh,02Eh,00h
-str_ExhibitionSettings:
+str_ExhibitionSettings:                         ; "Exhibition Settings ..." string literal
         db 045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,020h,053h,065h,074h,074h,069h
         db 06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-modesetlabel:
+modesetlabel:                                   ; menu label buffer "xxxxxxx..." patched with mode name; used
+                                                ; by SetModeMenuLabels
         db 078h,078h,078h,078h,078h,078h,078h
         db 078h,078h,078h
         db 078h
         db 020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-str_PlayOffSettings2:
+str_PlayOffSettings2:                           ; "Play-Off Settings ..." string literal
         db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,053h,065h,074h,074h,069h,06Eh,067h
         db 073h,020h,02Eh,02Eh,02Eh,00h
-str_SoundSettings:
+str_SoundSettings:                              ; "Sound Settings ..." string literal
         db 053h,06Fh,075h,06Eh,064h,020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh
         db 02Eh,02Eh,00h
-str_Dashes3:
+str_Dashes3:                                    ; string '---------------------'
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,02Dh,02Dh,02Dh,02Dh,00h
-str_HomeTeamGoalie:
+str_HomeTeamGoalie:                             ; Menu text: Home Team Goalie
         db 048h,06Fh,06Dh,065h,020h,054h,065h,061h,06Dh,020h,047h,06Fh,061h,06Ch,069h,065h
         db 020h,03h,00h
-str_sp00XXXXXXXXXXXXXXXXX:
+str_sp00XXXXXXXXXXXXXXXXX:                      ; string ' 00 X. XXXXXXXXXXXXXXXX'
         db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
         db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-str_sp00XXXXXXXXXXXXXXXXX2:
+str_sp00XXXXXXXXXXXXXXXXX2:                     ; string ' 00 X. XXXXXXXXXXXXXXXX'
         db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
         db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-str_spNONE:
+str_spNONE:                                     ; string ' NONE'
         db 02h,020h,04Eh,04Fh,04Eh,045h,00h
-str_VisitingTeamGoalie:
+str_VisitingTeamGoalie:                         ; string 'Visiting Team Goalie '
         db 056h,069h,073h,069h,074h,069h,06Eh,067h,020h,054h,065h,061h,06Dh,020h,047h,06Fh
         db 061h,06Ch,069h,065h,020h,03h,00h
-str_sp00XXXXXXXXXXXXXXXXX3:
+str_sp00XXXXXXXXXXXXXXXXX3:                     ; string ' 00 X. XXXXXXXXXXXXXXXX'
         db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
         db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-str_sp00XXXXXXXXXXXXXXXXX4:
+str_sp00XXXXXXXXXXXXXXXXX4:                     ; string ' 00 X. XXXXXXXXXXXXXXXX'
         db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
         db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-str_spNONE2:
+str_spNONE2:                                    ; string ' NONE'
         db 02h,020h,04Eh,04Fh,04Eh,045h,00h
-str_GoalieItemTmpl:
+str_GoalieItemTmpl:                             ; string '\x02 00 X. XXXXXXXXXXXXXXXX'; used by
+                                                ; ResetGoalieMenu
         db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
         db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-str_Action:
+str_Action:                                     ; "Action" string literal
         db 041h,063h,074h,069h,06Fh,06Eh,00h
-str_Game7:
+str_Game7:                                      ; "Game" string literal
         db 047h,061h,06Dh,065h,00h
-str_InstantReplay:
+str_InstantReplay:                              ; "Instant Replay" string literal
         db 049h,06Eh,073h,074h,061h,06Eh,074h,020h,052h,065h,070h,06Ch,061h,079h,00h
-str_LineEditor:
+str_LineEditor:                                 ; "Line Editor" string literal
         db 04Ch,069h,06Eh,065h,020h,045h,064h,069h,074h,06Fh,072h,00h
-str_Statistics4:
+str_Statistics4:                                ; "Statistics" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,00h
-str_GameSummary:
+str_GameSummary:                                ; "Game Summary" string literal
         db 047h,061h,06Dh,065h,020h,053h,075h,06Dh,06Dh,061h,072h,079h,00h
-str_BackToGame:
+str_BackToGame:                                 ; "Back to Game" string literal
         db 042h,061h,063h,06Bh,020h,074h,06Fh,020h,047h,061h,06Dh,065h,00h
-str_SaveGame2:
+str_SaveGame2:                                  ; "Save Game ..." string literal
         db 053h,061h,076h,065h,020h,047h,061h,06Dh,065h,020h,02Eh,02Eh,02Eh,00h
-str_SportsDesk:
+str_SportsDesk:                                 ; "Sports Desk" string literal
         db 053h,070h,06Fh,072h,074h,073h,020h,044h,065h,073h,06Bh,00h
-str_SportsCentral2:
+str_SportsCentral2:                             ; string 'Sports Central'; used by SetModeMenuLabels
         db 053h,070h,06Fh,072h,074h,073h,020h,043h,065h,06Eh,074h,072h,061h,06Ch,00h
-str_PlayoffTree2:
+str_PlayoffTree2:                               ; string 'Playoff Tree'; used by SetModeMenuLabels
         db 050h,06Ch,061h,079h,06Fh,066h,066h,020h,054h,072h,065h,065h,00h
-str_Return:
+str_Return:                                     ; string 'Return'; used by SetModeMenuLabels
         db 052h,065h,074h,075h,072h,06Eh,00h
-str_Exit2:
+str_Exit2:                                      ; "Exit" string literal
         db 045h,078h,069h,074h,00h
-str_GoToReplay:
+str_GoToReplay:                                 ; "Go To Replay ..." string literal
         db 047h,06Fh,020h,054h,06Fh,020h,052h,065h,070h,06Ch,061h,079h,020h,02Eh,02Eh,02Eh
         db 00h
-str_HomeTeam2:
+str_HomeTeam2:                                  ; "Home Team ..." string literal
         db 048h,06Fh,06Dh,065h,020h,054h,065h,061h,06Dh,020h,02Eh,02Eh,02Eh,00h
-str_VisitingTeam2:
+str_VisitingTeam2:                              ; "Visiting Team ..." string literal
         db 056h,069h,073h,069h,074h,069h,06Eh,067h,020h,054h,065h,061h,06Dh,020h,02Eh,02Eh
         db 02Eh,00h
-str_GameStatistics:
+str_GameStatistics:                             ; "Game Statistics ..." string literal
         db 047h,061h,06Dh,065h,020h,053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h
         db 02Eh,02Eh,02Eh,00h
-str_PenaltySummary:
+str_PenaltySummary:                             ; "Penalty Summary ..." string literal
         db 050h,065h,06Eh,061h,06Ch,074h,079h,020h,053h,075h,06Dh,06Dh,061h,072h,079h,020h
         db 02Eh,02Eh,02Eh,00h
-str_ScoringSummary:
+str_ScoringSummary:                             ; "Scoring Summary ..." string literal
         db 053h,063h,06Fh,072h,069h,06Eh,067h,020h,053h,075h,06Dh,06Dh,061h,072h,079h,020h
         db 02Eh,02Eh,02Eh,00h
-str_TeamScratches:
+str_TeamScratches:                              ; "Team Scratches ..." string literal
         db 054h,065h,061h,06Dh,020h,053h,063h,072h,061h,074h,063h,068h,065h,073h,020h,02Eh
         db 02Eh,02Eh,00h
-str_LeagueMenuDivider:
+str_LeagueMenuDivider:                          ; Dashed divider text in the league manager pull-down
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,00h
-str_MergeLeagueFiles:
+str_MergeLeagueFiles:                           ; "Merge League Files ..." string literal
         db 04Dh,065h,072h,067h,065h,020h,04Ch,065h,061h,067h,075h,065h,020h,046h,069h,06Ch
         db 065h,073h,020h,02Eh,02Eh,02Eh,00h
-str_RemoveTeamFromLeague:
+str_RemoveTeamFromLeague:                       ; "Remove Team From League ..." string literal
         db 052h,065h,06Dh,06Fh,076h,065h,020h,054h,065h,061h,06Dh,020h,046h,072h,06Fh,06Dh
         db 020h,04Ch,065h,061h,067h,075h,065h,020h,02Eh,02Eh,02Eh,00h
-str_AddTeamToLeague:
+str_AddTeamToLeague:                            ; "Add Team to League ..." string literal
         db 041h,064h,064h,020h,054h,065h,061h,06Dh,020h,074h,06Fh,020h,04Ch,065h,061h,067h
         db 075h,065h,020h,02Eh,02Eh,02Eh,00h
-str_TradePlayers:
+str_TradePlayers:                               ; "Trade Players ... " string literal
         db 054h,072h,061h,064h,065h,020h,050h,06Ch,061h,079h,065h,072h,073h,020h,02Eh,02Eh
         db 02Eh,020h,00h
-str_RebuildDataBases:
+str_RebuildDataBases:                           ; "Rebuild DataBases ..." string literal
         db 052h,065h,062h,075h,069h,06Ch,064h,020h,044h,061h,074h,061h,042h,061h,073h,065h
         db 073h,020h,02Eh,02Eh,02Eh,00h
-str_MergeAndUpdateTeam:
+str_MergeAndUpdateTeam:                         ; "Merge and Update Team Databases ..." string literal
         db 04Dh,065h,072h,067h,065h,020h,061h,06Eh,064h,020h,055h,070h,064h,061h,074h,065h
         db 020h,054h,065h,061h,06Dh,020h,044h,061h,074h,061h,062h,061h,073h,065h,073h,020h
         db 02Eh,02Eh,02Eh,00h
-str_UpdateTeamsDataBases:
+str_UpdateTeamsDataBases:                       ; "Update Teams DataBases ..." string literal
         db 055h,070h,064h,061h,074h,065h,020h,054h,065h,061h,06Dh,073h,020h,044h,061h,074h
         db 061h,042h,061h,073h,065h,073h,020h,02Eh,02Eh,02Eh,00h
-str_ChangeLeaguePlaySettings:
+str_ChangeLeaguePlaySettings:                   ; "Change League Play Settings ..." string literal
         db 043h,068h,061h,06Eh,067h,065h,020h,04Ch,065h,061h,067h,075h,065h,020h,050h,06Ch
         db 061h,079h,020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-str_LeagueHilights:
+str_LeagueHilights:                             ; "League Hilights ..." string literal
         db 04Ch,065h,061h,067h,075h,065h,020h,048h,069h,06Ch,069h,067h,068h,074h,073h,020h
         db 02Eh,02Eh,02Eh,00h
-str_File2:
+str_File2:                                      ; "File" string literal
         db 046h,069h,06Ch,065h,00h
-str_Settings4:
+str_Settings4:                                  ; "Settings" string literal
         db 053h,065h,074h,074h,069h,06Eh,067h,073h,00h
-str_Statistics5:
+str_Statistics5:                                ; "Statistics" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,00h
-str_PlayNextGame:
+str_PlayNextGame:                               ; "Play Next Game ..." string literal
         db 050h,06Ch,061h,079h,020h,04Eh,065h,078h,074h,020h,047h,061h,06Dh,065h,020h,02Eh
         db 02Eh,02Eh,00h
-str_ReturnToSportsCentral2:
+str_ReturnToSportsCentral2:                     ; "Return To Sports Central" string literal
         db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,020h,053h,070h,06Fh,072h,074h,073h
         db 020h,043h,065h,06Eh,074h,072h,061h,06Ch,00h
-str_StatisticsType8:
+str_StatisticsType8:                            ; string 'Statistics Type '
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,020h
         db 03h,00h
-str_Standings2:
+str_Standings2:                                 ; "Standings ..." string literal
         db 053h,074h,061h,06Eh,064h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-str_TeamsSortedBy2:
+str_TeamsSortedBy2:                             ; string 'Teams Sorted By '
         db 054h,065h,061h,06Dh,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h,079h,020h
         db 03h,00h
-str_PlayersSortedBy2:
+str_PlayersSortedBy2:                           ; string 'Players Sorted By '
         db 050h,06Ch,061h,079h,065h,072h,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h
         db 079h,020h,03h,00h
-str_GoaliesSortedBy2:
+str_GoaliesSortedBy2:                           ; string 'Goalies Sorted By '
         db 047h,06Fh,061h,06Ch,069h,065h,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h
         db 079h,020h,03h,00h
-str_Scoring:
+str_Scoring:                                    ; "Scoring ..." string literal
         db 053h,063h,06Fh,072h,069h,06Eh,067h,020h,02Eh,02Eh,02Eh,00h
-str_Defense4:
+str_Defense4:                                   ; "Defense ..." string literal
         db 044h,065h,066h,065h,06Eh,073h,065h,020h,02Eh,02Eh,02Eh,00h
-str_PenaltyKilling2:
+str_PenaltyKilling2:                            ; "Penalty Killing ..." string literal
         db 050h,065h,06Eh,061h,06Ch,074h,079h,020h,04Bh,069h,06Ch,06Ch,069h,06Eh,067h,020h
         db 02Eh,02Eh,02Eh,00h
-str_PowerPlay2:
+str_PowerPlay2:                                 ; "Power Play ..." string literal
         db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,020h,02Eh,02Eh,02Eh,00h
-str_Penalties:
+str_Penalties:                                  ; "Penalties ..." string literal
         db 050h,065h,06Eh,061h,06Ch,074h,069h,065h,073h,020h,02Eh,02Eh,02Eh,00h
-str_Points:
+str_Points:                                     ; "Points ..." string literal
         db 050h,06Fh,069h,06Eh,074h,073h,020h,02Eh,02Eh,02Eh,00h
-str_Goals:
+str_Goals:                                      ; "Goals ..." string literal
         db 047h,06Fh,061h,06Ch,073h,020h,02Eh,02Eh,02Eh,00h
-str_Assists2:
+str_Assists2:                                   ; "Assists ..." string literal
         db 041h,073h,073h,069h,073h,074h,073h,020h,02Eh,02Eh,02Eh,00h
-str_PowerPlayGoals:
+str_PowerPlayGoals:                             ; "Power Play Goals ..." string literal
         db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,020h,047h,06Fh,061h,06Ch,073h
         db 020h,02Eh,02Eh,02Eh,00h
-str_ShorthandedGoals:
+str_ShorthandedGoals:                           ; "Shorthanded Goals ..." string literal
         db 053h,068h,06Fh,072h,074h,068h,061h,06Eh,064h,065h,064h,020h,047h,06Fh,061h,06Ch
         db 073h,020h,02Eh,02Eh,02Eh,00h
-str_PlusMinus4:
+str_PlusMinus4:                                 ; "Plus/Minus ..." string literal
         db 050h,06Ch,075h,073h,02Fh,04Dh,069h,06Eh,075h,073h,020h,02Eh,02Eh,02Eh,00h
-str_PenaltyMinutes:
+str_PenaltyMinutes:                             ; "Penalty Minutes ..." string literal
         db 050h,065h,06Eh,061h,06Ch,074h,079h,020h,04Dh,069h,06Eh,075h,074h,065h,073h,020h
         db 02Eh,02Eh,02Eh,00h
-str_ShootingPercentage:
+str_ShootingPercentage:                         ; "Shooting Percentage ..." string literal
         db 053h,068h,06Fh,06Fh,074h,069h,06Eh,067h,020h,050h,065h,072h,063h,065h,06Eh,074h
         db 061h,067h,065h,020h,02Eh,02Eh,02Eh,00h
-str_GoalsAgainstAverage:
+str_GoalsAgainstAverage:                        ; "Goals Against Average ..." string literal
         db 047h,06Fh,061h,06Ch,073h,020h,041h,067h,061h,069h,06Eh,073h,074h,020h,041h,076h
         db 065h,072h,061h,067h,065h,020h,02Eh,02Eh,02Eh,00h
-str_Wins2:
+str_Wins2:                                      ; "Wins ..." string literal
         db 057h,069h,06Eh,073h,020h,02Eh,02Eh,02Eh,00h
-str_SavePercentage:
+str_SavePercentage:                             ; "Save Percentage ..." string literal
         db 053h,061h,076h,065h,020h,050h,065h,072h,063h,065h,06Eh,074h,061h,067h,065h,020h
         db 02Eh,02Eh,02Eh,00h
-str_StatisticsType:
+str_StatisticsType:                             ; "Statistics Type" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_LineEditor2:
+str_LineEditor2:                                ; "Line Editor" string literal
         db 04Ch,069h,06Eh,065h,020h,045h,064h,069h,074h,06Fh,072h,00h
-str_Roster:
+str_Roster:                                     ; "Roster" string literal
         db 052h,06Fh,073h,074h,065h,072h,00h
-str_PlayerStatistics:
+str_PlayerStatistics:                           ; "Player Statistics" string literal
         db 050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h,069h,073h,074h,069h,063h
         db 073h,00h
-str_SaveTheseLines:
+str_SaveTheseLines:                             ; "Save These Lines" string literal
         db 053h,061h,076h,065h,020h,054h,068h,065h,073h,065h,020h,04Ch,069h,06Eh,065h,073h
         db 00h
-str_UseTheseLines:
+str_UseTheseLines:                              ; "Use These Lines" string literal
         db 055h,073h,065h,020h,054h,068h,065h,073h,065h,020h,04Ch,069h,06Eh,065h,073h,00h
-str_UseOriginalLines:
+str_UseOriginalLines:                           ; "Use Original Lines" string literal
         db 055h,073h,065h,020h,04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,04Ch,069h,06Eh
         db 065h,073h,00h
-str_UseDefaultLines:
+str_UseDefaultLines:                            ; "Use Default Lines" string literal
         db 055h,073h,065h,020h,044h,065h,066h,061h,075h,06Ch,074h,020h,04Ch,069h,06Eh,065h
         db 073h,00h
-str_SaveAsDefaultLines:
+str_SaveAsDefaultLines:                         ; "Save As Default Lines" string literal
         db 053h,061h,076h,065h,020h,041h,073h,020h,044h,065h,066h,061h,075h,06Ch,074h,020h
         db 04Ch,069h,06Eh,065h,073h,00h
-str_DressPlayer:
+str_DressPlayer:                                ; "Dress Player" string literal
         db 044h,072h,065h,073h,073h,020h,050h,06Ch,061h,079h,065h,072h,00h
-str_ScratchPlayer:
+str_ScratchPlayer:                              ; "Scratch Player" string literal
         db 053h,063h,072h,061h,074h,063h,068h,020h,050h,06Ch,061h,079h,065h,072h,00h
-str_ShowPlayerStatistics:
+str_ShowPlayerStatistics:                       ; "Show Player Statistics" string literal
         db 053h,068h,06Fh,077h,020h,050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h
         db 069h,073h,074h,069h,063h,073h,00h
-str_LineEditor3:
+str_LineEditor3:                                ; "Line Editor" string literal
         db 04Ch,069h,06Eh,065h,020h,045h,064h,069h,074h,06Fh,072h,00h
-str_PlayerStatistics2:
+str_PlayerStatistics2:                          ; "Player Statistics" string literal
         db 050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h,069h,073h,074h,069h,063h
         db 073h,00h
-str_Cancel4:
+str_Cancel4:                                    ; "Cancel" string literal
         db 043h,061h,06Eh,063h,065h,06Ch,00h
-str_UseTheseLines2:
+str_UseTheseLines2:                             ; "Use These Lines" string literal
         db 055h,073h,065h,020h,054h,068h,065h,073h,065h,020h,04Ch,069h,06Eh,065h,073h,00h
-str_UseOriginalLines2:
+str_UseOriginalLines2:                          ; "Use Original Lines" string literal
         db 055h,073h,065h,020h,04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,04Ch,069h,06Eh
         db 065h,073h,00h
-str_UseDefaultLines2:
+str_UseDefaultLines2:                           ; "Use Default Lines" string literal
         db 055h,073h,065h,020h,044h,065h,066h,061h,075h,06Ch,074h,020h,04Ch,069h,06Eh,065h
         db 073h,00h
-str_SaveAsDefaultLines2:
+str_SaveAsDefaultLines2:                        ; "Save As Default Lines" string literal
         db 053h,061h,076h,065h,020h,041h,073h,020h,044h,065h,066h,061h,075h,06Ch,074h,020h
         db 04Ch,069h,06Eh,065h,073h,00h
-str_LineEditor4:
+str_LineEditor4:                                ; "Line Editor" string literal
         db 04Ch,069h,06Eh,065h,020h,045h,064h,069h,074h,06Fh,072h,00h
-str_StatisticsType2:
+str_StatisticsType2:                            ; "Statistics Type" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_ReturnTo:
+str_ReturnTo:                                   ; "Return To" string literal
         db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,00h
-str_SportsDesk2:
+str_SportsDesk2:                                ; "Sports Desk" string literal
         db 053h,070h,06Fh,072h,074h,073h,020h,044h,065h,073h,06Bh,00h
-str_SportsCentral:
+str_SportsCentral:                              ; string; used by SetScreenTitle_central
         db 053h,070h,06Fh,072h,074h,073h,020h,043h,065h,06Eh,074h,072h,061h,06Ch,00h
-str_LeagueCalendar:
+str_LeagueCalendar:                             ; string; used by SetScreenTitle_calendar
         db 04Ch,065h,061h,067h,075h,065h,020h,043h,061h,06Ch,065h,06Eh,064h,061h,072h,00h
-str_PlayoffTree:
+str_PlayoffTree:                                ; string; used by SetScreenTitle_tree
         db 050h,06Ch,061h,079h,06Fh,066h,066h,020h,054h,072h,065h,065h,00h
-str_BroadcastBooth:
+str_BroadcastBooth:                             ; string; used by SetScreenTitle_booth
         db 042h,072h,06Fh,061h,064h,063h,061h,073h,074h,020h,042h,06Fh,06Fh,074h,068h,00h
-str_IntermissionDesk:
+str_IntermissionDesk:                           ; string; used by SetScreenTitle_desk
         db 049h,06Eh,074h,065h,072h,06Dh,069h,073h,073h,069h,06Fh,06Eh,020h,044h,065h,073h
         db 06Bh,00h
-str_RinkSide:
+str_RinkSide:                                   ; string; used by SetScreenTitle_rink
         db 052h,069h,06Eh,06Bh,020h,053h,069h,064h,065h,00h
-str_ReturnTo2:
+str_ReturnTo2:                                  ; "Return To" string literal
         db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,00h
-str_Roster3:
+str_Roster3:                                    ; "Roster" string literal
         db 052h,06Fh,073h,074h,065h,072h,00h
-str_StatisticsType3:
+str_StatisticsType3:                            ; "Statistics Type" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_TeamRoster:
+str_TeamRoster:                                 ; "Team Roster" string literal
         db 054h,065h,061h,06Dh,020h,052h,06Fh,073h,074h,065h,072h,00h
-str_OverallStandings:
+str_OverallStandings:                           ; "Overall Standings" string literal
         db 04Fh,076h,065h,072h,061h,06Ch,06Ch,020h,053h,074h,061h,06Eh,064h,069h,06Eh,067h
         db 073h,00h
-str_ShowTeamRoster:
+str_ShowTeamRoster:                             ; "Show Team Roster" string literal
         db 053h,068h,06Fh,077h,020h,054h,065h,061h,06Dh,020h,052h,06Fh,073h,074h,065h,072h
         db 00h
-str_ReturnTo3:
+str_ReturnTo3:                                  ; "Return To" string literal
         db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,00h
-str_PlayerStatistics3:
+str_PlayerStatistics3:                          ; "Player Statistics" string literal
         db 050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h,069h,073h,074h,069h,063h
         db 073h,00h
-str_StatisticsType4:
+str_StatisticsType4:                            ; "Statistics Type" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_ShowPlayerStatisticsAnd:
+str_ShowPlayerStatisticsAnd:                    ; "Show Player Statistics And Attributes" string literal
         db 053h,068h,06Fh,077h,020h,050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h
         db 069h,073h,074h,069h,063h,073h,020h,041h,06Eh,064h,020h,041h,074h,074h,072h,069h
         db 062h,075h,074h,065h,073h,00h
-str_ReturnTo4:
+str_ReturnTo4:                                  ; "Return To" string literal
         db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,00h,053h,074h,061h,074h,069h,073h
         db 074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_StatisticsType5:
+str_StatisticsType5:                            ; "Statistics Type" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_TeamsSortedBy:
+str_TeamsSortedBy:                              ; "Teams Sorted By" string literal
         db 054h,065h,061h,06Dh,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h,079h,00h
-str_StatisticsType6:
+str_StatisticsType6:                            ; "Statistics Type" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_PlayersSortedBy:
+str_PlayersSortedBy:                            ; "Players Sorted By" string literal
         db 050h,06Ch,061h,079h,065h,072h,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h
         db 079h,00h
-str_StatisticsType7:
+str_StatisticsType7:                            ; "Statistics Type" string literal
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,00h
-str_GoaliesSortedBy:
+str_GoaliesSortedBy:                            ; "Goalies Sorted By" string literal
         db 047h,06Fh,061h,06Ch,069h,065h,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h
         db 079h,00h
-str_Print:
+str_Print:                                      ; "Print" string literal
         db 050h,072h,069h,06Eh,074h,00h
-str_OutputCurrentData:
+str_OutputCurrentData:                          ; "Output Current Data ..." string literal
         db 04Fh,075h,074h,070h,075h,074h,020h,043h,075h,072h,072h,065h,06Eh,074h,020h,044h
         db 061h,074h,061h,020h,02Eh,02Eh,02Eh,00h,052h,061h,064h,061h,072h,027h,073h,020h
         db 043h,06Ch,069h,070h,073h,00h
-mainmenubar:
+mainmenubar:                                    ; main desk menu bar (rect, then File / Game / Statistics
+                                                ; entries); used by MainDeskLoop
         db 00h,00h,00h,00h
         db 00h,00h,00h,00h
         db 020h,00h,00h,00h
@@ -449,7 +457,8 @@ mainmenubar:
         db 00h,00h,00h,00h
         dd statsmenu
         db 05h,00h,00h,00h
-filemenu:
+filemenu:                                       ; File menu items (Open ..., New Exhibition Game ..., ...,
+                                                ; Exit)
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A5h,00h,00h,00h,011h,00h,00h,00h
         dd str_Open5
         dd MenuOpenSaved
@@ -474,16 +483,19 @@ filemenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h
         db 0A5h,00h,00h,00h,07Dh,00h,00h,00h
         dd str_ExportDatabases
-menuact_export:
+menuact_export:                                 ; filemenu "Export Databases" action slot; used by
+                                                ; DeleteSavedGame, ImportDbs, MenuNewLeague ...
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 07Eh,00h,00h,00h,0A5h,00h,00h,00h,08Fh,00h,00h,00h
         dd str_NextLeagueGame
-menuact_nextlg:
+menuact_nextlg:                                 ; filemenu "Next League Game" action slot; used by
+                                                ; DeleteSavedGame, ImportDbs, MenuNewLeague ...
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 090h,00h,00h,00h,0A5h,00h,00h,00h,0A1h,00h,00h,00h
         dd str_LeagueManager
         db 00h,00h,00h,00h
-menusub_lgmgr:
+menusub_lgmgr:                                  ; filemenu "League Manager" submenu slot; used by
+                                                ; DeleteSavedGame, ImportDbs, MenuNewLeague ...
         db 00h,00h,00h,00h,0Dh,00h,00h,00h,00h,00h,00h,00h,0A2h,00h,00h,00h
         db 0A5h,00h,00h,00h,0B3h,00h,00h,00h
         dd str_FileMenuDivider
@@ -494,15 +506,18 @@ menusub_lgmgr:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0C6h,00h,00h,00h
         db 0A5h,00h,00h,00h,0D7h,00h,00h,00h
         dd str_NextPlayOffGame
-menuact_nextpo:
+menuact_nextpo:                                 ; filemenu "Next Play-Off Game" action slot; used by
+                                                ; CreatePlayoffs, DeleteSavedGame, SelectSavedFile
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 0D8h,00h,00h,00h,0A5h,00h,00h,00h,0E9h,00h,00h,00h
         dd str_PlayOffSettings
-menuact_posettings:
+menuact_posettings:                             ; filemenu "Play-Off Settings" action slot; used by
+                                                ; CreatePlayoffs, DeleteSavedGame, SelectSavedFile
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 0EAh,00h,00h,00h,0A5h,00h,00h,00h,0FBh,00h,00h,00h
         dd str_PlayOffHilights
-menuact_pohilights:
+menuact_pohilights:                             ; filemenu "Play-Off Hilights" action slot; used by
+                                                ; CreatePlayoffs, DeleteSavedGame, SelectSavedFile
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 0FCh,00h,00h,00h,0A5h,00h,00h,00h,0Dh,01h,00h,00h
         dd str_FileMenuDivider
@@ -518,7 +533,8 @@ menuact_pohilights:
         dd str_Exit
         dd MenuExit
         db 00h,00h,00h,00h,00h,00h,00h,00h
-leaguemgrmenu:
+leaguemgrmenu:                                  ; League Manager submenu items; used by ImportDbs,
+                                                ; MenuNewLeague, SelectSavedFile
         db 00h,00h,00h,00h,00h,00h,00h,00h,0FDh,00h,00h,00h,011h,00h,00h,00h
         dd str_MergeLeagueFiles
         dd MenuMergeLeagueFiles
@@ -567,7 +583,7 @@ leaguemgrmenu:
         dd str_UpdateTeamsDataBases
         dd MenuUpdateTeamDbs
         db 00h,00h,00h,00h,00h,00h,00h,00h
-gamemenu:
+gamemenu:                                       ; Game menu items
         db 00h,00h,00h,00h,00h,00h,00h,00h,092h,00h,00h,00h,011h,00h,00h,00h
         dd str_GameLabel
         dd LockerRoomScreen
@@ -594,12 +610,13 @@ gamemenu:
         dd str_SoundSettings
         dd MenuSoundSettings
         db 00h,00h,00h,00h,00h,00h,00h,00h
-statsmenu:
+statsmenu:                                      ; Statistics menu items
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_StatisticsType8
         db 00h,00h,00h,00h
         dd StatsSourceMenu
-statsmenu_srccnt:
+statsmenu_srccnt:                               ; Item count of the statistics source pull-down under the
+                                                ; statistics menu; used by SetupStatsSourceMenu_all
         db 04h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
         db 023h,00h,00h,00h
         dd str_Standings2
@@ -620,7 +637,8 @@ statsmenu_srccnt:
         db 00h,00h,00h,00h
         dd GoalieStatsSortMenu
         db 03h,00h,00h,00h
-TeamStatsSortMenu:
+TeamStatsSortMenu:                              ; Statistics pull-down: team sort orders (standings scoring
+                                                ; defense penalty killing power play penalties)
         db 00h,00h,00h,00h,00h,00h,00h,00h,07Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_Standings2
         dd StatsMenuStandings
@@ -645,7 +663,8 @@ TeamStatsSortMenu:
         dd str_Penalties
         dd StatsMenuTeamPenalties
         db 00h,00h,00h,00h,00h,00h,00h,00h
-SkaterStatsSortMenu:
+SkaterStatsSortMenu:                            ; Statistics pull-down: skater sort orders (points goals
+                                                ; assists and so on)
         db 00h,00h,00h,00h,00h,00h,00h,00h,09Fh,00h,00h,00h,011h,00h,00h,00h
         dd str_Points
         dd StatsMenuPoints
@@ -678,7 +697,8 @@ SkaterStatsSortMenu:
         dd str_ShootingPercentage
         dd StatsMenuShootPct
         db 00h,00h,00h,00h,00h,00h,00h,00h
-GoalieStatsSortMenu:
+GoalieStatsSortMenu:                            ; Statistics pull-down: goalie sort orders (GAA wins save
+                                                ; percentage)
         db 00h,00h,00h,00h,00h,00h,00h,00h,0ABh,00h,00h,00h,011h,00h,00h,00h
         dd str_GoalsAgainstAverage
         dd StatsMenuGAA
@@ -691,7 +711,8 @@ GoalieStatsSortMenu:
         dd str_SavePercentage
         dd StatsMenuSavePct
         db 00h,00h,00h,00h,00h,00h,00h,00h
-deskmenubar:
+deskmenubar:                                    ; SportsDesk: 'Action' menu bar outside league mode; used by
+                                                ; SportsDesk
         db 00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h,012h,00h,00h,00h
         dd str_Action
         db 00h,00h,00h,00h
@@ -722,7 +743,8 @@ deskmenubar:
         db 00h,00h,00h,00h
         dd DeskGameStatsMenu
         db 04h,00h,00h,00h
-deskmenubar_lg:
+deskmenubar_lg:                                 ; SportsDesk: 'Action' menu bar in mode 2 (league), 3 items;
+                                                ; used by SportsDesk
         db 00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h,012h,00h,00h,00h
         dd str_Action
         db 00h,00h,00h,00h
@@ -738,7 +760,8 @@ deskmenubar_lg:
         db 00h,00h,00h,00h
         dd DeskGameStatsMenu
         db 04h,00h,00h,00h
-DeskFileMenu:
+DeskFileMenu:                                   ; Sports desk File pull-down: back to game save game sports
+                                                ; desk exit
         db 00h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,011h,00h,00h,00h
         dd str_BackToGame
         dd DeskBackToGame
@@ -748,7 +771,8 @@ DeskFileMenu:
         dd MenuSaveGame
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
         db 076h,00h,00h,00h,035h,00h,00h,00h
-menutext_deskreturn:
+menutext_deskreturn:                            ; SetModeMenuLabels: text slot of the desk item that runs
+                                                ; DeskReturnConfirm; used by SetModeMenuLabels
         dd str_SportsDesk
         dd DeskReturnConfirm
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
@@ -756,9 +780,11 @@ menutext_deskreturn:
         dd str_Exit2
         dd DeskExitGame
         db 00h,00h,00h,00h,00h,00h,00h,00h
-DeskLeagueFileMenu:
+DeskLeagueFileMenu:                             ; Sports desk File pull-down in league play: sports desk and
+                                                ; exit
         db 00h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,011h,00h,00h,00h
-menutext_desktodesk:
+menutext_desktodesk:                            ; SetModeMenuLabels: text slot of the desk item that runs
+                                                ; DeskToSportsDesk; used by SetModeMenuLabels
         dd str_SportsDesk
         dd DeskToSportsDesk
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
@@ -766,7 +792,8 @@ menutext_desktodesk:
         dd str_Exit2
         dd DeskExitGame
         db 00h,00h,00h,00h,00h,00h,00h,00h
-DeskSettingsMenu:
+DeskSettingsMenu:                               ; Sports desk Settings pull-down: player controls and home
+                                                ; team goalie
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
         dd str_Player1Controls2
         dd MenuP1ControlsInGame

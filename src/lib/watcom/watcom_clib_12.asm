@@ -5,6 +5,10 @@ section s_90C32 progbits alloc exec nowrite align=1
 extern __doserror_, __set_errno_dos_
 global rmdir_, _dos_close_, _dos_commit_, _dos_open_, _dos_creat_, _dos_creatnew_, lseek_, _dos_read_
 global _dos_write_
+;-----------------------------------------------------------------------------
+; rmdir_                                                        90C32  library
+; Run-time library rmdir: removes a directory
+;-----------------------------------------------------------------------------
 rmdir_:
         push edx
         mov edx, eax
@@ -23,6 +27,10 @@ rmdir_:
         pop edx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; _dos_close_                                                   90C52  library
+; Run-time library _dos_close: closes a DOS file handle
+;-----------------------------------------------------------------------------
 _dos_close_:
         push ebx
         mov bx, ax
@@ -31,6 +39,10 @@ _dos_close_:
         call __doserror_
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; _dos_commit_                                                  90C61  library
+; Run-time library _dos_commit: flushes a DOS file to disk
+;-----------------------------------------------------------------------------
 _dos_commit_:
         push ebx
         mov bx, ax
@@ -40,6 +52,10 @@ _dos_commit_:
         call __doserror_
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; _dos_open_                                                    90C71  library
+; Run-time library _dos_open: opens a DOS file
+;-----------------------------------------------------------------------------
 _dos_open_:
         xchg edx, eax
         mov ah, 3Dh
@@ -49,6 +65,11 @@ _dos_open_:
 .1:
         call __doserror_
         ret
+;-----------------------------------------------------------------------------
+; _dos_creat_                                                   90C80  library
+; Run-time library _dos_creat: creates or truncates a file and returns its
+; handle
+;-----------------------------------------------------------------------------
 _dos_creat_:
         push ecx
         mov ecx, edx
@@ -61,6 +82,10 @@ _dos_creat_:
         call __doserror_
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; _dos_creatnew_                               90C94  95 PC, medium confidence
+; DOS create-new-file call (function 5Bh)
+;-----------------------------------------------------------------------------
 _dos_creatnew_:
         push ecx
         mov ecx, edx
@@ -73,6 +98,10 @@ _dos_creatnew_:
         call __doserror_
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; lseek_                                                        90CA8  library
+; Run-time library lseek: moves a file handle's position
+;-----------------------------------------------------------------------------
 lseek_:
         push ecx
         push edi
@@ -103,6 +132,10 @@ lseek_:
         pop ecx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; _dos_read_                                                    90CEA  library
+; Run-time library _dos_read: reads from a DOS file handle
+;-----------------------------------------------------------------------------
 _dos_read_:
         push dword 3F00h
         push ds
@@ -122,6 +155,11 @@ _dos_read_:
         pop ds
         add esp, byte 4
         ret 4
+;-----------------------------------------------------------------------------
+; _dos_write_                                                   90D14  library
+; Run-time library _dos_write: writes to a DOS file handle through the shared
+; read and write code
+;-----------------------------------------------------------------------------
 _dos_write_:
         push dword 4000h
         jmp short _dos_read_+05h

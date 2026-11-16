@@ -16,6 +16,11 @@ global GusAllocDosBuffer, GusFreeDosBuffer, GusLoadMidiPatch, GusStartup, GusDri
 global GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack, GusPlayDigi, GusProgramChange
 global GusPitchBend, GusStopVoice, GusStartVoice, GusVoiceStartSample, GusVoiceSetVolume, GusSetVoiceOwner, GusVoiceController, GusMusicMidi
 global GusDigiMidi, GusNoteOn, GusNoteOff, GusFreeVoice, GusController, PrintStringCentered, ResetClipRect, ResetClipWindow
+;-----------------------------------------------------------------------------
+; GusAllocDosBuffer                            9FFCA  95 PC, medium confidence
+; Allocates a DOS memory buffer through DPMI and returns its 64K-aligned
+; address
+;-----------------------------------------------------------------------------
 GusAllocDosBuffer:
         push dword 4Ch
         call __CHK
@@ -68,6 +73,10 @@ GusAllocDosBuffer:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusFreeDosBuffer                             A0064  95 PC, medium confidence
+; Frees the DOS memory buffer through DPMI
+;-----------------------------------------------------------------------------
 GusFreeDosBuffer:
         push dword 44h
         call __CHK
@@ -100,6 +109,10 @@ GusFreeDosBuffer:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusLoadMidiPatch                             A00C1  95 PC, medium confidence
+; Loads one ULTRASND MIDI .PAT patch file into GUS memory
+;-----------------------------------------------------------------------------
 GusLoadMidiPatch:
         push dword 15Ch
         call __CHK
@@ -234,6 +247,11 @@ GusLoadMidiPatch:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusStartup                                      A0288  95 PC, low confidence
+; Shared GUS start-up for the music and digital drivers: probes the card,
+; opens it, reads ULTRADIR
+;-----------------------------------------------------------------------------
 GusStartup:
         push dword 38h
         call __CHK
@@ -356,6 +374,10 @@ GusStartup:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusDriverClose                               A044D  95 PC, medium confidence
+; Gravis driver close
+;-----------------------------------------------------------------------------
 GusDriverClose:
         push dword 1Ch
         call __CHK
@@ -397,6 +419,10 @@ GusDriverClose:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusProbe                                     A04B9  95 PC, medium confidence
+; GUS driver open entry: reads the ULTRASND settings and probes the port
+;-----------------------------------------------------------------------------
 GusProbe:
         push dword 18h
         call __CHK
@@ -439,6 +465,10 @@ GusProbe:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusDetect                                    A053C  95 PC, medium confidence
+; GUS driver detect entry: returns the port from the ULTRASND settings
+;-----------------------------------------------------------------------------
 GusDetect:
         push dword 18h
         call __CHK
@@ -473,6 +503,10 @@ GusDetect:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusInitDigi                                  A059B  95 PC, medium confidence
+; GUS digital driver init entry: starts the card once
+;-----------------------------------------------------------------------------
 GusInitDigi:
         push dword 14h
         call __CHK
@@ -493,6 +527,10 @@ GusInitDigi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusInitMusic                                 A05D3  95 PC, medium confidence
+; GUS music driver init entry: starts the card once
+;-----------------------------------------------------------------------------
 GusInitMusic:
         push dword 14h
         call __CHK
@@ -513,6 +551,10 @@ GusInitMusic:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusCloseDigi                                 A060B  95 PC, medium confidence
+; GUS digital driver close entry
+;-----------------------------------------------------------------------------
 GusCloseDigi:
         push dword 14h
         call __CHK
@@ -533,6 +575,10 @@ GusCloseDigi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusCloseMusic                                A0643  95 PC, medium confidence
+; GUS music driver close entry
+;-----------------------------------------------------------------------------
 GusCloseMusic:
         push dword 14h
         call __CHK
@@ -553,6 +599,11 @@ GusCloseMusic:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusService                                      A067B  95 PC, low confidence
+; GUS digital driver timer service entry: frees finished voices and services
+; the stream
+;-----------------------------------------------------------------------------
 GusService:
         push dword 3Ch
         call __CHK
@@ -646,6 +697,10 @@ GusService:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusQuery                                        A076E  95 PC, low confidence
+; GUS digital driver query entry
+;-----------------------------------------------------------------------------
 GusQuery:
         push dword 28h
         call __CHK
@@ -729,6 +784,10 @@ GusQuery:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusSetTrack                                     A0853  95 PC, low confidence
+; GUS digital driver track setup entry
+;-----------------------------------------------------------------------------
 GusSetTrack:
         push dword 14h
         call __CHK
@@ -749,6 +808,10 @@ GusSetTrack:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusPlayDigi                                     A0886  95 PC, low confidence
+; GUS digital driver playback entry: starts a sample on a voice
+;-----------------------------------------------------------------------------
 GusPlayDigi:
         push dword 34h
         call __CHK
@@ -781,6 +844,10 @@ GusPlayDigi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusProgramChange                             A08D7  95 PC, medium confidence
+; MIDI program change: sets the patch of a channel
+;-----------------------------------------------------------------------------
 GusProgramChange:
         push dword 28h
         call __CHK
@@ -845,6 +912,10 @@ GusProgramChange:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusPitchBend                                 A0981  95 PC, medium confidence
+; MIDI pitch bend: stores the bend of a channel
+;-----------------------------------------------------------------------------
 GusPitchBend:
         push dword 20h
         call __CHK
@@ -869,6 +940,10 @@ GusPitchBend:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusStopVoice                                    A09B9  95 PC, low confidence
+; Stops one hardware voice
+;-----------------------------------------------------------------------------
 GusStopVoice:
         push dword 28h
         call __CHK
@@ -902,6 +977,10 @@ GusStopVoice:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusStartVoice                                   A0A08  95 PC, low confidence
+; Starts a note on a hardware voice
+;-----------------------------------------------------------------------------
 GusStartVoice:
         push dword 24h
         call __CHK
@@ -1036,6 +1115,10 @@ GusStartVoice:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; GusVoiceStartSample                             A0BAC  95 PC, low confidence
+; Sets a voice's sample position and frequency
+;-----------------------------------------------------------------------------
 GusVoiceStartSample:
         push dword 3Ch
         call __CHK
@@ -1096,6 +1179,10 @@ GusVoiceStartSample:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; GusVoiceSetVolume                               A0C5B  95 PC, low confidence
+; Sets a voice's volume
+;-----------------------------------------------------------------------------
 GusVoiceSetVolume:
         push dword 38h
         call __CHK
@@ -1161,6 +1248,10 @@ GusVoiceSetVolume:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; GusSetVoiceOwner                                A0D0C  95 PC, low confidence
+; Stores the owner word of a voice
+;-----------------------------------------------------------------------------
 GusSetVoiceOwner:
         push dword 20h
         call __CHK
@@ -1185,6 +1276,10 @@ GusSetVoiceOwner:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusVoiceController                              A0D43  95 PC, low confidence
+; MIDI controller on a voice: controller 7 sets its volume
+;-----------------------------------------------------------------------------
 GusVoiceController:
         push dword 2Ch
         call __CHK
@@ -1220,6 +1315,10 @@ GusVoiceController:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; GusMusicMidi                                    A0D99  95 PC, low confidence
+; GUS music driver MIDI entry: plays a run of MIDI messages
+;-----------------------------------------------------------------------------
 GusMusicMidi:
         push dword 40h
         call __CHK
@@ -1420,6 +1519,10 @@ GusMusicMidi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusDigiMidi                                     A0FEA  95 PC, low confidence
+; GUS digital driver MIDI entry: plays a run of MIDI messages
+;-----------------------------------------------------------------------------
 GusDigiMidi:
         push dword 3Ch
         call __CHK
@@ -1604,6 +1707,10 @@ GusDigiMidi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; GusNoteOn                                    A11FE  95 PC, medium confidence
+; MIDI note on: finds a voice and starts the note
+;-----------------------------------------------------------------------------
 GusNoteOn:
         push dword 4Ch
         call __CHK
@@ -1846,6 +1953,10 @@ GusNoteOn:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; GusNoteOff                                   A14AF  95 PC, medium confidence
+; MIDI note off: releases the voice playing the note
+;-----------------------------------------------------------------------------
 GusNoteOff:
         push dword 3Ch
         call __CHK
@@ -1938,6 +2049,10 @@ GusNoteOff:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusFreeVoice                                    A15AA  95 PC, low confidence
+; Stops a voice and returns it to the free voice mask
+;-----------------------------------------------------------------------------
 GusFreeVoice:
         push dword 20h
         call __CHK
@@ -1987,6 +2102,10 @@ GusFreeVoice:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GusController                                A1632  95 PC, medium confidence
+; MIDI control change on a channel
+;-----------------------------------------------------------------------------
 GusController:
         push dword 34h
         call __CHK
@@ -2151,6 +2270,10 @@ GusController:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; PrintStringCentered                          A1800  95 PC, medium confidence
+; Prints a string centred across the clip window
+;-----------------------------------------------------------------------------
 PrintStringCentered:
         push esi
         push edi
@@ -2176,6 +2299,10 @@ PrintStringCentered:
         pop esi
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; ResetClipRect                                                   A1840  95 PC
+; Sets a bitmap's clip rectangle to the whole bitmap
+;-----------------------------------------------------------------------------
 ResetClipRect:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte eax+04h]
@@ -2189,6 +2316,10 @@ ResetClipRect:
         add esp, byte 14h
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; ResetClipWindow                              A185C  95 PC, medium confidence
+; Sets the clip window to the whole screen
+;-----------------------------------------------------------------------------
 ResetClipWindow:
         mov edx, dword [ScreenHeight]
         push edx

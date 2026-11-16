@@ -9,6 +9,10 @@ extern getmemblock, StrCopyN, FileNamePart, MemUnlock, MemLock
 global InitMemList, AddMemListRegion, AddHighMemList, FindMemListBlock, SetRowTableBuffer, AllocMemHandleLocked, AllocMemHandle, AllocMemBlock
 global AllocMemBlockUnlocked, AllocMemBlockFlags, AllocMemBlockEx, reservemem, ResizeMemPtr, ResizeMemPtrLocked, ResizeMemPtrUnlocked, ResizeMemHandleLocked
 global ResizeMemHandleUnlocked, ResizeMemBlock, findmemblock
+;-----------------------------------------------------------------------------
+; InitMemList                                     8C990  95 PC, low confidence
+; Sets up one memory list type: alignment, base and size
+;-----------------------------------------------------------------------------
 InitMemList:
         push esi
         push edi
@@ -77,6 +81,10 @@ InitMemList:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; AddMemListRegion                                8CA6C  95 PC, low confidence
+; Adds a region of memory to one memory list type
+;-----------------------------------------------------------------------------
 AddMemListRegion:
         push esi
         push edi
@@ -134,6 +142,10 @@ AddMemListRegion:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; AddHighMemList                                  8CAF4  95 PC, low confidence
+; Adds the HIGHMEM region to one memory list type
+;-----------------------------------------------------------------------------
 AddHighMemList:
         push esi
         push edi
@@ -193,6 +205,10 @@ AddHighMemList:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; FindMemListBlock                                8CBA4  95 PC, low confidence
+; Looks for a block in one memory list type
+;-----------------------------------------------------------------------------
 FindMemListBlock:
         push esi
         push edi
@@ -264,6 +280,10 @@ FindMemListBlock:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; SetRowTableBuffer                            8CC5C  95 PC, medium confidence
+; Sets the row table buffer and its size before initmemman
+;-----------------------------------------------------------------------------
 SetRowTableBuffer:
         mov eax, dword [byte esp+04h]
         mov dword [RowTableBuffer], eax
@@ -271,6 +291,10 @@ SetRowTableBuffer:
         mov dword [RowTableSize], eax
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; AllocMemHandleLocked                            8CC70  95 PC, low confidence
+; Allocates a locked block and returns its descriptor
+;-----------------------------------------------------------------------------
 AllocMemHandleLocked:
         push byte 1
         mov edx, dword [byte esp+010h]
@@ -283,6 +307,10 @@ AllocMemHandleLocked:
         add esp, byte 10h
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; AllocMemHandle                                  8CC8C  95 PC, low confidence
+; Allocates an unlocked block and returns its descriptor
+;-----------------------------------------------------------------------------
 AllocMemHandle:
         push byte 0
         mov edx, dword [byte esp+010h]
@@ -295,6 +323,11 @@ AllocMemHandle:
         add esp, byte 10h
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; AllocMemBlock                                8CCA8  95 PC, medium confidence
+; Memory manager: allocate a named block (name, size, flags), e.g. the 320 KB
+; 'TEMP' buffer of MenuSoundSettings; freed with FreeMemBlock
+;-----------------------------------------------------------------------------
 AllocMemBlock:
         push byte 1
         mov edx, dword [byte esp+010h]
@@ -307,6 +340,10 @@ AllocMemBlock:
         add esp, byte 10h
         mov eax, dword [eax]
         ret
+;-----------------------------------------------------------------------------
+; AllocMemBlockUnlocked                           8CCC4  95 PC, low confidence
+; Allocates an unlocked block and returns its address
+;-----------------------------------------------------------------------------
 AllocMemBlockUnlocked:
         push byte 0
         mov edx, dword [byte esp+010h]
@@ -319,6 +356,10 @@ AllocMemBlockUnlocked:
         add esp, byte 10h
         mov eax, dword [eax]
         ret
+;-----------------------------------------------------------------------------
+; AllocMemBlockFlags                              8CCE0  95 PC, low confidence
+; Allocates a block with the given lock flag and returns its address
+;-----------------------------------------------------------------------------
 AllocMemBlockFlags:
         push esi
         mov edx, dword [byte esp+014h]
@@ -335,6 +376,11 @@ AllocMemBlockFlags:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; AllocMemBlockEx                              8CD04  95 PC, medium confidence
+; EA memory manager: the allocator under AllocMemBlock (name, size, flags,
+; one), returns the block descriptor
+;-----------------------------------------------------------------------------
 AllocMemBlockEx:
         push esi
         push edi
@@ -364,6 +410,11 @@ AllocMemBlockEx:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; reservemem                                                      8CD4C  95 PC
+; Prints its own name: "reservemem - INVALID SIZE REQUESTED", "reservemem -
+; OUT OF MEMORY"
+;-----------------------------------------------------------------------------
 reservemem:
         push esi
         push edi
@@ -694,6 +745,10 @@ reservemem:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; ResizeMemPtr                                    8D0C8  95 PC, low confidence
+; Resizes the block at an address, with the given lock flag
+;-----------------------------------------------------------------------------
 ResizeMemPtr:
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -708,6 +763,10 @@ ResizeMemPtr:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; ResizeMemPtrLocked                              8D0EC  95 PC, low confidence
+; Resizes the block at an address, locked
+;-----------------------------------------------------------------------------
 ResizeMemPtrLocked:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -721,6 +780,10 @@ ResizeMemPtrLocked:
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; ResizeMemPtrUnlocked                            8D10C  95 PC, low confidence
+; Resizes the block at an address, unlocked
+;-----------------------------------------------------------------------------
 ResizeMemPtrUnlocked:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -734,6 +797,10 @@ ResizeMemPtrUnlocked:
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; ResizeMemHandleLocked                           8D12C  95 PC, low confidence
+; Resizes a block by descriptor, locked
+;-----------------------------------------------------------------------------
 ResizeMemHandleLocked:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -744,6 +811,10 @@ ResizeMemHandleLocked:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; ResizeMemHandleUnlocked                         8D144  95 PC, low confidence
+; Resizes a block by descriptor, unlocked
+;-----------------------------------------------------------------------------
 ResizeMemHandleUnlocked:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -754,6 +825,10 @@ ResizeMemHandleUnlocked:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; ResizeMemBlock                               8D15C  95 PC, medium confidence
+; Changes a memory block's size, compacting its list when needed
+;-----------------------------------------------------------------------------
 ResizeMemBlock:
         push esi
         push edi
@@ -875,6 +950,11 @@ ResizeMemBlock:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; findmemblock                                                    8D2A0  95 PC
+; EA library: finds the memory block that holds a pointer, through the block
+; lists
+;-----------------------------------------------------------------------------
 findmemblock:
         mov ebx, dword [byte esp+04h]
         mov eax, dword [memblocklist]

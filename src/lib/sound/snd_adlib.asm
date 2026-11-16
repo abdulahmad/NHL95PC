@@ -9,12 +9,20 @@ global AdlibDetect, AdlibOpen, AdlibInit, AdlibClose, AdlibService, AdlibLoadTim
 global AdlibProgramChange, AdlibPitchBend, AdlibVoiceSetup, AdlibVoiceRelease, AdlibVoiceResetEnvelopes, AdlibEnvelopeJumpTable, AdlibEnvelopeStep, AdlibEnvelopeStep
 global AdlibStartLfo, AdlibStepLfo, AdlibStartPitchEnv, AdlibStepPitchEnv, AdlibMidi, AdlibApplyModulation, AdlibModulationJumps, AdlibModulationJumps
 global AdlibUpdateVoice, AdlibWriteVoice, AdlibNoteOn
+;-----------------------------------------------------------------------------
+; AdlibDetect                                  9DE9C  95 PC, medium confidence
+; AdLib driver detect entry
+;-----------------------------------------------------------------------------
 AdlibDetect:
         push ds
         call __GETDS
         call OplDetect
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; AdlibOpen                                    9DEA9  95 PC, medium confidence
+; AdLib driver open entry
+;-----------------------------------------------------------------------------
 AdlibOpen:
         push ds
         call __GETDS
@@ -24,6 +32,10 @@ AdlibOpen:
         add esp, byte 4
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; AdlibInit                                    9DEBE  95 PC, medium confidence
+; AdLib driver init entry: resets the nine voices and sixteen channels
+;-----------------------------------------------------------------------------
 AdlibInit:
         push ds
         call __GETDS
@@ -80,12 +92,21 @@ AdlibInit:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; AdlibClose                                   9DF73  95 PC, medium confidence
+; AdLib driver close entry
+;-----------------------------------------------------------------------------
 AdlibClose:
         push ds
         call __GETDS
         call OplHwClose
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; AdlibService                                 9DF80  95 PC, medium confidence
+; AdLib driver timer service entry: frees finished voices and updates the
+; rest
+;-----------------------------------------------------------------------------
 AdlibService:
         push ds
         call __GETDS
@@ -145,6 +166,10 @@ AdlibService:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; AdlibLoadTimbre                                 9E026  95 PC, low confidence
+; Loads a channel's patch into a voice
+;-----------------------------------------------------------------------------
 AdlibLoadTimbre:
         push ebx
         push ecx
@@ -186,6 +211,11 @@ AdlibLoadTimbre:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibNoteOff                                 9E087  95 PC, medium confidence
+; MIDI note off: releases the voice playing the note, or holds it while
+; sustain is on
+;-----------------------------------------------------------------------------
 AdlibNoteOff:
         push ebx
         push ecx
@@ -236,6 +266,11 @@ AdlibNoteOff:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibController                              9E0FF  95 PC, medium confidence
+; MIDI control change: modulation, volume, pan, sustain, effects, all notes
+; off
+;-----------------------------------------------------------------------------
 AdlibController:
         push ecx
         push esi
@@ -376,11 +411,19 @@ AdlibController:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; AdlibProgramChange                           9E28B  95 PC, medium confidence
+; MIDI program change: sets the patch of a channel
+;-----------------------------------------------------------------------------
 AdlibProgramChange:
         and eax, 0FFh
         mov eax, dword [nosplit eax*4+AdlibChanState]
         mov byte [byte eax+01Bh], dl
         ret
+;-----------------------------------------------------------------------------
+; AdlibPitchBend                               9E29B  95 PC, medium confidence
+; MIDI pitch bend: stores the bend of a channel
+;-----------------------------------------------------------------------------
 AdlibPitchBend:
         and eax, 0FFh
         mov eax, dword [nosplit eax*4+AdlibChanState]
@@ -388,6 +431,10 @@ AdlibPitchBend:
         add edx, edx
         mov word [byte eax+08h], dx
         ret
+;-----------------------------------------------------------------------------
+; AdlibVoiceSetup                                 9E2B1  95 PC, low confidence
+; Copies a timbre's OPL settings into a voice and starts its envelopes
+;-----------------------------------------------------------------------------
 AdlibVoiceSetup:
         push esi
         push edi
@@ -454,6 +501,10 @@ AdlibVoiceSetup:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; AdlibVoiceRelease                               9E378  95 PC, low confidence
+; Moves a voice's envelope to its release stage
+;-----------------------------------------------------------------------------
 AdlibVoiceRelease:
         cmp word [byte eax+010h], byte 0
         je short .1
@@ -463,6 +514,10 @@ AdlibVoiceRelease:
         mov ax, word [byte eax+04Ah]
         mov word [byte edx+020h], ax
         ret
+;-----------------------------------------------------------------------------
+; AdlibVoiceResetEnvelopes                        9E390  95 PC, low confidence
+; Resets the envelopes of a voice
+;-----------------------------------------------------------------------------
 AdlibVoiceResetEnvelopes:
         push ecx
         cmp word [byte eax+010h], byte 0
@@ -508,12 +563,16 @@ AdlibVoiceResetEnvelopes:
         pop ecx
         ret
         db 08Dh,040h,00h
-AdlibEnvelopeJumpTable:
+AdlibEnvelopeJumpTable:                         ; jump table for the switch cases of AdlibEnvelopeStep
         dd AdlibEnvelopeStep+020h
         dd AdlibEnvelopeStep+03Bh
         dd AdlibEnvelopeStep+05Ch
         dd AdlibEnvelopeStep+07Dh
         dd AdlibEnvelopeStep+090h
+;-----------------------------------------------------------------------------
+; AdlibEnvelopeStep                               9E428  95 PC, low confidence
+; Steps one five-stage volume envelope
+;-----------------------------------------------------------------------------
 AdlibEnvelopeStep:
         push ebx
         push ecx
@@ -586,6 +645,10 @@ AdlibEnvelopeStep:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibStartLfo                                   9E4D7  95 PC, low confidence
+; Starts a voice's delayed modulation (LFO)
+;-----------------------------------------------------------------------------
 AdlibStartLfo:
         push ebx
         mov word [edx], 0
@@ -607,6 +670,10 @@ AdlibStartLfo:
         call AdlibStepLfo
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibStepLfo                                    9E511  95 PC, low confidence
+; Steps a voice's modulation (LFO)
+;-----------------------------------------------------------------------------
 AdlibStepLfo:
         push ebx
         push ecx
@@ -668,6 +735,10 @@ AdlibStepLfo:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibStartPitchEnv                              9E59D  95 PC, low confidence
+; Starts a voice's pitch envelope
+;-----------------------------------------------------------------------------
 AdlibStartPitchEnv:
         push ebx
         mov word [byte edx+0Ch], 0
@@ -682,6 +753,10 @@ AdlibStartPitchEnv:
         mov byte [byte edx+04h], 1
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibStepPitchEnv                               9E5C9  95 PC, low confidence
+; Steps a voice's pitch envelope
+;-----------------------------------------------------------------------------
 AdlibStepPitchEnv:
         push ebx
         push ecx
@@ -756,6 +831,10 @@ AdlibStepPitchEnv:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibMidi                                    9E676  95 PC, medium confidence
+; AdLib driver MIDI entry: plays a run of MIDI messages
+;-----------------------------------------------------------------------------
 AdlibMidi:
         push ds
         call __GETDS
@@ -927,6 +1006,10 @@ AdlibMidi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; AdlibApplyModulation                            9E85B  95 PC, low confidence
+; Applies a voice's modulation sources to its OPL settings
+;-----------------------------------------------------------------------------
 AdlibApplyModulation:
         push esi
         push edi
@@ -939,7 +1022,7 @@ AdlibApplyModulation:
         mov dword [byte ebp-0Ch], ecx
         jmp short AdlibModulationJumps+024h
         db 08Bh,0C0h
-AdlibModulationJumps:
+AdlibModulationJumps:                           ; used by AdlibApplyModulation
         dd .1
         dd .2
         dd .3
@@ -1134,6 +1217,10 @@ AdlibModulationJumps:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; AdlibUpdateVoice                                9EAA6  95 PC, low confidence
+; Updates one voice's envelopes and modulation for this tick
+;-----------------------------------------------------------------------------
 AdlibUpdateVoice:
         push ebx
         push ecx
@@ -1234,6 +1321,10 @@ AdlibUpdateVoice:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibWriteVoice                                 9EBD5  95 PC, low confidence
+; Writes one voice's settings to the OPL registers
+;-----------------------------------------------------------------------------
 AdlibWriteVoice:
         push ebx
         push ecx
@@ -1337,6 +1428,11 @@ AdlibWriteVoice:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AdlibNoteOn                                  9ECE8  95 PC, medium confidence
+; MIDI note on: channel 10 drums use their own patches; picks a voice and
+; starts it
+;-----------------------------------------------------------------------------
 AdlibNoteOn:
         push ecx
         push esi

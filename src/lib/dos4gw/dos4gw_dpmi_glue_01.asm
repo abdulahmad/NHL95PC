@@ -4,6 +4,10 @@ bits 32
 section s_8DC9C progbits alloc exec nowrite align=1
 extern int386x_, segread_
 global int386_
+;-----------------------------------------------------------------------------
+; int386_                                                       8DC9C  library
+; Run-time library int386: calls an interrupt
+;-----------------------------------------------------------------------------
 int386_:
         push ecx
         sub esp, byte 0Ch

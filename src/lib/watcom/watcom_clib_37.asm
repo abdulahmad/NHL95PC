@@ -5,6 +5,10 @@ section s_9D586 progbits alloc exec nowrite align=1
 extern __init_80x87, str_UnknownError, __8087, FpuType, delaycount, __save_8087_, StrErrorTable, EmuInitHook
 extern EmuFiniHook, __save_8087_, _doserrno, ErrnoVar, __no87, DefaultControlWord
 global __init_8087_, _fpreset_, __chk8087_, __delay_init_, __delay_, ErrnoPtr, __get_doserrno_ptr_, strerror_
+;-----------------------------------------------------------------------------
+; __init_8087_                                                  9D586  library
+; Run-time library: initialises the FPU
+;-----------------------------------------------------------------------------
 __init_8087_:
         push ebx
         push edx
@@ -21,10 +25,18 @@ __init_8087_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; _fpreset_                                                       9D5B7  95 PC
+; Run-time library _fpreset: resets the floating point package
+;-----------------------------------------------------------------------------
 _fpreset_:
         cmp byte [FpuType], 0
         jne short __init_8087_
         ret
+;-----------------------------------------------------------------------------
+; __chk8087_                                                    9D5C1  library
+; Run-time library: detects the FPU at start-up
+;-----------------------------------------------------------------------------
 __chk8087_:
         push edx
         mov ah, byte [__8087]
@@ -50,6 +62,10 @@ __chk8087_:
 .2:
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; __delay_init_                                                 9D601  library
+; C run-time: calibrates the millisecond delay loop
+;-----------------------------------------------------------------------------
 __delay_init_:
         push ebx
         push ecx
@@ -81,6 +97,10 @@ __delay_init_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __delay_                                                      9D633  library
+; C run-time: waits a number of milliseconds
+;-----------------------------------------------------------------------------
 __delay_:
         push ebx
         push ecx
@@ -112,12 +132,24 @@ __delay_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ErrnoPtr                                     9D66B  95 PC, medium confidence
+; Returns the address of errno
+;-----------------------------------------------------------------------------
 ErrnoPtr:
         mov eax, ErrnoVar
         ret
+;-----------------------------------------------------------------------------
+; __get_doserrno_ptr_                          9D671  95 PC, medium confidence
+; Returns the address of the DOS error number
+;-----------------------------------------------------------------------------
 __get_doserrno_ptr_:
         mov eax, _doserrno
         ret
+;-----------------------------------------------------------------------------
+; strerror_                                                     9D677  library
+; C run-time: returns the message text for an error number
+;-----------------------------------------------------------------------------
 strerror_:
         test eax, eax
         jl short .1

@@ -23,123 +23,149 @@ global debugstep, SortPending, exitgame, gameover, PerTimeTab, energywarn, lcbli
 global lcblinktime, lcsel, lcsel_aw, lcline, lctimer
 global lcboxon, ObjInitFrame, ObjInitAttr, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
 global refhitcount, fadeinpending, injurystop, bannermsg, ovlseq, ovlstep
-replaystart:
+replaystart:                                    ; used by LoadGameState, PlayHilight, ReplayFirstFrame ...
         dd ReplayBuffer
-puckx:
+puckx:                                          ; used by CanBlockShot, CountPuckThreat, DrawRinkOverlays ...
         dd puckstruct+2
-puckvx:
+puckvx:                                         ; used by ReassignCtlPlayer, ScatterPass, SetupPenaltyShot ...
         dd puckstruct+0Ch
-pucky:
+pucky:                                          ; used by CanBlockShot, CheckBump, ChkDelayedOffside ...
         dd puckstruct+6
-puckvy:
+puckvy:                                         ; used by CanBlockShot, ReassignCtlPlayer, ScatterPass ...
         dd puckstruct+0Eh
-puckz:
+puckz:                                          ; used by BlockShotDive, DrawRinkOverlays, Endfaceoff ...
         dd puckstruct+0Ah
-puckvz:
+puckvz:                                         ; aligned 3/5 accesses in dopass, doshot, passtoa0; used by
+                                                ; BlockShotDive, DebugMonitor, ScatterPass ...
         dd puckstruct+10h
 puckc:
 camx_m2 equ $+2
         dd puckstruct+042h
-camx:
+camx:                                           ; camera x (LockScroll copies it into xc1); used by
+                                                ; DebugMonitor, DrawRinkOverlays, DrawRinkSideObjects ...
         db 00h,00h
-camy:
+camy:                                           ; camera y (LockScroll copies it into yc1); used by
+                                                ; DebugMonitor, DrawRinkOverlays, DrawRinkSideObjects ...
         db 00h,00h
-wcradiusx:
+wcradiusx:                                      ; aligned 2/3 accesses in checkgoal, checkwallcoll; used by
+                                                ; checkcoll, checkgoal, checkgoalp ...
         db 00h,00h
-wcradiusy:
+wcradiusy:                                      ; used by checkcoll, checkgoal, checkgoalp ...
         db 00h,00h
-shotplayer:
+shotplayer:                                     ; doshot stores the shooter SCnum here; 95 doshot writes
+                                                ; shotplayer and assscore compares it with SCnum; used by
+                                                ; CanBlockShot, ChkShotStat, Goal ...
         db 00h,00h
-lastplayer:
+lastplayer:                                     ; dopass and doshot store the carrier SCnum here; 95 writes
+                                                ; lastplayer; used by GiveControl, LoadGameState,
+                                                ; ResetGameVars ...
         db 00h,00h
-passdir:
+passdir:                                        ; used by LoadGameState, ResetGameVars, SaveGameState ...
         db 00h,00h
-passspeed:
+passspeed:                                      ; dopass stores passacc*2+$A0 here and doshot scales it by
+                                                ; $5249; 95 passspeed; used by LoadGameState, ResetGameVars,
+                                                ; SaveGameState ...
         db 00h,00h
-passplayer:
+passplayer:                                     ; used by LoadGameState, PassCompleted, ResetGameVars ...
         db 00h,00h
-threat:
+threat:                                         ; aligned 2/3 accesses in assgoalie, chk4pass; used by
+                                                ; CountPuckThreat, LoadGameState, ResetGameVars ...
         db 00h,00h
-xc1:
+xc1:                                            ; used by DebugMonitor, LoadGameState, PreGameIntro ...
         db 00h,00h
-yc1:
+yc1:                                            ; used by DebugMonitor, LoadGameState, PreGameIntro ...
         db 00h,00h
-yleader:
+yleader:                                        ; used by LoadGameState, SaveGameState, StartHL2 ...
         db 00h,00h
-fox:
+fox:                                            ; used by Goal, LoadGameState, PlacePlayersAtStart ...
         db 00h,00h
-foy:
+foy:                                            ; used by ChkPullGoalieLate, Goal, LoadGameState ...
         db 00h,00h
-fodir1:
+fodir1:                                         ; used by Endfaceoff, LoadGameState, SaveGameState ...
         db 00h,00h
-fodir2:
+fodir2:                                         ; used by Endfaceoff, LoadGameState, SaveGameState ...
         db 00h,00h
-collflag:
+collflag:                                       ; aligned 2/3 accesses in Bcheck, holdcheck; used by Bcheck,
+                                                ; Goal, LoadGameState ...
         db 00h
-gmode:
+gmode:                                          ; used by AddPenalty, BuildEventLines, CheckBump ...
         db 00h
-sflags:
+sflags:                                         ; used by AddPenalty2, CheckBump, InProgress ...
         db 00h,00h
-gmode2:
+gmode2:                                         ; game-state flag word beside gmode (saved with the game,
+                                                ; cleared/restored by the frame driver); bit 7 also selects
+                                                ; the referee's signalling animations; meaning of the other
+                                                ; bits unknown; used by ChkShotStat, DebugMonitor, Endfaceoff
+                                                ; ...
         db 00h,00h
-sflags3:
+sflags3:                                        ; used by CrowdOnStoppage, Endfaceoff, LoadGameState ...
         db 00h,00h
-c1playernum:
+c1playernum:                                    ; used by Bcheck, DebugMonitor, DrawRinkOverlays ...
         db 0FFh
         db 0FFh
-c2playernum:
+c2playernum:                                    ; used by DebugMonitor, DrawRinkOverlays, GiveControl ...
         db 0FFh
         db 0FFh
-cont1team:
+cont1team:                                      ; used by ChkGoalies, ChkPullGoalieLate, ClearCtlBlink ...
         db 00h,00h
-cont2team:
+cont2team:                                      ; used by ChkGoalies, ClearCtlBlink, ControlsDlgInGame_setside
+                                                ; ...
         db 00h,00h
-HomeTeam:
+HomeTeam:                                       ; used by ControlsDlgLoop, DeskGoToReplay, DeskReloadGame ...
         db 0Ch,00h
-VisTeam:
+VisTeam:                                        ; used by ControlsDlgLoop, DrawControlsDlg,
+                                                ; DrawGameLineJerseys ...
         db 015h,00h
-Pencntdwn:
+Pencntdwn:                                      ; used by DebugMonitor, LoadGameState, ResetGameVars ...
         db 0FFh,0FFh
-Penaltytimer:
+Penaltytimer:                                   ; used by LoadGameState, ResetGameVars, SaveGameState ...
         db 00h,00h
-refsignal:
+refsignal:                                      ; used by DebugMonitor, LoadGameState, ResetGameVars ...
         db 00h,00h
-RefStep:
+RefStep:                                        ; used by ClearSortCords, DebugMonitor, InProgress ...
         db 0FFh
         db 0FFh
-RefPen:
+RefPen:                                         ; used by CrowdOnStoppage, LoadGameState, ResetGameVars ...
         db 00h,00h
-penaltysc:
+penaltysc:                                      ; sort object number of the player the referee's call is
+                                                ; about, -1 none: InProgress sets it from the penalty buffer,
+                                                ; QueueGoalieNote and assrefgoalpa read it; used by
+                                                ; InProgress, LoadGameState, QueueGoalieNote ...
         db 0FFh,0FFh
-gsp:
+gsp:                                            ; used by CPgoalie, ChkPullGoalieLate, CrowdOnStoppage ...
         db 00h,00h
-gameclock:
+gameclock:                                      ; used by CPgoalie, ChkPullGoalieLate, ClockTick ...
         db 00h,00h
-clockticks:
+clockticks:                                     ; ticks within the current gameclock second (reloaded with 18h
+                                                ; by ClockTick); used by ClockTick, DebugMonitor,
+                                                ; ForceStartLineup ...
         db 00h,00h
-dirtab:
+dirtab:                                         ; used by Endfaceoff, burst, dopass ...
         db 00h,00h
-dirtab_y:
+dirtab_y:                                       ; used by Endfaceoff, burst, playeracc
         db 0C8h,00h,08Dh,00h,08Dh,00h,0C8h,00h,00h,00h,08Dh,00h,073h,0FFh,00h,00h
         db 038h,0FFh,073h,0FFh,073h,0FFh,038h,0FFh,00h,00h,073h,0FFh,08Dh,00h
-seed:
+seed:                                           ; used by LoadGameState, PreGameIntro, RunDemoGame ...
         db 021h,043h
         db 0CDh,0ABh
-pendelaytab:
+pendelaytab:                                    ; used by checkfornewpen
         db 00h,0Ah,0Ah,03h,01h,00h,01h,01h,01h,0Ah,0Ah,04h,04h
-pendelaytab_e13:
+pendelaytab_e13:                                ; pendelaytab+0Dh: entry 13, checkfornewpen uses it for a
+                                                ; penalty shot; used by checkfornewpen
         db 04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,01h
-penmintab_m3:
+penmintab_m3:                                   ; penmintab-3: -5r byte-load base
         db 00h,01h,01h
-penmintab:
+penmintab:                                      ; used by AddPenalty2, InProgress, PenGoalStuff ...
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,02h,00h,02h,02h,02h,02h,02h
         db 02h,02h,02h,02h,02h,02h,0FFh,05h,05h,05h,00h,00h,00h,00h,00h
-pendelay2tab:
+pendelay2tab:                                   ; checkfornewpen: second delay per penalty, x 32 frames, the
+                                                ; minimum for Pencntdwn2; used by checkfornewpen
         db 00h,02h,02h,02h
-pendelay2tab_e4:
+pendelay2tab_e4:                                ; pendelay2tab+4: entry 4, used for a penalty shot; used by
+                                                ; checkfornewpen
         db 02h,00h,02h,04h,02h,06h,02h,02h,02h,02h,02h,02h,02h,02h,02h,02h
         db 02h,02h,02h,02h,02h,02h,02h,00h,02h,02h,02h
-asstab:
+asstab:                                         ; used by updateplayers
         dd rtss
         dd assdefo
         dd assdefd
@@ -187,7 +213,7 @@ asstab:
         dd assrefpenshot
         dd asspsclear
         dd asspenshooter
-SPAtab:
+SPAtab:                                         ; used by updateanim
         db 00h,00h,00h,080h,012h,00h,024h,00h,036h,00h,048h,00h,05Ah,00h,06Ch,00h
         db 07Eh,00h,096h,01h,0B4h,00h,01Ah,02h,0Ah,00h,01Bh,02h,0Ah,00h,01Ah,02h
         db 0Ah,00h,01Bh,02h,0Ah,00h,096h,01h,0F0h,00h,01Ah,02h,0Ah,00h,01Bh,02h
@@ -862,68 +888,101 @@ SPAtab:
         db 0F4h,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,0C1h,02h,0Ch,00h,06Bh,04h,0Ah,00h,06Ch,04h,0Ah,00h,06Dh,04h
         db 018h,00h,06Bh,04h,0Ch,00h,0C1h,02h,0F4h
-priolist_m1:
+priolist_m1:                                    ; used by releasepl
         db 0FFh
-priolist:
+priolist:                                       ; used by SetPlList
         db 00h,01h,02h,04h,03h,05h,06h
-shownumbers:
+shownumbers:                                    ; toggled by HandleHotKey on scan code 0Fh (Tab); while set
+                                                ; the frame code draws each player's number (+5Eh) above him
+                                                ; with DrawSpriteNumber; used by DrawRinkOverlays,
+                                                ; DrawRinkSideObjects, HandleHotKey ...
         db 00h,00h,00h,00h
-debugstep:
+debugstep:                                      ; only used by DebugMonitor: non-zero prints the per-frame
+                                                ; debug lines and waits for a key (WaitKey), '\' toggles it,
+                                                ; joyq_flush on toggling off
         db 00h,00h
-SortPending:
+SortPending:                                    ; used by AddPenalty2, InProgress, LoadGameState ...
         db 00h,00h
-exitgame:
+exitgame:                                       ; main-loop request flag set by SetExitGame; used by
+                                                ; DebugMonitor, Gameloop, IntermissionDesk ...
         db 01h,00h
-gameover:
+gameover:                                       ; main-loop request flag set by GameOver; used by
+                                                ; DebugMonitor, GameOver, Gameloop ...
         db 01h,00h
-PerTimeTab:
+PerTimeTab:                                     ; period length table read by GetPeriodTime; used by
+                                                ; GetPeriodTime, RunDemoGame
         db 02Ch,01h,058h,02h,0B0h,04h,0B0h,04h
-energywarn:
+energywarn:                                     ; per-team word (home, away): 1 while one of the team's
+                                                ; skaters is exhausted (+43h < 0) on an odd lldispodd frame;
+                                                ; DrawEnergyBar draws the bar in 0/7 instead of 67h; used by
+                                                ; DrawEnergyBar, LoadGameState, PeriodOver ...
         db 00h,00h
         db 00h,00h
-lcblink:
+lcblink:                                        ; per team: line change box highlight blink state (toggled
+                                                ; every 12 frames by lineinput); cleared with lcboxon when the
+                                                ; box closes; used by ClearCtlBlink, DrawLineGroupBars,
+                                                ; LoadGameState ...
         db 00h,00h
         db 00h,00h
-lcblinktime:
+lcblinktime:                                    ; per team: blink countdown (12 frames) in lineinput; used by
+                                                ; LoadGameState, RequestLineChange, ResetGameVars ...
         db 00h,00h
         db 00h,00h
-lcsel:
+lcsel:                                          ; per team: highlighted line change choice; lineinput passes
+                                                ; it to lcfound on a press and advances it every 60 frames mod
+                                                ; 4 (mod 2 when lcline > 3); used by LoadGameState,
+                                                ; RequestLineChange, ResetGameVars ...
         db 00h,00h
-lcsel_aw:
+lcsel_aw:                                       ; lcsel+2: the visitors; also lcline-2, the -5r short-load
+                                                ; base in lineinput; used by LoadGameState, ResetGameVars,
+                                                ; SaveGameState ...
         db 00h,00h
-lcline:
+lcline:                                         ; per team: line offered in the line change box, advanced
+                                                ; through linenext; the box opener sets it from tmline or
+                                                ; getlchoice(1); used by DrawLineGroupBars, LoadGameState,
+                                                ; PeriodOver ...
         db 00h,00h
         db 00h,00h
-lctimer:
+lctimer:                                        ; per team: 60-frame countdown that advances lcsel/lcline in
+                                                ; lineinput; used by LoadGameState, RequestLineChange,
+                                                ; ResetGameVars ...
         db 00h,00h
         db 00h,00h
-lcboxon:
+lcboxon:                                        ; per team: line change box open (set with lcblink by the box
+                                                ; opener RequestLineChange, cleared by lineinput/doinput when
+                                                ; a line is chosen); used by ClearCtlBlink, DrawLineGroupBars,
+                                                ; LoadGameState ...
         db 00h,00h
         db 00h,00h
-CoachRotateFour:
+CoachRotateFour:                                ; Coach line table rows: next-line choices for a four-line
+                                                ; rotation
         db 02h,01h,00h,03h,00h,03h,02h,01h,03h,02h,01h,00h,01h,00h,03h,02h
-CoachRotateThree:
+CoachRotateThree:                               ; Coach line table rows: three-line rotation with the
+                                                ; power-play rows after it
         db 01h,02h,03h,0FFh,02h,00h,03h,0FFh,00h,01h,03h,0FFh,00h,01h,02h,0FFh
         db 01h,02h,03h,0FFh,02h,00h,03h,0FFh,03h,00h,01h,0FFh,00h,01h,02h,0FFh
-CoachRotateThreeTop:
+CoachRotateThreeTop:                            ; Coach line table rows: three lines with the top line first
         db 02h,01h,00h,0FFh,00h,02h,01h,0FFh,01h,02h,00h,0FFh,01h,00h,02h,0FFh
-CoachRotateFourEven:
+CoachRotateFourEven:                            ; Coach line table rows: four lines in even rotation
         db 02h,01h,00h,03h,00h,01h,02h,03h,03h,02h,01h,00h,01h,00h,03h,02h
-CoachRotateFourMixed:
+CoachRotateFourMixed:                           ; Coach line table rows: four lines in mixed rotation
         db 02h,01h,00h,03h,00h,01h,03h,02h,03h,02h,01h,00h,01h,00h,03h,02h
-CoachRotateThreeEven:
+CoachRotateThreeEven:                           ; Coach line table rows: three lines in even rotation
         db 02h,01h,00h,0FFh,00h,01h,02h,0FFh,02h,01h,00h,0FFh,01h,00h,02h,0FFh
-CoachSpecialUnits:
+CoachSpecialUnits:                              ; Coach line table rows: special team units only
         db 05h,04h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
-CoachRotateTwo:
+CoachRotateTwo:                                 ; Coach line table rows: two lines only
         db 01h,00h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,0FFh,0FFh
-CoachRotateTwoDeep:
+CoachRotateTwoDeep:                             ; Coach line table rows: two lines with the third line as
+                                                ; backup
         db 01h,02h,0FFh,0FFh,02h,00h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,02h,0FFh
-CoachRotateFourShort:
+CoachRotateFourShort:                           ; Coach line table rows: four lines with short shifts
         db 01h,02h,03h,0FFh,02h,03h,00h,0FFh,03h,00h,01h,0FFh,00h,01h,02h,0FFh
-CoachRotateThreeShort:
+CoachRotateThreeShort:                          ; Coach line table rows: three lines with short shifts
         db 01h,02h,0FFh,0FFh,00h,02h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,02h,0FFh
-coachlinetab:
+coachlinetab:                                   ; CompLine: pointer per coach mode (tmcoachmode) to its table
+                                                ; of 4-byte rows, the lines to try next for each current line;
+                                                ; used by CompLine
         dd CoachRotateFour
         dd CoachRotateThree
         dd CoachRotateThreeTop
@@ -935,11 +994,13 @@ coachlinetab:
         dd CoachRotateTwoDeep
         dd CoachRotateFourShort
         dd CoachRotateThreeShort
-ds2list:
+ds2list:                                        ; used by ClearSortCords
         db 060h,0FFh,0F1h,0FFh,00h,00h,0FFh,0FFh,00h,00h
-ObjInitFrame:
+ObjInitFrame:                                   ; Object start table (18 bytes per object): frame word
+                                                ; LoadGameState copies into the object; used by LoadGameState
         db 08h,00h
-ObjInitAttr:
+ObjInitAttr:                                    ; Object start table: attribute word LoadGameState copies into
+                                                ; the object; used by LoadGameState
         db 04h,00h,029h,00h,080h,00h,060h,0FFh,0E2h,0FFh,00h,00h,0FFh,0FFh,00h,00h
         db 08h,00h,04h,00h,029h,00h,080h,00h,060h,0FFh,0D3h,0FFh,00h,00h,0FFh,0FFh
         db 00h,00h,08h,00h,04h,00h,029h,00h,080h,00h,060h,0FFh,0C4h,0FFh,00h,00h
@@ -959,28 +1020,50 @@ ObjInitAttr:
         db 01h,00h,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,03h,00h,03h,00h
         db 019h,00h,04h,00h,0F1h,0FFh,00h,00h,00h,00h,0BFh,02h,00h,00h,08h,00h
         db 04h,00h,01Eh,00h,00h,00h
-puckfaceoff2_ptab:
+puckfaceoff2_ptab:                              ; used by PlacePlayersAtStart, asstakeposition, puckfaceoff2
         db 00h,00h
-puckfaceoff2_ptab_y:
+puckfaceoff2_ptab_y:                            ; puckfaceoff2_ptab+2: the y column; used by
+                                                ; PlacePlayersAtStart, asstakeposition, puckfaceoff2
         db 024h,0FFh,0DDh,0FFh,0D3h,0FFh,023h,00h,0D3h,0FFh,0CCh,0FFh,0F6h,0FFh,00h,00h
         db 0F8h,0FFh,034h,00h,0F6h,0FFh,00h,00h,0C9h,0FFh
-apl:
+apl:                                            ; faceoff slot list, the bytes of puckfaceoff2 .apl; used by
+                                                ; PlacePlayersAtStart, asstakeposition, puckfaceoff2
         db 00h,01h,02h,03h,04h,05h,06h,00h,00h,01h,05h,03h,04h,02h,00h,00h
         db 00h,03h,05h,01h,04h,00h
         db 00h,00h
-ovltimer:
+ovltimer:                                       ; text overlay slide timer: DrawTextOverlay slides in below
+                                                ; 10h, shows at 100h, slides out to 258h; CloseTextOverlay
+                                                ; sets 10h/0; used by ChkScorerMilestone, CloseTextOverlay,
+                                                ; CrowdOnStoppage ...
         db 0FFh,0FFh
-refhitcount:
+refhitcount:                                    ; checkcheck: checks on the referee (SCnum 10h); the third
+                                                ; draws penalty 16h. ResetGameVars clears it; used by
+                                                ; LoadGameState, ResetGameVars, SaveGameState ...
         db 00h,00h
-fadeinpending:
+fadeinpending:                                  ; set when the pre-game intro is skipped or a game starts; the
+                                                ; next game frame fades the palette in and clears it; used by
+                                                ; Gameloop, HandleHotKey, LoadGameGfx_common ...
         db 00h,00h
-injurystop:
+injurystop:                                     ; set by setInjuryType when a player is hurt: the referee
+                                                ; stops play and the call countdown is 140h; cleared at the
+                                                ; next faceoff; used by LoadGameState, ResetGameVars,
+                                                ; SaveGameState ...
         db 00h,00h
-bannermsg:
+bannermsg:                                      ; index into the call banner strings bannerstrs (-1 none); set
+                                                ; by offside/icing/faceoff/penalty code, drawn by
+                                                ; DrawCallBanner; used by AddPenalty2, DrawRinkOverlays,
+                                                ; DrawTextOverlay ...
         db 0FFh,0FFh
-bannertimer:
+bannertimer:                                    ; word: frames left for the call banner (50h typical); cleared
+                                                ; with bannermsg; used by AddPenalty2, DrawRinkOverlays,
+                                                ; DrawTextOverlay ...
         db 00h,00h
-ovlseq:
+ovlseq:                                         ; current overlay script id (-1 none); UpdateTextOverlay
+                                                ; indexes ovlseqtimed / ovlsteptime with it; used by
+                                                ; CrowdOnStoppage, DrawTextOverlay, EnsureFreeMemory ...
         db 0FFh,0FFh
-ovlstep:
+ovlstep:                                        ; current overlay script step value (byte of the script at
+                                                ; ovlstepidx); DrawTextOverlay and DrawTextOverlay callers
+                                                ; read it; used by DrawTextOverlay, Gameloop, LoadGameState
+                                                ; ...
         db 0FFh,0FFh

@@ -4,6 +4,10 @@ bits 32
 section s_A2B95 progbits alloc exec nowrite align=1
 extern _Extender, _ExtenderSubtype, _curbrk, _STACKTOP, ErrnoPtr
 global sbrk_, sbrk_, __brk_
+;-----------------------------------------------------------------------------
+; sbrk_                                                         A2B95  library
+; Run-time library sbrk: grows the program's data break
+;-----------------------------------------------------------------------------
 sbrk_:
         push ebx
         push ecx
@@ -82,6 +86,10 @@ sbrk_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __brk_                                                        A2C54  library
+; Run-time library brk: sets the program's data break
+;-----------------------------------------------------------------------------
 __brk_:
         push ebx
         push ecx

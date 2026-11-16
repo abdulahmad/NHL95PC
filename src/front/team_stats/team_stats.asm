@@ -1,4 +1,4 @@
-; Team stats screen and its sort orders (95G stats95).
+; Team stats screen and its sort orders.
 bits 32
 %include "hockey.inc"
 section s_22DDE progbits alloc exec nowrite align=1
@@ -836,12 +836,12 @@ CmpTeamPenalties:
         jmp near CmpTeamPK_sub
 %endif ; C
         db 08Dh,040h,00h
-TeamStatsScreen_keyjt:
+TeamStatsScreen_keyjt:                          ; used by TeamStatsScreen
         dd TeamStatsScreen_keyPK
         dd TeamStatsScreen_keyPP
         dd TeamStatsScreen_keyPen
         dd TeamStatsScreen_keyStand
-TeamStatsScreen_coljt:
+TeamStatsScreen_coljt:                          ; used by TeamStatsScreen_keyPen
         dd TeamStatsScreen_colScoring
         dd TeamStatsScreen_colDefense
         dd TeamStatsScreen_colPK

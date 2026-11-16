@@ -32,9 +32,18 @@ _dos_findnext_:	;IDA: unknown_libname_2
         call CopyDtaOut
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; _dos_findclose_                              90BE9  95 PC, medium confidence
+; Ends a DOS file search; always succeeds
+;-----------------------------------------------------------------------------
 _dos_findclose_:
         xor eax, eax
         ret
+;-----------------------------------------------------------------------------
+; CopyDtaOut                                   90BEC  95 PC, medium confidence
+; Copies the DOS transfer area to the caller's find record under the DOS/4GW
+; extender
+;-----------------------------------------------------------------------------
 CopyDtaOut:
         cmp byte [_Extender], 9
         jne short .1

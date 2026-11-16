@@ -1,5 +1,5 @@
 ; What each player is trying to do. The assignment table: wings, centres, defence, the goalie,
-; the puck carrier, the referee, and the shootout path (95G engine/logic95).
+; the puck carrier, the referee, and the shootout path.
 bits 32
 %include "hockey.inc"
 section s_499D8 progbits alloc exec nowrite align=1
@@ -17,8 +17,9 @@ global asspenalty, assdopen, assepen, assbench
 ;-----------------------------------------------------------------------------
 ; assboxenter                                     499D8  95 PC, low confidence
 ; Asstab 2Ah: Pencntdwn 12Ch; skates to x -91h,y 6, then seats the player in
-; the box (pflags 20h, tmpde 800h, SetBoxDoorObject) and opens the box door
-; sprite (sortobj15)
+; the box (pflags 20h, tmpde 800h, SetBoxDoorObject)
+;
+; and opens the box door sprite (sortobj15)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assboxenter.c
 %ifdef CBUILD
@@ -169,8 +170,9 @@ assboxenter:
 ;-----------------------------------------------------------------------------
 ; assbenchside                                    49BC2  95 PC, low confidence
 ; Asstab 2Bh (clockcont_0): when the camera is at the left boards (camx <=
-; -20h, |camy| <= 14h) places the sprite at x -0BEh,y 3 and plays bench-side
-; animations 0E97h / 0EB5h; waits on PaSpeechBusy
+; -20h, |camy| <= 14h) places the sprite at x -0BEh,y 3
+;
+; and plays bench-side animations 0E97h / 0EB5h; waits on PaSpeechBusy
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assbenchside.c
 %ifdef CBUILD
@@ -265,9 +267,7 @@ assbenchside:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assdefo                                               49CDD  94G logic94.asm
-; Asstab slot 1; field alignment 82% of 11 known-field accesses; content rank
-; 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 1: a defenceman while his team attacks
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assdefo.c
 %ifdef CBUILD
@@ -395,9 +395,7 @@ assdefo:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assdefd                                               49E3A  94G logic94.asm
-; Asstab slot 2; field alignment 81% of 31 known-field accesses; content rank
-; 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 2: a defenceman while his team defends
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (assdefd)
 %ifdef CBUILD
@@ -651,9 +649,7 @@ assdefd:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; asswingd                           4A1A6  94G logic94.asm, medium confidence
-; Asstab slot 3; field alignment 80% of 10 known-field accesses; content rank
-; 2/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 3: a winger while his team defends
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (asswingd)
 %ifdef CBUILD
@@ -786,9 +782,7 @@ asswingd_skateto:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; asswingo                                              4A343  94G logic94.asm
-; Asstab slot 4; field alignment 83% of 18 known-field accesses; content rank
-; 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 1
-; extra
+; Assignment table slot 4: a winger while his team attacks
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (asswingo)
 %ifdef CBUILD
@@ -937,9 +931,7 @@ asswingo_evade:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; asscenterd                                            4A53A  94G logic94.asm
-; Asstab slot 5; field alignment 80% of 10 known-field accesses; content rank
-; 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 5: the centre while his team defends
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/asscenterd.c
 %ifdef CBUILD
@@ -1045,9 +1037,7 @@ asscenterd:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; asscentero                                            4A65C  94G logic94.asm
-; Asstab slot 6; field alignment 82% of 17 known-field accesses; content rank
-; 1/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 1
-; extra
+; Assignment table slot 6: the centre while his team attacks
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (asscentero)
 %ifdef CBUILD
@@ -1177,7 +1167,7 @@ asscentero:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; donothing                                             4A80E  94G logic94.asm
-; The 94G donothing: doplayeracc 8 unless pfalock or pfjoycon
+; donothing: doplayeracc 8 unless pfalock or pfjoycon
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/donothing.c
 %ifdef CBUILD
@@ -1200,9 +1190,7 @@ donothing:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assstanley                         4A832  94G logic94.asm, medium confidence
-; Asstab slot 8; field alignment 70% of 10 known-field accesses; content rank
-; 1/34 vs other slot routines; 2 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 8: the Stanley Cup skate after the final
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assstanley.c
 %ifdef CBUILD
@@ -1280,9 +1268,7 @@ assstanley:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assscore                                              4A90F  94G logic94.asm
-; Asstab slot 7; field alignment 92% of 13 known-field accesses; content rank
-; 1/34 vs other slot routines; 2 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 7: goal celebration skate
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assscore.c
 %ifdef CBUILD
@@ -1421,9 +1407,7 @@ assscore:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; asseben                                               4AAC2  94G logic94.asm
-; Asstab slot 9; field alignment 88% of 16 known-field accesses; content rank
-; 1/34 vs other slot routines; 1 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 9: skate to the bench at the end of a period
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/asseben.c
 %ifdef CBUILD
@@ -1494,9 +1478,10 @@ asseben:
 ;-----------------------------------------------------------------------------
 ; assleaveice                                  4AB87  95 PC, medium confidence
 ; Asstab 1Dh (set by assthreestars, InProgress): skates to the bench gate (x
-; -0A8h, y +-1Ch/24h by team), turns, plays the exit animation, sets pflags
-; 20h (off ice) and RemoveFromLines (gsp<4, not gmode 40h); then assreplace
-; 29h
+; -0A8h, y +-1Ch/24h by team), turns, plays the exit animation,
+;
+; sets pflags 20h (off ice) and RemoveFromLines (gsp<4, not gmode 40h); then
+; assreplace 29h
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assleaveice.c
 %ifdef CBUILD
@@ -1673,9 +1658,7 @@ assleaveice:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; asspenalty                                            4ADAB  94G logic94.asm
-; Asstab slot 12; field alignment 97% of 30 known-field accesses; content
-; rank 1/34 vs other slot routines; 1 known Genesis callees present, 0
-; missing, 0 extra
+; Assignment table slot 0Ch: the penalised player skates to the penalty box
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (asspenalty)
 %ifdef CBUILD
@@ -1870,9 +1853,7 @@ assdopen:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assepen                                               4B02D  94G logic94.asm
-; Asstab slot 10; field alignment 84% of 19 known-field accesses; content
-; rank 1/34 vs other slot routines; 1 known Genesis callees present, 0
-; missing, 0 extra
+; Assignment table slot 0Ah: a player leaving the penalty box
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assepen.c
 %ifdef CBUILD
@@ -1965,9 +1946,7 @@ assepen:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assbench                                              4B12C  94G logic94.asm
-; Asstab slot 11; field alignment 85% of 41 known-field accesses; content
-; rank 1/34 vs other slot routines; 1 known Genesis callees present, 0
-; missing, 0 extra
+; Assignment table slot 0Bh: a player going to the bench on a line change
 ;-----------------------------------------------------------------------------
 ; C: src/engine/logic/assbench.c
 %ifdef CBUILD

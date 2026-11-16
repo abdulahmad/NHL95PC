@@ -6,9 +6,10 @@ extern NoFloatSupport
 global str_SHPI2, HotkeyScanTable, HotkeyModTable, AngleOctantTable, HotkeyNesting, HotkeyFuncTable, __heap_enabled, __amblksiz
 global RectFillMaxShades, CosTable, CosTableFine, CosTableEnd, __EFG_printf, __EFG_scanf, RectFillPatternPtrs, RectFillPatterns_m2
 global RectFillPatterns
-str_SHPI2:
+str_SHPI2:                                      ; "SHPI" string literal; used by ConvertShapeBank
         db 053h,048h,050h,049h,00h,00h,00h,00h,00h,00h,00h,00h,053h,050h,049h,054h
-HotkeyScanTable:
+HotkeyScanTable:                                ; Scan code per registered hotkey; used by DispatchHotkey,
+                                                ; RegisterHotkey
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -17,7 +18,8 @@ HotkeyScanTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-HotkeyModTable:
+HotkeyModTable:                                 ; Shift state per registered hotkey; used by DispatchHotkey,
+                                                ; RegisterHotkey
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -27,9 +29,10 @@ HotkeyModTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h
-HotkeyNesting:
+HotkeyNesting:                                  ; Hotkey dispatch nesting count; used by DispatchHotkey
         db 01h,00h,00h,00h
-HotkeyFuncTable:
+HotkeyFuncTable:                                ; Routine per registered hotkey; used by DispatchHotkey,
+                                                ; RegisterHotkey
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -47,17 +50,22 @@ HotkeyFuncTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h
-__EFG_printf:
+__EFG_printf:                                   ; Float formatting routine for printf; used by __setEFGfmt_,
+                                                ; float_format_
         dd NoFloatSupport
-__EFG_scanf:
+__EFG_scanf:                                    ; Float parsing routine for scanf; used by ScanFloatField,
+                                                ; __setEFGfmt_
         dd NoFloatSupport
-__heap_enabled:
+__heap_enabled:                                 ; Non-zero while the near heap may grow; used by
+                                                ; __CreateNewNHeap_, __ExpandDGROUP_, _heapenable_
         db 01h,00h,00h,00h
-__amblksiz:
+__amblksiz:                                     ; Heap growth amount; used by __AdjustAmount_, __CommonInit_,
+                                                ; __cenvarg_
         db 010h,00h,00h,00h
-RectFillMaxShades:
+RectFillMaxShades:                              ; Highest shade count with a pattern; used by SetupRectFill
         db 032h,00h,00h,00h
-RectFillPatternPtrs:
+RectFillPatternPtrs:                            ; Pattern run per shade count for SetupRectFill; used by
+                                                ; SetupRectFill
         dd RectFillPatterns_m2
         dd RectFillPatterns_m2
         dd RectFillPatterns_m2
@@ -109,7 +117,7 @@ RectFillPatternPtrs:
         dd RectFillPatterns+0870h
 RectFillPatterns_m2 equ $+2
         dd RectFillPatterns+08CEh
-RectFillPatterns:
+RectFillPatterns:                               ; Dither patterns for rectangle fills, one run per shade count
         db 00h,080h,055h,055h
         db 0AAh,0AAh,00h,040h,00h,080h
         db 00h,0C0h,033h,033h,066h,066h,099h,099h
@@ -226,7 +234,7 @@ RectFillPatterns:
         db 0CCh,0CCh,033h,0D3h,099h,0D9h,00h,0E0h,066h,0E6h,0CCh,0ECh,033h,0F3h
         db 099h,0F9h,03Eh,06h,07Ch,0Ch,0BBh,012h,0F9h,018h,038h,01Fh,076h,025h,0B5h,02Bh
         db 0F3h,031h,031h,038h,070h,03Eh,0AEh,044h,0EDh,04Ah,02Bh,051h,06Ah,057h
-CosTable:
+CosTable:                                       ; Cosine table read by TableCos; used by TableCos
         db 0A8h,05Dh,0E7h,063h,025h,06Ah,063h,070h,0A2h,076h,0E0h,07Ch,01Fh,083h,05Dh,089h
         db 09Ch,08Fh,0DAh,095h,018h,09Ch,057h,0A2h,095h,0A8h,0D4h,0AEh,012h,0B5h,051h,0BBh
         db 08Fh,0C1h,0CEh,0C7h,0Ch,0CEh,04Ah,0D4h,089h,0DAh,0C7h,0E0h,06h,0E7h,044h,0EDh
@@ -280,7 +288,8 @@ CosTable:
         db 02Fh,0A7h,068h,0ACh,0A1h,0B1h,0DBh,0B6h,014h,0BCh,04Eh,0C1h,087h,0C6h,0C1h,0CBh
         db 0FAh,0D0h,034h,0D6h,06Dh,0DBh,0A7h,0E0h,0E0h,0E5h,01Ah,0EBh,053h,0F0h,08Dh,0F5h
         db 0C6h,0FAh
-AngleOctantTable:
+AngleOctantTable:                               ; Octant per delta slope for AngleFromDelta; used by
+                                                ; AngleFromDelta
         db 00h,01h,01h,02h,03h,03h,04h,04h,05h,06h,06h,07h,08h,08h,09h,0Ah
         db 0Ah,0Bh,0Bh,0Ch,0Dh,0Dh,0Eh,0Fh,0Fh,010h,010h,011h,012h,012h,013h,014h
         db 014h,015h,016h,016h,017h,017h,018h,019h,019h,01Ah,01Bh,01Bh,01Ch,01Ch,01Dh,01Eh
@@ -298,7 +307,7 @@ AngleOctantTable:
         db 075h,076h,076h,076h,077h,077h,077h,078h,078h,078h,079h,079h,079h,07Ah,07Ah,07Ah
         db 07Bh,07Bh,07Bh,07Ch,07Ch,07Ch,07Dh,07Dh,07Dh,07Eh,07Eh,07Eh,07Fh,07Fh,07Fh,080h
         db 080h,00h,00h,00h
-CosTableFine:
+CosTableFine:                                   ; Fine cosine step table read by TableCos; used by TableCos
         db 00h,00h,00h,00h,092h,01h,00h,00h,024h,03h,00h,00h,0B6h,04h,00h,00h
         db 048h,06h,00h,00h,0DAh,07h,00h,00h,06Ch,09h,00h,00h,0FEh,0Ah,00h,00h
         db 08Fh,0Ch,00h,00h,021h,0Eh,00h,00h,0B2h,0Fh,00h,00h,044h,011h,00h,00h
@@ -363,5 +372,5 @@ CosTableFine:
         db 04Eh,0FFh,00h,00h,06Ah,0FFh,00h,00h,084h,0FFh,00h,00h,09Ch,0FFh,00h,00h
         db 0B1h,0FFh,00h,00h,0C3h,0FFh,00h,00h,0D3h,0FFh,00h,00h,0E1h,0FFh,00h,00h
         db 0ECh,0FFh,00h,00h,0F4h,0FFh,00h,00h,0FBh,0FFh,00h,00h,0FEh,0FFh,00h,00h
-CosTableEnd:
+CosTableEnd:                                    ; Entry past the cosine table; used by TableCos
         db 00h,00h,01h,00h

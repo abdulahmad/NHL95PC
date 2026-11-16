@@ -8,6 +8,11 @@ global MviGetWidth, MviGetFrame, MviAtEnd, MviSeekFrame, MviDecodeKeyFrame, MviD
 global SndDriverHandle, SndHandleDetect, SndHandleOpen, SndHandleInit, SndHandleClose, SndHandleService, SndDriverCall, SndHandleSetTrack
 global SndHandleMidi, SndHandlePlayDigi, NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery, NullDriverSetTrack, NullDriverMidi
 global NullDriverPlayDigi
+;-----------------------------------------------------------------------------
+; MviGetWidth                                     96A60  95 PC, low confidence
+; Returns a movie's width; the code after it returns the height and the frame
+; count
+;-----------------------------------------------------------------------------
 MviGetWidth:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+0Ch]
@@ -19,10 +24,18 @@ MviGetWidth:
         mov eax, dword [eax]
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MviGetFrame                                     96A78  95 PC, low confidence
+; Returns a movie's current picture
+;-----------------------------------------------------------------------------
 MviGetFrame:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+08h]
         ret
+;-----------------------------------------------------------------------------
+; MviAtEnd                                     96A80  95 PC, medium confidence
+; Returns 1 when a movie is past its last frame
+;-----------------------------------------------------------------------------
 MviAtEnd:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+04h]
@@ -31,6 +44,10 @@ MviAtEnd:
         and eax, 0FFh
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MviSeekFrame                                    96A94  95 PC, low confidence
+; Moves a movie to a frame, rewinding when it has to
+;-----------------------------------------------------------------------------
 MviSeekFrame:
         push esi
         push edi
@@ -56,6 +73,10 @@ MviSeekFrame:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MviDecodeKeyFrame                               96AC4  95 PC, low confidence
+; Decodes a movie key frame
+;-----------------------------------------------------------------------------
 MviDecodeKeyFrame:
         push ecx
         push esi
@@ -203,6 +224,10 @@ MviDecodeKeyFrame:
         pop ecx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MviDecodeDeltaFrame                             96C4C  95 PC, low confidence
+; Decodes a movie delta frame
+;-----------------------------------------------------------------------------
 MviDecodeDeltaFrame:
         push ecx
         push esi
@@ -408,6 +433,10 @@ MviDecodeDeltaFrame:
         pop ecx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MviNextFrame                                    96E7C  95 PC, low confidence
+; Reads and decodes a movie's next frame
+;-----------------------------------------------------------------------------
 MviNextFrame:
         push esi
         push edi
@@ -604,6 +633,11 @@ MviNextFrame:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; SndOpenDriver                                97079  95 PC, medium confidence
+; Opens sound driver 0-6 (detect, open, init) and returns its handle, or the
+; handle it already has
+;-----------------------------------------------------------------------------
 SndOpenDriver:
         push ebx
         push ecx
@@ -693,6 +727,10 @@ SndOpenDriver:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SndDriverHandle                              97166  95 PC, medium confidence
+; Returns the open handle of a sound driver, or -1
+;-----------------------------------------------------------------------------
 SndDriverHandle:
         cmp dword [sndhandlecount], byte 0
         jg short .1
@@ -702,6 +740,10 @@ SndDriverHandle:
         imul eax, byte 2Ch
         mov eax, dword [dword eax+SndDriverTable+028h]
         ret
+;-----------------------------------------------------------------------------
+; SndHandleDetect                              9717F  95 PC, medium confidence
+; Calls the detect entry of an open driver handle
+;-----------------------------------------------------------------------------
 SndHandleDetect:
         push ebx
         push ecx
@@ -713,6 +755,10 @@ SndHandleDetect:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SndHandleOpen                                97194  95 PC, medium confidence
+; Calls the open entry of an open driver handle with the detected port
+;-----------------------------------------------------------------------------
 SndHandleOpen:
         push ebx
         push ecx
@@ -724,6 +770,10 @@ SndHandleOpen:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SndHandleInit                                971AB  95 PC, medium confidence
+; Calls the init entry of an open driver handle
+;-----------------------------------------------------------------------------
 SndHandleInit:
         push ebx
         push ecx
@@ -732,6 +782,10 @@ SndHandleInit:
         push edx
         call dword [dword eax+SndHandleTable+08h]
         jmp short SndHandleOpen+011h
+;-----------------------------------------------------------------------------
+; SndHandleClose                               971BE  95 PC, medium confidence
+; Calls the close entry of an open driver handle
+;-----------------------------------------------------------------------------
 SndHandleClose:
         push ebx
         push ecx
@@ -746,6 +800,10 @@ SndHandleClose:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SndHandleService                             971DB  95 PC, medium confidence
+; Calls the timer service entry of an open driver handle
+;-----------------------------------------------------------------------------
 SndHandleService:
         push ebx
         push ecx
@@ -760,6 +818,11 @@ SndHandleService:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SndDriverCall                                971F8  95 PC, medium confidence
+; EACSNDF core entry the handle calls jump to (handle in al, command word in
+; edx)
+;-----------------------------------------------------------------------------
 SndDriverCall:
         push ebx
         push ecx
@@ -768,6 +831,11 @@ SndDriverCall:
         push edx
         call dword [dword eax+SndHandleTable+014h]
         jmp short SndHandleOpen+011h
+;-----------------------------------------------------------------------------
+; SndHandleSetTrack                               9720B  95 PC, low confidence
+; Calls the track setup entry of an open driver handle (channel and track
+; data)
+;-----------------------------------------------------------------------------
 SndHandleSetTrack:
         push ecx
         and eax, 0FFh
@@ -783,6 +851,11 @@ SndHandleSetTrack:
 .1:
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SndHandleMidi                                   9722E  95 PC, low confidence
+; Sends a MIDI message to an open driver handle, raising note on and note off
+; two octaves
+;-----------------------------------------------------------------------------
 SndHandleMidi:
         push ecx
         xor ecx, ecx
@@ -809,6 +882,10 @@ SndHandleMidi:
 .3:
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SndHandlePlayDigi                               97268  95 PC, low confidence
+; Calls the digital playback entry of an open driver handle
+;-----------------------------------------------------------------------------
 SndHandlePlayDigi:
         push esi
         push edi
@@ -839,38 +916,66 @@ SndHandlePlayDigi:
         pop edi
         pop esi
         ret 18h
+;-----------------------------------------------------------------------------
+; NullDriverOpen                               972AB  95 PC, medium confidence
+; Null sound driver detect and open entries: return 1
+;-----------------------------------------------------------------------------
 NullDriverOpen:
         push ds
         call __GETDS
         mov eax, 1
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; NullDriverInit                               972B8  95 PC, medium confidence
+; Null sound driver init entry: does nothing
+;-----------------------------------------------------------------------------
 NullDriverInit:
         push ds
         call __GETDS
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; NullDriverReturn                             972C0  95 PC, medium confidence
+; Null sound driver close and service entries: do nothing
+;-----------------------------------------------------------------------------
 NullDriverReturn:
         push ds
         call __GETDS
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; NullDriverQuery                              972C8  95 PC, medium confidence
+; Null sound driver query entry: returns -1
+;-----------------------------------------------------------------------------
 NullDriverQuery:
         push ds
         call __GETDS
         mov eax, 0FFFFFFFFh
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; NullDriverSetTrack                           972D5  95 PC, medium confidence
+; Null sound driver track setup entry: does nothing
+;-----------------------------------------------------------------------------
 NullDriverSetTrack:
         push ds
         call __GETDS
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; NullDriverMidi                               972DD  95 PC, medium confidence
+; Null sound driver MIDI entry: does nothing
+;-----------------------------------------------------------------------------
 NullDriverMidi:
         push ds
         call __GETDS
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; NullDriverPlayDigi                           972E5  95 PC, medium confidence
+; Null sound driver digital playback entry: does nothing
+;-----------------------------------------------------------------------------
 NullDriverPlayDigi:
         push ds
         call __GETDS

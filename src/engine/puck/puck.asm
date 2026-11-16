@@ -1,4 +1,4 @@
-; Puck state routines: normal, nothing, unflip (94G logic94).
+; Puck state routines: normal, nothing, unflip.
 bits 32
 %include "hockey.inc"
 section s_4D6B4 progbits alloc exec nowrite align=1
@@ -9,22 +9,28 @@ extern pucky, regd0, regd1, SortCords
 global pucknorm_body, pucknorm, pucknothing, puckunflip
 ;-----------------------------------------------------------------------------
 ; pucknorm_body                                         4D6B4  94G logic94.asm
-; pucknorm_body (4D6B4; 93G logic93 / 94G pucknorm after the new-assignment
-; part, PC version; ends in ass_popx): the puck's normal assignment. Count
-; down the two line-crossing timers (puckcross) and every 5 ticks recompute
-; them (temp1, findpc). A carried puck is pulled a quarter of the way toward
-; its carrier's hot spot (a2touchpuck, GetHot into regd0 / regd1) and takes
-; his velocity. Then the ice / offside / two-line checks (PuckIChk,
-; ChkOffsides, MarkTwoLinePlayers). While the clock runs: a carried puck
-; resets temp2 (78h) and the penalty-shot send count (psendcount); a loose
-; one on a live penalty shot moving back toward the shooter's own end (puckvy
-; by penshotteam and the gmode bit 1 rink flip) for 1Eh ticks ends the shot
-; (EndPenaltyShot). A puck that has stopped (same position as last tick),
-; outside the middle (x A3h, y 10Eh) or with hmtmnear / awtmnear at 14h or
-; less, counts temp2 down and at 0 calls a delay of game (AddPenalty2 3); a
-; moving one resets temp2. A puck almost still on the ice (z speed below
-; 100h, z 0) is put flat (puckunflip); then the collisions (checkpuckcoll).
-; p: the puck. No result.
+; Body of pucknorm after the new-assignment part; ends in ass_popx: the puck's
+; normal assignment.
+;
+; Count down the two line-crossing timers (puckcross) and every 5 ticks
+; recompute them (temp1, findpc).
+;
+; A carried puck is pulled a quarter of the way toward its carrier's hot spot
+; (a2touchpuck, GetHot into regd0 / regd1) and takes his velocity. Then the
+; ice / offside / two-line checks (PuckIChk, ChkOffsides, MarkTwoLinePlayers).
+;
+; While the clock runs: a carried puck resets temp2 (78h) and the penalty-shot
+; send count (psendcount); a loose one on a live penalty shot moving back
+; toward the shooter's own end (puckvy by penshotteam
+;
+; and the gmode bit 1 rink flip) for 1Eh ticks ends the shot (EndPenaltyShot).
+;
+; A puck that has stopped (same position as last tick), outside the middle (x
+; A3h, y 10Eh) or with hmtmnear / awtmnear at 14h or less, counts temp2 down
+; and at 0 calls a delay of game (AddPenalty2 3); a moving one resets temp2.
+;
+; A puck almost still on the ice (z speed below 100h, z 0) is put flat
+; (puckunflip); then the collisions (checkpuckcoll). p: the puck. No result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (pucknorm_body)
 %ifdef CBUILD
@@ -206,8 +212,8 @@ pucknorm_body:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; pucknorm                                              4D8C7  94G logic94.asm
-; Slot $18; head identical to 93G pucknorm: bclr pfna; clr temp1(+26h);
-; temp2(+28h)=$78; then calls the body sub_4D6B4
+; Assignment table slot 18h: clears pfna; clr temp1(+26h);
+; temp2(+28h)=$78; then calls the body pucknorm_body
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puck/pucknorm.c
 %ifdef CBUILD
@@ -234,9 +240,7 @@ pucknorm:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; pucknothing                        4D8FD  94G logic94.asm, medium confidence
-; Asstab slot 26; field alignment n/a of 0 known-field accesses; content rank
-; 2/34 vs other slot routines; 0 known Genesis callees present, 0 missing, 0
-; extra
+; Assignment table slot 1Ah: the puck with nothing to do
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puck/pucknothing.c
 %ifdef CBUILD

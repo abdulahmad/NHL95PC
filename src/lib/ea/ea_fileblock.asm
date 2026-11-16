@@ -7,6 +7,10 @@ extern MemDescPtr, MemDescSize, bcopy, CreateHandle, DosCloseFile, DosWriteFile,
 global SaveDataFile, SaveFileBlockErr, SaveFileBlockQuiet, savefileblocka, imul32, umul32, IntSqrt, SortIndices
 global DebugPrintf, DebugSetLine, DebugShowLinesJumpTable, DebugShowLines, DebugShowLines, DebugScrollUp, DebugClearScreen, DebugSetRow
 global DebugSetAttr, DebugSetTabWidth, DebugSetPage
+;-----------------------------------------------------------------------------
+; SaveDataFile                                 93308  95 PC, medium confidence
+; Saves a memory block to a file
+;-----------------------------------------------------------------------------
 SaveDataFile:
         sub esp, byte 28h
         mov eax, dword [byte esp+030h]
@@ -26,6 +30,10 @@ SaveDataFile:
         add esp, byte 28h
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; SaveFileBlockErr                                9333C  95 PC, low confidence
+; Saves a memory block to a file with the error message
+;-----------------------------------------------------------------------------
 SaveFileBlockErr:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -36,6 +44,10 @@ SaveFileBlockErr:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; SaveFileBlockQuiet                              93354  95 PC, low confidence
+; Saves a memory block to a file without the error message
+;-----------------------------------------------------------------------------
 SaveFileBlockQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -46,6 +58,10 @@ SaveFileBlockQuiet:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; savefileblocka                                                  9336C  95 PC
+; Prints its own name: "savefileblocka - OPEN FAILED FOR FILE <%s>"
+;-----------------------------------------------------------------------------
 savefileblocka:
         push esi
         push edi
@@ -101,11 +117,20 @@ savefileblocka:
         pop esi
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; imul32                                       933F0  95 PC, medium confidence
+; EA math helper (cdecl): returns [esp+4]*[esp+8] signed (imul edx);
+; skatetopuck squares x and y with it
+;-----------------------------------------------------------------------------
 imul32:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         imul edx
         ret
+;-----------------------------------------------------------------------------
+; umul32                                       933FB  95 PC, medium confidence
+; Unsigned 32-bit multiply; followed by the unlabelled divide helpers
+;-----------------------------------------------------------------------------
 umul32:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -150,6 +175,10 @@ umul32:
         idiv ebx
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; IntSqrt                                      93470  95 PC, medium confidence
+; Returns the integer square root of a number
+;-----------------------------------------------------------------------------
 IntSqrt:
         mov eax, dword [byte esp+04h]
         cmp eax, 10000h
@@ -241,6 +270,10 @@ IntSqrt:
         pop edi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; SortIndices                                  93540  95 PC, medium confidence
+; Sort library: sort n indices by their keys (n, keys, idx)
+;-----------------------------------------------------------------------------
 SortIndices:
         push esi
         push edi
@@ -306,6 +339,13 @@ SortIndices:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; DebugPrintf                                                     935E0  95 PC
+; Vsprintf into a 100h stack buffer and pass it to DebugShowLines only when
+; DebugMode >= 2 (debug level); DebugMonitor/DumpStatsLog use it
+;
+; for their debug text
+;-----------------------------------------------------------------------------
 DebugPrintf:
         sub esp, 104h
         cmp dword [DebugMode], byte 2
@@ -324,6 +364,10 @@ DebugPrintf:
         add esp, 104h
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DebugSetLine                                 9362C  95 PC, medium confidence
+; Formats a debug message into one of the on-screen debug lines
+;-----------------------------------------------------------------------------
 DebugSetLine:
         push esi
         sub esp, 104h
@@ -360,12 +404,17 @@ DebugSetLine:
         add esp, 104h
         pop esi
         ret
-DebugShowLinesJumpTable:
+DebugShowLinesJumpTable:                        ; jump table for the switch cases of DebugShowLines
         dd DebugShowLines+0BCh
         dd DebugShowLines+0E8h
         dd DebugShowLines+0125h
         dd DebugShowLines+014Ch
         dd DebugShowLines+0158h
+;-----------------------------------------------------------------------------
+; DebugShowLines                               936C0  95 PC, medium confidence
+; Writes a string to the debug monitor handling control characters and
+; scrolling
+;-----------------------------------------------------------------------------
 DebugShowLines:
         push ebx
         push ecx
@@ -519,6 +568,10 @@ DebugShowLines:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DebugScrollUp                                93844  95 PC, medium confidence
+; Scrolls the debug monochrome screen up a line
+;-----------------------------------------------------------------------------
 DebugScrollUp:
         push ebx
         push ecx
@@ -561,6 +614,10 @@ DebugScrollUp:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DebugClearScreen                             938C8  95 PC, medium confidence
+; Clears the debug monochrome screen
+;-----------------------------------------------------------------------------
 DebugClearScreen:
         mov ebx, dword [DebugScreenBase]
         cmp dword [DebugMode], byte 2
@@ -575,6 +632,10 @@ DebugClearScreen:
         mov dword [DebugScreenBase], ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DebugSetRow                                  938F4  95 PC, medium confidence
+; Sets the debug screen's output row (0 to 24)
+;-----------------------------------------------------------------------------
 DebugSetRow:
         mov eax, dword [byte esp+04h]
         test eax, eax
@@ -585,11 +646,19 @@ DebugSetRow:
 .1:
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DebugSetAttr                                 93908  95 PC, medium confidence
+; Sets the debug screen's text attribute
+;-----------------------------------------------------------------------------
 DebugSetAttr:
         mov al, byte [byte esp+04h]
         mov byte [DebugBackColor], al
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DebugSetTabWidth                                93914  95 PC, low confidence
+; Sets the debug monitor tab width when it is at least 1
+;-----------------------------------------------------------------------------
 DebugSetTabWidth:
         mov eax, dword [byte esp+04h]
         cmp eax, byte 1
@@ -598,6 +667,10 @@ DebugSetTabWidth:
 .1:
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DebugSetPage                                    93924  95 PC, low confidence
+; Points the debug monitor at a 32K page of monochrome video memory
+;-----------------------------------------------------------------------------
 DebugSetPage:
         mov eax, dword [byte esp+04h]
         shl eax, 0Fh

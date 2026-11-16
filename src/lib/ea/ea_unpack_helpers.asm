@@ -5,6 +5,10 @@ section s_A2F40 progbits alloc exec nowrite align=1
 extern _FtoS_, ColourRemap, KeyedDraw, RowCopyFunc, forcedecpt_, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId
 extern PutBlock, CopyRowShadowKeyed, RemapBytes, bcopy, BlitBlockShadow
 global DrawArtShadow, DrawArtShadowOwnPos, FlipArtHorizontal, FlipArtVertical, RemapArt, RemapShapeBank, RemapShapeBank
+;-----------------------------------------------------------------------------
+; DrawArtShadow                                A2F40  95 PC, medium confidence
+; Draws art keyed with colour 0FEh darkening the screen under it
+;-----------------------------------------------------------------------------
 DrawArtShadow:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
@@ -27,6 +31,10 @@ DrawArtShadow:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtShadowOwnPos                          A2F84  95 PC, medium confidence
+; Draws shadow art at the position stored in its header
+;-----------------------------------------------------------------------------
 DrawArtShadowOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -55,6 +63,10 @@ DrawArtShadowOwnPos:
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; FlipArtHorizontal                            A2FD0  95 PC, medium confidence
+; Mirrors art left to right and fixes its hotspot
+;-----------------------------------------------------------------------------
 FlipArtHorizontal:
         push esi
         push edi
@@ -109,6 +121,10 @@ FlipArtHorizontal:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; FlipArtVertical                              A3050  95 PC, medium confidence
+; Mirrors art top to bottom and fixes its hotspot
+;-----------------------------------------------------------------------------
 FlipArtVertical:
         push esi
         push edi
@@ -164,6 +180,10 @@ FlipArtVertical:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; RemapArt                                     A30D0  95 PC, medium confidence
+; Translates every pixel of an art through the colour remap
+;-----------------------------------------------------------------------------
 RemapArt:
         mov ebx, dword [byte esp+04h]
         mov edx, dword [byte ebx+02h]
@@ -179,6 +199,10 @@ RemapArt:
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; RemapShapeBank                               A30F8  95 PC, medium confidence
+; Remaps every art in a shape bank except the '!' entries
+;-----------------------------------------------------------------------------
 RemapShapeBank:
         push esi
         push edi

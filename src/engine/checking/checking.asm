@@ -1,4 +1,4 @@
-; Body checks: sweep check, burst, shot blocks, check aggression and the check decision (94G collide94 / logic94).
+; Body checks: sweep check, burst, shot blocks, check aggression and the check decision.
 bits 32
 %include "hockey.inc"
 section s_53294 progbits alloc exec nowrite align=1
@@ -26,7 +26,7 @@ ToFixed:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Sweepcheck                         532A2  94G logic94.asm, medium confidence
-; Genesis comment (logic94.asm): start sweep check on player a3
+; start sweep check on player a3
 ;-----------------------------------------------------------------------------
 ; C: src/engine/checking/Sweepcheck.c
 %ifdef CBUILD
@@ -45,7 +45,7 @@ Sweepcheck:
 ;-----------------------------------------------------------------------------
 ; burst                                               532BD  93G logic93_1.asm
 ; Manual trace: CCh energy cost, energy>>7 dir-vector push, same constants as
-; 93G burst
+; burst
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/checkob.c (burst)
 %ifdef CBUILD
@@ -239,8 +239,9 @@ BlockShotDive:
 ;-----------------------------------------------------------------------------
 ; TryBlockShot                                 534BB  95 PC, medium confidence
 ; Random roll from attribute 5Ah (easier for the human team's opponents,
-; gmode2 bits 5/6), then CanBlockShot and BlockShotDive; called from
-; check4check
+; gmode2 bits 5/6), then CanBlockShot and BlockShotDive; called
+;
+; from check4check
 ;-----------------------------------------------------------------------------
 ; C: src/engine/checking/TryBlockShot.c
 %ifdef CBUILD
@@ -296,15 +297,18 @@ TryBlockShot:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; check4check                        53537  94G logic94.asm, medium confidence
-; check4check (53537; 93G logic93 check4check, "look for good opportunity for
-; checking opponent"): the odds are 20 - p's checking rating (93G aggress),
-; half again with penalties on (gameopts bit 0); a roll of randomd0(twice
-; that) over 8 (93G: over 3) skips. Otherwise walk the six opponents: one on
-; the ice (position), not animation-locked (pfalock) and not fighting
-; (pflags2 bit 0), within 30 in x and y, straight ahead of p (vtoa of the
-; offset equals facedir) gets checked: 1 in 4 Acheck, else burst. PC: with
-; nobody to check, p may try to block a shot (TryBlockShot). regd0-regd2 hold
-; the 68k d0-d2. p: the player. No result.
+; Looks for a good chance to check an opponent: the odds are 20 - p's checking
+; rating, half again with penalties on (gameopts bit 0);
+;
+; a roll of randomd0(twice that) over 8 skips.
+;
+; Otherwise walk the six opponents: one on the ice (position), not
+; animation-locked (pfalock) and not fighting (pflags2 bit 0), within 30 in x
+; and y, straight ahead of p (vtoa of the offset equals facedir) gets checked:
+;
+; 1 in 4 Acheck, else burst. PC: with nobody to check, p may try to block a
+; shot (TryBlockShot). regd0-regd2 hold the 68k d0-d2. p: the player. No
+; result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/checkob.c (check4check)
 %ifdef CBUILD
@@ -420,12 +424,14 @@ check4check:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; checkagr                         5369F  94G collide94.asm, medium confidence
-; Random roll for an aggressive act (fight penalty) by p: range (20 -
-; aggress) * 16, doubled with pflags bit 3, halved within 40 of the puck in
-; both x and y, x8 after the second period, doubled without gameopts bit 9,
-; x4 per power-play man down (other tmap - own tmap >= 1, >= 2) and x4
-; against the puck carrier's team during a stoppage; randomd0 of 1.5 times
-; that. Returns 0 for a hit.
+; Random roll for an aggressive act (fight penalty) by p: range (20 - aggress)
+; * 16, doubled with pflags bit 3, halved within 40 of the puck in both x
+;
+; and y, x8 after the second period, doubled without gameopts bit 9, x4 per
+; power-play man down (other tmap - own tmap >= 1, >= 2) and x4 against the
+; puck carrier's team during a stoppage; randomd0 of 1.5 times that.
+;
+; Returns 0 for a hit.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/checking/checkagr.c
 %ifdef CBUILD
@@ -1000,7 +1006,7 @@ checkcheck:
         ret
 ;-----------------------------------------------------------------------------
 ; checkgoalp                       53CE5  94G collide94.asm, medium confidence
-; Genesis comment (collide94.asm): check for player a3 collision with
+; check for player a3 collision with
 ; goal/net a2. Entered from checkgoal.
 ;-----------------------------------------------------------------------------
 checkgoalp:
@@ -1124,7 +1130,7 @@ checkgoalp:
         ret
 ;-----------------------------------------------------------------------------
 ; checkint                         53E6A  94G collide94.asm, medium confidence
-; 93G checkint (interference penalty): checkagr-style roll with randomd0,
+; checkint (interference penalty): checkagr-style roll with randomd0,
 ; AddPenalty, FallDown; called from checkcx
 ;-----------------------------------------------------------------------------
 ; C: src/engine/checking/checkint.c

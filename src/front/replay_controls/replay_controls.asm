@@ -292,9 +292,10 @@ FreeRockMusic:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; DrawGadgetByType                                7DF4E  95 PC, low confidence
-; (type, ?, ?, gadget): switch on type 4/8/10h/20h drawing the gadget's
-; shapes (+28h/+24h/+2Ch via DrawShape) and its label field; used by
-; game_setup and settings dialogs
+; (type, ?, ?, gadget): switch on type 4/8/10h/20h drawing the gadget's shapes
+; (+28h/+24h/+2Ch via DrawShape) and its label field; used by game_setup
+;
+; and settings dialogs
 ;-----------------------------------------------------------------------------
 ; C: src/front/replay_controls/DrawGadgetByType.c
 %ifdef CBUILD
@@ -429,7 +430,7 @@ GadgetSoundStub:
         pop ebx
         ret
 %endif ; C
-bothneitherstrs:
+bothneitherstrs:                                ; used by HilightSaveToDlg
         dd str_BothTeams
         dd str_NeitherTeams
 ;-----------------------------------------------------------------------------
@@ -1619,14 +1620,14 @@ ReplayControlLoop:
         jmp near DrawGadgetButton_ret
 %endif ; C
         db 08Bh,0C0h
-ReplaySaveHilight_jt:
+ReplaySaveHilight_jt:                           ; used by ReplaySaveHilight
         dd ReplaySaveHilight_n0
         dd ReplaySaveHilight_n1
         dd ReplaySaveHilight_n2
         dd ReplaySaveHilight_n3
 ;-----------------------------------------------------------------------------
 ; ReplaySaveHilight                            7F0AF  95 PC, medium confidence
-; Gadget button 7: picks team, writes highlight (sub_7FA10), "Insufficient
+; Gadget button 7: picks team, writes highlight (SaveHilight), "Insufficient
 ; disk space to save hilights." message
 ;-----------------------------------------------------------------------------
 ReplaySaveHilight:

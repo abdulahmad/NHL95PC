@@ -8,6 +8,11 @@ extern sprintf_, AngleFromDelta, TableSin, TableCos, FindFileDta, FindFileName, 
 global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, DosCloseFile, DosWriteFile, DosReadFile
 global DosSeekFile, FindFirstFile, FindFirstFile, FindNextFile, SetSlowDeadline, WaitSlowDeadline, SlowDeadlinePassed, DebugLineCount
 global vecdist, SprintfSaveRegs
+;-----------------------------------------------------------------------------
+; DosCallSplitDx                               B3B00  95 PC, medium confidence
+; Calls DOS with a 32-bit value split into CX:DX and joins DX:AX back into
+; EAX
+;-----------------------------------------------------------------------------
 DosCallSplitDx:
         push ecx
         push edx
@@ -23,6 +28,10 @@ DosCallSplitDx:
         pop edx
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; DosOpenFile                                  B3B19  95 PC, medium confidence
+; Opens a file through DOS with the given mode
+;-----------------------------------------------------------------------------
 DosOpenFile:
         push ebp
         LD mov, ebp, esp
@@ -31,6 +40,10 @@ DosOpenFile:
         mov dword [byte ebp-04h], eax
         mov dword [byte ebp-08h], 3D00h
         jmp short openhandle+014h
+;-----------------------------------------------------------------------------
+; DosOpenReadOnly                              B3B2E  95 PC, medium confidence
+; Opens a file read-only through DOS
+;-----------------------------------------------------------------------------
 DosOpenReadOnly:
         push ebp
         LD mov, ebp, esp
@@ -38,6 +51,10 @@ DosOpenReadOnly:
         mov dword [byte ebp-04h], 0
         mov dword [byte ebp-08h], 3D00h
         jmp short openhandle+014h
+;-----------------------------------------------------------------------------
+; CreateHandle                                 B3B44  95 PC, medium confidence
+; Creates a file and returns its handle through openhandle
+;-----------------------------------------------------------------------------
 CreateHandle:
         push ebp
         LD mov, ebp, esp
@@ -45,6 +62,10 @@ CreateHandle:
         mov dword [byte ebp-04h], 0
         mov dword [byte ebp-08h], 3C00h
         jmp short openhandle+014h
+;-----------------------------------------------------------------------------
+; openhandle                                                      B3B5A  95 PC
+; Prints its own name: "openhandle - %s FILE ERROR"
+;-----------------------------------------------------------------------------
 openhandle:
         push ebp
         LD mov, ebp, esp
@@ -137,6 +158,10 @@ openhandle:
         push dword [byte ebp+08h]
         push str_OpenhandleSFILEERROR
         call FatalError
+;-----------------------------------------------------------------------------
+; DosCloseFile                                 B3C60  95 PC, medium confidence
+; Closes a DOS file handle when it is open
+;-----------------------------------------------------------------------------
 DosCloseFile:
         push ebp
         LD mov, ebp, esp
@@ -148,9 +173,17 @@ DosCloseFile:
 .1:
         leave
         ret
+;-----------------------------------------------------------------------------
+; DosWriteFile                                                    B3C70  95 PC
+; Writes a buffer to a DOS file
+;-----------------------------------------------------------------------------
 DosWriteFile:
         mov ah, 40h
         jmp short DosReadFile+02h
+;-----------------------------------------------------------------------------
+; DosReadFile                                  B3C74  95 PC, medium confidence
+; Reads from a file handle (DOS 3Fh) in 16K pieces
+;-----------------------------------------------------------------------------
 DosReadFile:
         mov ah, 3Fh
         push ebp
@@ -179,6 +212,10 @@ DosReadFile:
 .4:
         leave
         ret
+;-----------------------------------------------------------------------------
+; DosSeekFile                                  B3CB3  95 PC, medium confidence
+; Moves a DOS file pointer to an absolute position
+;-----------------------------------------------------------------------------
 DosSeekFile:
         push ebp
         LD mov, ebp, esp
@@ -188,6 +225,11 @@ DosSeekFile:
         call DosCallSplitDx
         leave
         ret
+;-----------------------------------------------------------------------------
+; FindFirstFile                                B3CC8  95 PC, medium confidence
+; Finds the first file matching a pattern and keeps its name for the next
+; search
+;-----------------------------------------------------------------------------
 FindFirstFile:
         push ebp
         LD mov, ebp, esp
@@ -231,6 +273,10 @@ FindFirstFile:
         ret
         LD xor, eax, eax
         jmp short .4
+;-----------------------------------------------------------------------------
+; FindNextFile                                 B3D2A  95 PC, medium confidence
+; DOS find-next using the shared DTA
+;-----------------------------------------------------------------------------
 FindNextFile:
         push ebp
         LD mov, ebp, esp
@@ -245,22 +291,38 @@ FindNextFile:
         jmp short FindFirstFile+042h
         mov eax, dword [slowtickcount]
         ret
+;-----------------------------------------------------------------------------
+; SetSlowDeadline                              B3D46  95 PC, medium confidence
+; Sets a deadline n slow ticks from now
+;-----------------------------------------------------------------------------
 SetSlowDeadline:
         mov eax, dword [byte esp+04h]
         add eax, dword [slowtickcount]
         mov dword [SlowDeadline], eax
         ret
+;-----------------------------------------------------------------------------
+; WaitSlowDeadline                             B3D56  95 PC, medium confidence
+; Waits until the slow-tick deadline passes
+;-----------------------------------------------------------------------------
 WaitSlowDeadline:
         mov eax, dword [slowtickcount]
         sub eax, dword [SlowDeadline]
         js short WaitSlowDeadline
         ret
+;-----------------------------------------------------------------------------
+; SlowDeadlinePassed                           B3D64  95 PC, medium confidence
+; Returns 1 once the slow-tick deadline has passed
+;-----------------------------------------------------------------------------
 SlowDeadlinePassed:
         mov ebx, dword [slowtickcount]
         sub ebx, dword [SlowDeadline]
         LD sbb, eax, eax
         inc eax
         ret
+;-----------------------------------------------------------------------------
+; DebugLineCount                                                  B3D74  95 PC
+; Returns the debug line count
+;-----------------------------------------------------------------------------
 DebugLineCount:
         push ebp
         LD mov, ebp, esp
@@ -275,6 +337,10 @@ DebugLineCount:
         leave
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; vecdist                                      B3D94  95 PC, medium confidence
+; (dx, dy): approximate length of a vector from its angle
+;-----------------------------------------------------------------------------
 vecdist:
         push ebp
         LD mov, ebp, esp
@@ -323,6 +389,10 @@ vecdist:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; SprintfSaveRegs                              B3DFC  95 PC, medium confidence
+; Calls sprintf keeping every register
+;-----------------------------------------------------------------------------
 SprintfSaveRegs:
         mov dword [PrintfSavedEbx], ebx
         mov dword [PrintfSavedEcx], ecx

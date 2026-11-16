@@ -1,4 +1,4 @@
-; Passing: open-man check, pass lanes, the pass itself and the computer's pass decision (94G logic94).
+; Passing: open-man check, pass lanes, the pass itself and the computer's pass decision.
 bits 32
 %include "hockey.inc"
 section s_53F8C progbits alloc exec nowrite align=1
@@ -16,7 +16,7 @@ global GetLowestPen, chk4lc, chk4lc_shoot, PassLaneChk, PassLaneChk_ret5a, PassL
 global dopass_ret6, passmode, setpassmode, passtoa0, chk4pass
 ;-----------------------------------------------------------------------------
 ; checkob                            53F8C  94G logic94.asm, medium confidence
-; Genesis comment (logic94.asm): bring up little warning ref if a player on
+; bring up little warning ref if a player on
 ; your team is over blue line
 ;-----------------------------------------------------------------------------
 checkob:
@@ -162,6 +162,7 @@ checkob_ret5:
 ; SkillForAnim                                    54134  95 PC, low confidence
 ; Returns the stick-handling attribute byte (5Dh / 62h / 65h) that fits the
 ; player's current animation (SPA codes 0B1h, 0C9h, 0E1h, 101h, 119h, 11D5h,
+;
 ; 121Dh); checkpuckcoll
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/checkob.c (SkillForAnim)
@@ -307,8 +308,7 @@ ChkDelayedOffside:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; checkpuckcoll_ccx                                   5428A  94G collide94.asm
-; The per-object puck test (stick, body, goalie): the 94G local
-; checkpuckcoll.ccx; 94S checkpuckcoll_ccx
+; The per-object puck test of checkpuckcoll (stick, body, goalie)
 ;-----------------------------------------------------------------------------
 checkpuckcoll_ccx:
         push dword 18h
@@ -772,7 +772,7 @@ checkpuckcoll_ccx:
         jmp near PassLaneChk_ret5
 ;-----------------------------------------------------------------------------
 ; checkpuckcoll                                       548AC  94G collide94.asm
-; The 94G checkpuckcoll step for step: stop past y 190h, return above Z 16,
+; checkpuckcoll step for step: stop past y 190h, return above Z 16,
 ; walk the OOlist up and down within 40 and test each object (.ccx)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/checkpuckcoll.c
@@ -860,10 +860,13 @@ checkpuckcoll:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CheckBump                        54990  94G collide94.asm, medium confidence
-; Player p runs into the puck carrier c. One time in 20h (randomd0), with the
-; puck within 28h in y of c and p faster than 1B58h in x or y: c takes a
-; quarter of p's velocity, p stops, sflags bit 6 (sfslock) is set and, while
-; the clock runs, p gets penalty 1Eh (AddPenalty2). Returns 1 then, else 0.
+; Player p runs into the puck carrier c.
+;
+; One time in 20h (randomd0), with the puck within 28h in y of c and p faster
+; than 1B58h in x or y: c takes a quarter of p's velocity, p stops, sflags bit
+; 6 (sfslock) is set and, while the clock runs, p gets penalty 1Eh
+;
+; (AddPenalty2). Returns 1 then, else 0.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/CheckBump.c
 %ifdef CBUILD
@@ -947,10 +950,11 @@ CheckBump:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; GetLowestPen                                        54A53  94G penalty94.asm
-; Same algorithm as 94G penalty94 GetLowestPen (IDA CalcPenTime): shorthanded
-; team from tmap, walks its box list (+0B6h) summing the non-coincidental
-; tmpdst (+7Eh, &3FFFh) time steps, then compares with the power-play team's
-; list; returns the power-play time left
+; Lowest penalty time left: shorthanded team from tmap, walks its box list
+; (+0B6h) summing the non-coincidental tmpdst (+7Eh, &3FFFh) time steps,
+;
+; then compares with the power-play team's list; returns the power-play time
+; left
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/checkob.c (GetLowestPen)
 %ifdef CBUILD
@@ -1023,8 +1027,10 @@ GetLowestPen:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; chk4lc                                              54AF9  93G logic93_3.asm
-; (see if computer should call line change). Puck in own half below the blue line,
-; 1 in 4, not pflags2 bit 3; PC adds clock penalty checks (GetLowestPen). Then CompLine, setpersonel and
+; (see if computer should call line change).
+;
+; Puck in own half below the blue line, 1 in 4, not pflags2 bit 3; PC adds
+; clock penalty checks (GetLowestPen). Then CompLine, setpersonel and
 ; chk4lc_shoot: CompShoot dumps the puck. Returns 1 when it did.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/checkob.c (chk4lc)
@@ -1119,9 +1125,10 @@ chk4lc_shoot:
 ;-----------------------------------------------------------------------------
 ; PassLaneChk                                     54C09  95 PC, low confidence
 ; Pass target check for passer eax / receiver edx: 0 when the passer is the
-; goalie, when ShotLaneOpen says no, or when the receiver is on the wrong
-; side of the blue line (4Eh by pfgoal); then a vtoa lane test; used by
-; chk4pass and dopass
+; goalie, when ShotLaneOpen says no, or
+;
+; when the receiver is on the wrong side of the blue line (4Eh by pfgoal);
+; then a vtoa lane test; used by chk4pass and dopass
 ;-----------------------------------------------------------------------------
 PassLaneChk:
         push dword 1Ch
@@ -1269,8 +1276,9 @@ PassLaneChk_ret5:
 ;-----------------------------------------------------------------------------
 ; ScatterPass                                     54D63  95 PC, low confidence
 ; (player, receiver): counts a pass attempt (team +26h, hmpassatt) unless
-; replay, sets passplayer, receiver gets asstab 13h (asspassrec), puck gets
-; random vx/vy scaled by (12h - passing skill +5Dh)*14h
+; replay, sets passplayer, receiver gets asstab 13h (asspassrec),
+;
+; puck gets random vx/vy scaled by (12h - passing skill +5Dh)*14h
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/ScatterPass.c
 %ifdef CBUILD
@@ -1322,7 +1330,7 @@ ScatterPass:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; dopass                             54DF4  94G logic94.asm, medium confidence
-; Genesis comment (logic94.asm): pass the puck in passdir, to the best
+; pass the puck in passdir, to the best
 ; teammate there if any
 ;-----------------------------------------------------------------------------
 dopass:
@@ -1586,7 +1594,7 @@ dopass_ret6:
         jmp near checkob_ret5
 ;-----------------------------------------------------------------------------
 ; passmode                                              5514E  94G logic94.asm
-; As 93G passmode: B changed (regd2 bit 4) -> dopass, else dpad&7 -> passdir
+; passmode: B changed (regd2 bit 4) -> dopass, else dpad&7 -> passdir
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/passmode.c
 %ifdef CBUILD
@@ -1621,7 +1629,7 @@ passmode:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; setpassmode                        551AF  94G logic94.asm, medium confidence
-; Genesis comment (logic94.asm): initialize pass mode
+; initialize pass mode
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/setpassmode.c
 %ifdef CBUILD
@@ -1639,7 +1647,7 @@ setpassmode:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; passtoa0                           551CF  94G logic94.asm, medium confidence
-; Genesis comment (logic94.asm): pass puck to player a0
+; pass puck to player a0
 ;-----------------------------------------------------------------------------
 passtoa0:
         push dword 38h

@@ -1,4 +1,4 @@
-; Shooting decision, offsides check after a shot, shot stats, injuries (94G logic94).
+; Shooting decision, offsides check after a shot, shot stats, injuries.
 bits 32
 %include "hockey.inc"
 section s_55804 progbits alloc exec nowrite align=1
@@ -365,8 +365,9 @@ ChkOffsides:
 ;-----------------------------------------------------------------------------
 ; MarkTwoLinePlayers                           55C6F  95 PC, medium confidence
 ; Two-line pass option (gameopts bit 3): sets pflags2 bit 7 on the skaters of
-; the team past the red line (Ypos sign by gmode bit 1), clears it on the
-; others; ChkTwoLinePass (from a2touchpuck) reads the flag
+; the team past the red line (Ypos sign by gmode bit 1),
+;
+; clears it on the others; ChkTwoLinePass (from a2touchpuck) reads the flag
 ;-----------------------------------------------------------------------------
 ; C: src/engine/shoot/MarkTwoLinePlayers.c
 %ifdef CBUILD

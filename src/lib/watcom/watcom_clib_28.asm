@@ -4,6 +4,10 @@ bits 32
 section s_98A81 progbits alloc exec nowrite align=1
 extern _environ, spawnve_
 global spawnl_, strncmp_
+;-----------------------------------------------------------------------------
+; spawnl_                                                       98A81  library
+; C run-time: runs a program with an argument list
+;-----------------------------------------------------------------------------
 spawnl_:
         push ebx
         push ecx
@@ -17,6 +21,10 @@ spawnl_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; strncmp_                                                      98A9F  library
+; Run-time library strncmp: compares at most n characters
+;-----------------------------------------------------------------------------
 strncmp_:
         push ecx
 .1:

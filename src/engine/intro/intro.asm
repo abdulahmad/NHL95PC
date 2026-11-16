@@ -50,9 +50,10 @@ global StartThreeStars, MoveInDir, SteerToTarget, assstarskate, assthreestars
 ;-----------------------------------------------------------------------------
 ; FadeOutPalCycle                              47C31  95 PC, medium confidence
 ; When loadscreenon is set: with palcyclelock = 1 (pauses the timer handler
-; LoadScreenPalTick, which cycles 3 palettes loadpals, 300h bytes each)
-; decrements every palette byte by 1 per tick until all are 0, then
-; re-installs LoadScreenPalTick (RemoveTimerCallback) and clears
+; LoadScreenPalTick, which cycles 3 palettes loadpals,
+;
+; 300h bytes each) decrements every palette byte by 1 per tick until all are
+; 0, then re-installs LoadScreenPalTick (RemoveTimerCallback) and clears
 ; loadscreenon; called when leaving many front-end screens
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/FadeOutPalCycle.c
@@ -125,12 +126,15 @@ FadeOutPalCycle:
 ;-----------------------------------------------------------------------------
 ; PreGameIntro                                 47CD6  95 PC, medium confidence
 ; Pre-game ceremony: PlayCrowdSample(0Ah), big-screen animation 3 or 4
-; (LoadTeamPPV), clears the message lines, seqtimer = 708h, reenergizeteam /
-; setpersonel / forcepldata for both teams, lines the skaters up near the
-; blue lines (y -DCh / DCh, then random x spots, SetSPA 99h, assignment 25h),
-; puck assignment 1Ah, referee at centre (assignment 26h), then the shared
-; frame loop (PreGameIntro_frameloop: scroll, DrawRinkOverlays,
-; CrowdNoiseUpdate) until a joystick button (Readjoy1/2 bits 4-5) or the end
+; (LoadTeamPPV), clears the message lines, seqtimer = 708h,
+;
+; reenergizeteam / setpersonel / forcepldata for both teams, lines the skaters
+; up near the blue lines (y -DCh / DCh, then random x spots, SetSPA 99h,
+; assignment 25h), puck assignment 1Ah, referee at centre (assignment 26h),
+;
+; then the shared frame loop (PreGameIntro_frameloop: scroll,
+; DrawRinkOverlays, CrowdNoiseUpdate) until a joystick button (Readjoy1/2 bits
+; 4-5) or the end
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/FadeOutPalCycle.c (PreGameIntro)
 %ifdef CBUILD
@@ -551,8 +555,10 @@ PreGameIntro_popx:
 ;-----------------------------------------------------------------------------
 ; StartPreGame                                 4830E  95 PC, medium confidence
 ; Returns 0 when demoflag is set; else runs PreGameIntro unless eax is
-; non-zero, then CrowdNoiseReset; called twice from asset_loading game start
-; code demoflag is a skip flag; introskipped/fadeinpending follow.
+; non-zero, then CrowdNoiseReset; called twice
+;
+; from asset_loading game start code demoflag is a skip flag;
+; introskipped/fadeinpending follow.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/FadeOutPalCycle.c (StartPreGame)
 %ifdef CBUILD
@@ -575,6 +581,7 @@ StartPreGame:
 ; ThreeStarsLoop                               48333  95 PC, medium confidence
 ; Called at the end of StartThreeStars: per real-time tick
 ; (ResetInputSampling) counts seqtimer down and steers the scroll targets
+;
 ; (viewscrollx / viewscrolly) from camx, then jumps into
 ; PreGameIntro_frameloop to draw the frame
 ;-----------------------------------------------------------------------------
@@ -649,8 +656,9 @@ ThreeStarsLoop_tick:
 ;-----------------------------------------------------------------------------
 ; assintrostand                                4842A  95 PC, medium confidence
 ; Asstab 25h (PreGameIntro): stands with a countdown in temp5, small random x
-; jitter and random fidget animation (introstandanims_m2); when done
-; assinsert 27h
+; jitter and random fidget animation (introstandanims_m2);
+;
+; when done assinsert 27h
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/assintrostand.c
 %ifdef CBUILD
@@ -719,8 +727,9 @@ assintrostand:
 ;-----------------------------------------------------------------------------
 ; assintroline                                 484DA  95 PC, medium confidence
 ; Asstab 26h (PreGameIntro): skates to the line-up spot (temp3 -0Fh,temp4),
-; turns to face centre, marks temp5 -64h; when all 12 skaters are done sets
-; seqtimer 0Ah; crowdlevel 320h
+; turns to face centre, marks temp5 -64h;
+;
+; when all 12 skaters are done sets seqtimer 0Ah; crowdlevel 320h
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/assintroline.c
 %ifdef CBUILD
@@ -1003,8 +1012,9 @@ AddStar:
 ;-----------------------------------------------------------------------------
 ; StarEligible                                    487D9  95 PC, low confidence
 ; (team, roster idx): 0 when the roster slot (hmtmpdst) is below -1 or the
-; player's on-ice sprite has +1Ah == 6; else 1. Used by StarCompare when
-; picking three stars
+; player's on-ice sprite has +1Ah == 6; else 1.
+;
+; Used by StarCompare when picking three stars
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/StarEligible.c
 %ifdef CBUILD
@@ -1662,8 +1672,10 @@ PickThreeStars:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StartThreeStars                              48F0B  95 PC, medium confidence
-; PC end-of-game set-up for the three-stars ceremony (assthreestars, asstab 15h): PickThreeStars,
-; clears the clock line-change signal state, stops the clock, empties the penalty boxes and places the players.
+; PC end-of-game set-up for the three-stars ceremony (assthreestars, asstab
+; 15h): PickThreeStars, clears the clock line-change signal state,
+;
+; stops the clock, empties the penalty boxes and places the players.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/FadeOutPalCycle.c (StartThreeStars)
 %ifdef CBUILD
@@ -1920,8 +1932,9 @@ MoveInDir:
 ;-----------------------------------------------------------------------------
 ; SteerToTarget                                   492F9  95 PC, low confidence
 ; Every 0Ch ticks (+29h countdown) recomputes the direction to regd0/regd1 (9
-; when within 0Ch), stores it in +28h and moves with MoveInDir; used by the
-; pc slot 20 skater
+; when within 0Ch), stores it in +28h and moves with MoveInDir; used
+;
+; by the pc slot 20 skater
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/SteerToTarget.c
 %ifdef CBUILD

@@ -7,6 +7,10 @@ extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC,
 extern str_COMMAND, _osmajor, getenv_, EmuInitHook, EmuFiniHook, spawnl_, stricmp_, strlen_
 extern ErrnoPtr, CMainHook, str_DotBackslash, _dos_findfirst_
 global SpawnPathExists, SpawnCommand, spawnve_
+;-----------------------------------------------------------------------------
+; SpawnPathExists                                 A1CA2  95 PC, low confidence
+; Returns 1 when a file matching the path is found
+;-----------------------------------------------------------------------------
 SpawnPathExists:
         push ebx
         push edx
@@ -21,6 +25,10 @@ SpawnPathExists:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SpawnCommand                                    A1CC1  95 PC, low confidence
+; Builds the command line and environment and spawns the program
+;-----------------------------------------------------------------------------
 SpawnCommand:
         push esi
         push edi
@@ -44,6 +52,11 @@ SpawnCommand:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; spawnve_                                        A1CF4  95 PC, low confidence
+; Spawns a program with an argument vector and environment, trying .COM .EXE
+; .BAT
+;-----------------------------------------------------------------------------
 spawnve_:
         push dword 0E4h
         call __CHK

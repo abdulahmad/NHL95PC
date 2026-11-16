@@ -6,6 +6,10 @@ extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, HuffBitBuffer, HuffBit
 extern BytePairDst, BytePairStack, FatalError, UnpackedSizeHook, UnpackHook, strncmp_, bcopy
 global SkipCopyrightHeader, UnpackReadBE, PackedTypeOf, UnpackedSize, HuffGetBits, HuffGetLength, UnpackHuffman, ExpandBytePair
 global UnpackBytePair, UnpackDelta, UnpackRunLength, UnpackRefPack, unpack, UnpackTo, UnpackQuiet
+;-----------------------------------------------------------------------------
+; SkipCopyrightHeader                          97300  95 PC, medium confidence
+; Skips a "Copyright" string at the start of packed data
+;-----------------------------------------------------------------------------
 SkipCopyrightHeader:
         push ebx
         push ecx
@@ -36,6 +40,10 @@ SkipCopyrightHeader:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; UnpackReadBE                                 97334  95 PC, medium confidence
+; Reads an n-byte value stored high byte first
+;-----------------------------------------------------------------------------
 UnpackReadBE:
         push ebx
         push ecx
@@ -56,6 +64,10 @@ UnpackReadBE:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; PackedTypeOf                                 97350  95 PC, medium confidence
+; Identifies the packing type of a block of data
+;-----------------------------------------------------------------------------
 PackedTypeOf:
         push ebx
         push ecx
@@ -356,6 +368,10 @@ PackedTypeOf:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; UnpackedSize                                 9762C  95 PC, medium confidence
+; Returns the unpacked size of packed data
+;-----------------------------------------------------------------------------
 UnpackedSize:
         push esi
         push edi
@@ -392,6 +408,10 @@ UnpackedSize:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; HuffGetBits                                     9767C  95 PC, low confidence
+; Reads n bits from the Huffman bit stream
+;-----------------------------------------------------------------------------
 HuffGetBits:
         push ebx
         push ecx
@@ -454,6 +474,10 @@ HuffGetBits:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; HuffGetLength                                   97714  95 PC, low confidence
+; Reads a variable-length count from the Huffman bit stream
+;-----------------------------------------------------------------------------
 HuffGetLength:
         push ebx
         push edx
@@ -473,6 +497,10 @@ HuffGetLength:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; UnpackHuffman                                   97740  95 PC, low confidence
+; Unpacks Huffman packed data (types 30h-34h)
+;-----------------------------------------------------------------------------
 UnpackHuffman:
         push ecx
         push esi
@@ -687,6 +715,11 @@ UnpackHuffman:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; ExpandBytePair                               979F8  95 PC, medium confidence
+; Expands one byte of byte-pair coded data through the pair tables
+; (recursive)
+;-----------------------------------------------------------------------------
 ExpandBytePair:
         push ebx
         push edx
@@ -711,6 +744,10 @@ ExpandBytePair:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; UnpackBytePair                               97A38  95 PC, medium confidence
+; Unpacks byte pair packed data (type 46h)
+;-----------------------------------------------------------------------------
 UnpackBytePair:
         push ebx
         push ecx
@@ -844,6 +881,10 @@ UnpackBytePair:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; UnpackDelta                                  97BB8  95 PC, medium confidence
+; Unpacks delta coded data (types 60h-66h) by a running sum
+;-----------------------------------------------------------------------------
 UnpackDelta:
         push ebx
         push ecx
@@ -905,6 +946,10 @@ UnpackDelta:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; UnpackRunLength                                 97C2C  95 PC, low confidence
+; Unpacks run length coded data (type 7Ah/7Bh)
+;-----------------------------------------------------------------------------
 UnpackRunLength:
         push ebx
         push ecx
@@ -1005,6 +1050,10 @@ UnpackRunLength:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; UnpackRefPack                                   97CE0  95 PC, low confidence
+; Unpacks RefPack data (type 10h)
+;-----------------------------------------------------------------------------
 UnpackRefPack:
         push ecx
         push esi
@@ -1255,6 +1304,10 @@ UnpackRefPack:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; unpack                                                          97EB8  95 PC
+; Prints its own name: "unpack - INVALID PACK CODE (%x)"
+;-----------------------------------------------------------------------------
 unpack:
         push esi
         push edi
@@ -1398,6 +1451,10 @@ unpack:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; UnpackTo                                     98028  95 PC, medium confidence
+; Unpacks data into a buffer through unpack
+;-----------------------------------------------------------------------------
 UnpackTo:
         push byte 1
         mov edx, dword [byte esp+010h]
@@ -1410,6 +1467,10 @@ UnpackTo:
         add esp, byte 10h
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; UnpackQuiet                                     98044  95 PC, low confidence
+; Unpacks without stopping on an unknown pack type
+;-----------------------------------------------------------------------------
 UnpackQuiet:
         push byte 0
         mov edx, dword [byte esp+010h]

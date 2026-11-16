@@ -4,6 +4,10 @@ bits 32
 section s_98AC8 progbits alloc exec nowrite align=1
 extern _Extender
 global _dos_setvect_, _dos_getvect_
+;-----------------------------------------------------------------------------
+; _dos_setvect_                                                 98AC8  library
+; Run-time library _dos_setvect: sets an interrupt vector
+;-----------------------------------------------------------------------------
 _dos_setvect_:
         push edx
         mov edx, ebx
@@ -29,6 +33,10 @@ _dos_setvect_:
         pop ds
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; _dos_getvect_                                                 98AF3  library
+; Run-time library _dos_getvect: reads an interrupt vector
+;-----------------------------------------------------------------------------
 _dos_getvect_:
         push ebx
         push ecx

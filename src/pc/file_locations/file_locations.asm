@@ -14,6 +14,7 @@ global InitFileLocations, CoachCutScene
 ; InitFileLocations                            8BAAF  95 PC, medium confidence
 ; From main_: reads nhl.cfg (2nd line = CD drive letter into cddrivestr),
 ; opens <drive>:ALLFILES.TXT (or local), marks all 549 fileoncd entries 1
+;
 ; then clears those listed as installed
 ;-----------------------------------------------------------------------------
 ; C: src/pc/file_locations/InitFileLocations.c

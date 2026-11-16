@@ -9,6 +9,10 @@ global SetMemBlockPurgeLevel, SetMemBlockPurge, FindNamedBlock, FindMemBlockName
 global FindCachedFileData, FindCachedFile, CompactDownLocked, CompactMemListDown, CompactUpLocked, CompactMemListUp, MemTrackLargestFree, MemLargestFree
 global MemLargestFreeOfList, MemLargestFreeParas, MemFreeSize, InitMemDescriptors, PushMemDescriptor, getmemblock, MemPtrSize, MemDescPtr
 global MemDescSize
+;-----------------------------------------------------------------------------
+; PushMemDescriptorLocked                      8D2F0  95 PC, medium confidence
+; Pushes a memory descriptor with the memory lock held
+;-----------------------------------------------------------------------------
 PushMemDescriptorLocked:
         mov edx, dword [MemLockHandle]
         push edx
@@ -23,6 +27,10 @@ PushMemDescriptorLocked:
         call MemUnlock
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; UnlinkMemBlockLocked                         8D31C  95 PC, medium confidence
+; Unlinks a block from its list and returns its descriptor to the free list
+;-----------------------------------------------------------------------------
 UnlinkMemBlockLocked:
         mov eax, dword [byte esp+04h]
         test byte [byte eax+019h], 80h
@@ -39,6 +47,11 @@ UnlinkMemBlockLocked:
 .1:
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; FreeMemBlocksAfter                              8D344  95 PC, low confidence
+; Frees every block after the block at an address, up to the next marker
+; block
+;-----------------------------------------------------------------------------
 FreeMemBlocksAfter:
         mov edx, dword [byte esp+04h]
         push edx
@@ -49,6 +62,10 @@ FreeMemBlocksAfter:
         add esp, byte 4
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; FreeBlocksAfter                                 8D35C  95 PC, low confidence
+; Frees every block after a descriptor, up to the next marker block
+;-----------------------------------------------------------------------------
 FreeBlocksAfter:
         push esi
         mov edx, dword [MemLockHandle]
@@ -75,6 +92,10 @@ FreeBlocksAfter:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MergeFreeSpaceLocked                         8D3A0  95 PC, medium confidence
+; MergeFreeSpace under the memory lock
+;-----------------------------------------------------------------------------
 MergeFreeSpaceLocked:
         push esi
         mov edx, dword [MemLockHandle]
@@ -94,6 +115,11 @@ MergeFreeSpaceLocked:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MergeFreeSpace                               8D3D4  95 PC, medium confidence
+; Walks a memory list and works out the free space around movable blocks for
+; the requested placement
+;-----------------------------------------------------------------------------
 MergeFreeSpace:
         push esi
         push edi
@@ -154,6 +180,10 @@ MergeFreeSpace:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; MarkBlockPurgeable                           8D468  95 PC, medium confidence
+; Marks the block at an address purgeable
+;-----------------------------------------------------------------------------
 MarkBlockPurgeable:
         push byte 1
         mov edx, dword [byte esp+08h]
@@ -165,6 +195,10 @@ MarkBlockPurgeable:
         add esp, byte 8
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MarkDescPurgeable                            8D484  95 PC, medium confidence
+; Marks a block purgeable by descriptor
+;-----------------------------------------------------------------------------
 MarkDescPurgeable:
         push byte 1
         mov edx, dword [byte esp+08h]
@@ -172,6 +206,10 @@ MarkDescPurgeable:
         call SetMemBlockPurge
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; SetMemBlockPurgeLevel                           8D494  95 PC, low confidence
+; Sets the purge level of the block at an address
+;-----------------------------------------------------------------------------
 SetMemBlockPurgeLevel:
         mov edx, dword [byte esp+08h]
         push edx
@@ -183,6 +221,10 @@ SetMemBlockPurgeLevel:
         call SetMemBlockPurge
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; SetMemBlockPurge                             8D4B0  95 PC, medium confidence
+; Sets the purge flags of a block under the memory lock
+;-----------------------------------------------------------------------------
 SetMemBlockPurge:
         push esi
         mov esi, dword [byte esp+08h]
@@ -204,6 +246,10 @@ SetMemBlockPurge:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; FindNamedBlock                                  8D4E8  95 PC, low confidence
+; Looks up a named block in its memory list type
+;-----------------------------------------------------------------------------
 FindNamedBlock:
         push esi
         push edi
@@ -248,6 +294,10 @@ FindNamedBlock:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; FindMemBlockNamed                               8D548  95 PC, low confidence
+; Looks up a named block (first match)
+;-----------------------------------------------------------------------------
 FindMemBlockNamed:
         push byte 0
         mov edx, dword [byte esp+08h]
@@ -255,6 +305,10 @@ FindMemBlockNamed:
         call FindNamedBlock
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; FindNamedBlockNext                              8D558  95 PC, low confidence
+; Looks up a named block in its memory list type, from the other end
+;-----------------------------------------------------------------------------
 FindNamedBlockNext:
         push esi
         push edi
@@ -302,6 +356,10 @@ FindNamedBlockNext:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; FindMemBlockNamedNext                           8D5C0  95 PC, low confidence
+; Looks up a named block from the other end (first match)
+;-----------------------------------------------------------------------------
 FindMemBlockNamedNext:
         push byte 0
         mov edx, dword [byte esp+08h]
@@ -309,6 +367,10 @@ FindMemBlockNamedNext:
         call FindNamedBlockNext
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; FindFreeSpaceLocked                          8D5D0  95 PC, medium confidence
+; FindFreeSpace under the memory lock
+;-----------------------------------------------------------------------------
 FindFreeSpaceLocked:
         push esi
         mov edx, dword [MemLockHandle]
@@ -328,6 +390,10 @@ FindFreeSpaceLocked:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; FindFreeSpace                                8D604  95 PC, medium confidence
+; Finds room for a block in a memory list, from the bottom or the top
+;-----------------------------------------------------------------------------
 FindFreeSpace:
         push esi
         push edi
@@ -442,6 +508,10 @@ FindFreeSpace:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; FindCachedFileData                           8D714  95 PC, medium confidence
+; Returns the data pointer of a file already held in memory
+;-----------------------------------------------------------------------------
 FindCachedFileData:
         mov edx, dword [byte esp+04h]
         push edx
@@ -452,6 +522,10 @@ FindCachedFileData:
         mov eax, dword [eax]
 .1:
         ret
+;-----------------------------------------------------------------------------
+; FindCachedFile                               8D728  95 PC, medium confidence
+; Returns the memory block that already holds a file, revalidating it
+;-----------------------------------------------------------------------------
 FindCachedFile:
         push esi
         push edi
@@ -548,6 +622,11 @@ FindCachedFile:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; CompactDownLocked                            8D80C  95 PC, medium confidence
+; Under the memory lock, slides the movable blocks of the main list down to
+; close gaps
+;-----------------------------------------------------------------------------
 CompactDownLocked:
         push esi
         mov edx, dword [MemLockHandle]
@@ -568,6 +647,10 @@ CompactDownLocked:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; CompactMemListDown                           8D844  95 PC, medium confidence
+; Moves the unlocked blocks of a list down to close the gaps
+;-----------------------------------------------------------------------------
 CompactMemListDown:
         push esi
         push edi
@@ -682,6 +765,11 @@ CompactMemListDown:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; CompactUpLocked                              8D958  95 PC, medium confidence
+; Under the memory lock, slides the movable blocks of the main list up to
+; close gaps
+;-----------------------------------------------------------------------------
 CompactUpLocked:
         push esi
         mov edx, dword [MemLockHandle]
@@ -702,6 +790,10 @@ CompactUpLocked:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; CompactMemListUp                             8D990  95 PC, medium confidence
+; Moves the unlocked blocks of a list up to close the gaps
+;-----------------------------------------------------------------------------
 CompactMemListUp:
         push esi
         push edi
@@ -827,6 +919,10 @@ CompactMemListUp:
         mov edi, dword [byte edi+020h]
         jmp near .4
         db 090h
+;-----------------------------------------------------------------------------
+; MemTrackLargestFree                             8DA98  95 PC, low confidence
+; Records the smallest largest-free-block seen so far
+;-----------------------------------------------------------------------------
 MemTrackLargestFree:
         push ebx
         push ecx
@@ -842,6 +938,10 @@ MemTrackLargestFree:
         pop ebx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MemLargestFree                               8DAB8  95 PC, medium confidence
+; Returns the largest free block, under the memory lock
+;-----------------------------------------------------------------------------
 MemLargestFree:
         push esi
         mov edx, dword [MemLockHandle]
@@ -858,6 +958,10 @@ MemLargestFree:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MemLargestFreeOfList                         8DAE4  95 PC, medium confidence
+; Compacts the block list and returns its largest free block
+;-----------------------------------------------------------------------------
 MemLargestFreeOfList:
         mov eax, dword [memblocklist]
         mov edx, dword [eax]
@@ -885,11 +989,19 @@ MemLargestFreeOfList:
         mov eax, ecx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MemLargestFreeParas                             8DB20  95 PC, low confidence
+; Returns the largest free block in 16-byte paragraphs
+;-----------------------------------------------------------------------------
 MemLargestFreeParas:
         call MemLargestFree
         sar eax, 4
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MemFreeSize                                  8DB2C  95 PC, medium confidence
+; Returns the total size of the free blocks
+;-----------------------------------------------------------------------------
 MemFreeSize:
         mov eax, dword [memblocklist]
         mov eax, dword [eax]
@@ -907,6 +1019,10 @@ MemFreeSize:
 .3:
         mov eax, edx
         ret
+;-----------------------------------------------------------------------------
+; InitMemDescriptors                           8DB4C  95 PC, medium confidence
+; Builds the free list of block descriptors
+;-----------------------------------------------------------------------------
 InitMemDescriptors:
         mov eax, dword [byte esp+04h]
         mov dword [MemDescriptorTop], eax
@@ -926,6 +1042,10 @@ InitMemDescriptors:
         mov dword [byte eax+020h], 0
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; PushMemDescriptor                            8DB78  95 PC, medium confidence
+; Returns a block descriptor to the free list
+;-----------------------------------------------------------------------------
 PushMemDescriptor:
         mov edx, dword [byte esp+04h]
         mov eax, dword [MemDescriptorTop]
@@ -933,6 +1053,10 @@ PushMemDescriptor:
         mov dword [MemDescriptorTop], edx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; getmemblock                                                     8DB8C  95 PC
+; Prints its own name: "getmemblock - NO MEMORY BLOCKS LEFT"
+;-----------------------------------------------------------------------------
 getmemblock:
         cmp dword [MemDescriptorTop], byte 0
         jne short .1
@@ -948,6 +1072,10 @@ getmemblock:
         mov edx, dword [byte eax+020h]
         mov dword [MemDescriptorTop], edx
         ret
+;-----------------------------------------------------------------------------
+; MemPtrSize                                   8DBC0  95 PC, medium confidence
+; Returns the size of the block that holds a pointer
+;-----------------------------------------------------------------------------
 MemPtrSize:
         mov edx, dword [byte esp+04h]
         push edx
@@ -956,11 +1084,19 @@ MemPtrSize:
         mov eax, dword [byte eax+014h]
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MemDescPtr                                                      8DBD4  95 PC
+; Returns the data pointer of a block descriptor
+;-----------------------------------------------------------------------------
 MemDescPtr:
         mov eax, dword [byte esp+04h]
         mov eax, dword [eax]
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MemDescSize                                  8DBDC  95 PC, medium confidence
+; Returns the size of a block descriptor's data
+;-----------------------------------------------------------------------------
 MemDescSize:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+014h]

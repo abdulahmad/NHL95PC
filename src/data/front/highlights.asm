@@ -4,7 +4,8 @@ bits 32
 section s_E03C4 nobits alloc noexec write align=1
 global hilightrec
 global ReplayBuffer
-hilightrec:
+hilightrec:                                     ; 9652h-byte highlight record buffer (.HI file record); used
+                                                ; by PlayHilight, SaveHilight, ViewHilights
         resb 1
         resb 1
         resb 1
@@ -17,5 +18,5 @@ hilightrec:
         resb 4
         resb 2
         resb 4
-ReplayBuffer:
+ReplayBuffer:                                   ; Instant replay frame buffer that replaystart points at
         resb 38395

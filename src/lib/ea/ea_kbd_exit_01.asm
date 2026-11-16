@@ -9,10 +9,18 @@ extern PrintStringCentered, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDraw
 extern SetBitmapClip, DefaultFont
 global EnableInterrupts, SaveBoxBackground, RestoreBoxBackground, ShowPromptBox, AskExitToDos, ShowMessageBox, PauseUntilKey, DosGetVector
 global DosSetVector, ConsoleMessageThunk
+;-----------------------------------------------------------------------------
+; EnableInterrupts                             981AD  95 PC, medium confidence
+; Turns interrupts back on
+;-----------------------------------------------------------------------------
 EnableInterrupts:
         sti
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; SaveBoxBackground                               981B0  95 PC, low confidence
+; Grabs the screen under a message box
+;-----------------------------------------------------------------------------
 SaveBoxBackground:
         push ecx
         push esi
@@ -34,6 +42,10 @@ SaveBoxBackground:
         pop ecx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; RestoreBoxBackground                            981D4  95 PC, low confidence
+; Draws the saved screen back over a message box
+;-----------------------------------------------------------------------------
 RestoreBoxBackground:
         push ecx
         push esi
@@ -55,6 +67,10 @@ RestoreBoxBackground:
         pop ecx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; ShowPromptBox                                981F8  95 PC, medium confidence
+; Shows a boxed prompt over the screen and waits for a key
+;-----------------------------------------------------------------------------
 ShowPromptBox:
         push esi
         push edi
@@ -234,6 +250,10 @@ ShowPromptBox:
         pop esi
         ret 8
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; AskExitToDos                                 984A8  95 PC, medium confidence
+; Asks "EXIT TO DOS" and leaves through the exit routine on yes
+;-----------------------------------------------------------------------------
 AskExitToDos:
         push byte 7
         push byte 18h
@@ -247,6 +267,10 @@ AskExitToDos:
         call dword [bailout_vec]
 .1:
         ret
+;-----------------------------------------------------------------------------
+; ShowMessageBox                               984D0  95 PC, medium confidence
+; Shows a boxed message over the screen
+;-----------------------------------------------------------------------------
 ShowMessageBox:
         push esi
         push edi
@@ -346,6 +370,10 @@ ShowMessageBox:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; PauseUntilKey                                9862C  95 PC, medium confidence
+; Shows PAUSE - PRESS ANY KEY and waits
+;-----------------------------------------------------------------------------
 PauseUntilKey:
         push byte 1
         push byte 18h
@@ -356,6 +384,10 @@ PauseUntilKey:
         call ShowPromptBox
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; DosGetVector                                 9864C  95 PC, medium confidence
+; Reads an interrupt vector through DOS
+;-----------------------------------------------------------------------------
 DosGetVector:
         push ebx
         push es
@@ -375,6 +407,10 @@ DosGetVector:
         pop es
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; DosSetVector                                 98664  95 PC, medium confidence
+; Sets an interrupt vector through DOS
+;-----------------------------------------------------------------------------
 DosSetVector:
         push es
         push ds
@@ -396,5 +432,9 @@ DosSetVector:
         pop ds
         pop es
         ret
+;-----------------------------------------------------------------------------
+; ConsoleMessageThunk                             9867E  95 PC, low confidence
+; Jumps to WriteConsoleMessage; unused
+;-----------------------------------------------------------------------------
 ConsoleMessageThunk:
         jmp near WriteConsoleMessage

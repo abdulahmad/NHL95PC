@@ -4,23 +4,30 @@ bits 32
 section s_F1704 nobits alloc noexec write align=1
 global SeqQueue, SeqQueueData, SeqSysexBuffer, SeqEventNote, SeqEventVelocity, SeqEventLength, SeqEventValue, SeqNextEvent
 global SongRecords, SeqEvent
-SeqQueue:
+SeqQueue:                                       ; Sequencer command queue (128 bytes); used by SeqFlushQueue,
+                                                ; SeqQueueCommand
         resb 1
-SeqQueueData:
+SeqQueueData:                                   ; Data bytes of the sequencer command queue; used by
+                                                ; SeqFlushQueue
         resb 127
-SeqSysexBuffer:
+SeqSysexBuffer:                                 ; Buffer for system exclusive messages; used by SeqReadEvent,
+                                                ; SeqStepTrack
         resb 256
-SeqEvent:
+SeqEvent:                                       ; Event record SeqReadEvent fills: delta time first; used by
+                                                ; SeqStepTrack
         resb 4
-SeqEventValue:
+SeqEventValue:                                  ; Event value (controller number or pitch bend); used by
+                                                ; SeqStepTrack
         resb 4
-SeqEventNote:
+SeqEventNote:                                   ; Event status or note byte; used by SeqStepTrack
         resb 1
-SeqEventVelocity:
+SeqEventVelocity:                               ; Event velocity or data byte; used by SeqStepTrack
         resb 1
-SeqEventLength:
+SeqEventLength:                                 ; Event length in bytes; used by SeqStepTrack
         resb 2
-SeqNextEvent:
+SeqNextEvent:                                   ; Record for the delta time of the next event; used by
+                                                ; SeqStepTrack
         resb 12
-SongRecords:
+SongRecords:                                    ; Song records (12 bytes): song pointer first; used by
+                                                ; ReleaseAllVoices, SeqNoteOn, SeqStepTrack ...
         resb 8

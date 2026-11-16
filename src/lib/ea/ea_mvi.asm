@@ -8,6 +8,10 @@ extern AllocMemHandleLocked, AllocMemBlock, AllocMemBlockUnlocked, PushMemDescri
 extern RestoreDrawState, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile, SetScreenTarget, SetClipWindow
 extern CreateBitmap, VesaSetBankArg, BlitShapeClipped
 global DrawShapeClippedKeyed, DrawShapeClippedKeyedAtOwnPos, MviPrintInfo, MviLoadPalette, MviOpen, MviRewind, MviGetPalette
+;-----------------------------------------------------------------------------
+; DrawShapeClippedKeyed                           96440  95 PC, low confidence
+; Draws a shape clipped to the clip window (keyed when KeyedDraw is set)
+;-----------------------------------------------------------------------------
 DrawShapeClippedKeyed:
         push esi
         push edi
@@ -150,6 +154,11 @@ DrawShapeClippedKeyed:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DrawShapeClippedKeyedAtOwnPos                   965DC  95 PC, low confidence
+; DrawShapeClippedKeyed at the shape's own position; the code after it draws
+; at a hotspot and into a screen window
+;-----------------------------------------------------------------------------
 DrawShapeClippedKeyedAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -220,6 +229,11 @@ DrawShapeClippedKeyedAtOwnPos:
         pop esi
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; MviPrintInfo                                 96690  95 PC, medium confidence
+; Prints a movie's frame rate, frame count, size and colours to the debug
+; screen
+;-----------------------------------------------------------------------------
 MviPrintInfo:
         push ebx
         push ecx
@@ -259,6 +273,10 @@ MviPrintInfo:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MviLoadPalette                               966E4  95 PC, medium confidence
+; Reads a movie's palette into a new block
+;-----------------------------------------------------------------------------
 MviLoadPalette:
         push ebx
         push ecx
@@ -403,6 +421,10 @@ MviLoadPalette:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MviOpen                                         96844  95 PC, low confidence
+; Opens an MVI movie file: header, palette, frame buffers and data buffer
+;-----------------------------------------------------------------------------
 MviOpen:
         push esi
         push edi
@@ -569,6 +591,10 @@ MviOpen:
         pop ebp
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; MviRewind                                       96A10  95 PC, low confidence
+; Goes back to a movie's first frame
+;-----------------------------------------------------------------------------
 MviRewind:
         mov eax, dword [byte esp+04h]
         mov dword [byte eax+04h], 1
@@ -586,6 +612,10 @@ MviRewind:
         add esp, byte 8
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MviGetPalette                                   96A38  95 PC, low confidence
+; Returns a movie's palette pointer, first colour and colour count
+;-----------------------------------------------------------------------------
 MviGetPalette:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+014h]

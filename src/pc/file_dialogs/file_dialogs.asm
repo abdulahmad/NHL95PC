@@ -27,7 +27,8 @@ global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, Draw
 global DrawFileDlg_jt, DrawFileDlg, DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3, DrawFileDlg_n2, DrawFileDlg_n1
 global DrawFileDlg_x, FileDlgHitTest, DrawFileDlgList_jt, DrawFileDlgList, DrawFileDlgList_n6, DrawFileDlgList_n5, DrawFileDlgList_n4, DrawFileDlgList_n3
 global DrawFileDlgList_n2, DrawFileDlgList_n1, RunFileDlg, DeleteSavedGame, SelectSavedFile, ReadGameSettings, gsuminitff
-savefileexts:
+savefileexts:                                   ; code-segment table of save extensions (str_NHL, str_PO2,
+                                                ; str_LP) copied by DeleteSavedGame; used by DeleteSavedGame
         dd str_NHL
         dd str_PO2
         dd str_LP
@@ -153,6 +154,7 @@ LoadFileDlgShapes_x:
 ; MenuOpenSaved                                                   2B944  95 PC
 ; "Open ..." menu action: scans saves, runs the file dialog, then resumes the
 ; chosen Exhibition (MenuNewExhibition), Play-Off (PlayoffModeLoop) or League
+;
 ; (MenuNextLeagueGame) save
 ;-----------------------------------------------------------------------------
 ; C: src/pc/file_dialogs/MenuOpenSaved.c
@@ -835,7 +837,7 @@ PrintTextCopy:
         ret
 %endif ; C
         db 08Dh,040h,00h
-DrawFileDlg_jt:
+DrawFileDlg_jt:                                 ; used by DrawFileDlg
         dd DrawFileDlg_n1
         dd DrawFileDlg_n2
         dd DrawFileDlg_n3
@@ -1080,7 +1082,7 @@ FileDlgHitTest:
         ret
 %endif ; C
         db 08Bh,0C0h
-DrawFileDlgList_jt:
+DrawFileDlgList_jt:                             ; used by DrawFileDlgList
         dd DrawFileDlgList_n1
         dd DrawFileDlgList_n2
         dd DrawFileDlgList_n3
@@ -2140,8 +2142,9 @@ DeleteSavedGame:
 ;-----------------------------------------------------------------------------
 ; SelectSavedFile                              2D099  95 PC, medium confidence
 ; Sets up the chosen save: .nhl (LoadModeState, "LA  at MTL" label), .po
-; (schedule.db, seriesgameno, PlayoffModeLoop menu actions), .lp (league menu
-; actions); ReadGameSettings for each
+; (schedule.db, seriesgameno, PlayoffModeLoop menu actions), .lp
+;
+; (league menu actions); ReadGameSettings for each
 ;-----------------------------------------------------------------------------
 SelectSavedFile:
         push dword 4Ch
@@ -2352,5 +2355,6 @@ ReadGameSettings:
         pop ecx
         ret
 %endif ; C
-gsuminitff:
+gsuminitff:                                     ; 8 x FFh copied into GameSummaryScreen locals at entry; used
+                                                ; by GameSummaryScreen
         db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh

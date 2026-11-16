@@ -5,6 +5,11 @@ section s_9D352 progbits alloc exec nowrite align=1
 extern __hook387, __8087, _Extender, Is8087, __real87, FpuFlags, FpuSystemFlags, OldFpuVectorOffset
 extern __int7_pl3, __int7, EmuHookFlags, SavedEsSelector, OldFpuVectorSelector, FpuCr0Bits
 global InitFpuFlags, MakeFpuGate, HookCoprocessorVector, SetSystemFpuFlag
+;-----------------------------------------------------------------------------
+; InitFpuFlags                                 9D352  95 PC, medium confidence
+; Start-up routine that sets up the floating point emulator and its two flags
+; (__8087, __real87); replaced in the port
+;-----------------------------------------------------------------------------
 InitFpuFlags:
         mov byte [__8087], 3
         mov byte [__real87], 1
@@ -65,6 +70,10 @@ InitFpuFlags:
         call HookCoprocessorVector
 .5:
         ret
+;-----------------------------------------------------------------------------
+; MakeFpuGate                                  9D41D  95 PC, medium confidence
+; Builds the gate descriptor for the coprocessor-missing handler
+;-----------------------------------------------------------------------------
 MakeFpuGate:
         lea ecx, [__int7]
         mov dx, cs
@@ -75,6 +84,10 @@ MakeFpuGate:
         shl cx, 0Dh
         or ch, 8Eh
         ret
+;-----------------------------------------------------------------------------
+; HookCoprocessorVector                        9D43A  95 PC, medium confidence
+; Saves and replaces the coprocessor-missing vector through the DOS extender
+;-----------------------------------------------------------------------------
 HookCoprocessorVector:
         mov cl, 7
         mov ax, 2502h
@@ -103,6 +116,10 @@ HookCoprocessorVector:
         mov cr0, ecx
 .2:
         ret
+;-----------------------------------------------------------------------------
+; SetSystemFpuFlag                             9D487  95 PC, medium confidence
+; Tells the DOS extender that a coprocessor is emulated
+;-----------------------------------------------------------------------------
 SetSystemFpuFlag:
         xor ebx, ebx
         lea edx, [FpuSystemFlags]

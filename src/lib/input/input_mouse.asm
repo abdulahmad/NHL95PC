@@ -7,6 +7,10 @@ extern PointerCount, MouseButtons, ViewScreenWidth, ViewScreenHeight, mousebtns,
 extern HidePointerKeepHook, HidePointerHook, ShowPointerHook, AddExitHandler, MouseSavedSensX, MouseSavedSensY, MouseSavedThreshold
 global MouseReadButtons, MouseSetSensitivity, MouseSetSensitivityDefault, MouseSetPos, MouseRead, MouseSetXRange, SetViewRect, MouseReadMotion
 global PointerCountUp, PointerCountDown, MouseRestoreSensitivity, InitMouse
+;-----------------------------------------------------------------------------
+; MouseReadButtons                             B2D38  95 PC, medium confidence
+; Reads the mouse buttons through the mouse driver
+;-----------------------------------------------------------------------------
 MouseReadButtons:
         LD xor, eax, eax
         dec dword [MouseButtonState]
@@ -28,6 +32,10 @@ MouseReadButtons:
         LD or, eax, ebx
         inc dword [MouseButtonState]
         ret
+;-----------------------------------------------------------------------------
+; MouseSetSensitivity                          B2D74  95 PC, medium confidence
+; Sets the mouse sensitivity (int 33h, 1Ah) when a mouse is present
+;-----------------------------------------------------------------------------
 MouseSetSensitivity:
         push ebp
         LD mov, ebp, esp
@@ -41,6 +49,10 @@ MouseSetSensitivity:
 .1:
         leave
         ret
+;-----------------------------------------------------------------------------
+; MouseSetSensitivityDefault                   B2D94  95 PC, medium confidence
+; Sets mouse sensitivity with the default double-speed threshold
+;-----------------------------------------------------------------------------
 MouseSetSensitivityDefault:
         push ebp
         LD mov, ebp, esp
@@ -54,6 +66,11 @@ MouseSetSensitivityDefault:
 .1:
         leave
         ret
+;-----------------------------------------------------------------------------
+; MouseSetPos                                  B2DB4  95 PC, medium confidence
+; Input_mouse lib: stores the two stack args as the mouse x/y (D302C/D3030),
+; read back by MouseRead
+;-----------------------------------------------------------------------------
 MouseSetPos:
         push ebp
         LD mov, ebp, esp
@@ -63,6 +80,10 @@ MouseSetPos:
         mov dword [mousey], edx
         leave
         ret
+;-----------------------------------------------------------------------------
+; MouseRead                                    B2DCA  95 PC, medium confidence
+; Mouse library: read buttons and position (btn, y, x)
+;-----------------------------------------------------------------------------
 MouseRead:
         push ebp
         LD mov, ebp, esp
@@ -77,6 +98,10 @@ MouseRead:
         mov dword [ebx], edx
         leave
         ret
+;-----------------------------------------------------------------------------
+; MouseSetXRange                               B2DEF  95 PC, medium confidence
+; Sets the mouse X range; the Y range setter follows unlabelled
+;-----------------------------------------------------------------------------
 MouseSetXRange:
         push ebp
         LD mov, ebp, esp
@@ -94,6 +119,10 @@ MouseSetXRange:
         mov dword [mousemaxy], edx
         leave
         ret
+;-----------------------------------------------------------------------------
+; SetViewRect                                  B2E1B  95 PC, medium confidence
+; Graphics library: set the view rectangle (x, y, w, h)
+;-----------------------------------------------------------------------------
 SetViewRect:
         push ebp
         LD mov, ebp, esp
@@ -107,6 +136,10 @@ SetViewRect:
         mov dword [mousemaxy], ecx
         leave
         ret
+;-----------------------------------------------------------------------------
+; MouseReadMotion                              B2E43  95 PC, medium confidence
+; Mouse library: reads int 33h 0Bh into the pointer state
+;-----------------------------------------------------------------------------
 MouseReadMotion:
         dec dword [MouseButtonState]
         jne near .5
@@ -156,12 +189,24 @@ MouseReadMotion:
         mov eax, dword [mousebtns]
         inc dword [MouseButtonState]
         ret
+;-----------------------------------------------------------------------------
+; PointerCountUp                               B2EF6  95 PC, medium confidence
+; Increments the pointer show count
+;-----------------------------------------------------------------------------
 PointerCountUp:
         inc dword [PointerCount]
         ret
+;-----------------------------------------------------------------------------
+; PointerCountDown                             B2EFD  95 PC, medium confidence
+; Decrements the pointer show count
+;-----------------------------------------------------------------------------
 PointerCountDown:
         dec dword [PointerCount]
         ret
+;-----------------------------------------------------------------------------
+; MouseRestoreSensitivity                                         B2F04  95 PC
+; Puts back the mouse sensitivity saved at start-up
+;-----------------------------------------------------------------------------
 MouseRestoreSensitivity:
         pusha
         mov ax, 1Ah
@@ -171,6 +216,11 @@ MouseRestoreSensitivity:
         int 33h
         popa
         ret
+;-----------------------------------------------------------------------------
+; InitMouse                                    B2F22  95 PC, medium confidence
+; Finds the mouse, saves its sensitivity, sets its range and the pointer
+; routines
+;-----------------------------------------------------------------------------
 InitMouse:
         mov dword [MousePresent], 0
         mov dword [PointerCount], 0

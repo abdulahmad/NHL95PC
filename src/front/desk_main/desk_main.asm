@@ -28,9 +28,10 @@ global MenuRebuildDbs_x, MenuMergeUpdateDbs, MenuMergeUpdateDbs_ret, MenuMergeLe
 global MenuImportDbs, MenuExportDbs, DemoSetupStub, FreeRinkGfx
 ;-----------------------------------------------------------------------------
 ; MainDeskLoop                                                    31AB5  95 PC
-; Front-end top level called from main: maindesk / tonights music
-; alternation, easndesk screen, menu bar File / Game / Statistics, runs the
-; chosen item's action until it returns 1 (Exit)
+; Front-end top level called from main: maindesk / tonights music alternation,
+; easndesk screen, menu bar File / Game / Statistics,
+;
+; runs the chosen item's action until it returns 1 (Exit)
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_main/MainDeskLoop.c
 %ifdef CBUILD
@@ -1364,9 +1365,10 @@ WriteModeState:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CopyGameSettings                             32C9E  95 PC, medium confidence
-; (src, dst): copies game.set (75h bytes) to dst, or into an existing dst
-; only the 13 bytes at +4 and the dword at +59h; used by database_merge with
-; the floppy path
+; (src, dst): copies game.set (75h bytes) to dst, or into an existing dst only
+; the 13 bytes at +4 and the dword at +59h; used by database_merge
+;
+; with the floppy path
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_main/CopyGameSettings.c
 %ifdef CBUILD
@@ -1452,9 +1454,8 @@ CopyGameSettings:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; MenuNewExhibition                                               32DA9  95 PC
-; File menu "New Exhibition Game ...": disk check, controllers,
-; PreGameScreen, PlayGame, then back to the desk (also resumes a saved
-; exhibition)
+; File menu "New Exhibition Game ...": disk check, controllers, PreGameScreen,
+; PlayGame, then back to the desk (also resumes a saved exhibition)
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_main/MainDeskLoop.c (MenuNewExhibition)
 %ifdef CBUILD
@@ -1967,6 +1968,9 @@ MenuMergeUpdateDbs:
         pop edx
         pop ecx
         pop ebx
+;-----------------------------------------------------------------------------
+; MenuMergeUpdateDbs_ret                                        33468  library
+;-----------------------------------------------------------------------------
 MenuMergeUpdateDbs_ret:
         ret
 %endif ; C

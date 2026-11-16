@@ -11,6 +11,11 @@ extern VesaBank, VesaWindowGranularity, vesapresent, ScreenWidthPtr, FatalError,
 extern strncmp_, MemPtrSize, OpenArtArchiveErr, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
 extern VesaSetBankArg, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_
 global ProbeVesa, initgraphics
+;-----------------------------------------------------------------------------
+; ProbeVesa                                                       8DF70  95 PC
+; EA library: the VESA probe (ran the external EAVESA program and read its
+; tables)
+;-----------------------------------------------------------------------------
 ProbeVesa:
         push ebx
         push ecx
@@ -98,6 +103,11 @@ ProbeVesa:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; initgraphics                                                    8E080  95 PC
+; Prints its own name: "initgraphics - EAVESA.COM REQUIRED IN PATH",
+; "initgraphics - INVALID SCREEN SIZE"
+;-----------------------------------------------------------------------------
 initgraphics:
         push esi
         push edi

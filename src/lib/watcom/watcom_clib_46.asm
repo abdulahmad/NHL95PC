@@ -7,6 +7,10 @@ extern ___env_mask, __amblksiz, ExecParamBlock
 extern SpawnSavedEsp, memset_, strcpy_, strlen_, _Envptr_w4
 extern SpawnSavedSs, SpawnSavedDs
 global __setenvp_, stpcpy_, __cenvarg_, __ccmdline_, __dospawn, pcopy_, _splitpath2_
+;-----------------------------------------------------------------------------
+; __setenvp_                                                    AF6D3  library
+; Run-time library: builds the environment pointer table at start-up
+;-----------------------------------------------------------------------------
 __setenvp_:
         push ebx
         push ecx
@@ -99,6 +103,10 @@ __setenvp_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; stpcpy_                                                       AF7A7  library
+; C run-time: copies a string and returns a pointer to its end
+;-----------------------------------------------------------------------------
 stpcpy_:
         push ebx
 .1:
@@ -112,6 +120,11 @@ stpcpy_:
 .2:
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __cenvarg_                                                    AF7B6  library
+; Spawn helper: builds the argument and environment blocks for a child
+; program
+;-----------------------------------------------------------------------------
 __cenvarg_:
         push esi
         push edi
@@ -235,6 +248,10 @@ __cenvarg_:
         pop edi
         pop esi
         ret 0Ch
+;-----------------------------------------------------------------------------
+; __ccmdline_                                                   AF8EE  library
+; Spawn helper: builds the command line of a child program
+;-----------------------------------------------------------------------------
 __ccmdline_:
         push esi
         enter 4, 0
@@ -278,6 +295,10 @@ __ccmdline_:
         leave
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; __dospawn                                                     AF943  library
+; Spawn helper: runs a child program through DOS
+;-----------------------------------------------------------------------------
 __dospawn:
         push ebp
         mov ebp, esp
@@ -353,6 +374,10 @@ __dospawn:
         pop esi
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; pcopy_                                                        AFA11  library
+; Spawn helper: copies a path part into the output buffer
+;-----------------------------------------------------------------------------
 pcopy_:
         push esi
         push edi
@@ -391,6 +416,10 @@ pcopy_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; _splitpath2_                                                  AFA55  library
+; C run-time: splits a path into drive, directory, name and extension
+;-----------------------------------------------------------------------------
 _splitpath2_:
         push esi
         push edi

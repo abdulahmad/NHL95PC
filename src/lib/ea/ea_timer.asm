@@ -8,22 +8,38 @@ extern timercallbacks
 global ReturnPointerArg, StrCopyN, StrCompareN, MemCopyArgs, FileNamePart, FileNameOnly, TimerISR, addtimer
 global RemoveTimerCallback, CountTimerCallbacks, MaskTimerKbdIrq, RestoreTimer, InstallTimer, UnmaskTimerKbdIrq, DrawShapeScaled, DrawShapeScaledAtOwnPos
 global DrawShapeScaledHotspot, DrawShapeZoomedAtOwnPos, DrawShapeZoomedHotspot, DrawShapeZoomed
+;-----------------------------------------------------------------------------
+; ReturnPointerArg                                8E3DC  95 PC, low confidence
+; Returns its argument (unused)
+;-----------------------------------------------------------------------------
 ReturnPointerArg:
         mov eax, dword [byte esp+04h]
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; StrCopyN                                     8E3E4  95 PC, medium confidence
+; Strncpy wrapper with stack arguments
+;-----------------------------------------------------------------------------
 StrCopyN:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         jmp near strncpy_
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; StrCompareN                                  8E3F8  95 PC, medium confidence
+; Strncmp wrapper with stack arguments
+;-----------------------------------------------------------------------------
 StrCompareN:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         jmp near strncmp_
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MemCopyArgs                                     8E40C  95 PC, low confidence
+; Copies memory (bcopy with destination first, stack arguments)
+;-----------------------------------------------------------------------------
 MemCopyArgs:
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -34,6 +50,10 @@ MemCopyArgs:
         call bcopy
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; FileNamePart                                 8E424  95 PC, medium confidence
+; Returns the part of a path after its last backslash, colon or slash
+;-----------------------------------------------------------------------------
 FileNamePart:
         mov eax, dword [byte esp+04h]
         mov edx, eax
@@ -56,6 +76,10 @@ FileNamePart:
 .4:
         mov eax, edx
         ret
+;-----------------------------------------------------------------------------
+; FileNameOnly                                 8E44C  95 PC, medium confidence
+; Stack-argument wrapper of FileNamePart
+;-----------------------------------------------------------------------------
 FileNameOnly:
         mov edx, dword [byte esp+04h]
         push edx
@@ -63,6 +87,16 @@ FileNameOnly:
         add esp, byte 4
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; TimerISR                                                        8E45C  95 PC
+; Int 08h handler installed by InstallTimer (8E5F8 _dos_setvect_(8)): pusha +
+; segment regs, __GETDS, inc tickcount,
+;
+; calls every non-null timercallbacks slot (8 dwords), then on every 5th tick
+; incs slowtickcount and far-calls
+;
+; the saved vector (oldint8off/oldint8sel), else EOI (out 20h,20h); iret
+;-----------------------------------------------------------------------------
 TimerISR:
         pusha
         push ds
@@ -105,6 +139,10 @@ TimerISR:
         pop ds
         popa
         iret
+;-----------------------------------------------------------------------------
+; addtimer                                                        8E4C0  95 PC
+; Adds a routine to the timer callback list
+;-----------------------------------------------------------------------------
 addtimer:
         xor eax, eax
         cmp dword [timercallbacks], byte 0
@@ -126,6 +164,13 @@ addtimer:
         add esp, byte 4
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; RemoveTimerCallback                                             8E4F8  95 PC
+; Clears the timercallbacks slot equal to the stack argument (8 slots); the
+; counterpart of addtimer (InputRemove, ShutdownSpeech, FadeOutPalCycle,
+;
+; cdstream)
+;-----------------------------------------------------------------------------
 RemoveTimerCallback:
         push esi
         mov edx, dword [byte esp+08h]
@@ -148,6 +193,11 @@ RemoveTimerCallback:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; CountTimerCallbacks                          8E528  95 PC, medium confidence
+; Returns the number of non-null timercallbacks slots (8); no caller in the
+; EXE
+;-----------------------------------------------------------------------------
 CountTimerCallbacks:
         xor edx, edx
         xor eax, eax
@@ -162,6 +212,11 @@ CountTimerCallbacks:
         mov eax, edx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MaskTimerKbdIrq                                                 8E544  95 PC
+; In al,21h / or al,3 / out 21h: masks IRQ0 (timer) and IRQ1 (keyboard) at the
+; master PIC; used by InstallTimer and RestoreTimer around the vector swap
+;-----------------------------------------------------------------------------
 MaskTimerKbdIrq:
         push edx
         mov edx, 21h
@@ -172,6 +227,13 @@ MaskTimerKbdIrq:
         pop edx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; RestoreTimer                                                    8E554  95 PC
+; When a vector is saved: masks IRQ0/1, _dos_setvect_(8) back to
+; oldint8off/oldint8sel, PIT channel 0 divisor 0 (18.2 Hz),
+;
+; clears the saved vector, unmasks; the atexit handler InstallTimer registers
+;-----------------------------------------------------------------------------
 RestoreTimer:
         push ebx
         push ecx
@@ -201,6 +263,10 @@ RestoreTimer:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; InstallTimer                                                    8E5AC  95 PC
+; Allocates the timer stack, masks the timer and installs the timer interrupt
+;-----------------------------------------------------------------------------
 InstallTimer:
         mov ecx, 8
         xor edx, edx
@@ -227,6 +293,11 @@ InstallTimer:
         push RestoreTimer
         call AddExitHandler
         add esp, byte 4
+;-----------------------------------------------------------------------------
+; UnmaskTimerKbdIrq                                               8E614  95 PC
+; In al,21h / and al,0FCh / out 21h: unmasks IRQ0 and IRQ1; tail of
+; InstallTimer, called by RestoreTimer
+;-----------------------------------------------------------------------------
 UnmaskTimerKbdIrq:
         push edx
         mov edx, 21h
@@ -237,6 +308,10 @@ UnmaskTimerKbdIrq:
         pop edx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DrawShapeScaled                                 8E624  95 PC, low confidence
+; Draws a shape scaled by 16.16 factors at a position
+;-----------------------------------------------------------------------------
 DrawShapeScaled:
         push esi
         push edi
@@ -285,6 +360,10 @@ DrawShapeScaled:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawShapeScaledAtOwnPos                         8E6A8  95 PC, low confidence
+; DrawShapeScaled at the shape's own position (unused)
+;-----------------------------------------------------------------------------
 DrawShapeScaledAtOwnPos:
         mov edx, dword [byte esp+08h]
         mov eax, dword [byte edx+0Ch]
@@ -300,6 +379,10 @@ DrawShapeScaledAtOwnPos:
         add esp, byte 10h
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawShapeScaledHotspot                          8E6CC  95 PC, low confidence
+; DrawShapeScaled with the scaled hotspot taken off the position (unused)
+;-----------------------------------------------------------------------------
 DrawShapeScaledHotspot:
         push esi
         push edi
@@ -331,6 +414,10 @@ DrawShapeScaledHotspot:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawShapeZoomedAtOwnPos                         8E714  95 PC, low confidence
+; Second copy of DrawShapeScaledAtOwnPos (unused)
+;-----------------------------------------------------------------------------
 DrawShapeZoomedAtOwnPos:
         mov edx, dword [byte esp+08h]
         mov eax, dword [byte edx+0Ch]
@@ -346,6 +433,10 @@ DrawShapeZoomedAtOwnPos:
         add esp, byte 10h
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawShapeZoomedHotspot                          8E738  95 PC, low confidence
+; Second copy of DrawShapeScaledHotspot (unused)
+;-----------------------------------------------------------------------------
 DrawShapeZoomedHotspot:
         push esi
         push edi
@@ -377,6 +468,10 @@ DrawShapeZoomedHotspot:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawShapeZoomed                                 8E780  95 PC, low confidence
+; Passes its arguments on to DrawShapeScaled (unused)
+;-----------------------------------------------------------------------------
 DrawShapeZoomed:
         push esi
         mov edx, dword [byte esp+014h]

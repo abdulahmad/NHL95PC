@@ -4,6 +4,10 @@ bits 32
 section s_A6B87 progbits alloc exec nowrite align=1
 extern _environ, strnicmp_
 global getenv_
+;-----------------------------------------------------------------------------
+; getenv_                                                       A6B87  library
+; Run-time library getenv: an environment variable's value
+;-----------------------------------------------------------------------------
 getenv_:
         push ebx
         push ecx

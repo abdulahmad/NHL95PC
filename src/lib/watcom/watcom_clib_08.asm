@@ -4,6 +4,10 @@ bits 32
 section s_90392 progbits alloc exec nowrite align=1
 extern unlink_
 global strcpy_, strcat_, j_unlink_
+;-----------------------------------------------------------------------------
+; strcpy_                                                       90392  library
+; Run-time library strcpy: copies a string
+;-----------------------------------------------------------------------------
 strcpy_:
         push ecx
         push eax
@@ -22,6 +26,10 @@ strcpy_:
         pop eax
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; strcat_                                                       903B1  library
+; Run-time library strcat: appends a string
+;-----------------------------------------------------------------------------
 strcat_:
         push ecx
         push esi
@@ -56,6 +64,10 @@ strcat_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; j_unlink_                                                     903E8  library
+; Jump to unlink (deletes a file)
+;-----------------------------------------------------------------------------
 j_unlink_:
         jmp near unlink_
         db 00h,00h,00h

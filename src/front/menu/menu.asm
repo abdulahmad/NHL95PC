@@ -18,6 +18,7 @@ global CmpGAA, LoadShapeByTag, LoadShapeByTag_x, MakeStatsTitle
 ; RunMenu                                      1D6E8  95 PC, medium confidence
 ; Mouse-driven menu loop: saves "Pointer" bg, tracks mouse, hit-tests menu
 ; items (32-byte items, +14h action fn), calls action; eax=menu list,
+;
 ; edx=count, ebx/ecx/stack=colors
 ;-----------------------------------------------------------------------------
 RunMenu:
@@ -2821,8 +2822,9 @@ RunPlayerPickMenu:
 ;-----------------------------------------------------------------------------
 ; InitMenuRemap                                1FAA7  95 PC, medium confidence
 ; Mode 0: menuremap 0..14h = 0, 15h..3Fh shifted down by 15h, rest identity;
-; else menuremap / menuremap2 0..7Fh identity; installs menuremap via
-; SetColorRemap
+; else menuremap / menuremap2 0..7Fh identity; installs menuremap
+;
+; via SetColorRemap
 ;-----------------------------------------------------------------------------
 ; C: src/front/menu/InitMenuRemap.c
 %ifdef CBUILD

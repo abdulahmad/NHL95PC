@@ -7,6 +7,10 @@ extern _dynend, _curbrk, _LpCmdLine, _LpPgmName, _STACKLOW, _STACKTOP, _Envptr, 
 extern ___begtext, stackarea, EmuHookFlags, _psp, __no87, _Envptr_w4
 global start, __saved_DS, __saved_DS, __saved_DS, WriteConsoleMessage, WriteConsoleMessage, __GETDS, __STOSB
 global __STOSD
+;-----------------------------------------------------------------------------
+; start                                                         8FFD4  library
+; Program entry point: the C run-time start-up
+;-----------------------------------------------------------------------------
 start:
         jmp short __saved_DS+06h
         push edi
@@ -58,6 +62,10 @@ start:
         jb short __saved_DS+06Ch
         db 065h,064h,02Eh,08Dh,040h,00h         ; insn: lea eax,[eax]
         dd ___begtext
+;-----------------------------------------------------------------------------
+; __saved_DS                                                           90048  
+; C run-time: the data segment saved at start-up for interrupt handlers
+;-----------------------------------------------------------------------------
 __saved_DS:
         add byte [eax], al
         db 063h,06Fh,06Eh                       ; insn: arpl (nasm 3 adds 66h)
@@ -249,6 +257,10 @@ __saved_DS:
         sub ebp, ebp
         call __CMain
         jmp short WriteConsoleMessage+023h
+;-----------------------------------------------------------------------------
+; WriteConsoleMessage                          90267  95 PC, medium confidence
+; Writes a message to the console through DOS before exit
+;-----------------------------------------------------------------------------
 WriteConsoleMessage:
         push edx
         push eax
@@ -278,11 +290,24 @@ WriteConsoleMessage:
         mov ah, 4Ch
         int 21h
         nop
-__GETDS:
+;-----------------------------------------------------------------------------
+; __GETDS                                                         902A0  95 PC
+; Watcom cstart __GETDS: o16 mov ds,[cs:__saved_DS] (the word at __saved_DS in
+; the cstart code) / ret, right after cstart's int 21h/4Ch exit; called first
+;
+; by interrupt handlers (TimerISR, the GUS, MPU-401 and EACSNDF IRQ
+;
+; handlers, the input_joystick_misc handler at B300C)
+;-----------------------------------------------------------------------------
+__GETDS:                                        ; used by AdlibClose, AdlibDetect, AdlibInit ...
         db 066h,02Eh,08Eh,01Dh                  ; insn: o16 mov ds,[cs:80048h]
         dd __saved_DS
         ret
         db 00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; __STOSB                                                       902B0  library
+; Run-time library: fills bytes (memset helper)
+;-----------------------------------------------------------------------------
 __STOSB:
         or ecx, ecx
         je short .3
@@ -312,6 +337,10 @@ __STOSB:
 .3:
         ret
         db 090h,090h,090h,090h,090h,090h
+;-----------------------------------------------------------------------------
+; __STOSD                                                       902E7  library
+; Run-time library: fills dwords (memset helper)
+;-----------------------------------------------------------------------------
 __STOSD:
         or ecx, ecx
         je short .7

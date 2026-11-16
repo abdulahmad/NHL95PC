@@ -4,6 +4,10 @@ bits 32
 section s_9D307 progbits alloc exec nowrite align=1
 extern __cnvs2d_, RemapShapeBank, __EFG_printf, __EFG_scanf, InitFpuFlags, DefaultControlWord
 global __setEFGfmt_, __sys_init_387_emulator
+;-----------------------------------------------------------------------------
+; __setEFGfmt_                                                  9D307  library
+; Run-time library: installs the float format hook for printf
+;-----------------------------------------------------------------------------
 __setEFGfmt_:
         push ebx
         push edx
@@ -14,6 +18,10 @@ __setEFGfmt_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __sys_init_387_emulator                                       9D322  library
+; Run-time library: installs the x87 emulator when there is no FPU
+;-----------------------------------------------------------------------------
 __sys_init_387_emulator:
         push es
         push ecx

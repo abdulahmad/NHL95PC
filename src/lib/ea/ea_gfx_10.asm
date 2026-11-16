@@ -4,6 +4,11 @@ bits 32
 section s_92DE0 progbits alloc exec nowrite align=1
 extern FreeMemBlock, FindCachedFileData, MemPtrSize, bcopy, DosOpenFile, DosCloseFile, DosReadFile
 global GetFileSize, GetFileSizeQuiet, GetFileSizeFlag, ReadFileCachedInto, LoadFileInto, LoadFileToBlockShared
+;-----------------------------------------------------------------------------
+; GetFileSize                                  92DE0  95 PC, medium confidence
+; File library: size of the file at path (the roster editor remembers each
+; database's size)
+;-----------------------------------------------------------------------------
 GetFileSize:
         push byte 1
         mov edx, dword [byte esp+08h]
@@ -11,6 +16,10 @@ GetFileSize:
         call GetFileSizeFlag
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; GetFileSizeQuiet                             92DF0  95 PC, medium confidence
+; Returns a file's size without the error message
+;-----------------------------------------------------------------------------
 GetFileSizeQuiet:
         push byte 0
         mov edx, dword [byte esp+08h]
@@ -18,6 +27,10 @@ GetFileSizeQuiet:
         call GetFileSizeFlag
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; GetFileSizeFlag                              92E00  95 PC, medium confidence
+; Opens a file to read its size, with the caller's error flag
+;-----------------------------------------------------------------------------
 GetFileSizeFlag:
         sub esp, byte 0Ch
         mov edx, dword [byte esp+014h]
@@ -40,6 +53,10 @@ GetFileSizeFlag:
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; ReadFileCachedInto                           92E40  95 PC, medium confidence
+; Copies a cached file into a buffer, or reads it from disk
+;-----------------------------------------------------------------------------
 ReadFileCachedInto:
         push esi
         push edi
@@ -98,6 +115,10 @@ ReadFileCachedInto:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadFileInto                                                    92ECC  95 PC
+; Loads a file into a buffer
+;-----------------------------------------------------------------------------
 LoadFileInto:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -108,6 +129,10 @@ LoadFileInto:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadFileToBlockShared                        92EE4  95 PC, medium confidence
+; Loads a file into a memory block in shared mode
+;-----------------------------------------------------------------------------
 LoadFileToBlockShared:
         push byte 0
         mov edx, dword [byte esp+0Ch]

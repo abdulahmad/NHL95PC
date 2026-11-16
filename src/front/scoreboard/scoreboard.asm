@@ -119,9 +119,10 @@ DrawPanelScore:
 ;-----------------------------------------------------------------------------
 ; DrawPanelLine                                14AFE  95 PC, medium confidence
 ; (side, line): draws the line indicator shape (linesprites[line]) at x 0FBh
-; (side 1) or 2Ah (side 0), y 14h, saves it in hudawayline / hudhomeline and
-; resets the side's energy-bar state when the line moves between the groups
-; 0-3, 4-5, 6+; called from the line-change code (chk4lc, puckfaceoff)
+; (side 1) or 2Ah (side 0), y 14h, saves it in hudawayline / hudhomeline
+;
+; and resets the side's energy-bar state when the line moves between the
+; groups 0-3, 4-5, 6+; called from the line-change code (chk4lc, puckfaceoff)
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/DrawPanelLine.c
 %ifdef CBUILD
@@ -246,8 +247,9 @@ GetLineEnergies:
 ;-----------------------------------------------------------------------------
 ; PanelAddPenalty                              14C22  95 PC, medium confidence
 ; (side, player, time): puts the penalty in the first free (-1) slot of the
-; 8-entry panel list (hudpenhome / hudpenaway) and flags the side for a
-; redraw; called from the penalty code (InProgress)
+; 8-entry panel list (hudpenhome / hudpenaway) and flags the side
+;
+; for a redraw; called from the penalty code (InProgress)
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/PanelAddPenalty.c
 %ifdef CBUILD
@@ -361,6 +363,7 @@ PanelRemovePenalty:
 ; UpdateHudPanel                               14CF1  95 PC, medium confidence
 ; Per-frame redraw of the PC top panel on the screen bitmap: line energies
 ; (GetLineEnergies, DrawEnergyBar bars), line indicators, penalty lists
+;
 ; (DrawLineGroupBars), clock; called from GameLoop, the engine and game_f
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/UpdateHudPanel.c
@@ -516,8 +519,10 @@ UpdateHudPanel_x:
 ;-----------------------------------------------------------------------------
 ; DrawPanelClock                               14F31  95 PC, medium confidence
 ; Draws the clock digits (clockdigits shapes, separator clockcolon at x 0AAh)
-; from hudclockmin / hudclocksec and saves them in panelprevmin /
-; panelprevsec; called from the scoreboard segment
+; from hudclockmin / hudclocksec
+;
+; and saves them in panelprevmin / panelprevsec; called from the scoreboard
+; segment
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/UpdateHudPanel.c (DrawPanelClock)
 %ifdef CBUILD
@@ -647,10 +652,12 @@ DrawPanelClock:
 ;-----------------------------------------------------------------------------
 ; DrawHudPanel                                 150C6  95 PC, medium confidence
 ; (home, visitor, period, resetclock): full redraw of the PC top panel on the
-; screen bitmap: optionally sets the panel clock from GetPeriodTime, resets
-; the panel state, draws the scrbrd2.PPV "srb3" background, both scores
+; screen bitmap: optionally sets the panel clock from GetPeriodTime,
+;
+; resets the panel state, draws the scrbrd2.PPV "srb3" background, both scores
 ; (DrawPanelScore), the clock (DrawPanelClock), the period number (shapes
 ; "3000".. from perioddigits, or "OT" from hudotname), the two team crests
+;
 ; from crests4.PPV (crestnames names "BOS " ...) and the line indicators;
 ; called by GameLoop, PlayGame, SetupGame, RunDemoGame
 ;-----------------------------------------------------------------------------
@@ -864,8 +871,9 @@ DrawHudPanel:
 ;-----------------------------------------------------------------------------
 ; TickPanelClock                               15374  95 PC, medium confidence
 ; (hundredths): saves the drawn clock (hudclockmin / sec / hund ->
-; panelprevmin..C5718) and counts the panel clock down; returns 0 when it
-; reaches 0:00, else 1 (UpdateHudPanel)
+; panelprevmin..C5718) and counts the panel clock down; returns 0
+;
+; when it reaches 0:00, else 1 (UpdateHudPanel)
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/TickPanelClock.c
 %ifdef CBUILD
@@ -1119,6 +1127,7 @@ DrawPanelClockDigits:
 ; TickPanelPenalties                           15655  95 PC, medium confidence
 ; (penalty list, hundredths): counts down the first two entries (min / sec /
 ; hund at +2 / +4 / +6), frees an expired entry (-1) and packs the list;
+;
 ; UpdateHudPanel calls it for hudpenhome / hudpenaway
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/DrawPanelLine.c (TickPanelPenalties)
@@ -1201,8 +1210,9 @@ TickPanelPenalties:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; DrawEnergyBar                                15707  95 PC, medium confidence
-; (level, x): draws a two-column energy bar (FillRect rectangles, 1Ah high)
-; at x; colour 67h, or 0 / 7 while the side's energywarn flag is set
+; (level, x): draws a two-column energy bar (FillRect rectangles, 1Ah high) at
+; x; colour 67h, or 0 / 7 while the side's energywarn flag is set
+;
 ; (UpdateHudPanel, current line energy / 500) The 0/7 colours are used while
 ; energywarn[side] is set.
 ;-----------------------------------------------------------------------------
@@ -1282,9 +1292,10 @@ DrawEnergyBar:
 ;-----------------------------------------------------------------------------
 ; DrawLineGroupBars                            157BD  95 PC, medium confidence
 ; Draws the energy bars of the current line group (lines 0-3, 4-5 or 6-7,
-; picking the group art once), the current line in colour 21h and the
-; line-change selection (lcboxon / lcsel) blinking (lcblink); x > 0A0h is the
-; right side (UpdateHudPanel)
+; picking the group art once), the current line in colour 21h
+;
+; and the line-change selection (lcboxon / lcsel) blinking (lcblink); x > 0A0h
+; is the right side (UpdateHudPanel)
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/DrawLineGroupBars.c
 %ifdef CBUILD
@@ -1634,10 +1645,11 @@ DrawPanelPenalties:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadCupFinalSeries                           15B76  95 PC, medium confidence
-; When Home and Visitor are in different conferences (teamdivflags 3 / 0Ch,
-; so a Stanley Cup final game): allocates "Stanley" (2Ah bytes) and copies
-; the 7 final-series games (SCHEDULE.DB +1BE4h) into cupseries, else
-; cupseries = 0; called from PlayGame and key_team_db
+; When Home and Visitor are in different conferences (teamdivflags 3 / 0Ch, so
+; a Stanley Cup final game): allocates "Stanley" (2Ah bytes)
+;
+; and copies the 7 final-series games (SCHEDULE.DB +1BE4h) into cupseries,
+; else cupseries = 0; called from PlayGame and key_team_db
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/LoadCupFinalSeries.c
 %ifdef CBUILD
@@ -1716,9 +1728,11 @@ LoadCupFinalSeries:
 ;-----------------------------------------------------------------------------
 ; IsCupClinched                                15C30  95 PC, medium confidence
 ; (score1, score2): with cupseries loaded, puts this game's score into the
-; first unplayed final game, asks CupSeriesWinner (best-of from gameopts in
-; Play-Off mode, else SeriesLength), restores the slot; returns 1 when this
-; game wins the Cup; called from the engine end-of-game code
+; first unplayed final game, asks CupSeriesWinner (best-of
+;
+; from gameopts in Play-Off mode, else SeriesLength), restores the slot;
+; returns 1 when this game wins the Cup; called from the engine end-of-game
+; code
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/IsCupClinched.c
 %ifdef CBUILD
@@ -1791,8 +1805,9 @@ IsCupClinched:
 ;-----------------------------------------------------------------------------
 ; CupSeriesWinner                              15CE1  95 PC, medium confidence
 ; Same code as SeriesWinner (season_playoffs): (series games, best-of) counts
-; each side's wins until one reaches best-of/2+1; -1 when a needed game is
-; unplayed
+; each side's wins until one reaches best-of/2+1; -1
+;
+; when a needed game is unplayed
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/CupSeriesWinner.c
 %ifdef CBUILD

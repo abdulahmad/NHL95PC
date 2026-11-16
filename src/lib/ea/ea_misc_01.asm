@@ -4,6 +4,10 @@ bits 32
 section s_9B498 progbits alloc exec nowrite align=1
 extern KeyedDraw, FillRect, PlotPixel, FillRectSpansCore, FillRectSpansModeTable
 global FillRectSpans, FillRectSpans, FillRectSpans
+;-----------------------------------------------------------------------------
+; FillRectSpans                                9B498  95 PC, medium confidence
+; Fills the rows of a set-up rectangle
+;-----------------------------------------------------------------------------
 FillRectSpans:
         push esi
         push edi

@@ -7,11 +7,20 @@ extern MidiTickCount, GetPatchTimbre, SbNoteOff, SbNoteOn, SbController, SbProgr
 extern PcSpkHwInit, PcSpkHwClose, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, MidiOutQueue, PcSpkVoices
 global CMainHook, PcSpkInit, PcSpkClose, PcSpkService, PcSpkNoteOn, PcSpkNoteOff, PcSpkProgramChange, PcSpkUpdateVoices
 global PcSpkTimbreUsable, PcSpkMidi, SbMidi
+;-----------------------------------------------------------------------------
+; CMainHook                                    9D68E  95 PC, medium confidence
+; Start-up hook (returns at once)
+;-----------------------------------------------------------------------------
 CMainHook:
         mov eax, esp
         sub eax, dword [_STACKLOW]
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; PcSpkInit                                    9D698  95 PC, medium confidence
+; PC speaker driver init entry: clears the voices and channels and starts the
+; timer
+;-----------------------------------------------------------------------------
 PcSpkInit:
         push ds
         call __GETDS
@@ -45,18 +54,30 @@ PcSpkInit:
         call PcSpkHwInit
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; PcSpkClose                                   9D6E6  95 PC, medium confidence
+; PC speaker driver close entry
+;-----------------------------------------------------------------------------
 PcSpkClose:
         push ds
         call __GETDS
         call PcSpkHwClose
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; PcSpkService                                 9D6F3  95 PC, medium confidence
+; PC speaker driver timer service entry: steps the voices
+;-----------------------------------------------------------------------------
 PcSpkService:
         push ds
         call __GETDS
         call PcSpkUpdateVoices
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; PcSpkNoteOn                                     9D700  95 PC, low confidence
+; MIDI note on for the PC speaker; channel 10 drums use their own patches
+;-----------------------------------------------------------------------------
 PcSpkNoteOn:
         push ds
         call __GETDS
@@ -140,6 +161,10 @@ PcSpkNoteOn:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; PcSpkNoteOff                                    9D805  95 PC, low confidence
+; MIDI note off for the PC speaker: releases the note's voice
+;-----------------------------------------------------------------------------
 PcSpkNoteOff:
         push ds
         call __GETDS
@@ -177,6 +202,10 @@ PcSpkNoteOff:
 .6:
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; PcSpkProgramChange                           9D858  95 PC, medium confidence
+; MIDI program change for the PC speaker: sets the timbre of a channel
+;-----------------------------------------------------------------------------
 PcSpkProgramChange:
         push ds
         call __GETDS
@@ -192,6 +221,11 @@ PcSpkProgramChange:
         mov dword [dword eax+PcSpkVoices+031Eh], edx
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; PcSpkUpdateVoices                               9D880  95 PC, low confidence
+; Steps the envelope and pitch of every PC speaker voice and plays the
+; loudest
+;-----------------------------------------------------------------------------
 PcSpkUpdateVoices:
         push ebx
         push ecx
@@ -389,6 +423,10 @@ PcSpkUpdateVoices:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; PcSpkTimbreUsable                               9DA99  95 PC, low confidence
+; Returns 1 when a timbre has PC speaker data, otherwise -1
+;-----------------------------------------------------------------------------
 PcSpkTimbreUsable:
         cmp word [byte eax+0Ch], byte 0
         jne short .1
@@ -397,6 +435,10 @@ PcSpkTimbreUsable:
 .1:
         mov eax, 1
         ret
+;-----------------------------------------------------------------------------
+; PcSpkMidi                                    9DAAC  95 PC, medium confidence
+; PC speaker driver MIDI entry: plays a run of MIDI messages
+;-----------------------------------------------------------------------------
 PcSpkMidi:
         push ds
         call __GETDS
@@ -573,6 +615,11 @@ PcSpkMidi:
         pop esi
         pop ds
         ret
+;-----------------------------------------------------------------------------
+; SbMidi                                       9DC9F  95 PC, medium confidence
+; Sound Blaster driver MIDI entry: plays a run of MIDI messages on the
+; sampled voices
+;-----------------------------------------------------------------------------
 SbMidi:
         push ds
         call __GETDS

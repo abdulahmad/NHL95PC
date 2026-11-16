@@ -27,8 +27,9 @@ global CheckLeagueDiskSync, MakeTeamDbFmt, PostGameToTeamDb, PlayLeagueGame
 ;-----------------------------------------------------------------------------
 ; CheckLeagueDiskSync                          35FB9  95 PC, medium confidence
 ; Compares the league id in the floppy PINFO.DB with the local league; on a
-; mismatch shows "The league <name> must be imported from / exported to the
-; disk for ... before a game can be played!"
+; mismatch shows "The league <name> must be imported from / exported
+;
+; to the disk for ... before a game can be played!"
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_game/CheckLeagueDiskSync.c
 %ifdef CBUILD
@@ -240,9 +241,10 @@ MakeTeamDbFmt:
 ;-----------------------------------------------------------------------------
 ; PostGameToTeamDb                             3626D  95 PC, medium confidence
 ; (dir, ext, team, side, ...): merges the game's key / season / GSUMMARY
-; records and player stat lines into the team's league database and rewrites
-; the team record; used by PlayLeagueGame and season_playoffs after a league
-; game
+; records and player stat lines into the team's league database
+;
+; and rewrites the team record; used by PlayLeagueGame and season_playoffs
+; after a league game
 ;-----------------------------------------------------------------------------
 PostGameToTeamDb:
         push dword 420h
@@ -839,9 +841,10 @@ PostGameToTeamDb:
         ret 8
 ;-----------------------------------------------------------------------------
 ; PlayLeagueGame                                                  36B93  95 PC
-; MenuNextLeagueGame body: loads the next league game, checks the human
-; teams' disks / passwords, "Select a team to play.", plays it and posts the
-; results to both team databases
+; MenuNextLeagueGame body: loads the next league game, checks the human teams'
+; disks / passwords, "Select a team to play.", plays it and posts the results
+;
+; to both team databases
 ;-----------------------------------------------------------------------------
 PlayLeagueGame:
         push dword 0C4h

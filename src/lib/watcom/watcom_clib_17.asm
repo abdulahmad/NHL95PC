@@ -4,6 +4,10 @@ bits 32
 section s_92D21 progbits alloc exec nowrite align=1
 extern __set_errno_dos_, CharClassTable
 global stricmp_, unlink_, atoi_
+;-----------------------------------------------------------------------------
+; stricmp_                                                      92D21  library
+; Run-time library stricmp: compares two strings, ignoring case
+;-----------------------------------------------------------------------------
 stricmp_:
         push ebx
 .1:
@@ -37,6 +41,10 @@ stricmp_:
         mov eax, edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; unlink_                                                       92D5A  library
+; Run-time library unlink: deletes a file
+;-----------------------------------------------------------------------------
 unlink_:
         push edx
         mov edx, eax

@@ -6,6 +6,10 @@ extern __close_, __flush_, __freefp_, __ioalloc_, _nfree_, __ClosedStreams, fput
 extern j_unlink_, lseek_, GetPsp
 global fclose_, __shutdown_stream_, __hex_, __MkTmpFile_, __doclose_, strncpy_, fputs_, strcmp_
 global FixedMulRound, memcmp_
+;-----------------------------------------------------------------------------
+; fclose_                                                       91D0B  library
+; Run-time library fclose: closes a stream
+;-----------------------------------------------------------------------------
 fclose_:
         push ebx
         push edx
@@ -31,6 +35,10 @@ fclose_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __shutdown_stream_                                            91D3A  library
+; Run-time library: flushes and closes a stream
+;-----------------------------------------------------------------------------
 __shutdown_stream_:
         push ebx
         mov ebx, eax
@@ -41,6 +49,10 @@ __shutdown_stream_:
         mov eax, edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __hex_                                                        91D4F  library
+; Run-time library: a value 0-15 to its lower case hex digit
+;-----------------------------------------------------------------------------
 __hex_:
         add eax, byte 30h
         cmp eax, byte 39h
@@ -48,6 +60,10 @@ __hex_:
         add eax, byte 27h
 .1:
         ret
+;-----------------------------------------------------------------------------
+; __MkTmpFile_                                                  91D5B  library
+; Run-time library: makes the name of a temporary file
+;-----------------------------------------------------------------------------
 __MkTmpFile_:
         push ebx
         push ecx
@@ -90,6 +106,10 @@ __MkTmpFile_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __doclose_                                                    91DC4  library
+; Run-time library: closes a stream and frees its buffer
+;-----------------------------------------------------------------------------
 __doclose_:
         push ebx
         push ecx
@@ -148,6 +168,10 @@ __doclose_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; strncpy_                                                      91E4D  library
+; Run-time library strncpy: copies at most n characters
+;-----------------------------------------------------------------------------
 strncpy_:
         push ecx
         push esi
@@ -176,6 +200,10 @@ strncpy_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; fputs_                                                        91E72  library
+; Run-time library fputs: writes a string to a stream
+;-----------------------------------------------------------------------------
 fputs_:
         push ebx
         push ecx
@@ -242,6 +270,10 @@ fputs_:
         pop ebx
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; strcmp_                                                       91F00  library
+; Run-time library strcmp: compares two strings
+;-----------------------------------------------------------------------------
 strcmp_:
         push ebx
         push ecx
@@ -315,6 +347,10 @@ strcmp_:
         pop ebx
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; FixedMulRound                                91FA4  95 PC, medium confidence
+; Multiplies two 16.16 fixed-point numbers with rounding
+;-----------------------------------------------------------------------------
 FixedMulRound:
         mov eax, dword [byte esp+04h]
         imul dword [byte esp+08h]
@@ -323,6 +359,10 @@ FixedMulRound:
         shrd eax, edx, 10h
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; memcmp_                                                       91FBC  library
+; Run-time library memcmp: compares two blocks
+;-----------------------------------------------------------------------------
 memcmp_:
         push ecx
         push esi

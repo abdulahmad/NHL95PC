@@ -4,6 +4,11 @@ bits 32
 section s_90A40 progbits alloc exec nowrite align=1
 extern TextFirstChar, TextLastChar, TextCharW, TextSpacing, TextWidthTable, TextCursorY
 global TextWidthN
+;-----------------------------------------------------------------------------
+; TextWidthN                                   90A40  95 PC, medium confidence
+; Returns the width in pixels of at most n characters of a string in the
+; current font
+;-----------------------------------------------------------------------------
 TextWidthN:
         push esi
         push edi

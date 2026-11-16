@@ -10,6 +10,10 @@ extern MemLargestFree, TextSetFont, FixedMulRound, bcopy, openhandle, DosCloseFi
 global CdStreamCreate, CdStreamClose, CdStreamOpen, CdStreamSeek, CdStreamCreateSecondary, CdStreamServiceJumpTable, CdStreamService, CdStreamService
 global CdStreamService, CdStreamTimer, CdStreamSkipReleased, CdStreamSpace, CdStreamFilled, CdStreamNextChunk, CdStreamNextChunk, CdStreamReleaseChunk
 global FreeGameMemory, FreeGameMemory, FreePhotoBankF, FreePhotoBanks, EnsureFreeMemory
+;-----------------------------------------------------------------------------
+; CdStreamCreate                               1B0F3  95 PC, medium confidence
+; Creates a CD stream reader with its buffer and hooks its timer
+;-----------------------------------------------------------------------------
 CdStreamCreate:
         push dword 14h
         call __CHK
@@ -55,6 +59,10 @@ CdStreamCreate:
         mov eax, esi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; CdStreamClose                                1B18B  95 PC, medium confidence
+; Unhooks a CD stream's timer and closes its file
+;-----------------------------------------------------------------------------
 CdStreamClose:
         push dword 0Ch
         call __CHK
@@ -75,6 +83,10 @@ CdStreamClose:
         add esp, byte 4
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; CdStreamOpen                                 1B1C2  95 PC, medium confidence
+; Starts a CD stream reading a file
+;-----------------------------------------------------------------------------
 CdStreamOpen:
         push dword 4
         call __CHK
@@ -83,6 +95,10 @@ CdStreamOpen:
         mov dword [byte eax+048h], edx
         mov dword [byte eax+01Ch], 1
         ret
+;-----------------------------------------------------------------------------
+; CdStreamSeek                                    1B1DF  95 PC, low confidence
+; Moves a CD stream to an offset in its file
+;-----------------------------------------------------------------------------
 CdStreamSeek:
         push dword 4
         call __CHK
@@ -93,6 +109,10 @@ CdStreamSeek:
         mov dword [byte edx+044h], eax
         mov dword [byte edx+01Ch], 2
         ret
+;-----------------------------------------------------------------------------
+; CdStreamCreateSecondary                      1B201  95 PC, medium confidence
+; Creates secondary CD stream 0-9 with its own buffer
+;-----------------------------------------------------------------------------
 CdStreamCreateSecondary:
         push dword 10h
         call __CHK
@@ -132,7 +152,7 @@ CdStreamCreateSecondary:
         mov edx, dword [byte esp+04h]
         mov dword [nosplit edx*4+StreamHandle], eax
         ret
-CdStreamServiceJumpTable:
+CdStreamServiceJumpTable:                       ; jump table for the switch cases of CdStreamService
         dd CdStreamService+039h
         dd CdStreamService+08Dh
         dd CdStreamService+0107h
@@ -142,6 +162,10 @@ CdStreamServiceJumpTable:
         dd CdStreamService+02Eh
         dd CdStreamService+0Dh
         dd CdStreamService+04F2h
+;-----------------------------------------------------------------------------
+; CdStreamService                              1B2A7  95 PC, medium confidence
+; Reads more of the file into a CD stream's buffer
+;-----------------------------------------------------------------------------
 CdStreamService:
         push dword 20h
         call __CHK
@@ -547,12 +571,20 @@ CdStreamService:
 .12:
         mov dword [byte edx+01Ch], 3
         jmp near CdStreamService+0Dh
+;-----------------------------------------------------------------------------
+; CdStreamTimer                                   1B818  95 PC, low confidence
+; Timer callback that counts down a CD stream's wait
+;-----------------------------------------------------------------------------
 CdStreamTimer:
         push dword 4
         call __CHK
         mov eax, dword [StreamHandle]
         dec dword [byte eax+04Ch]
         ret
+;-----------------------------------------------------------------------------
+; CdStreamSkipReleased                            1B82B  95 PC, low confidence
+; Moves a CD stream's read pointer past released chunks
+;-----------------------------------------------------------------------------
 CdStreamSkipReleased:
         push dword 14h
         call __CHK
@@ -591,6 +623,10 @@ CdStreamSkipReleased:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; CdStreamSpace                                   1B871  95 PC, low confidence
+; Returns the free space in a CD stream's buffer
+;-----------------------------------------------------------------------------
 CdStreamSpace:
         push dword 0Ch
         call __CHK
@@ -603,6 +639,10 @@ CdStreamSpace:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; CdStreamFilled                                  1B88A  95 PC, low confidence
+; Returns the bytes waiting in a CD stream's buffer
+;-----------------------------------------------------------------------------
 CdStreamFilled:
         push dword 0Ch
         call __CHK
@@ -622,6 +662,10 @@ CdStreamFilled:
         pop edx
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; CdStreamNextChunk                            1B8AC  95 PC, medium confidence
+; Returns the next chunk of a CD stream, 0 when none is ready, -1 at the end
+;-----------------------------------------------------------------------------
 CdStreamNextChunk:
         push dword 0Ch
         call __CHK
@@ -686,6 +730,10 @@ CdStreamNextChunk:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; CdStreamReleaseChunk                         1B92E  95 PC, medium confidence
+; Marks a chunk of a CD stream as used
+;-----------------------------------------------------------------------------
 CdStreamReleaseChunk:
         push dword 8
         call __CHK
@@ -720,6 +768,11 @@ CdStreamReleaseChunk:
         je short CdStreamNextChunk+080h
         mov edx, dword [byte eax+014h]
         jmp short .1
+;-----------------------------------------------------------------------------
+; FreeGameMemory                                  1B982  95 PC, low confidence
+; Frees the game's overlay art, photos, rink, score board and fonts after a
+; game
+;-----------------------------------------------------------------------------
 FreeGameMemory:
         push dword 20h
         call __CHK
@@ -807,6 +860,10 @@ FreeGameMemory:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FreePhotoBankF                                  1BA85  95 PC, low confidence
+; Frees the photo bank in photobankf
+;-----------------------------------------------------------------------------
 FreePhotoBankF:
         push dword 14h
         call __CHK
@@ -826,6 +883,10 @@ FreePhotoBankF:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FreePhotoBanks                                  1BAB1  95 PC, low confidence
+; Frees every player photo bank
+;-----------------------------------------------------------------------------
 FreePhotoBanks:
         push dword 1Ch
         call __CHK
@@ -854,6 +915,10 @@ FreePhotoBanks:
         test edi, edi
         jge short .1
         jmp short FreeGameMemory+0FDh
+;-----------------------------------------------------------------------------
+; EnsureFreeMemory                             1BAF3  95 PC, medium confidence
+; Frees cached graphics until a block of a given size fits
+;-----------------------------------------------------------------------------
 EnsureFreeMemory:
         push dword 20h
         call __CHK

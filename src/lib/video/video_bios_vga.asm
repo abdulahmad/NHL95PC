@@ -15,6 +15,10 @@ global RectFillClipBottomJumpTable, RectFillClipBottomJumpTable, RectFillClipRig
 global RectFillStepJumpTable, AngleFromDelta, AngleFromDeltaJumpTable, TableSin, TableCos, DispatchHotkey, RegisterHotkey, SetTextMode
 global VgaSetPalette, SetScreenTarget, SetClipWindow, ResetRetraceTimeout, WaitRetrace, WaitRetraceStart, WaitRetraceEnd, InRetrace
 global VgaBlitKeyedHot
+;-----------------------------------------------------------------------------
+; PrintfSaveRegs                               B3E4A  95 PC, medium confidence
+; Calls printf keeping the registers it would change
+;-----------------------------------------------------------------------------
 PrintfSaveRegs:
         mov dword [PrintfSavedEbx], ebx
         mov dword [PrintfSavedEcx], ecx
@@ -30,6 +34,10 @@ PrintfSaveRegs:
         mov esi, dword [PrintfSavedEsi]
         mov edi, dword [PrintfSavedEdi]
         ret
+;-----------------------------------------------------------------------------
+; SaveTextMode                                                    B3E98  95 PC
+; Video library: save the text mode and the BIOS data area
+;-----------------------------------------------------------------------------
 SaveTextMode:
         cmp byte [SavedTextMode], 0
         jne short .1
@@ -47,6 +55,10 @@ SaveTextMode:
         add esp, byte 4
 .1:
         ret
+;-----------------------------------------------------------------------------
+; RestoreTextMode                                                 B3ED8  95 PC
+; Video library: restore the text mode and the BIOS data area
+;-----------------------------------------------------------------------------
 RestoreTextMode:
         pusha
         cmp byte [SavedTextMode], 0
@@ -85,6 +97,11 @@ RestoreTextMode:
         popa
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; DetectCPU                                                       B3F50  95 PC
+; Video library start-up: CPU detection by the alignment-check flag (386 or
+; 486, protected mode); replaced in the port
+;-----------------------------------------------------------------------------
 DetectCPU:
         pushfw
         mov dword [cpuinfo_d0], 1
@@ -120,6 +137,10 @@ DetectCPU:
         popfw
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; FillMem                                      B3FB0  95 PC, medium confidence
+; Fills memory (dst, count, byte value)
+;-----------------------------------------------------------------------------
 FillMem:
         push ebp
         LD mov, ebp, esp
@@ -129,6 +150,10 @@ FillMem:
         shrd eax, edx, 10h
         LD mov, ax, dx
         jmp short ZeroMem+06h
+;-----------------------------------------------------------------------------
+; ZeroMem                                      B3FC2  95 PC, medium confidence
+; Clears memory (dst, count) to zero
+;-----------------------------------------------------------------------------
 ZeroMem:
         push ebp
         LD mov, ebp, esp
@@ -146,10 +171,18 @@ ZeroMem:
         leave
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; ResetHotkeyState                                B3FE0  95 PC, low confidence
+; Clears the hotkey busy flag
+;-----------------------------------------------------------------------------
 ResetHotkeyState:
         mov dword [RetraceMode], 0
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; KbdGetKeyQuiet                                  B3FEC  95 PC, low confidence
+; Returns the next key or 0; the entries after it also dispatch hotkeys
+;-----------------------------------------------------------------------------
 KbdGetKeyQuiet:
         call KbdGetKey
         LD or, ax, ax
@@ -218,6 +251,10 @@ KbdGetKeyQuiet:
         mov byte [KbdRepeatDelay], 3
         mov word [KbdPrevKey], ax
         jmp short .6
+;-----------------------------------------------------------------------------
+; PollHotkeys                                                     B40BF  95 PC
+; Reads a key and dispatches its hotkey handler
+;-----------------------------------------------------------------------------
 PollHotkeys:
         call KbdGetKey
         LD or, eax, eax
@@ -228,6 +265,10 @@ PollHotkeys:
 .1:
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; SetupRectFillBlend                                              B40D4  95 PC
+; Sets up a rectangle fill with the blend flag set
+;-----------------------------------------------------------------------------
 SetupRectFillBlend:
         push ebp
         LD mov, ebp, esp
@@ -236,6 +277,10 @@ SetupRectFillBlend:
         push edi
         mov byte [byte ebp-05h], 1
         jmp short SetupRectFill+0Ch
+;-----------------------------------------------------------------------------
+; SetupRectFill                                B40E2  95 PC, medium confidence
+; Clips a rectangle and fills in its fill description
+;-----------------------------------------------------------------------------
 SetupRectFill:
         push ebp
         LD mov, ebp, esp
@@ -392,7 +437,8 @@ SetupRectFill:
         mov ebx, dword [byte ebp-04h]
         je short SetupRectFillJumpTable+040h
         jmp dword [nosplit cs:ebx*4+SetupRectFillJumpTable]
-SetupRectFillJumpTable:
+SetupRectFillJumpTable:                         ; jump table for the switch cases of RectFillStepJumpTable,
+                                                ; SetupRectFill
         dd SetupRectFillJumpTable+040h
         dd RectFillClipRightJumpTable+01DAh
         dd RectFillClipBottomJumpTable+0DFh
@@ -421,7 +467,8 @@ SetupRectFillJumpTable:
         LD sub, ecx, eax
         mov bl, byte [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+RectFillClipLeftJumpTable]
-RectFillClipLeftJumpTable:
+RectFillClipLeftJumpTable:                      ; jump table for the switch cases of RectFillStepJumpTable,
+                                                ; SetupRectFillJumpTable
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .1
         dd .2
@@ -501,7 +548,8 @@ RectFillClipLeftJumpTable:
         LD sub, ecx, edx
         mov bl, byte [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+RectFillClipBottomJumpTable]
-RectFillClipBottomJumpTable:
+RectFillClipBottomJumpTable:                    ; jump table for the switch cases of
+                                                ; RectFillClipLeftJumpTable, SetupRectFillJumpTable
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .1
         dd .2
@@ -587,7 +635,9 @@ RectFillClipBottomJumpTable:
         jmp near RectFillStepJumpTable+0153h
         mov bl, byte [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+RectFillClipRightJumpTable]
-RectFillClipRightJumpTable:
+RectFillClipRightJumpTable:                     ; jump table for the switch cases of
+                                                ; RectFillClipBottomJumpTable, RectFillStepJumpTable,
+                                                ; SetupRectFill ...
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .10
         dd .1
@@ -753,7 +803,9 @@ RectFillClipRightJumpTable:
         ret
         movzx ebx, byte [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+RectFillStepJumpTable]
-RectFillStepJumpTable:
+RectFillStepJumpTable:                          ; jump table for the switch cases of
+                                                ; RectFillClipBottomJumpTable, RectFillClipLeftJumpTable,
+                                                ; RectFillClipRightJumpTable ...
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .1
         dd .2
@@ -1062,6 +1114,10 @@ RectFillStepJumpTable:
         sub dword [byte esi+010h], edx
         jmp short .30
         db 00h
+;-----------------------------------------------------------------------------
+; AngleFromDelta                               B49C0  95 PC, medium confidence
+; Returns the angle of a 2D vector from the ratio of its components
+;-----------------------------------------------------------------------------
 AngleFromDelta:
         push ebp
         LD mov, ebp, esp
@@ -1093,7 +1149,7 @@ AngleFromDelta:
 .4:
         mov eax, 80h
         jmp dword [dword cs:ebx+AngleFromDeltaJumpTable]
-AngleFromDeltaJumpTable:
+AngleFromDeltaJumpTable:                        ; jump table for the switch cases of AngleFromDelta
         dd .2
         dd .1
         dd .3
@@ -1134,9 +1190,17 @@ AngleFromDeltaJumpTable:
         sub eax, 100h
         leave
         ret
+;-----------------------------------------------------------------------------
+; TableSin                                     B4A60  95 PC, medium confidence
+; Sine of an angle from the sine table
+;-----------------------------------------------------------------------------
 TableSin:
         mov eax, dword [byte esp+04h]
         jmp short TableCos+06h
+;-----------------------------------------------------------------------------
+; TableCos                                     B4A66  95 PC, medium confidence
+; Cosine of an angle from the sine table (a quarter turn on)
+;-----------------------------------------------------------------------------
 TableCos:
         mov eax, dword [byte esp+04h]
         inc ah
@@ -1162,6 +1226,11 @@ TableCos:
         neg eax
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; DispatchHotkey                                                  B4AA4  95 PC
+; Looks up the handler registered for a key (ASCII or extended scan code) and
+; calls it
+;-----------------------------------------------------------------------------
 DispatchHotkey:
         push ebp
         LD mov, ebp, esp
@@ -1198,6 +1267,10 @@ DispatchHotkey:
         inc dword [HotkeyNesting]
         leave
         ret
+;-----------------------------------------------------------------------------
+; RegisterHotkey                               B4AFD  95 PC, medium confidence
+; Adds a key to the hotkey table (at most 64)
+;-----------------------------------------------------------------------------
 RegisterHotkey:
         push ebp
         LD mov, ebp, esp
@@ -1240,6 +1313,10 @@ RegisterHotkey:
         LD xor, eax, eax
         jmp short .4
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; SetTextMode                                  B4B58  95 PC, medium confidence
+; Closes the graphics screen and sets 80x25 colour text mode
+;-----------------------------------------------------------------------------
 SetTextMode:
         push byte 0
         call ClearScreenColour
@@ -1253,6 +1330,10 @@ SetTextMode:
         int 10h
         mov dword [GraphicsReady], 0
         ret
+;-----------------------------------------------------------------------------
+; VgaSetPalette                                B4B88  95 PC, medium confidence
+; Video library: set DAC entries (first, count, rgb)
+;-----------------------------------------------------------------------------
 VgaSetPalette:
         push ebp
         LD mov, ebp, esp
@@ -1273,6 +1354,10 @@ VgaSetPalette:
         leave
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; SetScreenTarget                              B4BA8  95 PC, medium confidence
+; Same code as in the next game
+;-----------------------------------------------------------------------------
 SetScreenTarget:
         LD mov, edx, edi
         LD mov, eax, esi
@@ -1284,6 +1369,10 @@ SetScreenTarget:
         LD mov, esi, eax
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; SetClipWindow                                B4BC4  95 PC, medium confidence
+; Video library: set the clip window (x1, x2, y1, y2)
+;-----------------------------------------------------------------------------
 SetClipWindow:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -1313,9 +1402,17 @@ SetClipWindow:
         mov dword [DrawClipRight], edx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; ResetRetraceTimeout                          B4C28  95 PC, medium confidence
+; Resets the retrace wait timeout after a wait timed out
+;-----------------------------------------------------------------------------
 ResetRetraceTimeout:
         mov dword [RetraceTimeout], 2710h
         ret
+;-----------------------------------------------------------------------------
+; WaitRetrace                                  B4C33  95 PC, medium confidence
+; Busy-wait for the VGA vertical retrace
+;-----------------------------------------------------------------------------
 WaitRetrace:
         mov dx, 3DAh
         mov ecx, dword [RetraceTimeout]
@@ -1335,6 +1432,10 @@ WaitRetrace:
 .3:
         mov dword [RetraceTimeout], 186A0h
         ret
+;-----------------------------------------------------------------------------
+; WaitRetraceStart                             B4C61  95 PC, medium confidence
+; Waits for the end of the current retrace, then for the next one to start
+;-----------------------------------------------------------------------------
 WaitRetraceStart:
         mov dx, 3DAh
         mov ecx, dword [RetraceTimeout]
@@ -1350,6 +1451,10 @@ WaitRetraceStart:
         jecxz ResetRetraceTimeout
         mov dword [RetraceTimeout], 186A0h
         ret
+;-----------------------------------------------------------------------------
+; WaitRetraceEnd                               B4C84  95 PC, medium confidence
+; Waits for a retrace, then for it to end
+;-----------------------------------------------------------------------------
 WaitRetraceEnd:
         mov dx, 3DAh
         mov ecx, dword [RetraceTimeout]
@@ -1365,12 +1470,20 @@ WaitRetraceEnd:
         jecxz ResetRetraceTimeout
         mov dword [RetraceTimeout], 186A0h
         ret
+;-----------------------------------------------------------------------------
+; InRetrace                                    B4CA7  95 PC, medium confidence
+; Returns nonzero during vertical retrace
+;-----------------------------------------------------------------------------
 InRetrace:
         mov dx, 3DAh
         in al, dx
         and ax, byte 8
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedHot                                 B4CB4  95 PC, low confidence
+; VgaBlitKeyed at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 VgaBlitKeyedHot:
         push ebp
         LD mov, ebp, esp

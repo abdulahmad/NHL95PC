@@ -3,28 +3,32 @@ bits 32
 %include "hockey.inc"
 section s_C816D progbits alloc noexec write align=1
 global str_SelHumanTeams, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_SelectATeam, str_SelectAHilight, str_EnterLeagueName
-str_SelHumanTeams:
+str_SelHumanTeams:                              ; string 'Select human controlled teams'; used by
+                                                ; CreateNewLeague
         db 053h,065h,06Ch,065h,063h,074h,020h,068h,075h,06Dh,061h,06Eh,020h,063h,06Fh,06Eh
         db 074h,072h,06Fh,06Ch,06Ch,065h,064h,020h,074h,065h,061h,06Dh,073h,00h
-str_SelNewHuman:
+str_SelNewHuman:                                ; string 'Select new human controlled team'; used by
+                                                ; AddHumanTeam
         db 053h,065h,06Ch,065h,063h,074h,020h,06Eh,065h,077h,020h,068h,075h,06Dh,061h,06Eh
         db 020h,063h,06Fh,06Eh,074h,072h,06Fh,06Ch,06Ch,065h,064h,020h,074h,065h,061h,06Dh
         db 00h
-str_SelRemoveHuman:
+str_SelRemoveHuman:                             ; string 'Select human controlled team to remove'; used by
+                                                ; RemoveHumanTeam
         db 053h,065h,06Ch,065h,063h,074h,020h,068h,075h,06Dh,061h,06Eh,020h,063h,06Fh,06Eh
         db 074h,072h,06Fh,06Ch,06Ch,065h,064h,020h,074h,065h,061h,06Dh,020h,074h,06Fh,020h
         db 072h,065h,06Dh,06Fh,076h,065h,00h
-str_SelTradeTeams:
+str_SelTradeTeams:                              ; string 'Select two teams for trading players'; used by
+                                                ; TradePlayers
         db 053h,065h,06Ch,065h,063h,074h,020h,074h,077h,06Fh,020h,074h,065h,061h,06Dh,073h
         db 020h,066h,06Fh,072h,020h,074h,072h,061h,064h,069h,06Eh,067h,020h,070h,06Ch,061h
         db 079h,065h,072h,073h,00h,053h,065h,06Ch,065h,063h,074h,020h,061h,020h,06Ch,065h
         db 061h,067h,075h,065h,00h
-str_SelectATeam:
+str_SelectATeam:                                ; string 'Select a team'; used by SelectHilight
         db 053h,065h,06Ch,065h,063h,074h,020h,061h,020h,074h,065h,061h,06Dh,00h
-str_SelectAHilight:
+str_SelectAHilight:                             ; string 'Select a hilight'; used by SelectHilight
         db 053h,065h,06Ch,065h,063h,074h,020h,061h,020h,068h,069h,06Ch,069h,067h,068h,074h
         db 00h
-str_EnterLeagueName:
+str_EnterLeagueName:                            ; string 'Enter New League Name'; used by CreateNewLeague
         db 045h,06Eh,074h,065h,072h,020h,04Eh,065h,077h,020h,04Ch,065h,061h,067h,075h,065h
         db 020h,04Eh,061h,06Dh,065h,00h,045h,06Eh,074h,065h,072h,020h,04Eh,075h,06Dh,062h
         db 065h,072h,020h,06Fh,066h,020h,068h,075h,06Dh,061h,06Eh,020h,063h,06Fh,06Eh,074h

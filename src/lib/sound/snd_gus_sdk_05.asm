@@ -12,6 +12,11 @@ global GusSetupDmaChannel, GusProgramDma, GusMaskDma, GusDmaCount, GusDosRead, G
 global GusSetVect, GusGetVect, GusHookIrq, GusUnhookIrq, GusSendEoi, GusInitPlayDma, GusInitRecordDma, GusInitDma
 global GusStartDramDma, GusDownload, GusDmaNextChunk, GusDramDmaDone, GusDmaIdle, GusStopDma, GusCalcVoiceAddrs, GusClearIrqState
 global GusEnterCritical, GusTryEnterCritical, GusLeaveCritical
+;-----------------------------------------------------------------------------
+; GusSetupDmaChannel                           B07D0  95 PC, medium confidence
+; Fills the port table of an ISA DMA channel (mask, mode, clear, address,
+; count and page registers)
+;-----------------------------------------------------------------------------
 GusSetupDmaChannel:
         push ebp
         mov ebp, esp
@@ -61,6 +66,11 @@ GusSetupDmaChannel:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusProgramDma                                B085C  95 PC, medium confidence
+; Programs an ISA DMA channel with the buffer address, length and transfer
+; mode
+;-----------------------------------------------------------------------------
 GusProgramDma:
         push ebp
         mov ebp, esp
@@ -165,6 +175,11 @@ GusProgramDma:
         pop esi
         pop ebp
         ret 4
+;-----------------------------------------------------------------------------
+; GusMaskDma                                                      B097C  95 PC
+; Masks an ISA DMA channel; followed by the DMA count read and DOS file
+; helpers of the toolkit
+;-----------------------------------------------------------------------------
 GusMaskDma:
         push ebp
         mov ebp, esp
@@ -182,6 +197,10 @@ GusMaskDma:
         pop edx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusDmaCount                                  B09A4  95 PC, medium confidence
+; Reads how many bytes a DMA channel still has to transfer
+;-----------------------------------------------------------------------------
 GusDmaCount:
         push ebp
         mov ebp, esp
@@ -228,6 +247,10 @@ GusDmaCount:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusDosRead                                   B0A14  95 PC, medium confidence
+; Reads from a DOS file and keeps the DOS result
+;-----------------------------------------------------------------------------
 GusDosRead:
         push ebp
         mov ebp, esp
@@ -249,6 +272,10 @@ GusDosRead:
         pop ecx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusDosClose                                  B0A40  95 PC, medium confidence
+; Closes a DOS file and keeps the DOS result
+;-----------------------------------------------------------------------------
 GusDosClose:
         push ebp
         mov ebp, esp
@@ -261,6 +288,10 @@ GusDosClose:
         mov esp, ebp
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusDosSeek                                   B0A5C  95 PC, medium confidence
+; Seeks in a DOS file
+;-----------------------------------------------------------------------------
 GusDosSeek:
         push ebp
         mov ebp, esp
@@ -277,6 +308,10 @@ GusDosSeek:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusDosOpen                                   B0A78  95 PC, medium confidence
+; Opens a DOS file and returns its handle or a negative error
+;-----------------------------------------------------------------------------
 GusDosOpen:
         push ebp
         mov ebp, esp
@@ -300,6 +335,10 @@ GusDosOpen:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusSetVect                                   B0AA4  95 PC, medium confidence
+; Sets a protected-mode interrupt vector
+;-----------------------------------------------------------------------------
 GusSetVect:
         push ebp
         mov ebp, esp
@@ -307,6 +346,10 @@ GusSetVect:
         mov esp, ebp
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusGetVect                                   B0AB0  95 PC, medium confidence
+; Reads a protected-mode interrupt vector
+;-----------------------------------------------------------------------------
 GusGetVect:
         push ebp
         mov ebp, esp
@@ -314,6 +357,11 @@ GusGetVect:
         mov esp, ebp
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusHookIrq                                   B0ABC  95 PC, medium confidence
+; Saves the old vector of an IRQ line, installs the new handler and unmasks
+; the line
+;-----------------------------------------------------------------------------
 GusHookIrq:
         push ebp
         mov ebp, esp
@@ -369,6 +417,10 @@ GusHookIrq:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusUnhookIrq                                 B0B5C  95 PC, medium confidence
+; Masks an IRQ line and restores its saved vector
+;-----------------------------------------------------------------------------
 GusUnhookIrq:
         push ebp
         mov ebp, esp
@@ -416,6 +468,10 @@ GusUnhookIrq:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusSendEoi                                   B0BE4  95 PC, medium confidence
+; Sends end-of-interrupt to the interrupt controller(s) for an IRQ line
+;-----------------------------------------------------------------------------
 GusSendEoi:
         push ebp
         mov ebp, esp
@@ -434,6 +490,10 @@ GusSendEoi:
         pop ebp
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; GusInitPlayDma                               B0C10  95 PC, medium confidence
+; Sets up the playback DMA channel when one is configured
+;-----------------------------------------------------------------------------
 GusInitPlayDma:
         push ebp
         mov ebp, esp
@@ -453,6 +513,10 @@ GusInitPlayDma:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusInitRecordDma                             B0C34  95 PC, medium confidence
+; Sets up the record DMA channel when one is configured
+;-----------------------------------------------------------------------------
 GusInitRecordDma:
         push ebp
         mov ebp, esp
@@ -472,6 +536,11 @@ GusInitRecordDma:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusInitDma                                   B0C5C  95 PC, medium confidence
+; Init table entry: sets up both DMA channels and claims the DMA-done
+; callback
+;-----------------------------------------------------------------------------
 GusInitDma:
         push ebp
         mov ebp, esp
@@ -509,6 +578,10 @@ GusInitDma:
         mov esp, ebp
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusStartDramDma                              B0CB8  95 PC, medium confidence
+; Starts one chunk of a DMA transfer from main memory into card memory
+;-----------------------------------------------------------------------------
 GusStartDramDma:
         push ebp
         mov ebp, esp
@@ -566,6 +639,11 @@ GusStartDramDma:
         pop ebp
         ret 4
         db 090h
+;-----------------------------------------------------------------------------
+; GusDownload                                  B0D6C  95 PC, medium confidence
+; Copies a buffer into card memory by DMA (with a filler run), refusing while
+; another transfer runs
+;-----------------------------------------------------------------------------
 GusDownload:
         push ebp
         mov ebp, esp
@@ -668,6 +746,10 @@ GusDownload:
         pop ebp
         ret 4
         db 090h
+;-----------------------------------------------------------------------------
+; GusDmaNextChunk                                 B0E7C  95 PC, low confidence
+; Starts the next chunk of a card DMA transfer when one finishes
+;-----------------------------------------------------------------------------
 GusDmaNextChunk:
         push ebp
         mov ebp, esp
@@ -765,6 +847,10 @@ GusDmaNextChunk:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusDramDmaDone                               B0FA8  95 PC, medium confidence
+; DMA-done callback: starts the next chunk of a download or ends the transfer
+;-----------------------------------------------------------------------------
 GusDramDmaDone:
         push ebp
         mov ebp, esp
@@ -818,6 +904,10 @@ GusDramDmaDone:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusDmaIdle                                   B1024  95 PC, medium confidence
+; Returns 1 when no card DMA transfer is running
+;-----------------------------------------------------------------------------
 GusDmaIdle:
         push ebp
         mov ebp, esp
@@ -828,6 +918,10 @@ GusDmaIdle:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusStopDma                                   B103C  95 PC, medium confidence
+; Stops the card DMA transfer and masks both channels
+;-----------------------------------------------------------------------------
 GusStopDma:
         push ebp
         mov ebp, esp
@@ -870,6 +964,10 @@ GusStopDma:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusCalcVoiceAddrs                               B10D0  95 PC, low confidence
+; Works out the card start/loop/end address registers for a voice
+;-----------------------------------------------------------------------------
 GusCalcVoiceAddrs:
         push ebp
         mov ebp, esp
@@ -997,13 +1095,25 @@ GusCalcVoiceAddrs:
         pop ebp
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; GusClearIrqState                             B121C  95 PC, medium confidence
+; Clears the pending IRQ flags and the critical-section depth
+;-----------------------------------------------------------------------------
 GusClearIrqState:
         mov word [GusIrqPending], 0
         mov word [GusCriticalDepth], 0
         ret
+;-----------------------------------------------------------------------------
+; GusEnterCritical                             B122F  95 PC, medium confidence
+; Raises the critical-section depth so card interrupts are deferred
+;-----------------------------------------------------------------------------
 GusEnterCritical:
         inc word [GusCriticalDepth]
         ret
+;-----------------------------------------------------------------------------
+; GusTryEnterCritical                          B1237  95 PC, medium confidence
+; Enters the critical section only if it is not already held
+;-----------------------------------------------------------------------------
 GusTryEnterCritical:
         pushfw
         cli
@@ -1018,6 +1128,11 @@ GusTryEnterCritical:
         popfw
         ret
         ret
+;-----------------------------------------------------------------------------
+; GusLeaveCritical                             B1256  95 PC, medium confidence
+; Lowers the critical-section depth and, at zero, services interrupts that
+; came in meanwhile
+;-----------------------------------------------------------------------------
 GusLeaveCritical:
         pushfw
         cli

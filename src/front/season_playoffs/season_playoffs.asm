@@ -1,4 +1,4 @@
-; Season playoffs: seeds, standings sort, rounds; new league (95G season95).
+; Season playoffs: seeds, standings sort, rounds; new league.
 bits 32
 %include "hockey.inc"
 section s_428AB progbits alloc exec nowrite align=1
@@ -20,6 +20,7 @@ global FinishPlayoffs, FinishPlayoffs_r1, FinishPlayoffs_r2, FinishPlayoffs_r3, 
 ; BuildPlayoffs                                428AB  95 PC, medium confidence
 ; GetPlayoffSeeds, allocates 69h (105) playoff games set to FFh,
 ; SeedPlayoffRound1; with no human team in the playoffs simulates every round
+;
 ; (Sim/Seed round functions); writes the games after game 444h and the 'sche'
 ; SEASON data
 ;-----------------------------------------------------------------------------
@@ -243,6 +244,7 @@ BuildPlayoffs:
 ; GetPlayoffSeeds                              42BBA  95 PC, medium confidence
 ; Reads the TEAMS.DB records of each conference's teams (lists C55E9 / C5619,
 ; 0Ch each), ranks them on points (2*W+T), wins and goals (SortStandings),
+;
 ; and moves a team so the top two are not from the same pair (teamdivflags
 ; flags)
 ;-----------------------------------------------------------------------------
@@ -2618,7 +2620,7 @@ SimPlayoffFinal:
         add esp, byte 74h
         jmp near SimPlayoffRound1_pop3
 %endif ; C
-FinishPlayoffs_jt:
+FinishPlayoffs_jt:                              ; used by FinishPlayoffs
         dd FinishPlayoffs_r1
         dd FinishPlayoffs_r2
         dd FinishPlayoffs_r3
@@ -2762,9 +2764,10 @@ FinishPlayoffs_r4:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; AdvancePlayoffs                              44A41  95 PC, medium confidence
-; Reads the 69h playoff games, finds the current round, simulates or seeds
-; the next round (or FinishPlayoffs when no human team is left), writes the
-; games back and the 'Sch' SEASON data
+; Reads the 69h playoff games, finds the current round, simulates or seeds the
+; next round (or FinishPlayoffs when no human team is left),
+;
+; writes the games back and the 'Sch' SEASON data
 ;-----------------------------------------------------------------------------
 ; C: src/front/season_playoffs/AdvancePlayoffs.c
 %ifdef CBUILD
@@ -3044,9 +3047,11 @@ AdvancePlayoffs:
 ; CreateNewLeague                                                 44DCF  95 PC
 ; League menu (temp_files 3310F): 'Enter New League Name', '<name>.LP'
 ; directory ('There is already a league with that name!'), free-space check
+;
 ; ('%4d Kbytes of free disk space.'), 'Which schedule do you want to use?'
 ; ('93 - '94 Season / Random), 'Select human controlled teams', 'Creating
 ; league.', copies the databases, WriteLeagueInfo, RandomizeSchedule,
+;
 ; CopyHumanTeamDBs ('Error while creating league!')
 ;-----------------------------------------------------------------------------
 CreateNewLeague:

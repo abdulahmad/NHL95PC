@@ -5,6 +5,10 @@ section s_B2220 progbits alloc exec nowrite align=1
 extern __Bin2String, __CmpBigInt, __Rnd2Int, str_Inf, str_Nan, DblMaxLow, DblMaxHigh, DblMinusMaxLow
 extern DblMinusMaxHigh, frexp_, modf_, F64_neg1_floor_, F64_Scale10Max, F64_Scale10Min, Pow10Table, Scale10Count
 global __Nan_Inf_, floor_, _Scale_, _Scale10V_, __cvt_, ModfCore, DecimalToInt64, NormalizeDouble
+;-----------------------------------------------------------------------------
+; __Nan_Inf_                                                    B2220  library
+; Run-time library: formats NaN and infinity
+;-----------------------------------------------------------------------------
 __Nan_Inf_:
         push ebx
         push edx
@@ -54,6 +58,10 @@ __Nan_Inf_:
         pop edx
         pop ebx
         ret 0Ch
+;-----------------------------------------------------------------------------
+; floor_                                                        B22A4  library
+; Run-time library floor
+;-----------------------------------------------------------------------------
 floor_:
         push ebp
         mov ebp, esp
@@ -84,6 +92,10 @@ floor_:
         pop eax
         pop ebp
         ret 8
+;-----------------------------------------------------------------------------
+; _Scale_                                                       B22E0  library
+; Run-time library: scales a double by a power of two
+;-----------------------------------------------------------------------------
 _Scale_:
         push ebp
         mov ebp, esp
@@ -117,6 +129,10 @@ _Scale_:
         pop ebx
         pop ebp
         ret 10h
+;-----------------------------------------------------------------------------
+; _Scale10V_                                                    B2321  library
+; Run-time library: scales a double by a power of ten
+;-----------------------------------------------------------------------------
 _Scale10V_:
         push eax
         push ebx
@@ -205,6 +221,10 @@ _Scale10V_:
         pop ebx
         pop eax
         ret 0Ch
+;-----------------------------------------------------------------------------
+; __cvt_                                                        B2408  library
+; Run-time library: a double to its decimal digits
+;-----------------------------------------------------------------------------
 __cvt_:
         push ebp
         mov ebp, esp
@@ -529,6 +549,10 @@ DecimalToInt64:	;IDA: unknown_libname_6
         pop esi
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; NormalizeDouble                              B26C9  95 PC, medium confidence
+; Normalises a 64-bit mantissa and exponent into a double
+;-----------------------------------------------------------------------------
 NormalizeDouble:
         sub esi, esi
         or esi, eax

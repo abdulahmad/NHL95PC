@@ -404,7 +404,7 @@ GameStandingsScreen:
         ret
 %endif ; C
         db 08Dh,040h,00h
-GameStandingsMenu_jt:
+GameStandingsMenu_jt:                           ; used by GameStandingsMenu
         dd GameStandingsMenu_standings
         dd GameStandingsMenu_roster
         dd GameStandingsMenu_player
@@ -412,8 +412,9 @@ GameStandingsMenu_jt:
 ;-----------------------------------------------------------------------------
 ; GameStandingsMenu                            2051A  95 PC, medium confidence
 ; Standingsmenucb in game: allocs tstat / keys / pstat / gstat, Overall
-; Standings + team picker, Team Roster player picker, player screens; loops
-; on deskexit
+; Standings + team picker, Team Roster player picker, player screens;
+;
+; loops on deskexit
 ;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/GameSkaterStatsScreen.c (GameStandingsMenu)
 %ifdef CBUILD
@@ -663,10 +664,13 @@ GameStandingsMenu_player2:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; EasnTeamStatsScreen                                             208EF  95 PC
-; The desk's team-stats page. Fill the palette buffer and fade out after the
-; menu remap, draw TeamStatsScreen, and load embpal2 (from the CD when
-; fileoncd 8Eh says so). Pal7 is faded in from the shape itself. keepdesksong
-; stays set so the desk music is not freed. Returns 2.
+; The desk's team-stats page.
+;
+; Fill the palette buffer and fade out after the menu remap, draw
+; TeamStatsScreen, and load embpal2 (from the CD when fileoncd 8Eh says so).
+;
+; Pal7 is faded in from the shape itself. keepdesksong stays set so the desk
+; music is not freed. Returns 2.
 ;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/EasnTeamStatsScreen.c
 %ifdef CBUILD
@@ -768,7 +772,8 @@ EasnTeamStatsScreen_x:
         pop ebx
         ret
 %endif ; C
-EasnSkaterStatsScreen:
+EasnSkaterStatsScreen:                          ; used by MainDeskLoop, MenuNewExhibition, MenuNextLeagueGame
+                                                ; ...
         db 068h,034h,03h,00h,00h,0E8h
 ;-----------------------------------------------------------------------------
 ; EasnSkaterStatsScreen_m                                         20A4C  95 PC
@@ -1093,12 +1098,13 @@ EasnStandingsScreen:
         ret
 %endif ; C
         db 08Dh,040h,00h
-EasnStandingsMenu_jt:
+EasnStandingsMenu_jt:                           ; used by EasnStandingsMenu_m
         dd EasnStandingsMenu_standings
         dd EasnStandingsMenu_roster
         dd EasnStandingsMenu_player
         dd EasnStandingsMenu_player2
-EasnStandingsMenu:
+EasnStandingsMenu:                              ; used by MainDeskLoop, MenuNewExhibition, MenuNextLeagueGame
+                                                ; ...
         db 068h,0B4h,03h,00h,00h
 ;-----------------------------------------------------------------------------
 ; EasnStandingsMenu_m                                             20EBC  95 PC
@@ -1452,7 +1458,7 @@ LoadCalendarShapes:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CalTeamStatsScreen                           21350  95 PC, medium confidence
-; Teamstatscb set by calendar (sub_34821): frees calendar, team stats screen,
+; Teamstatscb set by calendar (CalendarScreen): frees calendar, team stats screen,
 ; reloads calendar
 ;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/CalTeamStatsScreen.c
@@ -1807,7 +1813,7 @@ CalStandingsScreen:
         pop ebx
         ret
 %endif ; C
-CalStandingsMenu_jt:
+CalStandingsMenu_jt:                            ; used by CalStandingsMenu
         dd CalStandingsMenu_standings
         dd CalStandingsMenu_roster
         dd CalStandingsMenu_player

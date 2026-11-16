@@ -5,7 +5,8 @@ section s_CF90F progbits alloc noexec write align=1
 extern MenuPlayoffSettings, MenuP1ControlsPlayoff, MenuP2ControlsPlayoff, MenuPlayNextGame, MenuReturnToSportsCentral, StatsSourceMenu, str_Dashes2, str_Player1Controls2
 extern str_Player2Controls2, str_PlayOffSettings2, str_File2, str_Settings4, str_Statistics5, str_PlayNextGame, str_ReturnToSportsCentral2, str_StatisticsType8
 global menuact_playnextgame, playoffmenubar, PlayoffFileMenu, PlayoffSettingsMenu, PlayoffStatsMenu
-playoffmenubar:
+playoffmenubar:                                 ; menu bar of the playoff mode screen; used by
+                                                ; POHandleElimination, PlayoffModeLoop
         db 00h,00h,00h,00h,00h,00h,00h,00h,020h,00h,00h,00h,012h,00h,00h,00h
         dd str_File2
         db 00h,00h,00h,00h
@@ -21,17 +22,20 @@ playoffmenubar:
         db 00h,00h,00h,00h
         dd PlayoffStatsMenu
         db 05h,00h,00h,00h
-PlayoffFileMenu:
+PlayoffFileMenu:                                ; Playoff menu bar File pull-down: play next game and return
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
         dd str_PlayNextGame
-menuact_playnextgame:
+menuact_playnextgame:                           ; playoff mode: action slot of 'Play Next Game'
+                                                ; (MenuPlayNextGame or 0); used by POAfterGame,
+                                                ; PlayoffModeLoop
         dd MenuPlayNextGame
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
         db 0A9h,00h,00h,00h,024h,00h,00h,00h
         dd str_ReturnToSportsCentral2
         dd MenuReturnToSportsCentral
         db 00h,00h,00h,00h,00h,00h,00h,00h
-PlayoffSettingsMenu:
+PlayoffSettingsMenu:                            ; Playoff menu bar Settings pull-down: player controls and
+                                                ; playoff settings
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_Player1Controls2
         dd MenuP1ControlsPlayoff
@@ -47,7 +51,7 @@ PlayoffSettingsMenu:
         dd str_PlayOffSettings2
         dd MenuPlayoffSettings
         db 00h,00h,00h,00h,00h,00h,00h,00h
-PlayoffStatsMenu:
+PlayoffStatsMenu:                               ; Playoff menu bar Statistics pull-down: statistics type
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_StatisticsType8
         db 00h,00h,00h,00h

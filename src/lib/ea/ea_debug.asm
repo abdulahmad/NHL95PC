@@ -33,6 +33,10 @@ global MemViewerCountBlocks, MemViewerSelectRow, MemViewerDrawList, MemPoolTotal
 global HexDumpRow, WriteMemMap, DumpMemoryMap, ShapeViewerFindShape, ShapeViewer, ReadShapeFileHeader, ShapeInfo, DumpShapesList
 global PaletteViewer, PaletteViewerLabel, SaveScreenshot, MemViewerShowArt, FormatDateTime, NextFreeFileName, DebugGetKeyUpper, DebugPressAnyKey
 global DebugKbdFlush, DebugFlushAndWait
+;-----------------------------------------------------------------------------
+; DebugLogOpen                                    93938  95 PC, low confidence
+; Opens the debug log file unless it is already open
+;-----------------------------------------------------------------------------
 DebugLogOpen:
         push ebx
         push ecx
@@ -136,6 +140,10 @@ DebugLogOpen:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DebugLogClose                                93A40  95 PC, medium confidence
+; Writes the closing date and time to the debug log and closes it
+;-----------------------------------------------------------------------------
 DebugLogClose:
         push ebx
         push ecx
@@ -170,6 +178,11 @@ DebugLogClose:
         pop ebx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DebugLog                                     93AA4  95 PC, medium confidence
+; Prints a formatted line to the debug log file when the debug level is 2 or
+; more
+;-----------------------------------------------------------------------------
 DebugLog:
         sub esp, byte 4
         cmp dword [DebugMode], byte 2
@@ -189,6 +202,10 @@ DebugLog:
         add esp, byte 4
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DebugLogPrintf                               93AD8  95 PC, medium confidence
+; Formats a line with vsprintf and writes it to the debug log
+;-----------------------------------------------------------------------------
 DebugLogPrintf:
         sub esp, 104h
         cmp dword [DebugMode], byte 2
@@ -213,6 +230,10 @@ DebugLogPrintf:
 .2:
         add esp, 104h
         ret
+;-----------------------------------------------------------------------------
+; FindWildcardDigits                           93B34  95 PC, medium confidence
+; Finds the run of ? characters in a file name pattern
+;-----------------------------------------------------------------------------
 FindWildcardDigits:
         push ebx
         push ecx
@@ -295,6 +316,10 @@ FindWildcardDigits:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FormatDateStamp                              93BD4  95 PC, medium confidence
+; Formats the current DOS date and time as a short stamp
+;-----------------------------------------------------------------------------
 FormatDateStamp:
         push ebx
         push ecx
@@ -343,9 +368,9 @@ FormatDateStamp:
         pop ebx
         ret
         db 00h
-MemMapRulePtr:
+MemMapRulePtr:                                  ; used by DumpShapesList, WriteMemMap
         dd str_Asterisks
-MonthNameTable:
+MonthNameTable:                                 ; used by FormatDateTime
         dd str_Fs
         dd str_Jan2
         dd str_Feb3
@@ -359,6 +384,10 @@ MonthNameTable:
         dd str_Oct2
         dd str_Nov2
         dd str_Dec2
+;-----------------------------------------------------------------------------
+; DebugWaitKey                                    93C88  95 PC, low confidence
+; Waits for a key in the debug viewers and returns it in upper case
+;-----------------------------------------------------------------------------
 DebugWaitKey:
         push ebx
         push ecx
@@ -372,6 +401,10 @@ DebugWaitKey:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DebugGetKey                                  93CA0  95 PC, medium confidence
+; Debug viewers: polls the hotkeys and returns the key pressed in upper case
+;-----------------------------------------------------------------------------
 DebugGetKey:
         push ebx
         push ecx
@@ -385,9 +418,17 @@ DebugGetKey:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MemViewerGetMode                                93CB8  95 PC, low confidence
+; Returns the memory viewer mode
+;-----------------------------------------------------------------------------
 MemViewerGetMode:
         mov eax, dword [MemViewOpen]
         lea eax, [byte eax+00h]
+;-----------------------------------------------------------------------------
+; MemViewer                                       93CC0  95 PC, low confidence
+; Memory viewer screen: block list, totals, hex dump and art view
+;-----------------------------------------------------------------------------
 MemViewer:
         push ebx
         push ecx
@@ -491,12 +532,20 @@ MemViewer:
         je short MemViewerDrawRows
         mov edi, edx
         jmp short MemViewerDrawRows+0Fh
+;-----------------------------------------------------------------------------
+; MemViewerStart                                  93E38  95 PC, low confidence
+; Opens the memory viewer in mode 1
+;-----------------------------------------------------------------------------
 MemViewerStart:
         mov edx, 1
         mov dword [MemViewOpen], edx
         mov eax, edx
         jmp near MemViewer
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MemViewerListHead                            93E4C  95 PC, medium confidence
+; Returns the head of the current memory list, or of its guard list
+;-----------------------------------------------------------------------------
 MemViewerListHead:
         push ebx
         push edx
@@ -516,6 +565,10 @@ MemViewerListHead:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; MemViewerDrawRows                               93E79  95 PC, low confidence
+; Draws the rows of the memory viewer block list
+;-----------------------------------------------------------------------------
 MemViewerDrawRows:
         cmp edx, dword [dword esp+0B4h]
         jge short MemViewerDrawRows+0Fh
@@ -720,6 +773,10 @@ MemViewerDrawRows:
         pop ebx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MemViewerCountBlocks                            940F4  95 PC, low confidence
+; Counts the blocks the memory viewer will list
+;-----------------------------------------------------------------------------
 MemViewerCountBlocks:
         push edx
         xor edx, edx
@@ -737,6 +794,11 @@ MemViewerCountBlocks:
         pop edx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MemViewerSelectRow                           94114  95 PC, medium confidence
+; Debug memory viewer: records the block on the cursor row while drawing the
+; list
+;-----------------------------------------------------------------------------
 MemViewerSelectRow:
         cmp edx, byte 2
         je short .4
@@ -772,6 +834,10 @@ MemViewerSelectRow:
         xor eax, eax
         ret 10h
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MemViewerDrawList                            94188  95 PC, medium confidence
+; Debug memory viewer: draws the memory totals and the list of blocks
+;-----------------------------------------------------------------------------
 MemViewerDrawList:
         push esi
         push edi
@@ -1290,6 +1356,10 @@ MemViewerDrawList:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MemPoolTotals                                9477C  95 PC, medium confidence
+; Adds up the used, free and largest free sizes of the current memory list
+;-----------------------------------------------------------------------------
 MemPoolTotals:
         push esi
         push edi
@@ -1336,6 +1406,10 @@ MemPoolTotals:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; MemViewerDrawTitle                           947D8  95 PC, medium confidence
+; Debug memory viewer: draws the "MEM MANAGER" title bar
+;-----------------------------------------------------------------------------
 MemViewerDrawTitle:
         push esi
         push edi
@@ -1421,6 +1495,10 @@ MemViewerDrawTitle:
         pop esi
         ret 10h
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DebugSprintf                                 948D4  95 PC, medium confidence
+; Formats a string through sprintf for the debug viewers
+;-----------------------------------------------------------------------------
 DebugSprintf:
         push eax
         push str_X_DebugSprintf
@@ -1428,6 +1506,10 @@ DebugSprintf:
         call sprintf_
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; MemViewerBlockInfo                           948E4  95 PC, medium confidence
+; Debug memory viewer: shows a popup describing a memory block's flags
+;-----------------------------------------------------------------------------
 MemViewerBlockInfo:
         push ecx
         push esi
@@ -1649,6 +1731,10 @@ MemViewerBlockInfo:
         pop ecx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; MemViewerHexDump                             94B6C  95 PC, medium confidence
+; Debug memory viewer: hex dump of a memory block with paging keys
+;-----------------------------------------------------------------------------
 MemViewerHexDump:
         push ecx
         push esi
@@ -1927,6 +2013,10 @@ MemViewerHexDump:
         pop ecx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; HexDumpRow                                   94E34  95 PC, medium confidence
+; Prints one row of a hex dump: offset, bytes and characters
+;-----------------------------------------------------------------------------
 HexDumpRow:
         push esi
         push edi
@@ -2060,6 +2150,11 @@ HexDumpRow:
         pop esi
         ret 8
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; WriteMemMap                                  94FBC  95 PC, medium confidence
+; Writes the memory map to an open text file with a file, date and time
+; header
+;-----------------------------------------------------------------------------
 WriteMemMap:
         push esi
         push edi
@@ -2135,6 +2230,10 @@ WriteMemMap:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DumpMemoryMap                                950AC  95 PC, medium confidence
+; Writes the memory map to the next free "xxMMAP??.TXT" file
+;-----------------------------------------------------------------------------
 DumpMemoryMap:
         push ebx
         push ecx
@@ -2194,6 +2293,10 @@ DumpMemoryMap:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; ShapeViewerFindShape                            95148  95 PC, low confidence
+; Looks up the shape under the cursor in the shape viewer
+;-----------------------------------------------------------------------------
 ShapeViewerFindShape:
         push ebx
         push ecx
@@ -2205,6 +2308,10 @@ ShapeViewerFindShape:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; ShapeViewer                                  95158  95 PC, medium confidence
+; Debug shape viewer: steps through the shapes of a shape file and draws them
+;-----------------------------------------------------------------------------
 ShapeViewer:
         push esi
         push edi
@@ -2519,6 +2626,10 @@ ShapeViewer:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; ReadShapeFileHeader                          954C8  95 PC, medium confidence
+; Reads a shape file's name, size, count and directory
+;-----------------------------------------------------------------------------
 ReadShapeFileHeader:
         push esi
         push edi
@@ -2571,6 +2682,10 @@ ReadShapeFileHeader:
         pop esi
         ret 0Ch
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; ShapeInfo                                    95548  95 PC, medium confidence
+; Debug shape viewer: shows a shape's size, position and packing
+;-----------------------------------------------------------------------------
 ShapeInfo:
         push ebx
         push ecx
@@ -2708,6 +2823,10 @@ ShapeInfo:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DumpShapesList                               956C0  95 PC, medium confidence
+; Writes a shape file's list of shapes to the next free "MEMSHP??.TXT" file
+;-----------------------------------------------------------------------------
 DumpShapesList:
         push ebx
         push ecx
@@ -2917,6 +3036,11 @@ DumpShapesList:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; PaletteViewer                                9596C  95 PC, medium confidence
+; Debug palette viewer: shows the palette and lets each colour's RGB be
+; edited
+;-----------------------------------------------------------------------------
 PaletteViewer:
         push ebx
         push ecx
@@ -3318,6 +3442,10 @@ PaletteViewer:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; PaletteViewerLabel                           95ECC  95 PC, medium confidence
+; Debug palette viewer: prints a colour number label
+;-----------------------------------------------------------------------------
 PaletteViewerLabel:
         push ebx
         push ecx
@@ -3361,6 +3489,10 @@ PaletteViewerLabel:
         pop ebx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; SaveScreenshot                               95F30  95 PC, medium confidence
+; Saves the screen to the next free "SCREEN??.tga" file
+;-----------------------------------------------------------------------------
 SaveScreenshot:
         push esi
         push edi
@@ -3394,6 +3526,10 @@ SaveScreenshot:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; MemViewerShowArt                             95F84  95 PC, medium confidence
+; Debug memory viewer: draws the art in a memory block
+;-----------------------------------------------------------------------------
 MemViewerShowArt:
         push ebx
         push ecx
@@ -3463,6 +3599,10 @@ MemViewerShowArt:
         pop ebx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; FormatDateTime                               96030  95 PC, medium confidence
+; Formats the current DOS date and time as strings
+;-----------------------------------------------------------------------------
 FormatDateTime:
         push ebx
         push ecx
@@ -3511,6 +3651,10 @@ FormatDateTime:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; NextFreeFileName                             960AC  95 PC, medium confidence
+; Fills in the ?? of a file name pattern with the first number not in use
+;-----------------------------------------------------------------------------
 NextFreeFileName:
         push ebx
         push ecx
@@ -3574,6 +3718,10 @@ NextFreeFileName:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; DebugGetKeyUpper                                9612C  95 PC, low confidence
+; Waits for a key and returns it in upper case
+;-----------------------------------------------------------------------------
 DebugGetKeyUpper:
         push ebx
         push ecx
@@ -3586,6 +3734,10 @@ DebugGetKeyUpper:
         pop ebx
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DebugPressAnyKey                                96144  95 PC, low confidence
+; Flushes the keyboard, waits for a key and returns it in upper case
+;-----------------------------------------------------------------------------
 DebugPressAnyKey:
         push ebx
         push ecx
@@ -3601,6 +3753,10 @@ DebugPressAnyKey:
         pop ebx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DebugKbdFlush                                   96164  95 PC, low confidence
+; Flushes the keyboard buffer
+;-----------------------------------------------------------------------------
 DebugKbdFlush:
         push ebx
         push ecx
@@ -3610,6 +3766,10 @@ DebugKbdFlush:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; DebugFlushAndWait                               96170  95 PC, low confidence
+; Flushes the keyboard and waits for a key
+;-----------------------------------------------------------------------------
 DebugFlushAndWait:
         push ebx
         push ecx

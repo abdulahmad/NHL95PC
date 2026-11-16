@@ -6,9 +6,17 @@ extern __GETDS, Mpu401Irq, Mpu401IrqMask, Mpu401DataPort, Mpu401StatusPort, Mpu4
 extern Mpu401OldIsrSel
 global Mpu401Detect, Mpu401Open, Mpu401Init, Mpu401Close, Mpu401Reset, Mpu401Command, Mpu401Delay, Mpu401ReadData
 global Mpu401WriteData, Mpu401Midi
+;-----------------------------------------------------------------------------
+; Mpu401Detect                                 9FD94  95 PC, medium confidence
+; MPU-401 driver detect entry: returns port 330h, IRQ 7
+;-----------------------------------------------------------------------------
 Mpu401Detect:
         mov eax, 70330h
         ret
+;-----------------------------------------------------------------------------
+; Mpu401Open                                   9FD9A  95 PC, medium confidence
+; MPU-401 driver open entry: resets the port and enters UART mode
+;-----------------------------------------------------------------------------
 Mpu401Open:
         push ebp
         LD mov, ebp, esp
@@ -35,6 +43,10 @@ Mpu401Open:
         inc eax
         leave
         ret
+;-----------------------------------------------------------------------------
+; Mpu401Init                                   9FDEA  95 PC, medium confidence
+; MPU-401 driver init entry
+;-----------------------------------------------------------------------------
 Mpu401Init:
         push ebp
         LD mov, ebp, esp
@@ -60,6 +72,11 @@ Mpu401Init:
         popfw
         leave
         ret
+;-----------------------------------------------------------------------------
+; Mpu401Close                                  9FE3B  95 PC, medium confidence
+; MPU-401 driver close entry: turns every channel's notes off and resets the
+; port
+;-----------------------------------------------------------------------------
 Mpu401Close:
         pusha
         mov ebx, 0B0h
@@ -89,6 +106,10 @@ Mpu401Close:
         or eax, dword [Mpu401OldIsrSel]
         popa
         ret
+;-----------------------------------------------------------------------------
+; Mpu401Reset                                  9FE94  95 PC, medium confidence
+; Resets the MPU-401 and puts it back in UART mode
+;-----------------------------------------------------------------------------
 Mpu401Reset:
         push dword 0FFh
         call Mpu401Command
@@ -98,6 +119,10 @@ Mpu401Reset:
         call Mpu401Command
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; Mpu401Command                                9FEB0  95 PC, medium confidence
+; Sends a command to the MPU-401 and waits for its acknowledge
+;-----------------------------------------------------------------------------
 Mpu401Command:
         push ebp
         LD mov, ebp, esp
@@ -138,6 +163,10 @@ Mpu401Command:
 .7:
         leave
         ret
+;-----------------------------------------------------------------------------
+; Mpu401Delay                                     9FF04  95 PC, low confidence
+; Waits a number of PIT channel 2 cycles
+;-----------------------------------------------------------------------------
 Mpu401Delay:
         push ebp
         LD mov, ebp, esp
@@ -193,6 +222,10 @@ Mpu401Delay:
         popfw
         leave
         ret
+;-----------------------------------------------------------------------------
+; Mpu401ReadData                               9FF55  95 PC, medium confidence
+; Reads a byte from the MPU-401 data port
+;-----------------------------------------------------------------------------
 Mpu401ReadData:
         mov edx, dword [Mpu401StatusPort]
         mov ecx, 0FFh
@@ -209,6 +242,10 @@ Mpu401ReadData:
         in al, dx
 .3:
         ret
+;-----------------------------------------------------------------------------
+; Mpu401WriteData                              9FF78  95 PC, medium confidence
+; Writes a byte to the MPU-401 data port
+;-----------------------------------------------------------------------------
 Mpu401WriteData:
         push ebp
         LD mov, ebp, esp
@@ -228,6 +265,10 @@ Mpu401WriteData:
 .3:
         leave
         ret
+;-----------------------------------------------------------------------------
+; Mpu401Midi                                   9FFA0  95 PC, medium confidence
+; MPU-401 driver MIDI entry: sends a run of MIDI bytes
+;-----------------------------------------------------------------------------
 Mpu401Midi:
         push ds
         call __GETDS

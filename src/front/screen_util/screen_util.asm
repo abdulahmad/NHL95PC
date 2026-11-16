@@ -112,7 +112,7 @@ LoadScoreboardGfx:
         pop ebx
         ret
 %endif ; C
-DrawSprite_jt:
+DrawSprite_jt:                                  ; used by DrawSprite
         dd DrawSprite_b0
         dd DrawSprite_b1
         dd DrawSprite_b2
@@ -447,7 +447,7 @@ AddDirtyRect:
         pop esi
         ret
 %endif ; C
-SetupStatsSourceMenu_jt:
+SetupStatsSourceMenu_jt:                        ; used by SetupStatsSourceMenu
         dd SetupStatsSourceMenu_all
         dd SetupStatsSourceMenu_exh
         dd SetupStatsSourceMenu_po
@@ -792,7 +792,7 @@ StrLenToDot:
         ret
 %endif ; C
         db 090h
-SetScreenTitle_jt:
+SetScreenTitle_jt:                              ; used by SetScreenTitle
         dd SetScreenTitle_central
         dd SetScreenTitle_tree
         dd SetScreenTitle_calendar

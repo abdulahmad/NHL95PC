@@ -6,6 +6,10 @@ extern __brk_, __unlink_, _nfree_, _Extender, _ExtenderSubtype, Is8087, HeapList
 extern __heap_enabled, __amblksiz, RationalAllocLimit, RationalAllocFlags
 global __FreeDPMIBlocks_, __ReAllocDPMIBlock_, __LinkUpNewMHeap_, __LastFree_, RationalAlloc_, RationalAlloc_, __CreateNewNHeap_, __ExpandDGROUP_
 global __AdjustAmount_
+;-----------------------------------------------------------------------------
+; __FreeDPMIBlocks_                                             9AA66  library
+; Run-time heap: frees the DPMI memory blocks of the near heap
+;-----------------------------------------------------------------------------
 __FreeDPMIBlocks_:
         push ebx
         push ecx
@@ -51,6 +55,10 @@ __FreeDPMIBlocks_:
 .3:
         mov edx, dword [byte edx+08h]
         jmp short .1
+;-----------------------------------------------------------------------------
+; __ReAllocDPMIBlock_                                           9AAC4  library
+; Run-time heap: resizes a DPMI memory block
+;-----------------------------------------------------------------------------
 __ReAllocDPMIBlock_:
         push ebx
         push ecx
@@ -143,6 +151,10 @@ __ReAllocDPMIBlock_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __LinkUpNewMHeap_                                             9ABAE  library
+; Run-time heap: links a new memory block into the near heap list
+;-----------------------------------------------------------------------------
 __LinkUpNewMHeap_:
         push ebx
         push edx
@@ -189,6 +201,10 @@ __LinkUpNewMHeap_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __LastFree_                                                   9AC22  library
+; Run-time heap: finds the last free entry of the heap
+;-----------------------------------------------------------------------------
 __LastFree_:
         push ebx
         push edx
@@ -223,6 +239,10 @@ __LastFree_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; RationalAlloc_                                                9AC70  library
+; DOS/4GW: allocates memory through the extender
+;-----------------------------------------------------------------------------
 RationalAlloc_:
         push ebx
         push ecx
@@ -312,6 +332,10 @@ RationalAlloc_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __CreateNewNHeap_                                             9AD43  library
+; Run-time heap: creates a new near heap segment
+;-----------------------------------------------------------------------------
 __CreateNewNHeap_:
         push ebx
         push ecx
@@ -380,6 +404,10 @@ __CreateNewNHeap_:
         call _nfree_
         mov eax, 1
         jmp near RationalAlloc_+0CAh
+;-----------------------------------------------------------------------------
+; __ExpandDGROUP_                                               9ADF2  library
+; Run-time heap: grows the data group for the near heap
+;-----------------------------------------------------------------------------
 __ExpandDGROUP_:
         push ebx
         push ecx
@@ -506,6 +534,10 @@ __ExpandDGROUP_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __AdjustAmount_                                               9AF36  library
+; Run-time heap: rounds a request size to the heap granularity
+;-----------------------------------------------------------------------------
 __AdjustAmount_:
         push ebx
         push edx

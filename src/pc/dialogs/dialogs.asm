@@ -1841,9 +1841,10 @@ GrowToButtons:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; MessageBox                                   31013  95 PC, medium confidence
-; (x, y (-1 = centred), message line table, line count, buttons, button
-; count, ...): the league/front-end message dialog used for every 'Copying
-; databases' / 'Insert disk' / error box
+; (x, y (-1 = centred), message line table, line count, buttons, button count,
+; ...): the league/front-end message dialog used
+;
+; for every 'Copying databases' / 'Insert disk' / error box
 ;-----------------------------------------------------------------------------
 ; C: src/pc/dialogs/TextInputDialog.c (MessageBox)
 %ifdef CBUILD
@@ -2514,9 +2515,10 @@ DrawEditText:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; EditTextField                                                   3170D  95 PC
-; (buf, maxlen, maxw, x, y, idlecb, ..., flags): line editor with Left /
-; Right / Home / End / Ins / Del / Backspace, digit-only or letters-only
-; flags; Enter / Esc ends
+; (buf, maxlen, maxw, x, y, idlecb, ..., flags): line editor with Left / Right
+; / Home / End / Ins / Del / Backspace, digit-only or letters-only flags;
+;
+; Enter / Esc ends
 ;-----------------------------------------------------------------------------
 EditTextField:
         push dword 1Ch

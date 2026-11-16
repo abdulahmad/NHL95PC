@@ -49,6 +49,7 @@ global GameScratchPlayer, GameDressPlayer, BlitJerseyDigit, MakeJerseyShape
 ; GameLineEditor                                                  767D0  95 PC
 ; Game / frontend line editor (pre-game, team screens, after trades): music
 ; stop, loading screen, LoadGameRoster, qsort GameRosterCmp,
+;
 ; GameLineEditorLoop
 ;-----------------------------------------------------------------------------
 ; C: src/front/game_lines/GameLineEditor.c
@@ -2417,7 +2418,7 @@ LoadGameRoster:
         pop ebx
         ret
         db 08Bh,0C0h
-DrawGameLineJerseys_jt:
+DrawGameLineJerseys_jt:                         ; used by DrawGameLineJerseys
         dd DrawGameLineJerseys_st0
         dd DrawGameLineJerseys_st1
         dd DrawGameLineJerseys_st2
@@ -2582,6 +2583,7 @@ DrawGameLineJerseys_join:
 ; DrawLineEditorScreen                                            78500  95 PC
 ; Line editor background (bkgd, emb<team> crest, HOMEPALS colours, lelogo),
 ; menu bar and the line headings (forward line 1..4, power play 1 / 2,
+;
 ; penalty kill 1 / 2, defense, goaltenders, extra attackers)
 ;-----------------------------------------------------------------------------
 ; C: src/front/game_lines/DrawLineEditorScreen.c
@@ -3935,7 +3937,8 @@ MenuUseDefaultLines:
         jl short MenuUseDefaultLines.1
         jmp near MenuUseOriginalLines_redraw
 %endif ; C
-MenuSaveDefaultLines:
+MenuSaveDefaultLines:                           ; used by GameLineEditorLoop, GameScratchPlayer,
+                                                ; MenuLineEdCancel ...
         db 068h,02Ch,03h,00h,00h
         call __CHK
         push esi
@@ -4193,7 +4196,8 @@ MenuSaveDefaultLines_pop:
         pop edi
         pop esi
         ret 18h
-MenuSaveTheseLines:
+MenuSaveTheseLines:                             ; used by GameLineEditorLoop, GameScratchPlayer,
+                                                ; MenuUseDefaultLines ...
         db 068h,02Ch,03h,00h,00h,0E8h,08Eh,031h,01h,00h,056h,057h,055h,081h,0ECh,010h
         db 03h,00h,00h,089h,0C6h,088h,09Ch,024h,0Ch,03h,00h,00h,031h,0C0h,088h,0D8h
         db 08Bh,09Ch,024h,034h,03h,00h,00h,08Bh,094h,024h,030h,03h,00h,00h,0E8h,04Fh

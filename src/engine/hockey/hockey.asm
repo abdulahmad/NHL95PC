@@ -1,4 +1,4 @@
-; The game loop: clock, periods, frame, crowd, sprite sort, intermission, game over (94G hockey94).
+; The game loop: clock, periods, frame, crowd, sprite sort, intermission, game over.
 bits 32
 %include "hockey.inc"
 section s_5B9D1 progbits alloc exec nowrite align=1
@@ -32,7 +32,7 @@ global SetupTeamForIntermission, Intermission, PeriodOver_sp, PeriodOver, ResetB
 global forcepldata
 ;-----------------------------------------------------------------------------
 ; GetPeriodTime                  5B9D1  93G hockey93_01.asm, medium confidence
-; 93G GetPeriodTime: period length from the option table CBC4A
+; GetPeriodTime: period length from the option table CBC4A
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/GetPeriodTime.c
 %ifdef CBUILD
@@ -84,7 +84,7 @@ ResetClock:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ClearSortCords                               5BA4E  95 PC, medium confidence
-; Zeroes the SortCords objects (93G defaultsprites2 .0 loop)
+; Zeroes the SortCords objects
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/ClearSortCords.c
 %ifdef CBUILD
@@ -123,7 +123,7 @@ ClearSortCords:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; defaultsprites_0                                      5BA89  94G setup94.asm
-; 94G renamed the 93G defaultsprites2 to defaultsprites_0 (94G name_map)
+; Zeroes the remaining sprite objects (second loop of defaultsprites)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (defaultsprites_0)
 %ifdef CBUILD
@@ -523,13 +523,17 @@ SetPlList:
 ;-----------------------------------------------------------------------------
 ; setpersonel                      5BEF4  94G collide94.asm, medium confidence
 ; Set the personnel of team t: clear newpos / newpnum of the team's 6 sort
-; objects, build PlList (SetPlList: pnum per wanted player, -1 none, the new
-; positions at PlList+6 = LinePlayersAway). Pass 1: a wanted player already on the
-; ice keeps his sort object (newpos from the list, newpnum = pnum). Pass 2:
-; each remaining wanted player takes the last free sort object (newpnum < 0),
-; stopping at the first one with a position; a sort object without a position
-; (off the ice) first gets assignment assbenchwait and position 5. Used
-; entries of PlList are set to -1.
+; objects, build PlList (SetPlList: pnum per wanted player, -1 none,
+;
+; the new positions at PlList+6 = LinePlayersAway). Pass 1: a wanted player
+; already on the ice keeps his sort object (newpos from the list, newpnum =
+; pnum).
+;
+; Pass 2: each remaining wanted player takes the last free sort object
+; (newpnum < 0), stopping at the first one with a position; a sort object
+; without a position (off the ice) first gets assignment assbenchwait
+;
+; and position 5. Used entries of PlList are set to -1.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (setpersonel)
 %ifdef CBUILD
@@ -754,8 +758,8 @@ DoGameFrame:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; RestoreBenchEnergy                                   5C1E2  94G hockey94.asm
-; The 94G RestoreBenchEnergy: once a second with line changes on, bench
-; players (tmpdst -2) gain energy, capped (PC +8, 94G +9)
+; RestoreBenchEnergy: once a second with line changes on, bench
+; players (tmpdst -2) gain energy, capped
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/RestoreBenchEnergy.c
 %ifdef CBUILD
@@ -807,7 +811,7 @@ RestoreBenchEnergy:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updatecrowdf                   5C248  93G hockey93_01.asm, medium confidence
-; 93G updatecrowdf: crowd excitement level E9AA8 rises/decays, random crowd
+; updatecrowdf: crowd excitement level E9AA8 rises/decays, random crowd
 ; sfx
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/updatecrowdf.c
@@ -959,23 +963,29 @@ periodicevents:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updateplayers                     5C40F  94G replay94.asm, medium confidence
-; updateplayers (5C40F, 93G updateplayers; ends in findpc_ret6): run every
+; updateplayers: run every
 ; sort object for a frame. PC first: playsuspended = 1 while the clock is
+;
 ; stopped for a highlight (gmode bit 7), or with no replay (gmode2 bit 0), no
 ; penalty countdown or queued penalty, overlay state refasslist[...] not 20h
 ; / 23h and the overlay idle (ovlseq 0 or 2, ovltimer outside 0-FFh); else 0.
+;
 ; Then for the 12 players: the puck distance (vecdist, word 4Eh), direction
 ; (vtoa, byte 52h) and the quarter vector squared (word 50h); per team the
 ; goalie's SCnum (word FAh) and the nearest available skater (dword 3Eh, word
+;
 ; 42h; reset to FFFFh / -1 first). Then for objects 0-10h (players off the
 ; ice skipped, object 10h kept): the old position, updateanim, nopuck and
 ; word 40h counted down, a goalie's frames on ice (tmglstats word 0) in line
+;
 ; change mode; outside the injury / fight anims the velocity: friction (>> 6,
 ; >> 9 with pflags bit 0) on the ice, players capped at 3E80h, the move by
 ; 10h * v, and gravity on z with a bounce (sfx ABh for slow ones); the
+;
 ; controlled players' joypads and doinput, the current assignment's routine
 ; (asstab), a goalie without the puck kept out of the posts (x 2Ch-30h, y
 ; C1h-C5h on either side), the wall values cleared, checkcoll when it moved
+;
 ; (always for the puck), impact counted down by 2 into limpact. Last the puck
 ; is kept inside the boards (|x| <= A0h low, y -104h..108h on the ice) while
 ; carried, frame 18Ah. No result.
@@ -1505,7 +1515,7 @@ updateplayers:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updateanim                                           5CAEF  94G replay94.asm
-; 93G updateanim: step SPAnum/SPAcnt through the SPA table (C921D), SetSPA
+; updateanim: step SPAnum/SPAcnt through the SPA table (C921D), SetSPA
 ; when an animation ends
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (updateanim)
@@ -1695,8 +1705,7 @@ updateanim:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; freezewindow                                          5CD25  94G logic94.asm
-; The 94G freezewindow body: xc1/yc1 = the camera, set sfslock (95G made the
-; same rename)
+; Freezes the camera: xc1/yc1 = the camera position, sets sfslock
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/freezewindow.c
 %ifdef CBUILD
@@ -2596,7 +2605,7 @@ DrawRinkOverlays:
         jmp near changeplayer_ret5
 ;-----------------------------------------------------------------------------
 ; setupice                       5D7F7  93G hockey93_06.asm, medium confidence
-; 93G setupice role: per-period rink setup, gmdir flips pfgoal of the
+; setupice role: per-period rink setup, gmdir flips pfgoal of the
 ; players, defaultsprites2
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/setupice.c
@@ -2892,8 +2901,11 @@ clockcont_0:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ClockTick                                    5DC10  95 PC, medium confidence
-; run from the main loop. Counts clockticks (18h per second) and gameclock down; horn sfx 97h at
-; 60 s (unless music plays), UpdateCoachModes each second. Debug playback (penshotlive) ends via EndPenaltyShot.
+; run from the main loop.
+;
+; Counts clockticks (18h per second) and gameclock down; horn sfx 97h at 60 s
+; (unless music plays), UpdateCoachModes each second. Debug playback
+; (penshotlive) ends via EndPenaltyShot.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/ClockTick.c
 %ifdef CBUILD
@@ -3072,7 +3084,7 @@ SetExitGame:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SetupTeamForIntermission                          5DDDA  93G penalty93_2.asm
-; 93G SetupTeamForIntermission: ResetBench, reenergizeteam both teams, tmline
+; SetupTeamForIntermission: ResetBench, reenergizeteam both teams, tmline
 ; 0/3/5 by tmap difference
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/SetupTeamForIntermission.c
@@ -3119,7 +3131,7 @@ SetupTeamForIntermission:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Intermission                   5DE42  93G penalty93_2.asm, medium confidence
-; 93G Intermission start: SetupTeamForIntermission and clear the SortCords
+; Intermission start: SetupTeamForIntermission and clear the SortCords
 ; positions
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/Intermission.c
@@ -3303,6 +3315,7 @@ ResetBench:
 ; resetplstuff                       5E01A  94G setup94.asm, medium confidence
 ; For both teams clear tmflags bit 4, and for the 6 SortCords entries of the
 ; team: pflags2 0; a player on the ice (position >= 0) gets SPA 289h, nopuck
+;
 ; and impact 0 and pflags bits 0, 2-5 cleared.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/resetplstuff.c

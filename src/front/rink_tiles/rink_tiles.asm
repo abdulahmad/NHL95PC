@@ -13,8 +13,9 @@ global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
 ;-----------------------------------------------------------------------------
 ; LoadRink                                                        3377C  95 PC
 ; (team): builds the home arena's rink bitmap (4Ah x 30h tiles) from rink.til
-; / TILES and the arena's .map overlays (rinkarenas), skips if currink
-; already matches, then resets the game display
+; / TILES and the arena's .map overlays (rinkarenas), skips
+;
+; if currink already matches, then resets the game display
 ;-----------------------------------------------------------------------------
 ; C: src/front/rink_tiles/LoadRink.c
 %ifdef CBUILD

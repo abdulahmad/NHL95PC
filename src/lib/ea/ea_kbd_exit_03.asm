@@ -4,6 +4,10 @@ bits 32
 section s_98A40 progbits alloc exec nowrite align=1
 extern DosOpenReadOnly, DosCloseFile
 global DosFileInfo
+;-----------------------------------------------------------------------------
+; DosFileInfo                                  98A40  95 PC, medium confidence
+; Opens a file to learn whether it exists and its size, then closes it
+;-----------------------------------------------------------------------------
 DosFileInfo:
         sub esp, byte 0Ch
         mov eax, esp

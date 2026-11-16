@@ -1,4 +1,4 @@
-; Goalie assignments: where the goalie stands, when he comes out for the puck, puck threat (94G logic94).
+; Goalie assignments: where the goalie stands, when he comes out for the puck, puck threat.
 bits 32
 %include "hockey.inc"
 section s_4B467 progbits alloc exec nowrite align=1
@@ -65,9 +65,10 @@ GoalieToPuckVec:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; AdjustFacingDirection              4B4E9  94G logic94.asm, medium confidence
-; Same step as the 93G/94G AdjustFacingDirection (checks): d = facedir - dir,
-; step = ((-d)&4)/2-1, with the pfgoal (pflags bit 7) facing-range special
-; cases; the PC adds a 2-tick delay counter at +4Ch
+; Turns one step toward the wanted direction: d = facedir - dir, step =
+; ((-d)&4)/2-1, with the pfgoal (pflags bit 7) facing-range special cases;
+;
+; the PC adds a 2-tick delay counter at +4Ch
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goalie/AdjustFacingDirection.c
 %ifdef CBUILD
@@ -160,7 +161,7 @@ AdjustFacingDirection:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assgoalietopuck                                       4B5C2  94G logic94.asm
-; Asstab slot 0Fh = 93G assgoalietopuck (goalie skates out to a loose puck):
+; Assignment table slot 0Fh: the goalie skates out to a loose puck:
 ; check4bench, skatetopuck, assexit
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goalie/assgoalietopuck.c
@@ -289,8 +290,8 @@ assgoalietopuck:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ClampYPosition                                        4B6F4  94G logic94.asm
-; 93G ClampYPosition: regd0 = 0 if the goalie has the puck, regd1 clamped to
-; +-E3h (93G +-$103), minus regd3; assgoalie helper
+; ClampYPosition: regd0 = 0 if the goalie has the puck, regd1 clamped to
+; +-E3h, minus regd3; assgoalie helper
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goalie/ClampYPosition.c
 %ifdef CBUILD
@@ -338,9 +339,7 @@ ClampYPosition:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assgoalie                          4B774  94G logic94.asm, medium confidence
-; Asstab slot 14; field alignment 68% of 59 known-field accesses; content
-; rank 1/34 vs other slot routines; 2 known Genesis callees present, 0
-; missing, 1 extra
+; Assignment table slot 0Eh: the goalie in net, following the puck
 ;-----------------------------------------------------------------------------
 assgoalie:
         push dword 24h

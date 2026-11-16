@@ -9,6 +9,10 @@ extern AllocMemBlock, AllocMemBlockEx, FindCachedFile, FillRowTable, LoadFileCac
 extern ZeroMem
 global subwindowdefadr, LoadFileCachedQuiet, LoadBank, LoadFileCachedFlag, str_LocateshapeSHAPENOTFOUND, OpenArtArchiveErr, OpenArtArchive, OpenArtArchiveFlag
 global LoadDataFileErr, LoadFileAllocQuiet, LoadDataFileExt, TextSetColors, TextSetCursor, TextSaveState, TextRestoreState, TextSetFont
+;-----------------------------------------------------------------------------
+; subwindowdefadr                                                 8E7A0  95 PC
+; Prints its own name: "subwindowdefadr - OUT OF ROW SPACE"
+;-----------------------------------------------------------------------------
 subwindowdefadr:
         push esi
         push edi
@@ -55,6 +59,10 @@ subwindowdefadr:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; LoadFileCachedQuiet                             8E81C  95 PC, low confidence
+; Loads a file through the file cache without the error message; unused
+;-----------------------------------------------------------------------------
 LoadFileCachedQuiet:
         push ebp
         LD mov, ebp, esp
@@ -72,6 +80,10 @@ LoadFileCachedQuiet:
         add esp, byte 0Ch
         leave
         ret
+;-----------------------------------------------------------------------------
+; LoadBank                                     8E83C  95 PC, medium confidence
+; Graphics library: load an art bank file (path, flags), returns the bank
+;-----------------------------------------------------------------------------
 LoadBank:
         push ebp
         LD mov, ebp, esp
@@ -96,13 +108,23 @@ LoadBank:
 .2:
         leave
         ret
+;-----------------------------------------------------------------------------
+; LoadFileCachedFlag                              8E86A  95 PC, low confidence
+; Jumps to LoadFileCached with the caller's error flag
+;-----------------------------------------------------------------------------
 LoadFileCachedFlag:
         jmp near LoadFileCached
         db 00h
-str_LocateshapeSHAPENOTFOUND:
+str_LocateshapeSHAPENOTFOUND:                   ; string "locateshape - '%-4.4s' SHAPE NOT FOUND "; used by
+                                                ; FindShape
         db 06Ch,06Fh,063h,061h,074h,065h,073h,068h,061h,070h,065h,020h,02Dh,020h,027h,025h
         db 02Dh,034h,02Eh,034h,073h,027h,020h,053h,048h,041h,050h,045h,020h,04Eh,04Fh,054h
         db 020h,046h,04Fh,055h,04Eh,044h,0Dh,0Ah,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; OpenArtArchiveErr                               8E8A0  95 PC, low confidence
+; Opens a data file through the cache with the error message and returns its
+; handle
+;-----------------------------------------------------------------------------
 OpenArtArchiveErr:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -113,6 +135,10 @@ OpenArtArchiveErr:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; OpenArtArchive                                  8E8B8  95 PC, low confidence
+; Opens a data file through the cache and returns its handle
+;-----------------------------------------------------------------------------
 OpenArtArchive:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -123,6 +149,10 @@ OpenArtArchive:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; OpenArtArchiveFlag                              8E8D0  95 PC, low confidence
+; Opens a data file with the caller's error flag and returns its handle
+;-----------------------------------------------------------------------------
 OpenArtArchiveFlag:
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -138,6 +168,10 @@ OpenArtArchiveFlag:
 .1:
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; LoadDataFileErr                                 8E8F0  95 PC, low confidence
+; Loads a data file with the error message
+;-----------------------------------------------------------------------------
 LoadDataFileErr:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -148,6 +182,10 @@ LoadDataFileErr:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadFileAllocQuiet                              8E908  95 PC, low confidence
+; Loads a file into a new block without the error message
+;-----------------------------------------------------------------------------
 LoadFileAllocQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -158,6 +196,10 @@ LoadFileAllocQuiet:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadDataFileExt                              8E920  95 PC, medium confidence
+; Loads a data file, trying its extension
+;-----------------------------------------------------------------------------
 LoadDataFileExt:
         push esi
         push edi
@@ -225,6 +267,10 @@ LoadDataFileExt:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; TextSetColors                                8E9C0  95 PC, medium confidence
+; Text library: set the foreground and background text colours
+;-----------------------------------------------------------------------------
 TextSetColors:
         mov eax, dword [byte esp+04h]
         mov dword [fontcolor], eax
@@ -232,6 +278,10 @@ TextSetColors:
         mov dword [TextBackColor], eax
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; TextSetCursor                                8E9D4  95 PC, medium confidence
+; Sets the text cursor position
+;-----------------------------------------------------------------------------
 TextSetCursor:
         mov eax, dword [byte esp+04h]
         mov dword [TextOriginX], eax
@@ -239,6 +289,10 @@ TextSetCursor:
         mov dword [TextOriginY], eax
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; TextSaveState                                8E9E8  95 PC, medium confidence
+; Text library: save the text state (40h bytes)
+;-----------------------------------------------------------------------------
 TextSaveState:
         push esi
         push edi
@@ -250,6 +304,10 @@ TextSaveState:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; TextRestoreState                             8EA00  95 PC, medium confidence
+; Text library: restore the text state
+;-----------------------------------------------------------------------------
 TextRestoreState:
         push esi
         push edi
@@ -261,6 +319,10 @@ TextRestoreState:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; TextSetFont                                  8EA18  95 PC, medium confidence
+; Text library: set the current font
+;-----------------------------------------------------------------------------
 TextSetFont:
         mov edx, dword [byte esp+04h]
         mov eax, edx

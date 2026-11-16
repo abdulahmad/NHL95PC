@@ -4,6 +4,10 @@ bits 32
 section s_91FE0 progbits alloc exec nowrite align=1
 extern KeyedDraw, RowCopyFunc, PutBlock, RemapRowKeyed, bcopy, BlitArtKeyColour
 global DrawArtKeyColour, DrawArtKeyColourAtOwnPos
+;-----------------------------------------------------------------------------
+; DrawArtKeyColour                                91FE0  95 PC, low confidence
+; Draws art skipping a given colour
+;-----------------------------------------------------------------------------
 DrawArtKeyColour:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
@@ -26,6 +30,10 @@ DrawArtKeyColour:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtKeyColourAtOwnPos                        92024  95 PC, low confidence
+; DrawArtKeyColour at the shape's own position
+;-----------------------------------------------------------------------------
 DrawArtKeyColourAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]

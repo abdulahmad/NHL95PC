@@ -23,10 +23,11 @@ global AddHumanTeam, AddHumanTeam_msgbox, AddHumanTeam_exit, RemoveHumanTeam, Ch
 global GetLeagueId, WriteLeagueInfo, MsgCopyingDatabases, CopyHumanTeamDBs, SaveLeagueGameRef
 ;-----------------------------------------------------------------------------
 ; AddHumanTeam                                                    408F5  95 PC
-; League menu (temp_files 33256): ReadLeagueInfo, saved-game /
-; master-database prompts, refuses when 1Ah teams are human ('All the teams
-; are already human'), 'Select new human controlled team', then
-; WriteLeagueInfo and CopyHumanTeamDBs for the new team
+; League menu (temp_files 33256): ReadLeagueInfo, saved-game / master-database
+; prompts, refuses when 1Ah teams are human
+;
+; ('All the teams are already human'), 'Select new human controlled team',
+; then WriteLeagueInfo and CopyHumanTeamDBs for the new team
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_teams/AddHumanTeam.c
 %ifdef CBUILD
@@ -282,8 +283,9 @@ AddHumanTeam_exit:
 ;-----------------------------------------------------------------------------
 ; RemoveHumanTeam                                                 40C29  95 PC
 ; League menu (temp_files 332EC): same checks as AddHumanTeam, refuses with
-; one human team ('There is only one human controlled team!'), 'Select human
-; controlled team to remove', then rewrites PINFO.DB
+; one human team ('There is only one human controlled team!'),
+;
+; 'Select human controlled team to remove', then rewrites PINFO.DB
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_teams/AddHumanTeam.c (RemoveHumanTeam)
 %ifdef CBUILD
@@ -526,9 +528,10 @@ RemoveHumanTeam:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CheckMasterPassword                          40F4E  95 PC, medium confidence
-; League menu (temp_files 3331D): ReadLeagueInfo, master-database prompt,
-; then AskMasterPassword for the league master team (leaguemaster); returns
-; its result (0 = accepted), the caller runs settings when it fails
+; League menu (temp_files 3331D): ReadLeagueInfo, master-database prompt, then
+; AskMasterPassword for the league master team (leaguemaster);
+;
+; returns its result (0 = accepted), the caller runs settings when it fails
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_teams/CheckMasterPassword.c
 %ifdef CBUILD
@@ -747,8 +750,10 @@ FmtFromLeague:
 ;-----------------------------------------------------------------------------
 ; BuildLeagueList                              411C8  95 PC, medium confidence
 ; Unreferenced: _dos_findfirst/next over '*.LP', allocates 'LLST' (pointer
-; list) and 'LLSN' (9-byte names), keeps leagues whose GetLeagueId result
-; passes the flag filter (bit 0: id >= 0, bit 1: id < 0); returns the count
+; list) and 'LLSN' (9-byte names),
+;
+; keeps leagues whose GetLeagueId result passes the flag filter (bit 0: id >=
+; 0, bit 1: id < 0); returns the count
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_teams/BuildLeagueList.c
 %ifdef CBUILD
@@ -896,8 +901,9 @@ BuildLeagueList:
 ;-----------------------------------------------------------------------------
 ; LeagueCheckStub                              41337  95 PC, medium confidence
 ; Returns 0; called (league path, 2) before ReadLeagueInfo by
-; AddHumanTeam/RemoveHumanTeam/CheckMasterPassword and in
-; database_merge/import_export (stubbed-out check)
+; AddHumanTeam/RemoveHumanTeam/CheckMasterPassword
+;
+; and in database_merge/import_export (stubbed-out check)
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_teams/LeagueCheckStub.c
 %ifdef CBUILD
@@ -969,6 +975,7 @@ GetLeagueId:
 ; WriteLeagueInfo                                                 413CD  95 PC
 ; Creates <league>\PINFO.DB and writes: +0 human count, +2 master team, +4
 ; saved-game flag, +6 saved-game name (0Dh), +13h flags, +15h master password
+;
 ; (0Bh), +20h team table (30Ch = 1Ah x 1Eh); args match the ReadLeagueInfo
 ; globals
 ;-----------------------------------------------------------------------------
@@ -1099,8 +1106,9 @@ MsgCopyingDatabases:
 ;-----------------------------------------------------------------------------
 ; CopyHumanTeamDBs                             41516  95 PC, medium confidence
 ; For each human team (+17h = 1, or the one asked): team from disk (+18h = 2)
-; asks 'Insert disk for', checks PLAYER.ID ('That disk is for ... from the
-; league ...') and imports with ExportTeamToFloppy; otherwise
+; asks 'Insert disk for', checks PLAYER.ID ('That disk is for ...
+;
+; from the league ...') and imports with ExportTeamToFloppy; otherwise
 ; MsgCopyingDatabases and copies the 7 league databases (KEY..SCHEDULE.DB) to
 ; '.xx' copies, sets +16h bit 0 and saves PINFO
 ;-----------------------------------------------------------------------------
@@ -1407,9 +1415,10 @@ CopyHumanTeamDBs:
         ret
 ;-----------------------------------------------------------------------------
 ; SaveLeagueGameRef                            41978  95 PC, medium confidence
-; Demo_savegame 85CC2: writes the league state (DDD34-DDD59) to the
-; saved-game file, then marks PINFO.DB of each league in the game
-; (savleague1, savleague2 when two) with saved flag -1 and name 'saved'
+; Demo_savegame 85CC2: writes the league state (DDD34-DDD59) to the saved-game
+; file, then marks PINFO.DB of each league in the game (savleague1, savleague2
+;
+; when two) with saved flag -1 and name 'saved'
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_teams/SaveLeagueGameRef.c
 %ifdef CBUILD

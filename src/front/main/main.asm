@@ -68,9 +68,10 @@ GetMemListHead:
 ;-----------------------------------------------------------------------------
 ; GetMemStats                                  1002A  95 PC, medium confidence
 ; Walks the memory block list from GetMemListHead(1) (next at +20h) and
-; returns total, free, used and largest block through four pointers; main_
-; refuses to start ('Insufficient memory available.') when the total is below
-; 1E5D70h
+; returns total, free, used and largest block through four pointers;
+;
+; main_ refuses to start ('Insufficient memory available.') when the total is
+; below 1E5D70h
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/GetMemStats.c
 %ifdef CBUILD
@@ -129,7 +130,7 @@ GetMemStats:
 ;-----------------------------------------------------------------------------
 ; main_                                                10094  94G hockey94.asm
 ; Watcom main_ entry (called from the C runtime start); front-end entry like
-; 94G Begin
+; Begin
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/main_.c
 %ifdef CBUILD
@@ -570,8 +571,7 @@ main_x:
 ;-----------------------------------------------------------------------------
 ; DiskFreeBytes                                                   106C8  95 PC
 ; _dos_getdiskfree_(drive) -> clusters * sectors * bytes; FatalError 'error
-; getting disk space free' on failure (main_, CreateNewLeague,
-; WriteModeState)
+; getting disk space free' on failure (main_, CreateNewLeague, WriteModeState)
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/DiskFreeBytes.c
 %ifdef CBUILD
@@ -609,9 +609,10 @@ DiskFreeBytes:
 ;-----------------------------------------------------------------------------
 ; SetupControllers                                                10712  95 PC
 ; From ctl1team/ctl2team and ctl1side/ctl2side sets cont1team/cont2team (0
-; none, 1 home, 2 away) and the same-side flag, maps ctl1dev/ctl2dev to pad
-; device codes (1 mouse, 2 joystick 1, 4 joystick 2, 8 keyboard, 10h -> 0
-; none), recentres the mouse and stops input sampling; called before each
+; none, 1 home, 2 away) and the same-side flag, maps ctl1dev/ctl2dev
+;
+; to pad device codes (1 mouse, 2 joystick 1, 4 joystick 2, 8 keyboard, 10h ->
+; 0 none), recentres the mouse and stops input sampling; called before each
 ; game
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/SetupControllers.c
@@ -740,9 +741,10 @@ SetupControllers:
 ;-----------------------------------------------------------------------------
 ; ReadKeyboardPad                                                 1086A  95 PC
 ; Keyboard pad: arrow / keypad scan codes (48h up, 50h down, 4Bh left, 4Dh
-; right, 47h/49h/51h/4Fh diagonals) -> 4-bit mask -> direction via the table
-; at C4D1F (8 = none); Ins/Alt/Enter/Space give buttons 10h, 20h or 40h
-; (both)
+; right, 47h/49h/51h/4Fh diagonals) -> 4-bit mask -> direction
+;
+; via the table at C4D1F (8 = none); Ins/Alt/Enter/Space give buttons 10h, 20h
+; or 40h (both)
 ;-----------------------------------------------------------------------------
 ReadKeyboardPad:
         push ebx
@@ -871,10 +873,11 @@ ReadKeyboardPad:
         ret
 ;-----------------------------------------------------------------------------
 ; ReadJoyPad                                                      109A1  95 PC
-; Joystick n pad: 8 (no input) when joystick n is not present
-; (joypresent[n]), else the direction from the low/high byte of the sampled
-; joystick bits (joyrawbits) through the same direction table, buttons 1/2 ->
-; 10h/20h, both -> 40h
+; Joystick n pad: 8 (no input) when joystick n is not present (joypresent[n]),
+; else the direction from the low/high byte of the sampled joystick bits
+;
+; (joyrawbits) through the same direction table, buttons 1/2 -> 10h/20h, both
+; -> 40h
 ;-----------------------------------------------------------------------------
 ReadJoyPad:
         push edx
@@ -920,8 +923,9 @@ ReadJoyPad:
 ;-----------------------------------------------------------------------------
 ; ReadMousePad                                                    109FC  95 PC
 ; Mouse pad: polls the mouse (mousepollfn), direction from the offset to the
-; screen centre (A0h,64h) through vtoa (none inside radius 50), mouse buttons
-; 1/2 -> 10h/20h, both -> 40h
+; screen centre (A0h,64h) through vtoa (none inside radius 50),
+;
+; mouse buttons 1/2 -> 10h/20h, both -> 40h
 ;-----------------------------------------------------------------------------
 ReadMousePad:
         push ebx
@@ -1016,8 +1020,9 @@ ReadControllerPad:
 ;-----------------------------------------------------------------------------
 ; ReadHotKeys                                                     10AC6  95 PC
 ; Game hot keys: Esc (1), Ctrl+S (1Fh), Ctrl+M (32h), F1-F10 (3Bh-44h), Tab
-; (0Fh), R (13h); edge-triggered against the last key (lasthotkey), a new key
-; is returned with bit 80h set
+; (0Fh), R (13h); edge-triggered against the last key (lasthotkey),
+;
+; a new key is returned with bit 80h set
 ;-----------------------------------------------------------------------------
 ReadHotKeys:
         push ebx
@@ -1189,8 +1194,10 @@ ReadHotKeys:
 ;-----------------------------------------------------------------------------
 ; ReadSkipKeys                                 10C7F  95 PC, medium confidence
 ; Hot-key reader used while demomode is set: Esc, Ins/Alt/Enter/Space or any
-; joystick/mouse button give 81h (an Esc), or set pad bit 10h when gmode bit
-; 10h; otherwise Ctrl+S / Ctrl+M / Tab, edge-triggered like ReadHotKeys
+; joystick/mouse button give 81h (an Esc), or set pad bit 10h
+;
+; when gmode bit 10h; otherwise Ctrl+S / Ctrl+M / Tab, edge-triggered like
+; ReadHotKeys
 ;-----------------------------------------------------------------------------
 ReadSkipKeys:
         push ebx
@@ -1327,6 +1334,7 @@ ReadSkipKeys:
 ; SampleInputTick                                                 10DCD  95 PC
 ; Timer callback installed by main_ (addtimer): while joysampling, every 5th
 ; tick appends a 3-byte record (controller 1 pad, controller 2 pad, hot key)
+;
 ; to the 50-entry joyqueue ring (joyqhead/joyqcount), reading the joysticks
 ; first when either controller uses one
 ;-----------------------------------------------------------------------------
@@ -1397,8 +1405,9 @@ SampleInputTick:
 ;-----------------------------------------------------------------------------
 ; SetScreenSize                                10E9F  95 PC, medium confidence
 ; (w, h): if different from the current size (screenw/C4E2C) blanks the
-; palette, clears the screen, switches the video mode (initgraphics) and
-; clears again; main_ uses 140h x C8h and 280h x 1E0h
+; palette, clears the screen, switches the video mode (initgraphics)
+;
+; and clears again; main_ uses 140h x C8h and 280h x 1E0h
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/SetScreenSize.c
 %ifdef CBUILD
@@ -1478,9 +1487,10 @@ SetScreenSize:
 ;-----------------------------------------------------------------------------
 ; IntermissionPC                                  10F6D  95 PC, low confidence
 ; Called from the period-end path after Intermission when gsp > 0: fades out
-; (FadePalette), restores 640x480, stops crowd/music/digital sound and runs
-; EnsureFreeMemory(222E0h) when SortPending is set, then IntermissionDesk and counts
-; curperiod
+; (FadePalette), restores 640x480, stops crowd/music/digital sound
+;
+; and runs EnsureFreeMemory(222E0h) when SortPending is set, then
+; IntermissionDesk and counts curperiod
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/IntermissionPC.c
 %ifdef CBUILD
@@ -1535,6 +1545,7 @@ IntermissionPC:
 ; DrawSpriteNumber                             11005  95 PC, medium confidence
 ; Draws a 1- or 2-digit number with the digit sprites numshapes[0..9]
 ; (DrawSprite), plus a suffix sprite from gfxidlist when cx > 0; x mirrored
+;
 ; from 140h
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/DrawSpriteNumber.c
@@ -1720,11 +1731,13 @@ WaitKeyRelease:
 ;-----------------------------------------------------------------------------
 ; HandleHotKey                                                    1118F  95 PC
 ; Acts on a ReadHotKeys code: F1-F4 line-change request (lcrequest /
-; lcreqchoice), F5-F8 request word_E0306 / word_E0382, F9 / F10
-; ShowGoalieBanner(0/1), Tab toggles shownumbers, R opens the in-game menu
-; (InstantReplay) with sound stopped and resumes, Ctrl+M toggles music
-; (gameopts bit 6), Ctrl+S toggles sound effects (bit 7), Esc sets the quit
-; request and returns 1
+; lcreqchoice) of team 1, F5-F8 of team 2 (the +2 words),
+;
+; F9 / F10 ShowGoalieBanner(0/1), Tab toggles shownumbers, R opens the in-game
+; menu (InstantReplay) with sound stopped and resumes, Ctrl+M toggles music
+; (gameopts bit 6), Ctrl+S toggles sound effects (bit 7),
+;
+; Esc sets the quit request and returns 1
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/HandleHotKey.c
 %ifdef CBUILD
@@ -1960,9 +1973,10 @@ ResetInputSampling:
 ;-----------------------------------------------------------------------------
 ; RunGameFrames                                                   1149A  95 PC
 ; Runs up to eax game frames: takes the next joyqueue record (each lasts 3
-; frames), handles hot keys (HandleHotKey; Esc flushes the queue and
-; returns), ClockTick unless gmode bit 0, DoGameFrame, stops on deferpending
-; / exitgame / gameover
+; frames), handles hot keys (HandleHotKey; Esc flushes the queue and returns),
+;
+; ClockTick unless gmode bit 0, DoGameFrame, stops on deferpending / exitgame
+; / gameover
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/RunGameFrames.c
 %ifdef CBUILD
@@ -2067,8 +2081,9 @@ SetFullPalette:
 ;-----------------------------------------------------------------------------
 ; FadePalette                                  11598  95 PC, medium confidence
 ; (in, palette, steps): fades the 256-colour palette in from black or out to
-; black in `steps` steps through fadepalbuf, or sets it at once when steps <
-; 2; remembers the faded-in state in palfadedin
+; black in `steps` steps through fadepalbuf, or sets it at once
+;
+; when steps < 2; remembers the faded-in state in palfadedin
 ;-----------------------------------------------------------------------------
 FadePalette:
         push dword 18h
@@ -2157,7 +2172,7 @@ FadePalette:
         ret
 ;-----------------------------------------------------------------------------
 ; Gameloop                          1167B  94G hockey94.asm, medium confidence
-; Role match: the in-game loop (94G Gameloop); PC converts timer ticks to
+; Role match: the in-game loop; PC converts timer ticks to
 ; frames
 ;-----------------------------------------------------------------------------
 Gameloop:
@@ -2583,11 +2598,13 @@ Gameloop:
 ;-----------------------------------------------------------------------------
 ; PlayGame                                                        11D09  95 PC
 ; (&savefile): without an open saved game runs the pre-game screens
-; (LoadRockMusic, LoadGameGfx, SetupGame; gameresult 2 on cancel), otherwise
-; LoadGameState from the file, rebuilds lines (SetupTeamLines) and resumes;
-; then GameLoop; in league / Play-Off mode a completed game (gameresult 1)
-; deletes <league>\game.sav; called from temp_files, import_export and
-; PlayoffModeLoop
+; (LoadRockMusic, LoadGameGfx, SetupGame; gameresult 2 on cancel),
+;
+; otherwise LoadGameState from the file, rebuilds lines (SetupTeamLines) and
+; resumes; then GameLoop; in league / Play-Off mode a completed game
+; (gameresult 1) deletes <league>\game.sav; called from temp_files,
+;
+; import_export and PlayoffModeLoop
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/HandleHotKey.c (PlayGame)
 %ifdef CBUILD

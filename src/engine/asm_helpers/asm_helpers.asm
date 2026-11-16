@@ -15,9 +15,11 @@ global stub_8C218, stub_8C223, randomd0, vgacopy_bg, vtoa, SaveSS
 ; PlayMVI                                                         8BEDB  95 PC
 ; PlayMVI(eax=path, edx=x, ebx=y) -> eax key. (CD movie player).
 ; Opens the file through the cdstream reader, then per chunk:
+;
 ; 'MVIh' header: sets up the decoder (cmv_player) and the frame delay
 ; 'MVIf' frame: decodes and waits for the frame time (GetTicks ticks)
 ; 'MVIe' end: stops. A key press (AnyInputPressed) aborts.
+;
 ; Afterwards waits for the music fade and restarts the song if music is on.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/asm_helpers/PlayMVI.c
@@ -420,11 +422,12 @@ randomd0:
         db 00h,00h
 ;-----------------------------------------------------------------------------
 ; vgacopy_bg                                   8C290  95 PC, medium confidence
-; vgacopy_bg.. vgacopy_pages (8C290-8C8E7): 16-bit-frame planar VGA
-; routines (args at [ebp+6..], o16 registers, ports 3C4h/3CEh/3D4h/3DAh/3C0h,
-; write mode 1 latched copies). None has a caller or a fixup: dead code
-; from an earlier real-mode build. The labels other than vgacopy_bg were
-; added here (no reference in the EXE).
+; vgacopy_bg.. vgacopy_pages (8C290-8C8E7): 16-bit-frame planar VGA routines
+; (args at [ebp+6..], o16 registers, ports 3C4h/3CEh/3D4h/3DAh/3C0h,
+;
+; write mode 1 latched copies). None has a caller or a fixup: dead code from
+; an earlier real-mode build. The labels other than vgacopy_bg were added here
+; (no reference in the EXE).
 ;-----------------------------------------------------------------------------
 vgacopy_bg:
         push bp
@@ -1140,9 +1143,10 @@ vgacopy_pages:
         db 00h,00h
 ;-----------------------------------------------------------------------------
 ; vtoa                                                  8C8E8  94G logic94.asm
-; : (x,y) vector -> direction 0-7 via vtoa_dt.
-; .dir/.0-.3 follow the x sign -> bit0, y sign -> bit1,
-; |x| vs |y| (and 2x) comparisons -> bits 2/3, then the table lookup.
+; : (x,y) vector -> direction 0-7 via vtoa_dt. .dir/.0-.3 follow the x sign ->
+; bit0, y sign -> bit1, |x| vs |y| (and 2x) comparisons -> bits 2/3,
+;
+; then the table lookup.
 ;-----------------------------------------------------------------------------
 vtoa:
         push ebp

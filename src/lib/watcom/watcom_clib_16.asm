@@ -6,6 +6,10 @@ extern __close_, __IOMode_, __set_errno_, __set_errno_dos_, __SetIOMode_, _fmode
 extern lseek_
 global open_, sopen_, __set_binary_, read_, j___close_, byteswap_, med3_, med3_
 global qsort_
+;-----------------------------------------------------------------------------
+; open_                                                         92068  library
+; Run-time library open: opens a file
+;-----------------------------------------------------------------------------
 open_:
         push ebx
         push edx
@@ -23,6 +27,10 @@ open_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; sopen_                                                        9208C  library
+; Run-time library sopen: opens a file with a share mode
+;-----------------------------------------------------------------------------
 sopen_:
         push ebx
         push ecx
@@ -201,6 +209,10 @@ sopen_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __set_binary_                                                 92251  library
+; Run-time library: puts a file handle in binary mode
+;-----------------------------------------------------------------------------
 __set_binary_:
         push ebx
         push ecx
@@ -252,6 +264,11 @@ __set_binary_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; read_                                                         922B6  library
+; Run-time library read: reads from a file handle, converting line ends in
+; text mode
+;-----------------------------------------------------------------------------
 read_:
         push ecx
         push esi
@@ -369,8 +386,16 @@ read_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; j___close_                                                    923C9  library
+; Jump to the run-time close of a file handle
+;-----------------------------------------------------------------------------
 j___close_:
         jmp near __close_
+;-----------------------------------------------------------------------------
+; byteswap_                                                     923CE  library
+; Run-time library: swaps two memory blocks (qsort helper)
+;-----------------------------------------------------------------------------
 byteswap_:
         push es
         push ds
@@ -398,6 +423,10 @@ byteswap_:
 .4:
         pop es
         ret
+;-----------------------------------------------------------------------------
+; med3_                                                         923F4  library
+; Run-time library: the median of three elements (qsort helper)
+;-----------------------------------------------------------------------------
 med3_:
         push esi
         push edi
@@ -447,6 +476,10 @@ med3_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; qsort_                                                        9244C  library
+; Run-time library qsort: sorts an array
+;-----------------------------------------------------------------------------
 qsort_:
         push esi
         push edi

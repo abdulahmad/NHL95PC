@@ -157,7 +157,7 @@ LoadSettingsShapes:
         ret
 %endif ; C
         db 08Bh,0C0h
-DrawSettingsHeading_jt:
+DrawSettingsHeading_jt:                         ; used by DrawSettingsHeading
         dd DrawSettingsHeading_n0
         dd DrawSettingsHeading_n1
         dd DrawSettingsHeading_n0
@@ -1996,7 +1996,7 @@ DrawLockerJersey:
         mov esp, ebp
         jmp near DrawPanel3D_ret
         db 090h
-LockerRoomLoop_jt:
+LockerRoomLoop_jt:                              ; used by LockerRoomLoop
         dd LockerRoomLoop_n0
         dd LockerRoomLoop_n1
         dd LockerRoomLoop_n2

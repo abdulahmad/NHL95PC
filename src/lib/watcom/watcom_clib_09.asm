@@ -3,6 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_909E0 progbits alloc exec nowrite align=1
 global strnicmp_
+;-----------------------------------------------------------------------------
+; strnicmp_                                                     909E0  library
+; Run-time library strnicmp: compares at most n characters, ignoring case
+;-----------------------------------------------------------------------------
 strnicmp_:
         push ecx
         sub esp, byte 4

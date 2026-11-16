@@ -18,8 +18,9 @@ global RebuildLeagueDbs
 ; MergeTeamDbs                                 3A9AA  95 PC, medium confidence
 ; Per human team: opens the 7 league DBs as old (.xx snapshot), new (floppy
 ; copy) and master, and adds the deltas into master: team records
-; (MergeTeamRecDelta), skater and goalie SEASON records (MergeSeasonRecDelta
-; / MergeGoalieRecDelta, picked by the KEY position 'G')
+;
+; (MergeTeamRecDelta), skater and goalie SEASON records (MergeSeasonRecDelta /
+; MergeGoalieRecDelta, picked by the KEY position 'G')
 ;-----------------------------------------------------------------------------
 ; C: src/pc/database_merge/MergeTeamDbs.c
 %ifdef CBUILD
@@ -436,6 +437,7 @@ MergeScheduleDb:
 ; LocateTeamDbCopy                             3AF70  95 PC, medium confidence
 ; (teams, team, ...): local teams use the league dir and their entry stamp;
 ; floppy teams prompt for their disk (WaitLeagueFloppy), read its stamp
+;
 ; (GetLeagueId) and warn "That floppy disk has an old copy of the league"
 ;-----------------------------------------------------------------------------
 ; C: src/pc/database_merge/LocateTeamDbCopy.c
@@ -521,8 +523,9 @@ LocateTeamDbCopy:
 ;-----------------------------------------------------------------------------
 ; UpdateTeamDbs                                                   3B039  95 PC
 ; MenuUpdateTeamDbs / PlayLeagueGame: "The league X has not been merged."
-; unless merged, then CopyHumanTeamDBs; "Error while updating players
-; databases!"
+; unless merged, then CopyHumanTeamDBs; "Error
+;
+; while updating players databases!"
 ;-----------------------------------------------------------------------------
 ; C: src/pc/database_merge/UpdateTeamDbs.c
 %ifdef CBUILD
@@ -701,8 +704,9 @@ UpdateTeamDbs_ret:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; MergeLeagueFiles                                                3B25A  95 PC
-; MenuMergeLeagueFiles / PlayLeagueGame / TradePlayers: master copy only
-; ("The databases can only be merged on the master copy of the league"),
+; MenuMergeLeagueFiles / PlayLeagueGame / TradePlayers: master copy only ("The
+; databases can only be merged on the master copy of the league"),
+;
 ; "Merging players to master database." (MergeTeamDbs), "Updating schedule."
 ; (MergeScheduleDb), marks the team entry merged (flags |= 4, stamp),
 ; "Warning! Merge not completed!"

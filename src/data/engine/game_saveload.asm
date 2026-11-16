@@ -18,7 +18,8 @@ global crowdlevel, lcline_aw, RockTuneIds, assstarskate_path, assstarskate_path_
 global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 global linenext, FallDown_pinxr, FallDown_pinxl, FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, blockspd
 global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
-ovlscripts:
+ovlscripts:                                     ; pointer to the step script of each text overlay sequence
+                                                ; (ovlseq); used by LoadGameState, LoadTeamPPV
         dd OvlScriptFanom
         dd OvlScriptGoal
         dd OvlScriptClap
@@ -30,86 +31,130 @@ ovlscripts:
         dd OvlScriptSaved
         dd OvlScriptCross
         dd OvlScriptGuilt
-ovlseqtimed:
+ovlseqtimed:                                    ; UpdateTextOverlay: set for the overlay sequences that get
+                                                ; the 258h ovltimer; used by UpdateTextOverlay
         db 01h,00h,01h,01h,01h,00h,00h,00h,01h,00h,00h
-ovlsteptime:
+ovlsteptime:                                    ; frames per step of each overlay sequence (dword per ovlseq;
+                                                ; ovlsteptimer is loaded from it); used by LoadTeamPPV,
+                                                ; UpdateTextOverlay
         db 0Ch,00h,00h,00h,08h,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h
         db 0Ch,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
         db 08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
-ovlartfiles:
+ovlartfiles:                                    ; file number (fileoncd index) of each overlay sequence's PPV
+                                                ; art, beside ovlartnames; used by Gameloop, LoadTeamPPV,
+                                                ; PlayGame
         db 091h,00h,00h,00h,097h,00h,00h,00h,052h,00h,00h,00h,0AEh,01h,00h,00h
         db 047h,00h,00h,00h,0D4h,01h,00h,00h,0D5h,01h,00h,00h,0D6h,01h,00h,00h
         db 0D7h,01h,00h,00h,0D8h,01h,00h,00h,0D9h,01h,00h,00h
-goalienotebits:
+goalienotebits:                                 ; QueueGoalieNote: one bit per goalie already noted (bit
+                                                ; tmgoalie, +3 for the visitors; 3Fh = all done); used by
+                                                ; LoadGameState, QueueGoalieNote, ResetGameVars ...
         db 00h,00h,00h,00h
-Pencntdwn2:
+Pencntdwn2:                                     ; second penalty-call countdown: checkfornewpen raises it from
+                                                ; pendelay2tab, chkprogress counts it down and sets gmode2 bit
+                                                ; 2 at the end; used by DrawRinkOverlays, DrawRinkSideObjects,
+                                                ; LoadGameState ...
         db 0FFh,0FFh,085h,01h
-markframes_e1:
+markframes_e1:                                  ; DrawRinkOverlays: frames of the control marks (stars
+                                                ; 185h-187h, then the off-screen arrows); the table starts one
+                                                ; word earlier; used by DrawRinkOverlays, DrawRinkSideObjects
         db 086h,01h,087h,01h,07Fh,01h,080h,01h,081h,01h,061h,01h,060h,01h,061h,01h
         db 081h,01h,080h,01h,082h,01h,083h,01h,084h,01h,063h,01h,062h,01h,063h,01h
         db 084h,01h,083h,01h
-lldispodd:
+lldispodd:                                      ; bit 0 flips each lldisp second in periodicevents; used by
+                                                ; LoadGameState, SaveGameState, cleargamevars ...
         db 00h
-lldisp:
+lldisp:                                         ; used by periodicevents
         db 00h
-ltack:
+ltack:                                          ; word before lastsfx, the 95/94 ltack slot; newcheck toggles
+                                                ; it to choose the check sound; used by LoadGameState,
+                                                ; SaveGameState, cleargamevars ...
         db 00h,00h
-lastsfx:
+lastsfx:                                        ; used by InstantReplay, LoadGameState, SaveGameState ...
         db 0FFh,0FFh
-crowdlevel:
+crowdlevel:                                     ; used by AddPenalty2, ChkShotStat, CountShotOnGoal ...
         db 00h,00h
-photobankf:
+photobankf:                                     ; loaded "f000_149.PPV" bank (LoadPhotoBankF); used by
+                                                ; FreePhotoBankF, LoadGameState, LoadPhotoBankF
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-demoflag:
+demoflag:                                       ; used by CrowdOnStoppage, ForceStartLineup,
+                                                ; PlacePlayersAtStart ...
         db 00h,00h,00h,00h
-introskipped:
+introskipped:                                   ; used by PlayGame, PreGameIntro_end, PreGameIntro_frameloop
+                                                ; ...
         db 00h,00h,00h,00h
-onetimerflag:
+onetimerflag:                                   ; used by Goal, LoadGameState, SaveGameState ...
         db 00h,00h,00h,00h
-shotongoal:
+shotongoal:                                     ; copy of shotontarget made by CountShotOnGoal; checked by
+                                                ; doshot, Goal and QuickShotChk; used by CountShotOnGoal,
+                                                ; DebugMonitor, Goal ...
         db 00h,00h
         db 00h,00h
-penshotplayer:
+penshotplayer:                                  ; used by Bcheck, DebugMonitor, EndPenaltyShot ...
         db 00h,00h,00h,00h
-penshotpnum:
+penshotpnum:                                    ; roster index (+44h high byte) of the penalty shot taker, set
+                                                ; in SetupPenaltyShot; used by BuildEventLines, DebugMonitor,
+                                                ; LoadGameState ...
         db 00h,00h,00h,00h
-penshotteam:
+penshotteam:                                    ; 1 when the away team takes the penalty shot
+                                                ; (SetupPenaltyShot); engine core ends the shot when the other
+                                                ; team touches the puck; used by BuildEventLines,
+                                                ; DebugMonitor, Goal ...
         db 00h,00h,00h,00h
-penshotctl:
+penshotctl:                                     ; who controls the shooter: 1 controller 1, 2 controller 2, -1
+                                                ; CPU (set from c1playernum / penshotplayer); used by Bcheck,
+                                                ; DebugMonitor, LoadGameState ...
         db 00h,00h,00h,00h
-lcline_aw:
+lcline_aw:                                      ; Away counterpart of lcline; used by LoadGameState,
+                                                ; SaveGameState
         db 00h,00h,00h,00h
-penshotfox:
+penshotfox:                                     ; fox saved by SetupPenaltyShot and restored afterwards (also
+                                                ; copied to ltx); used by EndPenaltyShot, Goal, LoadGameState
+                                                ; ...
         db 00h,00h,00h,00h
-penshotfoy:
+penshotfoy:                                     ; foy saved by SetupPenaltyShot and restored afterwards (also
+                                                ; copied to lty); used by EndPenaltyShot, Goal, LoadGameState
+                                                ; ...
         db 00h,00h,00h,00h
-penshotmode:
+penshotmode:                                    ; used by CPgoalie, CountShotOnGoal, DebugMonitor ...
         db 00h,00h,00h,00h
-penshotstart:
+penshotstart:                                   ; used by AddPenalty2, ChkDelayedOffside, ChkOffsides ...
         db 00h,00h,00h,00h
-penshottimer:
+penshottimer:                                   ; penalty shot time limit: 3E8h when it starts, ClockTick
+                                                ; decrements it, at 0 EndPenaltyShot ends the shot; used by
+                                                ; ClockTick, DebugMonitor, LoadGameState ...
         db 00h,00h,00h,00h
-shotontarget:
+shotontarget:                                   ; result of ShotLaneOpen (shot is on target), cleared at
+                                                ; period start; used by CountShotOnGoal, DebugMonitor,
+                                                ; LoadGameState ...
         db 00h,00h,00h,00h
-penshotlive:
+penshotlive:                                    ; used by AddPenalty, ChkDelayedOffside, ChkOffsides ...
         db 00h,00h,00h,00h
-psendcount:
+psendcount:                                     ; frames the puck has moved away from the net during a live
+                                                ; penalty shot; at 1Eh EndPenaltyShot is called; used by
+                                                ; DebugMonitor, LoadGameState, SaveGameState ...
         db 00h,00h,00h,00h
-sopathx:
+sopathx:                                        ; used by LoadGameState, NextPathPoint, SaveGameState ...
         db 00h,00h,00h,00h
-sopathy:
+sopathy:                                        ; used by LoadGameState, NextPathPoint, SaveGameState ...
         db 00h,00h,00h,00h
-sopathend:
+sopathend:                                      ; used by LoadGameState, NextPathPoint, SaveGameState ...
         db 00h,00h,00h,00h
-sopathpoint:
+sopathpoint:                                    ; used by LoadGameState, NextPathPoint, SaveGameState ...
         db 00h,00h,00h,00h
-pspathside:
+pspathside:                                     ; sign of the penalty-shot path (+-) chosen by StartShotPath;
+                                                ; NextPathPoint negates x when it is negative; used by
+                                                ; LoadGameState, NextPathPoint, SaveGameState ...
         db 00h,00h,00h,00h
-pspathdir:
+pspathdir:                                      ; facedir saved when a path point is reached; asspenshooter
+                                                ; compares facedir with it before shooting; used by
+                                                ; LoadGameState, SaveGameState, asspenshooter
         db 00h,00h,00h,00h
-HotList:
+HotList:                                        ; GetHot reads the hot-spot x byte at frame*2, the 95 HotList;
+                                                ; used by GetHot
         db 0FCh
-HotList_y:
+HotList_y:                                      ; GetHot y byte, the HotList column at +1; its own label so
+                                                ; the indexed operand stays a symbol; used by GetHot
         db 014h,0FFh,018h,0FEh,01Ch,0FFh,019h,01h,019h,010h,08h,017h,0Ah,013h,08h,015h
         db 0Bh,0Eh,04h,011h,0FDh,015h,0FDh,015h,0FEh,015h,0FDh,012h,0FDh,0Eh,0FAh,011h
         db 0F2h,011h,0F6h,013h,0F5h,011h,0F6h,02h,0F0h,01h,0ECh,04h,0F1h,04h,0ECh,00h
@@ -212,9 +257,10 @@ HotList_y:
         db 03h,0FFh,03h,09h,00h,06h,04h,0Bh,00h,0Bh,00h,010h,0FDh,00h,0FEh,00h
         db 0FCh,0FFh,0FEh,05h,0FEh,03h,0FDh,01h,0FCh,0FDh,0FCh,0FEh,0FCh,0FEh,0FCh,0FAh
         db 01h,0F8h,03h,0FCh,01h,0FEh,0FEh,0FEh,0FEh,0FEh,0FEh
-HotStickList:
+HotStickList:                                   ; GetHotStick: stick hot spot per stick frame, x,y byte pairs
+                                                ; (as HotList for GetHot); x column; used by GetHotStick
         db 01h
-HotStickList_y:
+HotStickList_y:                                 ; HotStickList+1: the y column; used by GetHotStick
         db 05h,011h,011h,0EDh,015h,05h,03h,0Fh,0Bh,0F3h,017h,08h,02h,0F6h,07h,0Ch
         db 01Bh,09h,0FDh,0F0h,09h,0Dh,010h,02h,0FAh,0EDh,010h,0Eh,0Ch,0FBh,0FAh,0F0h
         db 015h,0Ah,01h,0F7h,0FFh,0FFh,014h,0F1h,05h,0F7h,03h,0Eh,019h,0ECh,0Eh,0FEh
@@ -249,151 +295,196 @@ HotStickList_y:
         db 0FEh,017h,0F9h,0F9h,0FCh,0F9h,0F7h,0F8h,0FFh,0F3h,0F4h,0F1h,00h,0E3h,03h,0F6h
         db 0FFh,0F5h,0Ah,02h,06h,0FEh,016h,010h
         db 0FDh,0Fh,0Dh
-teamrocktune:
+teamrocktune:                                   ; by HomeTeam: the rock tune LoadRockMusic loads and the intro
+                                                ; variant PreGameIntro uses; used by LoadRockMusic,
+                                                ; PreGameIntro
         db 01h,01h,00h,01h,01h,00h,01h,01h,01h,00h,01h,01h,01h,00h,01h,01h
         db 00h,01h,01h,01h,00h,00h,01h,00h,01h,01h,00h,00h
-RockTuneIds:
+RockTuneIds:                                    ; Word per rock tune number read by PreGameIntro from the home
+                                                ; team's teamrocktune entry; used by PreGameIntro
         db 0FEh,01h
-introstandanims_m2:
+introstandanims_m2:                             ; assintrostand: five standing animations (SPA in the high
+                                                ; word of each dword load), -2; used by assintrostand
         db 03Ah,02h,067h,0Dh,00h,00h,07Bh,0Dh,00h,00h,057h,0Dh,00h,00h,089h,0Dh
         db 00h,00h,045h,0Dh,00h,00h
-starskatermin:
+starskatermin:                                  ; PickThreeStars: skater stat minimum by period length
+                                                ; (gameopts.pertime); used by PickThreeStars
         db 0Ah,0Fh,014h
-stargoaliemin:
+stargoaliemin:                                  ; PickThreeStars: goalie shots minimum by period length; used
+                                                ; by PickThreeStars
         db 0Ah,014h,028h
-assstarskate_path:
+assstarskate_path:                              ; assstarskate: 4-point skate path, x,y word pairs, one set
+                                                ; per side; x column; used by assstarskate
         db 089h,0FFh
-assstarskate_path_y:
+assstarskate_path_y:                            ; assstarskate_path+2: the y column; used by assstarskate
         db 0C9h,0FFh,0CAh,0FFh,0D3h,0FFh,0C5h,0FFh,0Fh,00h,084h,0FFh,0Ah,00h,0A2h,0FFh
         db 014h,00h,0D4h,0FFh,05h,00h,0C0h,0FFh,0CEh,0FFh,08Eh,0FFh,0ECh,0FFh
-starordtab:
+starordtab:                                     ; dd str_1st, str_2nd, str_3rd: star ordinal strings indexed
+                                                ; by star number (assthreestars); used by assthreestars
         dd str_1st
         dd str_2nd
         dd str_3rd
         db 00h,00h
-asswingo_dedata:
+asswingo_dedata:                                ; used by asswingo
         db 064h,00h
-asswingo_dedata_xrand:
+asswingo_dedata_xrand:                          ; used by asswingo
         db 014h,00h
-asswingo_dedata_y:
+asswingo_dedata_y:                              ; used by asswingo
         db 0C0h,0FFh
-asswingo_dedata_yrand:
+asswingo_dedata_yrand:                          ; used by asswingo
         db 0Ah,00h,078h,00h,014h,00h,032h,00h,05h,00h,037h,00h,032h,00h,0BEh,00h
         db 014h,00h,064h,00h,01Eh,00h,0DAh,00h,014h,00h
-asscentero_dedata:
+asscentero_dedata:                              ; used by asscentero
         db 00h,00h
-asscentero_dedata_xrand:
+asscentero_dedata_xrand:                        ; used by asscentero
         db 046h,00h
-asscentero_dedata_y:
+asscentero_dedata_y:                            ; used by asscentero
         db 0C0h,0FFh
-asscentero_dedata_yrand:
+asscentero_dedata_yrand:                        ; used by asscentero
         db 0Ah,00h,00h,00h,046h,00h,034h,00h,0Ah,00h,00h,00h,03Ch,00h,0A0h,00h
         db 01Eh,00h,00h,00h,064h,00h,09Bh,00h,014h,00h
-assscore_dancecnt:
+assscore_dancecnt:                              ; assscore: count of the scorer celebration, restarted by the
+                                                ; scorer; used by assscore
         db 00h,00h
-goaliesave_saveanim_m2:
+goaliesave_saveanim_m2:                         ; used by assgoalie
         db 00h,00h,0B1h,00h,0C9h,00h,031h,01h,059h,01h,01h,01h,019h,01h,01Dh,012h
         db 0D5h,011h,09Dh,011h
-asspuckc_postab2:
+asspuckc_postab2:                               ; used by asspuckc
         db 092h,0FFh
-asspuckc_postab2_y:
+asspuckc_postab2_y:                             ; asspuckc_postab2+2: the y column; used by asspuckc
         db 0ECh,0FFh,06Eh,00h,0ECh,0FFh,07Eh,0FFh,024h,00h,01Eh,00h,024h,00h,082h,00h
         db 024h,00h,0E2h,0FFh,024h,00h,0CEh,0FFh,0CCh,00h,00h,00h,0BCh,00h,01Eh,00h
         db 0C6h,00h,028h,00h,0C6h
-Endfaceoff_ftab_m1:
+Endfaceoff_ftab_m1:                             ; used by Endfaceoff
         db 00h,00h,08h,010h,00h,08h,010h
-refsigdir:
+refsigdir:                                      ; assrefsignal: direction the referee turns to for each call
+                                                ; (RefPen), -1 for none; used by assrefsignal
         db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
         db 0FFh,0FFh,04h,00h,0FFh,0FFh,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
         db 04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
         db 04h,00h,04h,00h,04h,00h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-refsigspa_m2:
+refsigspa_m2:                                   ; assrefsignal: signal SPA of each call (RefPen), read as
+                                                ; words at +2; used by assrefsignal
         db 0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,063h,0Ch,00h,00h,073h,0Ch,08Bh,0Ch,063h,0Ch,09Bh,0Ch
         db 0ABh,0Ch,0BBh,0Ch,0CBh,0Ch,0D9h,0Ch,0F9h,014h,0F5h,0Ch,0E5h,014h,0E7h,0Ch
         db 0F5h,0Ch,0F5h,0Ch,0E5h,014h,083h,010h,00h,00h,00h,00h,00h,00h,00h,00h
-ShootoutPathData:
+ShootoutPathData:                               ; used by NextPathPoint
         db 028h,00h,00h,00h
-ShootoutPathData_y:
+ShootoutPathData_y:                             ; ShootoutPathData+4: the y column; used by NextPathPoint
         db 078h,00h,00h,00h
-ShootoutPathData_end:
+ShootoutPathData_end:                           ; ShootoutPathData+8: the end column; used by NextPathPoint
         db 03Eh,00h,00h,00h,0EAh,0FFh,0FFh,0FFh,097h,00h,00h,00h,066h,00h,00h,00h
         db 0EAh,0FFh,0FFh,0FFh,0C0h,00h,00h,00h,091h,00h,00h,00h,02Ch,00h,00h,00h
         db 0C3h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,00h,00h
-linenext:
+linenext:                                       ; table of the next line: 1,2,3,0 (even strength), 5,4 (PK),
+                                                ; 7,6 (PP); used by lineinput
         db 01h,00h,02h,00h,03h,00h,00h,00h,05h,00h,04h,00h,07h,00h,06h,00h
-lchoicetab:
+lchoicetab:                                     ; used by getlchoice
         db 00h,01h,02h,03h,01h,02h,03h,00h,02h,03h,00h,01h,03h,00h,01h,02h
         db 00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h
         db 04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
         db 04h,05h,0FFh,0FFh,05h,04h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
         db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh
         db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,07h,06h,0FFh,0FFh
-assonetimer_blade:
+assonetimer_blade:                              ; assonetimer: stick blade offset by facing, x,y byte pairs; x
+                                                ; column; used by assonetimer
         db 0FAh
-assonetimer_blade_y:
+assonetimer_blade_y:                            ; assonetimer_blade+1: the y column; used by assonetimer
         db 0Ch,0Eh,0Ch,013h,0FEh,0Fh,0F9h,06h,0F5h,0F6h,0F4h,0EFh,0F9h,0EEh,04h,00h
         db 00h
-FallDown_pinxr:
+FallDown_pinxr:                                 ; FallDown/NetCollide: by facing, x where a player pinned on
+                                                ; the right boards is put; used by FallDown, NetCollide
         db 098h,00h,098h,00h,08Dh,00h,08Dh,00h,09Dh,00h,09Dh,00h,096h,00h,099h,00h
-FallDown_pinxl:
+FallDown_pinxl:                                 ; FallDown/NetCollide: by facing, x on the left boards; used
+                                                ; by FallDown, NetCollide
         db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh,070h,0FFh,070h,0FFh
-FallDown_pinyt:
+FallDown_pinyt:                                 ; FallDown/NetCollide: by facing, y behind the top goal line;
+                                                ; used by FallDown, NetCollide
         db 0FEh,00h,0FEh,00h,03h,01h,03h,01h,06h,01h,01h,01h,01h,01h,01h,01h
-FallDown_pinyb:
+FallDown_pinyb:                                 ; FallDown/NetCollide: by facing, y behind the bottom goal
+                                                ; line; used by FallDown, NetCollide
         db 0F6h,0FEh,0F6h,0FEh,0F6h,0FEh,0FDh,0FEh,0FDh,0FEh,0F6h,0FEh,0F6h,0FEh,0F6h,0FEh
-FallDown_pinxr2:
+FallDown_pinxr2:                                ; FallDown/NetCollide: by facing, x on the right boards at the
+                                                ; benches (frame 1027h); used by FallDown
         db 099h,00h,099h,00h,090h,00h,090h,00h,09Bh,00h,09Bh,00h,09Eh,00h,09Eh,00h
-FallDown_pinxl2:
+FallDown_pinxl2:                                ; FallDown/NetCollide: by facing, x on the left boards at the
+                                                ; benches (frame 1055h); used by FallDown
         db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh
-nethit:
+nethit:                                         ; set when a player hits the goal net or post (checkgoalp,
+                                                ; checkgoal): wallcoll then skips the hard-hit sound and keeps
+                                                ; him outside the net; used by checkcoll, checkgoal,
+                                                ; checkgoalp ...
         db 00h,00h,00h,00h
 ; Shot-block slide speeds, eight facings. blockspd is X and blockspd_y is Y, the next short.
 ; The short index is the facing doubled. An axis facing is Â±4242 and 0; a diagonal is Â±3000 on both.
-blockspd:
+blockspd:                                       ; X column of the shot-block slide speeds. Eight facings,
+                                                ; short index = facing*2: 0, ±0BB8h (3000), ±1092h (4242).
+                                                ; Same interleaved layout as dirtab, and nosplit, so the Y
+                                                ; column keeps its own label; used by BlockShotDive
         db 092h,010h
-blockspd_y:
+blockspd_y:                                     ; Y column of the shot-block slide speeds, the short after
+                                                ; blockspd. Own label because nasm drops nosplit on
+                                                ; [idx*s+blockspd+2], same as dirtab_y; used by BlockShotDive
         db 00h,00h,0B8h,0Bh,048h,0F4h,00h,00h,06Eh,0EFh,048h,0F4h,048h,0F4h,06Eh,0EFh
         db 00h,00h,048h,0F4h,0B8h,0Bh,00h,00h,092h,010h,0B8h,0Bh
-checkinglist_m2:
+checkinglist_m2:                                ; used by checkcheck
         db 0B8h,0Bh,0C1h,05h,0D9h,05h,09h,06h,09h,06h,09h,06h,0F1h,05h,0F1h,05h
         db 0C1h,05h
-shotsets:
+shotsets:                                       ; used by doshot
         db 00h,00h
-shotsetz:
+shotsetz:                                       ; z word of each shotsets entry (shotsets+2); kept as its own
+                                                ; label because doshot indexes it with nosplit; used by doshot
         db 0Ch,00h,010h,00h,0Ch,00h,010h,00h,06h,00h,010h,00h,00h,00h,00h,00h
         db 00h,00h,0F0h,0FFh,00h,00h,0F0h,0FFh,06h,00h,0F0h,0FFh,0Ch,00h,00h,00h
         db 06h,00h
-digihandle:
+digihandle:                                     ; handle of the digital sample PlayDigiSample started (-1 =
+                                                ; none); StopDigiSample / WaitDigiSample poll it; used by
+                                                ; FreeDigiSample, PlayDigiSample, StopDigiSample ...
         db 0FFh,0FFh,0FFh,0FFh
-crowdsmooth:
+crowdsmooth:                                    ; MIDI crowd noise: crowdlevel eased by CrowdNoiseUpdate (step
+                                                ; 30*eax per call); drives the channel 8/7 volumes; used by
+                                                ; CrowdNoiseReset, Crowd_Noise, InstantReplay ...
         db 00h,00h,00h,00h
-crowdvol8:
+crowdvol8:                                      ; MIDI crowd noise: current volume of channel 8 (0 = note
+                                                ; off); CrowdNoiseUpdate / CrowdNoiseOff; used by
+                                                ; CrowdNoiseOff, CrowdNoiseReset, Crowd_Noise
         db 00h,00h,00h,00h
-crowdvol7:
+crowdvol7:                                      ; MIDI crowd noise: current volume of channel 7 (0 = note
+                                                ; off); CrowdNoiseUpdate / CrowdNoiseOff; used by
+                                                ; CrowdNoiseOff, CrowdNoiseReset, Crowd_Noise
         db 00h,00h,00h,00h
-cursndbank:
+cursndbank:                                     ; SndLoadFile: the current sound bank the file is loaded into;
+                                                ; used by GameStatsScreen, GameSummaryScreen, InitSpeech ...
         db 00h,00h,00h,00h
-oneminsaid:
+oneminsaid:                                     ; used by SayOneMinuteLeft, StartHL2, sfx
         db 00h,00h,00h,00h
-playsuspended:
+playsuspended:                                  ; updateplayers: set while play is paused for a highlight,
+                                                ; replay or stoppage; changeplayer then drops both controlled
+                                                ; players; used by DrawRinkOverlays, doinput, lineinput ...
         db 00h
         db 00h
-Setplass_alist_m3:
+Setplass_alist_m3:                              ; Three bytes before Setplass_alist: a dword read here shifted
+                                                ; right 24 gives the list byte; used by Setplass
         db 00h,00h
-cupceremony:
+cupceremony:                                    ; 1 while the cup presentation runs after the final (findpc
+                                                ; sets it; SportsDesk and clockcont_0 test it); used by
+                                                ; SportsDesk, setupice
         db 00h
 Setplass_alist:	; alist: initial assignment by position (0Eh assgoalie, 2 assdefd, 3 asswingd, 5 asscenterd)
         db 0Eh,02h,02h,03h,05h,03h,05h
-restoreteams_pdsttab:
+restoreteams_pdsttab:                           ; restoreteams: tmpdst word by roster status byte (-7, -4, -6,
+                                                ; then -2 bench); used by restoreteams
         db 0F9h,0FFh,0FCh,0FFh,0FAh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh
-sublist_m2:
+sublist_m2:                                     ; sublist-2: -5r short-load base in SetPlList; used by
+                                                ; SetPlList
         db 0FEh,0FFh
-sublist:	; 93G sublist: word offsets into sublist_defl of the substitute list per position 0-6 (SetPlList)
+sublist:	; sublist: word offsets into sublist_defl of the substitute list per position 0-6 (SetPlList)
         db 00h,00h,03h,00h,014h,00h,025h,00h,057h,00h,03Eh
-sublist_defl_m3:
+sublist_defl_m3:                                ; sublist_defl-3: -5r byte-load base (dword load, sar 18h) in
+                                                ; SetPlList; used by SetPlList
         db 00h,070h,00h
-sublist_defl:
+sublist_defl:                                   ; used by SetPlList
         db 024h,025h,0FFh,0Ch,0Eh,010h,0Ch,015h,01Ah,01Eh,022h,0Dh,0Fh,011h,0Dh,016h
         db 01Bh,01Fh,023h,0FFh,0Dh,0Fh,011h,0Dh,016h,01Bh,01Fh,023h,0Ch,0Eh,010h,0Ch
         db 015h,01Ah,01Eh,022h,0FFh,00h,03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h
@@ -403,27 +494,32 @@ sublist_defl:
         db 03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h,0Bh,014h,019h,026h,027h,0FFh
         db 026h,027h,01h,04h,07h,0Ah,013h,018h,01Dh,021h,00h,03h,06h,09h,012h,017h
         db 01Ch,020h,02h,05h,08h,0Bh,014h
-AimArrowFrames_m2:
+AimArrowFrames_m2:                              ; Two bytes before the aim arrow frame table (one frame word
+                                                ; every 4 bytes by direction; the last entry is the no-arrow
+                                                ; frame); used by DrawRinkOverlays
         db 019h,0FFh,0C4h,02h,00h,00h,0C5h,02h,00h,00h,0C6h,02h,00h,00h,0C9h,02h
         db 00h,00h,0CAh,02h,00h,00h,0C9h,02h,00h,00h,0C6h,02h,00h,00h,0C5h,02h
         db 00h,00h,064h,01h,00h,00h,00h,00h,00h
-doplayeracc_ftab:
+doplayeracc_ftab:                               ; used by doplayeracc
         db 00h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h
         db 00h,00h,00h,00h,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh
-MaxSpeed:
+MaxSpeed:                                       ; used by playeracc
         db 040h,0F2h,0BCh,01h,010h,050h,0E3h,01h,010h,08Dh,0Ah,02h,040h,094h,032h,02h
         db 00h,051h,05Bh,02h,010h,0AFh,084h,02h,090h,09Ah,0AEh,02h,00h,00h,0D9h,02h
         db 040h,0CCh,03h,03h,090h,0ECh,02Eh,03h,090h,04Eh,05Ah,03h,040h,0E0h,085h,03h
         db 00h,090h,0B1h,03h,090h,04Ch,0DDh,03h,010h,05h,09h,04h,00h,0A9h,034h,04h
-str_ErrLoadGame:
+str_ErrLoadGame:                                ; "Error Loading Game" (LoadGameState); used by LoadGameState
         db 045h,072h,072h,06Fh,072h,020h,04Ch,06Fh,061h,064h,069h,06Eh,067h,020h,047h,061h
         db 06Dh,065h,0Ah,00h
-str_ErrSaveGame:
+str_ErrSaveGame:                                ; "Error Saving Game" (SaveGameState); used by LoadGameState,
+                                                ; SaveGameState
         db 045h,072h,072h,06Fh,072h,020h,053h,061h,076h,069h,06Eh,067h,020h,047h,061h,06Dh
         db 065h,0Ah,00h,00h
-rinkobjanim:
+rinkobjanim:                                    ; rink object animation bytes, indexed by a definition's third
+                                                ; word (+ step): the frame; used by DecayCrowdLevel,
+                                                ; DrawRinkSideObjects, LoadGameState ...
         db 06h
-rinkobjanim_b1:
+rinkobjanim_b1:                                 ; rinkobjanim+1; used by DecayCrowdLevel, SetRinkObject
         db 00h,01h,02h,01h,02h,00h,06h,03h,04h,05h,04h,05h,03h,07h,06h,07h
         db 08h,07h,08h,07h,06h,0FEh,09h,0Ah,08h,0Bh,0Ch,0Dh,0Eh,0Ch,0Dh,0Eh
         db 0Bh,06h,0Fh,010h,011h,010h,011h,0Fh,08h,012h,013h,014h,013h,012h,013h,014h
@@ -440,9 +536,12 @@ rinkobjanim_b1:
         db 046h,0Ah,061h,061h,062h,062h,061h,061h,062h,062h,063h,063h,06h,063h,063h,063h
         db 063h,063h,063h,06h,067h,067h,067h,067h,068h,068h,03h,065h,065h,065h,03h,066h
         db 066h,066h,04h,067h,067h
-rinkobjdefs_m2:
+rinkobjdefs_m2:                                 ; rinkobjdefs-2: -5r short-load base; used by
+                                                ; DrawRinkSideObjects
         db 067h,067h
-rinkobjdefs:
+rinkobjdefs:                                    ; rink object definitions, 3 words per object id
+                                                ; (SetRinkObject copies them into the slot at +5, +7, +9);
+                                                ; used by DrawRinkSideObjects, LoadGameState, SetRinkObject
         db 047h,00h,013h,00h,00h,00h,038h,01h,013h,00h,00h,00h,051h,00h,014h,00h
         db 07h,00h,02Eh,01h,014h,00h,07h,00h,0A8h,00h,011h,00h,0Eh,00h,0B6h,00h
         db 010h,00h,016h,00h,0E7h,00h,011h,00h,019h,00h,0F9h,00h,011h,00h,022h,00h
@@ -507,5 +606,6 @@ rinkobjdefs:
         db 0EBh,00h,06h,00h,0CFh,00h,0EFh,00h,09h,00h,0D9h,00h,0EFh,00h,07h,00h
         db 0E8h,00h,0EFh,00h,0Ah,00h,0F1h,00h,0EFh,00h,0Ah,00h,01h,01h,0EFh,00h
         db 08h,00h,010h,01h,0EFh,00h,0Bh,00h,019h,01h,0EFh,00h,04h,00h,02Dh,01h
-sideobjpos:
+sideobjpos:                                     ; DrawRinkObjects: x, y of the rink-side objects (slots 12h,
+                                                ; 13h); used by DrawRinkObjects
         db 0F3h,00h,0A5h,01h,00h,00h,02Dh,01h,00h,00h,00h,00h

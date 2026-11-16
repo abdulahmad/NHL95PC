@@ -1,4 +1,4 @@
-; Computer line choice: line energy and the next line (94G penalty94).
+; Computer line choice: line energy and the next line.
 bits 32
 %include "hockey.inc"
 section s_5A03B progbits alloc exec nowrite align=1
@@ -6,7 +6,7 @@ extern __CHK, awtmstruct, coachlinetab, DrawPanelLine, gmode, hmtmstruct, regd0
 global AvgCline, CompLine, getlinee_pp, getlinee_sum, TeamLineEnergy, getlinee
 ;-----------------------------------------------------------------------------
 ; AvgCline                         5A03B  94G penalty94.asm, medium confidence
-; 93G AvgCline: average energy of the current line of team eax (walks tmsort
+; AvgCline: average energy of the current line of team eax (walks tmsort
 ; F6h); used by chk4lc (54AF9) and CompLine
 ;-----------------------------------------------------------------------------
 ; C: src/engine/autolines/AvgCline.c
@@ -56,9 +56,11 @@ AvgCline:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CompLine                         5A0A3  93G logic93_3.asm, medium confidence
-; (find good line for comp to switch to). eax = other team, edx = team.
-; tmap difference picks the power-play penalty-kill lines, getlinee compares line energies, tmline/tmlcnt take
-; the result (DrawPanelLine is called on a change). Callers: chk4lc and puckfaceoff.
+; (find good line for comp to switch to). eax = other team, edx = team. tmap
+; difference picks the power-play penalty-kill lines,
+;
+; getlinee compares line energies, tmline/tmlcnt take the result
+; (DrawPanelLine is called on a change). Callers: chk4lc and puckfaceoff.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/autolines/CompLine.c
 %ifdef CBUILD
@@ -309,9 +311,8 @@ TeamLineEnergy:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; getlinee                                     5A30C  95 PC, medium confidence
-; {source_game=93G,source_file=penalty93_2.asm,confidence=medium} 93G
-; getlinee (d0 = line number, a2 = team: energy level of this line); called
-; by CompLine and TeamLineEnergy
+; Energy level of a line (line number, team); called by CompLine and
+; TeamLineEnergy
 ;-----------------------------------------------------------------------------
 ; C: src/engine/autolines/CompLine.c (getlinee)
 %ifdef CBUILD

@@ -11,9 +11,10 @@ global LoadPlayoffModeTree, TreeSeriesWinner, OpenStatsSchedule, LoadLeagueTree,
 ;-----------------------------------------------------------------------------
 ; LoadPlayoffModeTree                          2970A  95 PC, medium confidence
 ; Statsfromleague == 0 path of ShowPlayoffTree: reads team names into
-; treeteamnames (ReadTeamNames on leaguedbnames[4]) or LSSCHED.DB, fills
-; playofftree from the playoff games (ReadSchedGame 444h.., final 4A6h ->
-; pochampion), then PlayoffTreeScreen
+; treeteamnames (ReadTeamNames on leaguedbnames[4]) or LSSCHED.DB,
+;
+; fills playofftree from the playoff games (ReadSchedGame 444h.., final 4A6h
+; -> pochampion), then PlayoffTreeScreen
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/LoadPlayoffModeTree.c
 %ifdef CBUILD
@@ -208,8 +209,9 @@ LoadPlayoffModeTree:
 ;-----------------------------------------------------------------------------
 ; TreeSeriesWinner                             2991C  95 PC, medium confidence
 ; Same code as SeriesWinner (season_playoffs) with an extra is-series flag:
-; walks 6-byte game entries of a series; returns the team that reached
-; len/2+1 wins, -1 if a game is unplayed
+; walks 6-byte game entries of a series;
+;
+; returns the team that reached len/2+1 wins, -1 if a game is unplayed
 ;-----------------------------------------------------------------------------
 TreeSeriesWinner:
         push dword 38h
@@ -421,8 +423,9 @@ OpenStatsSchedule:
 ;-----------------------------------------------------------------------------
 ; LoadLeagueTree                               29B07  95 PC, medium confidence
 ; Statsfromleague path: copies teamcitynames into treeteamnames, reads the
-; playoff pairs from the schedule into playofftree, resolves winners with
-; SeriesWinner, then PlayoffTreeScreen
+; playoff pairs from the schedule into playofftree, resolves winners
+;
+; with SeriesWinner, then PlayoffTreeScreen
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/LoadLeagueTree.c
 %ifdef CBUILD

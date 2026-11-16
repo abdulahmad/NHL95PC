@@ -6,6 +6,10 @@ extern __delay_, __fprtf_, __IOMode_, __set_errno_, __set_errno_dos_, __sys_fini
 extern fputs_, strerror_, __STKOVF, ErrnoPtr, CMainHook, str_ColonSpace, PerrorSeparator
 global fprintf_, strupr_, __CHP, j___sys_init_387_emulator, j___sys_fini_387_emulator, strlwr_, j___delay_, perror_
 global write_
+;-----------------------------------------------------------------------------
+; fprintf_                                                      96185  library
+; Run-time library fprintf: formats to a stream
+;-----------------------------------------------------------------------------
 fprintf_:
         push ebx
         push edx
@@ -21,6 +25,10 @@ fprintf_:
         pop ebx
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; strupr_                                                       961B0  library
+; Run-time library strupr: makes a string upper case
+;-----------------------------------------------------------------------------
 strupr_:
         push ebx
         push edx
@@ -43,6 +51,10 @@ strupr_:
         pop ebx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; __CHP                                                         961D0  library
+; Run-time library: rounds the x87 top of stack to an integer (chop)
+;-----------------------------------------------------------------------------
 __CHP:
         push eax
         wait
@@ -57,10 +69,22 @@ __CHP:
         lea esp, [byte esp+08h]
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; j___sys_init_387_emulator                                     961EE  library
+; Jump to the start-up of the 387 emulator
+;-----------------------------------------------------------------------------
 j___sys_init_387_emulator:
         jmp near __sys_init_387_emulator
+;-----------------------------------------------------------------------------
+; j___sys_fini_387_emulator                                     961F3  library
+; Jump to the shut-down of the 387 emulator
+;-----------------------------------------------------------------------------
 j___sys_fini_387_emulator:
         jmp near __sys_fini_387_emulator
+;-----------------------------------------------------------------------------
+; strlwr_                                                       961F8  library
+; C run-time: converts a string to lower case in place
+;-----------------------------------------------------------------------------
 strlwr_:
         push ebx
         push edx
@@ -83,8 +107,16 @@ strlwr_:
         pop ebx
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; j___delay_                                                    96218  library
+; Jump to the run-time millisecond delay
+;-----------------------------------------------------------------------------
 j___delay_:
         jmp near __delay_
+;-----------------------------------------------------------------------------
+; perror_                                                       9621D  library
+; C run-time: prints a message and the text of the current errno to stderr
+;-----------------------------------------------------------------------------
 perror_:
         push edx
         test eax, eax
@@ -107,6 +139,10 @@ perror_:
         call fputc_
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; write_                                                        96267  library
+; C run-time: writes a buffer to a file handle
+;-----------------------------------------------------------------------------
 write_:
         push ecx
         push esi

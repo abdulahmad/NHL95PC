@@ -4,6 +4,11 @@ bits 32
 section s_93284 progbits alloc exec nowrite align=1
 extern __setbits_, CLibBitMasks
 global strcspn_
+;-----------------------------------------------------------------------------
+; strcspn_                                                      93284  library
+; C run-time: length of the leading part of a string without any of the given
+; characters
+;-----------------------------------------------------------------------------
 strcspn_:
         push ebx
         push ecx

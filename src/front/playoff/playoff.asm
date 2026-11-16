@@ -20,8 +20,9 @@ global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, P
 ;-----------------------------------------------------------------------------
 ; StandingsScreen                                                 27080  95 PC
 ; " Standings" screen: Western / Eastern Conference by division
-; (divisionnames, divx / divy), qsort CmpConfStandings, Team GP W L T GF GA P
-; Pct; called by the *StandingsScreen callbacks
+; (divisionnames, divx / divy), qsort CmpConfStandings,
+;
+; Team GP W L T GF GA P Pct; called by the *StandingsScreen callbacks
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff/StandingsScreen.c
 %ifdef CBUILD
@@ -975,6 +976,7 @@ MoveTreeHighlight:
 ; CountSeriesWins                              27C34  95 PC, medium confidence
 ; Loads the schedule (LoadScheduleDB or OpenStatsSchedule), counts wins per
 ; team over the 38h playoff games (6-byte entries, score +4/+5), writes wins
+;
 ; for the 16 tree teams
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff/CountSeriesWins.c

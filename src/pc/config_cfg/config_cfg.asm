@@ -10,6 +10,7 @@ global LoadNhlCfg, negone_3DC28
 ; LoadNhlCfg                                                      3DB41  95 PC
 ; Startup: opens NHL.CFG ("cannot open nhl.cfg" fatal), fscanf "%4x" sound
 ; device index -> sounddevids (default 10h), sets palette 0-3 to a grey ramp,
+;
 ; installs SndShutdown handler, mouse to 0,0, dialog colors, then starts the
 ; sound driver (SetSoundDevice); the writer is in sound_config
 ;-----------------------------------------------------------------------------
@@ -97,5 +98,6 @@ LoadNhlCfg:
         pop ebx
         ret
 %endif ; C
-negone_3DC28:
+negone_3DC28:                                   ; code-segment dword -1 (TradePlayers initial selection); used
+                                                ; by TradePlayers
         db 0FFh,0FFh,0FFh,0FFh

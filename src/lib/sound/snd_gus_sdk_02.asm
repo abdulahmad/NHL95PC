@@ -15,6 +15,10 @@ extern GusStreamEndHi, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, Gus
 global GusFillStreamBuffer, GusStreamVoiceIrq, GusServiceStream, GusStartStream, GusStopStream, GusStreamStart, GusStreamIdle, GusStreamPlayNote
 global GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetBend, GusStreamSetRate, GusStreamSetSample, GusStreamApplyBend, GusStreamBusy
 global GusStreamGetVolume, GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController
+;-----------------------------------------------------------------------------
+; GusFillStreamBuffer                             ADEE9  95 PC, low confidence
+; Mixes the software stream channels into one half of the GUS stream buffer
+;-----------------------------------------------------------------------------
 GusFillStreamBuffer:
         push ebp
         LD mov, ebp, esp
@@ -704,6 +708,11 @@ GusFillStreamBuffer:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamVoiceIrq                               AE903  95 PC, low confidence
+; Voice interrupt callback for the stream voices: loops them back to the
+; buffer start
+;-----------------------------------------------------------------------------
 GusStreamVoiceIrq:
         cmp dword [GusStreamActive], byte 0
         je near .3
@@ -783,6 +792,10 @@ GusStreamVoiceIrq:
 .3:
         LD xor, eax, eax
         ret
+;-----------------------------------------------------------------------------
+; GusServiceStream                             AE9EB  95 PC, medium confidence
+; Refills every streaming channel that its voice interrupt flagged
+;-----------------------------------------------------------------------------
 GusServiceStream:
         cmp dword [GusStreamBusyLeft], byte 0
         je short .1
@@ -797,6 +810,11 @@ GusServiceStream:
         mov dword [GusStreamBusyRight], 0
 .2:
         ret
+;-----------------------------------------------------------------------------
+; GusStartStream                               AEA23  95 PC, medium confidence
+; Sets up the double-buffered stream in card memory, loads both halves and
+; starts the looping voices
+;-----------------------------------------------------------------------------
 GusStartStream:
         push ebp
         LD mov, ebp, esp
@@ -1061,6 +1079,10 @@ GusStartStream:
         pop ebx
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStopStream                                   AEDBC  95 PC, low confidence
+; Stops the two GUS stream voices
+;-----------------------------------------------------------------------------
 GusStopStream:
         pushf
         cli
@@ -1118,6 +1140,10 @@ GusStopStream:
 .1:
         popf
         ret
+;-----------------------------------------------------------------------------
+; GusStreamStart                                  AEE54  95 PC, low confidence
+; Starts a sample on a software stream channel (rate, volume, sample, note)
+;-----------------------------------------------------------------------------
 GusStreamStart:
         push ebp
         LD mov, ebp, esp
@@ -1194,6 +1220,10 @@ GusStreamStart:
         pop ebx
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamIdle                                AEF0E  95 PC, medium confidence
+; Returns 1 when a software stream channel is not playing
+;-----------------------------------------------------------------------------
 GusStreamIdle:
         push ebp
         LD mov, ebp, esp
@@ -1214,6 +1244,10 @@ GusStreamIdle:
         pop ecx
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamPlayNote                               AEF33  95 PC, low confidence
+; Sets the note of a stream channel, works out its step and starts it
+;-----------------------------------------------------------------------------
 GusStreamPlayNote:
         push ebp
         LD mov, ebp, esp
@@ -1253,6 +1287,10 @@ GusStreamPlayNote:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamRelease                                AEFA2  95 PC, low confidence
+; Lets a stream channel play out to its end
+;-----------------------------------------------------------------------------
 GusStreamRelease:
         push ebp
         LD mov, ebp, esp
@@ -1270,6 +1308,10 @@ GusStreamRelease:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamStop                                AEFC9  95 PC, medium confidence
+; Stops a software stream channel
+;-----------------------------------------------------------------------------
 GusStreamStop:
         push ebp
         LD mov, ebp, esp
@@ -1285,6 +1327,10 @@ GusStreamStop:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamSetVolume                              AEFEA  95 PC, low confidence
+; Sets the volume of a stream channel and rebuilds its volume tables
+;-----------------------------------------------------------------------------
 GusStreamSetVolume:
         push ebp
         LD mov, ebp, esp
@@ -1330,6 +1376,10 @@ GusStreamSetVolume:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamSetBend                                AF058  95 PC, low confidence
+; Stores the pitch bend of a stream channel
+;-----------------------------------------------------------------------------
 GusStreamSetBend:
         push ebp
         LD mov, ebp, esp
@@ -1344,6 +1394,10 @@ GusStreamSetBend:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamSetRate                                AF076  95 PC, low confidence
+; Sets the sample rate of a stream channel (step against 22050 Hz)
+;-----------------------------------------------------------------------------
 GusStreamSetRate:
         push ebp
         LD mov, ebp, esp
@@ -1382,6 +1436,10 @@ GusStreamSetRate:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamSetSample                              AF0D5  95 PC, low confidence
+; Sets the start, loop start and loop length of a stream channel's sample
+;-----------------------------------------------------------------------------
 GusStreamSetSample:
         push ebp
         LD mov, ebp, esp
@@ -1408,6 +1466,10 @@ GusStreamSetSample:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamApplyBend                              AF112  95 PC, low confidence
+; Applies a pitch bend to a stream channel's step
+;-----------------------------------------------------------------------------
 GusStreamApplyBend:
         push ebp
         LD mov, ebp, esp
@@ -1465,10 +1527,18 @@ GusStreamApplyBend:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusStreamBusy                                AF198  95 PC, medium confidence
+; Returns non-zero while either streaming channel is still playing
+;-----------------------------------------------------------------------------
 GusStreamBusy:
         mov eax, dword [GusStreamBusyLeft]
         or eax, dword [GusStreamBusyRight]
         ret
+;-----------------------------------------------------------------------------
+; GusStreamGetVolume                           AF1A4  95 PC, medium confidence
+; Returns the volume of a stream channel
+;-----------------------------------------------------------------------------
 GusStreamGetVolume:
         push ebp
         LD mov, ebp, esp
@@ -1487,6 +1557,11 @@ GusStreamGetVolume:
         leave
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusGetEnvConfig                              AF1D0  95 PC, medium confidence
+; Reads the ULTRASND environment variable and parses base port, DMA channels
+; and IRQs into the card config
+;-----------------------------------------------------------------------------
 GusGetEnvConfig:
         push ebp
         mov ebp, esp
@@ -1571,6 +1646,11 @@ GusGetEnvConfig:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusProbePort                                 AF2E0  95 PC, medium confidence
+; Writes test bytes to a card port and reads them back; returns whether a
+; card answers at that base
+;-----------------------------------------------------------------------------
 GusProbePort:
         push ebp
         mov ebp, esp
@@ -1609,6 +1689,10 @@ GusProbePort:
         pop ebp
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; GusMidiPitchBend                                AF340  95 PC, low confidence
+; Works out a MIDI channel's frequency after a pitch bend
+;-----------------------------------------------------------------------------
 GusMidiPitchBend:
         push ebp
         mov ebp, esp
@@ -1696,6 +1780,11 @@ GusMidiPitchBend:
         pop ecx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusMidiController                               AF428  95 PC, low confidence
+; MIDI control change: modulation, data entry, volume, pan, expression,
+; sustain, RPN, all notes off
+;-----------------------------------------------------------------------------
 GusMidiController:
         push ebp
         mov ebp, esp

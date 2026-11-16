@@ -4,6 +4,10 @@ bits 32
 section s_B28C9 progbits alloc exec nowrite align=1
 extern BigIntNullHook
 global BigIntCallHook
+;-----------------------------------------------------------------------------
+; BigIntCallHook                                                  B28C9  95 PC
+; Calls the empty big-integer compare hook
+;-----------------------------------------------------------------------------
 BigIntCallHook:
         call BigIntNullHook
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h

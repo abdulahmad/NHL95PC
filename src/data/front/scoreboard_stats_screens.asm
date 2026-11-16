@@ -77,59 +77,78 @@ global str_gsPassing, str_gsOneTimers, str_gsPPMinutes, str_gsPPShots, str_gsOff
 global str_Yes, str_No4, str_DoYouWishToUse, str_CurrentDbOr, str_OriginalNHLDb, str_Current, str_Original, dbchoicebtns
 global str_AllTheTeamsAre, hudpenhome, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, hudpenaway, awpanelpen_time, awpanelpen_w4
 global awpanelpen_w6, potreeround, treecolx, scrpitch
-msg_NeedKbytes:
+msg_NeedKbytes:                                 ; message text (sprintf target) for the CheckGameDiskSpace
+                                                ; MessageBox; used by CheckGameDiskSpace
         db 070h,06Ch,061h,079h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h,02Ch,020h,079h
         db 06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h
         db 079h,074h,065h,073h,020h,020h,020h,00h
-str_OfFreeDiskSpace:
+str_OfFreeDiskSpace:                            ; "of free disk space." string literal
         db 06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h
         db 063h,065h,02Eh,00h
-msg_GameDiskSpace:
+msg_GameDiskSpace:                              ; CheckGameDiskSpace message lines 'Insufficient disk space' ;
+                                                ; used by CheckGameDiskSpace
         dd str_InsufficientDiskSpace3
         dd msg_NeedKbytes
         dd str_OfFreeDiskSpace
         db 00h,00h,00h
-awlineenergies:
+awlineenergies:                                 ; UpdateHudPanel: GetLineEnergies(1) results, drawn by
+                                                ; awlineind / hudawayline; used by UpdateHudPanel
         db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
         db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
-hmlineenergies:
+hmlineenergies:                                 ; UpdateHudPanel: GetLineEnergies(0) results, drawn by
+                                                ; hmlineind / hudhomeline; used by UpdateHudPanel
         db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
         db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
-hudclockmin:
+hudclockmin:                                    ; panel clock minutes (DrawHudPanel, TickPanelClock); used by
+                                                ; DrawHudPanel, DrawPanelClock, DrawPanelClockDigits ...
         db 05h,00h,00h,00h
-hudclocksec:
+hudclocksec:                                    ; panel clock seconds; used by DrawHudPanel, DrawPanelClock,
+                                                ; DrawPanelClockDigits ...
         db 00h,00h,00h,00h
-hudclockhund:
+hudclockhund:                                   ; panel clock hundredths; used by DrawHudPanel,
+                                                ; DrawPanelClock, DrawPanelClockDigits ...
         db 00h,00h,00h,00h
-panelprevmin:
+panelprevmin:                                   ; scoreboard panel clock: minutes drawn last frame
+                                                ; (DrawPanelClockDigits redraws changed digits only); used by
+                                                ; DrawPanelClock, DrawPanelClockDigits, TickPanelClock
         db 063h,00h,00h,00h
-panelprevsec:
+panelprevsec:                                   ; scoreboard panel clock: seconds drawn last frame; used by
+                                                ; DrawPanelClock, DrawPanelClockDigits, TickPanelClock
         db 063h,00h,00h,00h
-panelprevhund:
+panelprevhund:                                  ; scoreboard panel clock: hundredths drawn last frame; used by
+                                                ; DrawPanelClock, DrawPanelClockDigits, TickPanelClock
         db 063h,00h,00h,00h
-hudpenhome:
+hudpenhome:                                     ; 8 penalty entries of 8 bytes (player, time, ...; -1 free)
+                                                ; shown on the left of the panel (PanelAddPenalty /
+                                                ; PanelRemovePenalty / UpdateHudPanel); used by
+                                                ; ClearPanelPenalties, LoadGameState, PanelAddPenalty ...
         db 0FFh,0FFh
-hmpanelpen_time:
+hmpanelpen_time:                                ; home penalty panel list, 8 entries of 4 words (player, time,
+                                                ; 2 spare): the time word; used by ClearPanelPenalties
         db 00h,00h
-hmpanelpen_w4:
+hmpanelpen_w4:                                  ; home penalty panel entry +4; used by ClearPanelPenalties
         db 00h,00h
-hmpanelpen_w6:
+hmpanelpen_w6:                                  ; home penalty panel entry +6; used by ClearPanelPenalties
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
-hudpenaway:
+hudpenaway:                                     ; 8 penalty entries of 8 bytes for the right side of the
+                                                ; panel; used by ClearPanelPenalties, LoadGameState,
+                                                ; PanelAddPenalty ...
         db 0FFh,0FFh
-awpanelpen_time:
+awpanelpen_time:                                ; visitor penalty panel list: the time word; used by
+                                                ; ClearPanelPenalties
         db 00h,00h
-awpanelpen_w4:
+awpanelpen_w4:                                  ; visitor penalty panel entry +4; used by ClearPanelPenalties
         db 00h,00h
-awpanelpen_w6:
+awpanelpen_w6:                                  ; visitor penalty panel entry +6; used by ClearPanelPenalties
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
         db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
-perioddigits:
+perioddigits:                                   ; names of the period number shapes in scrbrd2.PPV
+                                                ; ("3000".."3009") (DrawHudPanel); used by DrawHudPanel
         dd str_3000
         dd str_3001
         dd str_3002
@@ -141,9 +160,11 @@ perioddigits:
         dd str_3008
         dd str_3009
         dd str_300
-hudotname:
+hudotname:                                      ; DrawHudPanel: name of the 'OT' shape; used by DrawHudPanel
         dd str_OT2
-crestnames:
+crestnames:                                     ; crest shape names in crests4.PPV, one per team ("BOS ", "BUF
+                                                ; " ...) (DrawHudPanel); used by CalendarScreen,
+                                                ; DrawCalendarDay, DrawHudPanel ...
         dd str_BOS
         dd str_BUF3
         dd str_CGY
@@ -172,65 +193,87 @@ crestnames:
         dd str_FLA
         dd str_ASW
         dd str_ASE
-panelhund:
+panelhund:                                      ; hundredths elapsed since the last panel update
+                                                ; (UpdateHudPanel passes it to TickPanelClock); used by
+                                                ; DrawHudPanel, UpdateHudPanel
         db 00h,00h,00h,00h
-deferpending:
+deferpending:                                   ; set by ChkScorerMilestone after QueueDeferredCall; GameLoop
+                                                ; then runs RunDeferredCalls and clears it; also stops the
+                                                ; frame loop; used by ChkScorerMilestone, Gameloop,
+                                                ; LoadGameState ...
         db 00h,00h,00h,00h
-hmpanellines:
+hmpanellines:                                   ; UpdateHudPanel: the home side of the panel shows line bars,
+                                                ; not penalties; PanelAddPenalty clears it; used by
+                                                ; DrawHudPanel, PanelAddPenalty, UpdateHudPanel
         db 00h,00h,00h,00h
-awpanellines:
+awpanellines:                                   ; UpdateHudPanel: the away side of the panel shows line bars,
+                                                ; not penalties; used by DrawHudPanel, PanelAddPenalty,
+                                                ; UpdateHudPanel
         db 00h,00h,00h,00h
-hudhomeline:
+hudhomeline:                                    ; line indicator currently drawn on the left of the panel
+                                                ; (DrawPanelLine); used by DrawHudPanel, DrawPanelLine,
+                                                ; UpdateHudPanel
         db 00h,00h,00h,00h
-hudawayline:
+hudawayline:                                    ; line indicator currently drawn on the right of the panel
+                                                ; (DrawPanelLine); used by DrawHudPanel, DrawPanelLine,
+                                                ; UpdateHudPanel
         db 00h,00h,00h,00h
-hmpanelpens:
+hmpanelpens:                                    ; UpdateHudPanel: the home penalty backdrop (hmpanelspr) is
+                                                ; drawn; used by DrawHudPanel, UpdateHudPanel
         db 00h,00h,00h,00h
-awpanelpens:
+awpanelpens:                                    ; UpdateHudPanel: the away penalty backdrop (awpanelspr) is
+                                                ; drawn; used by DrawHudPanel, UpdateHudPanel
         db 00h,00h,00h,00h
-hmlinetimer:
+hmlinetimer:                                    ; home line timer of the panel: DrawPanelLine resets it when
+                                                ; the line group changes, RequestLineChange and
+                                                ; PanelAddPenalty clear it; used by DrawHudPanel,
+                                                ; DrawPanelLine, PanelAddPenalty ...
         db 00h,00h,00h,00h
-awlinetimer:
+awlinetimer:                                    ; visitor line timer of the panel; used by DrawHudPanel,
+                                                ; DrawPanelLine, PanelAddPenalty ...
         db 00h
-demomatchups_m1:
+demomatchups_m1:                                ; demomatchups-1: load base of the second -5r dword read; used
+                                                ; by RunDemoGame
         db 00h
-demomatchups:
+demomatchups:                                   ; RunDemoGame: team byte pairs of the demo games, read by
+                                                ; dword loads at team*2; used by RunDemoGame
         db 00h,00h,08h,011h,04h,012h,02h,015h,014h,03h,0Fh,016h,0Ch,015h,0Ch,0Bh
         db 00h,09h,0Ah,01h,08h,015h,014h,012h,0Ch,015h,0Ch,016h,0Ah,00h,0Ch,0Ah
         db 014h,015h,0Ch,015h
-demoteammode:
+demoteammode:                                   ; used by RunDemoGame
         db 02h,00h,00h,00h
-nhlintrosaid:
+nhlintrosaid:                                   ; used by TitleScreen
         db 01h,00h,00h,00h
-CreditBlankLine:
+CreditBlankLine:                                ; Empty string used as a blank line on the credit pages
         db 00h
-str_OfficiallyLicensed:
+str_OfficiallyLicensed:                         ; "Officially Licensed" string literal
         db 04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch,069h,063h,065h,06Eh
         db 073h,065h,064h,00h
-str_ProductOfThe:
+str_ProductOfThe:                               ; "Product of the" string literal
         db 050h,072h,06Fh,064h,075h,063h,074h,020h,06Fh,066h,020h,074h,068h,065h,00h
-str_NationalHockeyLeague:
+str_NationalHockeyLeague:                       ; "National Hockey League." string literal
         db 04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h,020h
         db 04Ch,065h,061h,067h,075h,065h,02Eh,00h
-str_NationalHockeyLeagueNHL:
+str_NationalHockeyLeagueNHL:                    ; "National Hockey League, NHL and" string literal
         db 04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h,020h
         db 04Ch,065h,061h,067h,075h,065h,02Ch,020h,04Eh,048h,04Ch,020h,061h,06Eh,064h,00h
-str_TheLogoOfThe:
+str_TheLogoOfThe:                               ; "the logo of the NHL are registered" string literal
         db 074h,068h,065h,020h,06Ch,06Fh,067h,06Fh,020h,06Fh,066h,020h,074h,068h,065h,020h
         db 04Eh,048h,04Ch,020h,061h,072h,065h,020h,072h,065h,067h,069h,073h,074h,065h,072h
         db 065h,064h,00h
-str_TrademarksOfTheNational:
+str_TrademarksOfTheNational:                    ; "trademarks of the National Hockey" string literal
         db 074h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,073h,020h,06Fh,066h,020h,074h,068h
         db 065h,020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h
         db 079h,00h
-str_LeagueAndAreUsed:
+str_LeagueAndAreUsed:                           ; "League and are used under license" string literal
         db 04Ch,065h,061h,067h,075h,065h,020h,061h,06Eh,064h,020h,061h,072h,065h,020h,075h
         db 073h,065h,064h,020h,075h,06Eh,064h,065h,072h,020h,06Ch,069h,063h,065h,06Eh,073h
         db 065h,00h
-CreditsList:
+CreditsList:                                    ; not referenced by name (reached through a neighbouring label
+                                                ; or a table)
         db 062h,079h,020h,045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h
         db 074h,073h,020h,049h,06Eh,063h,02Eh,00h
-CreditPageNhlLicense:
+CreditPageNhlLicense:                           ; Credit page: NHL licence notice
         db 09h,0DCh,00h,00h,00h
         dd CreditBlankTitle
         dd str_OfficiallyLicensed
@@ -242,33 +285,33 @@ CreditPageNhlLicense:
         dd str_TrademarksOfTheNational
         dd str_LeagueAndAreUsed
         dd CreditsList
-str_StanleyCupIsA:
+str_StanleyCupIsA:                              ; Credits text: Stanley Cup registered trademark line
         db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,0A8h,020h,069h,073h,020h
         db 061h,020h,072h,065h,067h,069h,073h,074h,065h,072h,065h,064h,00h
-str_TrademarkOfTheNational:
+str_TrademarkOfTheNational:                     ; "Trademark of the National Hockey" string literal
         db 054h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,020h,06Fh,066h,020h,074h,068h,065h
         db 020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h
         db 00h
-str_LeagueAndIsUsed:
+str_LeagueAndIsUsed:                            ; "League and is used under licence" string literal
         db 04Ch,065h,061h,067h,075h,065h,020h,061h,06Eh,064h,020h,069h,073h,020h,075h,073h
         db 065h,064h,020h,075h,06Eh,064h,065h,072h,020h,06Ch,069h,063h,065h,06Eh,063h,065h
         db 00h
-str_ByElectronicArtsInc:
+str_ByElectronicArtsInc:                        ; "by Electronic Arts Inc." string literal
         db 062h,079h,020h,045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h
         db 074h,073h,020h,049h,06Eh,063h,02Eh,00h
-str_TeamNamesAndLogos:
+str_TeamNamesAndLogos:                          ; "Team Names and logos depicted" string literal
         db 054h,065h,061h,06Dh,020h,04Eh,061h,06Dh,065h,073h,020h,061h,06Eh,064h,020h,06Ch
         db 06Fh,067h,06Fh,073h,020h,064h,065h,070h,069h,063h,074h,065h,064h,00h
-str_AreOfficiallyLicensed:
+str_AreOfficiallyLicensed:                      ; "are Officially Licensed Trademarks" string literal
         db 061h,072h,065h,020h,04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch
         db 069h,063h,065h,06Eh,073h,065h,064h,020h,054h,072h,061h,064h,065h,06Dh,061h,072h
         db 06Bh,073h,00h
-str_OfTheNationalHockey:
+str_OfTheNationalHockey:                        ; "of the National Hockey League" string literal
         db 06Fh,066h,020h,074h,068h,065h,020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h
         db 048h,06Fh,063h,06Bh,065h,079h,020h,04Ch,065h,061h,067h,075h,065h,00h
-str_CopyrightNHL1994:
+str_CopyrightNHL1994:                           ; Credits text: NHL 1994 copyright line
         db 0A9h,020h,04Eh,048h,04Ch,020h,031h,039h,039h,034h,02Eh,00h
-CreditPageStanleyCup:
+CreditPageStanleyCup:                           ; Credit page: Stanley Cup and team logo trademarks
         db 09h,0DCh,00h,00h,00h
         dd str_Credit19
         dd str_StanleyCupIsA
@@ -280,33 +323,33 @@ CreditPageStanleyCup:
         dd str_AreOfficiallyLicensed
         dd str_OfTheNationalHockey
         dd str_CopyrightNHL1994
-str_OfficiallyLicensedProductOf:
+str_OfficiallyLicensedProductOf:                ; "Officially Licensed Product of the" string literal
         db 04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch,069h,063h,065h,06Eh
         db 073h,065h,064h,020h,050h,072h,06Fh,064h,075h,063h,074h,020h,06Fh,066h,020h,074h
         db 068h,065h,00h
-str_NationalHockeyLeaguePlayers:
+str_NationalHockeyLeaguePlayers:                ; "National Hockey League Players'" string literal
         db 04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h,020h
         db 04Ch,065h,061h,067h,075h,065h,020h,050h,06Ch,061h,079h,065h,072h,073h,027h,00h
-str_Association:
+str_Association:                                ; "Association." string literal
         db 041h,073h,073h,06Fh,063h,069h,061h,074h,069h,06Fh,06Eh,02Eh,00h
-str_NHLPANationalHockeyLeague:
+str_NHLPANationalHockeyLeague:                  ; "NHLPA, National Hockey League" string literal
         db 04Eh,048h,04Ch,050h,041h,02Ch,020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h
         db 048h,06Fh,063h,06Bh,065h,079h,020h,04Ch,065h,061h,067h,075h,065h,00h
-str_PlayersAssociationAndThe:
+str_PlayersAssociationAndThe:                   ; "Players' Association and the logo" string literal
         db 050h,06Ch,061h,079h,065h,072h,073h,027h,020h,041h,073h,073h,06Fh,063h,069h,061h
         db 074h,069h,06Fh,06Eh,020h,061h,06Eh,064h,020h,074h,068h,065h,020h,06Ch,06Fh,067h
         db 06Fh,00h
-str_OfTheNHLPAAre:
+str_OfTheNHLPAAre:                              ; "of the NHLPA are Trademarks of" string literal
         db 06Fh,066h,020h,074h,068h,065h,020h,04Eh,048h,04Ch,050h,041h,020h,061h,072h,065h
         db 020h,054h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,073h,020h,06Fh,066h,00h
-str_TheNHLPAAndAre:
+str_TheNHLPAAndAre:                             ; "the NHLPA and are used, under" string literal
         db 074h,068h,065h,020h,04Eh,048h,04Ch,050h,041h,020h,061h,06Eh,064h,020h,061h,072h
         db 065h,020h,075h,073h,065h,064h,02Ch,020h,075h,06Eh,064h,065h,072h,00h
-str_LicenseByElectronicArts:
+str_LicenseByElectronicArts:                    ; "license, by Electronic Arts Inc." string literal
         db 06Ch,069h,063h,065h,06Eh,073h,065h,02Ch,020h,062h,079h,020h,045h,06Ch,065h,063h
         db 074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h,073h,020h,049h,06Eh,063h,02Eh
         db 00h
-CreditPageNhlpaLicense:
+CreditPageNhlpaLicense:                         ; Credit page: NHLPA licence notice
         db 09h,0FAh,00h,00h,00h
         dd str_Credit10
         dd str_OfficiallyLicensedProductOf
@@ -318,51 +361,51 @@ CreditPageNhlpaLicense:
         dd str_OfTheNHLPAAre
         dd str_TheNHLPAAndAre
         dd str_LicenseByElectronicArts
-str_EASportsTheEA:
+str_EASportsTheEA:                              ; "EA Sports, the EA Sports Logo, and" string literal
         db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,02Ch,020h,074h,068h,065h,020h,045h
         db 041h,020h,053h,070h,06Fh,072h,074h,073h,020h,04Ch,06Fh,067h,06Fh,02Ch,020h,061h
         db 06Eh,064h,00h
-str_IfItSIn:
+str_IfItSIn:                                    ; ""If it's in the game, it's in the game"" string literal
         db 022h,049h,066h,020h,069h,074h,027h,073h,020h,069h,06Eh,020h,074h,068h,065h,020h
         db 067h,061h,06Dh,065h,02Ch,020h,069h,074h,027h,073h,020h,069h,06Eh,020h,074h,068h
         db 065h,020h,067h,061h,06Dh,065h,022h,00h
-str_AreTrademarksOfElectronic:
+str_AreTrademarksOfElectronic:                  ; "are trademarks of Electronic Arts, Inc." string literal
         db 061h,072h,065h,020h,074h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,073h,020h,06Fh
         db 066h,020h,045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h
         db 073h,02Ch,020h,049h,06Eh,063h,02Eh,00h
-CreditPageEaSports:
+CreditPageEaSports:                             ; Credit page: EA Sports trademarks
         db 03h,078h,00h,00h,00h
         dd str_Credit09
         dd str_EASportsTheEA
         dd str_IfItSIn
         dd str_AreTrademarksOfElectronic
-str_ThisHasBeenA:
+str_ThisHasBeenA:                               ; "This has been a presentation by" string literal
         db 054h,068h,069h,073h,020h,068h,061h,073h,020h,062h,065h,065h,06Eh,020h,061h,020h
         db 070h,072h,065h,073h,065h,06Eh,074h,061h,074h,069h,06Fh,06Eh,020h,062h,079h,00h
-str_ThePIONEERPRODUCTIONSGroup:
+str_ThePIONEERPRODUCTIONSGroup:                 ; "the PIONEER PRODUCTIONS group of" string literal
         db 074h,068h,065h,020h,050h,049h,04Fh,04Eh,045h,045h,052h,020h,050h,052h,04Fh,044h
         db 055h,043h,054h,049h,04Fh,04Eh,053h,020h,067h,072h,06Fh,075h,070h,020h,06Fh,066h
         db 00h
-str_ElectronicArtsCanada:
+str_ElectronicArtsCanada:                       ; "Electronic Arts Canada." string literal
         db 045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h,073h,020h
         db 043h,061h,06Eh,061h,064h,061h,02Eh,00h
-CreditPagePresentedBy:
+CreditPagePresentedBy:                          ; Credit page: production group presentation line
         db 03h,078h,00h,00h,00h
         dd str_Credit17
         dd str_ThisHasBeenA
         dd str_ThePIONEERPRODUCTIONSGroup
         dd str_ElectronicArtsCanada
-str_OriginalGameConcept:
+str_OriginalGameConcept:                        ; "Original Game Concept:" string literal
         db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,047h,061h,06Dh,065h,020h,043h,06Fh
         db 06Eh,063h,065h,070h,074h,03Ah,00h
-str_JimSimmons:
+str_JimSimmons:                                 ; "Jim Simmons" string literal
         db 04Ah,069h,06Dh,020h,053h,069h,06Dh,06Dh,06Fh,06Eh,073h,00h
-str_ScottOrr:
+str_ScottOrr:                                   ; "Scott Orr" string literal
         db 053h,063h,06Fh,074h,074h,020h,04Fh,072h,072h,00h
-str_RichardHilleman:
+str_RichardHilleman:                            ; "Richard Hilleman" string literal
         db 052h,069h,063h,068h,061h,072h,064h,020h,048h,069h,06Ch,06Ch,065h,06Dh,061h,06Eh
         db 00h
-CreditPageGameConcept:
+CreditPageGameConcept:                          ; Credit page: original game concept
         db 05h,078h,00h,00h,00h
         dd CreditBlankTitle
         dd str_OriginalGameConcept
@@ -370,208 +413,208 @@ CreditPageGameConcept:
         dd str_JimSimmons
         dd str_ScottOrr
         dd str_RichardHilleman
-str_OriginalPCVersionGame:
+str_OriginalPCVersionGame:                      ; "Original PC Version Game Design:" string literal
         db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,050h,043h,020h,056h,065h,072h,073h
         db 069h,06Fh,06Eh,020h,047h,061h,06Dh,065h,020h,044h,065h,073h,069h,067h,06Eh,03Ah
         db 00h
-str_DaveWarfield:
+str_DaveWarfield:                               ; "Dave Warfield" string literal
         db 044h,061h,076h,065h,020h,057h,061h,072h,066h,069h,065h,06Ch,064h,00h
-str_RichardHilleman2:
+str_RichardHilleman2:                           ; "Richard Hilleman" string literal
         db 052h,069h,063h,068h,061h,072h,064h,020h,048h,069h,06Ch,06Ch,065h,06Dh,061h,06Eh
         db 00h
-CreditPagePcDesign:
+CreditPagePcDesign:                             ; Credit page: original PC version game design
         db 04h,078h,00h,00h,00h
         dd CreditBlankTitle
         dd str_OriginalPCVersionGame
         dd CreditBlankLine
         dd str_DaveWarfield
         dd str_RichardHilleman2
-str_LanceWall:
+str_LanceWall:                                  ; "Lance Wall" string literal
         db 04Ch,061h,06Eh,063h,065h,020h,057h,061h,06Ch,06Ch,00h
-str_LeadProgrammer:
+str_LeadProgrammer:                             ; "Lead Programmer" string literal
         db 04Ch,065h,061h,064h,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-CreditPageLeadProgrammer:
+CreditPageLeadProgrammer:                       ; Credit page: lead programmer
         db 03h,078h,00h,00h,00h
         dd str_Credit01
         dd str_LanceWall
         dd CreditBlankLine
         dd str_LeadProgrammer
-str_VictoriaWong:
+str_VictoriaWong:                               ; "Victoria Wong" string literal
         db 056h,069h,063h,074h,06Fh,072h,069h,061h,020h,057h,06Fh,06Eh,067h,00h
-str_Programmer:
+str_Programmer:                                 ; "Programmer" string literal
         db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-CreditPageProgrammerWong:
+CreditPageProgrammerWong:                       ; Credit page: programmer
         db 03h,078h,00h,00h,00h
         dd str_Credit15
         dd str_VictoriaWong
         dd CreditBlankLine
         dd str_Programmer
-str_RobertPenner:
+str_RobertPenner:                               ; "Robert Penner" string literal
         db 052h,06Fh,062h,065h,072h,074h,020h,050h,065h,06Eh,06Eh,065h,072h,00h
-str_Programmer2:
+str_Programmer2:                                ; "Programmer" string literal
         db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-CreditPageProgrammerPenner:
+CreditPageProgrammerPenner:                     ; Credit page: programmer
         db 03h,078h,00h,00h,00h
         dd str_Credit12
         dd str_RobertPenner
         dd CreditBlankLine
         dd str_Programmer2
-str_KurtKennett:
+str_KurtKennett:                                ; "Kurt Kennett" string literal
         db 04Bh,075h,072h,074h,020h,04Bh,065h,06Eh,06Eh,065h,074h,074h,00h
-str_Programmer3:
+str_Programmer3:                                ; "Programmer" string literal
         db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-CreditPageProgrammerKennett:
+CreditPageProgrammerKennett:                    ; Credit page: programmer
         db 03h,078h,00h,00h,00h
         dd str_Credit08
         dd str_KurtKennett
         dd CreditBlankLine
         dd str_Programmer3
-str_GerardDeSouza:
+str_GerardDeSouza:                              ; "Gerard DeSouza" string literal
         db 047h,065h,072h,061h,072h,064h,020h,044h,065h,053h,06Fh,075h,07Ah,061h,00h
-str_Artist:
+str_Artist:                                     ; "Artist" string literal
         db 041h,072h,074h,069h,073h,074h,00h
-CreditPageArtistDeSouza:
+CreditPageArtistDeSouza:                        ; Credit page: artist
         db 03h,078h,00h,00h,00h
         dd str_Credit02
         dd str_GerardDeSouza
         dd CreditBlankLine
         dd str_Artist
-str_PhilChow:
+str_PhilChow:                                   ; "Phil Chow" string literal
         db 050h,068h,069h,06Ch,020h,043h,068h,06Fh,077h,00h
-str_Artist2:
+str_Artist2:                                    ; "Artist" string literal
         db 041h,072h,074h,069h,073h,074h,00h
-CreditPageArtistChow:
+CreditPageArtistChow:                           ; Credit page: artist
         db 03h,078h,00h,00h,00h
         dd str_Credit11
         dd str_PhilChow
         dd CreditBlankLine
         dd str_Artist2
-str_KentMaclagan:
+str_KentMaclagan:                               ; "Kent Maclagan" string literal
         db 04Bh,065h,06Eh,074h,020h,04Dh,061h,063h,06Ch,061h,067h,061h,06Eh,00h
-str_Artist3DAnimations:
+str_Artist3DAnimations:                         ; "Artist / 3D Animations" string literal
         db 041h,072h,074h,069h,073h,074h,020h,02Fh,020h,033h,044h,020h,041h,06Eh,069h,06Dh
         db 061h,074h,069h,06Fh,06Eh,073h,00h
-CreditPageAnimator:
+CreditPageAnimator:                             ; Credit page: artist and 3D animations
         db 03h,078h,00h,00h,00h
         dd str_Credit05
         dd str_KentMaclagan
         dd CreditBlankLine
         dd str_Artist3DAnimations
-str_MichaelJSokyrka:
+str_MichaelJSokyrka:                            ; "Michael J. Sokyrka" string literal
         db 04Dh,069h,063h,068h,061h,065h,06Ch,020h,04Ah,02Eh,020h,053h,06Fh,06Bh,079h,072h
         db 06Bh,061h,00h
-str_Composer:
+str_Composer:                                   ; "Composer" string literal
         db 043h,06Fh,06Dh,070h,06Fh,073h,065h,072h,00h
-CreditPageComposer:
+CreditPageComposer:                             ; Credit page: composer
         db 03h,078h,00h,00h,00h
         dd str_Credit06
         dd str_MichaelJSokyrka
         dd CreditBlankLine
         dd str_Composer
-str_AlanStewart:
+str_AlanStewart:                                ; "Alan Stewart" string literal
         db 041h,06Ch,061h,06Eh,020h,053h,074h,065h,077h,061h,072h,074h,00h
-str_AudioProgrammer:
+str_AudioProgrammer:                            ; "Audio Programmer" string literal
         db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
         db 00h
-CreditPageAudioStewart:
+CreditPageAudioStewart:                         ; Credit page: audio programmer
         db 03h,078h,00h,00h,00h
         dd str_Credit07
         dd str_AlanStewart
         dd CreditBlankLine
         dd str_AudioProgrammer
-str_IainMacanulty:
+str_IainMacanulty:                              ; "Iain Macanulty" string literal
         db 049h,061h,069h,06Eh,020h,04Dh,061h,063h,061h,06Eh,075h,06Ch,074h,079h,00h
-str_AudioProgrammer2:
+str_AudioProgrammer2:                           ; "Audio Programmer" string literal
         db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
         db 00h
-CreditPageAudioMacanulty:
+CreditPageAudioMacanulty:                       ; Credit page: audio programmer
         db 03h,078h,00h,00h,00h
         dd str_Credit18
         dd str_IainMacanulty
         dd CreditBlankLine
         dd str_AudioProgrammer2
-str_SerenaMcCabe:
+str_SerenaMcCabe:                               ; "Serena McCabe" string literal
         db 053h,065h,072h,065h,06Eh,061h,020h,04Dh,063h,043h,061h,062h,065h,00h
-str_AdministrativeAssistant:
+str_AdministrativeAssistant:                    ; "Administrative Assistant" string literal
         db 041h,064h,06Dh,069h,06Eh,069h,073h,074h,072h,061h,074h,069h,076h,065h,020h,041h
         db 073h,073h,069h,073h,074h,061h,06Eh,074h,00h
-CreditPageAdminAssistant:
+CreditPageAdminAssistant:                       ; Credit page: administrative assistant
         db 03h,078h,00h,00h,00h
         dd str_Credit14
         dd str_SerenaMcCabe
         dd CreditBlankLine
         dd str_AdministrativeAssistant
-str_RodHigo:
+str_RodHigo:                                    ; "Rod Higo" string literal
         db 052h,06Fh,064h,020h,048h,069h,067h,06Fh,00h
-str_LeadTester:
+str_LeadTester:                                 ; "Lead Tester" string literal
         db 04Ch,065h,061h,064h,020h,054h,065h,073h,074h,065h,072h,00h
-CreditPageLeadTester:
+CreditPageLeadTester:                           ; Credit page: lead tester
         db 03h,078h,00h,00h,00h
         dd str_Credit13
         dd str_RodHigo
         dd CreditBlankLine
         dd str_LeadTester
-str_RichardRadarMul:
+str_RichardRadarMul:                            ; "Richard (Radar) Mul" string literal
         db 052h,069h,063h,068h,061h,072h,064h,020h,028h,052h,061h,064h,061h,072h,029h,020h
         db 04Dh,075h,06Ch,00h
-str_AssistantProducer:
+str_AssistantProducer:                          ; "Assistant Producer" string literal
         db 041h,073h,073h,069h,073h,074h,061h,06Eh,074h,020h,050h,072h,06Fh,064h,075h,063h
         db 065h,072h,00h
-CreditPageAssistantProducer:
+CreditPageAssistantProducer:                    ; Credit page: assistant producer
         db 03h,078h,00h,00h,00h
         dd str_Credit16
         dd str_RichardRadarMul
         dd CreditBlankLine
         dd str_AssistantProducer
-str_FosterHall:
+str_FosterHall:                                 ; "Foster Hall" string literal
         db 046h,06Fh,073h,074h,065h,072h,020h,048h,061h,06Ch,06Ch,00h
-str_DirectorOfDevelopment:
+str_DirectorOfDevelopment:                      ; "Director of Development" string literal
         db 044h,069h,072h,065h,063h,074h,06Fh,072h,020h,06Fh,066h,020h,044h,065h,076h,065h
         db 06Ch,06Fh,070h,06Dh,065h,06Eh,074h,00h
-CreditPageDevDirector:
+CreditPageDevDirector:                          ; Credit page: director of development
         db 03h,078h,00h,00h,00h
         dd str_Credit00
         dd str_FosterHall
         dd CreditBlankLine
         dd str_DirectorOfDevelopment
-str_KenSayler:
+str_KenSayler:                                  ; "Ken Sayler" string literal
         db 04Bh,065h,06Eh,020h,053h,061h,079h,06Ch,065h,072h,00h
-str_ProducerDesign:
+str_ProducerDesign:                             ; "Producer & Design" string literal
         db 050h,072h,06Fh,064h,075h,063h,065h,072h,020h,026h,020h,044h,065h,073h,069h,067h
         db 06Eh,00h
-CreditPageProducerDesign:
+CreditPageProducerDesign:                       ; Credit page: producer and design
         db 03h,078h,00h,00h,00h
         dd str_Credit04
         dd str_KenSayler
         dd CreditBlankLine
         dd str_ProducerDesign
-str_HannoLemke:
+str_HannoLemke:                                 ; "Hanno Lemke" string literal
         db 048h,061h,06Eh,06Eh,06Fh,020h,04Ch,065h,06Dh,06Bh,065h,00h
-str_Producer:
+str_Producer:                                   ; "Producer" string literal
         db 050h,072h,06Fh,064h,075h,063h,065h,072h,00h
-CreditPageProducer:
+CreditPageProducer:                             ; Credit page: producer
         db 03h,078h,00h,00h,00h
         dd str_Credit03
         dd str_HannoLemke
         dd CreditBlankLine
         dd str_Producer
-str_Testers:
+str_Testers:                                    ; "Testers:" string literal
         db 054h,065h,073h,074h,065h,072h,073h,03Ah,00h
-str_PaulSmith:
+str_PaulSmith:                                  ; "Paul Smith" string literal
         db 050h,061h,075h,06Ch,020h,053h,06Dh,069h,074h,068h,00h
-str_JohnBrydon:
+str_JohnBrydon:                                 ; "John Brydon" string literal
         db 04Ah,06Fh,068h,06Eh,020h,042h,072h,079h,064h,06Fh,06Eh,00h
-str_TonyLam:
+str_TonyLam:                                    ; "Tony Lam" string literal
         db 054h,06Fh,06Eh,079h,020h,04Ch,061h,06Dh,00h
-str_DavidLee:
+str_DavidLee:                                   ; "David Lee" string literal
         db 044h,061h,076h,069h,064h,020h,04Ch,065h,065h,00h
-str_QASupport:
+str_QASupport:                                  ; "QA Support:" string literal
         db 051h,041h,020h,053h,075h,070h,070h,06Fh,072h,074h,03Ah,00h
-str_JonBruce:
+str_JonBruce:                                   ; "Jon Bruce" string literal
         db 04Ah,06Fh,06Eh,020h,042h,072h,075h,063h,065h,00h
-str_JohnSantamaria:
+str_JohnSantamaria:                             ; "John Santamaria" string literal
         db 04Ah,06Fh,068h,06Eh,020h,053h,061h,06Eh,074h,061h,06Dh,061h,072h,069h,061h,00h
-CreditPageTesters:
+CreditPageTesters:                              ; Credit page: testers and QA support
         db 0Ch,0B4h,00h,00h,00h
         dd str_Credit17
         dd str_Testers
@@ -586,28 +629,28 @@ CreditPageTesters:
         dd CreditBlankLine
         dd str_JonBruce
         dd str_JohnSantamaria
-str_RosterVerification:
+str_RosterVerification:                         ; "Roster Verification:" string literal
         db 052h,06Fh,073h,074h,065h,072h,020h,056h,065h,072h,069h,066h,069h,063h,061h,074h
         db 069h,06Fh,06Eh,03Ah,00h
-str_DaveWarfield2:
+str_DaveWarfield2:                              ; "Dave Warfield" string literal
         db 044h,061h,076h,065h,020h,057h,061h,072h,066h,069h,065h,06Ch,064h,00h
-str_JohnBrydon2:
+str_JohnBrydon2:                                ; "John Brydon" string literal
         db 04Ah,06Fh,068h,06Eh,020h,042h,072h,079h,064h,06Fh,06Eh,00h
-str_ProductManager:
+str_ProductManager:                             ; "Product Manager:" string literal
         db 050h,072h,06Fh,064h,075h,063h,074h,020h,04Dh,061h,06Eh,061h,067h,065h,072h,03Ah
         db 00h
-str_ChipLange:
+str_ChipLange:                                  ; "Chip Lange" string literal
         db 043h,068h,069h,070h,020h,04Ch,061h,06Eh,067h,065h,00h
-str_RatingsByJohnRosasco:
+str_RatingsByJohnRosasco:                       ; "Ratings by John Rosasco" string literal
         db 052h,061h,074h,069h,06Eh,067h,073h,020h,062h,079h,020h,04Ah,06Fh,068h,06Eh,020h
         db 052h,06Fh,073h,061h,073h,063h,06Fh,00h
-str_AndNeilSmithOf:
+str_AndNeilSmithOf:                             ; "and Neil Smith of the" string literal
         db 061h,06Eh,064h,020h,04Eh,065h,069h,06Ch,020h,053h,06Dh,069h,074h,068h,020h,06Fh
         db 066h,020h,074h,068h,065h,00h
-str_NewYorkRangers:
+str_NewYorkRangers:                             ; "New York Rangers" string literal
         db 04Eh,065h,077h,020h,059h,06Fh,072h,06Bh,020h,052h,061h,06Eh,067h,065h,072h,073h
         db 00h
-CreditPageRosters:
+CreditPageRosters:                              ; Credit page: roster verification and ratings
         db 0Ah,0B4h,00h,00h,00h
         dd CreditBlankTitle
         dd str_RosterVerification
@@ -620,24 +663,24 @@ CreditPageRosters:
         dd str_RatingsByJohnRosasco
         dd str_AndNeilSmithOf
         dd str_NewYorkRangers
-str_AudioTechnician:
+str_AudioTechnician:                            ; "Audio Technician:" string literal
         db 041h,075h,064h,069h,06Fh,020h,054h,065h,063h,068h,06Eh,069h,063h,069h,061h,06Eh
         db 03Ah,00h
-str_SteveRoyea:
+str_SteveRoyea:                                 ; "Steve Royea" string literal
         db 053h,074h,065h,076h,065h,020h,052h,06Fh,079h,065h,061h,00h
-str_AudioProgrammers:
+str_AudioProgrammers:                           ; "Audio Programmers:" string literal
         db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
         db 073h,03Ah,00h
-str_PaulChernikhowsky:
+str_PaulChernikhowsky:                          ; "Paul Chernikhowsky" string literal
         db 050h,061h,075h,06Ch,020h,043h,068h,065h,072h,06Eh,069h,06Bh,068h,06Fh,077h,073h
         db 06Bh,079h,00h
-str_JasonLeeSteere:
+str_JasonLeeSteere:                             ; "Jason Lee-Steere" string literal
         db 04Ah,061h,073h,06Fh,06Eh,020h,04Ch,065h,065h,02Dh,053h,074h,065h,065h,072h,065h
         db 00h
-str_AdvancedGravis:
+str_AdvancedGravis:                             ; "(Advanced Gravis)" string literal
         db 028h,041h,064h,076h,061h,06Eh,063h,065h,064h,020h,047h,072h,061h,076h,069h,073h
         db 029h,00h
-CreditPageAudioTeam:
+CreditPageAudioTeam:                            ; Credit page: audio technician and audio programmers
         db 0Ah,0B4h,00h,00h,00h
         dd CreditBlankTitle
         dd str_AudioTechnician
@@ -650,21 +693,21 @@ CreditPageAudioTeam:
         dd CreditBlankLine
         dd str_JasonLeeSteere
         dd str_AdvancedGravis
-str_SportsDeskAnnouncer:
+str_SportsDeskAnnouncer:                        ; "SportsDesk Announcer:" string literal
         db 053h,070h,06Fh,072h,074h,073h,044h,065h,073h,06Bh,020h,041h,06Eh,06Eh,06Fh,075h
         db 06Eh,063h,065h,072h,03Ah,00h
-str_MichaelDonovan:
+str_MichaelDonovan:                             ; "Michael Donovan" string literal
         db 04Dh,069h,063h,068h,061h,065h,06Ch,020h,044h,06Fh,06Eh,06Fh,076h,061h,06Eh,00h
-str_RinkAnnouncer:
+str_RinkAnnouncer:                              ; "Rink Announcer:" string literal
         db 052h,069h,06Eh,06Bh,020h,041h,06Eh,06Eh,06Fh,075h,06Eh,063h,065h,072h,03Ah,00h
-str_BruceJamieson:
+str_BruceJamieson:                              ; "Bruce Jamieson" string literal
         db 042h,072h,075h,063h,065h,020h,04Ah,061h,06Dh,069h,065h,073h,06Fh,06Eh,00h
-str_PlayerProfilePhotographs:
+str_PlayerProfilePhotographs:                   ; "Player Profile Photographs:" string literal
         db 050h,06Ch,061h,079h,065h,072h,020h,050h,072h,06Fh,066h,069h,06Ch,065h,020h,050h
         db 068h,06Fh,074h,06Fh,067h,072h,061h,070h,068h,073h,03Ah,00h
-str_SteveBabineau:
+str_SteveBabineau:                              ; "Steve Babineau" string literal
         db 053h,074h,065h,076h,065h,020h,042h,061h,062h,069h,06Eh,065h,061h,075h,00h
-CreditPageAnnouncers:
+CreditPageAnnouncers:                           ; Credit page: announcers and player photographs
         db 08h,0B4h,00h,00h,00h
         dd str_Credit17
         dd str_SportsDeskAnnouncer
@@ -675,23 +718,23 @@ CreditPageAnnouncers:
         dd CreditBlankLine
         dd str_PlayerProfilePhotographs
         dd str_SteveBabineau
-str_VideoProvidedBy:
+str_VideoProvidedBy:                            ; "Video Provided By:" string literal
         db 056h,069h,064h,065h,06Fh,020h,050h,072h,06Fh,076h,069h,064h,065h,064h,020h,042h
         db 079h,03Ah,00h
-str_NHLProductions:
+str_NHLProductions:                             ; "NHL Productions" string literal
         db 04Eh,048h,04Ch,020h,050h,072h,06Fh,064h,075h,063h,074h,069h,06Fh,06Eh,073h,00h
-str_SpecialThanks:
+str_SpecialThanks:                              ; "Special Thanks:" string literal
         db 053h,070h,065h,063h,069h,061h,06Ch,020h,054h,068h,061h,06Eh,06Bh,073h,03Ah,00h
-str_ScottJackson:
+str_ScottJackson:                               ; "Scott Jackson" string literal
         db 053h,063h,06Fh,074h,074h,020h,04Ah,061h,063h,06Bh,073h,06Fh,06Eh,00h
-str_CatherineOBrien:
+str_CatherineOBrien:                            ; "Catherine O'Brien" string literal
         db 043h,061h,074h,068h,065h,072h,069h,06Eh,065h,020h,04Fh,027h,042h,072h,069h,065h
         db 06Eh,00h
-str_DougReid:
+str_DougReid:                                   ; "Doug Reid" string literal
         db 044h,06Fh,075h,067h,020h,052h,065h,069h,064h,00h
-str_MottLinn:
+str_MottLinn:                                   ; "Mott Linn" string literal
         db 04Dh,06Fh,074h,074h,020h,04Ch,069h,06Eh,06Eh,00h
-CreditPageSpecialThanks:
+CreditPageSpecialThanks:                        ; Credit page: video credit and special thanks
         db 08h,0B4h,00h,00h,00h
         dd str_Credit17
         dd str_VideoProvidedBy
@@ -702,9 +745,11 @@ CreditPageSpecialThanks:
         dd str_CatherineOBrien
         dd str_DougReid
         dd str_MottLinn
-CreditPageEnd:
+CreditPageEnd:                                  ; Empty credit page that ends the credits; ShowCredits stops
+                                                ; when it reaches it; used by ShowCredits
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-creditpages:
+creditpages:                                    ; ShowCredits: pointers to the 29 credit pages; used by
+                                                ; ShowCredits
         dd CreditPageNhlLicense
         dd CreditPageNhlpaLicense
         dd CreditPageStanleyCup
@@ -735,132 +780,180 @@ creditpages:
         dd CreditPageSpecialThanks
         dd CreditPageEnd
         db 00h,00h,00h
-textgrid:
+textgrid:                                       ; 100 x 36 character copy of the screen text (TextGridOpen /
+                                                ; TextGridPut); used by TextGridFree, TextGridOpen,
+                                                ; TextGridPut ...
         db 00h,00h,00h,00h
-textgridon:
+textgridon:                                     ; 1 while TextGridPut logs text; used by TextGridOff,
+                                                ; TextGridOpen, TextGridPut
         db 00h,00h,00h,00h
-textcolor:
+textcolor:                                      ; text colour for the Print* routines (SetTextColors); used by
+                                                ; PrintCenteredText, PrintOutlinedText, PrintShadowText ...
         db 0Fh,00h,00h,00h
-textshadow:
+textshadow:                                     ; shadow / outline colour for the Print* routines
+                                                ; (SetTextColors); used by PrintCenteredText,
+                                                ; PrintOutlinedText, PrintShadowText ...
         db 00h,00h,00h,00h
-textoutlinedx:
+textoutlinedx:                                  ; 4 x offsets for PrintOutlinedText; used by PrintOutlinedText
         db 0FFh,0FFh,0FFh,0FFh,01h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-textoutlinedy:
+textoutlinedy:                                  ; 4 y offsets for PrintOutlinedText; used by PrintOutlinedText
         db 00h,00h,00h,00h,00h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,01h,00h,00h,00h
-str_TheFileYouSpecified:
+str_TheFileYouSpecified:                        ; "The file you specified already exists!" string literal
         db 054h,068h,065h,020h,066h,069h,06Ch,065h,020h,079h,06Fh,075h,020h,073h,070h,065h
         db 063h,069h,066h,069h,065h,064h,020h,061h,06Ch,072h,065h,061h,064h,079h,020h,065h
         db 078h,069h,073h,074h,073h,021h,00h
-str_DoYouWantTo:
+str_DoYouWantTo:                                ; "Do you want to overwrite the old file?" string literal
         db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,06Fh
         db 076h,065h,072h,077h,072h,069h,074h,065h,020h,074h,068h,065h,020h,06Fh,06Ch,064h
         db 020h,066h,069h,06Ch,065h,03Fh,00h
-msg_FileExists:
+msg_FileExists:                                 ; WriteScreenTextFile message 'The file you specified' / 'Do
+                                                ; you want to'; used by WriteScreenTextFile
         dd str_TheFileYouSpecified
         dd str_DoYouWantTo
-str_No3:
+str_No3:                                        ; "No" string literal
         db 04Eh,06Fh,00h
-btn_FileExists:
+btn_FileExists:                                 ; WriteScreenTextFile: the two buttons of msg_FileExists; used
+                                                ; by WriteScreenTextFile
         db 010h,00h,00h,00h,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
         db 00h,00h,00h,00h,05h,00h,00h,00h
         dd str_No3
         db 0F0h,0FFh,0FFh,0FFh,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
         db 00h,00h,00h,00h,06h,00h,00h,00h
         dd str_Yes
-str_TheStatsWereSuccessfully:
+str_TheStatsWereSuccessfully:                   ; "The stats were successfully written" string literal
         db 054h,068h,065h,020h,073h,074h,061h,074h,073h,020h,077h,065h,072h,065h,020h,073h
         db 075h,063h,063h,065h,073h,073h,066h,075h,06Ch,06Ch,079h,020h,077h,072h,069h,074h
         db 074h,065h,06Eh,00h
-msg_StatsWritten:
+msg_StatsWritten:                               ; WriteScreenTextFile message 'The stats were successfully';
+                                                ; used by WriteScreenTextFile
         dd str_TheStatsWereSuccessfully
-str_ERROROutputFileWas:
+str_ERROROutputFileWas:                         ; string "ERROR : Output file was not successfully written";
+                                                ; not referenced by name
         db 045h,052h,052h,04Fh,052h,020h,03Ah,020h,04Fh,075h,074h,070h,075h,074h,020h,066h
         db 069h,06Ch,065h,020h,077h,061h,073h,020h,06Eh,06Fh,074h,020h,073h,075h,063h,063h
         db 065h,073h,073h,066h,075h,06Ch,06Ch,079h,020h,077h,072h,069h,074h,074h,065h,06Eh
         db 00h
-msg_OutputFileError:
+msg_OutputFileError:                            ; used by WriteScreenTextFile
         dd str_ERROROutputFileWas
-str_InsufficientDiskSpaceTo:
+str_InsufficientDiskSpaceTo:                    ; "Insufficient disk space to print" string literal
         db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
         db 06Bh,020h,073h,070h,061h,063h,065h,020h,074h,06Fh,020h,070h,072h,069h,06Eh,074h
         db 00h
-str_TheDisplayedStatisticsTo:
+str_TheDisplayedStatisticsTo:                   ; "the displayed statistics to, you" string literal
         db 074h,068h,065h,020h,064h,069h,073h,070h,06Ch,061h,079h,065h,064h,020h,073h,074h
         db 061h,074h,069h,073h,074h,069h,063h,073h,020h,074h,06Fh,02Ch,020h,079h,06Fh,075h
         db 00h
-msg_NeedKbytes2:
+msg_NeedKbytes2:                                ; message text (sprintf target) for the WriteScreenTextFile
+                                                ; free-space MessageBox; used by WriteScreenTextFile
         db 072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h,079h,074h,065h
         db 073h,020h,06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h
         db 070h,061h,063h,065h,02Eh,020h,020h,020h,020h,00h
-msg_StatsDiskSpace:
+msg_StatsDiskSpace:                             ; WriteScreenTextFile message 'Insufficient disk space to' /
+                                                ; 'the displayed statistics to'; used by WriteScreenTextFile
         dd str_InsufficientDiskSpaceTo
         dd str_TheDisplayedStatisticsTo
         dd msg_NeedKbytes2
         db 00h,00h
-easnfontbuf:
+easnfontbuf:                                    ; loaded EASN.VFN font of the in-game standings screens, freed
+                                                ; by FreeDeskBuffers; used by CalStandingsScreen,
+                                                ; EasnStandingsScreen, FreeDeskBuffers ...
         db 00h,00h,00h,00h
-embscupbank:
+embscupbank:                                    ; loaded EMBSCUP background bank of the playoff screens, freed
+                                                ; by FreeDeskBuffers; used by CalStandingsScreen,
+                                                ; CreatePlayoffs, DrawPlayoffTree ...
         db 00h,00h,00h,00h
-statscategory:
+statscategory:                                  ; stats category picked in the stats menu (StatsMenu*; team
+                                                ; 0-5, skater 0-7, goalie 8-10); used by CalGoalieStatsScreen,
+                                                ; CalSkaterStatsScreen, CalStandingsMenu ...
         db 00h,00h,00h,00h
-statsteamsel:
+statsteamsel:                                   ; selected team index in stats pickers; used by
+                                                ; CalStandingsMenu, EasnStandingsMenu_m, GameStandingsMenu ...
         db 00h,00h,00h,00h
-statsredrawcb:
+statsredrawcb:                                  ; callback (statscategory) that redraws the current stats
+                                                ; screen after a Statistics Type change (StatsSel*); used by
+                                                ; CalGoalieStatsScreen, CalSkaterStatsScreen, CalStandingsMenu
+                                                ; ...
         db 00h,00h,00h,00h
-deskexit:
+deskexit:                                       ; sports desk menu result set by the DeskSetExit* items (read
+                                                ; by easn_stats and palette_fx); used by CalStandingsMenu,
+                                                ; DeskSetExit1, DeskSetExit2 ...
         db 00h,00h,00h,00h
-teamstatscb:
+teamstatscb:                                    ; redraw callback for the team stats screen (StatsMenu* team
+                                                ; items); used by CalendarScreen, MainDeskLoop,
+                                                ; MenuNewExhibition ...
         db 00h,00h,00h,00h
-skaterstatscb:
+skaterstatscb:                                  ; redraw callback for the skater stats screen; used by
+                                                ; CalendarScreen, MainDeskLoop, MenuNewExhibition ...
         db 00h,00h,00h,00h
-goaliestatscb:
+goaliestatscb:                                  ; redraw callback for the goalie stats screen; used by
+                                                ; CalendarScreen, MainDeskLoop, MenuNewExhibition ...
         db 00h,00h,00h,00h
-standingscb:
+standingscb:                                    ; standings screen callback (Game/Easn/CalStandingsScreen);
+                                                ; used by CalStandingsMenu, CalStandingsMenu_standings,
+                                                ; CalendarScreen ...
         db 00h,00h,00h,00h
-standingsmenucb:
+standingsmenucb:                                ; standings + roster menu callback; used by CalendarScreen,
+                                                ; MainDeskLoop, MenuNewExhibition ...
         db 00h,00h,00h,00h
-statsleague:
+statsleague:                                    ; name of the league / Play-Off whose stats are shown
+                                                ; (StatsSel*); used by GoalieStatsCard, LeadersScreen,
+                                                ; LoadLeagueTree ...
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-hlplayedmask:
+hlplayedmask:                                   ; bits of the 6 highlights already shown (PlayRandomHighlight,
+                                                ; IntermissionDesk); used by IntermissionDesk,
+                                                ; PlayRandomHighlight
         db 00h,00h,00h,00h
-str_ReturningToSportsCentral:
+str_ReturningToSportsCentral:                   ; string 'Returning to sports central'; used by
+                                                ; DeskReturnConfirm
         db 052h,065h,074h,075h,072h,06Eh,069h,06Eh,067h,020h,074h,06Fh,020h,073h,070h,06Fh
         db 072h,074h,073h,020h,063h,065h,06Eh,074h,072h,061h,06Ch,00h
-str_ReturningOutOfThe:
+str_ReturningOutOfThe:                          ; string 'Returning out of the game'; used by
+                                                ; DeskReturnConfirm
         db 052h,065h,074h,075h,072h,06Eh,069h,06Eh,067h,020h,06Fh,075h,074h,020h,06Fh,066h
         db 020h,074h,068h,065h,020h,067h,061h,06Dh,065h,00h
-str_ReturningToThePlayoff:
+str_ReturningToThePlayoff:                      ; string 'Returning to the playoff tree'; used by
+                                                ; DeskReturnConfirm
         db 052h,065h,074h,075h,072h,06Eh,069h,06Eh,067h,020h,074h,06Fh,020h,074h,068h,065h
         db 020h,070h,06Ch,061h,079h,06Fh,066h,066h,020h,074h,072h,065h,065h,00h
-str_ExitingTheGame:
+str_ExitingTheGame:                             ; string 'Exiting the game'; used by DeskExitGame
         db 045h,078h,069h,074h,069h,06Eh,067h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h
         db 00h
-str_MayLoseThisGame:
+str_MayLoseThisGame:                            ; "may lose this game's data." string literal
         db 06Dh,061h,079h,020h,06Ch,06Fh,073h,065h,020h,074h,068h,069h,073h,020h,067h,061h
         db 06Dh,065h,027h,073h,020h,064h,061h,074h,061h,02Eh,00h
-str_DoYouWishToReturn:
+str_DoYouWishToReturn:                          ; string 'Do you wish to return?'; used by DeskReturnConfirm
         db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,072h
         db 065h,074h,075h,072h,06Eh,03Fh,00h
-str_DoYouWishToExit:
+str_DoYouWishToExit:                            ; string 'Do you wish to exit?'; used by DeskExitGame
         db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,065h
         db 078h,069h,074h,03Fh,00h
-msg_DeskExit:
+msg_DeskExit:                                   ; DeskExitGame / DeskReturnConfirm message lines; line 0 is
+                                                ; patched; used by DeskExitGame, DeskReturnConfirm
         db 00h,00h,00h,00h
         dd str_MayLoseThisGame
-msg_DeskExit_e02:
+msg_DeskExit_e02:                               ; msg_DeskExit[2], patched with 'Do you wish to exit /
+                                                ; return'; used by DeskExitGame, DeskReturnConfirm
         db 00h,00h,00h,00h
-CdStreamRateFactor:
+CdStreamRateFactor:                             ; Rate factor (0Dh) the CD stream code scales its read sizes
+                                                ; by; used by CdStreamCreate, CdStreamService
         db 0Dh,00h,00h,00h
-RosterStatusByInjury:
+RosterStatusByInjury:                           ; Roster status code per injury value (word entries) used by
+                                                ; LoadTeamRoster
         db 07h,00h,04h,00h,03h,00h,06h,00h,01h,00h,08h,00h,02h,00h,00h,00h
-screenbm:
+screenbm:                                       ; pointer to the screen bitmap descriptor (set in main_
+                                                ; startup), selected by SelectScreenBM; used by
+                                                ; SelectScreenBM, main_
         db 00h,00h,00h,00h
-dirtyrectcount:
+dirtyrectcount:                                 ; per-page rect count; used by AddDirtyRect
         db 00h,00h,00h,00h,00h,00h,00h,00h
-DeskRedrawAll:
+DeskRedrawAll:                                  ; Flag set when the desk and replay screens must be redrawn in
+                                                ; full; used by DeskGoToReplay, DeskReloadGame,
+                                                ; DeskReturnConfirm ...
         db 00h,00h,00h,00h
-DeskRedrawFlag:
+DeskRedrawFlag:                                 ; Flag set after the desk photos load and fade in so the desk
+                                                ; redraws; used by DeskGoToReplay, DeskReloadGame,
+                                                ; DeskReturnConfirm ...
         db 00h,00h,00h,00h
         dd NullBlit
         dd NullBlit
@@ -878,47 +971,61 @@ DeskRedrawFlag:
         dd VgaBlitKeyedFlipHV
         dd VgaBlitRemapFlipH
         dd VgaBlitRemapFlipHV
-lastsprremap:
+lastsprremap:                                   ; cached remap selection in DrawSprite; used by DrawSprite
         db 0FFh,0FFh,0FFh,0FFh
-mi_9394Season:
+mi_9394Season:                                  ; "Statistics Type" menu item text (first byte 1 = selected, 2
+                                                ; = not); used by MakeStatsTitle, SetupStatsSourceMenu_all,
+                                                ; SetupStatsSourceMenu_exh ...
         db 01h,020h
-str_9394Season:
+str_9394Season:                                 ; string; used by MakeStatsTitle
         db 027h,039h,033h,020h,02Dh,020h,027h,039h,034h,020h,053h,065h,061h,073h,06Fh,06Eh
         db 00h
-mi_9394Playoffs:
+mi_9394Playoffs:                                ; menu item "'93 - '94 Play-Offs"; used by MakeStatsTitle,
+                                                ; SetupStatsSourceMenu_all, SetupStatsSourceMenu_exh ...
         db 02h,020h
-str_9394PlayOffs:
+str_9394PlayOffs:                               ; string; used by MakeStatsTitle
         db 027h,039h,033h,020h,02Dh,020h,027h,039h,034h,020h,050h,06Ch,061h,079h,02Dh,04Fh
         db 066h,066h,073h,00h
-mi_LeagueSeason:
+mi_LeagueSeason:                                ; menu item "<league> Season"; used by BuildSavedGameLabels,
+                                                ; MakeStatsTitle, SetupStatsSourceMenu_all ...
         db 02h,020h
-str_LgSeasonTitle:
+str_LgSeasonTitle:                              ; '"' + league name + '" Season'; used by
+                                                ; BuildSavedGameLabels, MakeStatsTitle
         db 022h
         db 057h,057h,057h,057h,057h,057h,057h,057h,022h,020h,053h,065h,061h,073h,06Fh,06Eh
         db 00h
-mi_LeaguePlayoffs:
+mi_LeaguePlayoffs:                              ; menu item "<league> Season Play-Offs"; used by
+                                                ; BuildSavedGameLabels, MakeStatsTitle,
+                                                ; SetupStatsSourceMenu_all ...
         db 02h,020h
-str_LgPlayoffsTitle:
+str_LgPlayoffsTitle:                            ; string; used by BuildSavedGameLabels, MakeStatsTitle
         db 022h
         db 057h,057h,057h,057h,057h,057h,057h,057h,022h,020h,053h,065h,061h,073h,06Fh,06Eh
         db 020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,073h,00h
-mi_PlayoffMode:
+mi_PlayoffMode:                                 ; menu item "<name> Play-Offs"; used by BuildSavedGameLabels,
+                                                ; MakeStatsTitle, SetupStatsSourceMenu_all ...
         db 02h,020h
-str_POTitle:
+str_POTitle:                                    ; string; used by BuildSavedGameLabels, DrawPlayoffTree,
+                                                ; MakeStatsTitle
         db 022h
         db 057h,057h,057h,057h,057h,057h,057h,057h,022h,020h,050h,06Ch,061h,079h,02Dh,04Fh
         db 066h,066h,073h,00h
-str_StatsSourceDivider:
+str_StatsSourceDivider:                         ; Dashed divider text between statistics source groups
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
-StatsSourceLastBottom:
+StatsSourceLastBottom:                          ; Base that reaches the bottom edge of the last statistics
+                                                ; source item when indexed by the item count; used by
+                                                ; SetupStatsSourceMenu_all
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
-str_Dashes:
+str_Dashes:                                     ; string '-------'; used by SetupStatsSourceMenu_all
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,00h
-StatsSourceMenu:
+StatsSourceMenu:                                ; Statistics Type pull-down: 93-94 season playoffs league and
+                                                ; playoff mode sources
         db 00h,00h,00h,00h,00h,00h,00h,00h
-StatsSourceMenuRight:
+StatsSourceMenuRight:                           ; Right edge of each statistics source item (32-byte stride);
+                                                ; used by SetupStatsSourceMenu_all
         db 0F7h,00h,00h,00h
-StatsSourceMenuBottom:
+StatsSourceMenuBottom:                          ; Bottom edge of each statistics source item (32-byte stride);
+                                                ; used by SetupStatsSourceMenu_all
         db 011h,00h,00h,00h
         dd mi_9394Season
         dd StatsSel9394Season
@@ -931,84 +1038,112 @@ StatsSourceMenuBottom:
         dd str_StatsSourceDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 036h,00h,00h,00h,0F7h,00h,00h,00h,047h,00h,00h,00h
-menutext_statsleague:
+menutext_statsleague:                           ; stats source menu: text slot of the league item
+                                                ; (SetupStatsSourceMenu); used by SetupStatsSourceMenu_all,
+                                                ; SetupStatsSourceMenu_lg, SetupStatsSourceMenu_po
         dd mi_LeagueSeason
-menuact_statsleague:
+menuact_statsleague:                            ; stats source menu: action slot of the league item; used by
+                                                ; SetupStatsSourceMenu_all, SetupStatsSourceMenu_lg,
+                                                ; SetupStatsSourceMenu_po
         dd StatsSelLeague
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
         db 0F7h,00h,00h,00h,059h,00h,00h,00h
-menutext_statslgplayoffs:
+menutext_statslgplayoffs:                       ; stats source menu: text slot of the league playoffs item;
+                                                ; used by SetupStatsSourceMenu_all, SetupStatsSourceMenu_lg
         dd mi_LeaguePlayoffs
-menuact_statslgplayoffs:
+menuact_statslgplayoffs:                        ; stats source menu: action slot of the league playoffs item;
+                                                ; used by SetupStatsSourceMenu_all, SetupStatsSourceMenu_lg
         dd StatsSelLeaguePlayoffs
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
         db 0F7h,00h,00h,00h,06Bh,00h,00h,00h
         dd str_StatsSourceDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 06Ch,00h,00h,00h,0F7h,00h,00h,00h,07Eh,00h,00h,00h
-menutext_statsplayoff:
+menutext_statsplayoff:                          ; stats source menu: text slot of the playoff mode item; used
+                                                ; by SetupStatsSourceMenu_all
         dd mi_PlayoffMode
-menuact_statsplayoff:
+menuact_statsplayoff:                           ; stats source menu: action slot of the playoff mode item;
+                                                ; used by SetupStatsSourceMenu_all
         dd StatsSelPlayoffMode
         db 00h,00h,00h,00h,00h,00h,00h,00h
-str_SeasonSfx:
+str_SeasonSfx:                                  ; string; used by BuildSavedGameLabels
         db 022h,020h,053h,065h,061h,073h,06Fh,06Eh,00h
-str_SeasonPlayOffsSfx:
+str_SeasonPlayOffsSfx:                          ; string; used by BuildSavedGameLabels
         db 022h,020h,053h,065h,061h,073h,06Fh,06Eh,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h
         db 066h,073h,00h
-str_PlayOffsSfx:
+str_PlayOffsSfx:                                ; string; used by BuildSavedGameLabels
         db 022h,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,073h,00h,00h,00h,00h
-divisionnames:
+divisionnames:                                  ; Pacific / Central / Northeast / Atlantic Division; used by
+                                                ; StandingsScreen
         dd str_PacificDivision
         dd str_CentralDivision
         dd str_NortheastDivision
         dd str_AtlanticDivision
-statslabels:
+statslabels:                                    ; Season: / Playoff: / reg. season / playoff / actual /
+                                                ; accumulated; used by GoalieStatsCard, SkaterStatsCard
         dd str_Season3
         dd str_Playoff3
         dd str_RegSeason
         dd str_Playoff4
         dd str_Actual
         dd str_Accumulated
-statsbgnames:
+statsbgnames:                                   ; embnhl / embscup; used by CalStandingsScreen,
+                                                ; EasnStandingsScreen, GameStandingsScreen ...
         dd str_embnhl
         dd str_embscup
-statsplayerdbs:
+statsplayerdbs:                                 ; career.db / season.db by statsfromleague; used by
+                                                ; GoalieStatsCard, LeadersScreen, SkaterStatsCard ...
         dd str_careerdb
         dd str_seasondb
-statsteamdbs:
+statsteamdbs:                                   ; carteams.db / teams.db; used by GoalieStatsCard,
+                                                ; LeadersScreen, SkaterStatsCard ...
         dd str_carteamsdb
         dd str_teamsdb
-str_AttDb:
+str_AttDb:                                      ; string 'att.db'; used by GoalieStatsCard, SkaterStatsCard
         db 061h,074h,074h,02Eh,064h,062h,00h
-str_fmt2d:
+str_fmt2d:                                      ; string '%2d'; used by DrawEditRosters, DrawRosterList,
+                                                ; GoalieStatsCard ...
         db 025h,032h,064h,00h
-str_fmt3d:
+str_fmt3d:                                      ; string '%3d'; used by DrawGloveField, DrawShootsField,
+                                                ; GoalieStatsCard ...
         db 025h,033h,064h,00h
-str_fmt4d:
+str_fmt4d:                                      ; string '%4d'; used by GoalieStatsCard, LeadersScreen,
+                                                ; LeadersScreen_colPlusMinus ...
         db 025h,034h,064h,00h
-str_fmt5d:
+str_fmt5d:                                      ; string '%5d'; used by GoalieStatsCard,
+                                                ; LeadersScreen_colShootPct, SkaterStatsCard ...
         db 025h,035h,064h,00h
-str_fmtTenths:
+str_fmtTenths:                                  ; string '%3d.%1d'; used by LeadersScreen_colShootPct,
+                                                ; ShowRosterStats, SkaterStatsCard ...
         db 025h,033h,064h,02Eh,025h,031h,064h,00h
-str_fmtPct:
+str_fmtPct:                                     ; string '%1d.%03d'; used by GoalieStatsCard,
+                                                ; LeadersScreen_colSavePct, StandingsScreen ...
         db 025h,031h,064h,02Eh,025h,030h,033h,064h,00h
-str_fmtPct0:
+str_fmtPct0:                                    ; string ' .%03d'; used by GoalieStatsCard,
+                                                ; LeadersScreen_colSavePct, StandingsScreen ...
         db 020h,02Eh,025h,030h,033h,064h,00h
-str_fmtMinSec:
+str_fmtMinSec:                                  ; string '%2d.%2.2d'; used by GoalieStatsCard,
+                                                ; LeadersScreen_colGAA, ShowRosterStats ...
         db 025h,032h,064h,02Eh,025h,032h,02Eh,032h,064h,00h
-str_fmtEmb:
+str_fmtEmb:                                     ; string 'emb%s'; used by GoalieStatsCard, ShowRosterStats,
+                                                ; SkaterStatsCard ...
         db 065h,06Dh,062h,025h,073h,00h
-str_Bkgd2:
+str_Bkgd2:                                      ; string 'bkgd'; used by DrawPlayoffTree, GoalieStatsCard,
+                                                ; LeadersScreen ...
         db 062h,06Bh,067h,064h,00h
-str_EASNvfn:
+str_EASNvfn:                                    ; string; used by CalStandingsScreen, EasnStandingsScreen,
+                                                ; GameStandingsScreen
         db 045h,041h,053h,04Eh,02Eh,076h,066h,06Eh,00h,077h,069h,074h,074h,06Ch,065h,030h
         db 036h,02Eh,076h,066h,06Eh,00h
-statsplayoffs:
+statsplayoffs:                                  ; 1 for play-off stats (StatsSel*); used by
+                                                ; CalStandingsMenu_standings, CalStandingsScreen, CmpAssists
+                                                ; ...
         db 00h,00h,00h,00h
-statsfromleague:
+statsfromleague:                                ; stats source: 0 the built-in '93 - '94 data, 1 a user league
+                                                ; / Play-Off file (StatsSel*); used by GoalieStatsCard,
+                                                ; LeadersScreen, OpenStatsSchedule ...
         db 00h,00h,00h,00h,00h,00h
-photoremap:
+photoremap:                                     ; remap table for photos; used by DrawPhotoWithPal
         db 044h,045h,046h,047h,048h,049h,04Ah,04Bh,04Ch,04Dh,04Eh,04Fh,050h,051h,052h,053h
         db 054h,055h,056h,057h,058h,059h,05Ah,05Bh,05Ch,05Dh,05Eh,05Fh,060h,061h,062h,063h
         db 064h,065h,066h,067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh,070h,071h,072h,073h
@@ -1025,9 +1160,11 @@ photoremap:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-statspalvalid:
+statspalvalid:                                  ; nonzero = use statspal copy (cleared by RunPlayerPickMenu);
+                                                ; used by DrawPhotoWithPal, EasnStandingsMenu_player2,
+                                                ; GameSkaterStatsScreen ...
         db 00h,00h,00h,00h
-skaterratingnames:
+skaterratingnames:                              ; Speed .. Faceoffs; used by SkaterStatsCard
         dd str_Speed
         dd str_Agility
         dd str_Weight
@@ -1044,7 +1181,7 @@ skaterratingnames:
 skatercardattrs_m3 equ $+1
         dd str_Faceoffs
         db 01h,02h,03h,04h,05h,06h,07h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,013h,00h,00h
-goalieratingnames:
+goalieratingnames:                              ; Glove Left .. Defensive Awareness; used by GoalieStatsCard
         dd str_GloveLeft
         dd str_GloveRight
         dd str_StickLeft
@@ -1057,35 +1194,39 @@ goalieratingnames:
 goaliecardattrs_m3 equ $+1
         dd str_DefensiveAwareness2
         db 01h,02h,03h,04h,05h,06h,07h,08h,0Ah,0Bh,00h,00h
-teamsortfns:
+teamsortfns:                                    ; team stats comparators by statscategory; used by
+                                                ; TeamStatsScreen_keyPen
         dd CmpTeamScoring
         dd CmpTeamDefense
         dd CmpTeamPK
         dd CmpTeamPP
         dd CmpTeamPenalties
         dd CmpTeamStandings
-westconfteams:
+westconfteams:                                  ; 12 team indices + 63h pad (Western, 12 teams in 94-95); used
+                                                ; by TeamStatsScreen_keyPen
         db 04h,00h,00h,00h,02h,00h,00h,00h,014h,00h,00h,00h,08h,00h,00h,00h
         db 011h,00h,00h,00h,03h,00h,00h,00h,015h,00h,00h,00h,012h,00h,00h,00h
         db 018h,00h,00h,00h,07h,00h,00h,00h,05h,00h,00h,00h,017h,00h,00h,00h
         db 063h,00h,00h,00h,063h,00h,00h,00h
-eastconfteams:
+eastconfteams:                                  ; 14 team indices (Eastern); used by TeamStatsScreen_keyPen
         db 0Ch,00h,00h,00h,0Fh,00h,00h,00h,0Ah,00h,00h,00h,00h,00h,00h,00h
         db 09h,00h,00h,00h,01h,00h,00h,00h,016h,00h,00h,00h,0Bh,00h,00h,00h
         db 019h,00h,00h,00h,0Eh,00h,00h,00h,010h,00h,00h,00h,013h,00h,00h,00h
         db 06h,00h,00h,00h,0Dh,00h,00h,00h
-westconfname:
+westconfname:                                   ; -> "Western Conference"; used by TeamStatsScreen_keyPen
         dd str_WesternConference3
-eastconfname:
+eastconfname:                                   ; -> "Eastern Conference"; used by TeamStatsScreen_keyPen
         dd str_EasternConference3
-teamstattitles:
+teamstattitles:                                 ; " Team Scoring" .. " Team Standings"; used by
+                                                ; TeamStatsScreen_keyPen
         dd str_TeamScoring
         dd str_TeamDefense
         dd str_TeamPenaltyKilling
         dd str_TeamPowerPlay
         dd str_TeamPenalties
         dd str_TeamStandings
-teamcolhdrs:
+teamcolhdrs:                                    ; team stats column header pointers; used by
+                                                ; TeamStatsScreen_keyPen
         dd str_spW
         dd str_SpL4
         dd str_SpT
@@ -1110,7 +1251,7 @@ teamcolhdrs:
         dd str_WINS
         dd str_BlankTeamColumn
         dd str_BlankTeamColumn
-leadersortfns:
+leadersortfns:                                  ; leader comparators by statscategory; used by LeadersScreen
         dd CmpPoints
         dd CmpGoals
         dd CmpAssists
@@ -1122,7 +1263,8 @@ leadersortfns:
         dd CmpGAA
         dd CmpGoalieWins
         dd CmpSavePct
-leadertitles:
+leadertitles:                                   ; " Point Leaders" .. " Save Percentage Leaders"; used by
+                                                ; LeadersScreen
         dd str_PointLeaders
         dd str_GoalLeaders
         dd str_AssistLeaders
@@ -1134,15 +1276,16 @@ leadertitles:
         dd str_GoalsAgainstAverageLeaders
         dd str_GoaltenderWinLeaders
         dd str_SavePercentageLeaders
-leadercolhdrs:
+leadercolhdrs:                                  ; LeadersScreen: column header strings, five per category;
+                                                ; first column; used by LeadersScreen
         dd str_spG
-leadercolhdrs_c1:
+leadercolhdrs_c1:                               ; leadercolhdrs+4: second column; used by LeadersScreen
         dd str_spA
-leadercolhdrs_c2:
+leadercolhdrs_c2:                               ; leadercolhdrs+8: third column; used by LeadersScreen
         dd str_Pt3
-leadercolhdrs_c3:
+leadercolhdrs_c3:                               ; leadercolhdrs+0Ch: fourth column; used by LeadersScreen
         dd str_BlankLeaderColumn
-leadercolhdrs_c4:
+leadercolhdrs_c4:                               ; leadercolhdrs+10h: fifth column; used by LeadersScreen
         dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
@@ -1197,40 +1340,53 @@ leadercolhdrs_c4:
         dd str_LSSCEDDB
 potreeround_m2 equ $+2
         dd str_SCHEDULEDB3
-potreeround:
+potreeround:                                    ; PlayoffTreeMenu: the round the playoff tree shows; the tree
+                                                ; is redrawn when it changes; used by PlayoffTreeMenu
         db 070h,0FFh
-PoStandingsMode:
+PoStandingsMode:                                ; Set while the standings and tree screens show playoff mode
+                                                ; data; used by CalStandingsMenu, CalStandingsMenu_player2,
+                                                ; CalStandingsMenu_standings ...
         db 00h,00h,00h,00h,00h,02h,04h,06h,08h,0Ah,0Ch,0Eh,01h,05h,09h,0Dh
         db 0FFh,0FFh,0FFh,0FFh,03h,0Bh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh
         db 0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh
         db 0FFh,0FFh,0FFh,0FFh,03h,0Bh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,01h,05h,09h,0Dh
         db 0FFh,0FFh,0FFh,0FFh,00h,02h,04h,06h,08h,0Ah,0Ch,0Eh
-treecolslots:
+treecolslots:                                   ; 9 columns x 8 playofftree slot indices (FFh = none): W r1, W
+                                                ; r2, W final, W champ, Cup, E champ, E final, E r2, E r1;
+                                                ; used by DrawPlayoffTree, HighlightTreeSlot,
+                                                ; PlayoffTreeScreen ...
         db 00h
         db 01h,02h,03h,04h,05h,06h,07h
-treecol_Wr2:
+treecol_Wr2:                                    ; treecolslots row 1 (West round 2), own name because of
+                                                ; nosplit indexing; used by DrawPlayoffTree,
+                                                ; HighlightTreeSlot, PlayoffTreeScreen ...
         db 010h
         db 011h
         db 012h
         db 013h,0FFh,0FFh,0FFh,0FFh
-treecol_Wr3:
+treecol_Wr3:                                    ; not referenced by name (reached through a neighbouring label
+                                                ; or a table)
         db 018h
         db 019h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
         db 01Ch,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
         db 01Eh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
         db 01Dh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-treecol_Er3:
+treecol_Er3:                                    ; not referenced by name (reached through a neighbouring label
+                                                ; or a table)
         db 01Ah
         db 01Bh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-treecol_Er2:
+treecol_Er2:                                    ; treecolslots row 7 (East round 2); used by DrawPlayoffTree,
+                                                ; HighlightTreeSlot, PlayoffTreeScreen ...
         db 014h
         db 015h
         db 016h
         db 017h,0FFh,0FFh,0FFh,0FFh
-treecol_Er1:
+treecol_Er1:                                    ; treecolslots row 8 (East round 1); used by DrawPlayoffTree,
+                                                ; HighlightTreeSlot, PlayoffTreeScreen ...
         db 08h
         db 09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
-potreeseeds:
+potreeseeds:                                    ; DrawPlayoffTree: seed numbers of the first-round teams; used
+                                                ; by DrawPlayoffTree, PlayoffTreeScreen
         db 01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h,04h,00h,00h,00h
         db 05h,00h,00h,00h,06h,00h,00h,00h,07h,00h,00h,00h,08h,00h,00h,00h
         db 09h,00h,00h,00h,0Ah,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h
@@ -1239,24 +1395,26 @@ potreeseeds:
         db 015h,00h,00h,00h,016h,00h,00h,00h,017h,00h,00h,00h,018h,00h,00h,00h
         db 019h,00h,00h,00h,01Ah,00h
         db 00h,00h
-treecolx:
+treecolx:                                       ; column x (dword per column pair); used by DrawPlayoffTree,
+                                                ; HighlightTreeSlot, PlayoffTreeScreen ...
         db 014h,00h,00h,00h,0B7h,00h,00h,00h,05Ch,01h,00h,00h,0FEh,01h,00h,00h
-treerowy:
+treerowy:                                       ; tree y bases; used by HighlightTreeSlot, TeamFromMouse
         db 030h,00h,00h,00h,0DCh,00h,00h,00h
-divx:
+divx:                                           ; division block x; used by StandingsScreen
         db 0Ah,00h,00h,00h,0Ah,00h,00h,00h,04Ah,01h,00h,00h,04Ah,01h,00h,00h
-divy:
+divy:                                           ; division block y; used by StandingsScreen
         db 07Dh,00h,00h,00h,022h,01h,00h,00h,07Dh,00h,00h,00h,022h,01h,00h,00h
         db 00h,00h
-str_AwayLines:
+str_AwayLines:                                  ; string
         db 041h,077h,061h,079h,020h,06Ch,069h,06Eh,065h,073h,00h
-str_Play:
+str_Play:                                       ; string
         db 050h,06Ch,061h,079h,00h
-str_Cancel:
+str_Cancel:                                     ; string
         db 043h,061h,06Eh,063h,065h,06Ch,00h
-str_HomeLines:
+str_HomeLines:                                  ; string
         db 048h,06Fh,06Dh,065h,020h,06Ch,069h,06Eh,065h,073h,00h
-pregamebuttons:
+pregamebuttons:                                 ; 4 x 1Ch buttons (x, y, w, h, .., text); used by
+                                                ; PreGameScreen
         db 030h,00h,00h,00h,0BCh,01h,00h,00h,064h,00h,00h,00h,018h,00h,00h,00h
         db 00h,00h,00h,00h,05h,00h,00h,00h
         dd str_AwayLines
@@ -1269,25 +1427,25 @@ pregamebuttons:
         db 0ECh,01h,00h,00h,0BCh,01h,00h,00h,064h,00h,00h,00h,018h,00h,00h,00h
         db 00h,00h,00h,00h,05h,00h,00h,00h
         dd str_HomeLines
-str_PenaltyKilling:
+str_PenaltyKilling:                             ; string
         db 050h,065h,06Eh,061h,06Ch,074h,079h,020h,04Bh,069h,06Ch,06Ch,069h,06Eh,067h,00h
-str_PowerPlay:
+str_PowerPlay:                                  ; string
         db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,00h
-str_Shooting:
+str_Shooting:                                   ; string
         db 053h,068h,06Fh,06Fh,074h,069h,06Eh,067h,00h
-str_Skating:
+str_Skating:                                    ; string
         db 053h,06Bh,061h,074h,069h,06Eh,067h,00h
-str_Passing:
+str_Passing:                                    ; string
         db 050h,061h,073h,073h,069h,06Eh,067h,00h
-str_Defense2:
+str_Defense2:                                   ; string
         db 044h,065h,066h,065h,06Eh,073h,065h,00h
-str_Checking:
+str_Checking:                                   ; string
         db 043h,068h,065h,063h,06Bh,069h,06Eh,067h,00h
-str_Goaltending:
+str_Goaltending:                                ; string
         db 047h,06Fh,061h,06Ch,074h,065h,06Eh,064h,069h,06Eh,067h,00h
-str_Overall:
+str_Overall:                                    ; string
         db 04Fh,076h,065h,072h,020h,061h,06Ch,06Ch,00h
-scoutcatnames:
+scoutcatnames:                                  ; Penalty Killing .. Over all (9); used by PreGameScreen
         dd str_PenaltyKilling
         dd str_PowerPlay
         dd str_Shooting
@@ -1297,17 +1455,22 @@ scoutcatnames:
         dd str_Checking
         dd str_Goaltending
         dd str_Overall
-scoutcatidx:
+scoutcatidx:                                    ; team rating index per scouting category; used by
+                                                ; PreGameScreen
         db 00h,01h,04h,05h,06h,07h,08h,0Ah,0Bh,00h,00h,00h
-fdlgshapes:
+fdlgshapes:                                     ; open_but shape file handle; used by LoadDbDialogShapes,
+                                                ; LoadFileDlgShapes, MenuOpenDatabase ...
         db 00h,00h,00h,00h
-fdlgfilelists:
+fdlgfilelists:                                  ; file dialog: file list of each tab (lgfiles, pofiles,
+                                                ; exhfiles), by fdlgtab; used by DrawFileDlg,
+                                                ; DrawFileDlgList_n1, DrawFileDlgTabs ...
         dd lgfiles
-fdlgfilelists_e01:
+fdlgfilelists_e01:                              ; fdlgfilelists[1] (pofiles); used by RunFileDlg
         dd pofiles
-fdlgfilelists_e02:
+fdlgfilelists_e02:                              ; fdlgfilelists[2] (exhfiles); used by RunFileDlg
         dd exhfiles
-fdlgrects:
+fdlgrects:                                      ; 16 hotspot rects (x0, y0, x1, y1); used by DrawFileDlg,
+                                                ; DrawFileDlgList, DrawFileDlgList_n1 ...
         db 0Eh,00h,00h,00h
         db 033h,00h,00h,00h
         db 01Ah,00h,00h,00h
@@ -1336,53 +1499,54 @@ fdlgrects:
         db 076h,00h,00h,00h,025h,00h,00h,00h,07Bh,00h,00h,00h,082h,00h,00h,00h
         db 086h,00h,00h,00h,025h,00h,00h,00h,08Bh,00h,00h,00h,082h,00h,00h,00h
         db 096h,00h,00h,00h
-str_ConfirmDeletionOfThe:
+str_ConfirmDeletionOfThe:                       ; "Confirm Deletion of the" string literal
         db 043h,06Fh,06Eh,066h,069h,072h,06Dh,020h,044h,065h,06Ch,065h,074h,069h,06Fh,06Eh
         db 020h,06Fh,066h,020h,074h,068h,065h,00h
-str_ExhibitionGameCalled:
+str_ExhibitionGameCalled:                       ; string 'Exhibition Game Called:'; used by DeleteSavedGame
         db 045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,020h,047h,061h,06Dh,065h,020h
         db 043h,061h,06Ch,06Ch,065h,064h,03Ah,00h
-str_LeagueCalled:
+str_LeagueCalled:                               ; string 'League Called:'; used by DeleteSavedGame
         db 04Ch,065h,061h,067h,075h,065h,020h,043h,061h,06Ch,06Ch,065h,064h,03Ah,00h
-str_PlayOffSeriesCalled:
+str_PlayOffSeriesCalled:                        ; string 'Play-Off Series Called:'; used by DeleteSavedGame
         db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,053h,065h,072h,069h,065h,073h,020h
         db 043h,061h,06Ch,06Ch,065h,064h,03Ah,00h
-delmsgbox:
+delmsgbox:                                      ; DeleteSavedGame MessageBox args (title at +4); used by
+                                                ; DeleteSavedGame
         dd str_ConfirmDeletionOfThe
         db 00h,00h,00h,00h
         db 00h,00h,00h,00h,00h
-str_NoScoring:
+str_NoScoring:                                  ; string 'No Scoring.'; used by GameSummaryScreen_period
         db 04Eh,06Fh,020h,053h,063h,06Fh,072h,069h,06Eh,067h,02Eh,00h
-str_NoPenalties:
+str_NoPenalties:                                ; string 'No Penalties.'; used by GameSummaryScreen_period
         db 04Eh,06Fh,020h,050h,065h,06Eh,061h,06Ch,074h,069h,065h,073h,02Eh,00h,00h,00h
-str_gsScore:
+str_gsScore:                                    ; string 'Score'
         db 053h,063h,06Fh,072h,065h,00h
-str_gsShots:
+str_gsShots:                                    ; string 'Shots'
         db 053h,068h,06Fh,074h,073h,00h
-str_gsPowerPlay:
+str_gsPowerPlay:                                ; string 'Power play'
         db 050h,06Fh,077h,065h,072h,020h,070h,06Ch,061h,079h,00h
-str_gsPenalties:
+str_gsPenalties:                                ; string 'Penalties'
         db 050h,065h,06Eh,061h,06Ch,074h,069h,065h,073h,00h
-str_gsFaceoffsWon:
+str_gsFaceoffsWon:                              ; string 'Faceoffs won'
         db 046h,061h,063h,065h,06Fh,066h,066h,073h,020h,077h,06Fh,06Eh,00h
-str_gsBodyChecks:
+str_gsBodyChecks:                               ; string 'Body checks'
         db 042h,06Fh,064h,079h,020h,063h,068h,065h,063h,06Bh,073h,00h
-str_gsAttackZone:
+str_gsAttackZone:                               ; string 'Attack zone'
         db 041h,074h,074h,061h,063h,06Bh,020h,07Ah,06Fh,06Eh,065h,00h
-str_gsPassing:
+str_gsPassing:                                  ; string 'Passing'
         db 050h,061h,073h,073h,069h,06Eh,067h,00h
-str_gsOneTimers:
+str_gsOneTimers:                                ; string 'One Timers'
         db 04Fh,06Eh,065h,020h,054h,069h,06Dh,065h,072h,073h,00h
-str_gsPPMinutes:
+str_gsPPMinutes:                                ; string 'Power Play Minutes'
         db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,020h,04Dh,069h,06Eh,075h,074h
         db 065h,073h,00h
-str_gsPPShots:
+str_gsPPShots:                                  ; string 'Power Play Shots'
         db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,020h,053h,068h,06Fh,074h,073h
         db 00h
-str_gsOffFaceoffs:
+str_gsOffFaceoffs:                              ; string 'Offensive Faceoffs won'
         db 04Fh,066h,066h,065h,06Eh,073h,069h,076h,065h,020h,046h,061h,063h,065h,06Fh,066h
         db 066h,073h,020h,077h,06Fh,06Eh,00h
-gamestatlabels:
+gamestatlabels:                                 ; 12 GameStatsScreen row labels; used by GameStatsScreen
         dd str_gsScore
         dd str_gsShots
         dd str_gsOneTimers
@@ -1395,21 +1559,28 @@ gamestatlabels:
         dd str_gsBodyChecks
         dd str_gsAttackZone
         dd str_gsPassing
-boxfillcolor:
+boxfillcolor:                                   ; DrawBevelBox fill; used by CreatePlayoffs, DrawBevelBox,
+                                                ; DrawButton ...
         db 02Ah,00h,00h,00h
-boxlitecolor:
+boxlitecolor:                                   ; DrawBevelBox top/left; used by CreatePlayoffs, DrawBevelBox,
+                                                ; DrawButton ...
         db 03Fh,00h,00h,00h
-boxshadecolor:
+boxshadecolor:                                  ; DrawBevelBox bottom/right; used by CreatePlayoffs,
+                                                ; DrawBevelBox, DrawButton ...
         db 017h,00h,00h,00h
-dlgtextfg:
+dlgtextfg:                                      ; string '?'; used by CreatePlayoffs, DrawListItem,
+                                                ; DrawTeamGridName ...
         db 03Fh,00h,00h,00h
-dlgtextbg:
+dlgtextbg:                                      ; string ''; used by CreatePlayoffs, DrawListItem,
+                                                ; DrawTeamGridName ...
         db 00h,00h,00h,00h
-EditRostersState:
+EditRostersState:                               ; Cleared before the roster editor runs from the central
+                                                ; registry; used by MenuCentralRegistry
         db 00h,00h,00h,00h
-dlgsavebuf:
+dlgsavebuf:                                     ; DBOX screen save; used by MergeLeagueFiles, RestoreDialogBg,
+                                                ; SaveDialogBg
         db 00h,00h,00h,00h
-listscroll:
+listscroll:                                     ; ListDialog scroll bar (30h-byte struct); used by ListDialog
         db 00h,00h,00h,00h
         db 00h,00h,00h,00h
         db 00h,00h,00h,00h
@@ -1417,31 +1588,40 @@ listscroll:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h
-desksongalt:
+desksongalt:                                    ; alternates the desk song between maindesk and tonights; used
+                                                ; by MainDeskLoop
         db 01h
-keepdesksong:
+keepdesksong:                                   ; set by easn_stats so returning to the desk keeps the song
+                                                ; playing; used by EasnGoalieStatsScreen_m,
+                                                ; EasnSkaterStatsScreen_m, EasnStandingsMenu_m ...
         db 00h,00h,00h,00h
-songdata:
+songdata:                                       ; pointer to the loaded song (0 = none); freed and cleared
+                                                ; after a fade in arena_logos; played with musichandle; used
+                                                ; by AwardsCeremony, CalendarScreen, CoachCutScene ...
         db 00h,00h,00h,00h
-str_InsufficientDiskSpace:
+str_InsufficientDiskSpace:                      ; string 'Insufficient disk space available'
         db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
         db 06Bh,020h,073h,070h,061h,063h,065h,020h,061h,076h,061h,069h,06Ch,061h,062h,06Ch
         db 065h,00h
-str_ToSaveTheSettings:
+str_ToSaveTheSettings:                          ; string 'to save the settings, you require'
         db 074h,06Fh,020h,073h,061h,076h,065h,020h,074h,068h,065h,020h,073h,065h,074h,074h
         db 069h,06Eh,067h,073h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h,069h,072h
         db 065h,00h
-str_1KbytesFree:
+str_1KbytesFree:                                ; string '1 Kbytes of free disk space.'
         db 031h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h,065h,065h
         db 020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,00h
-setdiskmsg:
+setdiskmsg:                                     ; 3 MessageBox lines: not enough disk space for game.set; used
+                                                ; by WriteModeState
         dd str_InsufficientDiskSpace
         dd str_ToSaveTheSettings
         dd str_1KbytesFree
         db 00h,00h
-scrpitch:
+scrpitch:                                       ; planar VGA bytes per row (50h): every vga* routine
+                                                ; multiplies y by it; used by FreeGameMemory, LoadGameGfx,
+                                                ; MainDeskLoop ...
         db 050h,00h,00h,00h,00h,00h,00h,00h
-rinkarenas:
+rinkarenas:                                     ; 12-byte arena entries: abbrev[4] ("BOS"), map x, y, second
+                                                ; map x, y (FFFFh none); used by LoadRink
         db 042h,04Fh
         db 053h,00h
         db 015h,00h
@@ -1465,11 +1645,12 @@ rinkarenas:
         db 057h,053h,048h,00h,016h,00h,025h,00h,0FFh,0FFh,0FFh,0FFh,057h,050h,047h,00h
         db 015h,00h,026h,00h,0FFh,0FFh,0FFh,0FFh,041h,04Eh,048h,00h,015h,00h,025h,00h
         db 0FFh,0FFh,0FFh,0FFh,046h,04Ch,04Fh,00h,015h,00h,025h,00h,0FFh,0FFh,0FFh,0FFh
-rinktilebm:
+rinktilebm:                                     ; rink bitmap built by LoadRink; used by BlitTileMap,
+                                                ; FreeRinkGfx, LoadRink
         db 00h,00h,00h,00h
-rinkbm:
+rinkbm:                                         ; used by EnsureFreeMemory, FreeRinkGfx, LoadRink ...
         db 00h,00h,00h,00h
-rinkfileidx:
+rinkfileidx:                                    ; used by LoadRink
         db 02Ch,00h,00h,00h,035h,00h,00h,00h,048h,00h,00h,00h,04Ah,00h,00h,00h
         db 05Dh,00h,00h,00h,06Eh,00h,00h,00h,09Eh,00h,00h,00h,0DDh,00h,00h,00h
         db 0EBh,00h,00h,00h,0FDh,00h,00h,00h,05h,01h,00h,00h,0Eh,01h,00h,00h
@@ -1477,40 +1658,43 @@ rinkfileidx:
         db 057h,01h,00h,00h,092h,01h,00h,00h,086h,01h,00h,00h,097h,01h,00h,00h
         db 0A3h,01h,00h,00h,0B1h,01h,00h,00h,0BFh,01h,00h,00h,0BCh,01h,00h,00h
         db 025h,00h,00h,00h,093h,00h,00h,00h
-currink:
+currink:                                        ; rink loaded in rinktilebm (-1 none); used by FreeRinkGfx,
+                                                ; LoadRink
         db 0FFh,0FFh,0FFh,0FFh
-rinkscrollx:
+rinkscrollx:                                    ; last SetRinkScroll x (negated; +3E8h forces a redraw); used
+                                                ; by Gameloop, HandleHotKey, InstantReplay ...
         db 00h,00h,00h,00h
-rinkscrolly:
+rinkscrolly:                                    ; last SetRinkScroll y; used by Gameloop, HandleHotKey,
+                                                ; InstantReplay ...
         db 00h,00h,00h,00h
-str_Yes:
+str_Yes:                                        ; "Yes" string literal
         db 059h,065h,073h,00h
-str_No4:
+str_No4:                                        ; "No" string literal
         db 04Eh,06Fh,00h
-str_DoYouWishToUse:
+str_DoYouWishToUse:                             ; string 'Do you wish to use your'
         db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,075h
         db 073h,065h,020h,079h,06Fh,075h,072h,00h
-str_CurrentDbOr:
+str_CurrentDbOr:                                ; string 'Current database or the'
         db 043h,075h,072h,072h,065h,06Eh,074h,020h,064h,061h,074h,061h,062h,061h,073h,065h
         db 020h,06Fh,072h,020h,074h,068h,065h,00h
-str_OriginalNHLDb:
+str_OriginalNHLDb:                              ; string 'Original NHL database?'
         db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,04Eh,048h,04Ch,020h,064h,061h,074h
         db 061h,062h,061h,073h,065h,03Fh,00h
-str_Current:
+str_Current:                                    ; string 'Current'
         db 043h,075h,072h,072h,065h,06Eh,074h,00h
-str_Original:
+str_Original:                                   ; string 'Original'
         db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,00h
-dbchoicelines:
+dbchoicelines:                                  ; 3 prompt lines; used by AskDatabaseChoice
         dd str_DoYouWishToUse
         dd str_CurrentDbOr
         dd str_OriginalNHLDb
-dbchoicebtns:
+dbchoicebtns:                                   ; 2 buttons (Current / Original); used by AskDatabaseChoice
         db 010h,00h,00h,00h,050h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
         db 00h,00h,00h,00h,05h,00h,00h,00h
         dd str_Current
         db 0F0h,0FFh,0FFh,0FFh,050h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
         db 00h,00h,00h,00h,06h,00h,00h,00h
         dd str_Original
-str_AllTheTeamsAre:
+str_AllTheTeamsAre:                             ; "All the teams are already human" string literal
         db 041h,06Ch,06Ch,020h,074h,068h,065h,020h,074h,065h,061h,06Dh,073h,020h,061h,072h
         db 065h,020h,061h,06Ch,072h,065h,061h,064h,079h,020h,068h,075h,06Dh,061h,06Eh,00h

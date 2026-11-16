@@ -1,4 +1,4 @@
-; Recording and stepping instant replay, and the objects at the side of the rink (95G engine/replay95).
+; Recording and stepping instant replay, and the objects at the side of the rink.
 bits 32
 %include "hockey.inc"
 section s_67564 progbits alloc exec nowrite align=1
@@ -67,9 +67,10 @@ ReplayFirstFrame:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ReplayPrevFrame                              675A0  95 PC, medium confidence
-; 94G suba4 role for the record pointer: recbpr - 80h, or the last frame of
-; the buffer (replaystart + 9580h) when recbpr is at the start and the buffer
-; has wrapped (sflags bit 4 = 94G sfwrap)
+; suba4 role for the record pointer: recbpr - 80h, or the last frame of the
+; buffer (replaystart + 9580h) when recbpr is at the start
+;
+; and the buffer has wrapped
 ;-----------------------------------------------------------------------------
 ; C: src/engine/replay/ReplayPrevFrame.c
 %ifdef CBUILD
@@ -99,11 +100,12 @@ ReplayPrevFrame:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updatereplay                                         675D6  94G replay94.asm
-; 93G/94G updatereplay (save replay events every frame): not in highlight
-; mode (gmode bit 4); every 2nd tick packs the 17 sort objects (Xpos/Ypos 10
-; bits, frame, attribute bits), the roster bytes and positions (15 for
-; negative, as 94G), puck z, lastsfx (then -1) into the 80h-byte frame at
-; recbpr; gmode2 bit 2 rewrites the previous frame (94G sf2drec)
+; updatereplay (save replay events every frame): not in highlight mode (gmode
+; bit 4); every 2nd tick packs the 17 sort objects (Xpos/Ypos 10 bits, frame,
+;
+; attribute bits), the roster bytes and positions (15 for negative), puck z,
+; lastsfx (then -1) into the 80h-byte frame at recbpr; gmode2 bit 2 rewrites
+; the previous frame
 ;-----------------------------------------------------------------------------
 updatereplay:
         push dword 1Ch
@@ -344,10 +346,11 @@ updatereplay:
         ret
 ;-----------------------------------------------------------------------------
 ; ReplayStep                                   67900  95 PC, medium confidence
-; 94G adda4/suba4 role: moves the play pointer replayplay eax frames (80h
-; each, wrapping at replaystart + 9600h when sflags bit 4, stopping at
-; recbpr) and restores the frame (positions, sfx, CrowdNoiseUpdate /
-; CrowdNoiseOff); called from the replay gadgets
+; adda4/suba4 role: moves the play pointer replayplay eax frames (80h each,
+; wrapping at replaystart + 9600h when sflags bit 4, stopping at recbpr)
+;
+; and restores the frame (positions, sfx, CrowdNoiseUpdate / CrowdNoiseOff);
+; called from the replay gadgets
 ;-----------------------------------------------------------------------------
 ReplayStep:
         push dword 6Ch
@@ -702,8 +705,9 @@ ReplayStep_popx:
 ;-----------------------------------------------------------------------------
 ; DrawRinkSideObjects                             67DCC  95 PC, low confidence
 ; Draws the side sprites (counts rpl_pbnum / rpl_pbnum_b1 at 17Eh,0B3h by
-; camera position) and the 12h+ rink objects of rpl_objframe (rinkobjdefs
-; frames, photoptrsf); used by the display and replay frame code
+; camera position) and the 12h+ rink objects of rpl_objframe
+;
+; (rinkobjdefs frames, photoptrsf); used by the display and replay frame code
 ;-----------------------------------------------------------------------------
 DrawRinkSideObjects:
         push dword 64h

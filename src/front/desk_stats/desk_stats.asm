@@ -18,11 +18,12 @@ global StatsMenuPlusMinus, StatsMenuPIM, StatsMenuShootPct, StatsMenuGAA, StatsM
 global FreeDeskBuffers
 ;-----------------------------------------------------------------------------
 ; WriteScreenTextFile                                             17816  95 PC
-; (name): "Output Current Data" on the sports desk: writes the 36 text rows
-; of textgrid as 100-column lines to name.OUT (fopen "wt"), checking free
-; space first (FileExists / DiskSpaceShort, "require %2d Kbytes of free disk
-; space." MessageBox) and asking before overwriting an existing file; reports
-; the result with a MessageBox
+; (name): "Output Current Data" on the sports desk: writes the 36 text rows of
+; textgrid as 100-column lines to name.OUT (fopen "wt"),
+;
+; checking free space first (FileExists / DiskSpaceShort, "require %2d Kbytes
+; of free disk space." MessageBox) and asking before overwriting an existing
+; file; reports the result with a MessageBox
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/WriteScreenTextFile.c
 %ifdef CBUILD
@@ -209,8 +210,9 @@ DeskSetExit_ret1:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StatsSel9394Season                                              17A00  95 PC
-; "Statistics Type" menu item "'93 - '94 Season": marks it (byte 1, the
-; others 2), statsfromleague = 0, statsplayoffs = 0, copies the league name
+; "Statistics Type" menu item "'93 - '94 Season": marks it (byte 1, the others
+; 2), statsfromleague = 0, statsplayoffs = 0, copies the league name
+;
 ; (exhstate+4) to statsleague and redraws the stats screen through the
 ; statsredrawcb callback with a fade
 ;-----------------------------------------------------------------------------
@@ -514,8 +516,10 @@ StatsSelPlayoffMode:
 ;-----------------------------------------------------------------------------
 ; StatsMenuStandings                                              17DFC  95 PC
 ; Menu action for the "Standings ..." stats item: statscategory = 5; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; team stats screen (TeamStatsScreen), else redraws through teamstatscb
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the team
+; stats screen (TeamStatsScreen), else redraws through teamstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuStandings.c
 %ifdef CBUILD
@@ -591,8 +595,10 @@ StatsMenuStandings:
 ;-----------------------------------------------------------------------------
 ; StatsMenuTeamScoring                                            17EDF  95 PC
 ; Menu action for the "Scoring ..." stats item: statscategory = 0; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; team stats screen (TeamStatsScreen), else redraws through teamstatscb
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the team
+; stats screen (TeamStatsScreen), else redraws through teamstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuTeamScoring.c
 %ifdef CBUILD
@@ -668,8 +674,10 @@ StatsMenuTeamScoring:
 ;-----------------------------------------------------------------------------
 ; StatsMenuTeamDefense                                            17FBC  95 PC
 ; Menu action for the "Defense ..." stats item: statscategory = 1; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; team stats screen (TeamStatsScreen), else redraws through teamstatscb
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the team
+; stats screen (TeamStatsScreen), else redraws through teamstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuTeamDefense.c
 %ifdef CBUILD
@@ -745,9 +753,10 @@ StatsMenuTeamDefense:
 ;-----------------------------------------------------------------------------
 ; StatsMenuPenaltyKilling                                         1809F  95 PC
 ; Menu action for the "Penalty Killing ..." stats item: statscategory = 2; on
-; first entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes
-; into the team stats screen (TeamStatsScreen), else redraws through
-; teamstatscb
+; first entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the team
+; stats screen (TeamStatsScreen), else redraws through teamstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuPenaltyKilling.c
 %ifdef CBUILD
@@ -822,10 +831,11 @@ StatsMenuPenaltyKilling:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StatsMenuPowerPlay                                              18182  95 PC
-; Menu action for the "Power Play ..." stats item: statscategory = 3; on
-; first entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes
-; into the team stats screen (TeamStatsScreen), else redraws through
-; teamstatscb
+; Menu action for the "Power Play ..." stats item: statscategory = 3; on first
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the team
+; stats screen (TeamStatsScreen), else redraws through teamstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuPowerPlay.c
 %ifdef CBUILD
@@ -901,8 +911,10 @@ StatsMenuPowerPlay:
 ;-----------------------------------------------------------------------------
 ; StatsMenuTeamPenalties                                          18265  95 PC
 ; Menu action for the "Penalties ..." stats item: statscategory = 4; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; team stats screen (TeamStatsScreen), else redraws through teamstatscb
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the team
+; stats screen (TeamStatsScreen), else redraws through teamstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuTeamPenalties.c
 %ifdef CBUILD
@@ -978,8 +990,10 @@ StatsMenuTeamPenalties:
 ;-----------------------------------------------------------------------------
 ; StatsMenuPoints                                                 18348  95 PC
 ; Menu action for the "Points ..." stats item: statscategory = 0; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; skater stats screen (LeadersScreen), else redraws through skaterstatscb
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuPoints.c
 %ifdef CBUILD
@@ -1055,8 +1069,10 @@ StatsMenuPoints:
 ;-----------------------------------------------------------------------------
 ; StatsMenuGoals                                                  18425  95 PC
 ; Menu action for the "Goals ..." stats item: statscategory = 1; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; skater stats screen (LeadersScreen), else redraws through skaterstatscb
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuGoals.c
 %ifdef CBUILD
@@ -1132,8 +1148,10 @@ StatsMenuGoals:
 ;-----------------------------------------------------------------------------
 ; StatsMenuAssists                                                18508  95 PC
 ; Menu action for the "Assists ..." stats item: statscategory = 2; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; skater stats screen (LeadersScreen), else redraws through skaterstatscb
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuAssists.c
 %ifdef CBUILD
@@ -1208,10 +1226,11 @@ StatsMenuAssists:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StatsMenuPPGoals                                                185EB  95 PC
-; Menu action for the "Power Play Goals ..." stats item: statscategory = 3;
-; on first entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes
-; into the skater stats screen (LeadersScreen), else redraws through
-; skaterstatscb
+; Menu action for the "Power Play Goals ..." stats item: statscategory = 3; on
+; first entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuPPGoals.c
 %ifdef CBUILD
@@ -1287,9 +1306,10 @@ StatsMenuPPGoals:
 ;-----------------------------------------------------------------------------
 ; StatsMenuSHGoals                                                186CE  95 PC
 ; Menu action for the "Shorthanded Goals ..." stats item: statscategory = 4;
-; on first entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes
-; into the skater stats screen (LeadersScreen), else redraws through
-; skaterstatscb
+; on first entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuSHGoals.c
 %ifdef CBUILD
@@ -1364,10 +1384,11 @@ StatsMenuSHGoals:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StatsMenuPlusMinus                                              187B1  95 PC
-; Menu action for the "Plus/Minus ..." stats item: statscategory = 5; on
-; first entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes
-; into the skater stats screen (LeadersScreen), else redraws through
-; skaterstatscb
+; Menu action for the "Plus/Minus ..." stats item: statscategory = 5; on first
+; entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuPlusMinus.c
 %ifdef CBUILD
@@ -1443,9 +1464,10 @@ StatsMenuPlusMinus:
 ;-----------------------------------------------------------------------------
 ; StatsMenuPIM                                                    18894  95 PC
 ; Menu action for the "Penalty Minutes ..." stats item: statscategory = 6; on
-; first entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes
-; into the skater stats screen (LeadersScreen), else redraws through
-; skaterstatscb
+; first entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuPIM.c
 %ifdef CBUILD
@@ -1520,10 +1542,11 @@ StatsMenuPIM:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StatsMenuShootPct                                               18977  95 PC
-; Menu action for the "Shooting Percentage ..." stats item: statscategory =
-; 7; on first entry (leaguestatsmode) fades through the SfPal1 / SfPal2
-; palettes into the skater stats screen (LeadersScreen), else redraws through
-; skaterstatscb
+; Menu action for the "Shooting Percentage ..." stats item: statscategory = 7;
+; on first entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the skater
+; stats screen (LeadersScreen), else redraws through skaterstatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuShootPct.c
 %ifdef CBUILD
@@ -1599,9 +1622,10 @@ StatsMenuShootPct:
 ;-----------------------------------------------------------------------------
 ; StatsMenuGAA                                                    18A5A  95 PC
 ; Menu action for the "Goals Against Average ..." stats item: statscategory =
-; 8; on first entry (leaguestatsmode) fades through the SfPal1 / SfPal2
-; palettes into the goalie stats screen (LeadersScreen), else redraws through
-; goaliestatscb
+; 8; on first entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the goalie
+; stats screen (LeadersScreen), else redraws through goaliestatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuGAA.c
 %ifdef CBUILD
@@ -1676,9 +1700,10 @@ StatsMenuGAA:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StatsMenuGoalieWins                                             18B3D  95 PC
-; Menu action for the "Wins ..." stats item: statscategory = 9; on first
-; entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the
-; goalie stats screen (LeadersScreen), else redraws through goaliestatscb
+; Menu action for the "Wins ..." stats item: statscategory = 9; on first entry
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the goalie
+;
+; stats screen (LeadersScreen), else redraws through goaliestatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuGoalieWins.c
 %ifdef CBUILD
@@ -1753,10 +1778,11 @@ StatsMenuGoalieWins:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StatsMenuSavePct                                                18C20  95 PC
-; Menu action for the "Save Percentage ..." stats item: statscategory = 10;
-; on first entry (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes
-; into the goalie stats screen (LeadersScreen), else redraws through
-; goaliestatscb
+; Menu action for the "Save Percentage ..." stats item: statscategory = 10; on
+; first entry
+;
+; (leaguestatsmode) fades through the SfPal1 / SfPal2 palettes into the goalie
+; stats screen (LeadersScreen), else redraws through goaliestatscb
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/StatsMenuSavePct.c
 %ifdef CBUILD
@@ -1840,7 +1866,7 @@ DeskSetExit3b:
 ;-----------------------------------------------------------------------------
 ; ShowPlayerStatsItem                          18D0D  95 PC, medium confidence
 ; "Show Player Statistics And Attributes" menu action: deskexit = 4, or 5
-; when byte_DC836 is not 'G'; returns 1 via DeskSetExit_ret1
+; when the player's position (statsplayer+2) is not 'G'; returns 1 via DeskSetExit_ret1
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk_stats/ShowPlayerStatsItem.c
 %ifdef CBUILD

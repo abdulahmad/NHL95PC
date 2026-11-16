@@ -1,4 +1,4 @@
-; Collision tests: players, boards, goal, the wall bounce (94G collide94).
+; Collision tests: players, boards, goal, the wall bounce.
 bits 32
 %include "hockey.inc"
 section s_58084 progbits alloc exec nowrite align=1
@@ -11,7 +11,7 @@ extern SortCords, vecdist, vtoa, wcradiusx, wcradiusy, LastShooterTeam, Ylist
 global newcheck, checkcoll, checkwallcoll, checkgoal, wallcoll, wallcollb, checkplcoll, checkcx
 ;-----------------------------------------------------------------------------
 ; newcheck                       58084  93G hockey93_03.asm, medium confidence
-; 93G newcheck: random check sound (sfx, randomd0); called from checkcx and
+; newcheck: random check sound (sfx, randomd0); called from checkcx and
 ; FallDown
 ;-----------------------------------------------------------------------------
 ; C: src/engine/collide/newcheck.c
@@ -196,7 +196,7 @@ checkcoll:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; checkwallcoll                                       582C9  94G collide94.asm
-; 93G checkwallcoll: vecdist against the corner radius, wallcollb, checkgoal
+; checkwallcoll: vecdist against the corner radius, wallcollb, checkgoal
 ;-----------------------------------------------------------------------------
 checkwallcoll:
         push dword 24h
@@ -336,7 +336,7 @@ checkwallcoll:
         ret
 ;-----------------------------------------------------------------------------
 ; checkgoal                                           584AA  94G collide94.asm
-; 93G checkgoal (coll with goal/net): checkgoalp for players, Goal for the
+; checkgoal (coll with goal/net): checkgoalp for players, Goal for the
 ; puck, puckflip / sfx on the frame
 ;-----------------------------------------------------------------------------
 checkgoal:
@@ -556,7 +556,7 @@ checkgoal:
         ret
 ;-----------------------------------------------------------------------------
 ; wallcoll                                            587D3  94G collide94.asm
-; 93G wallcoll (bounce off a wall with cos/sin): randomd0, puckflip, sfx;
+; wallcoll (bounce off a wall with cos/sin): randomd0, puckflip, sfx;
 ; called from checkgoalp, checkgoal and wallcollb
 ;-----------------------------------------------------------------------------
 wallcoll:
@@ -837,14 +837,19 @@ wallcoll:
 ;-----------------------------------------------------------------------------
 ; wallcollb                        58B7F  94G collide94.asm, medium confidence
 ; Check for the puck over the wall (called from checkwallcoll). Not the puck
-; (SCnum 0Eh), or Zpos up to 12h: wallcoll. Zpos above 1Dh, or above 12h with
-; Ypos below F8h: out of play. Otherwise only at |Xpos| 28h-38h with Yvel >=
-; FA0h and lty >= 26h (else wallcoll): halve Yvel, SPA 821h on the next
-; struct (the glass) at x 3Fh -40h (by the puck's side), y 10Bh, sfx AEh,
-; crowdlevel +1200 (max 1500) and CwdExciteLvl +15, then out of play. Out of
-; play: sfslock (sflags bit 6), pfnc (pflags bit 2), attribute bit 15 when
-; Ypos < 0, the next struct's frame -1 and, while the clock runs, penalty 3
-; for the last player to touch the puck (lasttouch); the penalty shot ends.
+; (SCnum 0Eh), or Zpos up to 12h: wallcoll.
+;
+; Zpos above 1Dh, or above 12h with Ypos below F8h: out of play.
+;
+; Otherwise only at |Xpos| 28h-38h with Yvel >= FA0h and lty >= 26h (else
+; wallcoll): halve Yvel, SPA 821h on the next struct (the glass) at x 3Fh -40h
+; (by the puck's side), y 10Bh, sfx AEh, crowdlevel +1200 (max 1500)
+;
+; and CwdExciteLvl +15, then out of play.
+;
+; Out of play: sfslock (sflags bit 6), pfnc (pflags bit 2), attribute bit 15
+; when Ypos < 0, the next struct's frame -1 and, while the clock runs, penalty
+; 3 for the last player to touch the puck (lasttouch); the penalty shot ends.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/collide/wallcollb.c
 %ifdef CBUILD
@@ -965,7 +970,7 @@ wallcollb:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; checkplcoll                      58CE2  94G collide94.asm, medium confidence
-; Genesis comment (collide94.asm): check collision with other players. d2/d3
+; check collision with other players. d2/d3
 ; = x/y cords, a3 = struct. Walk
 ;-----------------------------------------------------------------------------
 checkplcoll:

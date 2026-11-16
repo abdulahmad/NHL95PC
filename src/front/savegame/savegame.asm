@@ -18,6 +18,7 @@ global MenuSaveGame, SaveGameStub, SaveGameNameDlg, savenamedefault, MenuPlayNex
 ; MenuSaveGame                                 85924  95 PC, medium confidence
 ; Menu action "Save Game ...": disk-space check (msg_NoSaveSpace),
 ; SaveGameNameDlg, writes .nhl game file, game.sav / gsummary.db copies,
+;
 ; league / playoff 'Saving Current ...' messages
 ;-----------------------------------------------------------------------------
 ; C: src/front/savegame/MenuSaveGame.c
@@ -1031,7 +1032,7 @@ SaveGameNameDlg:
         add esp, 94h
         jmp near SaveGameStub
 %endif ; C
-savenamedefault:
+savenamedefault:                                ; used by CreatePlayoffs
         db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h
 ;-----------------------------------------------------------------------------

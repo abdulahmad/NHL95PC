@@ -12,9 +12,10 @@ global LoadLeagueGameRef, DateKey, NormalizeDate, UpdateSeasonSchedule, UpdateSe
 global SeriesLength_bo1, SeriesLength_bo3, SeriesLength_n3, SeriesLength_n4, SeriesLength_bo7, RandomizeSchedule, SimScheduleDay
 ;-----------------------------------------------------------------------------
 ; LoadLeagueGameRef                                               41B80  95 PC
-; Import_export 36BFC: reads the saved-game league state from the open file
-; in the order SaveLeagueGameRef writes it (DDD38, DDD34, DDD3C, DDD48,
-; DDD4A, DDD46, savleague1, savleague2, DDD40)
+; Import_export 36BFC: reads the saved-game league state from the open file in
+; the order SaveLeagueGameRef writes it (DDD38, DDD34, DDD3C, DDD48, DDD4A,
+;
+; DDD46, savleague1, savleague2, DDD40)
 ;-----------------------------------------------------------------------------
 ; C: src/front/season/LoadLeagueGameRef.c
 %ifdef CBUILD
@@ -105,8 +106,9 @@ LoadLeagueGameRef:
 ;-----------------------------------------------------------------------------
 ; DateKey                                      41C79  95 PC, medium confidence
 ; (month, day) -> sortable day number: months below 9 count as month+12
-; (season runs Sep-Jun), result month*31 + day; SimScheduleDay compares game
-; dates with it
+; (season runs Sep-Jun), result month*31 + day;
+;
+; SimScheduleDay compares game dates with it
 ;-----------------------------------------------------------------------------
 ; C: src/front/season/DateKey.c
 %ifdef CBUILD
@@ -164,10 +166,11 @@ NormalizeDate:
 ;-----------------------------------------------------------------------------
 ; UpdateSeasonSchedule                         41CC4  95 PC, medium confidence
 ; After a league game (import_export/database_merge): opens SCHEDULE.DB,
-; TEAMS.DB (rw) and CARTEAMS.DB, loads SEASON/CAREER/KEY databases, reads the
-; game at the given index; regular season (index < 444h, or game 444h not yet
-; seeded) -> SimScheduleDay, playoffs -> AdvancePlayoffs; saves SEASON.DB and
-; frees the buffers
+; TEAMS.DB (rw) and CARTEAMS.DB, loads SEASON/CAREER/KEY databases,
+;
+; reads the game at the given index; regular season (index < 444h, or game
+; 444h not yet seeded) -> SimScheduleDay, playoffs -> AdvancePlayoffs; saves
+; SEASON.DB and frees the buffers
 ;-----------------------------------------------------------------------------
 ; C: src/front/season/UpdateSeasonSchedule.c
 %ifdef CBUILD
@@ -396,10 +399,11 @@ UpdateSeasonSchedule_pop3:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; UpdatePlayoffSeries                          41F64  95 PC, medium confidence
-; Import_export 37846/378A4: playoff game index -> round
-; (444h/47Ch/498h/4A6h) and series (7 games each); counts played games, and
-; when a team reached (n+1)/2 wins blanks the remaining games (FFh teams) and
-; rewrites both team records
+; Import_export 37846/378A4: playoff game index -> round (444h/47Ch/498h/4A6h)
+; and series (7 games each); counts played games, and when a team reached
+;
+; (n+1)/2 wins blanks the remaining games (FFh teams) and rewrites both team
+; records
 ;-----------------------------------------------------------------------------
 ; C: src/front/season/UpdatePlayoffSeries.c
 %ifdef CBUILD
@@ -594,7 +598,7 @@ UpdatePlayoffSeries:
         ret
 %endif ; C
         db 08Bh,0C0h
-SeriesLength_jt:
+SeriesLength_jt:                                ; used by SeriesLength
         dd SeriesLength_bo1
         dd SeriesLength_bo3
         dd SeriesLength_n3
@@ -660,10 +664,11 @@ SeriesLength_bo7:
         jmp short SeriesLength_bo1.4
 ;-----------------------------------------------------------------------------
 ; RandomizeSchedule                            42295  95 PC, medium confidence
-; CreateNewLeague: 'Generating random schedule. Please wait.' when asked,
-; shuffles the teams inside each division (divisionteams, 12 rand swaps per
-; division) and remaps every SCHEDULE.DB game and TEAMS.DB record to the
-; shuffled teams
+; CreateNewLeague: 'Generating random schedule.
+;
+; Please wait.' when asked, shuffles the teams inside each division
+; (divisionteams, 12 rand swaps per division) and remaps every SCHEDULE.DB
+; game and TEAMS.DB record to the shuffled teams
 ;-----------------------------------------------------------------------------
 RandomizeSchedule:
         push dword 3D4h
@@ -927,8 +932,9 @@ RandomizeSchedule:
 ;-----------------------------------------------------------------------------
 ; SimScheduleDay                               42631  95 PC, medium confidence
 ; Simulates (SimulateGame) every unplayed game up to the given game's date
-; that the flags select (bit 0 two human teams, bit 1 one, bit 2 none); with
-; flags 7 and no human games left it plays out the rest of the 444h
+; that the flags select (bit 0 two human teams, bit 1 one, bit 2 none);
+;
+; with flags 7 and no human games left it plays out the rest of the 444h
 ; regular-season games and calls BuildPlayoffs
 ;-----------------------------------------------------------------------------
 ; C: src/front/season/SimScheduleDay.c

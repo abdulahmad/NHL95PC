@@ -4,6 +4,11 @@ bits 32
 section s_A18D6 progbits alloc exec nowrite align=1
 extern IntrStubs
 global IntrLoadSegRegs
+;-----------------------------------------------------------------------------
+; IntrLoadSegRegs                              A18D6  95 PC, medium confidence
+; Loads the register set and segment registers for a protected-mode interrupt
+; call
+;-----------------------------------------------------------------------------
 IntrLoadSegRegs:
         lea esi, [esi+esi*2]
         lea eax, [dword cs:esi+IntrStubs]

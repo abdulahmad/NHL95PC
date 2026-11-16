@@ -31,11 +31,16 @@ extern str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2
 global dressbystatus, lineslotgroups, lineslotgroupstart, gsumqcount, defercount, ovlmemneed, dbg_spalist
 global starthl2pos, pennametab, goaliemenuflags, goaliemenuflags_e02, bannerstrs, replayfollowpl_m2, dbg_spanames, dbg_assnames
 global dbg_posnames, penbannertab, replayfollowpl, replaytick, replaysfx
-gsumqcount:
+gsumqcount:                                     ; number of 0Dh-byte records queued at gsumqueue for
+                                                ; FlushGSumQueue; used by FlushGSumQueue, PostGoalEvent,
+                                                ; PostInjuryEvent ...
         db 00h,00h,00h,00h
-defercount:
+defercount:                                     ; number of slots queued by QueueDeferredCall; used by
+                                                ; QueueDeferredCall, RunDeferredCalls
         db 00h,00h,00h,00h
-pennametab:
+pennametab:                                     ; pointer to the name of each penalty (Roughing, Charging,
+                                                ; Slashing ...) for the penalty event text; used by
+                                                ; PostPenaltyEvent
         dd str_Roughing
         dd str_NoPenalty
         dd str_Charging2
@@ -54,7 +59,8 @@ pennametab:
         dd str_Boarding2
         dd str_Elbowing2
         dd str_Penshot
-penbannertab:
+penbannertab:                                   ; AddPenalty2: call banner message per penalty (dword each, -1
+                                                ; none); used by AddPenalty2
         db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,02h,00h,00h,00h
         db 02h,00h,00h,00h,02h,00h,00h,00h,05h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
         db 04h,00h,00h,00h,06h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,06h,00h,00h,00h
@@ -63,33 +69,42 @@ penbannertab:
         db 06h,00h,00h,00h,06h,00h,00h,00h,06h,00h,00h,00h,06h,00h,00h,00h
         db 06h,00h,00h,00h,06h,00h,00h,00h,07h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
         db 06h,00h,00h,00h,03h,00h,00h,00h,02h,00h,00h,00h
-dressbystatus:
+dressbystatus:                                  ; BuildDefaultLines: dressflags value for each roster status
+                                                ; byte; used by BuildDefaultLines, CanFillLineSlot,
+                                                ; PickExtraSkater ...
         db 00h,00h,02h,01h,01h,00h
         db 00h,01h,00h
-lineslotgroups:
+lineslotgroups:                                 ; PickForLineSlot: line slots grouped by position, each group
+                                                ; ended by -1; used by PickForLineSlot
         db 00h,03h,06h,09h,0FFh,01h,04h,07h,0Ah,0FFh,02h,05h,08h,0Bh,0FFh,0Ch
         db 0Eh,010h,0FFh,0Dh,0Fh,011h,0FFh,012h,017h,00h,03h,06h,09h,0FFh,013h,018h
         db 01h,04h,07h,0Ah,0FFh,014h,019h,02h,05h,08h,0Bh,0FFh,015h,01Ah,0Ch,0Eh
         db 010h,0FFh,016h,01Bh,0Dh,0Fh,011h,0FFh,01Ch,020h,00h,03h,06h,09h,0FFh,01Dh
         db 021h,01h,04h,07h,0Ah,0FFh,01Eh,022h,0Ch,0Eh,010h,0FFh,01Fh,023h,0Dh,0Fh
         db 011h,0FFh
-lineslotgroupstart:
+lineslotgroupstart:                             ; PickForLineSlot: start index in lineslotgroups of each
+                                                ; slot's group; used by PickForLineSlot
         db 00h,05h,0Ah,00h,05h,0Ah,00h,05h,0Ah,00h,05h,0Ah,0Fh,013h,0Fh,013h
         db 0Fh,013h,017h,01Eh,025h,02Ch,032h,017h,01Eh,025h,02Ch,032h,038h,03Fh,046h,04Ch
         db 038h,03Fh,046h,04Ch,00h
-goaliemenuflags:
+goaliemenuflags:                                ; ShowGoalieBanner / CPgoalie: per side three pointers to the
+                                                ; goalie menu item check marks; used by CPgoalie, ChkGoalies,
+                                                ; CtlSwapScoreFix ...
         dd str_sp00XXXXXXXXXXXXXXXXX
         dd str_sp00XXXXXXXXXXXXXXXXX2
-goaliemenuflags_e02:
+goaliemenuflags_e02:                            ; goaliemenuflags[2]: the 'pulled goalie / extra attacker'
+                                                ; item; used by CPgoalie, ChkGoalies, CtlSwapScoreFix ...
         dd str_spNONE
         dd str_sp00XXXXXXXXXXXXXXXXX3
         dd str_sp00XXXXXXXXXXXXXXXXX4
         dd str_spNONE2
-ovlmemneed:
+ovlmemneed:                                     ; free memory each overlay sequence needs before LoadTeamPPV
+                                                ; loads its art; used by LoadTeamPPV
         db 0Dh,0ACh,00h,00h,0CDh,05Ch,00h,00h,0A5h,050h,00h,00h,0AAh,050h,00h,00h
         db 023h,03Ch,00h,00h,07Bh,04Fh,00h,00h,084h,06Dh,00h,00h,0D1h,037h,01h,00h
         db 0D5h,0D0h,01h,00h,075h,0C4h,00h,00h,0C5h,0C7h,01h,00h
-bannerstrs:
+bannerstrs:                                     ; pointer table of the call banner strings indexed by
+                                                ; bannermsg (DrawCallBanner); used by DrawCallBanner
         dd str_BnReturnGoalie
         dd str_BnPullGoalie
         dd str_BnFaceOff
@@ -99,13 +114,21 @@ bannerstrs:
         dd str_BnPenalty
 replayfollowpl_m2 equ $+2
         dd str_BnPenaltyShot
-replayfollowpl:
+replayfollowpl:                                 ; instant replay: the player the camera follows, -1 for a free
+                                                ; spot; used by DrawRinkSideObjects, InstantReplay,
+                                                ; ReplayControlLoop
         db 0FFh,0FFh
-replaytick:
+replaytick:                                     ; updatereplay tick counter: a frame is recorded every 2nd
+                                                ; call; ReplayRecordReset sets 1; used by ReplayRecordReset,
+                                                ; updatereplay
         db 01h,00h
-replaysfx:
+replaysfx:                                      ; sfx number kept from the off tick (lastsfx) for the next
+                                                ; recorded frame (-1 = none); used by InstantReplay,
+                                                ; ReplayRecordReset, updatereplay
         db 0FFh,0FFh,00h,00h
-dbg_spalist:
+dbg_spalist:                                    ; 78h dword SPA values: DebugMonitor searches it for the
+                                                ; object's SPA to find its name in dbg_spanames; used by
+                                                ; DebugMonitor
         db 01h,00h,00h,00h,099h,00h,00h,00h,0B1h,00h,00h,00h,0C9h,00h,00h,00h
         db 0E1h,00h,00h,00h,01h,01h,00h,00h,019h,01h,00h,00h,031h,01h,00h,00h
         db 059h,01h,00h,00h,081h,01h,00h,00h,0B9h,01h,00h,00h,0F1h,01h,00h,00h
@@ -136,7 +159,7 @@ dbg_spalist:
         db 01Dh,012h,00h,00h,065h,012h,00h,00h,0DDh,012h,00h,00h,055h,013h,00h,00h
         db 08Dh,013h,00h,00h,0C5h,013h,00h,00h,01Dh,014h,00h,00h,075h,014h,00h,00h
         db 0ADh,014h,00h,00h,0E5h,014h,00h,00h,0F9h,014h,00h,00h,0Dh,015h,00h,00h
-dbg_spanames:
+dbg_spanames:                                   ; used by DebugMonitor
         dd str_Gready
         dd str_Gready2
         dd str_Gglover
@@ -257,7 +280,9 @@ dbg_spanames:
         dd str_Refelbow
         dd str_Refhistick
         dd str_ERROR
-dbg_assnames:
+dbg_assnames:                                   ; pointer table of assignment-name strings: DebugMonitor
+                                                ; indexes it with the object's current asstab entry and prints
+                                                ; "A%s"; used by DebugMonitor
         dd str_Null
         dd str_Defo
         dd str_Defd
@@ -306,7 +331,9 @@ dbg_assnames:
         dd str_Apswait
         dd str_Abreak
         dd str_Error2
-dbg_posnames:
+dbg_posnames:                                   ; pointer table to "G","LD","RD","LW","C","RW","XC":
+                                                ; DebugMonitor prints the object's position name through it;
+                                                ; used by DebugMonitor
         dd str_G5
         dd str_LD
         dd str_RD2
@@ -314,7 +341,8 @@ dbg_posnames:
         dd str_C6
         dd str_RW
         dd str_XC
-starthl2pos:
+starthl2pos:                                    ; StartHL2: x, y start positions of the players for the
+                                                ; highlight; used by StartHL2
         db 00h,00h,024h,0FFh,0B0h,0FFh,079h,0FFh,019h,00h,09Ch,0FFh,092h,0FFh,0C9h,0FFh
         db 01Eh,00h,0DCh,0FFh,050h,00h,0B8h,0FFh,00h,00h,0DCh,00h,028h,00h,052h,00h
         db 0C2h,0FFh,048h,00h,06Eh,00h,024h,00h,0F1h,0FFh,09h,00h,0C9h,0FFh,00h,00h

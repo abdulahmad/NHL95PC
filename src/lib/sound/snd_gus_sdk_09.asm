@@ -3,6 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_B2720 progbits alloc exec nowrite align=1
 global GusConvertAddr16, GusRegsToAddr
+;-----------------------------------------------------------------------------
+; GusConvertAddr16                             B2720  95 PC, medium confidence
+; Converts a card memory address for a 16-bit DMA transfer
+;-----------------------------------------------------------------------------
 GusConvertAddr16:
         push ebp
         mov ebp, esp
@@ -17,6 +21,10 @@ GusConvertAddr16:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusRegsToAddr                                   B273C  95 PC, low confidence
+; Turns a pair of voice address registers back into a card address
+;-----------------------------------------------------------------------------
 GusRegsToAddr:
         push ebp
         mov ebp, esp

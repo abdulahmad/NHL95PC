@@ -24,8 +24,10 @@ global PollMouseEvent, PollJoystickEvent, PollKeyboardEvent
 ;-----------------------------------------------------------------------------
 ; JoystickCalScreen                                               6B093  95 PC
 ; (stick, shift, mask, title): "joycal" screen with the left / right stick
-; picture; moves the puck to the position of the stick direction (joycalx /
-; joycaly) until a button; Esc / failure clears the stick from joyenablemask
+; picture; moves the puck to the position of the stick direction
+;
+; (joycalx / joycaly) until a button; Esc / failure clears the stick from
+; joyenablemask
 ;-----------------------------------------------------------------------------
 ; C: src/pc/input_events/JoystickCalScreen.c
 %ifdef CBUILD
@@ -401,8 +403,9 @@ InputRemove:
 ;-----------------------------------------------------------------------------
 ; EventToPointer                                                  6B4BB  95 PC
 ; (event, x*, y*): mouse events set the pointer position, joystick / key
-; events step it with acceleration (8 << repeat/5), clamped to 0..275h /
-; 0..1D5h, MouseSetPos; returns the buttons
+; events step it with acceleration (8 << repeat/5), clamped
+;
+; to 0..275h / 0..1D5h, MouseSetPos; returns the buttons
 ;-----------------------------------------------------------------------------
 ; C: src/pc/input_events/EventToPointer.c
 %ifdef CBUILD
@@ -1109,8 +1112,7 @@ MenuHitTest:
 ;-----------------------------------------------------------------------------
 ; InputPollTick                                                   6BAEB  95 PC
 ; Timer callback, every 5 ticks: PollMouseEvent / PollJoystickEvent /
-; PollKeyboardEvent by ctlavailmask, tracks direction repeat, queues the
-; event
+; PollKeyboardEvent by ctlavailmask, tracks direction repeat, queues the event
 ;-----------------------------------------------------------------------------
 InputPollTick:
         push edx

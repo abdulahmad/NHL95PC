@@ -16,27 +16,47 @@ global MergeZoneRect, ZoneOverlaps, ZoneOverlaps, ClampZoneToScreen, RemoveZone,
 global AddMarkedZones, InitZoneManager, FreeZoneManager, MarkZonePoint, MarkZoneRect, ZonePutChar, MarkZonePoints, MarkZoneRadius
 global MarkZoneSprite, MarkZoneShapeAt, EraseZones, FlushZones, ComputeZoneBounds, SetZoneScreen, SetZoneOrigin, ClipToZoneScreen
 global ClipToZoneUpdate, ClipToRect, BeginZoneFrame
+;-----------------------------------------------------------------------------
+; SetZoneFlags                                 6A033  95 PC, medium confidence
+; Sets bits in the zone manager flags
+;-----------------------------------------------------------------------------
 SetZoneFlags:
         push dword 4
         call __CHK
         or dword [ZoneFlags], eax
         ret
+;-----------------------------------------------------------------------------
+; ClearZoneFlags                               6A044  95 PC, medium confidence
+; Clears bits in the zone manager flags
+;-----------------------------------------------------------------------------
 ClearZoneFlags:
         push dword 4
         call __CHK
         not eax
         and dword [ZoneFlags], eax
         ret
+;-----------------------------------------------------------------------------
+; ToggleZoneFlags                              6A057  95 PC, medium confidence
+; Toggles bits in the zone manager flags
+;-----------------------------------------------------------------------------
 ToggleZoneFlags:
         push dword 4
         call __CHK
         xor dword [ZoneFlags], eax
         ret
+;-----------------------------------------------------------------------------
+; GetZoneFlags                                 6A068  95 PC, medium confidence
+; Returns the zone manager flags
+;-----------------------------------------------------------------------------
 GetZoneFlags:
         push dword 4
         call __CHK
         mov eax, dword [ZoneFlags]
         ret
+;-----------------------------------------------------------------------------
+; SetZoneBits                                  6A078  95 PC, medium confidence
+; Sets bits in one zone's state word
+;-----------------------------------------------------------------------------
 SetZoneBits:
         push dword 8
         call __CHK
@@ -47,6 +67,10 @@ SetZoneBits:
         or dword [ebx+eax], edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ClearZoneBits                                6A092  95 PC, medium confidence
+; Clears bits in one zone's state word
+;-----------------------------------------------------------------------------
 ClearZoneBits:
         push dword 8
         call __CHK
@@ -56,6 +80,10 @@ ClearZoneBits:
         and dword [ebx+eax*4], edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ToggleZoneBits                               6A0AA  95 PC, medium confidence
+; Toggles bits in one zone's state word
+;-----------------------------------------------------------------------------
 ToggleZoneBits:
         push dword 8
         call __CHK
@@ -66,6 +94,10 @@ ToggleZoneBits:
         xor dword [ebx+eax], edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; GetZoneBits                                  6A0C4  95 PC, medium confidence
+; Returns one zone's state word
+;-----------------------------------------------------------------------------
 GetZoneBits:
         push dword 8
         call __CHK
@@ -76,6 +108,10 @@ GetZoneBits:
         mov eax, dword [edx+eax]
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; GetZoneRect                                  6A0DE  95 PC, medium confidence
+; Returns a pointer to one zone's rectangle
+;-----------------------------------------------------------------------------
 GetZoneRect:
         push dword 8
         call __CHK
@@ -85,11 +121,20 @@ GetZoneRect:
         add eax, edx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; SetHiddenWindow                              6A0F6  95 PC, medium confidence
+; Sets the hidden (off-screen) bitmap
+;-----------------------------------------------------------------------------
 SetHiddenWindow:
         push dword 4
         call __CHK
         mov dword [HiddenWindow], eax
         ret
+;-----------------------------------------------------------------------------
+; SelectHiddenWindow                           6A106  95 PC, medium confidence
+; Draws to the hidden bitmap and clips to its full size; fatal error if none
+; is set
+;-----------------------------------------------------------------------------
 SelectHiddenWindow:
         push dword 24h
         call __CHK
@@ -121,11 +166,20 @@ SelectHiddenWindow:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SetBackgroundWindow                          6A156  95 PC, medium confidence
+; Sets the background bitmap
+;-----------------------------------------------------------------------------
 SetBackgroundWindow:
         push dword 4
         call __CHK
         mov dword [BackgroundWindow], eax
         ret
+;-----------------------------------------------------------------------------
+; SelectBackgroundWindow                       6A166  95 PC, medium confidence
+; Draws to the background bitmap and clips to its full size; fatal error if
+; none is set
+;-----------------------------------------------------------------------------
 SelectBackgroundWindow:
         push dword 24h
         call __CHK
@@ -145,6 +199,10 @@ SelectBackgroundWindow:
         add esp, byte 4
         mov eax, dword [BackgroundWindow]
         jmp short SelectHiddenWindow+038h
+;-----------------------------------------------------------------------------
+; ClipToZone                                      6A1A0  95 PC, low confidence
+; Clips drawing to a rectangle moved by the zone origin
+;-----------------------------------------------------------------------------
 ClipToZone:
         push dword 24h
         call __CHK
@@ -167,6 +225,10 @@ ClipToZone:
         add eax, esi
         push eax
         jmp near SelectHiddenWindow+043h
+;-----------------------------------------------------------------------------
+; CopyZoneToScreen                                6A1D6  95 PC, low confidence
+; Copies one rectangle of the hidden bitmap to the screen
+;-----------------------------------------------------------------------------
 CopyZoneToScreen:
         push dword 28h
         call __CHK
@@ -206,6 +268,10 @@ CopyZoneToScreen:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; CopyHiddenToScreen                              6A234  95 PC, low confidence
+; Copies the whole 320x168 hidden bitmap to the screen
+;-----------------------------------------------------------------------------
 CopyHiddenToScreen:
         push dword 20h
         call __CHK
@@ -231,6 +297,10 @@ CopyHiddenToScreen:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AlignZoneRect                                   6A27A  95 PC, low confidence
+; Widens the current zone rectangle to 4-pixel columns
+;-----------------------------------------------------------------------------
 AlignZoneRect:
         push dword 8
         call __CHK
@@ -253,10 +323,18 @@ AlignZoneRect:
         inc dword [byte eax+0Ch]
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; ZoneDebugHook                                   6A2BC  95 PC, low confidence
+; Empty hook called before a flush
+;-----------------------------------------------------------------------------
 ZoneDebugHook:
         push dword 4
         call __CHK
         ret
+;-----------------------------------------------------------------------------
+; DrawRectOutline                                 6A2C7  95 PC, low confidence
+; Draws a rectangle outline as four filled lines
+;-----------------------------------------------------------------------------
 DrawRectOutline:
         push dword 28h
         call __CHK
@@ -307,6 +385,10 @@ DrawRectOutline:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; OutlineZone                                     6A335  95 PC, low confidence
+; Draws the outline of one zone rectangle
+;-----------------------------------------------------------------------------
 OutlineZone:
         push dword 14h
         call __CHK
@@ -330,6 +412,10 @@ OutlineZone:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; RestoreZoneRect                                 6A373  95 PC, low confidence
+; Copies one rectangle of the background bitmap into the drawing bitmap
+;-----------------------------------------------------------------------------
 RestoreZoneRect:
         push dword 2Ch
         call __CHK
@@ -365,6 +451,10 @@ RestoreZoneRect:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SwapZoneLists                                   6A3C0  95 PC, low confidence
+; Swaps the current and previous frame zone lists
+;-----------------------------------------------------------------------------
 SwapZoneLists:
         push dword 0Ch
         call __CHK
@@ -398,6 +488,10 @@ SwapZoneLists:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FreeAllZones                                    6A439  95 PC, low confidence
+; Returns every zone in the list to the free list
+;-----------------------------------------------------------------------------
 FreeAllZones:
         push dword 10h
         call __CHK
@@ -424,6 +518,10 @@ FreeAllZones:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ZoneCovered                                     6A48E  95 PC, low confidence
+; Tells whether a rectangle lies inside an existing zone
+;-----------------------------------------------------------------------------
 ZoneCovered:
         push dword 0Ch
         call __CHK
@@ -457,6 +555,10 @@ ZoneCovered:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; MergeZoneRect                                   6A4D3  95 PC, low confidence
+; Merges a rectangle into a zone within 16 pixels of it
+;-----------------------------------------------------------------------------
 MergeZoneRect:
         push dword 14h
         call __CHK
@@ -554,6 +656,10 @@ MergeZoneRect:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ZoneOverlaps                                    6A5A5  95 PC, low confidence
+; Tells whether two zone rectangles overlap
+;-----------------------------------------------------------------------------
 ZoneOverlaps:
         push dword 0Ch
         call __CHK
@@ -587,6 +693,10 @@ ZoneOverlaps:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ClampZoneToScreen                               6A5EA  95 PC, low confidence
+; Clamps a zone rectangle to the screen bounds
+;-----------------------------------------------------------------------------
 ClampZoneToScreen:
         push dword 10h
         call __CHK
@@ -623,6 +733,10 @@ ClampZoneToScreen:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; RemoveZone                                      6A649  95 PC, low confidence
+; Unlinks one zone from the zone list
+;-----------------------------------------------------------------------------
 RemoveZone:
         push dword 14h
         call __CHK
@@ -672,6 +786,10 @@ RemoveZone:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; InsertZoneSorted                                6A6CC  95 PC, low confidence
+; Links a zone into the list sorted by position
+;-----------------------------------------------------------------------------
 InsertZoneSorted:
         push dword 18h
         call __CHK
@@ -737,6 +855,10 @@ InsertZoneSorted:
         movsd
         inc dword [ZoneListCount]
         jmp near RestoreZoneRect+047h
+;-----------------------------------------------------------------------------
+; SplitZoneRect                                   6A791  95 PC, low confidence
+; Splits an overlapping rectangle into pieces and adds each one
+;-----------------------------------------------------------------------------
 SplitZoneRect:
         push dword 4Ch
         call __CHK
@@ -863,6 +985,10 @@ SplitZoneRect:
 .14:
         add esp, byte 30h
         jmp near RestoreZoneRect+046h
+;-----------------------------------------------------------------------------
+; AddZone                                         6A8B1  95 PC, low confidence
+; Adds a rectangle to the zone list, merging or splitting as needed
+;-----------------------------------------------------------------------------
 AddZone:
         push dword 8
         call __CHK
@@ -944,6 +1070,10 @@ AddZone:
 .11:
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; AddMarkedZones                                  6A990  95 PC, low confidence
+; Adds every zone whose state word has the dirty bit
+;-----------------------------------------------------------------------------
 AddMarkedZones:
         push dword 0Ch
         call __CHK
@@ -970,6 +1100,11 @@ AddMarkedZones:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; InitZoneManager                              6A9CE  95 PC, medium confidence
+; Allocates the screen zone lists used to redraw only changed parts of the
+; screen
+;-----------------------------------------------------------------------------
 InitZoneManager:
         push dword 20h
         call __CHK
@@ -1055,6 +1190,10 @@ InitZoneManager:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; FreeZoneManager                              6AAD5  95 PC, medium confidence
+; Frees the zone manager memory block
+;-----------------------------------------------------------------------------
 FreeZoneManager:
         push dword 14h
         call __CHK
@@ -1069,6 +1208,10 @@ FreeZoneManager:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; MarkZonePoint                                   6AAF5  95 PC, low confidence
+; Grows one zone's dirty rectangle to hold a point
+;-----------------------------------------------------------------------------
 MarkZonePoint:
         push dword 10h
         call __CHK
@@ -1127,6 +1270,10 @@ MarkZonePoint:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; MarkZoneRect                                    6AB7C  95 PC, low confidence
+; Grows one zone's dirty rectangle to hold a rectangle
+;-----------------------------------------------------------------------------
 MarkZoneRect:
         push dword 0Ch
         call __CHK
@@ -1175,6 +1322,10 @@ MarkZoneRect:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; ZonePutChar                                     6ABF9  95 PC, low confidence
+; Draws one character and marks its cell dirty
+;-----------------------------------------------------------------------------
 ZonePutChar:
         push dword 14h
         call __CHK
@@ -1200,6 +1351,10 @@ ZonePutChar:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; MarkZonePoints                                  6AC31  95 PC, low confidence
+; Grows one zone's dirty rectangle to hold a list of points
+;-----------------------------------------------------------------------------
 MarkZonePoints:
         push dword 1Ch
         call __CHK
@@ -1256,6 +1411,10 @@ MarkZonePoints:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; MarkZoneRadius                                  6ACA2  95 PC, low confidence
+; Marks a point, or a box of a given radius around it, dirty
+;-----------------------------------------------------------------------------
 MarkZoneRadius:
         push dword 18h
         call __CHK
@@ -1289,6 +1448,10 @@ MarkZoneRadius:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; MarkZoneSprite                                  6ACE9  95 PC, low confidence
+; Marks the box of a sprite (16.16 position and size) dirty
+;-----------------------------------------------------------------------------
 MarkZoneSprite:
         push dword 14h
         call __CHK
@@ -1314,6 +1477,10 @@ MarkZoneSprite:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; MarkZoneShapeAt                                 6AD22  95 PC, low confidence
+; Marks the box of a shape drawn at a given position dirty
+;-----------------------------------------------------------------------------
 MarkZoneShapeAt:
         push dword 0Ch
         call __CHK
@@ -1333,6 +1500,10 @@ MarkZoneShapeAt:
         call MarkZoneRect
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; EraseZones                                      6AD4F  95 PC, low confidence
+; Restores the background under every zone, or the whole screen
+;-----------------------------------------------------------------------------
 EraseZones:
         push dword 0Ch
         call __CHK
@@ -1362,6 +1533,10 @@ EraseZones:
         mov edx, dword [ZoneNextLinks]
         mov edx, dword [edx+eax*4]
         jmp short .3
+;-----------------------------------------------------------------------------
+; FlushZones                                      6ADA7  95 PC, low confidence
+; Copies every dirty zone (or the whole hidden bitmap) to the screen
+;-----------------------------------------------------------------------------
 FlushZones:
         push dword 10h
         call __CHK
@@ -1414,6 +1589,10 @@ FlushZones:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ComputeZoneBounds                               6AE5C  95 PC, low confidence
+; Computes the bounding box of all zones
+;-----------------------------------------------------------------------------
 ComputeZoneBounds:
         push dword 10h
         call __CHK
@@ -1504,6 +1683,10 @@ ComputeZoneBounds:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SetZoneScreen                                   6AF52  95 PC, low confidence
+; Sets the screen bounds and clip window for the zone manager
+;-----------------------------------------------------------------------------
 SetZoneScreen:
         push dword 14h
         call __CHK
@@ -1522,17 +1705,29 @@ SetZoneScreen:
         call SetClipWindow
         add esp, byte 10h
         ret
+;-----------------------------------------------------------------------------
+; SetZoneOrigin                                   6AF97  95 PC, low confidence
+; Sets the screen position of the hidden bitmap
+;-----------------------------------------------------------------------------
 SetZoneOrigin:
         push dword 4
         call __CHK
         mov dword [ZoneOriginX], eax
         mov dword [ZoneOriginY], edx
         ret
+;-----------------------------------------------------------------------------
+; ClipToZoneScreen                                6AFAD  95 PC, low confidence
+; Clips drawing to the zone manager screen bounds
+;-----------------------------------------------------------------------------
 ClipToZoneScreen:
         push dword 4
         call __CHK
         mov eax, ZoneScreenLeft
         jmp short ClipToRect
+;-----------------------------------------------------------------------------
+; ClipToZoneUpdate                                6AFBE  95 PC, low confidence
+; Clips drawing to the zone bounds, or to the screen on a full redraw
+;-----------------------------------------------------------------------------
 ClipToZoneUpdate:
         push dword 4
         call __CHK
@@ -1542,6 +1737,10 @@ ClipToZoneUpdate:
         jne short ClipToRect+022h
 .1:
         mov eax, ZoneScreenLeft
+;-----------------------------------------------------------------------------
+; ClipToRect                                      6AFDF  95 PC, low confidence
+; Clips drawing to a rectangle
+;-----------------------------------------------------------------------------
 ClipToRect:
         push dword 24h
         call __CHK
@@ -1560,6 +1759,11 @@ ClipToRect:
         jmp near SelectHiddenWindow+043h
         mov eax, ZoneBoundsLeft
         jmp short ClipToRect
+;-----------------------------------------------------------------------------
+; BeginZoneFrame                                  6B008  95 PC, low confidence
+; Starts a frame: draws to the hidden bitmap, swaps zone lists, erases the
+; old zones
+;-----------------------------------------------------------------------------
 BeginZoneFrame:
         push dword 2Ch
         call __CHK

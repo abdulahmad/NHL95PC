@@ -789,9 +789,10 @@ SoundCardDlgLoop_x:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SetSoundDevice                               82D7A  95 PC, medium confidence
-; Shuts down current driver, selects PCBEEP/SBDAC/ADLIB/MT32 drivers by
-; device bit, MT-32 init message, test 'slapshot' sample, writes nhl.cfg
-; (%04x); also from LoadNhlCfg
+; Shuts down current driver, selects PCBEEP/SBDAC/ADLIB/MT32 drivers by device
+; bit, MT-32 init message, test 'slapshot' sample, writes nhl.cfg (%04x); also
+;
+; from LoadNhlCfg
 ;-----------------------------------------------------------------------------
 ; C: src/pc/sound_config/SoundCardDlgLoop.c (SetSoundDevice)
 %ifdef CBUILD

@@ -694,7 +694,7 @@ DrawLeagueSetDlg:
         jmp near LeagueSettingsDlg_ret0
 %endif ; C
         db 08Dh,040h,00h
-LeagueOptsToBits_jt:
+LeagueOptsToBits_jt:                            ; used by LeagueOptsToBits
         dd LeagueOptsToBits_n1
         dd LeagueOptsToBits_n0
         dd LeagueOptsToBits_n2

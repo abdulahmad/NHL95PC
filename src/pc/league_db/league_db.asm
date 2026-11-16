@@ -94,7 +94,7 @@ MenuCentralRegistry:
         pop ebx
         ret
 %endif ; C
-unk13_6BF3D:
+unk13_6BF3D:                                    ; 13 zero bytes in code (empty event, used by database_save)
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 ;-----------------------------------------------------------------------------
 ; BuildFreeAgentList                                              6BF4A  95 PC
@@ -530,9 +530,10 @@ MenuSaveDbs:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; MenuSaveDbsAs                                                   6C3BB  95 PC
-; Edit Rosters menu "Save As": "Enter a new database name:" (.DBX dir),
-; "There is already a database with that name! Do you want to replace it?",
-; mkdir, SaveDbsToDir
+; Edit Rosters menu "Save As": "Enter a new database name:" (.DBX dir), "There
+; is already a database with that name!
+;
+; Do you want to replace it?", mkdir, SaveDbsToDir
 ;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/MenuSaveDbsAs.c
 %ifdef CBUILD
@@ -624,8 +625,9 @@ MenuSaveDbsAs:
 ;-----------------------------------------------------------------------------
 ; SaveDbsToDir                                 6C4BA  95 PC, medium confidence
 ; (dir, ext): sums the old file sizes (KB) against the in-memory DB sizes and
-; the free disk space ("Insufficient disk space available ... XXX Kbytes"),
-; then writes the DBs (WriteLeagueDbsMem); rmdir on failure
+; the free disk space ("Insufficient disk space available ...
+;
+; XXX Kbytes"), then writes the DBs (WriteLeagueDbsMem); rmdir on failure
 ;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/SaveDbsToDir.c
 %ifdef CBUILD

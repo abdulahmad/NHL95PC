@@ -6,6 +6,10 @@ extern __fatal_runtime_error_, __flush_, __IOMode_, __set_errno_, __set_errno_do
 extern __iob_flags, UngetChar, __OpenStreams, __ClosedStreams, __freefp_, lseek_, __iob, __iob_end
 global tell_, __InitFiles_, __full_io_exit_, fcloseall_, docloseall_, __qwrite_, flushall_, __flushall_
 global getche_, __qread_, __FDFS
+;-----------------------------------------------------------------------------
+; tell_                                                         A2D16  library
+; Run-time library tell: a file handle's position
+;-----------------------------------------------------------------------------
 tell_:
         push ebx
         push edx
@@ -15,6 +19,10 @@ tell_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __InitFiles_                                                  A2D27  library
+; Run-time library: sets up the standard streams
+;-----------------------------------------------------------------------------
 __InitFiles_:
         push ebx
         push ecx
@@ -56,12 +64,23 @@ __InitFiles_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __full_io_exit_                                               A2D9F  library
+; Run-time library: closes all streams at exit
+;-----------------------------------------------------------------------------
 __full_io_exit_:
         xor eax, eax
         call docloseall_
         jmp near __freefp_+039h
+;-----------------------------------------------------------------------------
+; fcloseall_                                                      A2DAB  95 PC
+; Run-time library fcloseall: closes every stream but the standard ones
+;-----------------------------------------------------------------------------
 fcloseall_:
         mov eax, 5
+;-----------------------------------------------------------------------------
+; docloseall_                                                   A2DB0  library
+;-----------------------------------------------------------------------------
 docloseall_:
         push ebx
         push ecx
@@ -103,6 +122,10 @@ docloseall_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __qwrite_                                                     A2E02  library
+; Run-time library: writes to a file handle
+;-----------------------------------------------------------------------------
 __qwrite_:
         push ecx
         push esi
@@ -165,8 +188,15 @@ __qwrite_:
         pop ecx
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; flushall_                                    A2E80  95 PC, medium confidence
+; Flushes every open stream
+;-----------------------------------------------------------------------------
 flushall_:
         mov eax, 0FFFFFFFFh
+;-----------------------------------------------------------------------------
+; __flushall_                                                   A2E85  library
+;-----------------------------------------------------------------------------
 __flushall_:
         push ebx
         push ecx
@@ -193,6 +223,10 @@ __flushall_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; getche_                                                       A2EB4  library
+; Run-time library getche: reads a key and echoes it
+;-----------------------------------------------------------------------------
 getche_:
         push edx
         xor edx, edx
@@ -206,6 +240,10 @@ getche_:
 .1:
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; __qread_                                                      A2ED1  library
+; Run-time library: reads from a file handle
+;-----------------------------------------------------------------------------
 __qread_:
         push ecx
         mov ecx, ebx
@@ -222,6 +260,10 @@ __qread_:
 .1:
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; __FDFS                                                        A2EF0  library
+; Run-time library: converts a double to a float
+;-----------------------------------------------------------------------------
 __FDFS:
         push ebx
         test edx, 7FF00000h

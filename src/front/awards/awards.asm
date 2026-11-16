@@ -1,5 +1,5 @@
 ; End-of-season trophies. Picking the winners, the award screens, the summary of who won each one,
-; and the ceremony (95G front/awards95). One module: they share PickAwardWinners' exit.
+; and the ceremony. One module: they share PickAwardWinners' exit.
 bits 32
 %include "hockey.inc"
 section s_1205D progbits alloc exec nowrite align=1
@@ -52,8 +52,9 @@ global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary
 ;-----------------------------------------------------------------------------
 ; PickAwardWinners                             1205D  95 PC, medium confidence
 ; Corrected from FindLeagueLeaders: the records it fills (awardwinners,
-; presidentsteam, cupteam) are the 11 trophy winners shown by
-; ShowAwardScreens / DrawAwardsSummary (Hart, Art Ross, Norris, Selke,
+; presidentsteam, cupteam) are the 11 trophy winners shown
+;
+; by ShowAwardScreens / DrawAwardsSummary (Hart, Art Ross, Norris, Selke,
 ; Vezina, Jennings, Calder, Presidents, Conn Smythe, EA Sports Cup, Stanley
 ; Cup); scans the 26 TEAMS.DB records with KEY / SEASON DB lookups
 ;-----------------------------------------------------------------------------
@@ -597,12 +598,14 @@ PickAwardWinners_x:
 ;-----------------------------------------------------------------------------
 ; ShowAwardScreens                                                12849  95 PC
 ; For each of the 11 trophies (awardnames) loads the art file from awardart
-; via MakePath, prints the winner (a team for awardtype 2: presidentsteam /
-; cupteam, else the awardwinners player record with GP / G / A / Pt / PIM /
-; +/- / PPG / SHG, or GAA / Min / Shots / Pct for goalies) and the title from
-; awardtitles ("Most Valuable Player", ...), fades in ("!pal" / "palmem") and
-; waits (WaitClickTimeout 10000); stops when the wait returns 3; returns that
-; result; called from asset_loading
+; via MakePath, prints the winner (a team for awardtype 2:
+;
+; presidentsteam / cupteam, else the awardwinners player record with GP / G /
+; A / Pt / PIM / +/- / PPG / SHG, or GAA / Min / Shots / Pct for goalies) and
+; the title from awardtitles ("Most Valuable Player", ...), fades in
+;
+; ("!pal" / "palmem") and waits (WaitClickTimeout 10000); stops when the wait
+; returns 3; returns that result; called from asset_loading
 ;-----------------------------------------------------------------------------
 ; C: src/front/awards/PickAwardWinners.c (ShowAwardScreens)
 %ifdef CBUILD
@@ -1355,8 +1358,9 @@ ShowAwardScreens:
 ;-----------------------------------------------------------------------------
 ; DrawAwardsSummary                                               13188  95 PC
 ; One row per trophy: award name (awardnames) at x 14h, winner name at x 0B4h
-; and team at x 190h (or the team alone for awardtype 2); called from
-; asset_loading after the award screens
+; and team at x 190h (or the team alone for awardtype 2); called
+;
+; from asset_loading after the award screens
 ;-----------------------------------------------------------------------------
 DrawAwardsSummary:
         push dword 4Ch
@@ -1497,10 +1501,11 @@ DrawAwardsSummary:
 ;-----------------------------------------------------------------------------
 ; AwardsCeremony                                                  13320  95 PC
 ; End-of-season trophy presentation (called from the schedule screens): loads
-; the "awardsi" art (scrn / titl / !pal), plays the fanfare ("mtafan" /
-; "adafan" by sound card) and the awards song ("awasong", "mtawards" /
-; "adawards"), PickAwardWinners, ShowAwardScreens, then the "summ" screen
-; with DrawAwardsSummary
+; the "awardsi" art (scrn / titl / !pal), plays the fanfare
+;
+; ("mtafan" / "adafan" by sound card) and the awards song ("awasong",
+; "mtawards" / "adawards"), PickAwardWinners, ShowAwardScreens, then the
+; "summ" screen with DrawAwardsSummary
 ;-----------------------------------------------------------------------------
 ; C: src/front/awards/PickAwardWinners.c (AwardsCeremony)
 %ifdef CBUILD

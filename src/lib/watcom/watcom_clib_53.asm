@@ -4,6 +4,10 @@ bits 32
 section s_B27A0 progbits alloc exec nowrite align=1
 extern __CHP, BigIntCallHook
 global modf_, __CmpBigInt, __Rnd2Int, __Bin2String
+;-----------------------------------------------------------------------------
+; modf_                                                         B27A0  library
+; Run-time library modf: splits a double into integer and fraction
+;-----------------------------------------------------------------------------
 modf_:
         push eax
         fld qword [byte esp+08h]
@@ -16,6 +20,10 @@ modf_:
         wait
         ret 0Ch
         db 00h
+;-----------------------------------------------------------------------------
+; __CmpBigInt                                                   B27BA  library
+; Run-time library: compares two big integers (float conversion)
+;-----------------------------------------------------------------------------
 __CmpBigInt:
         push edi
         push ecx
@@ -49,6 +57,10 @@ __CmpBigInt:
         pop ecx
         pop edi
         ret
+;-----------------------------------------------------------------------------
+; __Rnd2Int                                                     B27F4  library
+; Run-time library: rounds a double to an integer
+;-----------------------------------------------------------------------------
 __Rnd2Int:
         push ebx
         push ecx
@@ -103,6 +115,10 @@ __Rnd2Int:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __Bin2String                                                  B285F  library
+; Run-time library: a binary value to decimal digits
+;-----------------------------------------------------------------------------
 __Bin2String:
         push ebp
         push edi

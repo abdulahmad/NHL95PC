@@ -4,6 +4,10 @@ bits 32
 section s_90AC4 progbits alloc exec nowrite align=1
 extern __prtf_, TextWidthN
 global fputchar, mem_putc_, sprintf_, memcpy_
+;-----------------------------------------------------------------------------
+; fputchar                                                      90AC4  library
+; C run-time: writes one character to stdout
+;-----------------------------------------------------------------------------
 fputchar:
         push dword 200h
         mov edx, dword [byte esp+08h]
@@ -11,6 +15,11 @@ fputchar:
         call TextWidthN
         add esp, byte 8
         ret
+;-----------------------------------------------------------------------------
+; mem_putc_                                                     90AD7  library
+; Run-time library: stores one character into a memory string stream (sprintf
+; output)
+;-----------------------------------------------------------------------------
 mem_putc_:
         push ebx
         push ecx
@@ -23,6 +32,10 @@ mem_putc_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; sprintf_                                                      90AEA  library
+; Run-time library sprintf: formats into a string
+;-----------------------------------------------------------------------------
 sprintf_:
         push ebx
         push ecx
@@ -43,6 +56,10 @@ sprintf_:
         pop ebx
         ret
         db 00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; memcpy_                                                       90B20  library
+; Run-time library memcpy: copies a block of memory
+;-----------------------------------------------------------------------------
 memcpy_:
         push ecx
         push esi

@@ -1,4 +1,4 @@
-; Create player: names, ratings, shoots / glove, the create screen (95G create95).
+; Create player: names, ratings, shoots / glove, the create screen.
 bits 32
 %include "hockey.inc"
 section s_6F159 progbits alloc exec nowrite align=1
@@ -167,9 +167,10 @@ SplitPlayerName:
 ;-----------------------------------------------------------------------------
 ; MoveToOtherRoster                                               6F29C  95 PC
 ; 'Move to Roster N' menu item: moves the selected players to the other
-; panel's team ('There is no space to add the selected player' / 'There is
-; not enough space to add all selected players'), FixJerseyNumber, reloads
-; and redraws
+; panel's team ('There is no space
+;
+; to add the selected player' / 'There is not enough space to add all selected
+; players'), FixJerseyNumber, reloads and redraws
 ;-----------------------------------------------------------------------------
 MoveToOtherRoster:
         push dword 4Ch
@@ -1513,8 +1514,9 @@ EditGoalieRating:
 ;-----------------------------------------------------------------------------
 ; DrawCreatePlayer                                                7025B  95 PC
 ; Draws the create-player screen (pstatbar, 'Free Agent', name, position
-; Center/Defence/Left Wing/Right Wing/Goalie, ratings, 'Rating Units
-; Available <%3d>')
+; Center/Defence/Left Wing/Right Wing/Goalie, ratings,
+;
+; 'Rating Units Available <%3d>')
 ;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawCreatePlayer.c
 %ifdef CBUILD
@@ -1926,6 +1928,7 @@ CreatePlayerLoop:
 ; CreateFreeAgent                                                 706E2  95 PC
 ; 'Create Free Agent ...' menu item: disk-space check ('Not enough space to
 ; create a new free agent.'), 'Enter the name of the new player/goalie',
+;
 ; 'Enter a position for (L,C,R,D)', 'Enter a jersey number for',
 ; CreatePlayerLoop, writes the player into .TMP database copies ('Error while
 ; making new databases!')

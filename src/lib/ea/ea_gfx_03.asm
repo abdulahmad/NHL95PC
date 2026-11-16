@@ -4,6 +4,10 @@ bits 32
 section s_90B50 progbits alloc exec nowrite align=1
 extern FindShape, FindShapeQuiet
 global FindShapeList, ProjectPointList
+;-----------------------------------------------------------------------------
+; FindShapeList                                90B50  95 PC, medium confidence
+; Looks up a list of shape ids in a bank
+;-----------------------------------------------------------------------------
 FindShapeList:
         push esi
         push edi
@@ -29,6 +33,10 @@ FindShapeList:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; ProjectPointList                             90B80  95 PC, medium confidence
+; Projects a list of 3D points to the screen through ProjectPoint
+;-----------------------------------------------------------------------------
 ProjectPointList:
         push esi
         push edi

@@ -7,6 +7,10 @@ extern GusVoiceAllocMask, inp_, outp_, outpw_, GusEnterCritical, GusLeaveCritica
 extern GusTimer2Count, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort, GusActiveVoices
 global GusResetTimers, GusStartTimer2, GusStartTimer1, GusStopTimer1, GusStopTimer2, GusResetVoiceAlloc, GusAllocVoice, GusReleaseVoice
 global GusAddVoicePriority, GusPeek, GusPoke, GusPokeFill, GusTestDramBank
+;-----------------------------------------------------------------------------
+; GusResetTimers                                  B19E0  95 PC, low confidence
+; Clears the timer state
+;-----------------------------------------------------------------------------
 GusResetTimers:
         push ebp
         mov ebp, esp
@@ -22,6 +26,10 @@ GusResetTimers:
         pop edx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusStartTimer2                               B1A04  95 PC, medium confidence
+; Sets the callback and count for card timer 2 and starts it
+;-----------------------------------------------------------------------------
 GusStartTimer2:
         push ebp
         mov ebp, esp
@@ -81,6 +89,10 @@ GusStartTimer2:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusStartTimer1                               B1AC8  95 PC, medium confidence
+; Sets the callback and count for card timer 1 and starts it
+;-----------------------------------------------------------------------------
 GusStartTimer1:
         push ebp
         mov ebp, esp
@@ -140,6 +152,10 @@ GusStartTimer1:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusStopTimer1                                B1B8C  95 PC, medium confidence
+; Stops card timer 1
+;-----------------------------------------------------------------------------
 GusStopTimer1:
         push ebp
         mov ebp, esp
@@ -172,6 +188,10 @@ GusStopTimer1:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusStopTimer2                                B1BF8  95 PC, medium confidence
+; Stops card timer 2
+;-----------------------------------------------------------------------------
 GusStopTimer2:
         push ebp
         mov ebp, esp
@@ -204,6 +224,10 @@ GusStopTimer2:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusResetVoiceAlloc                              B1C70  95 PC, low confidence
+; Marks every voice free
+;-----------------------------------------------------------------------------
 GusResetVoiceAlloc:
         push ebp
         mov ebp, esp
@@ -235,6 +259,10 @@ GusResetVoiceAlloc:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusAllocVoice                                   B1CBC  95 PC, low confidence
+; Finds a free voice or steals one
+;-----------------------------------------------------------------------------
 GusAllocVoice:
         push ebp
         mov ebp, esp
@@ -353,6 +381,10 @@ GusAllocVoice:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusReleaseVoice                                 B1E2C  95 PC, low confidence
+; Marks a voice free
+;-----------------------------------------------------------------------------
 GusReleaseVoice:
         push ebp
         mov ebp, esp
@@ -377,6 +409,10 @@ GusReleaseVoice:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusAddVoicePriority                             B1E64  95 PC, low confidence
+; Adds to a voice's priority value
+;-----------------------------------------------------------------------------
 GusAddVoicePriority:
         push ebp
         mov ebp, esp
@@ -399,6 +435,10 @@ GusAddVoicePriority:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusPeek                                                         B1EA0  95 PC
+; Reads one byte of card memory
+;-----------------------------------------------------------------------------
 GusPeek:
         push ebp
         mov ebp, esp
@@ -440,6 +480,10 @@ GusPeek:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusPoke                                                         B1F1C  95 PC
+; Writes one byte of card memory
+;-----------------------------------------------------------------------------
 GusPoke:
         push ebp
         mov ebp, esp
@@ -482,6 +526,11 @@ GusPoke:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusPokeFill                                  B1F9C  95 PC, medium confidence
+; Writes a run of bytes (optionally sign-flipped) into card memory through
+; the register ports
+;-----------------------------------------------------------------------------
 GusPokeFill:
         push ebp
         mov ebp, esp
@@ -565,6 +614,11 @@ GusPokeFill:
         pop esi
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusTestDramBank                              B2074  95 PC, medium confidence
+; Writes and reads back test bytes to check whether a bank of card memory
+; exists
+;-----------------------------------------------------------------------------
 GusTestDramBank:
         push ebp
         mov ebp, esp

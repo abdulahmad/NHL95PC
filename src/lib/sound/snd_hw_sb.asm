@@ -13,6 +13,11 @@ global SbStreamStart, SbStreamIdle, SbStreamGetVolume, SbStreamApplyBend, SbMixA
 global SbDmaStart, SbDmaStop, SbMixPause, SbConvertMix, SbCardDmaPage, SbCardDmaAddr, SbCardDmaLength, SbCardDmaActive
 global SbCardPort, SbCardIrq, SbCardDma, SbCardRate, SbCardHighSpeed, SbCardPicMask, SbCardPicMask2, SbCardIrqHooked
 global SbCardOldIsr, SbCardOldIsrSel, SbDmaPagePorts
+;-----------------------------------------------------------------------------
+; StrToLong                                    A6BE1  95 PC, medium confidence
+; Converts a string to a number, signed or unsigned (the core of strtol and
+; strtoul)
+;-----------------------------------------------------------------------------
 StrToLong:
         push esi
         push edi
@@ -154,16 +159,29 @@ StrToLong:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; strtol_                                      A6D1A  95 PC, medium confidence
+; C library strtol: signed form of the shared string to number routine
+;-----------------------------------------------------------------------------
 strtol_:
         push ecx
         xor ecx, ecx
         call StrToLong
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; strtoul_                                     A6D24  95 PC, medium confidence
+; Converts a string to an unsigned number (strtoul)
+;-----------------------------------------------------------------------------
 strtoul_:
         push ecx
         mov ecx, 1
         jmp short strtol_+03h
+;-----------------------------------------------------------------------------
+; DigitValue                                   A6D2C  95 PC, medium confidence
+; Returns the value of a digit or letter in bases up to 36, or 37 if it is
+; not one
+;-----------------------------------------------------------------------------
 DigitValue:
         push edx
         mov dl, al
@@ -210,6 +228,10 @@ DigitValue:
         pop edx
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; SbStreamCheck                                A6D84  95 PC, medium confidence
+; Sets carry when a software stream channel number is 4 or more
+;-----------------------------------------------------------------------------
 SbStreamCheck:
         cmp esi, byte 4
         jb short .1
@@ -218,6 +240,10 @@ SbStreamCheck:
 .1:
         clc
         ret
+;-----------------------------------------------------------------------------
+; SbMixRateDiv                                    A6D8D  95 PC, low confidence
+; Returns the mix rate divided by 256
+;-----------------------------------------------------------------------------
 SbMixRateDiv:
         push edx
         push ecx
@@ -228,6 +254,10 @@ SbMixRateDiv:
         pop ecx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; SbMixerOpen                                     A6DA0  95 PC, low confidence
+; Stops the four stream channels and starts Sound Blaster DMA output
+;-----------------------------------------------------------------------------
 SbMixerOpen:
         push ebp
         LD mov, ebp, esp
@@ -259,10 +289,18 @@ SbMixerOpen:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbMixerClose                                    A6DED  95 PC, low confidence
+; Stops the stream channels and the DMA output
+;-----------------------------------------------------------------------------
 SbMixerClose:
         call SbStreamStopAll
         call SbDmaStop
         ret
+;-----------------------------------------------------------------------------
+; SbStreamStopAll                              A6DF8  95 PC, medium confidence
+; Stops all four software stream channels
+;-----------------------------------------------------------------------------
 SbStreamStopAll:
         push esi
         mov ecx, 4
@@ -275,6 +313,10 @@ SbStreamStopAll:
         loop .1
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; SbStreamPlayNote                                A6E10  95 PC, low confidence
+; Sets the note of a stream channel, works out its step and starts it
+;-----------------------------------------------------------------------------
 SbStreamPlayNote:
         push ebp
         LD mov, ebp, esp
@@ -315,6 +357,10 @@ SbStreamPlayNote:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamRelease                                 A6E7B  95 PC, low confidence
+; Lets a stream channel play out to its end
+;-----------------------------------------------------------------------------
 SbStreamRelease:
         push ebp
         LD mov, ebp, esp
@@ -333,6 +379,10 @@ SbStreamRelease:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamStop                                 A6EA2  95 PC, medium confidence
+; Stops a software stream channel
+;-----------------------------------------------------------------------------
 SbStreamStop:
         push ebp
         LD mov, ebp, esp
@@ -349,6 +399,10 @@ SbStreamStop:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamSetVolume                               A6EC3  95 PC, low confidence
+; Sets the volume of a stream channel and rebuilds its volume table
+;-----------------------------------------------------------------------------
 SbStreamSetVolume:
         push ebp
         LD mov, ebp, esp
@@ -386,6 +440,10 @@ SbStreamSetVolume:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamSetBend                                 A6F1B  95 PC, low confidence
+; Stores the pitch bend of a stream channel
+;-----------------------------------------------------------------------------
 SbStreamSetBend:
         push ebp
         LD mov, ebp, esp
@@ -400,6 +458,10 @@ SbStreamSetBend:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamSetRate                                 A6F3C  95 PC, low confidence
+; Sets the sample rate of a stream channel (step against the mix rate)
+;-----------------------------------------------------------------------------
 SbStreamSetRate:
         push ebp
         LD mov, ebp, esp
@@ -440,6 +502,10 @@ SbStreamSetRate:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamSetSample                               A6FA2  95 PC, low confidence
+; Sets the start, loop start and loop length of a stream channel's sample
+;-----------------------------------------------------------------------------
 SbStreamSetSample:
         push ebp
         LD mov, ebp, esp
@@ -466,6 +532,10 @@ SbStreamSetSample:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamStart                                   A6FE1  95 PC, low confidence
+; Starts a sample on a software stream channel (rate, volume, sample, note)
+;-----------------------------------------------------------------------------
 SbStreamStart:
         push ebp
         LD mov, ebp, esp
@@ -539,6 +609,10 @@ SbStreamStart:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamIdle                                 A7094  95 PC, medium confidence
+; Returns 1 when a software stream channel is not playing
+;-----------------------------------------------------------------------------
 SbStreamIdle:
         push ebp
         LD mov, ebp, esp
@@ -560,6 +634,10 @@ SbStreamIdle:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamGetVolume                            A70BC  95 PC, medium confidence
+; Returns the volume of a stream channel
+;-----------------------------------------------------------------------------
 SbStreamGetVolume:
         push ebp
         LD mov, ebp, esp
@@ -577,6 +655,10 @@ SbStreamGetVolume:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStreamApplyBend                               A70DD  95 PC, low confidence
+; Applies a pitch bend to a stream channel's step
+;-----------------------------------------------------------------------------
 SbStreamApplyBend:
         push ebp
         LD mov, ebp, esp
@@ -631,6 +713,10 @@ SbStreamApplyBend:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbMixAdd8Vol                                    A715C  95 PC, low confidence
+; Adds 8-bit samples through a volume table into the mix buffer
+;-----------------------------------------------------------------------------
 SbMixAdd8Vol:
         mov al, byte [esi]
         xlatb
@@ -2169,6 +2255,10 @@ SbMixAdd8Vol:
         LD add, ecx, edx
         LD adc, esi, edi
         ret
+;-----------------------------------------------------------------------------
+; SbMixAdd8                                       A815D  95 PC, low confidence
+; Adds 8-bit samples at full volume into the mix buffer
+;-----------------------------------------------------------------------------
 SbMixAdd8:
         mov al, byte [esi]
         cbw
@@ -3451,6 +3541,10 @@ SbMixAdd8:
         LD add, ecx, edx
         LD adc, esi, edi
         ret
+;-----------------------------------------------------------------------------
+; SbMixChannels                                   A905E  95 PC, low confidence
+; Clears the mix buffer and mixes every playing stream channel into it
+;-----------------------------------------------------------------------------
 SbMixChannels:
         push esi
         push edi
@@ -4228,6 +4322,10 @@ SbMixChannels:
         pop esi
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; SbDmaHalfReady                                  A9BA4  95 PC, low confidence
+; Returns 1 when the DMA has moved on to the other half of the buffer
+;-----------------------------------------------------------------------------
 SbDmaHalfReady:
         call SbDmaCount
         cmp eax, dword [SbDmaHalfSize]
@@ -4245,6 +4343,10 @@ SbDmaHalfReady:
 .3:
         mov eax, 0
         ret
+;-----------------------------------------------------------------------------
+; SbDmaStart                                      A9BD0  95 PC, low confidence
+; Stores the DMA buffer and starts auto-init DMA output
+;-----------------------------------------------------------------------------
 SbDmaStart:
         push ebp
         LD mov, ebp, esp
@@ -4274,6 +4376,10 @@ SbDmaStart:
         mov eax, 0FFFFFFFFh
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbDmaStop                                       A9C1B  95 PC, low confidence
+; Stops the DMA output
+;-----------------------------------------------------------------------------
 SbDmaStop:
         push esi
         pushfw
@@ -4286,6 +4392,10 @@ SbDmaStop:
         popfw
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; SbMixPause                                      A9C37  95 PC, low confidence
+; Sets the mix pause flag (the code after it clears it)
+;-----------------------------------------------------------------------------
 SbMixPause:
         mov eax, 1
         mov byte [SbMixPaused], al
@@ -4293,6 +4403,10 @@ SbMixPause:
         LD xor, eax, eax
         mov byte [SbMixPaused], al
         ret
+;-----------------------------------------------------------------------------
+; SbConvertMix                                    A9C4A  95 PC, low confidence
+; Clips the 16-bit mix into 8-bit samples in the free half of the DMA buffer
+;-----------------------------------------------------------------------------
 SbConvertMix:
         push esi
         push edi
@@ -4314,33 +4428,33 @@ SbConvertMix:
         pop esi
         ret
         db 00h
-SbCardDmaPage:
+SbCardDmaPage:                                  ; used by SbCardOpen
         db 00h
-SbCardDmaAddr:
+SbCardDmaAddr:                                  ; used by SbCardOpen
         db 00h,00h
-SbCardDmaLength:
+SbCardDmaLength:                                ; used by SbCardOpen, SbDmaCount
         db 00h,00h
-SbCardDmaActive:
+SbCardDmaActive:                                ; used by SbCardOpen, SbStopDma
         db 00h
-SbCardPort:
+SbCardPort:                                     ; used by SbCardOpen, SbDspRead, SbDspReset ...
         db 020h,02h
-SbCardIrq:
+SbCardIrq:                                      ; used by SbCardOpen, SbStopDma
         db 05h
-SbCardDma:
+SbCardDma:                                      ; used by SbCardOpen, SbDmaCount, SbStopDma
         db 01h
-SbCardRate:
+SbCardRate:                                     ; used by SbCardOpen, SbDspVersion, SbMixRateDiv ...
         db 00h,00h,00h,00h
-SbCardHighSpeed:
+SbCardHighSpeed:                                ; used by SbCardOpen, SbDspVersion, SbIrqHandler
         db 00h
-SbCardPicMask:
+SbCardPicMask:                                  ; used by SbCardClose, SbCardOpen
         db 00h
-SbCardPicMask2:
+SbCardPicMask2:                                 ; used by SbCardClose, SbCardOpen
         db 00h
-SbCardIrqHooked:
+SbCardIrqHooked:                                ; used by SbCardOpen, SbHookIrq, SbStopDma ...
         db 00h
-SbCardOldIsr:
+SbCardOldIsr:                                   ; used by SbHookIrq, SbUnhookIrq
         db 00h,00h,00h,00h
-SbCardOldIsrSel:
+SbCardOldIsrSel:                                ; used by SbHookIrq, SbUnhookIrq
         db 00h,00h
-SbDmaPagePorts:
+SbDmaPagePorts:                                 ; used by SbCardOpen
         db 087h,083h,081h,082h

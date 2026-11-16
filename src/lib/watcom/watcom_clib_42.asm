@@ -4,6 +4,10 @@ bits 32
 section s_A321C progbits alloc exec nowrite align=1
 extern strtod_
 global forcedecpt_, __cnvs2d_
+;-----------------------------------------------------------------------------
+; forcedecpt_                                                   A321C  library
+; Run-time library: makes sure a formatted float has a decimal point
+;-----------------------------------------------------------------------------
 forcedecpt_:
         push ebx
         push ecx
@@ -48,6 +52,10 @@ forcedecpt_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __cnvs2d_                                                     A3264  library
+; Run-time library: a decimal string to a double
+;-----------------------------------------------------------------------------
 __cnvs2d_:
         push ebx
         mov ebx, edx

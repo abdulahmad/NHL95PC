@@ -6,6 +6,10 @@ extern __GETDS, SbCardDmaPage, SbCardDmaAddr, SbCardDmaLength, SbCardDmaActive, 
 extern SbCardRate, SbCardHighSpeed, SbCardPicMask, SbCardPicMask2, SbCardIrqHooked, SbCardOldIsr, SbCardOldIsrSel, SbDmaPagePorts
 global SbHookIrq, SbUnhookIrq, SbIrqHandler, SbDspWrite, SbDspRead, SbCardClose, SbDspReset, SbDspVersion
 global SbCardOpen, SbStopDma, SbDmaCount, SbSetStereo
+;-----------------------------------------------------------------------------
+; SbHookIrq                                    A9C9C  95 PC, medium confidence
+; Installs the Sound Blaster interrupt handler and unmasks its IRQ
+;-----------------------------------------------------------------------------
 SbHookIrq:
         pushf
         cli
@@ -80,6 +84,10 @@ SbHookIrq:
 .15:
         popf
         ret
+;-----------------------------------------------------------------------------
+; SbUnhookIrq                                  A9D1D  95 PC, medium confidence
+; Masks the Sound Blaster IRQ and restores the old handler
+;-----------------------------------------------------------------------------
 SbUnhookIrq:
         mov al, byte [SbCardIrqHooked]
         LD or, al, al
@@ -102,6 +110,11 @@ SbUnhookIrq:
         popf
 .2:
         ret
+;-----------------------------------------------------------------------------
+; SbIrqHandler                                 A9D4C  95 PC, medium confidence
+; Sound Blaster interrupt handler: acknowledges the DSP, mixes the next half
+; buffer and ends the interrupt
+;-----------------------------------------------------------------------------
 SbIrqHandler:
         pushf
         pusha
@@ -196,6 +209,10 @@ SbIrqHandler:
         popa
         popf
         iret
+;-----------------------------------------------------------------------------
+; SbDspWrite                                   A9DEB  95 PC, medium confidence
+; Writes a byte to the DSP once it is ready
+;-----------------------------------------------------------------------------
 SbDspWrite:
         movzx edx, word [SbCardPort]
         add edx, byte 0Ch
@@ -219,6 +236,10 @@ SbDspWrite:
         clc
 .6:
         ret
+;-----------------------------------------------------------------------------
+; SbDspRead                                    A9E0F  95 PC, medium confidence
+; Reads a byte from the DSP once one is waiting
+;-----------------------------------------------------------------------------
 SbDspRead:
         movzx edx, word [SbCardPort]
         add edx, byte 0Eh
@@ -242,6 +263,10 @@ SbDspRead:
         clc
 .6:
         ret
+;-----------------------------------------------------------------------------
+; SbCardClose                                  A9E34  95 PC, medium confidence
+; Stops the DMA, restores the PIC masks and resets the DSP
+;-----------------------------------------------------------------------------
 SbCardClose:
         call SbStopDma
         mov al, byte [SbCardPicMask]
@@ -258,6 +283,10 @@ SbCardClose:
 .4:
         call SbDspReset
         ret
+;-----------------------------------------------------------------------------
+; SbDspReset                                   A9E55  95 PC, medium confidence
+; Resets the DSP and waits for its AAh answer
+;-----------------------------------------------------------------------------
 SbDspReset:
         movzx edx, word [SbCardPort]
         add edx, byte 0Eh
@@ -392,6 +421,10 @@ SbDspReset:
         LD sbb, eax, eax
         rol eax, 1
         ret
+;-----------------------------------------------------------------------------
+; SbDspVersion                                 A9F1A  95 PC, medium confidence
+; Asks the DSP for its version (command E1h)
+;-----------------------------------------------------------------------------
 SbDspVersion:
         push eax
         push ebx
@@ -439,6 +472,11 @@ SbDspVersion:
         pop ebx
         pop eax
         ret
+;-----------------------------------------------------------------------------
+; SbCardOpen                                      A9F93  95 PC, low confidence
+; Stores the port, IRQ and DMA channel, saves the PIC masks, resets the DSP
+; and starts output
+;-----------------------------------------------------------------------------
 SbCardOpen:
         push ebp
         LD mov, ebp, esp
@@ -636,6 +674,10 @@ SbCardOpen:
         clc
         leave
         ret
+;-----------------------------------------------------------------------------
+; SbStopDma                                    AA14D  95 PC, medium confidence
+; Masks the Sound Blaster DMA channel
+;-----------------------------------------------------------------------------
 SbStopDma:
         cmp byte [SbCardDmaActive], 0
         clc
@@ -681,6 +723,10 @@ SbStopDma:
 .6:
         sti
         ret
+;-----------------------------------------------------------------------------
+; SbDmaCount                                   AA1B2  95 PC, medium confidence
+; Reads the DMA channel's remaining count
+;-----------------------------------------------------------------------------
 SbDmaCount:
         LD xor, eax, eax
         movzx edx, byte [SbCardDma]
@@ -703,6 +749,10 @@ SbDmaCount:
         dec eax
         LD sub, eax, ebx
         ret
+;-----------------------------------------------------------------------------
+; SbSetStereo                                     AA1D9  95 PC, low confidence
+; Sets mixer register 0Eh: stereo output and the output filter
+;-----------------------------------------------------------------------------
 SbSetStereo:
         push ebp
         LD mov, ebp, esp

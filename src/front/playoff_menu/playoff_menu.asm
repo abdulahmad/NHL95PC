@@ -27,9 +27,10 @@ global PlayoffModeLoop, POReturnZero, POHiliteSlot, PlayoffTreeMenu, DrawPlayoff
 ;-----------------------------------------------------------------------------
 ; PlayoffModeLoop                                                 89268  95 PC
 ; Play-Off mode loop installed in menuact_nextpo by CreatePlayoffs (also
-; entered from the file dialogs when loading): loads schedule.db, runs the
-; game for the current series game, POAfterGame / POHandleElimination after
-; it, then the playoff tree menu until the user leaves
+; entered from the file dialogs when loading): loads schedule.db,
+;
+; runs the game for the current series game, POAfterGame / POHandleElimination
+; after it, then the playoff tree menu until the user leaves
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_mode/POSeedRound2.c (PlayoffModeLoop)
 %ifdef CBUILD
@@ -719,6 +720,7 @@ POHiliteSlot:
 ; PlayoffTreeMenu                              89BD2  95 PC, medium confidence
 ; Mouse/keyboard loop over the playoff tree screen with the 'Pointer' cursor
 ; and 'menubuff' menu (ClearInputQueue / MenuHitTest), highlighting slots
+;
 ; with POHiliteSlot
 ;-----------------------------------------------------------------------------
 PlayoffTreeMenu:
@@ -1468,9 +1470,10 @@ PlayoffTreeMenu:
 ;-----------------------------------------------------------------------------
 ; DrawPlayoffTree                                                 8A652  95 PC
 ; Draws the playoff tree screen: 'Playoffs have not been seeded yet' when
-; playofftree is empty, otherwise 'Western Conference' / 'Eastern Conference'
-; brackets with series scores, pstatbar / rst1 / rst2 / scuparrw / aup / adn
-; art
+; playofftree is empty,
+;
+; otherwise 'Western Conference' / 'Eastern Conference' brackets with series
+; scores, pstatbar / rst1 / rst2 / scuparrw / aup / adn art
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_mode/POSeedRound2.c (DrawPlayoffTree)
 %ifdef CBUILD
@@ -2665,8 +2668,10 @@ DrawPlayoffTree:
 ;-----------------------------------------------------------------------------
 ; SetSideControls                              8B85B  95 PC, medium confidence
 ; Installs the home / away input handlers (menuact_homelines /
-; menuact_visitorlines, code_1A8AA / code_1A922) from the controller sides
-; ctl1side / ctl2side and teams (-1 none, -2 eliminated)
+; menuact_visitorlines, code_1A8AA / code_1A922)
+;
+; from the controller sides ctl1side / ctl2side and teams (-1 none, -2
+; eliminated)
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_menu/SetSideControls.c
 %ifdef CBUILD
@@ -2770,6 +2775,7 @@ WriteCurModeState:
 ; ClearPlayerFromLines                         8B96D  95 PC, medium confidence
 ; (player, lines): replaces the player's index with 64h (empty) in the 4x3
 ; forward lines, 3 defence pairs and the special-team slots (+12h..+27h);
+;
 ; called four times from the roster screens
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff_menu/ClearPlayerFromLines.c

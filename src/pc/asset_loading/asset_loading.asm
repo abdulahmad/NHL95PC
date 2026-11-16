@@ -152,6 +152,7 @@ LoadPhotoBankF_x:
 ; LoadPlayerPhotos                             1395F  95 PC, medium confidence
 ; Loads each of the 17h .PPV photo banks not loaded yet (names "%d00_%d49" /
 ; "%d50_%d99" below bank 14h, "%d00%d49" / "%d50%d99" above) and indexes them
+;
 ; (IndexPhotoBank), then LoadPhotoBankF; called from the game setup,
 ; frontend_desk and the game
 ;-----------------------------------------------------------------------------
@@ -287,6 +288,7 @@ LoadTransparentRinkEndOverlay:
 ; LoadGameGfx                                  13A91  95 PC, medium confidence
 ; In-game graphics: SetScreenTarget, scrpitch 52h, HILIGHT.VFN (hilightfont),
 ; numshp.PPV with its 10 number shapes (numshapes), then LoadGameGfx_common;
+;
 ; called from PlayGame and the highlights / game-setup code
 ;-----------------------------------------------------------------------------
 ; C: src/pc/asset_loading/LoadGameGfx.c
@@ -383,9 +385,10 @@ LoadGameGfx_common:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ReloadGameGfx                                13BB4  95 PC, medium confidence
-; LoadGameGfx without the SetScreenTarget call (same HILIGHT / numshp loads, then
-; LoadGameGfx_common); called from the scoreboard segment before
-; SetupGameQuick
+; LoadGameGfx without the SetScreenTarget call (same HILIGHT / numshp loads,
+; then LoadGameGfx_common); called
+;
+; from the scoreboard segment before SetupGameQuick
 ;-----------------------------------------------------------------------------
 ; C: src/pc/asset_loading/LoadGameGfx.c (ReloadGameGfx)
 %ifdef CBUILD
@@ -457,10 +460,11 @@ ReloadGameGfx:
 ;-----------------------------------------------------------------------------
 ; PlacePlayersAtStart                             13C79  95 PC, low confidence
 ; When demoflag is 0: forceteams, puck to centre, then for the 12 skaters /
-; goalies: assignment 16h (17h goalie), position from the team formation
-; tables (apl, puckfaceoff2_ptab / puckfaceoff2_ptab_y, mirrored by side),
-; facing the puck (vtoa); PlayGame setup calls it when gameopts bit 2 is set
-; or no skate-out
+; goalies: assignment 16h (17h goalie), position
+;
+; from the team formation tables (apl, puckfaceoff2_ptab /
+; puckfaceoff2_ptab_y, mirrored by side), facing the puck (vtoa); PlayGame
+; setup calls it when gameopts bit 2 is set or no skate-out
 ;-----------------------------------------------------------------------------
 PlacePlayersAtStart:
         push dword 10h
@@ -605,6 +609,7 @@ PlacePlayersAtStart:
 ; SetupGame                                    13E8F  95 PC, medium confidence
 ; (from PlayGame): lines for both teams (SetupTeamLines), crowd reset,
 ; ResetGameVars, team intro scoreboard (DrawHudPanel Home / Visitor),
+;
 ; StartPreGame (-1 on cancel), ResetGameVars again, palette fade-in,
 ; PlacePlayersAtStart
 ;-----------------------------------------------------------------------------
@@ -765,6 +770,7 @@ SetupDemoGame:
 ; ResetGameVars                                14056  95 PC, medium confidence
 ; Clears the per-game state (penalty / referee / line-change / penalty-shot
 ; vars, pass state, crowd excitement, input counters, exitgame / gameover,
+;
 ; frameaccum), calls StartGame, centres the mouse when a pad uses it,
 ; joyq_flush
 ;-----------------------------------------------------------------------------

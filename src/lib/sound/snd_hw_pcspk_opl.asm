@@ -10,6 +10,11 @@ extern OplPort, OplFNumTable, OplVolumeTable, OplVelocityTable
 global PcSpkHwInit, PcSpkHwClose, PcSpkSilence, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, OplWrite
 global OplReset, OplFlush, OplSetReg, OplGetReg, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
 global OplOpen, OplProbe, OplCalibrate, OplNoteFNum, OplVolumeLevel, OplVelocityLevel
+;-----------------------------------------------------------------------------
+; PcSpkHwInit                                  A65E8  95 PC, medium confidence
+; Sets PIT channel 2 to square wave mode, silences the speaker and sets the
+; voice volumes
+;-----------------------------------------------------------------------------
 PcSpkHwInit:
         mov al, 0B6h
         out 43h, al
@@ -22,9 +27,17 @@ PcSpkHwInit:
         mov byte [PcSpkState+019h], al
         mov eax, 5
         ret
+;-----------------------------------------------------------------------------
+; PcSpkHwClose                                 A6612  95 PC, medium confidence
+; Silences the speaker
+;-----------------------------------------------------------------------------
 PcSpkHwClose:
         call PcSpkSilence
         ret
+;-----------------------------------------------------------------------------
+; PcSpkSilence                                 A6618  95 PC, medium confidence
+; Turns the speaker off and clears the four voice levels
+;-----------------------------------------------------------------------------
 PcSpkSilence:
         in al, 61h
         and al, 0FCh
@@ -35,6 +48,10 @@ PcSpkSilence:
         mov byte [PcSpkState+07h], al
         mov byte [PcSpkState+08h], al
         ret
+;-----------------------------------------------------------------------------
+; PcSpkVoiceNote                                  A6635  95 PC, low confidence
+; Sets the note and PIT divisor of a speaker voice
+;-----------------------------------------------------------------------------
 PcSpkVoiceNote:
         push ebp
         LD mov, ebp, esp
@@ -61,6 +78,10 @@ PcSpkVoiceNote:
 .2:
         leave
         ret
+;-----------------------------------------------------------------------------
+; PcSpkVoiceOff                                   A6672  95 PC, low confidence
+; Clears the level of a speaker voice
+;-----------------------------------------------------------------------------
 PcSpkVoiceOff:
         db 055h                                 ; insn: push ebp
         LD mov, ebp, esp
@@ -71,6 +92,10 @@ PcSpkVoiceOff:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; PcSpkVoiceUpdate                                A6684  95 PC, low confidence
+; Works out a speaker voice's pitch and level for this tick
+;-----------------------------------------------------------------------------
 PcSpkVoiceUpdate:
         push ebp
         LD mov, ebp, esp
@@ -169,6 +194,10 @@ PcSpkVoiceUpdate:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; PcSpkOutput                                     A677B  95 PC, low confidence
+; Plays the loudest speaker voice through PIT channel 2
+;-----------------------------------------------------------------------------
 PcSpkOutput:
         mov al, byte [PcSpkVoiceLevel]
         mov byte [PcSpkOutLevel], al
@@ -245,6 +274,10 @@ PcSpkOutput:
         mov byte [PcSpkState+02Ah], al
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; OplWrite                                     A6858  95 PC, medium confidence
+; Writes a value to an OPL register, with the read delays the chip needs
+;-----------------------------------------------------------------------------
 OplWrite:
         out dx, al
         push eax
@@ -269,6 +302,10 @@ OplWrite:
         pop ecx
         pop eax
         ret
+;-----------------------------------------------------------------------------
+; OplReset                                     A687D  95 PC, medium confidence
+; Clears every OPL register and both shadow copies
+;-----------------------------------------------------------------------------
 OplReset:
         LD xor, eax, eax
         mov al, 1
@@ -302,6 +339,10 @@ OplReset:
         jle short .3
         call OplFlush
         ret
+;-----------------------------------------------------------------------------
+; OplFlush                                     A68C9  95 PC, medium confidence
+; Writes the OPL shadow registers that changed since the last flush
+;-----------------------------------------------------------------------------
 OplFlush:
         mov dx, word [OplPort]
         push esi
@@ -366,6 +407,11 @@ OplFlush:
         jne short .5
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; OplSetReg                                    A6957  95 PC, medium confidence
+; Sets an OPL register in the shadow copy (or writes it directly when outside
+; 20h-F5h)
+;-----------------------------------------------------------------------------
 OplSetReg:
         mov dx, word [OplPort]
         cmp al, 20h
@@ -389,6 +435,10 @@ OplSetReg:
         call OplWrite
 .2:
         ret
+;-----------------------------------------------------------------------------
+; OplGetReg                                    A6983  95 PC, medium confidence
+; Returns an OPL register from the shadow copy
+;-----------------------------------------------------------------------------
 OplGetReg:
         push ecx
         cmp al, 20h
@@ -404,6 +454,10 @@ OplGetReg:
 .1:
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; OplLoadVoice                                 A699D  95 PC, medium confidence
+; Writes the ten operator settings of one OPL voice
+;-----------------------------------------------------------------------------
 OplLoadVoice:
         push ebp
         LD mov, ebp, esp
@@ -441,6 +495,10 @@ OplLoadVoice:
         pop si
         leave
         ret
+;-----------------------------------------------------------------------------
+; OplHwInit                                    A69E8  95 PC, medium confidence
+; Stores the OPL port and resets the chip
+;-----------------------------------------------------------------------------
 OplHwInit:
         push ebp
         LD mov, ebp, esp
@@ -449,13 +507,25 @@ OplHwInit:
         call OplReset
         leave
         ret
+;-----------------------------------------------------------------------------
+; OplHwClose                                   A69FB  95 PC, medium confidence
+; Resets the OPL chip
+;-----------------------------------------------------------------------------
 OplHwClose:
         call OplReset
         ret
+;-----------------------------------------------------------------------------
+; OplDetect                                    A6A01  95 PC, medium confidence
+; Returns the OPL port, 388h
+;-----------------------------------------------------------------------------
 OplDetect:
         mov eax, 388h
         LD xor, edx, edx
         ret
+;-----------------------------------------------------------------------------
+; OplOpen                                      A6A09  95 PC, medium confidence
+; Stores the OPL port and the write delays, probes the chip and calibrates
+;-----------------------------------------------------------------------------
 OplOpen:
         push ebp
         LD mov, ebp, esp
@@ -474,6 +544,10 @@ OplOpen:
 .1:
         leave
         ret
+;-----------------------------------------------------------------------------
+; OplProbe                                     A6A42  95 PC, medium confidence
+; Checks for an OPL chip with its timer test
+;-----------------------------------------------------------------------------
 OplProbe:
         push ax
         push cx
@@ -518,6 +592,10 @@ OplProbe:
         pop cx
         pop ax
         ret
+;-----------------------------------------------------------------------------
+; OplCalibrate                                    A6AC2  95 PC, low confidence
+; Times OPL status reads against PIT channel 2
+;-----------------------------------------------------------------------------
 OplCalibrate:
         push ax
         push cx
@@ -568,6 +646,10 @@ OplCalibrate:
         pop cx
         pop ax
         ret
+;-----------------------------------------------------------------------------
+; OplNoteFNum                                  A6B32  95 PC, medium confidence
+; Returns the OPL F-number and block of a note
+;-----------------------------------------------------------------------------
 OplNoteFNum:
         push ebp
         LD mov, ebp, esp
@@ -588,6 +670,10 @@ OplNoteFNum:
         LD or, eax, edx
         leave
         ret
+;-----------------------------------------------------------------------------
+; OplVolumeLevel                                  A6B5D  95 PC, low confidence
+; Looks up the OPL attenuation of a volume
+;-----------------------------------------------------------------------------
 OplVolumeLevel:
         push ebp
         LD mov, ebp, esp
@@ -598,6 +684,10 @@ OplVolumeLevel:
         movzx eax, word [dword ebx+OplVolumeTable]
         leave
         ret
+;-----------------------------------------------------------------------------
+; OplVelocityLevel                                A6B73  95 PC, low confidence
+; Looks up the OPL attenuation of a note velocity
+;-----------------------------------------------------------------------------
 OplVelocityLevel:
         push ebp
         LD mov, ebp, esp

@@ -8,6 +8,10 @@ extern DosFileInfo, GetBytesLE, PutBytesLE, bcopy, DosOpenFile, DosCloseFile, Do
 extern SetBlitSource, CopyRowKeyFF
 global DrawShapeQuad, SplitFileExt, ReadFileRange, LoadPackedAlloc, LoadPackedAllocQuiet, LoadPackedAllocFlag, LoadPackedHandle, LoadPackedHandleQuiet
 global LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace
+;-----------------------------------------------------------------------------
+; DrawShapeQuad                                   A2000  95 PC, low confidence
+; Draws a shape warped into a four-point outline
+;-----------------------------------------------------------------------------
 DrawShapeQuad:
         push esi
         push edi
@@ -512,6 +516,10 @@ DrawShapeQuad:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; SplitFileExt                                 A2610  95 PC, medium confidence
+; Copies a file name and returns its extension
+;-----------------------------------------------------------------------------
 SplitFileExt:
         push esi
         push edi
@@ -585,6 +593,10 @@ SplitFileExt:
         pop esi
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; ReadFileRange                                A26B0  95 PC, medium confidence
+; Reads part of an open file into memory, unpacking it when packed
+;-----------------------------------------------------------------------------
 ReadFileRange:
         push esi
         push edi
@@ -639,6 +651,11 @@ ReadFileRange:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; LoadPackedAlloc                              A2744  95 PC, medium confidence
+; Loads a file into a new memory block and returns its data, stopping on an
+; error
+;-----------------------------------------------------------------------------
 LoadPackedAlloc:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -649,6 +666,10 @@ LoadPackedAlloc:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadPackedAllocQuiet                         A275C  95 PC, medium confidence
+; Loads a file into a new memory block and returns its data, or 0 on an error
+;-----------------------------------------------------------------------------
 LoadPackedAllocQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -659,6 +680,11 @@ LoadPackedAllocQuiet:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadPackedAllocFlag                          A2774  95 PC, medium confidence
+; Loads a file into a new memory block and returns its data; the flag picks
+; whether errors stop
+;-----------------------------------------------------------------------------
 LoadPackedAllocFlag:
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -674,6 +700,11 @@ LoadPackedAllocFlag:
 .1:
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; LoadPackedHandle                             A2794  95 PC, medium confidence
+; Loads a file into a new memory block and returns its descriptor, stopping
+; on an error
+;-----------------------------------------------------------------------------
 LoadPackedHandle:
         push byte 1
         mov edx, dword [byte esp+0Ch]
@@ -684,6 +715,11 @@ LoadPackedHandle:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadPackedHandleQuiet                        A27AC  95 PC, medium confidence
+; Loads a file into a new memory block and returns its descriptor, or 0 on an
+; error
+;-----------------------------------------------------------------------------
 LoadPackedHandleQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -694,6 +730,11 @@ LoadPackedHandleQuiet:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; LoadPackedCore                               A27C4  95 PC, medium confidence
+; Loads a file, from the file cache when it is there, unpacking it when
+; packed
+;-----------------------------------------------------------------------------
 LoadPackedCore:
         push esi
         push edi
@@ -819,6 +860,10 @@ LoadPackedCore:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; ConvertShapeBank                             A28F0  95 PC, medium confidence
+; Converts a shape bank from its file layout to the layout in memory
+;-----------------------------------------------------------------------------
 ConvertShapeBank:
         push esi
         push edi
@@ -971,6 +1016,10 @@ ConvertShapeBank:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; ConvertShapeBankInPlace                      A2AB8  95 PC, medium confidence
+; Converts a loaded shape bank in place
+;-----------------------------------------------------------------------------
 ConvertShapeBankInPlace:
         push byte 0
         mov edx, dword [byte esp+08h]

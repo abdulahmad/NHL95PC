@@ -7,6 +7,10 @@ extern CreateMcgaWindow, FillRectSpans, SetupRectFill
 global VgaBlitKeyed, VgaBlitKeyedAtOwnPos, SetColorRemap, GetColorRemap, VgaBlitRemap, SetDrawBitmap, CreateBitmap, CreateBitmapJump
 global FillRectColor, VgaBlitKeyedFlipVHot, VgaBlitKeyedFlipV, VgaBlitRemapFlipVHot, VgaBlitRemapFlipV, VgaBlitKeyedFlipHHot, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHVHot
 global VgaBlitKeyedFlipHV, VgaBlitRemapFlipHHot, VgaBlitRemapFlipH, VgaBlitRemapFlipHVHot, VgaBlitRemapFlipHV
+;-----------------------------------------------------------------------------
+; VgaBlitKeyed                                    B4CD8  95 PC, low confidence
+; Draws a shape at a position skipping colour FFh (sprite mode 0)
+;-----------------------------------------------------------------------------
 VgaBlitKeyed:
         push ebp
         LD mov, ebp, esp
@@ -20,6 +24,10 @@ VgaBlitKeyed:
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitKeyedAtOwnPos+01Ah
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedAtOwnPos                            B4CF2  95 PC, low confidence
+; Draws a shape at its own position skipping colour FFh
+;-----------------------------------------------------------------------------
 VgaBlitKeyedAtOwnPos:
         push ebp
         LD mov, ebp, esp
@@ -120,6 +128,10 @@ VgaBlitKeyedAtOwnPos:
         jg short .8
         jmp near .1
         db 00h
+;-----------------------------------------------------------------------------
+; SetColorRemap                                B4DD4  95 PC, medium confidence
+; Graphics library: set the colour remap table the blitters use
+;-----------------------------------------------------------------------------
 SetColorRemap:
         push ebp
         LD mov, ebp, esp
@@ -133,6 +145,10 @@ SetColorRemap:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; GetColorRemap                                B4DEC  95 PC, medium confidence
+; Copies the 256-byte colour remap table out
+;-----------------------------------------------------------------------------
 GetColorRemap:
         push ebp
         LD mov, ebp, esp
@@ -183,6 +199,10 @@ GetColorRemap:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitRemap+034h
+;-----------------------------------------------------------------------------
+; VgaBlitRemap                                    B4E50  95 PC, low confidence
+; Draws a shape through the colour remap table (sprite mode 2)
+;-----------------------------------------------------------------------------
 VgaBlitRemap:
         push ebp
         LD mov, ebp, esp
@@ -307,6 +327,10 @@ VgaBlitRemap:
         jg short .8
         jmp near .1
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; SetDrawBitmap                                B4F70  95 PC, medium confidence
+; Copies a 12-word bitmap header into the screen bitmap the draw routines use
+;-----------------------------------------------------------------------------
 SetDrawBitmap:
         LD mov, edx, edi
         LD mov, eax, esi
@@ -318,6 +342,10 @@ SetDrawBitmap:
         LD mov, esi, eax
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; CreateBitmap                                 B4F8C  95 PC, medium confidence
+; Graphics library: create a bitmap (w, h, flags)
+;-----------------------------------------------------------------------------
 CreateBitmap:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -329,9 +357,18 @@ CreateBitmap:
         add esp, byte 0Ch
         mov eax, dword [eax]
         ret
+;-----------------------------------------------------------------------------
+; CreateBitmapJump                                B4FA6  95 PC, low confidence
+; Jumps to CreateMcgaWindow
+;-----------------------------------------------------------------------------
 CreateBitmapJump:
         jmp near CreateMcgaWindow
         db 00h
+;-----------------------------------------------------------------------------
+; FillRectColor                                B4FAC  95 PC, medium confidence
+; Clips a rectangle to the screen and fills it with a colour; followed by the
+; row fillers
+;-----------------------------------------------------------------------------
 FillRectColor:
         push ebp
         LD mov, ebp, esp
@@ -357,6 +394,10 @@ FillRectColor:
 .1:
         leave
         ret
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedFlipVHot                            B4FE8  95 PC, low confidence
+; VgaBlitKeyedFlipV at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 VgaBlitKeyedFlipVHot:
         push ebp
         LD mov, ebp, esp
@@ -374,6 +415,10 @@ VgaBlitKeyedFlipVHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitKeyedFlipV+034h
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedFlipV                               B500C  95 PC, low confidence
+; Draws a shape upside down, skipping colour FFh (sprite mode 1)
+;-----------------------------------------------------------------------------
 VgaBlitKeyedFlipV:
         push ebp
         LD mov, ebp, esp
@@ -670,6 +715,10 @@ VgaBlitKeyedFlipV:
         movsx ecx, ax
         jmp short .28
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; VgaBlitRemapFlipVHot                            B5290  95 PC, low confidence
+; VgaBlitRemapFlipV at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 VgaBlitRemapFlipVHot:
         push ebp
         LD mov, ebp, esp
@@ -687,6 +736,10 @@ VgaBlitRemapFlipVHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitRemapFlipV+034h
+;-----------------------------------------------------------------------------
+; VgaBlitRemapFlipV                               B52B4  95 PC, low confidence
+; Draws a shape upside down through the colour remap table (sprite mode 3)
+;-----------------------------------------------------------------------------
 VgaBlitRemapFlipV:
         push ebp
         LD mov, ebp, esp
@@ -997,6 +1050,10 @@ VgaBlitRemapFlipV:
         movsx ecx, ax
         jmp short .30
         db 00h
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedFlipHHot                            B555C  95 PC, low confidence
+; VgaBlitKeyedFlipH at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 VgaBlitKeyedFlipHHot:
         push ebp
         LD mov, ebp, esp
@@ -1015,6 +1072,10 @@ VgaBlitKeyedFlipHHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitKeyedFlipH+034h
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedFlipH                               B5584  95 PC, low confidence
+; Draws a shape mirrored, skipping colour FFh (sprite mode 4)
+;-----------------------------------------------------------------------------
 VgaBlitKeyedFlipH:
         push ebp
         LD mov, ebp, esp
@@ -1139,6 +1200,10 @@ VgaBlitKeyedFlipH:
         LD or, ecx, ecx
         jg short .8
         jmp near .1
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedFlipHVHot                           B5690  95 PC, low confidence
+; VgaBlitKeyedFlipHV at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 VgaBlitKeyedFlipHVHot:
         push ebp
         LD mov, ebp, esp
@@ -1157,6 +1222,10 @@ VgaBlitKeyedFlipHVHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitKeyedFlipHV+034h
+;-----------------------------------------------------------------------------
+; VgaBlitKeyedFlipHV                              B56B8  95 PC, low confidence
+; Draws a shape mirrored and upside down, skipping colour FFh (sprite mode 5)
+;-----------------------------------------------------------------------------
 VgaBlitKeyedFlipHV:
         push ebp
         LD mov, ebp, esp
@@ -1470,6 +1539,10 @@ VgaBlitKeyedFlipHV:
         movsx ecx, ax
         jmp short .30
         db 00h,00h
+;-----------------------------------------------------------------------------
+; VgaBlitRemapFlipHHot                            B594C  95 PC, low confidence
+; VgaBlitRemapFlipH at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 VgaBlitRemapFlipHHot:
         push ebp
         LD mov, ebp, esp
@@ -1488,6 +1561,10 @@ VgaBlitRemapFlipHHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitRemapFlipH+034h
+;-----------------------------------------------------------------------------
+; VgaBlitRemapFlipH                               B5974  95 PC, low confidence
+; Draws a shape mirrored through the colour remap table (sprite mode 6)
+;-----------------------------------------------------------------------------
 VgaBlitRemapFlipH:
         push ebp
         LD mov, ebp, esp
@@ -1619,6 +1696,10 @@ VgaBlitRemapFlipH:
         jg short .8
         jmp near .1
         db 00h,00h
+;-----------------------------------------------------------------------------
+; VgaBlitRemapFlipHVHot                           B5AA0  95 PC, low confidence
+; VgaBlitRemapFlipHV at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 VgaBlitRemapFlipHVHot:
         push ebp
         LD mov, ebp, esp
@@ -1637,6 +1718,11 @@ VgaBlitRemapFlipHVHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short VgaBlitRemapFlipHV+034h
+;-----------------------------------------------------------------------------
+; VgaBlitRemapFlipHV                              B5AC8  95 PC, low confidence
+; Draws a shape mirrored and upside down through the colour remap table
+; (sprite mode 7)
+;-----------------------------------------------------------------------------
 VgaBlitRemapFlipHV:
         push ebp
         LD mov, ebp, esp

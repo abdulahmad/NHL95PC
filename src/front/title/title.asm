@@ -1,5 +1,5 @@
 ; The title. The demo that runs from the title screen, the Pioneer and EA Sports logos, the title screen,
-; the credits, and the text drawn over them (95G front/title95).
+; the credits, and the text drawn over them.
 bits 32
 %include "hockey.inc"
 section s_15D6B progbits alloc exec nowrite align=1
@@ -38,10 +38,11 @@ global RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, Pr
 global TextGridOff, TextGridPut
 ;-----------------------------------------------------------------------------
 ; RunDemoGame                                                     15D6B  95 PC
-; Attract-mode demo from the title screens: picks random teams / options,
-; sets demomode, loads the exhibition mode state, ReloadGameGfx,
-; SetupGameQuick, DrawHudPanel, GameLoop, then restores the screen size and
-; mode state and clears demomode
+; Attract-mode demo from the title screens: picks random teams / options, sets
+; demomode, loads the exhibition mode state, ReloadGameGfx, SetupGameQuick,
+;
+; DrawHudPanel, GameLoop, then restores the screen size and mode state and
+; clears demomode
 ;-----------------------------------------------------------------------------
 ; C: src/front/title/RunDemoGame.c
 %ifdef CBUILD
@@ -219,9 +220,10 @@ RunDemoGame_x:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; AnyInputPressed                              1600C  95 PC, medium confidence
-; Returns 1 for a key (PollKey), a joystick button (bits 30h of ReadJoyRaw
-; for each present stick) or a mouse button; used to break the demo and the
-; MVI movies
+; Returns 1 for a key (PollKey), a joystick button (bits 30h of ReadJoyRaw for
+; each present stick) or a mouse button; used to break the demo
+;
+; and the MVI movies
 ;-----------------------------------------------------------------------------
 ; C: src/front/title/AnyInputPressed.c
 %ifdef CBUILD
@@ -304,6 +306,7 @@ ReadBE32:
 ; TitleScreen                                  1609F  95 PC, medium confidence
 ; The EA screen ("eascrn" scrn / msk1 / MASK) and the title ("title30", title
 ; music "mttitle" / "adtitle" by sound card, the "title.cmv" movie checked
+;
 ; for the 'MVIf' tag, ended early by AnyInputPressed); returns nonzero when
 ; the player pressed something, 0 when it timed out; called from RunIntro
 ;-----------------------------------------------------------------------------
@@ -781,9 +784,10 @@ TitleScreen:
 ;-----------------------------------------------------------------------------
 ; RunIntro                                     1672A  95 PC, medium confidence
 ; Start-up sequence called once from main: the Pioneer logo screens
-; ("pioneer1".."pioneer4", "bkgd", "fla%d" flashes, "pion"), the EA SPORTS
-; opening ("eaopen", "easports"), then TitleScreen / RunDemoGame in turn
-; until the player presses something; clears demomode on the way out
+; ("pioneer1".."pioneer4", "bkgd", "fla%d" flashes, "pion"),
+;
+; the EA SPORTS opening ("eaopen", "easports"), then TitleScreen / RunDemoGame
+; in turn until the player presses something; clears demomode on the way out
 ;-----------------------------------------------------------------------------
 ; C: src/front/title/RunDemoGame.c (RunIntro)
 %ifdef CBUILD
@@ -1402,8 +1406,9 @@ RunIntro:
 ;-----------------------------------------------------------------------------
 ; ShowCredits                                  16F9A  95 PC, medium confidence
 ; Credits screen ("backwin", "credits" art, "rockditi" song, scrolling text
-; lines drawn by RenderTextLine); called from main at exit and from
-; frontend_desk
+; lines drawn by RenderTextLine); called from main at exit and
+;
+; from frontend_desk
 ;-----------------------------------------------------------------------------
 ShowCredits:
         push dword 394h
@@ -1777,9 +1782,10 @@ SetTextColors:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; RenderTextLine                               174D8  95 PC, medium confidence
-; (?, y, text): draws the text (PrintShadowText) into a temporary bitmap
-; sized to its width (rounded up to 40h) and the font height, blits it with
-; DrawArt and frees it; ShowCredits
+; (?, y, text): draws the text (PrintShadowText) into a temporary bitmap sized
+; to its width (rounded up to 40h) and the font height, blits it with DrawArt
+;
+; and frees it; ShowCredits
 ;-----------------------------------------------------------------------------
 ; C: src/front/title/RenderTextLine.c
 %ifdef CBUILD

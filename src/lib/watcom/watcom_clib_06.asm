@@ -4,6 +4,10 @@ bits 32
 section s_8EAEC progbits alloc exec nowrite align=1
 extern randseed
 global _dos_getdate_, _dos_gettime_, GetRandState, rand_, srand_
+;-----------------------------------------------------------------------------
+; _dos_getdate_                                                 8EAEC  library
+; Run-time library _dos_getdate: the DOS date
+;-----------------------------------------------------------------------------
 _dos_getdate_:
         push edx
         push ecx
@@ -20,6 +24,10 @@ _dos_getdate_:
         pop ecx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; _dos_gettime_                                                 8EB07  library
+; Run-time library _dos_gettime: the DOS time
+;-----------------------------------------------------------------------------
 _dos_gettime_:
         push edx
         push ecx
@@ -36,9 +44,17 @@ _dos_gettime_:
         pop ecx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; GetRandState                                 8EB21  95 PC, medium confidence
+; Returns the C library's rand state address
+;-----------------------------------------------------------------------------
 GetRandState:
         mov eax, randseed
         ret
+;-----------------------------------------------------------------------------
+; rand_                                                         8EB27  library
+; Run-time library rand: the next random number
+;-----------------------------------------------------------------------------
 rand_:
         push edx
         call GetRandState
@@ -53,6 +69,10 @@ rand_:
 .1:
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; srand_                                                        8EB4B  library
+; Run-time library srand: seeds the random numbers
+;-----------------------------------------------------------------------------
 srand_:
         push edx
         mov edx, eax

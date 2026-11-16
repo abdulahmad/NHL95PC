@@ -37,8 +37,9 @@ global FormatPlayerName, BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostI
 ;-----------------------------------------------------------------------------
 ; SetRinkObject                                   614C2  95 PC, low confidence
 ; (slot, frame): fills the 0Ch-byte rinkobjs slot from the rinkobjdefs frame
-; triple (x, y, z) and rinkobjanim/CCE01, and marks the frame bit in
-; rinkobjused
+; triple (x, y, z) and rinkobjanim/CCE01,
+;
+; and marks the frame bit in rinkobjused
 ;-----------------------------------------------------------------------------
 ; C: src/engine/gamelog/SetRinkObject.c
 %ifdef CBUILD
@@ -584,6 +585,7 @@ fileio_popebpx:
 ; AppendGSumRecord                             61A8A  95 PC, medium confidence
 ; Bumps the gsummary record count gsumcount, opens gsummarypath, rewrites the
 ; 0Bh-byte header (gsumheader) and appends the record in eax (B3/B4..
+;
 ; FatalError codes)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/gamelog/AppendGSumRecord.c
@@ -993,6 +995,7 @@ FormatPlayerName:
 ; BuildEventLines                              61E99  95 PC, medium confidence
 ; Fills the 5 event text lines from the event record E9AC8 (1 goal: time,
 ; PP/SH, scorer, Assists/Unassisted; 2 penalty: 'Penalty shot', '%d minutes',
+;
 ; 'game misconduct', 'served by #%d'; 3 injury: 'gone for the game' / '1
 ; period')
 ;-----------------------------------------------------------------------------
@@ -1772,8 +1775,9 @@ NullCallback0C:
 ;-----------------------------------------------------------------------------
 ; ChkScorerMilestone                           62807  95 PC, medium confidence
 ; After a goal checks the scorer's season/game totals (hmtmtouch1,
-; hmplstats.., plcareergoals/7C/80): hat trick (3), first goal, 50 goals, 100
-; points/goals multiples; queues the note with QueueDeferredCall and sets
+; hmplstats.., plcareergoals/7C/80): hat trick (3), first goal, 50 goals,
+;
+; 100 points/goals multiples; queues the note with QueueDeferredCall and sets
 ; deferpending
 ;-----------------------------------------------------------------------------
 ChkScorerMilestone:
@@ -2122,9 +2126,8 @@ ChkScorerMilestone:
         jmp near fileio_popebpx
 ;-----------------------------------------------------------------------------
 ; QueueGoalieNote                                 62C37  95 PC, low confidence
-; Once per goalie (bit mask goalienotebits, 3Fh = all done): queues a
-; deferred note for the goalie of the team of player penaltysc and sets
-; deferpending
+; Once per goalie (bit mask goalienotebits, 3Fh = all done): queues a deferred
+; note for the goalie of the team of player penaltysc and sets deferpending
 ;-----------------------------------------------------------------------------
 ; C: src/engine/gamelog/QueueGoalieNote.c
 %ifdef CBUILD

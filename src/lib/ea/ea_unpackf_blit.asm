@@ -6,6 +6,10 @@ extern str_Unpackf, str_Unpacking, PaletteUsable, cliprect_x0, cliprect_x1, Debu
 extern fputchar, FreeMemBlock, ArtDrawModeFuncs, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, FlipArtHorizontal
 extern FlipArtVertical, RemapArt, bcopy, UnpackArtRle
 global ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered, ShapePixelSize, DrawArtAnyFormat, DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos
+;-----------------------------------------------------------------------------
+; ToUpperChar                                  9C594  95 PC, medium confidence
+; Converts a lower case letter to upper case
+;-----------------------------------------------------------------------------
 ToUpperChar:
         mov eax, dword [byte esp+04h]
         cmp eax, byte 61h
@@ -16,10 +20,18 @@ ToUpperChar:
 .1:
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; ReturnFalse                                  9C5A8  95 PC, medium confidence
+; Returns 0; the debug viewers' empty check
+;-----------------------------------------------------------------------------
 ReturnFalse:
         mov eax, 0
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; FindNearestColor                             9C5B0  95 PC, medium confidence
+; Returns the palette index closest to a 24-bit RGB colour
+;-----------------------------------------------------------------------------
 FindNearestColor:
         push esi
         push edi
@@ -225,6 +237,10 @@ FindNearestColor:
         pop esi
         ret
         db 00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; TextPrintCentered                            9C890  95 PC, medium confidence
+; Prints a string centred across the clip window
+;-----------------------------------------------------------------------------
 TextPrintCentered:
         push esi
         push edi
@@ -250,6 +266,10 @@ TextPrintCentered:
         pop esi
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; ShapePixelSize                               9C8D0  95 PC, medium confidence
+; Returns the pixel size of a shape
+;-----------------------------------------------------------------------------
 ShapePixelSize:
         push edx
         mov edx, dword [byte eax+02h]
@@ -261,6 +281,10 @@ ShapePixelSize:
         pop edx
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtAnyFormat                             9C8E8  95 PC, medium confidence
+; Draws art of any type (packed, run length or plain), scaled or not
+;-----------------------------------------------------------------------------
 DrawArtAnyFormat:
         push esi
         push edi
@@ -414,6 +438,10 @@ DrawArtAnyFormat:
         pop esi
         ret 10h
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtAnyFormatAt                           9CA6C  95 PC, medium confidence
+; Draws art of any type at x, y
+;-----------------------------------------------------------------------------
 DrawArtAnyFormatAt:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -426,6 +454,10 @@ DrawArtAnyFormatAt:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DrawArtAnyFormatOwnPos                       9CA90  95 PC, medium confidence
+; Draws art of any type at its own position
+;-----------------------------------------------------------------------------
 DrawArtAnyFormatOwnPos:
         mov eax, dword [byte esp+04h]
         push dword 10000h

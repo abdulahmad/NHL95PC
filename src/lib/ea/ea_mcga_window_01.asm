@@ -5,6 +5,10 @@ section s_9A7A0 progbits alloc exec nowrite align=1
 extern _os_handle, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLOCK, str_WindowdefadrOUTOFROW, FatalError, AllocMemHandleLocked, FillRowTable
 extern ZeroMem
 global CreateMcgaWindow
+;-----------------------------------------------------------------------------
+; CreateMcgaWindow                             9A7A0  95 PC, medium confidence
+; Allocates and sets up an MCGA window bitmap of a given size
+;-----------------------------------------------------------------------------
 CreateMcgaWindow:
         push esi
         push edi

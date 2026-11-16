@@ -7,6 +7,10 @@ extern PutBlockScaleSteps, RowCopyFunc, bcopy, VesaSetBankArg, BlitBlock, BlitBl
 extern BlitBlockOr, OrPixel
 global PutBlock, DrawBitmap, PutBlockHotspot, DrawArtXor, DrawArtXorAtOwnPos, DrawArtAnd, DrawArtAndAtOwnPos, DrawArtOr
 global DrawArtOrAtOwnPos
+;-----------------------------------------------------------------------------
+; PutBlock                                     903F0  95 PC, medium confidence
+; Graphics library: put a saved screen block back (buf, x, y)
+;-----------------------------------------------------------------------------
 PutBlock:
         push esi
         push edi
@@ -198,6 +202,10 @@ PutBlock:
         pop esi
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; DrawBitmap                                   9061C  95 PC, medium confidence
+; Graphics library: draw a bitmap
+;-----------------------------------------------------------------------------
 DrawBitmap:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -210,6 +218,10 @@ DrawBitmap:
         call PutBlock
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; PutBlockHotspot                              90638  95 PC, medium confidence
+; PutBlock at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 PutBlockHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
@@ -253,6 +265,10 @@ PutBlockHotspot:
         inc edx
         jmp short .4
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DrawArtXor                                      90698  95 PC, low confidence
+; XORs art onto the screen (keyed when KeyedDraw is set)
+;-----------------------------------------------------------------------------
 DrawArtXor:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
@@ -275,6 +291,10 @@ DrawArtXor:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtXorAtOwnPos                              906DC  95 PC, low confidence
+; DrawArtXor at the shape's own position
+;-----------------------------------------------------------------------------
 DrawArtXorAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -302,6 +322,11 @@ DrawArtXorAtOwnPos:
         call DrawArtXor
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; DrawArtAnd                                   90720  95 PC, medium confidence
+; ANDs art onto the draw target at x, y, pixel by pixel when keyed drawing is
+; on
+;-----------------------------------------------------------------------------
 DrawArtAnd:
         push esi
         push edi
@@ -410,6 +435,10 @@ DrawArtAnd:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; DrawArtAndAtOwnPos                              90838  95 PC, low confidence
+; DrawArtAnd at the shape's own position
+;-----------------------------------------------------------------------------
 DrawArtAndAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -437,6 +466,10 @@ DrawArtAndAtOwnPos:
         call DrawArtAnd
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; DrawArtOr                                    9087C  95 PC, medium confidence
+; ORs art onto the screen
+;-----------------------------------------------------------------------------
 DrawArtOr:
         push esi
         push edi
@@ -544,6 +577,10 @@ DrawArtOr:
         add esi, dword [byte esp+04h]
         jmp short .6
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawArtOrAtOwnPos                               9099C  95 PC, low confidence
+; DrawArtOr at the shape's own position
+;-----------------------------------------------------------------------------
 DrawArtOrAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]

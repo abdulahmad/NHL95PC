@@ -8,6 +8,10 @@ extern __EFG_printf, CMainHook, __CommonInit_, toupper_, ultoa_, InitRtnsEntry, 
 global copypart_, _splitpath_, pickup_, _makepath_, _Full_at_exit_rtn_, atexit_, __CMain, __InitRtns
 global __FiniRtns, __prtf_, getprintspecs_, evalflags_, far_strlen_, far_other_strlen_, fmt4hex_, FixedPoint_Format_
 global float_format_, formstring_, zupstr_, __doserror_, _dosret0_, _dosretax_, __set_errno_dos_
+;-----------------------------------------------------------------------------
+; copypart_                                                     99A12  library
+; Run-time library: copies one part of a path (for _splitpath)
+;-----------------------------------------------------------------------------
 copypart_:
         push esi
         push edi
@@ -40,6 +44,11 @@ copypart_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; _splitpath_                                                   99A45  library
+; Run-time library _splitpath: splits a path into drive, directory, name and
+; extension
+;-----------------------------------------------------------------------------
 _splitpath_:
         push esi
         db 057h                                 ; insn: push edi
@@ -116,6 +125,10 @@ _splitpath_:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; pickup_                                                       99AE2  library
+; Run-time library: notes the path separator in use (for _makepath)
+;-----------------------------------------------------------------------------
 pickup_:
         cmp al, 5Ch
         je short .1
@@ -129,6 +142,10 @@ pickup_:
         mov al, byte [edx]
 .3:
         ret
+;-----------------------------------------------------------------------------
+; _makepath_                                                    99AF4  library
+; Run-time library _makepath: builds a path from its parts
+;-----------------------------------------------------------------------------
 _makepath_:
         push esi
         push edi
@@ -233,6 +250,10 @@ _makepath_:
         pop edi
         pop esi
         ret 4
+;-----------------------------------------------------------------------------
+; _Full_at_exit_rtn_                                            99BBF  library
+; Run-time library: runs the atexit routines
+;-----------------------------------------------------------------------------
 _Full_at_exit_rtn_:
         push ebx
         push edx
@@ -256,6 +277,10 @@ _Full_at_exit_rtn_:
         pop edx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; atexit_                                                       99BF6  library
+; Run-time library atexit: registers an exit routine
+;-----------------------------------------------------------------------------
 atexit_:
         push ebx
         push ecx
@@ -281,6 +306,10 @@ atexit_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __CMain                                                       99C32  library
+; Run-time library: calls main
+;-----------------------------------------------------------------------------
 __CMain:
         push edx
         push ebp
@@ -307,6 +336,10 @@ __CMain:
         call main_
         call exit_
         db 089h,0ECh,05Dh,05Ah,0C3h,00h
+;-----------------------------------------------------------------------------
+; __InitRtns                                                    99C82  library
+; Run-time library: runs the init routine table by priority
+;-----------------------------------------------------------------------------
 __InitRtns:
         push esi
         push edi
@@ -354,6 +387,10 @@ __InitRtns:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; __FiniRtns                                                    99CCD  library
+; Run-time library: runs the fini routine table by priority
+;-----------------------------------------------------------------------------
 __FiniRtns:
         push esi
         push edi
@@ -402,6 +439,10 @@ __FiniRtns:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; __prtf_                                                       99D1C  library
+; Run-time library: the printf formatting engine
+;-----------------------------------------------------------------------------
 __prtf_:
         push esi
         push edi
@@ -654,6 +695,10 @@ __prtf_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; getprintspecs_                                                99F9D  library
+; Run-time library: reads one printf format specification
+;-----------------------------------------------------------------------------
 getprintspecs_:
         push ecx
         push esi
@@ -806,6 +851,10 @@ getprintspecs_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; evalflags_                                                    9A0D0  library
+; Run-time library: reads the flags of a printf specification
+;-----------------------------------------------------------------------------
 evalflags_:
         push ebx
         push ecx
@@ -852,6 +901,10 @@ evalflags_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; far_strlen_                                                   9A12B  library
+; Run-time library: length of a far string (printf)
+;-----------------------------------------------------------------------------
 far_strlen_:
         push ecx
         push esi
@@ -877,6 +930,10 @@ far_strlen_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; far_other_strlen_                                             9A14F  library
+; Run-time library: length of a far wide string (printf)
+;-----------------------------------------------------------------------------
 far_other_strlen_:
         push ecx
         push esi
@@ -897,6 +954,10 @@ far_other_strlen_:
         je short far_strlen_+01Fh
         inc eax
         jmp short .1
+;-----------------------------------------------------------------------------
+; fmt4hex_                                                      9A172  library
+; Run-time library: formats a value as four hex digits
+;-----------------------------------------------------------------------------
 fmt4hex_:
         push ecx
         push esi
@@ -952,6 +1013,10 @@ fmt4hex_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; FixedPoint_Format_                                            9A1D3  library
+; Run-time library: formats a fixed point value
+;-----------------------------------------------------------------------------
 FixedPoint_Format_:
         push ecx
         push esi
@@ -1059,9 +1124,17 @@ FixedPoint_Format_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; float_format_                                                 9A2AE  library
+; Run-time library: formats a float for printf
+;-----------------------------------------------------------------------------
 float_format_:
         call dword [__EFG_printf]
         ret
+;-----------------------------------------------------------------------------
+; formstring_                                                   9A2B5  library
+; Run-time library: formats an integer into its digits for printf
+;-----------------------------------------------------------------------------
 formstring_:
         push esi
         push edi
@@ -1492,6 +1565,10 @@ formstring_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; zupstr_                                                       9A6FE  library
+; Run-time library: makes a string upper case (printf %X)
+;-----------------------------------------------------------------------------
 zupstr_:
         push edx
         mov edx, eax
@@ -1507,6 +1584,10 @@ zupstr_:
 .2:
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; __doserror_                                                   9A716  library
+; Run-time library: sets errno from a DOS error
+;-----------------------------------------------------------------------------
 __doserror_:
         jae short .1
         and eax, 0FFFFh
@@ -1518,15 +1599,28 @@ __doserror_:
         sub eax, eax
 .2:
         ret
+;-----------------------------------------------------------------------------
+; _dosret0_                                    9A729  95 PC, medium confidence
+; Returns 0 or the DOS error code
+;-----------------------------------------------------------------------------
 _dosret0_:
         test edx, edx
         jne short _dosretax_
         xor eax, eax
         ret
+;-----------------------------------------------------------------------------
+; _dosretax_                                                    9A730  library
+; C run-time: returns the DOS result in eax, or sets errno and returns -1
+; when carry is set
+;-----------------------------------------------------------------------------
 _dosretax_:
         test edx, edx
         jne short __set_errno_dos_
         ret
+;-----------------------------------------------------------------------------
+; __set_errno_dos_                                              9A735  library
+; Run-time library: stores a DOS error code and maps it to errno
+;-----------------------------------------------------------------------------
 __set_errno_dos_:
         push ebx
         push edx

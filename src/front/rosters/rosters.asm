@@ -1,4 +1,4 @@
-; Edit rosters: roster lists, roster panel, jersey numbers (95G create95).
+; Edit rosters: roster lists, roster panel, jersey numbers.
 bits 32
 %include "hockey.inc"
 section s_6CC20 progbits alloc exec nowrite align=1
@@ -30,6 +30,7 @@ global EditRosters
 ; RunEditRosters                                                  6CC20  95 PC
 ; Edit Rosters session: dialog colours, music fade, "Current" DBs into memory
 ; (LoadLeagueDbsMem), enlarged pointer copy, EditRosters, FreeLeagueDbsMem,
+;
 ; restore
 ;-----------------------------------------------------------------------------
 ; C: src/front/rosters/RunEditRosters.c
@@ -632,8 +633,9 @@ DrawRosterPanel:
 ;-----------------------------------------------------------------------------
 ; DrawEditRosters                              6D2F8  95 PC, medium confidence
 ; Redraws the Edit Rosters screen (prez2 background and palette, both roster
-; panels with 'Ratings:' and jersey numbers); called after every roster
-; change and from database_dialogs
+; panels with 'Ratings:' and jersey numbers); called after every roster change
+;
+; and from database_dialogs
 ;-----------------------------------------------------------------------------
 ; C: src/front/rosters/RunEditRosters.c (DrawEditRosters)
 %ifdef CBUILD
@@ -847,9 +849,10 @@ EditRostersReturn:
 ;-----------------------------------------------------------------------------
 ; SelectRosterTeam                                                6D5D0  95 PC
 ; Division-submenu team item: puts the picked team (divisionteams[div][slot])
-; in rosterteam[side], re-enables the previous team's item and 'Free Agents
-; ...', disables the new one, enables 'Edit Team Lines ...', reloads the list
-; (LoadRosterList) and redraws
+; in rosterteam[side], re-enables the previous team's item
+;
+; and 'Free Agents ...', disables the new one, enables 'Edit Team Lines ...',
+; reloads the list (LoadRosterList) and redraws
 ;-----------------------------------------------------------------------------
 SelectRosterTeam:
         push dword 20h
@@ -1344,8 +1347,9 @@ CountSelected:
 ;-----------------------------------------------------------------------------
 ; RosterPanelClick                             6DAC3  95 PC, medium confidence
 ; Mouse click (x, y): picks panel 0 (x 23h-113h) or 1 (x 15Eh-24Eh) and the
-; row (y from 35h), toggles that player's selection, then enables 'Move to
-; Free Agent List' (MoveToFreeAgents) / 'Move to Roster N'
+; row (y from 35h), toggles that player's selection, then enables 'Move
+;
+; to Free Agent List' (MoveToFreeAgents) / 'Move to Roster N'
 ; (MoveToOtherRoster) by the selection count
 ;-----------------------------------------------------------------------------
 RosterPanelClick:
@@ -1702,8 +1706,10 @@ LoadBothRosterLists:
 ;-----------------------------------------------------------------------------
 ; LoadRosterList                                                  6DE94  95 PC
 ; (side): free-agent panel frees and rebuilds falist from KEY.DB
-; (keydb_size/34h entries), team panel builds the sorted 1Ch-player list of
-; rosterteam[side]; resets the selections and the move menu items
+; (keydb_size/34h entries),
+;
+; team panel builds the sorted 1Ch-player list of rosterteam[side]; resets the
+; selections and the move menu items
 ;-----------------------------------------------------------------------------
 LoadRosterList:
         push dword 24h
@@ -1747,8 +1753,9 @@ LoadRosterList:
 ;-----------------------------------------------------------------------------
 ; EditTeamLines                                                   6DF06  95 PC
 ; 'Edit Team Lines ...' menu item: sets HomeTeam/VisTeam to the panel's team,
-; copies its team record into the hmteamrec slot and runs the line editor
-; DbLineEditor, then restores and redraws
+; copies its team record into the hmteamrec slot
+;
+; and runs the line editor DbLineEditor, then restores and redraws
 ;-----------------------------------------------------------------------------
 ; C: src/front/rosters/RunEditRosters.c (EditTeamLines)
 %ifdef CBUILD
@@ -1861,9 +1868,10 @@ EditTeamLines:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; EditRosters                                  6E089  95 PC, medium confidence
-; Database_save 6CE03: Edit Rosters screen loop (menubuff menus, panel
-; clicks, keys); on exit 'The database has not been saved. Are you sure you
-; want to exit?'
+; Database_save 6CE03: Edit Rosters screen loop (menubuff menus, panel clicks,
+; keys); on exit 'The database has not been saved.
+;
+; Are you sure you want to exit?'
 ;-----------------------------------------------------------------------------
 EditRosters:
         push dword 0A0h

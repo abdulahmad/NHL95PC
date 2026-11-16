@@ -19,7 +19,7 @@ extern SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt
 extern SetViewRect, FindShape, ClearScreen, SetScreenTarget, SetClipWindow, FillRectColor, teamabbrevs, teamconf
 extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
 global PreGameScreen_jt, PreGameScreen, PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines, TonightsGameScreen
-PreGameScreen_jt:
+PreGameScreen_jt:                               ; used by PreGameScreen
         dd PreGameScreen_awaylines
         dd PreGameScreen_play
         dd PreGameScreen_cancel
@@ -27,10 +27,11 @@ PreGameScreen_jt:
 ;-----------------------------------------------------------------------------
 ; PreGameScreen                                                   29F28  95 PC
 ; Pre-game arena screen: apal / arena / rink / srlogo shapes, "%s   at   %s",
-; scouting comparison (scoutcatnames), buttons Away lines / Play / Cancel /
-; Home lines (pregamebuttons; lines go to the line editor GameLineEditor),
-; then TonightsGameScreen; called from temp_files / import_export /
-; season_playoffs before a game
+; scouting comparison (scoutcatnames),
+;
+; buttons Away lines / Play / Cancel / Home lines (pregamebuttons; lines go to
+; the line editor GameLineEditor), then TonightsGameScreen; called from
+; temp_files / import_export / season_playoffs before a game
 ;-----------------------------------------------------------------------------
 ; C: src/front/pregame/PreGameScreen.c
 %ifdef CBUILD
@@ -903,9 +904,10 @@ PreGameScreen_homelines:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; TonightsGameScreen                           2ABDF  95 PC, medium confidence
-; "tonights" matchup screen: ctlogo / logohome / logoaway / ctbkgd /
-; cttitle1, team leader shapes (top, tlu, scra, fowa, def), indus030 font,
-; KEY records (GIPK), "Injured" list; FitPlayerName for names
+; "tonights" matchup screen: ctlogo / logohome / logoaway / ctbkgd / cttitle1,
+; team leader shapes (top, tlu, scra, fowa, def), indus030 font, KEY records
+;
+; (GIPK), "Injured" list; FitPlayerName for names
 ;-----------------------------------------------------------------------------
 ; C: src/front/pregame/TonightsGameScreen.c
 %ifdef CBUILD

@@ -55,7 +55,7 @@ SndLoadFile2:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Crowd_Noise                        594CD  94G crowd94.asm, medium confidence
-; Role match: the crowd noise each frame (PC MIDI, 94G PSG)
+; Role match: the crowd noise each frame
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/Crowd_Noise.c
 %ifdef CBUILD
@@ -270,8 +270,9 @@ Crowd_Noise:
 ;-----------------------------------------------------------------------------
 ; CrowdNoiseOff                                59748  95 PC, medium confidence
 ; PC MIDI crowd noise off: for channels 8 and 7 when playing
-; (crowdvol8/crowdvol7 > 0): volume 0, note 24h off (MidiNoteOff, 80h), clears
-; the level
+; (crowdvol8/crowdvol7 > 0): volume 0, note 24h off (MidiNoteOff, 80h),
+;
+; clears the level
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/CrowdNoiseOff.c
 %ifdef CBUILD
@@ -326,6 +327,7 @@ CrowdNoiseOff:
 ; CrowdFadeOut                                 597E3  95 PC, medium confidence
 ; Saves crowdlevel, then while it is > 0: wait a tick
 ; (SetTickDeadline/WaitTickDeadline), crowdlevel -= 32h, CrowdNoiseUpdate(2);
+;
 ; then CrowdNoiseOff and restores crowdlevel; called at game exit / screen
 ; changes
 ;-----------------------------------------------------------------------------
@@ -399,9 +401,10 @@ CrowdNoiseReset:
 ;-----------------------------------------------------------------------------
 ; sfx                               59884  94G middle94.asm, medium confidence
 ; Play sound effect id (remembered in lastsfx): while speech plays only 9Ch
-; passes (and in a replay only with oneminsaid); A0h/A1h not on sound devices
-; 4/8; 7Dh raises crowdlevel by 500; AAh on device 4 starts sample
-; SfxTestSample; 90h also plays 91h (both on device 4).
+; passes (and in a replay only with oneminsaid);
+;
+; A0h/A1h not on sound devices 4/8; 7Dh raises crowdlevel by 500; AAh on
+; device 4 starts sample SfxTestSample; 90h also plays 91h (both on device 4).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/sfx.c
 %ifdef CBUILD
@@ -581,8 +584,9 @@ WaitDigiSample:
 ;-----------------------------------------------------------------------------
 ; PlayCrowdSample                                 59A11  95 PC, low confidence
 ; Eax < 6: sample from rockteamcues[eax] (else falls back to a random 6-8);
-; plays crowdsamples entries 0-8 or leaguesetimg entries 9-11 with
-; PlayDigiSample; callers pass 0, 2, 3, 9, 0Ah, 0Bh (goal / end-of-game
+; plays crowdsamples entries 0-8 or leaguesetimg entries 9-11
+;
+; with PlayDigiSample; callers pass 0, 2, 3, 9, 0Ah, 0Bh (goal / end-of-game
 ; sequences)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/PlayCrowdSample.c
@@ -812,6 +816,9 @@ PaTonightIntro:
 .2:
         pop ecx
         pop ebx
+;-----------------------------------------------------------------------------
+; PaTonightIntro_ret                                            59BFB  library
+;-----------------------------------------------------------------------------
 PaTonightIntro_ret:
         ret
 ;-----------------------------------------------------------------------------

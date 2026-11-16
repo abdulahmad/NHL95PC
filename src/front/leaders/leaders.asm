@@ -1,4 +1,4 @@
-; League leaders screen and its sort orders (95G stats95).
+; League leaders screen and its sort orders.
 bits 32
 %include "hockey.inc"
 section s_25144 progbits alloc exec nowrite align=1
@@ -1135,7 +1135,7 @@ CmpSavePct:
         ret
 %endif ; C
         db 08Bh,0C0h
-LeadersScreen_coljt:
+LeadersScreen_coljt:                            ; used by LeadersScreen
         dd LeadersScreen_colDefault
         dd LeadersScreen_colDefault
         dd LeadersScreen_colDefault
@@ -2179,7 +2179,8 @@ LeadersScreen_colSavePct:
         pop ebx
         ret
 %endif ; C
-stand_tmpl1:
+stand_tmpl1:                                    ; 5 words 14h..18h in code, copied into a local by
+                                                ; StandingsScreen; used by StandingsScreen
         db 014h,00h,015h,00h,016h,00h,017h,00h,018h,00h
 ;-----------------------------------------------------------------------------
 ; stand_tmpl2                                                     269F4  95 PC
@@ -2193,7 +2194,7 @@ stand_tmpl2:
         das
         add byte [esi], ch
         db 00h
-CmpConfStandings:
+CmpConfStandings:                               ; used by StandingsScreen
         db 068h,02Ch,00h,00h,00h,0E8h,044h,05Fh,06h,00h,053h,051h,056h,057h
 ;-----------------------------------------------------------------------------
 ; CmpConfStandings_m                                              26A0C  95 PC

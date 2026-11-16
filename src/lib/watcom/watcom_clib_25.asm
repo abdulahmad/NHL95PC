@@ -4,6 +4,10 @@ bits 32
 section s_98683 progbits alloc exec nowrite align=1
 extern __EnterWVIDEO_, MemLockHandleStore, WriteConsoleMessage
 global __fatal_runtime_error_, DefaultFpeHandler, MemLockHandleInit, MemLock
+;-----------------------------------------------------------------------------
+; __fatal_runtime_error_                                        98683  library
+; Run-time library: prints a fatal run-time error and exits
+;-----------------------------------------------------------------------------
 __fatal_runtime_error_:
         push ebx
         push ecx
@@ -20,9 +24,17 @@ __fatal_runtime_error_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; DefaultFpeHandler                            986A0  95 PC, medium confidence
+; Default floating point exception handler; does nothing
+;-----------------------------------------------------------------------------
 DefaultFpeHandler:
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; MemLockHandleInit                               986B0  95 PC, low confidence
+; Clears the memory-manager lock handle and returns its address
+;-----------------------------------------------------------------------------
 MemLockHandleInit:
         xor edx, edx
         mov dword [MemLockHandleStore], edx

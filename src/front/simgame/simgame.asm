@@ -2717,9 +2717,11 @@ LoadScreenPalTick:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ShowLoadingScreen                                               479E9  95 PC
-; Once (loadscreenon), if enough free memory: shows the "load" picture,
-; builds 3 rotated copies of its palette, installs LoadScreenPalTick as timer
-; callback and fades in; cleared by engine_init
+; Once (loadscreenon), if enough free memory: shows the "load" picture, builds
+; 3 rotated copies of its palette,
+;
+; installs LoadScreenPalTick as timer callback and fades in; cleared by
+; engine_init
 ;-----------------------------------------------------------------------------
 ; C: src/front/simgame/ShowLoadingScreen.c
 %ifdef CBUILD

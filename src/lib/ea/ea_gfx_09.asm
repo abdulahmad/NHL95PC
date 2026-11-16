@@ -7,6 +7,10 @@ extern ScreenHeight, TextBackColor, TextOriginX, TextOriginY, TextFontTag, TextW
 extern TextLeft, TextTop, TextRight, TextBottom, fontcolor, TextFont, TextSetCursor, PutBlock
 extern FillRectClipped, SetClipWindow, PutPixel
 global TextPrint, TextPrintAt, TextPutCharAt
+;-----------------------------------------------------------------------------
+; TextPrint                                    92890  95 PC, medium confidence
+; Prints a string at the text cursor with the current font
+;-----------------------------------------------------------------------------
 TextPrint:
         push esi
         push edi
@@ -411,6 +415,10 @@ TextPrint:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; TextPrintAt                                  92CD0  95 PC, medium confidence
+; Sets the text origin and draws a string there
+;-----------------------------------------------------------------------------
 TextPrintAt:
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -423,6 +431,10 @@ TextPrintAt:
         call TextPrint
         add esp, byte 4
         ret
+;-----------------------------------------------------------------------------
+; TextPutCharAt                                   92CF0  95 PC, low confidence
+; Prints one character at a position
+;-----------------------------------------------------------------------------
 TextPutCharAt:
         sub esp, byte 4
         mov edx, dword [byte esp+010h]

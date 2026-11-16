@@ -9,7 +9,7 @@ extern str_Faceoffs2, str_Min6, str_GA6, str_GAA5, str_spW3, str_SpL6, str_SpT3,
 extern str_EN3, str_SA5, str_GloveHand3, str_GloveLeft2, str_GloveRight2, str_StickLeft2, str_StickRight2, str_PuckControl2
 extern str_PenaltyKilling3, str_PowerPlay3, str_Shooting2, str_Skating2, str_Defence2, str_Goaltending2, str_OverAll2
 global str_Ratings, teamratingidx, rostereditmode, newskaterratingnames, newskaterattrs_m3, newgoalieratingnames, newgoalieattrs_m3, teamratingnames
-str_Ratings:
+str_Ratings:                                    ; string 'Ratings:'; used by DrawEditRosters
         db 052h,061h,074h,069h,06Eh,067h,073h,03Ah,00h,052h,06Fh,06Fh,06Bh,069h,065h,03Ah
         db 00h,04Eh,061h,06Dh,065h,03Ah,00h
         dd str_GP9
@@ -25,7 +25,8 @@ str_Ratings:
         db 078h,00h,00h,00h,0A0h,00h,00h,00h,0C8h,00h,00h,00h,0F0h,00h,00h,00h
         db 018h,01h,00h,00h,040h,01h,00h,00h,07Ch,01h,00h,00h,0A4h,01h,00h,00h
         db 0CCh,01h,00h,00h,08h,02h,00h,00h
-newskaterratingnames:
+newskaterratingnames:                           ; create player: names of the 14 skater ratings (index 1-14);
+                                                ; used by DrawShootsField, EditSkaterRating
         dd str_Shoots3
         dd str_Speed3
         dd str_Agility3
@@ -69,7 +70,8 @@ newskaterattrs_m3 equ $+1
         db 078h,00h,00h,00h,0A0h,00h,00h,00h,0C8h,00h,00h,00h,0F0h,00h,00h,00h
         db 02Ch,01h,00h,00h,054h,01h,00h,00h,07Ch,01h,00h,00h,0A4h,01h,00h,00h
         db 0CCh,01h,00h,00h,0F4h,01h,00h,00h,030h,02h,00h,00h
-newgoalieratingnames:
+newgoalieratingnames:                           ; create player: names of the 10 goalie ratings (index 1-10);
+                                                ; used by DrawGloveField, EditGoalieRating
         dd str_GloveHand3
         dd str_GloveLeft2
         dd str_GloveRight2
@@ -94,7 +96,8 @@ newgoalieattrs_m3 equ $+1
         db 01h,00h,00h,09Ch,0FFh,0FFh,0FFh,09Ch,0FFh,0FFh,0FFh,0A4h,01h,00h,00h,01Dh
         db 01h,00h,00h,0CCh,01h,00h,00h,01Dh,01h,00h,00h,0F4h,01h,00h,00h,01Dh
         db 01h,00h,00h,09Ch,0FFh,0FFh,0FFh,09Ch,0FFh,0FFh,0FFh
-teamratingnames:
+teamratingnames:                                ; DrawEditRosters: the nine team rating names; used by
+                                                ; DrawEditRosters
         dd str_PenaltyKilling3
         dd str_PowerPlay3
         dd str_Shooting2
@@ -104,9 +107,12 @@ teamratingnames:
         dd str_Checking3
         dd str_Goaltending2
         dd str_OverAll2
-teamratingidx:
+teamratingidx:                                  ; DrawEditRosters: index of each of the nine ratings in the
+                                                ; team record; used by DrawEditRosters
         db 00h,01h,04h,05h,06h,07h,08h,0Ah,0Bh,045h,06Eh,074h,065h,072h,020h,061h
         db 020h,070h,06Fh,073h,069h,074h,069h,06Fh,06Eh,020h,066h,06Fh,072h,00h,028h,059h
         db 029h,065h,073h,020h,06Fh,072h,020h,028h,04Eh,029h,06Fh,00h
-rostereditmode:
+rostereditmode:                                 ; roster editor mode (2: CopyRoster1Rec copies the team record
+                                                ; into the edit buffer); used by CopyRoster1Rec,
+                                                ; DrawEditRosters, EditRosters ...
         db 00h,00h,00h,00h

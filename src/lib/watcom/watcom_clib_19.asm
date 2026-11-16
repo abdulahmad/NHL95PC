@@ -4,6 +4,10 @@ bits 32
 section s_930A7 progbits alloc exec nowrite align=1
 extern __set_errno_dos_, fgetc_, ScanFormat, ungetc_
 global mkdir_, cget_file_, uncget_file_, vfscanf_, fscanf_
+;-----------------------------------------------------------------------------
+; mkdir_                                                        930A7  library
+; C run-time: creates a directory
+;-----------------------------------------------------------------------------
 mkdir_:
         push edx
         mov edx, eax
@@ -21,6 +25,10 @@ mkdir_:
         xor eax, eax
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; cget_file_                                                    930C6  library
+; Scanf helper: reads the next character from the input file
+;-----------------------------------------------------------------------------
 cget_file_:
         push ebx
         push ecx
@@ -60,9 +68,17 @@ cget_file_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; uncget_file_                                                  93114  library
+; Scanf helper: pushes a character back to the input file
+;-----------------------------------------------------------------------------
 uncget_file_:
         mov edx, dword [byte edx+08h]
         jmp near ungetc_
+;-----------------------------------------------------------------------------
+; vfscanf_                                                      9311C  library
+; C run-time: scanf from a file with an argument list
+;-----------------------------------------------------------------------------
 vfscanf_:
         push ecx
         push esi
@@ -78,6 +94,10 @@ vfscanf_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; fscanf_                                                       93143  library
+; C run-time: reads formatted input from a file
+;-----------------------------------------------------------------------------
 fscanf_:
         push ebx
         push edx

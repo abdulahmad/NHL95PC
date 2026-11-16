@@ -4,6 +4,10 @@ bits 32
 section s_986EF progbits alloc exec nowrite align=1
 extern __flush_, __ioalloc_, __prtf_, FpeHandler, fputc_, ErrnoPtr, __get_doserrno_ptr_
 global file_putc_, __fprtf_, __set_EDOM_, __set_errno_, __set_ERANGE_, __set_EINVAL_, __set_doserrno_, CallFpeHandler
+;-----------------------------------------------------------------------------
+; file_putc_                                                    986EF  library
+; Run-time library: writes one character to a stream (fprintf output)
+;-----------------------------------------------------------------------------
 file_putc_:
         push ebx
         mov ebx, eax
@@ -13,6 +17,10 @@ file_putc_:
         inc dword [byte ebx+010h]
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __fprtf_                                                      98700  library
+; Run-time library: the fprintf engine
+;-----------------------------------------------------------------------------
 __fprtf_:
         push ecx
         push esi
@@ -70,8 +78,15 @@ __fprtf_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; __set_EDOM_                                  98785  95 PC, medium confidence
+; Sets errno to EDOM
+;-----------------------------------------------------------------------------
 __set_EDOM_:
         mov eax, 0Dh
+;-----------------------------------------------------------------------------
+; __set_errno_                                                  9878A  library
+;-----------------------------------------------------------------------------
 __set_errno_:
         push edx
         mov edx, eax
@@ -79,14 +94,26 @@ __set_errno_:
         mov dword [eax], edx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; __set_ERANGE_                                                 98796  library
+; Run-time library: sets errno to ERANGE
+;-----------------------------------------------------------------------------
 __set_ERANGE_:
         mov eax, 0Eh
         jmp short __set_errno_
+;-----------------------------------------------------------------------------
+; __set_EINVAL_                                                 9879D  library
+; Run-time library: sets errno to EINVAL
+;-----------------------------------------------------------------------------
 __set_EINVAL_:
         mov eax, 9
         call __set_errno_
         mov eax, 0FFFFFFFFh
         ret
+;-----------------------------------------------------------------------------
+; __set_doserrno_                                               987AD  library
+; Run-time library: sets the DOS error code
+;-----------------------------------------------------------------------------
 __set_doserrno_:
         push edx
         mov edx, eax
@@ -94,6 +121,10 @@ __set_doserrno_:
         mov dword [eax], edx
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; CallFpeHandler                               987B9  95 PC, medium confidence
+; Calls the floating point exception handler
+;-----------------------------------------------------------------------------
 CallFpeHandler:
         call dword [FpeHandler]
         ret

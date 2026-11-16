@@ -23,11 +23,13 @@ global ResetGoalieMenu, ClearPanelPenalties
 ;-----------------------------------------------------------------------------
 ; LoadGameTeams                                1BBCC  95 PC, medium confidence
 ; (mode): reads the Home and Visitor TEAMS.DB records (leaguedbfmt /
-; leaguedbfmt2 paths) into hmteamrec / awteamrec, opens each side's KEY / ATT
-; / SEASON / CAREER files (OpenPlayerDBs) and loads both rosters
-; (LoadTeamRoster); in modes 0 / 2 copies the saved lines into hmlinetab /
-; awlinetab; marks the scratched players (hmscratch / awscratch) in the
-; rosters; FatalError codes "1".."8"
+; leaguedbfmt2 paths) into hmteamrec / awteamrec,
+;
+; opens each side's KEY / ATT / SEASON / CAREER files (OpenPlayerDBs) and
+; loads both rosters (LoadTeamRoster); in modes 0 / 2 copies the saved lines
+; into hmlinetab / awlinetab; marks the scratched players
+;
+; (hmscratch / awscratch) in the rosters; FatalError codes "1".."8"
 ;-----------------------------------------------------------------------------
 ; C: src/front/team_db/LoadGameTeams.c
 %ifdef CBUILD
@@ -294,11 +296,13 @@ LoadGameTeams:
 ;-----------------------------------------------------------------------------
 ; InitGameSummary                              1BEFD  95 PC, medium confidence
 ; (a, b): new game: fills the 0Bh-byte game header at C5423 (a, b, Home,
-; Visitor, 1), clears the goal / shot counters, LoadCupFinalSeries unless
-; gameopts+1 bit 1, creates <league>\gsummary.db (MakeGSummaryPath) with two
-; 0Bh headers, LoadGameTeams(0), clears the per-player (2 x 25 x 10h at
-; hmplstats) and goalie (2 x 3 x 6 at hmglstats) game stats; called from
-; temp_files, import_export, RunDemoGame and season_playoffs
+; Visitor, 1), clears the goal / shot counters, LoadCupFinalSeries
+;
+; unless gameopts+1 bit 1, creates <league>\gsummary.db (MakeGSummaryPath)
+; with two 0Bh headers, LoadGameTeams(0), clears the per-player (2 x 25 x 10h
+; at hmplstats) and goalie (2 x 3 x 6 at hmglstats) game stats; called
+;
+; from temp_files, import_export, RunDemoGame and season_playoffs
 ;-----------------------------------------------------------------------------
 ; C: src/front/team_db/InitGameSummary.c
 %ifdef CBUILD
@@ -594,8 +598,9 @@ ReadPlayerRecs:
 ;-----------------------------------------------------------------------------
 ; OpenPlayerDBs                                1C26C  95 PC, medium confidence
 ; (path fmt, &key, &att, &season, &career): FileOpenRead of "key", "att",
-; "season" and (unless mode bits 6) "career" .DB for one side (FatalError
-; "9".."K")
+; "season" and (unless mode bits 6) "career" .DB for one side
+;
+; (FatalError "9".."K")
 ;-----------------------------------------------------------------------------
 ; C: src/front/team_db/OpenPlayerDBs.c
 %ifdef CBUILD
@@ -735,8 +740,10 @@ OpenPlayerDBs_x:
 ;-----------------------------------------------------------------------------
 ; LoadTeamRoster                               1C3F6  95 PC, medium confidence
 ; (side, file handles...): for each roster slot of the team record reads the
-; player records (ReadPlayerRecs at hmteamrec_skaters offsets) into hmroster
-; / awroster entries (names, attributes, status bytes 1 / 3 / 5)
+; player records
+;
+; (ReadPlayerRecs at hmteamrec_skaters offsets) into hmroster / awroster
+; entries (names, attributes, status bytes 1 / 3 / 5)
 ;-----------------------------------------------------------------------------
 LoadTeamRoster:
         push dword 130h
@@ -1095,10 +1102,11 @@ MakeGSummaryPath:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SetupGoalieMenu                              1C852  95 PC, medium confidence
-; Fills the goalie menu items (mi_HomeGoalie1/2, mi_AwayGoalie1/2) with "nn
-; X. Name" for each side's two goalies (hmgoalieidx / awgoalieidx in hmroster
-; / awroster), sizes the menu columns and marks the goalie in net
-; (hmtmgoalie, NONE when pulled); called from PlayGame
+; Fills the goalie menu items (mi_HomeGoalie1/2, mi_AwayGoalie1/2) with "nn X.
+;
+; Name" for each side's two goalies (hmgoalieidx / awgoalieidx in hmroster /
+; awroster), sizes the menu columns and marks the goalie in net (hmtmgoalie,
+; NONE when pulled); called from PlayGame
 ;-----------------------------------------------------------------------------
 ; C: src/front/team_db/SetupGoalieMenu.c
 %ifdef CBUILD

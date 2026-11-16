@@ -5,7 +5,8 @@ section s_CD304 progbits alloc noexec write align=1
 extern PenaltyList, str_NoPenalty, str_Charging, str_Slashing, str_CrossChecking, str_Hooking, str_Tripping, str_Interference
 extern str_Holding, str_HighSticking, str_Boarding, str_Elbowing, str_AbuseOfOfficial, str_CheckingFromBehind, str_PenaltyShot2
 global penaltynames
-penaltynames:
+penaltynames:                                   ; penalty name pointers (PenaltyList ...); used by
+                                                ; BuildEventLines, GameSummaryScreen_period
         dd PenaltyList
         dd str_NoPenalty
         dd str_Charging

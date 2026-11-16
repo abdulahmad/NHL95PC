@@ -9,6 +9,10 @@ extern GraphicsReady, PrintBoxedText, DosGetVector, DosSetVector, AddExitHandler
 extern WaitKey, SavedKbdVecSelector, SavedInt16Selector, SavedRealKbdSegment, KbdDataSelector
 global InstallKeyboardHandler, RemoveKeyboardHandler, KeyboardIrqHandler, IretStub, Int16Handler, Int16Service, KeyDown, BiosKeyCall
 global FatalError, FatalErrorEnd
+;-----------------------------------------------------------------------------
+; InstallKeyboardHandler                       B29F0  95 PC, medium confidence
+; Hooks INT 9, 16h and 23h and registers the removal at exit
+;-----------------------------------------------------------------------------
 InstallKeyboardHandler:
         cmp word [KbdDataSelector], byte 0
         jne near .1
@@ -49,6 +53,10 @@ InstallKeyboardHandler:
         add esp, byte 4
 .1:
         ret
+;-----------------------------------------------------------------------------
+; RemoveKeyboardHandler                        B2A9B  95 PC, medium confidence
+; Restores the INT 9, 16h and 23h vectors
+;-----------------------------------------------------------------------------
 RemoveKeyboardHandler:
         cmp word [KbdDataSelector], byte 0
         je short .1
@@ -77,6 +85,10 @@ RemoveKeyboardHandler:
         popa
 .1:
         ret
+;-----------------------------------------------------------------------------
+; KeyboardIrqHandler                           B2B0A  95 PC, medium confidence
+; INT 9 handler that reads scan codes into the key table
+;-----------------------------------------------------------------------------
 KeyboardIrqHandler:
         push eax
         push ebx
@@ -167,8 +179,13 @@ KeyboardIrqHandler:
         test byte [KeyStateTable+053h], 1
         je short .11
         jmp short .9
-IretStub:
+IretStub:                                       ; used by InstallKeyboardHandler
         db 0CFh
+;-----------------------------------------------------------------------------
+; Int16Handler                                                    B2C01  95 PC
+; Keyboard: BIOS keyboard service replacement that reads from the game's key
+; buffer
+;-----------------------------------------------------------------------------
 Int16Handler:
         push ebx
         push ecx
@@ -216,6 +233,10 @@ Int16Handler:
         pop ecx
         pop ebx
         iret
+;-----------------------------------------------------------------------------
+; Int16Service                                 B2C4A  95 PC, medium confidence
+; Keyboard: handles the BIOS keyboard read and status calls
+;-----------------------------------------------------------------------------
 Int16Service:
         cmp ah, 0
         je short .3
@@ -257,6 +278,10 @@ Int16Service:
         and al, 1
         LD or, eax, eax
         ret
+;-----------------------------------------------------------------------------
+; KeyDown                                      B2CBE  95 PC, medium confidence
+; Keyboard library: is this key down
+;-----------------------------------------------------------------------------
 KeyDown:
         push ebp
         LD mov, ebp, esp
@@ -264,12 +289,23 @@ KeyDown:
         movzx eax, byte [dword ebx+KeyStateTable]
         leave
         ret
+;-----------------------------------------------------------------------------
+; BiosKeyCall                                  B2CCD  95 PC, medium confidence
+; Calls BIOS INT 16h with ax
+;-----------------------------------------------------------------------------
 BiosKeyCall:
         movzx eax, ax
         int 16h
         movzx eax, ax
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; FatalError                                   B2CD8  95 PC, medium confidence
+; Fatal-error exit, never returns: drops its return address, optionally shows
+; a message (PrintBoxedText + WaitKey), shuts down
+;
+; and jumps through bailout_vec; callers push short code strings like 'e1'
+;-----------------------------------------------------------------------------
 FatalError:
         pop eax
         cmp dword [FatalErrorHook], byte 0
@@ -291,6 +327,10 @@ FatalError:
         call RestoreTextMode
         call PrintfSaveRegs
         call dword [bailout_vec]
+;-----------------------------------------------------------------------------
+; FatalErrorEnd                                   B2D27  95 PC, low confidence
+; Unreached return after FatalError; the hook setter follows unlabelled
+;-----------------------------------------------------------------------------
 FatalErrorEnd:
         ret
         push ebp

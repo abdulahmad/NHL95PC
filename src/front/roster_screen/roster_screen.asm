@@ -1,4 +1,4 @@
-; Team roster screen (95G stats95).
+; Team roster screen.
 bits 32
 %include "hockey.inc"
 section s_24453 progbits alloc exec nowrite align=1

@@ -3,6 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_B00E4 progbits alloc exec nowrite align=1
 global strrchr_
+;-----------------------------------------------------------------------------
+; strrchr_                                                      B00E4  library
+; Run-time library strrchr: the last place of a character in a string
+;-----------------------------------------------------------------------------
 strrchr_:
         push ebx
         push ecx

@@ -12,6 +12,10 @@ extern ActiveSongCount
 global DrawShapeStretched, DrawShapeStretchedAt, FillRowTable, removewindow, LoadFileCached, SeqService, SeqUpdate, SeqUpdate
 global SeqStepTrack, SeqSendController, SeqNoteOffSlot, SeqChannelNotesOff, SeqSendPitchBend, SeqNoteOn, SeqQueueCommand, SeqFlushQueue
 global SeqSendProgram, SeqReadEventJumpTable, SeqReadEvent, SeqReadEvent, SeqReadEvent, PeekDword, PeekWord
+;-----------------------------------------------------------------------------
+; DrawShapeStretched                              98B30  95 PC, low confidence
+; Draws a shape stretched to fill a box, as two warped halves
+;-----------------------------------------------------------------------------
 DrawShapeStretched:
         push esi
         push edi
@@ -75,6 +79,10 @@ DrawShapeStretched:
         pop esi
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawShapeStretchedAt                            98BEC  95 PC, low confidence
+; Draws a shape stretched to fill a box at a position, as two warped halves
+;-----------------------------------------------------------------------------
 DrawShapeStretchedAt:
         push esi
         push edi
@@ -169,6 +177,11 @@ DrawShapeStretchedAt:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; FillRowTable                                 98D20  95 PC, medium confidence
+; Fills the screen row address table for a range of rows of the current
+; screen
+;-----------------------------------------------------------------------------
 FillRowTable:
         push ecx
         push esi
@@ -258,6 +271,10 @@ FillRowTable:
         pop ecx
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; removewindow                                                    98DD8  95 PC
+; Prints its own name: "removewindow - ROW SPACE CORRUPTED"
+;-----------------------------------------------------------------------------
 removewindow:
         push ebx
         push ecx
@@ -316,6 +333,10 @@ removewindow:
         pop ebx
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; LoadFileCached                               98E50  95 PC, medium confidence
+; Returns a file from the file cache, or loads it (shape banks unpacked)
+;-----------------------------------------------------------------------------
 LoadFileCached:
         push esi
         push edi
@@ -395,6 +416,11 @@ LoadFileCached:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; SeqService                                      98F11  95 PC, low confidence
+; Music sequencer timer entry: runs SeqUpdate unless it is already running or
+; no driver is open
+;-----------------------------------------------------------------------------
 SeqService:
         push edx
         mov ah, byte [SeqServiceBusy]
@@ -412,6 +438,10 @@ SeqService:
 .1:
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; SeqUpdate                                       98F46  95 PC, low confidence
+; Services the sound drivers and steps every playing track
+;-----------------------------------------------------------------------------
 SeqUpdate:
         push ebx
         push ecx
@@ -562,6 +592,10 @@ SeqUpdate:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SeqStepTrack                                    990CB  95 PC, low confidence
+; Plays the events of one track that are due
+;-----------------------------------------------------------------------------
 SeqStepTrack:
         push ebx
         push ecx
@@ -934,6 +968,10 @@ SeqStepTrack:
 .42:
         add esp, byte 4
         jmp near SeqUpdate+017Eh
+;-----------------------------------------------------------------------------
+; SeqSendController                               99522  95 PC, low confidence
+; Sends a MIDI control change, scaling volume and pan
+;-----------------------------------------------------------------------------
 SeqSendController:
         push ecx
         push esi
@@ -1027,6 +1065,10 @@ SeqSendController:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SeqNoteOffSlot                                  99620  95 PC, low confidence
+; Sends note off for one playing note and frees its slot
+;-----------------------------------------------------------------------------
 SeqNoteOffSlot:
         push ebx
         push ecx
@@ -1055,6 +1097,10 @@ SeqNoteOffSlot:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SeqChannelNotesOff                              9966E  95 PC, low confidence
+; Sends note off for every playing note on a channel
+;-----------------------------------------------------------------------------
 SeqChannelNotesOff:
         push ebx
         push ecx
@@ -1088,6 +1134,10 @@ SeqChannelNotesOff:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SeqSendPitchBend                                996B0  95 PC, low confidence
+; Sends a MIDI pitch bend
+;-----------------------------------------------------------------------------
 SeqSendPitchBend:
         push ebx
         push ecx
@@ -1115,6 +1165,10 @@ SeqSendPitchBend:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SeqNoteOn                                       99700  95 PC, low confidence
+; Takes a note slot and sends MIDI note on
+;-----------------------------------------------------------------------------
 SeqNoteOn:
         push esi
         push edi
@@ -1179,6 +1233,10 @@ SeqNoteOn:
         pop edi
         pop esi
         ret 0Ch
+;-----------------------------------------------------------------------------
+; SeqQueueCommand                                 997B7  95 PC, low confidence
+; Adds a command to the sequencer queue (at most 128)
+;-----------------------------------------------------------------------------
 SeqQueueCommand:
         push ecx
         push esi
@@ -1214,6 +1272,10 @@ SeqQueueCommand:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; SeqFlushQueue                                   99822  95 PC, low confidence
+; Runs the queued sequencer commands
+;-----------------------------------------------------------------------------
 SeqFlushQueue:
         push ebx
         push ecx
@@ -1259,6 +1321,10 @@ SeqFlushQueue:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; SeqSendProgram                                  998A0  95 PC, low confidence
+; Sends a MIDI program change
+;-----------------------------------------------------------------------------
 SeqSendProgram:
         push ecx
         push esi
@@ -1279,7 +1345,7 @@ SeqSendProgram:
         pop ecx
         ret
         db 08Bh,0C0h
-SeqReadEventJumpTable:
+SeqReadEventJumpTable:                          ; jump table for the switch cases of SeqReadEvent
         dd SeqReadEvent+0AAh
         dd SeqReadEvent+0AAh
         dd SeqReadEvent+0AAh
@@ -1298,6 +1364,11 @@ SeqReadEventJumpTable:
         dd SeqReadEvent+04Dh
         dd SeqReadEvent+080h
         dd SeqReadEvent+080h
+;-----------------------------------------------------------------------------
+; SeqReadEvent                                    99925  95 PC, low confidence
+; Reads one event of a track: variable-length delta time, status and EA meta
+; events
+;-----------------------------------------------------------------------------
 SeqReadEvent:
         push ebx
         push ecx
@@ -1393,9 +1464,17 @@ SeqReadEvent:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; PeekDword                                    99A0B  95 PC, medium confidence
+; Returns the dword at an address
+;-----------------------------------------------------------------------------
 PeekDword:
         mov eax, dword [eax]
         ret
+;-----------------------------------------------------------------------------
+; PeekWord                                     99A0E  95 PC, medium confidence
+; Returns the word at an address
+;-----------------------------------------------------------------------------
 PeekWord:
         mov ax, word [eax]
         ret

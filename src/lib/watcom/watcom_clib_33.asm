@@ -6,6 +6,10 @@ extern __flushall_, __ioalloc_, __qread_, __set_errno_, CLibBitMasks, __NHandles
 extern memset_
 global isatty_, __IOMode_, __SetIOMode_, __fsetbits_, __setbits_, fgetc_, __filbuf_, __fill_buffer_
 global ungetc_
+;-----------------------------------------------------------------------------
+; isatty_                                                       9B710  library
+; Run-time library isatty: whether a handle is a terminal
+;-----------------------------------------------------------------------------
 isatty_:
         push ebx
         push ecx
@@ -23,6 +27,10 @@ isatty_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __IOMode_                                                     9B72E  library
+; Run-time library: the mode bits of a file handle
+;-----------------------------------------------------------------------------
 __IOMode_:
         push ebx
         push ecx
@@ -61,6 +69,10 @@ __IOMode_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __SetIOMode_                                                  9B783  library
+; Run-time library: sets the mode bits of a file handle
+;-----------------------------------------------------------------------------
 __SetIOMode_:
         push ebx
         or dh, 40h
@@ -71,6 +83,10 @@ __SetIOMode_:
         mov dword [edx+eax], ebx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __fsetbits_                                                   9B798  library
+; Floating point formatting helper: sets the bits of a digit buffer
+;-----------------------------------------------------------------------------
 __fsetbits_:
         push esi
         push edi
@@ -117,6 +133,10 @@ __fsetbits_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; __setbits_                                                    9B7F5  library
+; Character set helper: sets the bits of a scanf character set
+;-----------------------------------------------------------------------------
 __setbits_:
         push ebx
         push ecx
@@ -146,6 +166,10 @@ __setbits_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; fgetc_                                                        9B833  library
+; Run-time library fgetc: reads a character from a stream
+;-----------------------------------------------------------------------------
 fgetc_:
         push ebx
         push ecx
@@ -208,6 +232,10 @@ fgetc_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __filbuf_                                                     9B8BC  library
+; Run-time library: fills a stream's buffer and returns its first character
+;-----------------------------------------------------------------------------
 __filbuf_:
         push ebx
         push ecx
@@ -234,6 +262,10 @@ __filbuf_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __fill_buffer_                                                9B8EB  library
+; Run-time library: reads the next block into a stream's buffer
+;-----------------------------------------------------------------------------
 __fill_buffer_:
         push ebx
         push ecx
@@ -303,6 +335,10 @@ __fill_buffer_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; ungetc_                                                       9B996  library
+; C run-time: pushes a character back onto a file stream
+;-----------------------------------------------------------------------------
 ungetc_:
         push ebx
         push esi

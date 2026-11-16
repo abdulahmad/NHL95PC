@@ -13,6 +13,10 @@ global BlitArtKeyFFHot, BlitArtKeyFF, BlitArtHot, BlitArt, BlitShapeFastHot, Bli
 global BlitArtKeyColour, BlitArtMaskedHot, BlitArtMasked, BlitShapeClippedHot, BlitShapeClipped, SetBitmapClip, ShapeWidth, ShapeHeight
 global ShapeDataSize, FillRectSpansCore, FillRectSpansJumpTable, UnpackArtRle, SetBlitSource, CopyRowKeyFF, CopyRowRemapKeyed, CopyRowFast
 global CopyRowFastJumpTable, BlitBlockShadowHot, BlitBlockShadow, SetRemapTable, BlitBlockRemapKeyedHot, BlitBlockRemapKeyed
+;-----------------------------------------------------------------------------
+; PutPixel                                        B5D80  95 PC, low confidence
+; Plots a pixel when it is inside the clip window
+;-----------------------------------------------------------------------------
 PutPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -28,6 +32,10 @@ PutPixel:
 .1:
         ret
         db 02Eh,0C0h,08Bh
+;-----------------------------------------------------------------------------
+; PlotPixel                                    B5DB0  95 PC, medium confidence
+; Graphics library: plot a pixel (x, y, colour)
+;-----------------------------------------------------------------------------
 PlotPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -54,8 +62,15 @@ PlotPixel:
         mov byte [edx], bl
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; VesaSetBankArg                               B5E00  95 PC, medium confidence
+; Stack-argument entry of VesaSetBank
+;-----------------------------------------------------------------------------
 VesaSetBankArg:
         mov eax, dword [byte esp+04h]
+;-----------------------------------------------------------------------------
+; VesaSetBank                                  B5E04  95 PC, medium confidence
+;-----------------------------------------------------------------------------
 VesaSetBank:
         cmp al, byte [VesaBankShift]
         je short VesaSetBankJumpTable+02Ah
@@ -63,7 +78,7 @@ VesaSetBank:
         push edx
         mov edx, dword [VesaBank]
         jmp dword [nosplit edx*4+VesaSetBankJumpTable]
-VesaSetBankJumpTable:
+VesaSetBankJumpTable:                           ; jump table for the switch cases of VesaSetBank
         dd .1
         dd .2
         dd .3
@@ -135,6 +150,10 @@ VesaSetBankJumpTable:
         out dx, ax
         pop edx
         ret
+;-----------------------------------------------------------------------------
+; VesaSetMode                                  B5EA7  95 PC, medium confidence
+; Sets a VESA video mode (int 10h, 4F02h)
+;-----------------------------------------------------------------------------
 VesaSetMode:
         mov ebx, dword [byte esp+04h]
         mov ax, 4F02h
@@ -146,6 +165,10 @@ VesaSetMode:
         pop esi
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; VgaSetModeTwice                              B5EB8  95 PC, medium confidence
+; Sets mode 12h without clearing, then the given video mode
+;-----------------------------------------------------------------------------
 VgaSetModeTwice:
         mov eax, dword [byte esp+04h]
         push ebp
@@ -156,6 +179,11 @@ VgaSetModeTwice:
         pop esi
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; VesaSetDisplayStart                          B5EC5  95 PC, medium confidence
+; Sets the VESA display start (function 4F07h); the code after it sets the
+; bank (4F05h)
+;-----------------------------------------------------------------------------
 VesaSetDisplayStart:
         push ecx
         LD mov, ecx, eax
@@ -172,6 +200,10 @@ VesaSetDisplayStart:
         pop ecx
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; BlitBlockHot                                    B5EE8  95 PC, low confidence
+; BlitBlock at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitBlockHot:
         push ebp
         LD mov, ebp, esp
@@ -188,6 +220,10 @@ BlitBlockHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitBlock+032h
+;-----------------------------------------------------------------------------
+; BlitBlock                                    B5F0F  95 PC, medium confidence
+; Copies a block to the draw target at x, y, clipped (opaque)
+;-----------------------------------------------------------------------------
 BlitBlock:
         push ebp
         LD mov, ebp, esp
@@ -341,6 +377,10 @@ BlitBlock:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; BlitBlockXorHot                                 B6064  95 PC, low confidence
+; BlitBlockXor at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitBlockXorHot:
         push ebp
         LD mov, ebp, esp
@@ -357,6 +397,10 @@ BlitBlockXorHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitBlockXor+032h
+;-----------------------------------------------------------------------------
+; BlitBlockXor                                 B608B  95 PC, medium confidence
+; XORs a block onto the screen at a position
+;-----------------------------------------------------------------------------
 BlitBlockXor:
         push ebp
         LD mov, ebp, esp
@@ -519,6 +563,10 @@ BlitBlockXor:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; BlitBlockAndHot                                 B61F0  95 PC, low confidence
+; BlitBlockAnd at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitBlockAndHot:
         push ebp
         LD mov, ebp, esp
@@ -535,6 +583,10 @@ BlitBlockAndHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitBlockAnd+032h
+;-----------------------------------------------------------------------------
+; BlitBlockAnd                                 B6217  95 PC, medium confidence
+; ANDs a block onto the screen at a position
+;-----------------------------------------------------------------------------
 BlitBlockAnd:
         push ebp
         LD mov, ebp, esp
@@ -697,6 +749,10 @@ BlitBlockAnd:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; AndPixelClipped                                 B637C  95 PC, low confidence
+; ANDs a pixel when it is inside the clip window
+;-----------------------------------------------------------------------------
 AndPixelClipped:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -712,6 +768,10 @@ AndPixelClipped:
 .1:
         ret
         db 02Eh,0C0h,08Bh
+;-----------------------------------------------------------------------------
+; AndPixel                                     B63AC  95 PC, medium confidence
+; ANDs a pixel of the draw target with a mask, on a linear or banked screen
+;-----------------------------------------------------------------------------
 AndPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -738,6 +798,10 @@ AndPixel:
         and byte [edx], bl
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; BlitBlockOrHot                                  B63FC  95 PC, low confidence
+; BlitBlockOr at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitBlockOrHot:
         push ebp
         LD mov, ebp, esp
@@ -754,6 +818,10 @@ BlitBlockOrHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitBlockOr+032h
+;-----------------------------------------------------------------------------
+; BlitBlockOr                                  B6423  95 PC, medium confidence
+; ORs a block onto the screen at a position
+;-----------------------------------------------------------------------------
 BlitBlockOr:
         push ebp
         LD mov, ebp, esp
@@ -916,6 +984,10 @@ BlitBlockOr:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; OrPixelClipped                                  B6588  95 PC, low confidence
+; ORs a pixel when it is inside the clip window
+;-----------------------------------------------------------------------------
 OrPixelClipped:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -931,6 +1003,10 @@ OrPixelClipped:
 .1:
         ret
         db 02Eh,0C0h,08Bh
+;-----------------------------------------------------------------------------
+; OrPixel                                      B65B8  95 PC, medium confidence
+; ORs a pixel of the draw target with a mask, on a linear or banked screen
+;-----------------------------------------------------------------------------
 OrPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -957,6 +1033,10 @@ OrPixel:
         or byte [edx], bl
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; FillRectClippedCore                             B6608  95 PC, low confidence
+; Clips a rectangle to the clip window and fills it
+;-----------------------------------------------------------------------------
 FillRectClippedCore:
         push ebp
         LD mov, ebp, esp
@@ -995,6 +1075,10 @@ FillRectClippedCore:
         pop edi
         leave
         ret
+;-----------------------------------------------------------------------------
+; FillRectCore                                 B6665  95 PC, medium confidence
+; Clips a rectangle and fills it with a colour on the draw target
+;-----------------------------------------------------------------------------
 FillRectCore:
         push ebp
         LD mov, ebp, esp
@@ -1020,7 +1104,7 @@ FillRectCore:
         shr dword [byte ebp+010h], 2
         and ecx, byte 3
         jmp dword [nosplit ecx*4+FillRectJumpTable]
-FillRectJumpTable:
+FillRectJumpTable:                              ; jump table for the switch cases of FillRectCore
         dd .1
         dd .2
         dd .4
@@ -1087,6 +1171,10 @@ FillRectJumpTable:
         leave
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; XorRectClippedCore                              B6720  95 PC, low confidence
+; Clips a rectangle to the clip window and XORs it
+;-----------------------------------------------------------------------------
 XorRectClippedCore:
         push ebp
         LD mov, ebp, esp
@@ -1125,6 +1213,10 @@ XorRectClippedCore:
         pop edi
         leave
         ret
+;-----------------------------------------------------------------------------
+; XorRectCore                                  B677D  95 PC, medium confidence
+; XORs a rectangle with a colour
+;-----------------------------------------------------------------------------
 XorRectCore:
         push ebp
         LD mov, ebp, esp
@@ -1150,7 +1242,7 @@ XorRectCore:
         shr dword [byte ebp+010h], 2
         and ecx, byte 3
         jmp dword [nosplit ecx*4+XorRectJumpTable]
-XorRectJumpTable:
+XorRectJumpTable:                               ; jump table for the switch cases of XorRectCore
         dd .1
         dd .4
         dd .8
@@ -1242,6 +1334,10 @@ XorRectJumpTable:
         leave
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; BlitArtOpaqueHot                                B6860  95 PC, low confidence
+; BlitArtOpaque at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitArtOpaqueHot:
         push ebp
         LD mov, ebp, esp
@@ -1258,6 +1354,10 @@ BlitArtOpaqueHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitArtOpaque+032h
+;-----------------------------------------------------------------------------
+; BlitArtOpaque                                B6887  95 PC, medium confidence
+; Copies art opaque to the draw target, clipped
+;-----------------------------------------------------------------------------
 BlitArtOpaque:
         push ebp
         LD mov, ebp, esp
@@ -1330,6 +1430,10 @@ BlitArtOpaque:
         leave
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; BlitArtKeyFFHot                                 B6918  95 PC, low confidence
+; BlitArtKeyFF at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitArtKeyFFHot:
         push ebp
         LD mov, ebp, esp
@@ -1347,6 +1451,10 @@ BlitArtKeyFFHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short BlitArtKeyFF+034h
+;-----------------------------------------------------------------------------
+; BlitArtKeyFF                                    B693C  95 PC, low confidence
+; Draws art skipping colour FFh
+;-----------------------------------------------------------------------------
 BlitArtKeyFF:
         push ebp
         LD mov, ebp, esp
@@ -1408,6 +1516,10 @@ BlitArtKeyFF:
         leave
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; BlitArtHot                                      B69C0  95 PC, low confidence
+; BlitArt at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitArtHot:
         push ebp
         LD mov, ebp, esp
@@ -1425,6 +1537,10 @@ BlitArtHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short BlitArt+034h
+;-----------------------------------------------------------------------------
+; BlitArt                                         B69E4  95 PC, low confidence
+; Draws art at a position
+;-----------------------------------------------------------------------------
 BlitArt:
         push ebp
         LD mov, ebp, esp
@@ -1561,6 +1677,10 @@ BlitArt:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; BlitShapeFastHot                                B6B18  95 PC, low confidence
+; BlitShapeFast at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitShapeFastHot:
         push ebp
         LD mov, ebp, esp
@@ -1577,6 +1697,11 @@ BlitShapeFastHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitShapeFast+03Ah
+;-----------------------------------------------------------------------------
+; BlitShapeFast                                B6B3F  95 PC, medium confidence
+; Stores a shape's position and copies it to the draw target a dword at a
+; time
+;-----------------------------------------------------------------------------
 BlitShapeFast:
         push ebp
         LD mov, ebp, esp
@@ -1631,6 +1756,10 @@ BlitShapeFast:
         leave
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; BlitArtKeyColourHot                             B6BC0  95 PC, low confidence
+; BlitArtKeyColour at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitArtKeyColourHot:
         push ebp
         LD mov, ebp, esp
@@ -1649,6 +1778,10 @@ BlitArtKeyColourHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short BlitArtKeyColour+036h
+;-----------------------------------------------------------------------------
+; BlitArtKeyColour                                B6BE5  95 PC, low confidence
+; Draws art skipping a given colour
+;-----------------------------------------------------------------------------
 BlitArtKeyColour:
         push ebp
         LD mov, ebp, esp
@@ -1791,6 +1924,10 @@ BlitArtKeyColour:
         leave
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; BlitArtMaskedHot                                B6D24  95 PC, low confidence
+; BlitArtMasked at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitArtMaskedHot:
         push ebp
         LD mov, ebp, esp
@@ -1807,6 +1944,10 @@ BlitArtMaskedHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short BlitArtMasked+032h
+;-----------------------------------------------------------------------------
+; BlitArtMasked                                   B6D47  95 PC, low confidence
+; Draws masked art at a position
+;-----------------------------------------------------------------------------
 BlitArtMasked:
         push ebp
         LD mov, ebp, esp
@@ -1866,6 +2007,10 @@ BlitArtMasked:
         leave
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; BlitShapeClippedHot                             B6DD0  95 PC, low confidence
+; BlitShapeClipped at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitShapeClippedHot:
         push ebp
         LD mov, ebp, esp
@@ -1882,6 +2027,11 @@ BlitShapeClippedHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitShapeClipped+03Ah
+;-----------------------------------------------------------------------------
+; BlitShapeClipped                             B6DF7  95 PC, medium confidence
+; Stores a shape's position and copies it to the draw target, clipped
+; (opaque)
+;-----------------------------------------------------------------------------
 BlitShapeClipped:
         push ebp
         LD mov, ebp, esp
@@ -2051,6 +2201,10 @@ BlitShapeClipped:
         dec edx
         jg short .14
         jmp near .1
+;-----------------------------------------------------------------------------
+; SetBitmapClip                                   B6F84  95 PC, low confidence
+; Sets a bitmap's clip window and makes it the drawing target
+;-----------------------------------------------------------------------------
 SetBitmapClip:
         push ebp
         LD mov, ebp, esp
@@ -2093,14 +2247,26 @@ SetBitmapClip:
         leave
         ret
         db 00h,00h
+;-----------------------------------------------------------------------------
+; ShapeWidth                                   B6FFC  95 PC, medium confidence
+; Returns a shape's width
+;-----------------------------------------------------------------------------
 ShapeWidth:
         mov ebx, dword [byte esp+04h]
         movsx eax, word [byte ebx+04h]
         ret
+;-----------------------------------------------------------------------------
+; ShapeHeight                                  B7005  95 PC, medium confidence
+; Returns a shape's height
+;-----------------------------------------------------------------------------
 ShapeHeight:
         mov ebx, dword [byte esp+04h]
         movsx eax, word [byte ebx+06h]
         ret
+;-----------------------------------------------------------------------------
+; ShapeDataSize                                   B700E  95 PC, low confidence
+; Returns the data size of a shape
+;-----------------------------------------------------------------------------
 ShapeDataSize:
         mov ebx, dword [byte esp+04h]
         mov al, byte [ebx]
@@ -2131,6 +2297,10 @@ ShapeDataSize:
         neg edx
         lea eax, [byte ebx+edx+01h]
         ret
+;-----------------------------------------------------------------------------
+; FillRectSpansCore                            B704C  95 PC, medium confidence
+; Fills the spans of a rectangle with a colour
+;-----------------------------------------------------------------------------
 FillRectSpansCore:
         push ebp
         LD mov, ebp, esp
@@ -2154,7 +2324,7 @@ FillRectSpansCore:
         mov al, byte [byte esi+01Ch]
         mov ebx, dword [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+FillRectSpansJumpTable]
-FillRectSpansJumpTable:
+FillRectSpansJumpTable:                         ; jump table for the switch cases of FillRectSpansCore
         dd .2
         dd .2
         dd .4
@@ -2320,6 +2490,10 @@ FillRectSpansJumpTable:
         loop .20
         jmp short .21
         db 00h,00h
+;-----------------------------------------------------------------------------
+; UnpackArtRle                                 B7218  95 PC, medium confidence
+; Copies an art header and unpacks its run length coded rows
+;-----------------------------------------------------------------------------
 UnpackArtRle:
         push ebp
         LD mov, ebp, esp
@@ -2429,6 +2603,11 @@ UnpackArtRle:
 .15:
         mov edx, dword [byte ebp+0Ch]
         jmp short .6
+;-----------------------------------------------------------------------------
+; SetBlitSource                                B72D4  95 PC, medium confidence
+; Sets the source pointer and the column offset table used by the span
+; copiers
+;-----------------------------------------------------------------------------
 SetBlitSource:
         push ebp
         LD mov, ebp, esp
@@ -2438,6 +2617,10 @@ SetBlitSource:
         mov dword [BlitColumnOffsets], eax
         leave
         ret
+;-----------------------------------------------------------------------------
+; CopyRowKeyFF                                    B72E9  95 PC, low confidence
+; Copies a row of the blit source to the screen, skipping colour FFh
+;-----------------------------------------------------------------------------
 CopyRowKeyFF:
         push ebp
         LD mov, ebp, esp
@@ -2463,6 +2646,11 @@ CopyRowKeyFF:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; CopyRowRemapKeyed                               B731E  95 PC, low confidence
+; Copies a row of the blit source through the remap table, skipping colours
+; FEh and FFh
+;-----------------------------------------------------------------------------
 CopyRowRemapKeyed:
         push ebp
         LD mov, ebp, esp
@@ -2574,6 +2762,10 @@ CopyRowRemapKeyed:
         pop esi
         leave
         ret
+;-----------------------------------------------------------------------------
+; CopyRowFast                                     B7420  95 PC, low confidence
+; Copies a row of the blit source to the screen
+;-----------------------------------------------------------------------------
 CopyRowFast:
         push ebp
         LD mov, ebp, esp
@@ -2632,7 +2824,7 @@ CopyRowFast:
         LD sub, edx, ebx
         LD sub, edx, ebx
         jmp dword [nosplit ebx*2+CopyRowFastJumpTable]
-CopyRowFastJumpTable:
+CopyRowFastJumpTable:                           ; jump table for the switch cases of CopyRowFast
         dd .2
         dd .3
         dd .4
@@ -2765,6 +2957,10 @@ CopyRowFastJumpTable:
         leave
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; BlitBlockShadowHot                              B7614  95 PC, low confidence
+; BlitBlockShadow at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitBlockShadowHot:
         push ebp
         LD mov, ebp, esp
@@ -2781,6 +2977,10 @@ BlitBlockShadowHot:
         movsx eax, ax
         mov dword [byte ebp-08h], eax
         jmp short BlitBlockShadow+032h
+;-----------------------------------------------------------------------------
+; BlitBlockShadow                              B763B  95 PC, medium confidence
+; Draws a block as a shadow through the shade table
+;-----------------------------------------------------------------------------
 BlitBlockShadow:
         push ebp
         LD mov, ebp, esp
@@ -2918,6 +3118,10 @@ BlitBlockShadow:
         leave
         ret
         db 00h,00h,00h
+;-----------------------------------------------------------------------------
+; SetRemapTable                                B7778  95 PC, medium confidence
+; Copies a 256-byte remap table
+;-----------------------------------------------------------------------------
 SetRemapTable:
         push ebp
         LD mov, ebp, esp
@@ -2962,6 +3166,10 @@ SetRemapTable:
         leave
         ret
         db 00h
+;-----------------------------------------------------------------------------
+; BlitBlockRemapKeyedHot                          B77D0  95 PC, low confidence
+; BlitBlockRemapKeyed at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 BlitBlockRemapKeyedHot:
         push ebp
         LD mov, ebp, esp
@@ -2979,6 +3187,10 @@ BlitBlockRemapKeyedHot:
         cwde
         mov dword [byte ebp-08h], eax
         jmp short BlitBlockRemapKeyed+034h
+;-----------------------------------------------------------------------------
+; BlitBlockRemapKeyed                          B77F4  95 PC, medium confidence
+; Draws a block through the colour remap at x, y, clipped
+;-----------------------------------------------------------------------------
 BlitBlockRemapKeyed:
         push ebp
         LD mov, ebp, esp

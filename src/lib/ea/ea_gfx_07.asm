@@ -4,6 +4,10 @@ bits 32
 section s_91CE7 progbits alloc exec nowrite align=1
 extern __doopen_, close_file_
 global freopen_
+;-----------------------------------------------------------------------------
+; freopen_                                                        91CE7  95 PC
+; Run-time library freopen: closes a stream and opens a file on it again
+;-----------------------------------------------------------------------------
 freopen_:
         push ecx
         push esi

@@ -349,15 +349,16 @@ BlitClipRect:
         pop esi
         ret
 %endif ; C
-str_Scratch2:
+str_Scratch2:                                   ; copy used by team_select
         db 053h,063h,072h,061h,074h,063h,068h,00h
-str_Dress2:
+str_Dress2:                                     ; string "Dress"; used by CheckGameRosterComplete
         db 044h,072h,065h,073h,073h,00h
-str_Player2:
+str_Player2:                                    ; string "Player"; used by CheckGameRosterComplete
         db 050h,06Ch,061h,079h,065h,072h,00h
-str_GoalieW2:
+str_GoalieW2:                                   ; string "Goalie"; used by CheckGameRosterComplete
         db 047h,06Fh,061h,06Ch,069h,065h,00h
-str_RosterIncomplete2:
+str_RosterIncomplete2:                          ; string "Your roster is incomplete."; used by
+                                                ; CheckGameRosterComplete
         db 059h,06Fh,075h,072h,020h,072h,06Fh,073h,074h,065h,072h,020h,069h,073h,020h,069h
         db 06Eh,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h,02Eh,00h
 ;-----------------------------------------------------------------------------

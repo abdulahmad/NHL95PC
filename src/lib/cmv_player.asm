@@ -6,6 +6,10 @@ extern __CHK, str_CmvMemBlock, str_CmvPalette, FreeMemBlock, AllocMemBlock, Allo
 extern CreateBitmap
 global CmvCreate, CmvFreeBuffers, CmvDestroy, CmvReadHeader, CmvDecodeBlocks, CmvDecodeFrame, CmvFrameCount, CmvWidth
 global CmvHeight, CmvFrameRate, CmvPaletteFirst, CmvPaletteCount, CmvPalette
+;-----------------------------------------------------------------------------
+; CmvCreate                                    1AC25  95 PC, medium confidence
+; Allocates a CMV movie decoder
+;-----------------------------------------------------------------------------
 CmvCreate:
         push dword 1Ch
         call __CHK
@@ -35,6 +39,10 @@ CmvCreate:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; CmvFreeBuffers                               1AC9A  95 PC, medium confidence
+; Frees a CMV decoder's frame buffers
+;-----------------------------------------------------------------------------
 CmvFreeBuffers:
         push dword 1Ch
         call __CHK
@@ -78,6 +86,10 @@ CmvFreeBuffers:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; CmvDestroy                                   1ACF1  95 PC, medium confidence
+; Frees a CMV decoder
+;-----------------------------------------------------------------------------
 CmvDestroy:
         push dword 14h
         call __CHK
@@ -96,6 +108,10 @@ CmvDestroy:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; CmvReadHeader                                1AD16  95 PC, medium confidence
+; Reads a movie header chunk: frame count, size, rate and palette
+;-----------------------------------------------------------------------------
 CmvReadHeader:
         push dword 28h
         call __CHK
@@ -247,6 +263,10 @@ CmvReadHeader:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; CmvDecodeBlocks                                 1AE6B  95 PC, low confidence
+; Decodes the blocks of one CMV frame
+;-----------------------------------------------------------------------------
 CmvDecodeBlocks:
         push dword 4Ch
         call __CHK
@@ -390,6 +410,10 @@ CmvDecodeBlocks:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; CmvDecodeFrame                               1B002  95 PC, medium confidence
+; Decodes a frame chunk and returns its picture
+;-----------------------------------------------------------------------------
 CmvDecodeFrame:
         push dword 24h
         call __CHK
@@ -450,36 +474,64 @@ CmvDecodeFrame:
 .4:
         mov eax, dword [byte eax+02Ch]
         jmp near CmvReadHeader+014Fh
+;-----------------------------------------------------------------------------
+; CmvFrameCount                                1B092  95 PC, medium confidence
+; Returns the movie's frame count
+;-----------------------------------------------------------------------------
 CmvFrameCount:
         push dword 4
         call __CHK
         mov eax, dword [eax]
         ret
+;-----------------------------------------------------------------------------
+; CmvWidth                                     1B09F  95 PC, medium confidence
+; Returns the movie's width
+;-----------------------------------------------------------------------------
 CmvWidth:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+04h]
         ret
+;-----------------------------------------------------------------------------
+; CmvHeight                                    1B0AD  95 PC, medium confidence
+; Returns the movie's height
+;-----------------------------------------------------------------------------
 CmvHeight:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+08h]
         ret
+;-----------------------------------------------------------------------------
+; CmvFrameRate                                 1B0BB  95 PC, medium confidence
+; Returns the movie's frame rate
+;-----------------------------------------------------------------------------
 CmvFrameRate:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+0Ch]
         ret
+;-----------------------------------------------------------------------------
+; CmvPaletteFirst                              1B0C9  95 PC, medium confidence
+; Returns the first palette entry the movie sets
+;-----------------------------------------------------------------------------
 CmvPaletteFirst:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+014h]
         ret
+;-----------------------------------------------------------------------------
+; CmvPaletteCount                              1B0D7  95 PC, medium confidence
+; Returns the number of palette entries the movie sets
+;-----------------------------------------------------------------------------
 CmvPaletteCount:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+018h]
         ret
+;-----------------------------------------------------------------------------
+; CmvPalette                                   1B0E5  95 PC, medium confidence
+; Returns the movie's palette
+;-----------------------------------------------------------------------------
 CmvPalette:
         push dword 4
         call __CHK

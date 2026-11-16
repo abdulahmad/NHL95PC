@@ -6,6 +6,10 @@ extern __allocfp_, __chktty_, __doclose_, __ExpandDGROUP_, __freefp_, __MemAlloc
 extern __nheap_clean, HeapList, HeapRover, HeapLargestFree, _fmode, __OpenStreams, __ClosedStreams, fseek_
 extern sopen_, McgaNoWindow, tolower_
 global _nmalloc_, _nfree_, strlen_, __open_flags_, __doopen_, _fsopen_, fopen_, close_file_
+;-----------------------------------------------------------------------------
+; _nmalloc_                                                     91984  library
+; Run-time library: allocates from the near heap
+;-----------------------------------------------------------------------------
 _nmalloc_:
         push ebx
         push ecx
@@ -104,6 +108,10 @@ _nmalloc_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; _nfree_                                                       91A67  library
+; Run-time library: frees near heap memory
+;-----------------------------------------------------------------------------
 _nfree_:
         push ebx
         push ecx
@@ -145,6 +153,10 @@ _nfree_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; strlen_                                                       91AC5  library
+; Run-time library strlen: the length of a string
+;-----------------------------------------------------------------------------
 strlen_:
         push ecx
         push edi
@@ -163,6 +175,10 @@ strlen_:
         pop edi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; __open_flags_                                                 91ADE  library
+; Run-time library: turns an fopen mode string into open flags
+;-----------------------------------------------------------------------------
 __open_flags_:
         push ebx
         push ecx
@@ -245,6 +261,10 @@ __open_flags_:
         pop ecx
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; __doopen_                                                     91B92  library
+; Run-time library: opens a file for a stream
+;-----------------------------------------------------------------------------
 __doopen_:
         push esi
         push edi
@@ -328,6 +348,10 @@ __doopen_:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; _fsopen_                                                      91C5A  library
+; Run-time library _fsopen: opens a stream with a share mode
+;-----------------------------------------------------------------------------
 _fsopen_:
         push ecx
         push esi
@@ -343,12 +367,20 @@ _fsopen_:
         pop esi
         pop ecx
         ret
+;-----------------------------------------------------------------------------
+; fopen_                                                        91C75  library
+; Run-time library fopen: opens a stream
+;-----------------------------------------------------------------------------
 fopen_:
         push ebx
         xor ebx, ebx
         call _fsopen_
         pop ebx
         ret
+;-----------------------------------------------------------------------------
+; close_file_                                                   91C7F  library
+; Run-time library: closes the file of a stream
+;-----------------------------------------------------------------------------
 close_file_:
         push ebx
         push ecx

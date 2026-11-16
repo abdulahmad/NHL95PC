@@ -6,6 +6,10 @@ extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, RowTableSize, RowTableBuffer, M
 extern MemFreeBytes, FatalError, int386_, InitMemList, AddHighMemList, MemLargestFree, InitMemDescriptors, GrabLargestBlock
 extern MemLockHandleInit, MemUnlock, DetectCPU, RowTableDefault, MemLock
 global initmemman, InitMemoryPoolDefault, SetupMemoryPool, SetupMemoryPoolReserve
+;-----------------------------------------------------------------------------
+; initmemman                                                      8DCF8  95 PC
+; Prints its own name: "initmemman - INSUFFICIENT ROW TABLE SPACE"
+;-----------------------------------------------------------------------------
 initmemman:
         push esi
         push edi
@@ -171,6 +175,10 @@ initmemman:
         pop esi
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; InitMemoryPoolDefault                           8DF28  95 PC, low confidence
+; Sets up the memory pool with the default sizes
+;-----------------------------------------------------------------------------
 InitMemoryPoolDefault:
         push byte 0
         push byte 0
@@ -180,6 +188,10 @@ InitMemoryPoolDefault:
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; SetupMemoryPool                                 8DF3C  95 PC, low confidence
+; Sets up the memory pool with a low-memory size
+;-----------------------------------------------------------------------------
 SetupMemoryPool:
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -190,6 +202,10 @@ SetupMemoryPool:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; SetupMemoryPoolReserve                          8DF54  95 PC, low confidence
+; Sets up the memory pool with a reserve size
+;-----------------------------------------------------------------------------
 SetupMemoryPoolReserve:
         mov edx, dword [byte esp+08h]
         push edx

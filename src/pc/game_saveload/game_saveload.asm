@@ -35,11 +35,13 @@ global SaveGameState, SaveGameState_popx, LoadGameState
 ;-----------------------------------------------------------------------------
 ; SaveGameState                                                   5FB03  95 PC
 ; Writes the in-game state to the open file eax with FileWriteAt (buffer,
-; length): ctl1side (4), the 17 SortCords entries (66h bytes each), both team
-; structs (D4h each), hmlinetab / awlinetab (30h each), then the game globals
-; one by one (clock, scores, flags, PenBuf, ...); "Error Saving Game"
-; (str_ErrSaveGame) on a failed write; called from demo_savegame and the
-; in-game save
+; length): ctl1side (4), the 17 SortCords entries (66h bytes each),
+;
+; both team structs (D4h each), hmlinetab / awlinetab (30h each), then the
+; game globals one by one (clock, scores, flags, PenBuf, ...); "Error Saving
+; Game" (str_ErrSaveGame) on a failed write; called from demo_savegame
+;
+; and the in-game save
 ;-----------------------------------------------------------------------------
 ; C: src/pc/game_saveload/SaveGameState.c
 %ifdef CBUILD
@@ -802,9 +804,10 @@ SaveGameState_popx:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadGameState                                                   60612  95 PC
-; Reads back what SaveGameState wrote, in the same order, with FileReadAt
-; from file eax; "Error Loading Game" (str_ErrLoadGame) on a failed read;
-; called from gamesave_io
+; Reads back what SaveGameState wrote, in the same order, with FileReadAt from
+; file eax; "Error Loading Game" (str_ErrLoadGame) on a failed read; called
+;
+; from gamesave_io
 ;-----------------------------------------------------------------------------
 LoadGameState:
         push dword 134h

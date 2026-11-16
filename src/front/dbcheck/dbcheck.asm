@@ -292,8 +292,9 @@ ShowDBError:
 ;-----------------------------------------------------------------------------
 ; CheckTeamLines                                                  6ED8F  95 PC
 ; Checks one team: 'The forward/defence/power play/penalty
-; killing/goalie/extra attacker lines are not complete on', 'There are not
-; enough players/goalies/forwards/defence on' + team name
+; killing/goalie/extra attacker lines are not complete on',
+;
+; 'There are not enough players/goalies/forwards/defence on' + team name
 ;-----------------------------------------------------------------------------
 ; C: src/front/dbcheck/CheckTeamLines.c
 %ifdef CBUILD

@@ -1,4 +1,4 @@
-; Roster moves: free agents, release, temporary databases, player search (95G create95).
+; Roster moves: free agents, release, temporary databases, player search.
 bits 32
 %include "hockey.inc"
 section s_70E8D progbits alloc exec nowrite align=1
@@ -18,8 +18,9 @@ global MoveToFreeAgents, RemovePlayerFromTeam, LoadTempDatabases, DeleteTempData
 ;-----------------------------------------------------------------------------
 ; MoveToFreeAgents                                                70E8D  95 PC
 ; 'Move to Free Agent List' menu item: 'Move <name> to free agent list?',
-; 'There is not enough space in the free agent list for all selected
-; players', RemovePlayerFromTeam, reload and redraw
+; 'There is not enough space in the free agent list for all selected players',
+;
+; RemovePlayerFromTeam, reload and redraw
 ;-----------------------------------------------------------------------------
 ; C: src/front/roster_edit/MoveToFreeAgents.c
 %ifdef CBUILD
@@ -153,8 +154,9 @@ MoveToFreeAgents:
 ;-----------------------------------------------------------------------------
 ; RemovePlayerFromTeam                         71043  95 PC, medium confidence
 ; Finds the player (name keys +24h/+28h/+2Ch) in the team's 1Ch roster slots
-; (+4Ch), clears it (-1), facount++, and replaces it in the line table
-; (+0BCh, 30h bytes) with 64h
+; (+4Ch), clears it (-1), facount++, and replaces it in the line table (+0BCh,
+;
+; 30h bytes) with 64h
 ;-----------------------------------------------------------------------------
 ; C: src/front/roster_edit/RemovePlayerFromTeam.c
 %ifdef CBUILD
@@ -395,9 +397,10 @@ DeleteTempDatabases:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SwapSelectedPlayers                             71333  95 PC, low confidence
-; Unreferenced: checks 'The number of selected players and goalies must be
-; the same on both teams!' and exchanges the selected players between the two
-; panels
+; Unreferenced: checks 'The number of selected players and goalies must be the
+; same on both teams!'
+;
+; and exchanges the selected players between the two panels
 ;-----------------------------------------------------------------------------
 SwapSelectedPlayers:
         push dword 114h
@@ -941,9 +944,10 @@ SetRosterTeamMenus:
 ;-----------------------------------------------------------------------------
 ; FindPlayer                                                      71961  95 PC
 ; 'Find Player ...' menu item: 'Enter name of player to find:', searches the
-; free-agent list and the teams, 'Choose which team to display' / 'is already
-; displayed on Roster N' / 'does not exist!', then SetRosterTeamMenus,
-; LoadRosterList and SelectMatchingPlayers
+; free-agent list and the teams, 'Choose which team
+;
+; to display' / 'is already displayed on Roster N' / 'does not exist!', then
+; SetRosterTeamMenus, LoadRosterList and SelectMatchingPlayers
 ;-----------------------------------------------------------------------------
 ; C: src/front/roster_edit/FindPlayer.c
 %ifdef CBUILD

@@ -8,6 +8,10 @@ extern TextCursorX, TextCursorY, TextLeft, TextTop, TextRight, TextBottom, RowCo
 extern DrawArtOpaqueHotspot, TextFont, TextSetCursor, PutBlock, bcopy, SetClipWindow, PutPixel, VesaSetBankArg
 extern BlitArt, BlitShapeFast
 global DrawArt, DrawShape, DrawArtHotspot, GrabBlock, DrawShapeAtOwnPos, GrabBlockHotspot, PrintStringAtCursor, PrintString
+;-----------------------------------------------------------------------------
+; DrawArt                                      91370  95 PC, medium confidence
+; Graphics library: draw art at x, y
+;-----------------------------------------------------------------------------
 DrawArt:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
@@ -30,6 +34,10 @@ DrawArt:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; DrawShape                                    913B4  95 PC, medium confidence
+; Graphics library: draw a shape at its own position
+;-----------------------------------------------------------------------------
 DrawShape:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -42,6 +50,10 @@ DrawShape:
         call DrawArt
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; DrawArtHotspot                               913D0  95 PC, medium confidence
+; DrawArt at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 DrawArtHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
@@ -59,6 +71,10 @@ DrawArtHotspot:
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GrabBlock                                    91400  95 PC, medium confidence
+; Graphics library: grab a screen rectangle into a block (buf, x, y)
+;-----------------------------------------------------------------------------
 GrabBlock:
         push esi
         push edi
@@ -167,6 +183,11 @@ GrabBlock:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; DrawShapeAtOwnPos                            91538  95 PC, medium confidence
+; Draws a shape at the position stored in its header; followed by the draw at
+; a given position
+;-----------------------------------------------------------------------------
 DrawShapeAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
@@ -179,6 +200,10 @@ DrawShapeAtOwnPos:
         call GrabBlock
         add esp, byte 0Ch
         ret
+;-----------------------------------------------------------------------------
+; GrabBlockHotspot                                91554  95 PC, low confidence
+; GrabBlock at a position less the shape's hotspot
+;-----------------------------------------------------------------------------
 GrabBlockHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
@@ -196,6 +221,10 @@ GrabBlockHotspot:
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; PrintStringAtCursor                             91580  95 PC, low confidence
+; Prints a string at the text cursor
+;-----------------------------------------------------------------------------
 PrintStringAtCursor:
         push esi
         push edi
@@ -566,6 +595,10 @@ PrintStringAtCursor:
         pop edi
         pop esi
         ret
+;-----------------------------------------------------------------------------
+; PrintString                                  91964  95 PC, medium confidence
+; Graphics library: print a string at x, y in the current font and colours
+;-----------------------------------------------------------------------------
 PrintString:
         mov edx, dword [byte esp+0Ch]
         push edx

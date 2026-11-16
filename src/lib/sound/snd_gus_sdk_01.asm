@@ -20,6 +20,10 @@ global GusVoiceSetEnvelope, GusScaleRatio, GusNoteFrequency, GusVoiceStopRamp, G
 global GusSetSustain, GusVoiceWaveEnd, GusVoiceRampEnd, GusStopPatchVoices, GusForgetPatch, GusSetChannelPatch, GusSetChannelPan, GusChannelNotesOff
 global GusPokeBlock, GusPeekBlock, GusSizeDram, GusDramAlloc, GusDramFree, GusDramFreeTotal, GusDramLargestFree, GusMixAdd8
 global GusClearMixBuffer
+;-----------------------------------------------------------------------------
+; GusReadPatchHeader                           AA210  95 PC, medium confidence
+; Opens a .PAT patch file and checks its GF1PATCH110 header
+;-----------------------------------------------------------------------------
 GusReadPatchHeader:
         push ebp
         mov ebp, esp
@@ -120,6 +124,10 @@ GusReadPatchHeader:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusLoadPatch                                 AA300  95 PC, medium confidence
+; Loads the layers and waves of a .PAT patch into GUS memory
+;-----------------------------------------------------------------------------
 GusLoadPatch:
         push ebp
         mov ebp, esp
@@ -516,6 +524,10 @@ GusLoadPatch:
         pop ebp
         ret 0Ch
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusUnloadPatch                               AA758  95 PC, medium confidence
+; Stops a patch's voices and frees its waves from GUS memory
+;-----------------------------------------------------------------------------
 GusUnloadPatch:
         push ebp
         mov ebp, esp
@@ -571,6 +583,10 @@ GusUnloadPatch:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusSetPatchFlags                                AA7CC  95 PC, low confidence
+; Stores the flags word of a loaded patch
+;-----------------------------------------------------------------------------
 GusSetPatchFlags:
         push ebp
         mov ebp, esp
@@ -579,6 +595,10 @@ GusSetPatchFlags:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusStopDmaAndTimers                          AA7E0  95 PC, medium confidence
+; Clears the card's DMA control, timer control and sampling control registers
+;-----------------------------------------------------------------------------
 GusStopDmaAndTimers:
         push ebp
         mov ebp, esp
@@ -641,6 +661,11 @@ GusStopDmaAndTimers:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusUnhookIrqs                                AA8C0  95 PC, medium confidence
+; Restores the original interrupt vectors and masks for the card's one or two
+; IRQ lines
+;-----------------------------------------------------------------------------
 GusUnhookIrqs:
         push ebp
         mov ebp, esp
@@ -658,6 +683,11 @@ GusUnhookIrqs:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusHookIrqs                                  AA8E0  95 PC, medium confidence
+; Installs the card's wave IRQ handler and, when it uses a second line, the
+; MIDI IRQ handler
+;-----------------------------------------------------------------------------
 GusHookIrqs:
         push ebp
         mov ebp, esp
@@ -682,6 +712,11 @@ GusHookIrqs:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusOpenCard                                  AA910  95 PC, medium confidence
+; Sets the base port, clears callbacks and IRQ state, resets the voices and
+; hooks the IRQs
+;-----------------------------------------------------------------------------
 GusOpenCard:
         push ebp
         mov ebp, esp
@@ -746,6 +781,10 @@ GusOpenCard:
         pop ebp
         ret 8
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusStopAllVoices                             AA9C0  95 PC, medium confidence
+; Stops every active voice and ramps its volume down to silence
+;-----------------------------------------------------------------------------
 GusStopAllVoices:
         push ebp
         mov ebp, esp
@@ -860,6 +899,11 @@ GusStopAllVoices:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusOpen                                      AAB5C  95 PC, medium confidence
+; Reference-counted card open: probes the port, opens the card, sets the
+; IRQ/DMA latches and runs the init table
+;-----------------------------------------------------------------------------
 GusOpen:
         push ebp
         mov ebp, esp
@@ -953,6 +997,11 @@ GusOpen:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusClose                                     AAC48  95 PC, medium confidence
+; Drops the open count and, on the last close, stops voices, clears DMA and
+; timers and unhooks the IRQs
+;-----------------------------------------------------------------------------
 GusClose:
         push ebp
         mov ebp, esp
@@ -989,6 +1038,11 @@ GusClose:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusSetIrqDmaLatches                          AACAC  95 PC, medium confidence
+; Programs the card's IRQ and DMA latch registers from the configured
+; channels
+;-----------------------------------------------------------------------------
 GusSetIrqDmaLatches:
         push ebp
         mov ebp, esp
@@ -1111,6 +1165,11 @@ GusSetIrqDmaLatches:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusResetVoices                               AAE40  95 PC, medium confidence
+; Resets the synthesizer with the given number of active voices (clamped to
+; 14..32) and silences each one
+;-----------------------------------------------------------------------------
 GusResetVoices:
         push ebp
         mov ebp, esp
@@ -1321,6 +1380,10 @@ GusResetVoices:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusMidiInit                                     AB180  95 PC, low confidence
+; Resets the 32 voice and 32 channel records and hooks the volume interrupt
+;-----------------------------------------------------------------------------
 GusMidiInit:
         push ebp
         mov ebp, esp
@@ -1386,6 +1449,10 @@ GusMidiInit:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusVoiceUpdateVolume                            AB244  95 PC, low confidence
+; Sets a voice's volume from its note, channel and master volume
+;-----------------------------------------------------------------------------
 GusVoiceUpdateVolume:
         push ebp
         mov ebp, esp
@@ -1732,6 +1799,10 @@ GusVoiceUpdateVolume:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusSetChannelVolume                          AB658  95 PC, medium confidence
+; MIDI channel volume (1-127): updates every voice of the channel
+;-----------------------------------------------------------------------------
 GusSetChannelVolume:
         push ebp
         mov ebp, esp
@@ -1785,6 +1856,10 @@ GusSetChannelVolume:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusSetChannelBend                               AB6D0  95 PC, low confidence
+; Applies a channel's pitch bend to the frequency of its voices
+;-----------------------------------------------------------------------------
 GusSetChannelBend:
         push ebp
         mov ebp, esp
@@ -1858,6 +1933,10 @@ GusSetChannelBend:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusSetMasterVolume                           AB79C  95 PC, medium confidence
+; Sets the master volume (1-127) and updates every voice
+;-----------------------------------------------------------------------------
 GusSetMasterVolume:
         push ebp
         mov ebp, esp
@@ -1907,6 +1986,10 @@ GusSetMasterVolume:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusSetChannelModulation                         AB80C  95 PC, low confidence
+; MIDI modulation: sets the vibrato depth of a channel's voices
+;-----------------------------------------------------------------------------
 GusSetChannelModulation:
         push ebp
         mov ebp, esp
@@ -2040,11 +2123,15 @@ GusSetChannelModulation:
         pop ebp
         ret
         db 08Bh,0C0h
-GusVibratoJumpTable:
+GusVibratoJumpTable:                            ; jump table for the switch cases of GusVibratoTick
         dd GusVibratoTick+083h
         dd GusVibratoTick+068h
         dd GusVibratoTick+074h
         dd GusVibratoTick+078h
+;-----------------------------------------------------------------------------
+; GusVibratoTick                                  AB974  95 PC, low confidence
+; Timer callback that moves the frequency of every vibrato voice
+;-----------------------------------------------------------------------------
 GusVibratoTick:
         push ebp
         mov ebp, esp
@@ -2165,6 +2252,10 @@ GusVibratoTick:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusStartVibratoTimer                            ABAB0  95 PC, low confidence
+; Hooks the vibrato timer callback
+;-----------------------------------------------------------------------------
 GusStartVibratoTimer:
         push ebp
         mov ebp, esp
@@ -2177,6 +2268,10 @@ GusStartVibratoTimer:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusStopVibratoTimer                             ABACC  95 PC, low confidence
+; Unhooks the vibrato timer callback
+;-----------------------------------------------------------------------------
 GusStopVibratoTimer:
         push ebp
         mov ebp, esp
@@ -2184,6 +2279,10 @@ GusStopVibratoTimer:
         mov esp, ebp
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusVoiceSetVibrato                              ABAD8  95 PC, low confidence
+; Sets a voice's vibrato rate and depth from its patch or channel
+;-----------------------------------------------------------------------------
 GusVoiceSetVibrato:
         push ebp
         mov ebp, esp
@@ -2313,6 +2412,10 @@ GusVoiceSetVibrato:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusVoiceSetEnvelope                             ABC38  95 PC, low confidence
+; Works out a voice's next volume envelope ramp
+;-----------------------------------------------------------------------------
 GusVoiceSetEnvelope:
         push ebp
         mov ebp, esp
@@ -2435,6 +2538,10 @@ GusVoiceSetEnvelope:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusScaleRatio                                   ABD60  95 PC, low confidence
+; Scales one ratio by another (frequency maths)
+;-----------------------------------------------------------------------------
 GusScaleRatio:
         push ebp
         mov ebp, esp
@@ -2468,6 +2575,10 @@ GusScaleRatio:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusNoteFrequency                                ABDA0  95 PC, low confidence
+; Returns the frequency of a note from the note table, with scale tuning
+;-----------------------------------------------------------------------------
 GusNoteFrequency:
         push ebp
         mov ebp, esp
@@ -2519,6 +2630,10 @@ GusNoteFrequency:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusVoiceStopRamp                             ABE18  95 PC, medium confidence
+; Stops a voice's volume ramp (register 0Dh)
+;-----------------------------------------------------------------------------
 GusVoiceStopRamp:
         push ebp
         mov ebp, esp
@@ -2610,6 +2725,10 @@ GusVoiceStopRamp:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusVoiceStopWave                             ABF5C  95 PC, medium confidence
+; Stops a voice's wave (register 00h)
+;-----------------------------------------------------------------------------
 GusVoiceStopWave:
         push ebp
         mov ebp, esp
@@ -2686,6 +2805,10 @@ GusVoiceStopWave:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusStopNoteVoices                               AC050  95 PC, low confidence
+; Stops the up to four voices of a sound slot
+;-----------------------------------------------------------------------------
 GusStopNoteVoices:
         push ebp
         mov ebp, esp
@@ -2737,6 +2860,10 @@ GusStopNoteVoices:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusMidiNoteOn                                   AC0CC  95 PC, low confidence
+; MIDI note on: picks the patch layer and starts voices
+;-----------------------------------------------------------------------------
 GusMidiNoteOn:
         push ebp
         mov ebp, esp
@@ -3221,6 +3348,11 @@ GusMidiNoteOn:
         pop ebp
         ret 4
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusMidiNoteOff                                  AC6E8  95 PC, low confidence
+; MIDI note off: releases the note's voices, or marks it held while sustain
+; is on
+;-----------------------------------------------------------------------------
 GusMidiNoteOff:
         push ebp
         mov ebp, esp
@@ -3623,6 +3755,10 @@ GusMidiNoteOff:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusSetSustain                                ACC3C  95 PC, medium confidence
+; MIDI sustain pedal: on holds notes, off releases the held notes
+;-----------------------------------------------------------------------------
 GusSetSustain:
         push ebp
         mov ebp, esp
@@ -3672,6 +3808,10 @@ GusSetSustain:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusVoiceWaveEnd                                 ACCC0  95 PC, low confidence
+; Wave end interrupt for one voice
+;-----------------------------------------------------------------------------
 GusVoiceWaveEnd:
         push ebp
         mov ebp, esp
@@ -3728,6 +3868,10 @@ GusVoiceWaveEnd:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusVoiceRampEnd                                 ACD58  95 PC, low confidence
+; Volume ramp end interrupt for one voice: moves to the next envelope stage
+;-----------------------------------------------------------------------------
 GusVoiceRampEnd:
         push ebp
         mov ebp, esp
@@ -4045,6 +4189,10 @@ GusVoiceRampEnd:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusStopPatchVoices                              AD160  95 PC, low confidence
+; Stops every voice playing a given patch
+;-----------------------------------------------------------------------------
 GusStopPatchVoices:
         push ebp
         mov ebp, esp
@@ -4165,6 +4313,10 @@ GusStopPatchVoices:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusForgetPatch                                  AD260  95 PC, low confidence
+; Clears a patch from every channel that uses it
+;-----------------------------------------------------------------------------
 GusForgetPatch:
         push ebp
         mov ebp, esp
@@ -4195,6 +4347,10 @@ GusForgetPatch:
         pop ebp
         ret
         db 08Bh,0C0h
+;-----------------------------------------------------------------------------
+; GusSetChannelPatch                              AD298  95 PC, low confidence
+; Stores the patch pointer of a channel
+;-----------------------------------------------------------------------------
 GusSetChannelPatch:
         push ebp
         mov ebp, esp
@@ -4203,6 +4359,10 @@ GusSetChannelPatch:
         mov esp, ebp
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusSetChannelPan                             AD2A8  95 PC, medium confidence
+; MIDI pan: sets the balance (register 0Ch) of a channel's voices
+;-----------------------------------------------------------------------------
 GusSetChannelPan:
         push ebp
         mov ebp, esp
@@ -4263,6 +4423,10 @@ GusSetChannelPan:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusChannelNotesOff                           AD344  95 PC, medium confidence
+; Stops every voice of a channel
+;-----------------------------------------------------------------------------
 GusChannelNotesOff:
         push ebp
         mov ebp, esp
@@ -4318,6 +4482,10 @@ GusChannelNotesOff:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; GusPokeBlock                                 AD3C0  95 PC, medium confidence
+; Writes a 16-byte block into card memory one byte at a time
+;-----------------------------------------------------------------------------
 GusPokeBlock:
         push ebp
         mov ebp, esp
@@ -4351,6 +4519,10 @@ GusPokeBlock:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusPeekBlock                                 AD3FC  95 PC, medium confidence
+; Reads a 16-byte block from card memory one byte at a time
+;-----------------------------------------------------------------------------
 GusPeekBlock:
         push ebp
         mov ebp, esp
@@ -4381,6 +4553,11 @@ GusPeekBlock:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusSizeDram                                  AD434  95 PC, medium confidence
+; Tests each 256K bank of card memory and records how much memory the card
+; has
+;-----------------------------------------------------------------------------
 GusSizeDram:
         push ebp
         mov ebp, esp
@@ -4443,6 +4620,10 @@ GusSizeDram:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusDramAlloc                                 AD4DC  95 PC, medium confidence
+; Allocates a block of GUS memory
+;-----------------------------------------------------------------------------
 GusDramAlloc:
         push ebp
         mov ebp, esp
@@ -4560,6 +4741,10 @@ GusDramAlloc:
         pop ebp
         ret
         db 08Dh,040h,00h
+;-----------------------------------------------------------------------------
+; GusDramFree                                  AD610  95 PC, medium confidence
+; Frees a block of GUS memory and merges it with free neighbours
+;-----------------------------------------------------------------------------
 GusDramFree:
         push ebp
         mov ebp, esp
@@ -4646,6 +4831,10 @@ GusDramFree:
         pop ebp
         ret
         db 090h
+;-----------------------------------------------------------------------------
+; GusDramFreeTotal                             AD6F4  95 PC, medium confidence
+; Returns the total free GUS memory
+;-----------------------------------------------------------------------------
 GusDramFreeTotal:
         push ebp
         mov ebp, esp
@@ -4694,6 +4883,10 @@ GusDramFreeTotal:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusDramLargestFree                           AD758  95 PC, medium confidence
+; Returns the largest free block of GUS memory
+;-----------------------------------------------------------------------------
 GusDramLargestFree:
         push ebp
         mov ebp, esp
@@ -4751,6 +4944,10 @@ GusDramLargestFree:
         pop ebx
         pop ebp
         ret
+;-----------------------------------------------------------------------------
+; GusMixAdd8                                      AD7CC  95 PC, low confidence
+; Adds 8-bit samples through a volume table into the mix buffer
+;-----------------------------------------------------------------------------
 GusMixAdd8:
         push ebp
         LD mov, ebp, esp
@@ -5165,6 +5362,10 @@ GusMixAdd8:
         pop ebx
         leave
         ret
+;-----------------------------------------------------------------------------
+; GusClearMixBuffer                            ADC96  95 PC, medium confidence
+; Clears the mix buffer
+;-----------------------------------------------------------------------------
 GusClearMixBuffer:
         cmp ecx, 100h
         jb near .2
