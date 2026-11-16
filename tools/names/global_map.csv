@@ -4101,7 +4101,7 @@ GusIrqLatchBits,D7A2C,carried from the matched 96 PC data (refset)
 GusDmaLatchBits,D877A,carried from the matched 96 PC data (refset)
 GusDmaReady,D8AE4,carried from the matched 96 PC data (position)
 LinePlayersAway,E038A,carried from the matched 96 PC data (refset)
-InputRecordCount,EA058,carried from the matched 97 PC data (position)
+ZoneFlags,EA058,"zone manager flags (bit 0 full redraw, bit 5 clip to zone bounds)"
 GusPlayDmaChannel,F79A4,carried from the matched 96 PC data (position)
 GusIrqLatch,F79A5,carried from the matched 96 PC data (refset)
 GusRecordDmaChannel,F79A6,carried from the matched 96 PC data (position)
@@ -4227,3 +4227,40 @@ RationalAllocFlags,F58E2,carried from the matched 96 PC data (position)
 GusIrqFlags,F799E,carried from the matched 96 PC data (position)
 GusActiveVoices,F79A0,carried from the matched 96 PC data (refset)
 GusCriticalDepth,F79A2,carried from the matched 96 PC data (position)
+ZoneScreenLeft,EA034,left edge of the zone manager screen
+ZoneScreenRight,EA038,right edge of the zone manager screen
+ZoneScreenTop,EA03C,top edge of the zone manager screen
+ZoneScreenBottom,EA040,bottom edge of the zone manager screen
+ZoneBoundsLeft,EA044,left edge of the box around all zones
+ZoneBoundsRight,EA048,right edge of the box around all zones
+ZoneBoundsTop,EA04C,top edge of the box around all zones
+ZoneBoundsBottom,EA050,bottom edge of the box around all zones
+ZoneCurRect,EA054,zone rectangle being aligned or added
+ZonePrevAdded,EA05C,set when last frame's zones were already added this frame
+ZoneNodeRects,EA060,rectangles of the zone list nodes
+ZoneFreeHead,EA064,first free zone list node
+ZoneNewNode,EA068,zone list node being added
+ZoneListHead,EA06C,first node of the zone list
+ZoneListTail,EA070,last node of the zone list
+ZoneRects,EA074,this frame's dirty rectangle per zone slot
+ZoneMgrOn,EA078,nonzero while the zone manager is set up
+ZoneListCount,EA07C,number of nodes in the zone list
+ZoneRectsB,EA080,second buffer of dirty rectangles
+ZoneRectsA,EA084,first buffer of dirty rectangles
+ZoneMemBlock,EA088,memory block holding all zone tables
+ZonePrevStates,EA08C,last frame's state word per zone slot
+ZoneNextLinks,EA090,next node index per zone list node
+ZonePrevRects,EA094,last frame's dirty rectangle per zone slot
+ZoneBufferParity,EA098,selects which rectangle and state buffer is current
+ZoneStates,EA09C,this frame's state word per zone slot
+ZoneStatesB,EA0A0,second buffer of state words
+ZoneStatesA,EA0A4,first buffer of state words
+HiddenWindow,EA0AC,hidden (off-screen) bitmap that frames are drawn into
+BackgroundWindow,EA0B0,background bitmap used to erase zones
+ZoneSlots,EA0B4,number of zone slots
+ZoneOriginX,EA0B8,screen x of the hidden bitmap
+ZoneOriginY,EA0BC,screen y of the hidden bitmap
+ZoneSavedBottom,EA0C4,bottom edge given to SetZoneScreen
+ZoneSavedRight,EA0C8,right edge given to SetZoneScreen
+ZoneSavedLeft,EA0CC,left edge given to SetZoneScreen
+ZoneSavedTop,EA0D0,top edge given to SetZoneScreen

@@ -2,84 +2,84 @@
 bits 32
 %include "hockey.inc"
 section s_EA034 nobits alloc noexec write align=1
-global InputRecordCount, dword_EA034, dword_EA038, dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C
-global dword_EA050, dword_EA054, dword_EA05C, dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070
-global dword_EA074, dword_EA078, dword_EA07C, dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090
-global dword_EA094, dword_EA098, dword_EA09C, dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4
-global dword_EA0B8, dword_EA0BC, dword_EA0C4, dword_EA0C8, dword_EA0CC, dword_EA0D0
-dword_EA034:
+global ZoneFlags, ZoneScreenLeft, ZoneScreenRight, ZoneScreenTop, ZoneScreenBottom, ZoneBoundsLeft, ZoneBoundsRight, ZoneBoundsTop
+global ZoneBoundsBottom, ZoneCurRect, ZonePrevAdded, ZoneNodeRects, ZoneFreeHead, ZoneNewNode, ZoneListHead, ZoneListTail
+global ZoneRects, ZoneMgrOn, ZoneListCount, ZoneRectsB, ZoneRectsA, ZoneMemBlock, ZonePrevStates, ZoneNextLinks
+global ZonePrevRects, ZoneBufferParity, ZoneStates, ZoneStatesB, ZoneStatesA, HiddenWindow, BackgroundWindow, ZoneSlots
+global ZoneOriginX, ZoneOriginY, ZoneSavedBottom, ZoneSavedRight, ZoneSavedLeft, ZoneSavedTop
+ZoneScreenLeft:
         resb 4
-dword_EA038:
+ZoneScreenRight:
         resb 4
-dword_EA03C:
+ZoneScreenTop:
         resb 4
-dword_EA040:
+ZoneScreenBottom:
         resb 4
-dword_EA044:
+ZoneBoundsLeft:
         resb 4
-dword_EA048:
+ZoneBoundsRight:
         resb 4
-dword_EA04C:
+ZoneBoundsTop:
         resb 4
-dword_EA050:
+ZoneBoundsBottom:
         resb 4
-dword_EA054:
+ZoneCurRect:
         resb 4
-InputRecordCount:
+ZoneFlags:
         resb 4
-dword_EA05C:
+ZonePrevAdded:
         resb 4
-dword_EA060:
+ZoneNodeRects:
         resb 4
-dword_EA064:
+ZoneFreeHead:
         resb 4
-dword_EA068:
+ZoneNewNode:
         resb 4
-dword_EA06C:
+ZoneListHead:
         resb 4
-dword_EA070:
+ZoneListTail:
         resb 4
-dword_EA074:
+ZoneRects:
         resb 4
-dword_EA078:
+ZoneMgrOn:
         resb 4
-dword_EA07C:
+ZoneListCount:
         resb 4
-dword_EA080:
+ZoneRectsB:
         resb 4
-dword_EA084:
+ZoneRectsA:
         resb 4
-dword_EA088:
+ZoneMemBlock:
         resb 4
-dword_EA08C:
+ZonePrevStates:
         resb 4
-dword_EA090:
+ZoneNextLinks:
         resb 4
-dword_EA094:
+ZonePrevRects:
         resb 4
-dword_EA098:
+ZoneBufferParity:
         resb 4
-dword_EA09C:
+ZoneStates:
         resb 4
-dword_EA0A0:
+ZoneStatesB:
         resb 4
-dword_EA0A4:
+ZoneStatesA:
         resb 8
-dword_EA0AC:
+HiddenWindow:
         resb 4
-dword_EA0B0:
+BackgroundWindow:
         resb 4
-dword_EA0B4:
+ZoneSlots:
         resb 4
-dword_EA0B8:
+ZoneOriginX:
         resb 4
-dword_EA0BC:
+ZoneOriginY:
         resb 8
-dword_EA0C4:
+ZoneSavedBottom:
         resb 4
-dword_EA0C8:
+ZoneSavedRight:
         resb 4
-dword_EA0CC:
+ZoneSavedLeft:
         resb 4
-dword_EA0D0:
+ZoneSavedTop:
         resb 12

@@ -35,8 +35,8 @@ extern setpersonel, Setplass, setplayer, SetRinkScroll, SetShotMode, SetSPA, Set
 extern sflags3, sfx, ShotLaneOpen, ShotMode, shotongoal, shotplayer, shownumbers, skateto
 extern skatetopuck, SkateToSpot, sopathend, sopathpoint, sopathx, sopathy, SortCords, sortobj15
 extern sounddev, SpeechStopQueue, sprintf_, spritedrawcount, SprSort, starordtab, starpl, startm
-extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_6ADA7, sub_6AF52, sub_6AF97
-extern sub_6B008, ReleaseAllVoices, SetPalette, teamabbrevs, textline1, textline2, textline3, textline4
+extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, FlushZones, SetZoneScreen, SetZoneOrigin
+extern BeginZoneFrame, ReleaseAllVoices, SetPalette, teamabbrevs, textline1, textline2, textline3, textline4
 extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, hmglstats, sortobj11, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, penaltysc
 extern SortPending, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
@@ -404,8 +404,8 @@ PreGameIntro_frameloop:
 .2:
         xor edx, edx
         xor eax, eax
-        call sub_6AF97
-        call sub_6B008
+        call SetZoneOrigin
+        call BeginZoneFrame
         mov edx, dword [viewscrolly]
         mov eax, dword [viewscrollx]
         call SetRinkScroll
@@ -423,7 +423,7 @@ PreGameIntro_frameloop:
         sar ebx, 10h
         add eax, ebx
         lea ebx, [dword eax+0140h]
-        call sub_6AF52
+        call SetZoneScreen
         xor ebp, ebp
         mov dword [spritedrawcount], ebp
         mov edx, dword [viewscrolly-2]
@@ -445,8 +445,8 @@ PreGameIntro_frameloop:
         sar eax, 10h
         add eax, ebx
         neg eax
-        call sub_6AF97
-        call sub_6ADA7
+        call SetZoneOrigin
+        call FlushZones
         cmp word [fadeinpending], byte 0
         je short .3
         mov ax, word [joysampling]

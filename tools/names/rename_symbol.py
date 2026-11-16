@@ -310,6 +310,8 @@ class Session:
         rx = tok(old)
         for f, t in self.ctexts.items():
             if old not in t or not rx.search(t): continue
+            if re.search(r'[+-]', new) and f.endswith('.h'):        # a fold (BASE+k): drop the alias's own declaration
+                t = '\n'.join(l for l in t.split('\n') if not re.match(r'\s*extern\b[^;]*\b%s\b' % re.escape(old), l))
             nt = sub_code(t, rx, new)
             if nt != t: self.ctexts[f] = nt
 

@@ -34,7 +34,7 @@ extern StartThreeStars, StopDigiSample, str_backslash, str_CheckRefCard, str_Che
 extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, str_GameSet2, str_Kaufm020, str_NoConvMemory
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
 extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, InitZoneManager
-extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, PushMemDescriptorLocked, sub_8DF54, initgraphics
+extern FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, AllocMemBlock, PushMemDescriptorLocked, sub_8DF54, initgraphics
 extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, ReleaseAllVoices, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
 extern DisableMidiMusic, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry, RemoveKeyboardHandler, KeyDown
 extern SetViewRect, InitMouse, sub_B3036, FindShape, sub_B30F4, JoyResetCentres, ReadJoyRaw, ClearScreen
@@ -2233,8 +2233,8 @@ Gameloop:
 .6:
         xor edx, edx
         xor eax, eax
-        call sub_6AF97
-        call sub_6B008
+        call SetZoneOrigin
+        call BeginZoneFrame
         mov edx, dword [viewscrolly]
         mov eax, dword [viewscrollx]
         call SetRinkScroll
@@ -2252,7 +2252,7 @@ Gameloop:
         sar eax, 10h
         add eax, ebx
         lea ebx, [dword eax+0140h]
-        call sub_6AF52
+        call SetZoneScreen
         xor ebx, ebx
         mov dword [spritedrawcount], ebx
         mov edx, dword [viewscrolly-2]
@@ -2338,8 +2338,8 @@ Gameloop:
         sar eax, 10h
         add eax, ebx
         neg eax
-        call sub_6AF97
-        call sub_6ADA7
+        call SetZoneOrigin
+        call FlushZones
         cmp word [fadeinpending], byte 0
         je short .10
         mov ax, word [joysampling]

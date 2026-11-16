@@ -8,39 +8,39 @@
 #define ShapeBankCount sub_90354_decl
 #define ShapeBankEntry sub_9035C_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
-#define sub_6AF97 sub_6AF97_decl
-#define sub_6B008 sub_6B008_decl
-#define sub_6AF52 sub_6AF52_decl
+#define SetZoneOrigin sub_6AF97_decl
+#define BeginZoneFrame sub_6B008_decl
+#define SetZoneScreen sub_6AF52_decl
 #define DrawRinkOverlays DrawRinkOverlays_decl
 #define Crowd_Noise CrowdNoiseUpdate_decl
 #define UpdateHudPanel UpdateHudPanel_decl
-#define sub_6ADA7 sub_6ADA7_decl
+#define FlushZones sub_6ADA7_decl
 #define StartThreeStars StartThreeStars_decl
 #define Gameloop GameLoop_decl
 #include "nhl95.h"
 #undef ShapeBankCount
 #undef ShapeBankEntry
 #undef TicksSinceLastCall
-#undef sub_6AF97
-#undef sub_6B008
-#undef sub_6AF52
+#undef SetZoneOrigin
+#undef BeginZoneFrame
+#undef SetZoneScreen
 #undef DrawRinkOverlays
 #undef Crowd_Noise
 #undef UpdateHudPanel
-#undef sub_6ADA7
+#undef FlushZones
 #undef StartThreeStars
 #undef Gameloop
 
 int __cdecl ShapeBankCount(int bank);
 int __cdecl ShapeBankEntry(int bank, int n);
 void TicksSinceLastCall(void);
-void sub_6AF97(int x, int y);
-void sub_6B008(void);
-void sub_6AF52(int x, int y, int x2, int y2);
+void SetZoneOrigin(int x, int y);
+void BeginZoneFrame(void);
+void SetZoneScreen(int x, int y, int x2, int y2);
 void DrawRinkOverlays(short x, short y);
 void Crowd_Noise(short n);
 void UpdateHudPanel(void);
-void sub_6ADA7(void);
+void FlushZones(void);
 void StartThreeStars(void);
 
 /* Gameloop (1167B, PC only): run the game until it ends. Each pass (joystick sampling on) while the period
@@ -74,10 +74,10 @@ void Gameloop(void)
             else if (viewscrollx < 0) viewscrollx = 0;
             if (viewscrolly > 0x1A8) viewscrolly = 0x1A8;
             else if (viewscrolly < 0) viewscrolly = 0;
-            sub_6AF97(0, 0);
-            sub_6B008();
+            SetZoneOrigin(0, 0);
+            BeginZoneFrame();
             SetRinkScroll(viewscrollx, viewscrolly);
-            sub_6AF52(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, scrollx + bgscrollx * 8 + 0x140,
+            SetZoneScreen(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, scrollx + bgscrollx * 8 + 0x140,
                 scrolly + bgscrolly * 8 + 0xA8);
             spritedrawcount = 0;
             DrawRinkOverlays(viewscrollx, viewscrolly);
@@ -99,8 +99,8 @@ void Gameloop(void)
                     hudhundstep = hudclockhund + (hudclockmin * 60 + hudclocksec) * 100;
             }
             UpdateHudPanel();
-            sub_6AF97(-(scrollx + bgscrollx * 8), -(bgscrolly * 8 + scrolly));
-            sub_6ADA7();
+            SetZoneOrigin(-(scrollx + bgscrollx * 8), -(bgscrolly * 8 + scrolly));
+            FlushZones();
             if (fadeinpending) {
                 joysampling_save = joysampling;
                 joysampling = 0;

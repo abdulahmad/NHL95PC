@@ -1,0 +1,87 @@
+sub_6A033 SetZoneFlags {source_game=PC-new,confidence=medium} sets bits in the zone manager flags
+sub_6A044 ClearZoneFlags {source_game=PC-new,confidence=medium} clears bits in the zone manager flags
+sub_6A057 ToggleZoneFlags {source_game=PC-new,confidence=medium} toggles bits in the zone manager flags
+InputRecordAvail GetZoneFlags {source_game=PC-new,confidence=medium} returns the zone manager flags
+sub_6A078 SetZoneBits {source_game=PC-new,confidence=medium} sets bits in one zone's state word
+sub_6A092 ClearZoneBits {source_game=PC-new,confidence=medium} clears bits in one zone's state word
+sub_6A0AA ToggleZoneBits {source_game=PC-new,confidence=medium} toggles bits in one zone's state word
+sub_6A0C4 GetZoneBits {source_game=PC-new,confidence=medium} returns one zone's state word
+sub_6A0DE GetZoneRect {source_game=PC-new,confidence=medium} returns a pointer to one zone's rectangle
+sub_6A0F6 SetHiddenWindow {source_game=PC-new,confidence=medium} sets the hidden (off-screen) bitmap
+sub_6A106 SelectHiddenWindow {source_game=PC-new,confidence=medium} draws to the hidden bitmap and clips to its full size; fatal error if none is set
+sub_6A156 SetBackgroundWindow {source_game=PC-new,confidence=medium} sets the background bitmap
+sub_6A166 SelectBackgroundWindow {source_game=PC-new,confidence=medium} draws to the background bitmap and clips to its full size; fatal error if none is set
+sub_6A1A0 ClipToZone {source_game=PC-new,confidence=low} clips drawing to a rectangle moved by the zone origin
+sub_6A1D6 CopyZoneToScreen {source_game=PC-new,confidence=low} copies one rectangle of the hidden bitmap to the screen
+sub_6A234 CopyHiddenToScreen {source_game=PC-new,confidence=low} copies the whole 320x168 hidden bitmap to the screen
+sub_6A27A AlignZoneRect {source_game=PC-new,confidence=low} widens the current zone rectangle to 4-pixel columns
+sub_6A2BC ZoneDebugHook {source_game=PC-new,confidence=low} empty hook called before a flush
+sub_6A2C7 DrawRectOutline {source_game=PC-new,confidence=low} draws a rectangle outline as four filled lines
+sub_6A335 OutlineZone {source_game=PC-new,confidence=low} draws the outline of one zone rectangle
+sub_6A373 RestoreZoneRect {source_game=PC-new,confidence=low} copies one rectangle of the background bitmap into the drawing bitmap
+sub_6A3C0 SwapZoneLists {source_game=PC-new,confidence=low} swaps the current and previous frame zone lists
+sub_6A439 FreeAllZones {source_game=PC-new,confidence=low} returns every zone in the list to the free list
+sub_6A48E ZoneCovered {source_game=PC-new,confidence=low} tells whether a rectangle lies inside an existing zone
+sub_6A4D3 MergeZoneRect {source_game=PC-new,confidence=low} merges a rectangle into a zone within 16 pixels of it
+sub_6A5A5 ZoneOverlaps {source_game=PC-new,confidence=low} tells whether two zone rectangles overlap
+sub_6A5EA ClampZoneToScreen {source_game=PC-new,confidence=low} clamps a zone rectangle to the screen bounds
+sub_6A649 RemoveZone {source_game=PC-new,confidence=low} unlinks one zone from the zone list
+sub_6A6CC InsertZoneSorted {source_game=PC-new,confidence=low} links a zone into the list sorted by position
+sub_6A791 SplitZoneRect {source_game=PC-new,confidence=low} splits an overlapping rectangle into pieces and adds each one
+sub_6A8B1 AddZone {source_game=PC-new,confidence=low} adds a rectangle to the zone list, merging or splitting as needed
+sub_6A990 AddMarkedZones {source_game=PC-new,confidence=low} adds every zone whose state word has the dirty bit
+sub_6AAD5 FreeZoneManager {source_game=PC-new,confidence=medium} frees the zone manager memory block
+sub_6AAF5 MarkZonePoint {source_game=PC-new,confidence=low} grows one zone's dirty rectangle to hold a point
+sub_6AB7C MarkZoneRect {source_game=PC-new,confidence=low} grows one zone's dirty rectangle to hold a rectangle
+sub_6ABF9 ZonePutChar {source_game=PC-new,confidence=low} draws one character and marks its cell dirty
+sub_6AC31 MarkZonePoints {source_game=PC-new,confidence=low} grows one zone's dirty rectangle to hold a list of points
+sub_6ACA2 MarkZoneRadius {source_game=PC-new,confidence=low} marks a point, or a box of a given radius around it, dirty
+sub_6ACE9 MarkZoneSprite {source_game=PC-new,confidence=low} marks the box of a sprite (16.16 position and size) dirty
+sub_6AD22 MarkZoneShapeAt {source_game=PC-new,confidence=low} marks the box of a shape drawn at a given position dirty
+sub_6AD4F EraseZones {source_game=PC-new,confidence=low} restores the background under every zone, or the whole screen
+sub_6ADA7 FlushZones {source_game=PC-new,confidence=low} copies every dirty zone (or the whole hidden bitmap) to the screen
+sub_6AE5C ComputeZoneBounds {source_game=PC-new,confidence=low} computes the bounding box of all zones
+sub_6AF52 SetZoneScreen {source_game=PC-new,confidence=low} sets the screen bounds and clip window for the zone manager
+sub_6AF97 SetZoneOrigin {source_game=PC-new,confidence=low} sets the screen position of the hidden bitmap
+sub_6AFAD ClipToZoneScreen {source_game=PC-new,confidence=low} clips drawing to the zone manager screen bounds
+sub_6AFBE ClipToZoneUpdate {source_game=PC-new,confidence=low} clips drawing to the zone bounds, or to the screen on a full redraw
+sub_6AFDF ClipToRect {source_game=PC-new,confidence=low} clips drawing to a rectangle
+sub_6B008 BeginZoneFrame {source_game=PC-new,confidence=low} starts a frame: draws to the hidden bitmap, swaps zone lists, erases the old zones
+dword_EA034 ZoneScreenLeft {source_game=PC-new,confidence=low} left edge of the zone manager screen
+dword_EA038 ZoneScreenRight {source_game=PC-new,confidence=low} right edge of the zone manager screen
+dword_EA03C ZoneScreenTop {source_game=PC-new,confidence=low} top edge of the zone manager screen
+dword_EA040 ZoneScreenBottom {source_game=PC-new,confidence=low} bottom edge of the zone manager screen
+dword_EA044 ZoneBoundsLeft {source_game=PC-new,confidence=low} left edge of the box around all zones
+dword_EA048 ZoneBoundsRight {source_game=PC-new,confidence=low} right edge of the box around all zones
+dword_EA04C ZoneBoundsTop {source_game=PC-new,confidence=low} top edge of the box around all zones
+dword_EA050 ZoneBoundsBottom {source_game=PC-new,confidence=low} bottom edge of the box around all zones
+dword_EA054 ZoneCurRect {source_game=PC-new,confidence=low} zone rectangle being aligned or added
+dword_EA05C ZonePrevAdded {source_game=PC-new,confidence=low} set when last frame's zones were already added this frame
+dword_EA060 ZoneNodeRects {source_game=PC-new,confidence=low} rectangles of the zone list nodes
+dword_EA064 ZoneFreeHead {source_game=PC-new,confidence=low} first free zone list node
+dword_EA068 ZoneNewNode {source_game=PC-new,confidence=low} zone list node being added
+dword_EA06C ZoneListHead {source_game=PC-new,confidence=low} first node of the zone list
+dword_EA070 ZoneListTail {source_game=PC-new,confidence=low} last node of the zone list
+dword_EA074 ZoneRects {source_game=PC-new,confidence=low} this frame's dirty rectangle per zone slot
+dword_EA078 ZoneMgrOn {source_game=PC-new,confidence=low} nonzero while the zone manager is set up
+dword_EA07C ZoneListCount {source_game=PC-new,confidence=low} number of nodes in the zone list
+dword_EA080 ZoneRectsB {source_game=PC-new,confidence=low} second buffer of dirty rectangles
+dword_EA084 ZoneRectsA {source_game=PC-new,confidence=low} first buffer of dirty rectangles
+dword_EA088 ZoneMemBlock {source_game=PC-new,confidence=low} memory block holding all zone tables
+dword_EA08C ZonePrevStates {source_game=PC-new,confidence=low} last frame's state word per zone slot
+dword_EA090 ZoneNextLinks {source_game=PC-new,confidence=low} next node index per zone list node
+dword_EA094 ZonePrevRects {source_game=PC-new,confidence=low} last frame's dirty rectangle per zone slot
+dword_EA098 ZoneBufferParity {source_game=PC-new,confidence=low} selects which rectangle and state buffer is current
+dword_EA09C ZoneStates {source_game=PC-new,confidence=low} this frame's state word per zone slot
+dword_EA0A0 ZoneStatesB {source_game=PC-new,confidence=low} second buffer of state words
+dword_EA0A4 ZoneStatesA {source_game=PC-new,confidence=low} first buffer of state words
+dword_EA0AC HiddenWindow {source_game=PC-new,confidence=low} hidden (off-screen) bitmap that frames are drawn into
+dword_EA0B0 BackgroundWindow {source_game=PC-new,confidence=low} background bitmap used to erase zones
+dword_EA0B4 ZoneSlots {source_game=PC-new,confidence=low} number of zone slots
+dword_EA0B8 ZoneOriginX {source_game=PC-new,confidence=low} screen x of the hidden bitmap
+dword_EA0BC ZoneOriginY {source_game=PC-new,confidence=low} screen y of the hidden bitmap
+dword_EA0C4 ZoneSavedBottom {source_game=PC-new,confidence=low} bottom edge given to SetZoneScreen
+dword_EA0C8 ZoneSavedRight {source_game=PC-new,confidence=low} right edge given to SetZoneScreen
+dword_EA0CC ZoneSavedLeft {source_game=PC-new,confidence=low} left edge given to SetZoneScreen
+dword_EA0D0 ZoneSavedTop {source_game=PC-new,confidence=low} top edge given to SetZoneScreen
+InputRecordCount ZoneFlags {source_game=PC-new,confidence=medium} zone manager flags (bit 0 full redraw, bit 5 clip to zone bounds)

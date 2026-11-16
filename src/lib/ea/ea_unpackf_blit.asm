@@ -5,16 +5,11 @@ section s_9C594 progbits alloc exec nowrite align=1
 extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
 extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, sub_91FA4, TextPrintAt, sub_A2FD0
 extern sub_A3050, _EFG_Format_, bcopy, UnpackArtRle
-global ToUpperChar, loc_9C5A4, ReturnFalse, sub_9C5B0, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
+global ToUpperChar, loc_9C5A4, ReturnFalse, FindNearestColor, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
 global loc_9C70C, loc_9C71B, loc_9C72B, loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873
-global loc_9C880, sub_9C890, ShapePixelSize, DrawArtAnyFormat, loc_9C924, loc_9C969, loc_9C97D, loc_9C97F
+global loc_9C880, TextPrintCentered, ShapePixelSize, DrawArtAnyFormat, loc_9C924, loc_9C969, loc_9C97D, loc_9C97F
 global loc_9C991, loc_9C9C1, loc_9C9D3, loc_9CA00, loc_9CA2B, loc_9CA3B, loc_9CA60, DrawArtAnyFormatAt
-global DrawArtAnyFormatOwnPos, sub_9CAB4, sub_9CADC, sub_9CB00, sub_9CB24, sub_9CB4C, sub_9CB70, sub_9CB94
-global sub_9CBBC, sub_9CBE0, sub_9CC04, sub_9CC2C, sub_9CC50, sub_9CC74, sub_9CC9C, sub_9CCC0
-global sub_9CCE4, sub_9CD0C, sub_9CD30, sub_9CD54, sub_9CD7C, sub_9CDA0, sub_9CDC4, sub_9CDEC
-global sub_9CE10, sub_9CE34, sub_9CE5C, sub_9CE80, sub_9CEA4, sub_9CECC, sub_9CEF0, sub_9CF14
-global sub_9CF3C, sub_9CF60, sub_9CF84, sub_9CFAC, sub_9CFD0, sub_9CFF4, sub_9D01C, sub_9D040
-global sub_9D064
+global DrawArtAnyFormatOwnPos
 ToUpperChar:
         mov eax, dword [byte esp+04h]
         cmp eax, byte 61h
@@ -29,7 +24,7 @@ ReturnFalse:
         mov eax, 0
         ret
         db 00h,00h
-sub_9C5B0:
+FindNearestColor:
         push esi
         push edi
         push ebp
@@ -234,7 +229,7 @@ loc_9C880:
         pop esi
         ret
         db 00h,00h,00h,00h
-sub_9C890:
+TextPrintCentered:
         push esi
         push edi
         mov esi, dword [cliprect_x1]
@@ -447,7 +442,6 @@ DrawArtAnyFormatOwnPos:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CAB4:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -459,7 +453,6 @@ sub_9CAB4:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CADC:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -471,7 +464,6 @@ sub_9CADC:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CB00:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -483,7 +475,6 @@ sub_9CB00:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CB24:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -495,7 +486,6 @@ sub_9CB24:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CB4C:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -507,7 +497,6 @@ sub_9CB4C:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CB70:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -519,7 +508,6 @@ sub_9CB70:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CB94:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -531,7 +519,6 @@ sub_9CB94:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CBBC:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -543,7 +530,6 @@ sub_9CBBC:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CBE0:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -555,7 +541,6 @@ sub_9CBE0:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CC04:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -567,7 +552,6 @@ sub_9CC04:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CC2C:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -579,7 +563,6 @@ sub_9CC2C:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CC50:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -591,7 +574,6 @@ sub_9CC50:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CC74:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -603,7 +585,6 @@ sub_9CC74:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CC9C:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -615,7 +596,6 @@ sub_9CC9C:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CCC0:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -627,7 +607,6 @@ sub_9CCC0:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CCE4:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -639,7 +618,6 @@ sub_9CCE4:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CD0C:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -651,7 +629,6 @@ sub_9CD0C:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CD30:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 0FFFF0000h
@@ -663,7 +640,6 @@ sub_9CD30:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CD54:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -675,7 +651,6 @@ sub_9CD54:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CD7C:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -687,7 +662,6 @@ sub_9CD7C:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CDA0:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 0FFFF0000h
@@ -699,7 +673,6 @@ sub_9CDA0:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CDC4:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -711,7 +684,6 @@ sub_9CDC4:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CDEC:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -723,7 +695,6 @@ sub_9CDEC:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CE10:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 0FFFF0000h
@@ -735,43 +706,6 @@ sub_9CE10:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CE34:
-        mov eax, dword [byte esp+04h]
-        mov edx, dword [byte esp+08h]
-        mov ebx, dword [byte esp+0Ch]
-        push dword 10000h
-        push dword 0FFFF0000h
-        push byte 0
-        push byte 2
-        mov ecx, 1
-        call DrawArtAnyFormat
-        ret
-        db 08Dh,040h,00h
-sub_9CE5C:
-        mov eax, dword [byte esp+04h]
-        mov edx, dword [byte esp+08h]
-        mov ebx, dword [byte esp+0Ch]
-        push dword 10000h
-        push dword 0FFFF0000h
-        push byte 0
-        push byte 2
-        xor ecx, ecx
-        call DrawArtAnyFormat
-        ret
-        db 08Bh,0C0h
-sub_9CE80:
-        mov eax, dword [byte esp+04h]
-        push dword 10000h
-        push dword 0FFFF0000h
-        push byte 0
-        push byte 2
-        mov ecx, 2
-        xor ebx, ebx
-        xor edx, edx
-        call DrawArtAnyFormat
-        ret
-        db 08Dh,040h,00h
-sub_9CEA4:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -783,7 +717,39 @@ sub_9CEA4:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CECC:
+        mov eax, dword [byte esp+04h]
+        mov edx, dword [byte esp+08h]
+        mov ebx, dword [byte esp+0Ch]
+        push dword 10000h
+        push dword 0FFFF0000h
+        push byte 0
+        push byte 2
+        xor ecx, ecx
+        call DrawArtAnyFormat
+        ret
+        db 08Bh,0C0h
+        mov eax, dword [byte esp+04h]
+        push dword 10000h
+        push dword 0FFFF0000h
+        push byte 0
+        push byte 2
+        mov ecx, 2
+        xor ebx, ebx
+        xor edx, edx
+        call DrawArtAnyFormat
+        ret
+        db 08Dh,040h,00h
+        mov eax, dword [byte esp+04h]
+        mov edx, dword [byte esp+08h]
+        mov ebx, dword [byte esp+0Ch]
+        push dword 10000h
+        push dword 0FFFF0000h
+        push byte 0
+        push byte 2
+        mov ecx, 1
+        call DrawArtAnyFormat
+        ret
+        db 08Dh,040h,00h
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -795,7 +761,6 @@ sub_9CECC:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CEF0:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -807,7 +772,6 @@ sub_9CEF0:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CF14:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -819,7 +783,6 @@ sub_9CF14:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CF3C:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -831,7 +794,6 @@ sub_9CF3C:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CF60:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -843,7 +805,6 @@ sub_9CF60:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CF84:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -855,7 +816,6 @@ sub_9CF84:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CFAC:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -867,7 +827,6 @@ sub_9CFAC:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9CFD0:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -879,7 +838,6 @@ sub_9CFD0:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9CFF4:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -891,7 +849,6 @@ sub_9CFF4:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9D01C:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -903,7 +860,6 @@ sub_9D01C:
         call DrawArtAnyFormat
         ret
         db 08Bh,0C0h
-sub_9D040:
         mov eax, dword [byte esp+04h]
         push dword 10000h
         push dword 10000h
@@ -915,7 +871,6 @@ sub_9D040:
         call DrawArtAnyFormat
         ret
         db 08Dh,040h,00h
-sub_9D064:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]

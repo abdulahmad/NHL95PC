@@ -670,8 +670,56 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00067DCC,sub_67DCC,DrawRinkSideObjects,PC-new,,,,low,"draws the side sprites (counts byte_E9FAE / byte_E9FAF at 17Eh,0B3h by camera position) and the 12h+ rink objects of word_E9FB4 (word_CCEF8 frames, photoptrsf); used by the display and replay frame code",engine_display,manual-trace
 000688A4,sub_688A4,DebugMonitor,PC-new,,,,medium,"Unreferenced PC debug monitor: when debugstep is set prints a state line per frame through DebugPrintf (clin=, ps<>, HVpos<>, ref<>, pb[], puckc/gmclock) and one line per SortCords object (17 entries, skipping 0Ch/0Dh/0Fh); flags 'debError' on a bad SPA/SCnum; then reads a key: '0' bail, 'm' sub_93E38, 'd' DumpStatsLog(""stats.log""), '\' toggles debugstep",debug_dump,manual-trace
 00068E7B,sub_68E7B,DumpStatsLog,PC-new,,,,high,"fopen(name,""a+t"") ('error dump stats' on failure), then fprintf of pool/gm header, both team structs (E8h bytes), SortCords (11h x 48h bytes and a field line), team stat lines (shts score ppg pp pen penmin atop pass passcomp), skater and goalie stat tables; called by DebugMonitor with ""stats.log""",debug_dump,manual-trace
-0006A068,sub_6A068,InputRecordAvail,PC-new,,,,medium,same routine as the matched 97 PC routine (exact 1.0),zonemgr,match97
+0006A033,sub_6A033,SetZoneFlags,PC-new,,,,medium,sets bits in the zone manager flags,zonemgr,manual-trace
+0006A044,sub_6A044,ClearZoneFlags,PC-new,,,,medium,clears bits in the zone manager flags,zonemgr,manual-trace
+0006A057,sub_6A057,ToggleZoneFlags,PC-new,,,,medium,toggles bits in the zone manager flags,zonemgr,manual-trace
+0006A068,sub_6A068,GetZoneFlags,PC-new,,,,medium,returns the zone manager flags,zonemgr,manual-trace
+0006A078,sub_6A078,SetZoneBits,PC-new,,,,medium,sets bits in one zone's state word,zonemgr,manual-trace
+0006A092,sub_6A092,ClearZoneBits,PC-new,,,,medium,clears bits in one zone's state word,zonemgr,manual-trace
+0006A0AA,sub_6A0AA,ToggleZoneBits,PC-new,,,,medium,toggles bits in one zone's state word,zonemgr,manual-trace
+0006A0C4,sub_6A0C4,GetZoneBits,PC-new,,,,medium,returns one zone's state word,zonemgr,manual-trace
+0006A0DE,sub_6A0DE,GetZoneRect,PC-new,,,,medium,returns a pointer to one zone's rectangle,zonemgr,manual-trace
+0006A0F6,sub_6A0F6,SetHiddenWindow,PC-new,,,,medium,sets the hidden (off-screen) bitmap,zonemgr,manual-trace
+0006A106,sub_6A106,SelectHiddenWindow,PC-new,,,,medium,draws to the hidden bitmap and clips to its full size; fatal error if none is set,zonemgr,manual-trace
+0006A156,sub_6A156,SetBackgroundWindow,PC-new,,,,medium,sets the background bitmap,zonemgr,manual-trace
+0006A166,sub_6A166,SelectBackgroundWindow,PC-new,,,,medium,draws to the background bitmap and clips to its full size; fatal error if none is set,zonemgr,manual-trace
+0006A1A0,sub_6A1A0,ClipToZone,PC-new,,,,low,clips drawing to a rectangle moved by the zone origin,zonemgr,manual-trace
+0006A1D6,sub_6A1D6,CopyZoneToScreen,PC-new,,,,low,copies one rectangle of the hidden bitmap to the screen,zonemgr,manual-trace
+0006A234,sub_6A234,CopyHiddenToScreen,PC-new,,,,low,copies the whole 320x168 hidden bitmap to the screen,zonemgr,manual-trace
+0006A27A,sub_6A27A,AlignZoneRect,PC-new,,,,low,widens the current zone rectangle to 4-pixel columns,zonemgr,manual-trace
+0006A2BC,sub_6A2BC,ZoneDebugHook,PC-new,,,,low,empty hook called before a flush,zonemgr,manual-trace
+0006A2C7,sub_6A2C7,DrawRectOutline,PC-new,,,,low,draws a rectangle outline as four filled lines,zonemgr,manual-trace
+0006A335,sub_6A335,OutlineZone,PC-new,,,,low,draws the outline of one zone rectangle,zonemgr,manual-trace
+0006A373,sub_6A373,RestoreZoneRect,PC-new,,,,low,copies one rectangle of the background bitmap into the drawing bitmap,zonemgr,manual-trace
+0006A3C0,sub_6A3C0,SwapZoneLists,PC-new,,,,low,swaps the current and previous frame zone lists,zonemgr,manual-trace
+0006A439,sub_6A439,FreeAllZones,PC-new,,,,low,returns every zone in the list to the free list,zonemgr,manual-trace
+0006A48E,sub_6A48E,ZoneCovered,PC-new,,,,low,tells whether a rectangle lies inside an existing zone,zonemgr,manual-trace
+0006A4D3,sub_6A4D3,MergeZoneRect,PC-new,,,,low,merges a rectangle into a zone within 16 pixels of it,zonemgr,manual-trace
+0006A5A5,sub_6A5A5,ZoneOverlaps,PC-new,,,,low,tells whether two zone rectangles overlap,zonemgr,manual-trace
+0006A5EA,sub_6A5EA,ClampZoneToScreen,PC-new,,,,low,clamps a zone rectangle to the screen bounds,zonemgr,manual-trace
+0006A649,sub_6A649,RemoveZone,PC-new,,,,low,unlinks one zone from the zone list,zonemgr,manual-trace
+0006A6CC,sub_6A6CC,InsertZoneSorted,PC-new,,,,low,links a zone into the list sorted by position,zonemgr,manual-trace
+0006A791,sub_6A791,SplitZoneRect,PC-new,,,,low,splits an overlapping rectangle into pieces and adds each one,zonemgr,manual-trace
+0006A8B1,sub_6A8B1,AddZone,PC-new,,,,low,"adds a rectangle to the zone list, merging or splitting as needed",zonemgr,manual-trace
+0006A990,sub_6A990,AddMarkedZones,PC-new,,,,low,adds every zone whose state word has the dirty bit,zonemgr,manual-trace
 0006A9CE,sub_6A9CE,InitZoneManager,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.911),zonemgr,match96
+0006AAD5,sub_6AAD5,FreeZoneManager,PC-new,,,,medium,frees the zone manager memory block,zonemgr,manual-trace
+0006AAF5,sub_6AAF5,MarkZonePoint,PC-new,,,,low,grows one zone's dirty rectangle to hold a point,zonemgr,manual-trace
+0006AB7C,sub_6AB7C,MarkZoneRect,PC-new,,,,low,grows one zone's dirty rectangle to hold a rectangle,zonemgr,manual-trace
+0006ABF9,sub_6ABF9,ZonePutChar,PC-new,,,,low,draws one character and marks its cell dirty,zonemgr,manual-trace
+0006AC31,sub_6AC31,MarkZonePoints,PC-new,,,,low,grows one zone's dirty rectangle to hold a list of points,zonemgr,manual-trace
+0006ACA2,sub_6ACA2,MarkZoneRadius,PC-new,,,,low,"marks a point, or a box of a given radius around it, dirty",zonemgr,manual-trace
+0006ACE9,sub_6ACE9,MarkZoneSprite,PC-new,,,,low,marks the box of a sprite (16.16 position and size) dirty,zonemgr,manual-trace
+0006AD22,sub_6AD22,MarkZoneShapeAt,PC-new,,,,low,marks the box of a shape drawn at a given position dirty,zonemgr,manual-trace
+0006AD4F,sub_6AD4F,EraseZones,PC-new,,,,low,"restores the background under every zone, or the whole screen",zonemgr,manual-trace
+0006ADA7,sub_6ADA7,FlushZones,PC-new,,,,low,copies every dirty zone (or the whole hidden bitmap) to the screen,zonemgr,manual-trace
+0006AE5C,sub_6AE5C,ComputeZoneBounds,PC-new,,,,low,computes the bounding box of all zones,zonemgr,manual-trace
+0006AF52,sub_6AF52,SetZoneScreen,PC-new,,,,low,sets the screen bounds and clip window for the zone manager,zonemgr,manual-trace
+0006AF97,sub_6AF97,SetZoneOrigin,PC-new,,,,low,sets the screen position of the hidden bitmap,zonemgr,manual-trace
+0006AFAD,sub_6AFAD,ClipToZoneScreen,PC-new,,,,low,clips drawing to the zone manager screen bounds,zonemgr,manual-trace
+0006AFBE,sub_6AFBE,ClipToZoneUpdate,PC-new,,,,low,"clips drawing to the zone bounds, or to the screen on a full redraw",zonemgr,manual-trace
+0006AFDF,sub_6AFDF,ClipToRect,PC-new,,,,low,clips drawing to a rectangle,zonemgr,manual-trace
+0006B008,sub_6B008,BeginZoneFrame,PC-new,,,,low,"starts a frame: draws to the hidden bitmap, swaps zone lists, erases the old zones",zonemgr,manual-trace
 0006B093,sub_6B093,JoystickCalScreen,PC-new,,,,high,"(stick, shift, mask, title): ""joycal"" screen with the left / right stick picture; moves the puck to the position of the stick direction (joycalx / joycaly) until a button; Esc / failure clears the stick from joyenablemask",joystick_calibration,manual-trace
 0006B35C,sub_6B35C,CalLeftJoystick,PC-new,,,,high,"JoystickCalScreen(1, 0, 0, ""LEFT JOYSTICK"") (no refs; startup calls JoystickCalScreen directly)",joystick_calibration,manual-trace
 0006B37A,sub_6B37A,CalRightJoystick,PC-new,,,,high,"JoystickCalScreen(2, 8, 1, ""RIGHT JOYSTICK"") (no refs)",joystick_calibration,manual-trace
@@ -1221,6 +1269,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009C540,sub_9C540,ScanGetCharWidth,PC-new,,,,medium,same routine as the matched 97 PC routine (sem 1.0),ea_misc_02,match97
 0009C594,sub_9C594,ToUpperChar,PC-new,,,,medium,"same library routine as the 96 PC ToUpperChar (similarity 0.933, best)",ea_unpackf_blit,match96
 0009C5A8,sub_9C5A8,ReturnFalse,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.827),ea_unpackf_blit,match96
+0009C5B0,sub_9C5B0,FindNearestColor,PC-new,,,,medium,returns the palette index closest to a 24-bit RGB colour,ea_unpackf_blit,manual-trace
+0009C890,sub_9C890,TextPrintCentered,PC-new,,,,medium,prints a string centred across the clip window,ea_unpackf_blit,manual-trace
 0009C8D0,sub_9C8D0,ShapePixelSize,PC-new,,,,medium,"same library routine as the 97 PC ShapePixelSize (similarity 0.9, best)",ea_unpackf_blit,match97
 0009C8E8,sub_9C8E8,DrawArtAnyFormat,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.722),ea_unpackf_blit,match96
 0009CA6C,sub_9CA6C,DrawArtAnyFormatAt,PC-new,,,,medium,same routine as the matched 96 PC routine (neighbour 0.909),ea_unpackf_blit,match96

@@ -16,8 +16,8 @@ extern ReplayStep, RestoreDialogBg, rinkscrollx, rinkscrolly, rockcuefiles, rock
 extern rockteamcues, rocktunes, rpl_x, rpl_x_e16, rpl_y, SaveHilight, savepal, scrollx
 extern scrolly, SelectRinkBM, SelectScreenBM, SetClipWindow, SetDialogColors, SetPalette, SetRinkScroll, SetScreenSize
 extern SetTickDeadline, SetViewRect, sounddev, spritedrawcount, str_ADROCKU, str_BothTeams, str_Gad1, str_Gadget5
-extern str_Gadget6, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_ROCKDITI, str_SBROCKU, sub_6ADA7
-extern sub_6AF52, sub_6AF97, sub_6B008, sub_8E8A0, sub_96A78, SetScreenTarget, sub_B4CD8, FillRectColor
+extern str_Gadget6, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_ROCKDITI, str_SBROCKU, FlushZones
+extern SetZoneScreen, SetZoneOrigin, BeginZoneFrame, sub_8E8A0, sub_96A78, SetScreenTarget, sub_B4CD8, FillRectColor
 extern sub_B500C, teamrockcuetbl, teamrocktune, teamtunefiles, teamtunepathsel, TextRestoreState, TextSaveState, TextSetFont
 extern TicksSinceLastCall, viewscrollx, viewscrolly, WaitTickDeadline
 global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, GadgetSoundStub, bothneitherstrs, DrawGadgetButton
@@ -669,8 +669,8 @@ InstantReplay:
         call SelectRinkBM
         xor edx, edx
         xor eax, eax
-        call sub_6AF97
-        call sub_6B008
+        call SetZoneOrigin
+        call BeginZoneFrame
         mov edx, dword [viewscrolly]
         mov eax, dword [viewscrollx]
         call SetRinkScroll
@@ -688,7 +688,7 @@ InstantReplay:
         sar ebx, 10h
         add eax, ebx
         lea ebx, [dword eax+0140h]
-        call sub_6AF52
+        call SetZoneScreen
         xor ecx, ecx
         mov dword [spritedrawcount], ecx
         mov edx, dword [viewscrolly-2]
@@ -710,8 +710,8 @@ InstantReplay:
         sar ebx, 10h
         add eax, ebx
         neg eax
-        call sub_6AF97
-        call sub_6ADA7
+        call SetZoneOrigin
+        call FlushZones
         mov ebx, 10h
         mov edx, gamepal
         xor eax, eax
@@ -849,8 +849,8 @@ InstantReplay:
 .25:
         xor edx, edx
         xor eax, eax
-        call sub_6AF97
-        call sub_6B008
+        call SetZoneOrigin
+        call BeginZoneFrame
         mov edx, dword [viewscrolly]
         mov eax, dword [viewscrollx]
         call SetRinkScroll
@@ -868,7 +868,7 @@ InstantReplay:
         sar eax, 10h
         add eax, ebx
         lea ebx, [dword eax+0140h]
-        call sub_6AF52
+        call SetZoneScreen
         xor ebp, ebp
         mov dword [spritedrawcount], ebp
         mov edx, dword [viewscrolly-2]
@@ -961,8 +961,8 @@ InstantReplay:
         sar ebx, 10h
         add eax, ebx
         neg eax
-        call sub_6AF97
-        call sub_6ADA7
+        call SetZoneOrigin
+        call FlushZones
         call TicksSinceLastCall
         mov dword [byte esp+014h], eax
         jmp near InstantReplay.12

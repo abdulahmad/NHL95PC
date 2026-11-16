@@ -4,7 +4,7 @@
    the EXE's 16-bit edge arithmetic. Declaring i before r also leaves pal in memory.
    Left: mode/clip/remap register choices and the first flip test's cached value. */
 #define DrawSprite DrawSprite_decl
-#define sub_6AB7C sub_6AB7C_decl
+#define MarkZoneRect sub_6AB7C_decl
 #define sub_B4CD8 sub_B4CD8_decl
 #define sub_B500C sub_B500C_decl
 #define sub_B4E50 sub_B4E50_decl
@@ -15,7 +15,7 @@
 #define sub_B5AC8 sub_B5AC8_decl
 #include "nhl95.h"
 #undef DrawSprite
-#undef sub_6AB7C
+#undef MarkZoneRect
 #undef sub_B4CD8
 #undef sub_B500C
 #undef sub_B4E50
@@ -34,7 +34,7 @@ typedef struct {
     short yoff;
 } SprHdr;
 
-void sub_6AB7C(int n, int x0, int y0, int x1, int y1);
+void MarkZoneRect(int n, int x0, int y0, int x1, int y1);
 void __cdecl sub_B4CD8(SprHdr *s, int x, int y);
 void __cdecl sub_B500C(SprHdr *s, int x, int y);
 void __cdecl sub_B4E50(SprHdr *s, int x, int y);
@@ -48,7 +48,7 @@ void __cdecl sub_B5AC8(SprHdr *s, int x, int y);
    is drawn when it lies wholly outside cliprect; it is clipped when it crosses it. With pal not negative the
    colour remap (SetColorRemap, awayremap for pal, else homeremap) is loaded unless it is already the current one
    (lastsprremap = pal + flip * 2); mirrored, the remap's 16-byte groups are flipped (bytes 0/4 and 1/3) around
-   the load. The rectangle is recorded (sub_6AB7C, spritedrawcount), and if the sprite's flag byte is set one of
+   the load. The rectangle is recorded (MarkZoneRect, spritedrawcount), and if the sprite's flag byte is set one of
    eight blitters draws it (clipped / remapped / mirrored). spr: the sprite header; unused: not read. */
 void DrawSprite(SprHdr *spr, int x, int y, int flip, short pal, int unused)
 {
@@ -120,7 +120,7 @@ void DrawSprite(SprHdr *spr, int x, int y, int flip, short pal, int unused)
         s.mode += 2;
     }
     if (spr->flags) s.mode += 8;
-    sub_6AB7C(spritedrawcount++, s.sx, s.sy, s.sx + spr->w, s.sy + spr->h);
+    MarkZoneRect(spritedrawcount++, s.sx, s.sy, s.sx + spr->w, s.sy + spr->h);
     switch ((unsigned short)s.mode) {
     case 8: sub_B4CD8(spr, s.sx, s.sy); break;
     case 9: sub_B500C(spr, s.sx, s.sy); break;

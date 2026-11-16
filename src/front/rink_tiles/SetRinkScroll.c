@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* SetRinkScroll: scroll the rink view to x y: a changed axis sets its tile scroll (bgscroll = pos 8) and
- pixel scroll (pos % 8); when either changed, store -x -y in rinkscrollx y and redraw (sub_6A033 3). */
+ pixel scroll (pos % 8); when either changed, store -x -y in rinkscrollx y and redraw (SetZoneFlags 3). */
 void SetRinkScroll(int x, int y)
 {
     int ch;
@@ -21,6 +21,6 @@ void SetRinkScroll(int x, int y)
     if (ch) {
         rinkscrollx = -x;
         rinkscrolly = -y;
-        sub_6A033(3);
+        SetZoneFlags(3);
     }
 }

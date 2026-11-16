@@ -20,7 +20,7 @@ extern dword_EDE7C, MemViewMode, dword_EDE84, fclose_, fopen_, fprintf_, fputs_,
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, sub_8D484, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId, PutBlock
 extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, sub_93000, PrintBoxedText, DebugSetLine, sub_936C0
-extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, ToUpperChar, ReturnFalse, sub_9C5B0, sub_9C890
+extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered
 extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, sub_9D090, sub_9D2E0, FindShape, ClearScreen, KbdGetKey, KbdFlush
 extern SaveDrawState, RestoreDrawState, FindFirstFile, PollHotkeys, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
 extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3
@@ -451,23 +451,23 @@ sub_93CC0:
         mov dword [dword esp+0B8h], 1
 loc_93D22:
         push byte 0
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         mov dword [MemViewBlack], eax
         push dword 0FCFCFCh
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         mov dword [MemViewWhite], eax
         push dword 0FCFC54h
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         mov dword [MemViewYellow], eax
         push dword 80A8h
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         mov dword [MemViewGreen], eax
         push dword 0A80000h
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         mov dword [MemViewRed], eax
         mov ebp, dword [dword_D459C]
@@ -2284,7 +2284,7 @@ loc_951B1:
         call ReturnFalse
         push byte 60h
         push str_ShapeFileIsInvalid
-        call sub_9C890
+        call TextPrintCentered
         add esp, byte 8
         call ReturnFalse
         call sub_96144
@@ -2721,7 +2721,7 @@ loc_95665:
         add esp, byte 8
         push byte 60h
         push str_ShapeIsInvalidDraw
-        call sub_9C890
+        call TextPrintCentered
         add esp, byte 8
         call ReturnFalse
         call sub_96144

@@ -19,7 +19,7 @@ extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep,
 extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
-extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, ReleaseAllVoices, SetPalette
+extern StopDigiSample, sub_1BAF3, FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, ReleaseAllVoices, SetPalette
 extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, SortPending
 extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, puckcross2, puckcross6, refYpos2, refXvel
 extern refYvel, xc1, yc1, yleader
@@ -484,8 +484,8 @@ StartHL2:
 .21:
         xor edx, edx
         xor eax, eax
-        call sub_6AF97
-        call sub_6B008
+        call SetZoneOrigin
+        call BeginZoneFrame
         mov edx, dword [viewscrolly]
         mov eax, dword [viewscrollx]
         call SetRinkScroll
@@ -503,7 +503,7 @@ StartHL2:
         sar eax, 10h
         add eax, ebx
         lea ebx, [dword eax+0140h]
-        call sub_6AF52
+        call SetZoneScreen
         xor ebx, ebx
         mov dword [spritedrawcount], ebx
         mov edx, dword [viewscrolly-2]
@@ -525,8 +525,8 @@ StartHL2:
         sar ebx, 10h
         add eax, ebx
         neg eax
-        call sub_6AF97
-        call sub_6ADA7
+        call SetZoneOrigin
+        call FlushZones
         cmp word [fadeinpending], byte 0
         je short .22
         mov ax, word [joysampling]

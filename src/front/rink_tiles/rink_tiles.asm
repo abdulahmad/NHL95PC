@@ -6,8 +6,8 @@ extern __CHK, bgscrollx, bgscrolly, cddriveptr, currink, dword_DD6A6, FadePalSte
 extern fileoncd, FreeMemBlock, GetInputEvent, GetTicks, MakePath, ptrupdatefn, rinkarenas, rinkbm
 extern rinkfileidx, rinkhtiles, rinkscrollx, rinkscrolly, rinktilebm, rinkwtiles, scrollx, scrolly
 extern SetDrawBitmap, str_CRESTS3, str_ErrorLoadingFile, str_extBIN, str_InvalidFileSize, str_Map, str_Pal16, str_Rink2
-extern str_Til, str_TILES, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52
-extern sub_6AF97, AllocMemBlock, MemPtrSize, LoadBank, sub_8E8A0, SetPalette, DrawShape, GetFileSize
+extern str_Til, str_TILES, SetZoneFlags, SetHiddenWindow, SelectHiddenWindow, SetBackgroundWindow, EraseZones, SetZoneScreen
+extern SetZoneOrigin, AllocMemBlock, MemPtrSize, LoadBank, sub_8E8A0, SetPalette, DrawShape, GetFileSize
 extern LoadFileToBlockShared, FindShape, CreateBitmap, deskbankname
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
 ;-----------------------------------------------------------------------------
@@ -336,23 +336,23 @@ LoadRink:
         idiv ebx
         mov word [scrollx], dx
         mov eax, 180h
-        call sub_6A033
+        call SetZoneFlags
         xor edx, edx
         xor eax, eax
-        call sub_6AF97
+        call SetZoneOrigin
         mov ecx, 250h
         mov ebx, 180h
         xor edx, edx
         xor eax, eax
-        call sub_6AF52
+        call SetZoneScreen
         mov eax, dword [rinkbm]
-        call sub_6A0F6
+        call SetHiddenWindow
         mov eax, dword [rinktilebm]
-        call sub_6A156
+        call SetBackgroundWindow
         mov eax, 1
-        call sub_6A033
-        call sub_6A106
-        call sub_6AD4F
+        call SetZoneFlags
+        call SelectHiddenWindow
+        call EraseZones
         add esp, byte 20h
         pop ebp
         pop edi
@@ -597,7 +597,7 @@ SetRinkScroll:
         neg ecx
         mov dword [rinkscrolly], ecx
         mov eax, 3
-        call sub_6A033
+        call SetZoneFlags
 .x:
         pop esi
         pop ecx

@@ -22,7 +22,7 @@ extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern sub_6AB7C, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, ShapeBankCount, FillRect
+extern MarkZoneRect, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, ShapeBankCount, FillRect
 extern sub_90EC0, PrintString, SortIndices, FindShape, JoyButtonMap, SetClipWindow, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
@@ -1343,7 +1343,7 @@ DrawTextOverlay:
         mov eax, dword [spritedrawcount]
         lea edi, [byte eax+01h]
         mov dword [spritedrawcount], edi
-        call sub_6AB7C
+        call MarkZoneRect
         add esp, byte 30h
         jmp near checkwindow_popebp
 %endif ; C
@@ -1660,7 +1660,7 @@ DrawCallBanner:
         mov eax, dword [spritedrawcount]
         lea edi, [byte eax+01h]
         mov dword [spritedrawcount], edi
-        call sub_6AB7C
+        call MarkZoneRect
         add esp, byte 24h
         jmp near checkwindow_popebp
 %endif ; C

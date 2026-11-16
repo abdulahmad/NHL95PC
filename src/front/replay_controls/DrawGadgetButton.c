@@ -4,10 +4,10 @@
 #define bothneitherstrs bothneitherstrs_fn
 #define HilightSaveToDlg HilightSaveToDlg_decl
 #define ReplayStep ReplayStep_decl
-#define sub_6AF97 sub_6AF97_decl
-#define sub_6B008 sub_6B008_decl
-#define sub_6AF52 sub_6AF52_decl
-#define sub_6ADA7 sub_6ADA7_decl
+#define SetZoneOrigin sub_6AF97_decl
+#define BeginZoneFrame sub_6B008_decl
+#define SetZoneScreen sub_6AF52_decl
+#define FlushZones sub_6ADA7_decl
 #define DrawRinkSideObjects DrawRinkSideObjects_decl
 #define ReplayControlLoop ReplayControlLoop_decl
 #define sub_B4CD8 sub_B4CD8_decl
@@ -16,10 +16,10 @@
 #define sub_B500C sub_B500C_decl
 #include "nhl95.h"
 #undef ReplayStep
-#undef sub_6AF97
-#undef sub_6B008
-#undef sub_6AF52
-#undef sub_6ADA7
+#undef SetZoneOrigin
+#undef BeginZoneFrame
+#undef SetZoneScreen
+#undef FlushZones
 #undef DrawRinkSideObjects
 #undef ReplayControlLoop
 #undef sub_B4CD8
@@ -52,10 +52,10 @@ void DrawGadgetButton(int n)
 }
 
 short ReplayStep(short n, short sound);
-void sub_6AF97(int x, int y);
-void sub_6B008(void);
-void sub_6AF52(int x0, int y0, int x1, int y1);
-void sub_6ADA7(void);
+void SetZoneOrigin(int x, int y);
+void BeginZoneFrame(void);
+void SetZoneScreen(int x0, int y0, int x1, int y1);
+void FlushZones(void);
 void DrawRinkSideObjects(short vx, short vy);
 int ReplayControlLoop(int *step);
 void __cdecl sub_B4CD8(int art, int x, int y);  /* graphics library: draw art (opaque) */
@@ -131,15 +131,15 @@ void InstantReplay(int mode)
     if (viewscrolly > 0x1A8) viewscrolly = 0x1A8;
     if (viewscrolly < 0) viewscrolly = 0;
     SelectRinkBM();
-    sub_6AF97(0, 0);
-    sub_6B008();
+    SetZoneOrigin(0, 0);
+    BeginZoneFrame();
     SetRinkScroll(viewscrollx, viewscrolly);
-    sub_6AF52(scrollx + (bgscrollx << 3), scrolly + (bgscrolly << 3), scrollx + (bgscrollx << 3) + 0x140,
+    SetZoneScreen(scrollx + (bgscrollx << 3), scrolly + (bgscrolly << 3), scrollx + (bgscrollx << 3) + 0x140,
         scrolly + (bgscrolly << 3) + 0xA8);
     spritedrawcount = 0;
     DrawRinkSideObjects(viewscrollx, viewscrolly);
-    sub_6AF97(-((bgscrollx << 3) + scrollx), -(scrolly + (bgscrolly << 3)));
-    sub_6ADA7();
+    SetZoneOrigin(-((bgscrollx << 3) + scrollx), -(scrolly + (bgscrolly << 3)));
+    FlushZones();
     FadePalette(0, gamepal, 0x10);
     TicksSinceLastCall();
     ClearInputQueue();
@@ -175,10 +175,10 @@ void InstantReplay(int mode)
         viewscrolly = 0x140 - camy - 0x54;
         if (viewscrolly > 0x1A8) viewscrolly = 0x1A8;
         if (viewscrolly < 0) viewscrolly = 0;
-        sub_6AF97(0, 0);
-        sub_6B008();
+        SetZoneOrigin(0, 0);
+        BeginZoneFrame();
         SetRinkScroll(viewscrollx, viewscrolly);
-        sub_6AF52((bgscrollx << 3) + scrollx, scrolly + (bgscrolly << 3), (bgscrollx << 3) + scrollx + 0x140,
+        SetZoneScreen((bgscrollx << 3) + scrollx, scrolly + (bgscrolly << 3), (bgscrollx << 3) + scrollx + 0x140,
             scrolly + (bgscrolly << 3) + 0xA8);
         spritedrawcount = 0;
         DrawRinkSideObjects(viewscrollx, viewscrolly);
@@ -199,8 +199,8 @@ void InstantReplay(int mode)
                 }
             }
         }
-        sub_6AF97(-((bgscrollx << 3) + scrollx), -(scrolly + (bgscrolly << 3)));
-        sub_6ADA7();
+        SetZoneOrigin(-((bgscrollx << 3) + scrollx), -(scrolly + (bgscrolly << 3)));
+        FlushZones();
         step = TicksSinceLastCall();
     }
     CrowdNoiseOff();

@@ -5,7 +5,7 @@
 #define ShapeBankCount sub_90354_decl
 #define sub_90EC0 sub_90EC0_decl
 #define sub_B500C sub_B500C_decl
-#define sub_6AB7C sub_6AB7C_decl
+#define MarkZoneRect sub_6AB7C_decl
 #include "nhl95.h"
 #undef LoadTeamPPV
 #undef UpdateTextOverlay
@@ -13,12 +13,12 @@
 #undef ShapeBankCount
 #undef sub_90EC0
 #undef sub_B500C
-#undef sub_6AB7C
+#undef MarkZoneRect
 
 int __cdecl ShapeBankCount(int bank);
 void __cdecl sub_90EC0(int x, int y, int w, int h, int c);  /* graphics library: save a rectangle */
 void __cdecl sub_B500C(int art, int x, int y);              /* graphics library: draw art */
-void sub_6AB7C(int n, int x0, int y0, int x1, int y1);      /* mark a dirty rectangle */
+void MarkZoneRect(int n, int x0, int y0, int x1, int y1);      /* mark a dirty rectangle */
 
 #define ABSW(v) ((v) < 0 ? -(v) : (v))
 
@@ -197,7 +197,7 @@ void LoadTeamPPV(short seq)
    drawn, for sequence 0Ah after step 10h over ovlstepart_e30 and for sequence 8 steps 12h-14h below ovlstepart_e21; at
    sequence 0 step 2 the crowd meter: up to three bars (30h, 27h, 60h) from crowdlevel over 2EEh, 3B6h and 47Eh.
    Without one, the text lines 3, 1, 2, 4, 5 centred, line spacing by how many there are, twice (scor3font in 25h,
-   then scor2font in 27h). Then the box is marked for redraw (sub_6AB7C). No arguments, no result. */
+   then scor2font in 27h). Then the box is marked for redraw (MarkZoneRect). No arguments, no result. */
 void DrawTextOverlay(void)
 {
     short w;
@@ -345,7 +345,7 @@ void DrawTextOverlay(void)
     x = (short)cliprect_x0 + 8;
     if (gsp == 4) x += 0xAC;
     y = (short)cliprect_y0 + 8;
-    sub_6AB7C(spritedrawcount++, x, y, x + 0x83, y + 0x53);
+    MarkZoneRect(spritedrawcount++, x, y, x + 0x83, y + 0x53);
 }
 
 /* UpdateTextOverlay (66E06, PC only; ends in checkwindow_popx): run the overlay once per frame while ovltimer is
@@ -390,7 +390,7 @@ void UpdateTextOverlay(void)
 /* DrawCallBanner (66FE2, PC only; ends in checkwindow_popebp): draw call banner n (bannerstrs[n], in the SCOR3
    font) near the bottom left of the view (scrollx + 0Ch, scrolly + 95h, moved into the clip window): a dark box
    (colour 10h, dithered with 9) as wide as the text plus 4 and 9 high with a black border of 4, the text in
-   colour 25h, then again in the SCOR2 font in colour 27h, and record the box as a drawn sprite (sub_6AB7C,
+   colour 25h, then again in the SCOR2 font in colour 27h, and record the box as a drawn sprite (MarkZoneRect,
    spritedrawcount). n: the banner. No result. */
 void DrawCallBanner(short n)
 {
@@ -429,5 +429,5 @@ void DrawCallBanner(short n)
     PrintString((char *)bannerstrs[n], x2, y2);
     x -= 4;
     y -= 4;
-    sub_6AB7C(spritedrawcount++, x, y, x + w, y + 0x11);
+    MarkZoneRect(spritedrawcount++, x, y, x + w, y + 0x11);
 }

@@ -450,7 +450,7 @@ int CupSeriesWinner(unsigned char *s, unsigned games);  /* 15CE1 */
 void DrawModeSetChecks(void);  /* 7B7BE */
 void BlitTileMap(unsigned char *shape, unsigned char *tiles, int x0, short y, short x, short flags);  /* 33C08 */
 void SetRinkScroll(int x, int y);  /* 33DD3 */
-void sub_6A033(int what);  /* engine display: redraw */
+void SetZoneFlags(int what);  /* engine display: redraw */
 void IntermissionPC(void);  /* 10F6D */
 void FadePalette(int dir, unsigned char *pal, int steps);
 void SetScreenSize(int w, int h);

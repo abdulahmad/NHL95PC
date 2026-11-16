@@ -1,30 +1,30 @@
 /* Rink tiles: loading the rink. */
 #define MemPtrSize sub_8DBC0_decl
 #define LoadFileToBlockShared sub_92EE4_decl
-#define sub_6A0F6 sub_6A0F6_decl
-#define sub_6A156 sub_6A156_decl
-#define sub_6A106 sub_6A106_decl
-#define sub_6AD4F sub_6AD4F_decl
-#define sub_6AF52 sub_6AF52_decl
-#define sub_6AF97 sub_6AF97_decl
+#define SetHiddenWindow sub_6A0F6_decl
+#define SetBackgroundWindow sub_6A156_decl
+#define SelectHiddenWindow sub_6A106_decl
+#define EraseZones sub_6AD4F_decl
+#define SetZoneScreen sub_6AF52_decl
+#define SetZoneOrigin sub_6AF97_decl
 #include "nhl95.h"
 #undef MemPtrSize
 #undef LoadFileToBlockShared
-#undef sub_6A0F6
-#undef sub_6A156
-#undef sub_6A106
-#undef sub_6AD4F
-#undef sub_6AF52
-#undef sub_6AF97
+#undef SetHiddenWindow
+#undef SetBackgroundWindow
+#undef SelectHiddenWindow
+#undef EraseZones
+#undef SetZoneScreen
+#undef SetZoneOrigin
 
 int __cdecl MemPtrSize(int blk);              /* memory library: block size */
 int __cdecl LoadFileToBlockShared(char *path, int buf);  /* file library: load a file into buf */
-void sub_6A0F6(int bm);
-void sub_6A156(int bm);
-void sub_6A106(void);
-void sub_6AD4F(void);
-void sub_6AF52(int x, int y, int w, int h);
-void sub_6AF97(int x, int y);
+void SetHiddenWindow(int bm);
+void SetBackgroundWindow(int bm);
+void SelectHiddenWindow(void);
+void EraseZones(void);
+void SetZoneScreen(int x, int y, int w, int h);
+void SetZoneOrigin(int x, int y);
 
 typedef struct {
     unsigned type:8;
@@ -46,7 +46,7 @@ typedef struct {
    when unreadable) and .MAP bank (from the CD when fileoncd says so) and blit the map at the arena's first and,
    when its x is positive, second spot (flags 6000h); free both and remember the rink. Then give both bitmaps'
    shapes the rink's pixel size and a clear header, create rinkbm if needed, set the background / pixel scroll
-   for the rink's centre and hand the bitmaps to the display (sub_6A033 180h, the 180h x 250h view, sub_6A033 1). */
+   for the rink's centre and hand the bitmaps to the display (SetZoneFlags 180h, the 180h x 250h view, SetZoneFlags 1). */
 void LoadRink(int rink)
 {
     char path[0x10];
@@ -112,12 +112,12 @@ void LoadRink(int rink)
     t = rinkwtiles * 4;
     bgscrollx = t / 8 - 0x14;
     scrollx = t % 8;
-    sub_6A033(0x180);
-    sub_6AF97(0, 0);
-    sub_6AF52(0, 0, 0x180, 0x250);
-    sub_6A0F6(rinkbm);
-    sub_6A156(rinktilebm);
-    sub_6A033(1);
-    sub_6A106();
-    sub_6AD4F();
+    SetZoneFlags(0x180);
+    SetZoneOrigin(0, 0);
+    SetZoneScreen(0, 0, 0x180, 0x250);
+    SetHiddenWindow(rinkbm);
+    SetBackgroundWindow(rinktilebm);
+    SetZoneFlags(1);
+    SelectHiddenWindow();
+    EraseZones();
 }

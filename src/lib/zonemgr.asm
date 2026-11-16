@@ -2,127 +2,127 @@
 bits 32
 %include "hockey.inc"
 section s_6A033 progbits alloc exec nowrite align=1
-extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, byte_D42C3, InputRecordCount, dword_EA034, dword_EA038
-extern dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C, dword_EA050, dword_EA054, dword_EA05C
-extern dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070, dword_EA074, dword_EA078, dword_EA07C
-extern dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090, dword_EA094, dword_EA098, dword_EA09C
-extern dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4, dword_EA0B8, dword_EA0BC, dword_EA0C4
-extern dword_EA0C8, dword_EA0CC, dword_EA0D0, FatalError, fputchar, FreeMemBlock, memset_, SetDrawBitmap
+extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, byte_D42C3, ZoneFlags, ZoneScreenLeft, ZoneScreenRight
+extern ZoneScreenTop, ZoneScreenBottom, ZoneBoundsLeft, ZoneBoundsRight, ZoneBoundsTop, ZoneBoundsBottom, ZoneCurRect, ZonePrevAdded
+extern ZoneNodeRects, ZoneFreeHead, ZoneNewNode, ZoneListHead, ZoneListTail, ZoneRects, ZoneMgrOn, ZoneListCount
+extern ZoneRectsB, ZoneRectsA, ZoneMemBlock, ZonePrevStates, ZoneNextLinks, ZonePrevRects, ZoneBufferParity, ZoneStates
+extern ZoneStatesB, ZoneStatesA, HiddenWindow, BackgroundWindow, ZoneSlots, ZoneOriginX, ZoneOriginY, ZoneSavedBottom
+extern ZoneSavedRight, ZoneSavedLeft, ZoneSavedTop, FatalError, fputchar, FreeMemBlock, memset_, SetDrawBitmap
 extern AllocMemBlock, PutBlock, SetScreenTarget, SetClipWindow, FillRectColor
-global sub_6A033, sub_6A044, sub_6A057, InputRecordAvail, sub_6A078, sub_6A092, sub_6A0AA, sub_6A0C4
-global sub_6A0DE, sub_6A0F6, sub_6A106, loc_6A12A, loc_6A13E, loc_6A149, sub_6A156, sub_6A166
-global loc_6A18A, sub_6A1A0, sub_6A1D6, sub_6A234, sub_6A27A, sub_6A2BC, sub_6A2C7, sub_6A335
-global sub_6A373, loc_6A3B9, loc_6A3BA, sub_6A3C0, loc_6A3FA, loc_6A41D, sub_6A439, loc_6A479
-global sub_6A48E, loc_6A4A8, loc_6A4AD, loc_6A4CB, sub_6A4D3, loc_6A4FD, loc_6A4FF, loc_6A51E
+global SetZoneFlags, ClearZoneFlags, ToggleZoneFlags, GetZoneFlags, SetZoneBits, ClearZoneBits, ToggleZoneBits, GetZoneBits
+global GetZoneRect, SetHiddenWindow, SelectHiddenWindow, loc_6A12A, loc_6A13E, loc_6A149, SetBackgroundWindow, SelectBackgroundWindow
+global loc_6A18A, ClipToZone, CopyZoneToScreen, CopyHiddenToScreen, AlignZoneRect, ZoneDebugHook, DrawRectOutline, OutlineZone
+global RestoreZoneRect, loc_6A3B9, loc_6A3BA, SwapZoneLists, loc_6A3FA, loc_6A41D, FreeAllZones, loc_6A479
+global ZoneCovered, loc_6A4A8, loc_6A4AD, loc_6A4CB, MergeZoneRect, loc_6A4FD, loc_6A4FF, loc_6A51E
 global loc_6A520, loc_6A535, loc_6A53C, loc_6A542, loc_6A549, loc_6A561, loc_6A563, loc_6A57E
-global loc_6A580, loc_6A593, loc_6A59C, loc_6A59E, sub_6A5A5, loc_6A5BF, loc_6A5C4, loc_6A5E2
-global loc_6A5E7, sub_6A5EA, loc_6A60A, loc_6A61F, loc_6A632, loc_6A645, sub_6A649, loc_6A669
-global loc_6A679, loc_6A693, loc_6A698, loc_6A6A6, sub_6A6CC, loc_6A6E5, loc_6A712, loc_6A748
-global loc_6A755, loc_6A771, sub_6A791, loc_6A7E1, loc_6A7E8, loc_6A7FF, loc_6A801, loc_6A824
+global loc_6A580, loc_6A593, loc_6A59C, loc_6A59E, ZoneOverlaps, loc_6A5BF, loc_6A5C4, loc_6A5E2
+global loc_6A5E7, ClampZoneToScreen, loc_6A60A, loc_6A61F, loc_6A632, loc_6A645, RemoveZone, loc_6A669
+global loc_6A679, loc_6A693, loc_6A698, loc_6A6A6, InsertZoneSorted, loc_6A6E5, loc_6A712, loc_6A748
+global loc_6A755, loc_6A771, SplitZoneRect, loc_6A7E1, loc_6A7E8, loc_6A7FF, loc_6A801, loc_6A824
 global loc_6A82B, loc_6A840, loc_6A842, loc_6A853, loc_6A855, loc_6A86C, loc_6A86E, loc_6A88B
-global loc_6A8A9, sub_6A8B1, loc_6A8E2, loc_6A909, loc_6A916, loc_6A91C, loc_6A941, loc_6A94A
-global loc_6A954, loc_6A95A, loc_6A97C, loc_6A989, loc_6A98E, sub_6A990, loc_6A9AB, loc_6A9B9
-global InitZoneManager, loc_6A9EA, loc_6AA6E, loc_6AA8A, loc_6AAA4, loc_6AAB0, sub_6AAD5, sub_6AAF5
-global loc_6AB54, loc_6AB5C, loc_6AB64, loc_6AB70, loc_6AB78, sub_6AB7C, loc_6ABD2, loc_6ABD8
-global loc_6ABE0, loc_6ABE8, loc_6ABF4, sub_6ABF9, sub_6AC31, loc_6AC63, loc_6AC73, loc_6AC7A
-global loc_6AC85, loc_6AC8E, loc_6AC9A, sub_6ACA2, loc_6ACC5, loc_6ACE3, sub_6ACE9, sub_6AD22
-global sub_6AD4F, loc_6AD6D, loc_6AD7A, loc_6AD80, sub_6ADA7, loc_6ADDB, loc_6ADE9, loc_6AE0C
-global loc_6AE24, loc_6AE44, sub_6AE5C, loc_6AE79, loc_6AE8C, loc_6AE9B, loc_6AEAE, loc_6AEC2
-global loc_6AED5, loc_6AEEB, loc_6AEFF, loc_6AF0E, loc_6AF1B, loc_6AF35, loc_6AF48, sub_6AF52
-global sub_6AF97, sub_6AFAD, sub_6AFBE, loc_6AFDA, sub_6AFDF, loc_6B001, sub_6B008, loc_6B03F
+global loc_6A8A9, AddZone, loc_6A8E2, loc_6A909, loc_6A916, loc_6A91C, loc_6A941, loc_6A94A
+global loc_6A954, loc_6A95A, loc_6A97C, loc_6A989, loc_6A98E, AddMarkedZones, loc_6A9AB, loc_6A9B9
+global InitZoneManager, loc_6A9EA, loc_6AA6E, loc_6AA8A, loc_6AAA4, loc_6AAB0, FreeZoneManager, MarkZonePoint
+global loc_6AB54, loc_6AB5C, loc_6AB64, loc_6AB70, loc_6AB78, MarkZoneRect, loc_6ABD2, loc_6ABD8
+global loc_6ABE0, loc_6ABE8, loc_6ABF4, ZonePutChar, MarkZonePoints, loc_6AC63, loc_6AC73, loc_6AC7A
+global loc_6AC85, loc_6AC8E, loc_6AC9A, MarkZoneRadius, loc_6ACC5, loc_6ACE3, MarkZoneSprite, MarkZoneShapeAt
+global EraseZones, loc_6AD6D, loc_6AD7A, loc_6AD80, FlushZones, loc_6ADDB, loc_6ADE9, loc_6AE0C
+global loc_6AE24, loc_6AE44, ComputeZoneBounds, loc_6AE79, loc_6AE8C, loc_6AE9B, loc_6AEAE, loc_6AEC2
+global loc_6AED5, loc_6AEEB, loc_6AEFF, loc_6AF0E, loc_6AF1B, loc_6AF35, loc_6AF48, SetZoneScreen
+global SetZoneOrigin, ClipToZoneScreen, ClipToZoneUpdate, loc_6AFDA, ClipToRect, loc_6B001, BeginZoneFrame, loc_6B03F
 global loc_6B05F
-sub_6A033:
+SetZoneFlags:
         push dword 4
         call __CHK
-        or dword [InputRecordCount], eax
+        or dword [ZoneFlags], eax
         ret
-sub_6A044:
+ClearZoneFlags:
         push dword 4
         call __CHK
         not eax
-        and dword [InputRecordCount], eax
+        and dword [ZoneFlags], eax
         ret
-sub_6A057:
+ToggleZoneFlags:
         push dword 4
         call __CHK
-        xor dword [InputRecordCount], eax
+        xor dword [ZoneFlags], eax
         ret
-InputRecordAvail:
+GetZoneFlags:
         push dword 4
         call __CHK
-        mov eax, dword [InputRecordCount]
+        mov eax, dword [ZoneFlags]
         ret
-sub_6A078:
+SetZoneBits:
         push dword 8
         call __CHK
         push ebx
         mov ebx, eax
         shl ebx, 2
-        mov eax, dword [dword_EA09C]
+        mov eax, dword [ZoneStates]
         or dword [ebx+eax], edx
         pop ebx
         ret
-sub_6A092:
+ClearZoneBits:
         push dword 8
         call __CHK
         push ebx
-        mov ebx, dword [dword_EA09C]
+        mov ebx, dword [ZoneStates]
         not edx
         and dword [ebx+eax*4], edx
         pop ebx
         ret
-sub_6A0AA:
+ToggleZoneBits:
         push dword 8
         call __CHK
         push ebx
         mov ebx, eax
         shl ebx, 2
-        mov eax, dword [dword_EA09C]
+        mov eax, dword [ZoneStates]
         xor dword [ebx+eax], edx
         pop ebx
         ret
-sub_6A0C4:
+GetZoneBits:
         push dword 8
         call __CHK
         push edx
         mov edx, eax
         shl edx, 2
-        mov eax, dword [dword_EA09C]
+        mov eax, dword [ZoneStates]
         mov eax, dword [edx+eax]
         pop edx
         ret
-sub_6A0DE:
+GetZoneRect:
         push dword 8
         call __CHK
         push edx
         shl eax, 4
-        mov edx, dword [dword_EA074]
+        mov edx, dword [ZoneRects]
         add eax, edx
         pop edx
         ret
-sub_6A0F6:
+SetHiddenWindow:
         push dword 4
         call __CHK
-        mov dword [dword_EA0AC], eax
+        mov dword [HiddenWindow], eax
         ret
-sub_6A106:
+SelectHiddenWindow:
         push dword 24h
         call __CHK
         push ebx
         push ecx
         push edx
         push esi
-        cmp dword [dword_EA0AC], byte 0
+        cmp dword [HiddenWindow], byte 0
         jne short loc_6A12A
         push str_ZMHiddenWindowNoHiddenWindow
         call FatalError
         add esp, byte 4
 loc_6A12A:
-        mov ebx, dword [dword_EA0AC]
+        mov ebx, dword [HiddenWindow]
         push ebx
         call SetDrawBitmap
         add esp, byte 4
-        mov eax, dword [dword_EA0AC]
+        mov eax, dword [HiddenWindow]
 loc_6A13E:
         mov ecx, dword [byte eax+04h]
         push ecx
@@ -138,31 +138,31 @@ loc_6A149:
         pop ecx
         pop ebx
         ret
-sub_6A156:
+SetBackgroundWindow:
         push dword 4
         call __CHK
-        mov dword [dword_EA0B0], eax
+        mov dword [BackgroundWindow], eax
         ret
-sub_6A166:
+SelectBackgroundWindow:
         push dword 24h
         call __CHK
         push ebx
         push ecx
         push edx
         push esi
-        cmp dword [dword_EA0B0], byte 0
+        cmp dword [BackgroundWindow], byte 0
         jne short loc_6A18A
         push str_ZMBackgroundWindowNo
         call FatalError
         add esp, byte 4
 loc_6A18A:
-        mov ebx, dword [dword_EA0B0]
+        mov ebx, dword [BackgroundWindow]
         push ebx
         call SetDrawBitmap
         add esp, byte 4
-        mov eax, dword [dword_EA0B0]
+        mov eax, dword [BackgroundWindow]
         jmp short loc_6A13E
-sub_6A1A0:
+ClipToZone:
         push dword 24h
         call __CHK
         push ebx
@@ -170,21 +170,21 @@ sub_6A1A0:
         push edx
         push esi
         mov edx, dword [byte eax+0Ch]
-        mov ebx, dword [dword_EA0BC]
+        mov ebx, dword [ZoneOriginY]
         add edx, ebx
         push edx
         mov edx, dword [byte eax+08h]
         add edx, ebx
         push edx
         mov edx, dword [byte eax+04h]
-        mov esi, dword [dword_EA0B8]
+        mov esi, dword [ZoneOriginX]
         add edx, esi
         push edx
         mov eax, dword [eax]
         add eax, esi
         push eax
         jmp near loc_6A149
-sub_6A1D6:
+CopyZoneToScreen:
         push dword 28h
         call __CHK
         push ebx
@@ -193,14 +193,14 @@ sub_6A1D6:
         push esi
         push ebp
         mov edx, dword [byte eax+0Ch]
-        mov ebx, dword [dword_EA0BC]
+        mov ebx, dword [ZoneOriginY]
         add edx, ebx
         push edx
         mov edx, dword [byte eax+08h]
         add edx, ebx
         push edx
         mov edx, dword [byte eax+04h]
-        mov esi, dword [dword_EA0B8]
+        mov esi, dword [ZoneOriginX]
         add edx, esi
         push edx
         mov eax, dword [eax]
@@ -208,11 +208,11 @@ sub_6A1D6:
         push eax
         call SetClipWindow
         add esp, byte 10h
-        mov ebp, dword [dword_EA0BC]
+        mov ebp, dword [ZoneOriginY]
         push ebp
-        mov eax, dword [dword_EA0B8]
+        mov eax, dword [ZoneOriginX]
         push eax
-        mov eax, dword [dword_EA0AC]
+        mov eax, dword [HiddenWindow]
         mov edx, dword [byte eax+02Ch]
         push edx
         call PutBlock
@@ -223,7 +223,7 @@ sub_6A1D6:
         pop ecx
         pop ebx
         ret
-sub_6A234:
+CopyHiddenToScreen:
         push dword 20h
         call __CHK
         push ebx
@@ -235,11 +235,11 @@ sub_6A234:
         push byte 0
         call SetClipWindow
         add esp, byte 10h
-        mov edx, dword [dword_EA0BC]
+        mov edx, dword [ZoneOriginY]
         push edx
-        mov ebx, dword [dword_EA0B8]
+        mov ebx, dword [ZoneOriginX]
         push ebx
-        mov eax, dword [dword_EA0AC]
+        mov eax, dword [HiddenWindow]
         mov ecx, dword [byte eax+02Ch]
         push ecx
         call PutBlock
@@ -248,33 +248,33 @@ sub_6A234:
         pop ecx
         pop ebx
         ret
-sub_6A27A:
+AlignZoneRect:
         push dword 8
         call __CHK
         push edx
-        mov eax, dword [dword_EA054]
+        mov eax, dword [ZoneCurRect]
         add dword [byte eax+04h], byte 2
-        mov eax, dword [dword_EA054]
+        mov eax, dword [ZoneCurRect]
         mov edx, dword [eax]
         sar edx, 2
         shl edx, 2
         mov dword [eax], edx
-        mov eax, dword [dword_EA054]
+        mov eax, dword [ZoneCurRect]
         mov edx, dword [byte eax+04h]
         dec edx
         sar edx, 2
         shl edx, 2
         add edx, byte 4
         mov dword [byte eax+04h], edx
-        mov eax, dword [dword_EA054]
+        mov eax, dword [ZoneCurRect]
         inc dword [byte eax+0Ch]
         pop edx
         ret
-sub_6A2BC:
+ZoneDebugHook:
         push dword 4
         call __CHK
         ret
-sub_6A2C7:
+DrawRectOutline:
         push dword 28h
         call __CHK
         push esi
@@ -324,7 +324,7 @@ sub_6A2C7:
         pop edi
         pop esi
         ret 4
-sub_6A335:
+OutlineZone:
         push dword 14h
         call __CHK
         push ebx
@@ -332,22 +332,22 @@ sub_6A335:
         push esi
         push edx
         mov edx, dword [byte eax+0Ch]
-        add edx, dword [dword_EA0BC]
+        add edx, dword [ZoneOriginY]
         lea ecx, [byte edx-01h]
         mov edx, dword [byte eax+04h]
-        mov esi, dword [dword_EA0B8]
+        mov esi, dword [ZoneOriginX]
         add edx, esi
         lea ebx, [byte edx-01h]
         mov edx, dword [byte eax+08h]
-        add edx, dword [dword_EA0BC]
+        add edx, dword [ZoneOriginY]
         mov eax, dword [eax]
         add eax, esi
-        call sub_6A2C7
+        call DrawRectOutline
         pop esi
         pop ecx
         pop ebx
         ret
-sub_6A373:
+RestoreZoneRect:
         push dword 2Ch
         call __CHK
         push ebx
@@ -366,11 +366,11 @@ sub_6A373:
         push esi
         call SetClipWindow
         add esp, byte 10h
-        mov edi, dword [dword_EA0BC]
+        mov edi, dword [ZoneOriginY]
         push edi
-        mov ebp, dword [dword_EA0B8]
+        mov ebp, dword [ZoneOriginX]
         push ebp
-        mov eax, dword [dword_EA0B0]
+        mov eax, dword [BackgroundWindow]
         mov edx, dword [byte eax+02Ch]
         push edx
         call PutBlock
@@ -384,71 +384,71 @@ loc_6A3BA:
         pop ecx
         pop ebx
         ret
-sub_6A3C0:
+SwapZoneLists:
         push dword 0Ch
         call __CHK
         push ebx
         push edx
-        cmp dword [dword_EA098], byte 0
+        cmp dword [ZoneBufferParity], byte 0
         je short loc_6A3FA
-        mov eax, dword [dword_EA080]
-        mov dword [dword_EA074], eax
-        mov eax, dword [dword_EA0A4]
-        mov dword [dword_EA09C], eax
-        mov eax, dword [dword_EA084]
-        mov dword [dword_EA094], eax
-        mov eax, dword [dword_EA0A0]
+        mov eax, dword [ZoneRectsB]
+        mov dword [ZoneRects], eax
+        mov eax, dword [ZoneStatesA]
+        mov dword [ZoneStates], eax
+        mov eax, dword [ZoneRectsA]
+        mov dword [ZonePrevRects], eax
+        mov eax, dword [ZoneStatesB]
         jmp short loc_6A41D
 loc_6A3FA:
-        mov eax, dword [dword_EA084]
-        mov dword [dword_EA074], eax
-        mov eax, dword [dword_EA0A0]
-        mov dword [dword_EA09C], eax
-        mov eax, dword [dword_EA080]
-        mov dword [dword_EA094], eax
-        mov eax, dword [dword_EA0A4]
+        mov eax, dword [ZoneRectsA]
+        mov dword [ZoneRects], eax
+        mov eax, dword [ZoneStatesB]
+        mov dword [ZoneStates], eax
+        mov eax, dword [ZoneRectsB]
+        mov dword [ZonePrevRects], eax
+        mov eax, dword [ZoneStatesA]
 loc_6A41D:
-        mov dword [dword_EA08C], eax
-        mov ebx, dword [dword_EA0B4]
+        mov dword [ZonePrevStates], eax
+        mov ebx, dword [ZoneSlots]
         add ebx, ebx
-        mov eax, dword [dword_EA09C]
+        mov eax, dword [ZoneStates]
         xor edx, edx
         call memset_
         pop edx
         pop ebx
         ret
-sub_6A439:
+FreeAllZones:
         push dword 10h
         call __CHK
         push ebx
         push ecx
         push edx
-        cmp dword [dword_EA07C], byte 0
+        cmp dword [ZoneListCount], byte 0
         je short loc_6A479
-        mov edx, dword [dword_EA064]
+        mov edx, dword [ZoneFreeHead]
         shl edx, 2
-        mov eax, dword [dword_EA090]
+        mov eax, dword [ZoneNextLinks]
         add eax, edx
-        mov edx, dword [dword_EA070]
+        mov edx, dword [ZoneListTail]
         mov dword [eax], edx
         xor ebx, ebx
-        mov dword [dword_EA07C], ebx
-        mov eax, dword [dword_EA06C]
-        mov dword [dword_EA070], eax
+        mov dword [ZoneListCount], ebx
+        mov eax, dword [ZoneListHead]
+        mov dword [ZoneListTail], eax
 loc_6A479:
         mov ecx, 0FFFFFFFFh
-        mov dword [dword_EA064], ecx
-        mov dword [dword_EA06C], ecx
+        mov dword [ZoneFreeHead], ecx
+        mov dword [ZoneListHead], ecx
         pop edx
         pop ecx
         pop ebx
         ret
-sub_6A48E:
+ZoneCovered:
         push dword 0Ch
         call __CHK
         push ebx
         push edx
-        mov edx, dword [dword_EA068]
+        mov edx, dword [ZoneNewNode]
         mov ebx, dword [byte eax+0Ch]
         cmp ebx, dword [byte edx+0Ch]
         jge short loc_6A4AD
@@ -476,14 +476,14 @@ loc_6A4CB:
         pop edx
         pop ebx
         ret
-sub_6A4D3:
+MergeZoneRect:
         push dword 14h
         call __CHK
         push ebx
         push ecx
         push edx
         push esi
-        mov edx, dword [dword_EA068]
+        mov edx, dword [ZoneNewNode]
         mov ebx, dword [byte eax+0Ch]
         cmp ebx, dword [byte edx+08h]
         jne short loc_6A549
@@ -499,7 +499,7 @@ loc_6A4FD:
 loc_6A4FF:
         cmp edx, byte 10h
         jg near loc_6A59C
-        mov ecx, dword [dword_EA068]
+        mov ecx, dword [ZoneNewNode]
         mov edx, dword [byte eax+04h]
         sub edx, dword [byte ecx+04h]
         test edx, edx
@@ -512,7 +512,7 @@ loc_6A51E:
 loc_6A520:
         cmp ecx, byte 10h
         jg near loc_6A59C
-        mov ecx, dword [dword_EA068]
+        mov ecx, dword [ZoneNewNode]
         mov ecx, dword [byte ecx+0Ch]
         mov dword [byte eax+0Ch], ecx
 loc_6A535:
@@ -543,7 +543,7 @@ loc_6A561:
 loc_6A563:
         cmp edx, byte 10h
         jg short loc_6A59C
-        mov ecx, dword [dword_EA068]
+        mov ecx, dword [ZoneNewNode]
         mov edx, dword [byte eax+04h]
         sub edx, dword [byte ecx+04h]
         test edx, edx
@@ -556,7 +556,7 @@ loc_6A57E:
 loc_6A580:
         cmp ecx, byte 10h
         jg short loc_6A59C
-        mov ecx, dword [dword_EA068]
+        mov ecx, dword [ZoneNewNode]
         mov ecx, dword [byte ecx+08h]
         mov dword [byte eax+08h], ecx
         jmp short loc_6A535
@@ -573,12 +573,12 @@ loc_6A59E:
         pop ecx
         pop ebx
         ret
-sub_6A5A5:
+ZoneOverlaps:
         push dword 0Ch
         call __CHK
         push ebx
         push edx
-        mov edx, dword [dword_EA068]
+        mov edx, dword [ZoneNewNode]
         mov ebx, dword [byte eax+0Ch]
         cmp ebx, dword [byte edx+08h]
         jg short loc_6A5C4
@@ -607,34 +607,34 @@ loc_6A5E7:
         pop edx
         pop ebx
         ret
-sub_6A5EA:
+ClampZoneToScreen:
         push dword 10h
         call __CHK
         push ebx
         push ecx
         push edx
-        mov eax, dword [dword_EA068]
+        mov eax, dword [ZoneNewNode]
         mov edx, dword [eax]
-        mov ebx, dword [dword_EA034]
+        mov ebx, dword [ZoneScreenLeft]
         cmp edx, ebx
         jge short loc_6A60A
         mov dword [eax], ebx
 loc_6A60A:
-        mov eax, dword [dword_EA068]
+        mov eax, dword [ZoneNewNode]
         mov edx, dword [byte eax+08h]
-        mov ecx, dword [dword_EA03C]
+        mov ecx, dword [ZoneScreenTop]
         cmp edx, ecx
         jge short loc_6A61F
         mov dword [byte eax+08h], ecx
 loc_6A61F:
-        mov eax, dword [dword_EA068]
-        mov edx, dword [dword_EA038]
+        mov eax, dword [ZoneNewNode]
+        mov edx, dword [ZoneScreenRight]
         cmp edx, dword [byte eax+04h]
         jge short loc_6A632
         mov dword [byte eax+04h], edx
 loc_6A632:
-        mov eax, dword [dword_EA068]
-        mov edx, dword [dword_EA040]
+        mov eax, dword [ZoneNewNode]
+        mov edx, dword [ZoneScreenBottom]
         cmp edx, dword [byte eax+0Ch]
         jge short loc_6A645
         mov dword [byte eax+0Ch], edx
@@ -643,7 +643,7 @@ loc_6A645:
         pop ecx
         pop ebx
         ret
-sub_6A649:
+RemoveZone:
         push dword 14h
         call __CHK
         push ebx
@@ -652,8 +652,8 @@ sub_6A649:
         push esi
         mov ebx, eax
         mov ecx, 0FFFFFFFFh
-        mov eax, dword [dword_EA06C]
-        mov edx, dword [dword_EA090]
+        mov eax, dword [ZoneListHead]
+        mov edx, dword [ZoneNextLinks]
 loc_6A669:
         cmp eax, byte 0FFFFFFFFh
         je short loc_6A679
@@ -663,36 +663,36 @@ loc_6A669:
         mov eax, dword [edx+eax*4]
         jmp short loc_6A669
 loc_6A679:
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         mov eax, dword [edx+eax*4]
         cmp ecx, byte 0FFFFFFFFh
         jne short loc_6A693
         mov eax, ebx
         mov eax, dword [edx+eax*4]
-        mov dword [dword_EA06C], eax
+        mov dword [ZoneListHead], eax
         jmp short loc_6A698
 loc_6A693:
         mov esi, ecx
         mov dword [edx+esi*4], eax
 loc_6A698:
-        cmp ebx, dword [dword_EA064]
+        cmp ebx, dword [ZoneFreeHead]
         jne short loc_6A6A6
-        mov dword [dword_EA064], ecx
+        mov dword [ZoneFreeHead], ecx
 loc_6A6A6:
         mov eax, ebx
         shl eax, 2
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         add eax, edx
-        mov edx, dword [dword_EA070]
+        mov edx, dword [ZoneListTail]
         mov dword [eax], edx
-        mov dword [dword_EA070], ebx
-        dec dword [dword_EA07C]
+        mov dword [ZoneListTail], ebx
+        dec dword [ZoneListCount]
         pop esi
         pop edx
         pop ecx
         pop ebx
         ret
-sub_6A6CC:
+InsertZoneSorted:
         push dword 18h
         call __CHK
         push ebx
@@ -700,31 +700,31 @@ sub_6A6CC:
         push edx
         push esi
         push edi
-        mov eax, dword [dword_EA06C]
+        mov eax, dword [ZoneListHead]
         mov ecx, 0FFFFFFFFh
 loc_6A6E5:
         cmp eax, byte 0FFFFFFFFh
         je short loc_6A712
         mov edx, eax
         shl edx, 4
-        mov ebx, dword [dword_EA060]
+        mov ebx, dword [ZoneNodeRects]
         add ebx, edx
-        mov edx, dword [dword_EA068]
+        mov edx, dword [ZoneNewNode]
         mov edx, dword [byte edx+08h]
         cmp edx, dword [byte ebx+08h]
         jl short loc_6A712
         mov ecx, eax
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         mov eax, dword [edx+eax*4]
         jmp short loc_6A6E5
 loc_6A712:
-        mov eax, dword [dword_EA070]
+        mov eax, dword [ZoneListTail]
         mov esi, eax
         shl esi, 2
-        mov ebx, dword [dword_EA090]
+        mov ebx, dword [ZoneNextLinks]
         lea edx, [ebx+esi]
         mov edi, dword [edx]
-        mov dword [dword_EA070], edi
+        mov dword [ZoneListTail], edi
         cmp ecx, byte 0FFFFFFFFh
         je short loc_6A748
         mov edx, ecx
@@ -732,32 +732,32 @@ loc_6A712:
         add edx, ebx
         mov ebx, dword [edx]
         mov dword [edx], eax
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         mov dword [edx+esi], ebx
         jmp short loc_6A755
 loc_6A748:
-        mov ebx, dword [dword_EA06C]
+        mov ebx, dword [ZoneListHead]
         mov dword [edx], ebx
-        mov dword [dword_EA06C], eax
+        mov dword [ZoneListHead], eax
 loc_6A755:
-        cmp ecx, dword [dword_EA064]
+        cmp ecx, dword [ZoneFreeHead]
         jne short loc_6A771
-        mov dword [dword_EA064], eax
+        mov dword [ZoneFreeHead], eax
         mov edx, eax
-        mov ebx, dword [dword_EA090]
+        mov ebx, dword [ZoneNextLinks]
         mov dword [ebx+edx*4], 0FFFFFFFFh
 loc_6A771:
-        mov esi, dword [dword_EA068]
+        mov esi, dword [ZoneNewNode]
         shl eax, 4
-        mov edi, dword [dword_EA060]
+        mov edi, dword [ZoneNodeRects]
         add edi, eax
         movsd
         movsd
         movsd
         movsd
-        inc dword [dword_EA07C]
+        inc dword [ZoneListCount]
         jmp near loc_6A3BA
-sub_6A791:
+SplitZoneRect:
         push dword 4Ch
         call __CHK
         push ebx
@@ -770,7 +770,7 @@ sub_6A791:
         mov ecx, eax
         mov edx, eax
         shl edx, 4
-        mov eax, dword [dword_EA060]
+        mov eax, dword [ZoneNodeRects]
         add edx, eax
         lea edi, [byte esp+020h]
         mov esi, edx
@@ -778,7 +778,7 @@ sub_6A791:
         movsd
         movsd
         movsd
-        mov ebx, dword [dword_EA068]
+        mov ebx, dword [ZoneNewNode]
         mov eax, dword [byte edx+08h]
         mov esi, dword [byte ebx+08h]
         cmp eax, esi
@@ -810,7 +810,7 @@ loc_6A7E8:
 loc_6A7FF:
         xor ebp, ebp
 loc_6A801:
-        mov ebx, dword [dword_EA068]
+        mov ebx, dword [ZoneNewNode]
         mov eax, dword [byte edx+0Ch]
         mov esi, dword [byte ebx+0Ch]
         cmp eax, esi
@@ -842,7 +842,7 @@ loc_6A82B:
 loc_6A840:
         xor esi, esi
 loc_6A842:
-        mov eax, dword [dword_EA068]
+        mov eax, dword [ZoneNewNode]
         mov ebx, dword [eax]
         mov edi, dword [edx]
         cmp ebx, edi
@@ -853,7 +853,7 @@ loc_6A853:
         mov eax, edi
 loc_6A855:
         mov dword [byte esp+020h], eax
-        mov eax, dword [dword_EA068]
+        mov eax, dword [ZoneNewNode]
         mov ebx, dword [byte eax+04h]
         mov edi, dword [byte edx+04h]
         cmp ebx, edi
@@ -865,45 +865,45 @@ loc_6A86C:
 loc_6A86E:
         mov dword [byte esp+024h], eax
         mov eax, ecx
-        call sub_6A649
+        call RemoveZone
         test ebp, ebp
         je short loc_6A88B
         mov edx, 1
         lea eax, [byte esp+010h]
-        call sub_6A8B1
+        call AddZone
 loc_6A88B:
         mov edx, 1
         lea eax, [byte esp+020h]
-        call sub_6A8B1
+        call AddZone
         test esi, esi
         je short loc_6A8A9
         mov edx, 1
         mov eax, esp
-        call sub_6A8B1
+        call AddZone
 loc_6A8A9:
         add esp, byte 30h
         jmp near loc_6A3B9
-sub_6A8B1:
+AddZone:
         push dword 8
         call __CHK
         push ebx
-        mov dword [dword_EA068], eax
+        mov dword [ZoneNewNode], eax
         test edx, edx
         jne short loc_6A916
-        mov eax, dword_EA034
-        call sub_6A5A5
+        mov eax, ZoneScreenLeft
+        call ZoneOverlaps
         test eax, eax
         je near loc_6A98E
-        call sub_6A5EA
-        mov edx, dword [dword_EA06C]
+        call ClampZoneToScreen
+        mov edx, dword [ZoneListHead]
 loc_6A8E2:
         cmp edx, byte 0FFFFFFFFh
         je short loc_6A916
         mov eax, edx
         shl eax, 4
-        mov ebx, dword [dword_EA060]
+        mov ebx, dword [ZoneNodeRects]
         add eax, ebx
-        call sub_6A48E
+        call ZoneCovered
         cmp eax, byte 1
         jb short loc_6A909
         jbe near loc_6A98E
@@ -911,19 +911,19 @@ loc_6A8E2:
         je short loc_6A916
 loc_6A909:
         mov eax, edx
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         mov edx, dword [edx+eax*4]
         jmp short loc_6A8E2
 loc_6A916:
-        mov edx, dword [dword_EA06C]
+        mov edx, dword [ZoneListHead]
 loc_6A91C:
         cmp edx, byte 0FFFFFFFFh
         je short loc_6A954
         mov eax, edx
         shl eax, 4
-        mov ebx, dword [dword_EA060]
+        mov ebx, dword [ZoneNodeRects]
         add eax, ebx
-        call sub_6A5A5
+        call ZoneOverlaps
         cmp eax, byte 1
         jb short loc_6A94A
         jbe short loc_6A941
@@ -932,23 +932,23 @@ loc_6A91C:
         jmp short loc_6A94A
 loc_6A941:
         mov eax, edx
-        call sub_6A791
+        call SplitZoneRect
         pop ebx
         ret
 loc_6A94A:
-        mov eax, dword [dword_EA090]
+        mov eax, dword [ZoneNextLinks]
         mov edx, dword [eax+edx*4]
         jmp short loc_6A91C
 loc_6A954:
-        mov edx, dword [dword_EA06C]
+        mov edx, dword [ZoneListHead]
 loc_6A95A:
         cmp edx, byte 0FFFFFFFFh
         je short loc_6A989
         mov ebx, edx
         shl ebx, 4
-        mov eax, dword [dword_EA060]
+        mov eax, dword [ZoneNodeRects]
         add eax, ebx
-        call sub_6A4D3
+        call MergeZoneRect
         cmp eax, byte 1
         jb short loc_6A97C
         jbe short loc_6A98E
@@ -956,22 +956,22 @@ loc_6A95A:
         je short loc_6A989
 loc_6A97C:
         mov eax, edx
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         mov edx, dword [edx+eax*4]
         jmp short loc_6A95A
 loc_6A989:
-        call sub_6A6CC
+        call InsertZoneSorted
 loc_6A98E:
         pop ebx
         ret
-sub_6A990:
+AddMarkedZones:
         push dword 0Ch
         call __CHK
         push ecx
         push esi
         mov esi, eax
         mov ecx, edx
-        mov ebx, dword [dword_EA0B4]
+        mov ebx, dword [ZoneSlots]
         shl ebx, 2
         add ebx, edx
 loc_6A9AB:
@@ -979,7 +979,7 @@ loc_6A9AB:
         je short loc_6A9B9
         xor edx, edx
         mov eax, esi
-        call sub_6A8B1
+        call AddZone
 loc_6A9B9:
         add esi, byte 10h
         add ecx, byte 4
@@ -999,17 +999,17 @@ InitZoneManager:
         push edi
         test eax, eax
         jne short loc_6A9EA
-        mov dword [dword_EA078], eax
+        mov dword [ZoneMgrOn], eax
         pop edi
         pop edx
         pop ecx
         pop ebx
         ret
 loc_6A9EA:
-        mov dword [dword_EA078], 1
-        mov dword [dword_EA0B4], eax
+        mov dword [ZoneMgrOn], 1
+        mov dword [ZoneSlots], eax
         xor ebx, ebx
-        mov dword [dword_EA098], ebx
+        mov dword [ZoneBufferParity], ebx
         push byte 20h
         mov edx, eax
         shl eax, 2
@@ -1019,69 +1019,69 @@ loc_6A9EA:
         push str_ZONEMGR
         call AllocMemBlock
         add esp, byte 0Ch
-        mov dword [dword_EA088], eax
-        mov dword [dword_EA084], eax
-        mov edx, dword [dword_EA0B4]
+        mov dword [ZoneMemBlock], eax
+        mov dword [ZoneRectsA], eax
+        mov edx, dword [ZoneSlots]
         shl edx, 4
         add eax, edx
-        mov dword [dword_EA080], eax
+        mov dword [ZoneRectsB], eax
         add eax, edx
-        mov dword [dword_EA060], eax
-        mov eax, dword [dword_EA0B4]
+        mov dword [ZoneNodeRects], eax
+        mov eax, dword [ZoneSlots]
         shl eax, 5
-        mov edx, dword [dword_EA060]
+        mov edx, dword [ZoneNodeRects]
         add edx, eax
-        mov dword [dword_EA0A0], edx
-        mov eax, dword [dword_EA0B4]
+        mov dword [ZoneStatesB], edx
+        mov eax, dword [ZoneSlots]
         shl eax, 2
         add edx, eax
-        mov dword [dword_EA0A4], edx
+        mov dword [ZoneStatesA], edx
         add edx, eax
-        mov dword [dword_EA090], edx
+        mov dword [ZoneNextLinks], edx
         xor eax, eax
         jmp short loc_6AA8A
 loc_6AA6E:
         mov ebx, eax
-        mov edx, dword [dword_EA0A4]
+        mov edx, dword [ZoneStatesA]
         mov dword [edx+ebx*4], 0
         mov ecx, dword [edx+ebx*4]
-        mov edx, dword [dword_EA0A0]
+        mov edx, dword [ZoneStatesB]
         mov dword [edx+ebx*4], ecx
         inc eax
 loc_6AA8A:
-        cmp eax, dword [dword_EA0B4]
+        cmp eax, dword [ZoneSlots]
         jl short loc_6AA6E
         xor edi, edi
-        mov dword [dword_EA070], edi
-        mov dword [dword_EA07C], edi
+        mov dword [ZoneListTail], edi
+        mov dword [ZoneListCount], edi
         xor eax, eax
         jmp short loc_6AAB0
 loc_6AAA4:
         mov ebx, eax
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         inc eax
         mov dword [edx+ebx*4], eax
 loc_6AAB0:
-        mov edx, dword [dword_EA0B4]
+        mov edx, dword [ZoneSlots]
         add edx, edx
         dec edx
         cmp eax, edx
         jl short loc_6AAA4
-        mov edx, dword [dword_EA0B4]
-        mov eax, dword [dword_EA090]
+        mov edx, dword [ZoneSlots]
+        mov eax, dword [ZoneNextLinks]
         mov dword [byte eax+edx*8-04h], 0FFFFFFFFh
         pop edi
         pop edx
         pop ecx
         pop ebx
         ret
-sub_6AAD5:
+FreeZoneManager:
         push dword 14h
         call __CHK
         push ebx
         push ecx
         push edx
-        mov edx, dword [dword_EA088]
+        mov edx, dword [ZoneMemBlock]
         push edx
         call FreeMemBlock
         add esp, byte 4
@@ -1089,7 +1089,7 @@ sub_6AAD5:
         pop ecx
         pop ebx
         ret
-sub_6AAF5:
+MarkZonePoint:
         push dword 10h
         call __CHK
         push ebx
@@ -1097,25 +1097,25 @@ sub_6AAF5:
         push esi
         mov ecx, eax
         mov ebx, edx
-        cmp dword [dword_EA078], byte 0
+        cmp dword [ZoneMgrOn], byte 0
         je near loc_6AB78
-        cmp eax, dword [dword_EA0B4]
+        cmp eax, dword [ZoneSlots]
         jg short loc_6AB78
         shl eax, 4
-        mov edx, dword [dword_EA074]
+        mov edx, dword [ZoneRects]
         add eax, edx
         mov edx, dword [ebx]
         mov ebx, dword [byte ebx+04h]
         mov esi, ecx
         shl esi, 2
-        mov ecx, dword [dword_EA09C]
+        mov ecx, dword [ZoneStates]
         test byte [ecx+esi], 4
         jne short loc_6AB54
         mov dword [byte eax+04h], edx
         mov dword [eax], edx
         mov dword [byte eax+0Ch], ebx
         mov dword [byte eax+08h], ebx
-        mov eax, dword [dword_EA09C]
+        mov eax, dword [ZoneStates]
         or byte [esi+eax], 4
         pop esi
         pop ecx
@@ -1147,21 +1147,21 @@ loc_6AB78:
         pop ecx
         pop ebx
         ret
-sub_6AB7C:
+MarkZoneRect:
         push dword 0Ch
         call __CHK
         push esi
         push edi
         mov esi, eax
-        cmp dword [dword_EA078], byte 0
+        cmp dword [ZoneMgrOn], byte 0
         je short loc_6ABF4
-        cmp eax, dword [dword_EA0B4]
+        cmp eax, dword [ZoneSlots]
         jg short loc_6ABF4
         shl eax, 4
-        mov edi, dword [dword_EA074]
+        mov edi, dword [ZoneRects]
         add eax, edi
         shl esi, 2
-        mov edi, dword [dword_EA09C]
+        mov edi, dword [ZoneStates]
         test byte [edi+esi], 4
         jne short loc_6ABD2
         mov dword [eax], edx
@@ -1169,7 +1169,7 @@ sub_6AB7C:
         mov dword [byte eax+08h], ebx
         mov edx, dword [byte esp+0Ch]
         mov dword [byte eax+0Ch], edx
-        mov eax, dword [dword_EA09C]
+        mov eax, dword [ZoneStates]
         or byte [esi+eax], 4
         pop edi
         pop esi
@@ -1195,7 +1195,7 @@ loc_6ABF4:
         pop edi
         pop esi
         ret 4
-sub_6ABF9:
+ZonePutChar:
         push dword 14h
         call __CHK
         push esi
@@ -1215,12 +1215,12 @@ sub_6ABF9:
         mov ebx, esi
         mov edx, edi
         mov eax, ebp
-        call sub_6AB7C
+        call MarkZoneRect
         pop ebp
         pop edi
         pop esi
         ret
-sub_6AC31:
+MarkZonePoints:
         push dword 1Ch
         call __CHK
         push ecx
@@ -1229,12 +1229,12 @@ sub_6AC31:
         push ebp
         push eax
         mov eax, ebx
-        cmp dword [dword_EA078], byte 0
+        cmp dword [ZoneMgrOn], byte 0
         je short loc_6AC9A
         test edx, edx
         je short loc_6AC9A
         mov ecx, dword [esp]
-        cmp ecx, dword [dword_EA0B4]
+        cmp ecx, dword [ZoneSlots]
         jg short loc_6AC9A
         mov ecx, dword [ebx]
         mov edi, ecx
@@ -1268,7 +1268,7 @@ loc_6AC8E:
         push esi
         mov edx, edi
         mov eax, dword [byte esp+04h]
-        call sub_6AB7C
+        call MarkZoneRect
 loc_6AC9A:
         add esp, byte 4
         pop ebp
@@ -1276,7 +1276,7 @@ loc_6AC9A:
         pop esi
         pop ecx
         ret
-sub_6ACA2:
+MarkZoneRadius:
         push dword 18h
         call __CHK
         push esi
@@ -1287,7 +1287,7 @@ sub_6ACA2:
         mov dword [esp], edx
         mov dword [byte esp+04h], ebx
         mov edx, esp
-        call sub_6AAF5
+        call MarkZonePoint
         jmp short loc_6ACE3
 loc_6ACC5:
         mov esi, ecx
@@ -1303,13 +1303,13 @@ loc_6ACC5:
         inc ebx
         sub edx, ecx
         mov ecx, edi
-        call sub_6AB7C
+        call MarkZoneRect
 loc_6ACE3:
         add esp, byte 8
         pop edi
         pop esi
         ret
-sub_6ACE9:
+MarkZoneSprite:
         push dword 14h
         call __CHK
         push ebx
@@ -1329,12 +1329,12 @@ sub_6ACE9:
         add ecx, eax
         mov edx, eax
         mov eax, esi
-        call sub_6AB7C
+        call MarkZoneRect
         pop esi
         pop ecx
         pop ebx
         ret
-sub_6AD22:
+MarkZoneShapeAt:
         push dword 0Ch
         call __CHK
         push esi
@@ -1350,99 +1350,99 @@ sub_6AD22:
         add ecx, eax
         mov edx, eax
         mov eax, esi
-        call sub_6AB7C
+        call MarkZoneRect
         pop esi
         ret
-sub_6AD4F:
+EraseZones:
         push dword 0Ch
         call __CHK
         push ebx
         push edx
-        cmp dword [dword_EA07C], byte 0
+        cmp dword [ZoneListCount], byte 0
         je short loc_6AD6D
-        test byte [InputRecordCount], 41h
+        test byte [ZoneFlags], 41h
         je short loc_6AD7A
 loc_6AD6D:
-        mov eax, dword_EA034
-        call sub_6A373
+        mov eax, ZoneScreenLeft
+        call RestoreZoneRect
         pop edx
         pop ebx
         ret
 loc_6AD7A:
-        mov edx, dword [dword_EA06C]
+        mov edx, dword [ZoneListHead]
 loc_6AD80:
         cmp edx, byte 0FFFFFFFFh
         je near loc_6A5E7
         mov ebx, edx
         shl ebx, 4
-        mov eax, dword [dword_EA060]
+        mov eax, dword [ZoneNodeRects]
         add eax, ebx
-        call sub_6A373
+        call RestoreZoneRect
         mov eax, edx
-        mov edx, dword [dword_EA090]
+        mov edx, dword [ZoneNextLinks]
         mov edx, dword [edx+eax*4]
         jmp short loc_6AD80
-sub_6ADA7:
+FlushZones:
         push dword 10h
         call __CHK
         push ebx
         push ecx
         push edx
         call SetScreenTarget
-        mov edx, dword [dword_EA09C]
-        mov eax, dword [dword_EA074]
-        call sub_6A2BC
-        cmp dword [dword_EA0B4], byte 0
+        mov edx, dword [ZoneStates]
+        mov eax, dword [ZoneRects]
+        call ZoneDebugHook
+        cmp dword [ZoneSlots], byte 0
         je short loc_6ADDB
-        test byte [InputRecordCount], 42h
+        test byte [ZoneFlags], 42h
         je short loc_6ADE9
 loc_6ADDB:
-        call sub_6A234
-        and byte [InputRecordCount], 0FDh
+        call CopyHiddenToScreen
+        and byte [ZoneFlags], 0FDh
         jmp short loc_6AE44
 loc_6ADE9:
-        cmp dword [dword_EA05C], byte 0
+        cmp dword [ZonePrevAdded], byte 0
         jne short loc_6AE0C
-        call sub_6A439
-        mov edx, dword [dword_EA08C]
-        mov eax, dword [dword_EA094]
+        call FreeAllZones
+        mov edx, dword [ZonePrevStates]
+        mov eax, dword [ZonePrevRects]
         mov ebx, 1
-        call sub_6A990
+        call AddMarkedZones
 loc_6AE0C:
-        mov edx, dword [dword_EA09C]
-        mov eax, dword [dword_EA074]
+        mov edx, dword [ZoneStates]
+        mov eax, dword [ZoneRects]
         xor ebx, ebx
-        call sub_6A990
-        mov edx, dword [dword_EA06C]
+        call AddMarkedZones
+        mov edx, dword [ZoneListHead]
 loc_6AE24:
         cmp edx, byte 0FFFFFFFFh
         je short loc_6AE44
         mov ebx, edx
         shl ebx, 4
-        mov eax, dword [dword_EA060]
+        mov eax, dword [ZoneNodeRects]
         add eax, ebx
-        call sub_6A1D6
-        mov eax, dword [dword_EA090]
+        call CopyZoneToScreen
+        mov eax, dword [ZoneNextLinks]
         mov edx, dword [eax+edx*4]
         jmp short loc_6AE24
 loc_6AE44:
-        cmp dword [dword_EA098], byte 0
+        cmp dword [ZoneBufferParity], byte 0
         sete al
         and eax, 0FFh
-        mov dword [dword_EA098], eax
+        mov dword [ZoneBufferParity], eax
         pop edx
         pop ecx
         pop ebx
         ret
-sub_6AE5C:
+ComputeZoneBounds:
         push dword 10h
         call __CHK
         push ebx
         push ecx
         push edx
         mov edx, 3E7h
-        mov eax, dword [dword_EA06C]
-        mov ecx, dword [dword_EA060]
+        mov eax, dword [ZoneListHead]
+        mov ecx, dword [ZoneNodeRects]
 loc_6AE79:
         cmp eax, byte 0FFFFFFFFh
         je short loc_6AE9B
@@ -1455,14 +1455,14 @@ loc_6AE79:
 loc_6AE8C:
         test edx, edx
         je short loc_6AE9B
-        mov ebx, dword [dword_EA090]
+        mov ebx, dword [ZoneNextLinks]
         mov eax, dword [ebx+eax*4]
         jmp short loc_6AE79
 loc_6AE9B:
-        mov dword [dword_EA044], edx
+        mov dword [ZoneBoundsLeft], edx
         xor edx, edx
-        mov eax, dword [dword_EA06C]
-        mov ecx, dword [dword_EA060]
+        mov eax, dword [ZoneListHead]
+        mov ecx, dword [ZoneNodeRects]
 loc_6AEAE:
         cmp eax, byte 0FFFFFFFFh
         je short loc_6AED5
@@ -1473,16 +1473,16 @@ loc_6AEAE:
         jle short loc_6AEC2
         mov edx, ebx
 loc_6AEC2:
-        cmp edx, dword [dword_EA038]
+        cmp edx, dword [ZoneScreenRight]
         jge short loc_6AED5
-        mov ebx, dword [dword_EA090]
+        mov ebx, dword [ZoneNextLinks]
         mov eax, dword [ebx+eax*4]
         jmp short loc_6AEAE
 loc_6AED5:
-        mov dword [dword_EA048], edx
+        mov dword [ZoneBoundsRight], edx
         mov edx, 3E7h
-        mov eax, dword [dword_EA06C]
-        mov ecx, dword [dword_EA060]
+        mov eax, dword [ZoneListHead]
+        mov ecx, dword [ZoneNodeRects]
 loc_6AEEB:
         cmp eax, byte 0FFFFFFFFh
         je short loc_6AF0E
@@ -1495,46 +1495,46 @@ loc_6AEEB:
 loc_6AEFF:
         test edx, edx
         je short loc_6AF0E
-        mov ebx, dword [dword_EA090]
+        mov ebx, dword [ZoneNextLinks]
         mov eax, dword [ebx+eax*4]
         jmp short loc_6AEEB
 loc_6AF0E:
-        mov dword [dword_EA04C], edx
+        mov dword [ZoneBoundsTop], edx
         xor edx, edx
-        mov eax, dword [dword_EA06C]
+        mov eax, dword [ZoneListHead]
 loc_6AF1B:
         cmp eax, byte 0FFFFFFFFh
         je short loc_6AF48
         mov ebx, eax
         shl ebx, 4
-        mov ecx, dword [dword_EA060]
+        mov ecx, dword [ZoneNodeRects]
         mov ebx, dword [byte ecx+ebx+0Ch]
         cmp ebx, edx
         jle short loc_6AF35
         mov edx, ebx
 loc_6AF35:
-        cmp edx, dword [dword_EA040]
+        cmp edx, dword [ZoneScreenBottom]
         jge short loc_6AF48
-        mov ebx, dword [dword_EA090]
+        mov ebx, dword [ZoneNextLinks]
         mov eax, dword [ebx+eax*4]
         jmp short loc_6AF1B
 loc_6AF48:
-        mov dword [dword_EA050], edx
+        mov dword [ZoneBoundsBottom], edx
         pop edx
         pop ecx
         pop ebx
         ret
-sub_6AF52:
+SetZoneScreen:
         push dword 14h
         call __CHK
-        mov dword [dword_EA0CC], eax
-        mov dword [dword_EA034], eax
-        mov dword [dword_EA0C8], ebx
-        mov dword [dword_EA038], ebx
-        mov dword [dword_EA0D0], edx
-        mov dword [dword_EA03C], edx
-        mov dword [dword_EA0C4], ecx
-        mov dword [dword_EA040], ecx
+        mov dword [ZoneSavedLeft], eax
+        mov dword [ZoneScreenLeft], eax
+        mov dword [ZoneSavedRight], ebx
+        mov dword [ZoneScreenRight], ebx
+        mov dword [ZoneSavedTop], edx
+        mov dword [ZoneScreenTop], edx
+        mov dword [ZoneSavedBottom], ecx
+        mov dword [ZoneScreenBottom], ecx
         push ecx
         push edx
         push ebx
@@ -1542,27 +1542,27 @@ sub_6AF52:
         call SetClipWindow
         add esp, byte 10h
         ret
-sub_6AF97:
+SetZoneOrigin:
         push dword 4
         call __CHK
-        mov dword [dword_EA0B8], eax
-        mov dword [dword_EA0BC], edx
+        mov dword [ZoneOriginX], eax
+        mov dword [ZoneOriginY], edx
         ret
-sub_6AFAD:
+ClipToZoneScreen:
         push dword 4
         call __CHK
-        mov eax, dword_EA034
-        jmp short sub_6AFDF
-sub_6AFBE:
+        mov eax, ZoneScreenLeft
+        jmp short ClipToRect
+ClipToZoneUpdate:
         push dword 4
         call __CHK
-        test byte [InputRecordCount], 20h
+        test byte [ZoneFlags], 20h
         je short loc_6AFDA
-        cmp dword [dword_EA05C], byte 0
+        cmp dword [ZonePrevAdded], byte 0
         jne short loc_6B001
 loc_6AFDA:
-        mov eax, dword_EA034
-sub_6AFDF:
+        mov eax, ZoneScreenLeft
+ClipToRect:
         push dword 24h
         call __CHK
         push ebx
@@ -1579,9 +1579,9 @@ sub_6AFDF:
         push esi
         jmp near loc_6A149
 loc_6B001:
-        mov eax, dword_EA044
-        jmp short sub_6AFDF
-sub_6B008:
+        mov eax, ZoneBoundsLeft
+        jmp short ClipToRect
+BeginZoneFrame:
         push dword 2Ch
         call __CHK
         push ebx
@@ -1590,33 +1590,33 @@ sub_6B008:
         push esi
         push edi
         push ebp
-        mov edx, dword [dword_EA0AC]
+        mov edx, dword [HiddenWindow]
         push edx
         call SetDrawBitmap
         add esp, byte 4
-        call sub_6A3C0
-        test byte [InputRecordCount], 1
+        call SwapZoneLists
+        test byte [ZoneFlags], 1
         je short loc_6B03F
         xor ecx, ecx
-        mov dword [dword_EA05C], ecx
+        mov dword [ZonePrevAdded], ecx
         jmp short loc_6B05F
 loc_6B03F:
         mov ebx, 1
-        mov dword [dword_EA05C], ebx
-        call sub_6A439
-        mov edx, dword [dword_EA08C]
-        mov eax, dword [dword_EA094]
-        call sub_6A990
+        mov dword [ZonePrevAdded], ebx
+        call FreeAllZones
+        mov edx, dword [ZonePrevStates]
+        mov eax, dword [ZonePrevRects]
+        call AddMarkedZones
 loc_6B05F:
-        call sub_6AD4F
-        and byte [InputRecordCount], 0FEh
-        mov esi, dword [dword_EA040]
+        call EraseZones
+        and byte [ZoneFlags], 0FEh
+        mov esi, dword [ZoneScreenBottom]
         push esi
-        mov edi, dword [dword_EA03C]
+        mov edi, dword [ZoneScreenTop]
         push edi
-        mov ebp, dword [dword_EA038]
+        mov ebp, dword [ZoneScreenRight]
         push ebp
-        mov eax, dword [dword_EA034]
+        mov eax, dword [ZoneScreenLeft]
         push eax
         call SetClipWindow
         add esp, byte 10h

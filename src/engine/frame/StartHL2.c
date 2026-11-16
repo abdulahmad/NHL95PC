@@ -205,15 +205,15 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         else if (viewscrollx < 0) viewscrollx = 0;
         if (viewscrolly > 0x1A8) viewscrolly = 0x1A8;
         else if (viewscrolly < 0) viewscrolly = 0;
-        sub_6AF97(0, 0);
-        sub_6B008();
+        SetZoneOrigin(0, 0);
+        BeginZoneFrame();
         SetRinkScroll(viewscrollx, viewscrolly);
-        sub_6AF52(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, bgscrollx * 8 + scrollx + 0x140,
+        SetZoneScreen(scrollx + bgscrollx * 8, scrolly + bgscrolly * 8, bgscrollx * 8 + scrollx + 0x140,
             scrolly + bgscrolly * 8 + 0xA8);
         spritedrawcount = 0;
         DrawRinkOverlays((short)viewscrollx, (short)viewscrolly);
-        sub_6AF97(-(bgscrollx * 8 + scrollx), -(bgscrolly * 8 + scrolly));
-        sub_6ADA7();
+        SetZoneOrigin(-(bgscrollx * 8 + scrollx), -(bgscrolly * 8 + scrolly));
+        FlushZones();
         if (fadeinpending) {
             joysampling_save = joysampling;
             joysampling = 0;

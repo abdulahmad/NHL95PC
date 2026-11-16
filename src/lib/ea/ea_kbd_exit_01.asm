@@ -4,7 +4,7 @@ bits 32
 section s_981AD progbits alloc exec nowrite align=1
 extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, BackBufferWidth, joycalactive, joycalposthook, joycalprehook, mousepollfn
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
-extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, sub_9C5B0
+extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, FindNearestColor
 extern sub_A1800, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
 extern sub_B6F84, DefaultFont
 global sub_981AD, sub_981B0, sub_981D4, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
@@ -119,7 +119,7 @@ ShowPromptBox:
         call sub_981B0
         call SetScreenTarget
         push byte 0
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         push eax
         mov edx, dword [dword esp+0D4h]
@@ -133,7 +133,7 @@ ShowPromptBox:
         call FillRect
         add esp, byte 14h
         push dword 0A80000h
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         push eax
         sub edi, byte 4
@@ -150,7 +150,7 @@ ShowPromptBox:
         add esp, byte 14h
         push byte 0
         push dword 0FCFCFCh
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         push eax
         call TextSetColors
@@ -293,7 +293,7 @@ ShowMessageBox:
         call sub_981B0
         call SetScreenTarget
         push byte 0
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         push eax
         push byte 0Ah
@@ -304,7 +304,7 @@ ShowMessageBox:
         add esp, byte 14h
         push byte 0
         push dword 0FCFCFCh
-        call sub_9C5B0
+        call FindNearestColor
         add esp, byte 4
         push eax
         call TextSetColors
