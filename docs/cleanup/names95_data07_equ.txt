@@ -1,0 +1,3 @@
+off_CD4FA replayfollowpl_m2 {source_game=PC-new,confidence=low} two bytes before replayfollowpl inside the last call banner string pointer; not used by name
+off_C6D22 potreeround_m2 {source_game=PC-new,confidence=low} two bytes before potreeround inside the last stats screen string pointer; not used by name
+off_D5742 RectFillPatterns_m2 {source_game=PC-new,confidence=low} two bytes before RectFillPatterns; the first three shade pattern pointers point here

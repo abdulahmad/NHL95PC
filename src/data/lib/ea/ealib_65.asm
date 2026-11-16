@@ -4,7 +4,7 @@ bits 32
 section s_D544C progbits alloc noexec write align=1
 extern NoFloatSupport
 global str_SHPI2, HotkeyScanTable, HotkeyModTable, AngleOctantTable, HotkeyNesting, HotkeyFuncTable, __heap_enabled, __amblksiz
-global RectFillMaxShades, CosTable, CosTableFine, CosTableEnd, __EFG_printf, __EFG_scanf, RectFillPatternPtrs, off_D5742
+global RectFillMaxShades, CosTable, CosTableFine, CosTableEnd, __EFG_printf, __EFG_scanf, RectFillPatternPtrs, RectFillPatterns_m2
 global RectFillPatterns
 str_SHPI2:
         db 053h,048h,050h,049h,00h,00h,00h,00h,00h,00h,00h,00h,053h,050h,049h,054h
@@ -58,9 +58,9 @@ __amblksiz:
 RectFillMaxShades:
         db 032h,00h,00h,00h
 RectFillPatternPtrs:
-        dd off_D5742
-        dd off_D5742
-        dd off_D5742
+        dd RectFillPatterns_m2
+        dd RectFillPatterns_m2
+        dd RectFillPatterns_m2
         dd RectFillPatterns
         dd RectFillPatterns+04h
         dd RectFillPatterns+0Ah
@@ -107,7 +107,7 @@ RectFillPatternPtrs:
         dd RectFillPatterns+07BAh
         dd RectFillPatterns+0814h
         dd RectFillPatterns+0870h
-off_D5742 equ $+2
+RectFillPatterns_m2 equ $+2
         dd RectFillPatterns+08CEh
 RectFillPatterns:
         db 00h,080h,055h,055h

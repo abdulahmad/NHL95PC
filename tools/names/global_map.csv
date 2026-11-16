@@ -4965,3 +4965,6 @@ F64_BankRate5512,C37B8,Double 5512.0 used by OpenSpeechBank
 F64_BankRate11025,C37C0,Double 11025.0 used by OpenSpeechBank
 F64_SlotPercent,C37C8,Double 100.0 used by LoadSpeechSlot
 F64_SlotRate11025,C37D0,Double 11025.0 used by LoadSpeechSlot
+replayfollowpl_m2,CD4FA,two bytes before replayfollowpl inside the last call banner string pointer; not used by name
+potreeround_m2,C6D22,two bytes before potreeround inside the last stats screen string pointer; not used by name
+RectFillPatterns_m2,D5742,two bytes before RectFillPatterns; the first three shade pattern pointers point here

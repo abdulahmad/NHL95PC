@@ -50,7 +50,7 @@ global crestnames, creditpages, msg_FileExists, msg_StatsDiskSpace, menutext_sta
 global menutext_statsplayoff, menuact_statsplayoff, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
 global skaterratingnames, skatercardattrs_m3, goalieratingnames, goaliecardattrs_m3, teamsortfns, westconfname, eastconfname, teamstattitles
 global teamcolhdrs, leadersortfns, leadertitles, leadercolhdrs, leadercolhdrs_c1
-global leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4, off_C6D22, scoutcatnames, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02
+global leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4, potreeround_m2, scoutcatnames, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02
 global gamestatlabels, setdiskmsg, dbchoicelines, str_OfFreeDiskSpace, CreditBlankLine, str_OfficiallyLicensed, str_ProductOfThe, str_NationalHockeyLeague
 global str_NationalHockeyLeagueNHL, str_TheLogoOfThe, str_TrademarksOfTheNational, str_LeagueAndAreUsed, CreditPageNhlLicense, str_StanleyCupIsA, str_TrademarkOfTheNational, str_LeagueAndIsUsed
 global str_ByElectronicArtsInc, str_TeamNamesAndLogos, str_AreOfficiallyLicensed, str_OfTheNationalHockey, str_CopyrightNHL1994, CreditPageStanleyCup, str_OfficiallyLicensedProductOf, str_NationalHockeyLeaguePlayers
@@ -1195,7 +1195,7 @@ leadercolhdrs_c4:
         dd str_PCT7
         dd str_BlankLeaderColumn
         dd str_LSSCEDDB
-off_C6D22 equ $+2
+potreeround_m2 equ $+2
         dd str_SCHEDULEDB3
 potreeround:
         db 070h,0FFh

@@ -29,7 +29,7 @@ extern str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, str_G5, 
 extern str_LW, str_C6, str_RW, str_XC, str_sp00XXXXXXXXXXXXXXXXX, str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_sp00XXXXXXXXXXXXXXXXX3
 extern str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2
 global dressbystatus, lineslotgroups, lineslotgroupstart, gsumqcount, defercount, ovlmemneed, dbg_spalist
-global starthl2pos, pennametab, goaliemenuflags, goaliemenuflags_e02, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
+global starthl2pos, pennametab, goaliemenuflags, goaliemenuflags_e02, bannerstrs, replayfollowpl_m2, dbg_spanames, dbg_assnames
 global dbg_posnames, penbannertab, replayfollowpl, replaytick, replaysfx
 gsumqcount:
         db 00h,00h,00h,00h
@@ -97,7 +97,7 @@ bannerstrs:
         dd str_BnOffside
         dd str_BnIcing
         dd str_BnPenalty
-off_CD4FA equ $+2
+replayfollowpl_m2 equ $+2
         dd str_BnPenaltyShot
 replayfollowpl:
         db 0FFh,0FFh

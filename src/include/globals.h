@@ -2314,7 +2314,7 @@ extern int leadercolhdrs_c1[]; /* C6C44 */
 extern int leadercolhdrs_c2[]; /* C6C48 */
 extern int leadercolhdrs_c3[]; /* C6C4C */
 extern int leadercolhdrs_c4[]; /* C6C50 */
-extern unsigned char off_C6D22[]; /* C6D22 */
+extern unsigned char potreeround_m2[]; /* C6D22 */
 extern short potreeround; /* C6D24 */
 extern int PoStandingsMode; /* C6D26 */
 extern unsigned char treecolslots[]; /* C6D72 */
@@ -2922,7 +2922,7 @@ extern int goaliemenuflags[]; /* CD498 */
 extern int goaliemenuflags_e02[]; /* CD4A0 */
 extern int ovlmemneed[]; /* CD4B0 */
 extern int bannerstrs[]; /* CD4DC */
-extern unsigned char off_CD4FA[]; /* CD4FA */
+extern unsigned char replayfollowpl_m2[]; /* CD4FA */
 extern short replayfollowpl; /* CD4FC */
 extern short replaytick; /* CD4FE */
 extern short replaysfx; /* CD500 */
@@ -3988,7 +3988,7 @@ extern int __heap_enabled; /* D5670 */
 extern int __amblksiz; /* D5674 */
 extern int RectFillMaxShades; /* D5678 */
 extern int RectFillPatternPtrs[]; /* D567C */
-extern unsigned char off_D5742[]; /* D5742 */
+extern unsigned char RectFillPatterns_m2[]; /* D5742 */
 extern unsigned char RectFillPatterns[]; /* D5744 */
 extern unsigned char unk_D5748[]; /* D5748 */
 extern unsigned char unk_D574E[]; /* D574E */
