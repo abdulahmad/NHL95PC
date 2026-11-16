@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_6B093 progbits alloc exec nowrite align=1
-extern __CHK, addtimer, attdb, attdb_size, byte_D416A, careerdb, careerdb_size, carteamsdb
+extern __CHK, addtimer, attdb, attdb_size, JoyPortMask, careerdb, careerdb_size, carteamsdb
 extern carteamsdb_size, ctlavailmask, dword_C4CFC, dword_C71E0, cursndbank, dword_CDA24, dword_CDA38, enterheld
 extern facount, FadePalStep, falist, falistsel, FreeLeagueDbsMem, FreeMemBlock, InitSpeechSlots, inputev
 extern inputinstalled, inputpolldiv, inputqcount, inputqhead, inputqtail, inputqueue, inputrepeat, joybtnheld
@@ -12,10 +12,10 @@ extern memset_, mousebtns, mousepollfn, MouseSetPos, mousex, mousey, musicon, Po
 extern PrintShadowText, ptrstep, ptrupdatefn, RemoveTimerCallback, RunEditRosters, scrpitch, seasondb, seasondb_size
 extern SetTextColors, speechbank, str_dot, str_Joycal, str_Left, str_LEFTJOYSTICK, str_Pal24, str_Puck
 extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, PushMemDescriptorLocked
-extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, FillRect, DrawArtOpaque
-extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, RemoveKeyboardHandler
-extern KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E, sub_B387E
-extern ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, FillRectColor, TeamRecPtr, teamsdb
+extern LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, FillRect, DrawArtOpaque
+extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, InstallKeyboardHandler
+extern KeyDown, InitMouse, FindShape, CalibrateJoystick, JoyButtonMap, ReadJoyRaw, JoyDefaultCalib1, JoyDefaultCalib2
+extern ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, WaitRetraceStart, FillRectColor, TeamRecPtr, teamsdb
 extern teamsdb_size, unk_C27F5, DefaultFont
 global JoystickCalScreen, CalLeftJoystick, CalLeftJoystick_common, CalRightJoystick, GetInputEvent, ClearInputQueue, InputInstall, InputRemove
 global EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuDropdown_ret, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextGrey_common
@@ -42,10 +42,10 @@ JoystickCalScreen:
         call dword [joycalprehook]
         cmp dword [dword esp+0364h], byte 0
         je short .1
-        call sub_B387E
+        call JoyDefaultCalib2
         jmp short .2
 .1:
-        call sub_B384E
+        call JoyDefaultCalib1
 .2:
         push byte 0
         push byte 0
@@ -166,7 +166,7 @@ JoystickCalScreen:
         mov dword [dword esp+0348h], eax
         cmp eax, esi
         je short JoystickCalScreen.5
-        call sub_B4C61
+        call WaitRetraceStart
         cmp esi, byte 0FFFFFFFFh
         je short .7
         mov ecx, dword [nosplit esi*4+joycaly]
@@ -350,7 +350,7 @@ InputInstall:
 .2:
         cmp dword [inputinstalled], byte 0
         jne short .x
-        call RemoveKeyboardHandler
+        call InstallKeyboardHandler
         xor ebx, ebx
         mov dword [dword_CDA24], ebx
         mov dword [ptrstep], ebx
@@ -1279,9 +1279,9 @@ PollJoystickEvent:
         push esi
         push edi
         mov esi, eax
-        cmp byte [byte_D416A], 0
+        cmp byte [JoyPortMask], 0
         je near .5
-        call sub_B30F4
+        call CalibrateJoystick
         call ReadJoyRaw
         test byte [ctlavailmask], 2
         jne short .1

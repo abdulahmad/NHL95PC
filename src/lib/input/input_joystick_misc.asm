@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_B300C progbits alloc exec nowrite align=1
-extern __GETDS, atexit_, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, joyedgedir
+extern __GETDS, atexit_, JoyButtonBits, JoyPortMask, byte_D4174, byte_D4175, byte_D4176, joyedgedir
 extern byte_D4244, byte_D4245, byte_D4246, byte_D4280, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1
-extern BiosKeyFunc, dword_D3090, dword_D3096, ScreenWidth, dword_D4158, dword_D415C, dword_D4160, dword_D4164
+extern BiosKeyFunc, dword_D3090, dword_D3096, ScreenWidth, JoyRawX1, JoyRawY1, JoyRawX2, JoyRawY2
 extern JoyAxisY2, JoyAxisMask, JoyX1Threshold, dword_D417B, JoyX1Center, dword_D4183, dword_D4187, dword_D418B
 extern dword_D418F, JoyY1Threshold, dword_D4197, JoyY1Center, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
 extern JoyXScale, JoyYScale, dword_D41FC, dword_D4200, dword_D4204, dword_D4208, dword_D420C, dword_D4210
@@ -12,25 +12,25 @@ extern dword_D4214, dword_D4218, dword_D421C, dword_D4220, dword_D4224, dword_D4
 extern dword_D4234, dword_D4238, dword_D423C, dword_D4240, dword_D4248, dword_D424C, dword_D4250, dword_D4254
 extern dword_D4258, dword_D425C, dword_D4260, dword_D4264, dword_D4268, dword_D426C, dword_D4270, dword_D4274
 extern dword_D4278, dword_D427C, exit_, FatalError, joyenablemask, KbdIdleHook, FillRect, DosGetVector
-extern DosSetVector, tickcount, tickdeadline, ticklast, unk_8E870, word_D3094, word_D309A
-global sub_B300C, ClearNumLock, sub_B3036, loc_B3089, RemoveBreakHandler, loc_B30B0, FindShape, FindShapeQuiet
-global loc_B30BD, loc_B30D1, loc_B30E3, loc_B30F1, sub_B30F4, loc_B3115, loc_B3129, loc_B3132
+extern DosSetVector, tickcount, tickdeadline, ticklast, str_LocateshapeSHAPENOTFOUND, word_D3094, word_D309A
+global ReturnZero, ClearNumLock, InstallBreakHandler, loc_B3089, RemoveBreakHandler, loc_B30B0, FindShape, FindShapeQuiet
+global loc_B30BD, loc_B30D1, loc_B30E3, loc_B30F1, CalibrateJoystick, loc_B3115, loc_B3129, loc_B3132
 global loc_B3156, ReadJoystickPorts, loc_B31A5, loc_B31A9, loc_B31BB, loc_B31BF, loc_B31D0, loc_B31DB
 global loc_B3207, loc_B3219, loc_B322F, loc_B3258, loc_B3277, loc_B3285, loc_B32A3, loc_B32BE
 global loc_B32E9, loc_B32FB, loc_B3311, loc_B333A, loc_B3346, loc_B3365, loc_B3373, loc_B3391
-global loc_B33A8, loc_B33BA, loc_B33C1, loc_B33C7, loc_B33D2, JoyResetCentres, JoyButtonMap, sub_B3421
-global loc_B3430, loc_B3449, AddExitHandler, sub_B345D, ReadJoyRaw, loc_B3471, loc_B34B1, loc_B34B5
+global loc_B33A8, loc_B33BA, loc_B33C1, loc_B33C7, loc_B33D2, JoyResetCentres, JoyButtonMap, JoyScaledX
+global loc_B3430, loc_B3449, AddExitHandler, ExitProgram, ReadJoyRaw, loc_B3471, loc_B34B1, loc_B34B5
 global loc_B34C7, loc_B34CB, loc_B34CF, loc_B34D3, loc_B34E4, loc_B34F1, loc_B34FE, loc_B3509
 global loc_B3518, loc_B3532, loc_B3548, loc_B3573, loc_B3593, loc_B35A1, loc_B35B5, loc_B35CC
 global loc_B35E6, loc_B35FC, loc_B3627, loc_B3630, loc_B3650, loc_B365E, loc_B3672, loc_B3689
 global loc_B369C, loc_B36A5, loc_B36B3, loc_B36CD, loc_B36E3, loc_B370E, loc_B372E, loc_B373C
 global loc_B3750, loc_B3767, loc_B3781, loc_B3797, loc_B37C2, loc_B37CB, loc_B37EB, loc_B37F9
-global loc_B380D, loc_B3824, loc_B3838, loc_B3845, sub_B384E, sub_B387E, sub_B38AE, loc_B38BD
+global loc_B380D, loc_B3824, loc_B3838, loc_B3845, JoyDefaultCalib1, JoyDefaultCalib2, Joy2ScaledX, loc_B38BD
 global loc_B38DC, loc_B38FB, loc_B391A, ClearScreen, GetTicks, TicksSince, TicksSinceLastCall, ResetTicks
 global SetTickDeadline, WaitTickDeadline, TickDeadlinePassed, WaitTicks, loc_B39C3, KbdGetKey, loc_B39DE, loc_B39EC
-global PollKey, KbdPeekKey, loc_B3A01, loc_B3A07, WaitKey, KbdFlush, sub_B3A2F, loc_B3A47
+global PollKey, KbdPeekKey, loc_B3A01, loc_B3A07, WaitKey, KbdFlush, KbdIdleWait, loc_B3A47
 global loc_B3A59, loc_B3A70, SaveDrawState, RestoreDrawState, bcopy, loc_B3ADF
-sub_B300C:
+ReturnZero:
         LD xor, eax, eax
         ret
         db 00h
@@ -59,7 +59,7 @@ ClearNumLock:
         pop ecx
         pop ebx
         iret
-sub_B3036:
+InstallBreakHandler:
         push ebp
         LD mov, ebp, esp
         mov eax, dword [byte ebp+08h]
@@ -97,7 +97,7 @@ loc_B30B0:
         ret
         db 00h,00h
 FindShape:
-        mov ebx, unk_8E870
+        mov ebx, str_LocateshapeSHAPENOTFOUND
         jmp short loc_B30BD
 FindShapeQuiet:
         LD xor, ebx, ebx
@@ -126,12 +126,12 @@ loc_B30E3:
 loc_B30F1:
         LD xor, eax, eax
         ret
-sub_B30F4:
+CalibrateJoystick:
         push ebp
         push esi
         push edi
         LD xor, eax, eax
-        mov ah, byte [byte_D416A]
+        mov ah, byte [JoyPortMask]
         mov ecx, 2710h
         mov edx, 201h
         LD xor, ebx, ebx
@@ -158,11 +158,11 @@ loc_B3129:
         jcxz loc_B3156
 loc_B3132:
         shr al, 4
-        mov byte [byte_D4168], al
-        mov dword [dword_D4158], ebp
-        mov dword [dword_D415C], esi
-        mov dword [dword_D4160], edi
-        mov dword [dword_D4164], ebx
+        mov byte [JoyButtonBits], al
+        mov dword [JoyRawX1], ebp
+        mov dword [JoyRawY1], esi
+        mov dword [JoyRawX2], edi
+        mov dword [JoyRawY2], ebx
         pop edi
         pop esi
         pop ebp
@@ -171,7 +171,7 @@ loc_B3156:
         LD mov, ah, al
         not ah
         and ah, 0Fh
-        mov byte [byte_D416A], ah
+        mov byte [JoyPortMask], ah
         jmp short loc_B3132
         db 00h,00h,00h
 ReadJoystickPorts:
@@ -371,7 +371,7 @@ JoyButtonMap:
         movzx eax, ax
         leave
         ret
-sub_B3421:
+JoyScaledX:
         mov eax, dword [JoyAxisY2]
         sub eax, dword [JoyX1Threshold]
         jge short loc_B3430
@@ -392,7 +392,7 @@ loc_B3449:
 AddExitHandler:
         mov eax, dword [byte esp+04h]
         jmp near atexit_
-sub_B345D:
+ExitProgram:
         LD xor, eax, eax
         call exit_
 ReadJoyRaw:
@@ -696,21 +696,21 @@ loc_B3838:
 loc_B3845:
         or byte [byte_D4246], 1
         jmp short loc_B3824
-sub_B384E:
+JoyDefaultCalib1:
         or byte [joyenablemask], 1
         mov dword [dword_D4248], 50h
         mov dword [dword_D424C], 0
         mov dword [dword_D4260], 50h
         mov dword [dword_D4264], 0
         ret
-sub_B387E:
+JoyDefaultCalib2:
         or byte [joyenablemask], 2
         mov dword [dword_D4204], 50h
         mov dword [dword_D4208], 0
         mov dword [dword_D421C], 50h
         mov dword [dword_D4220], 0
         ret
-sub_B38AE:
+Joy2ScaledX:
         mov eax, dword [dword_D423C]
         sub eax, dword [dword_D4248]
         jge short loc_B38BD
@@ -860,13 +860,13 @@ KbdFlush:
         LD or, ax, ax
         jne short KbdFlush
         ret
-sub_B3A2F:
+KbdIdleWait:
         call dword [KbdIdleHook]
         LD or, ax, ax
         jne short loc_B3A47
         call TickDeadlinePassed
         LD or, ax, ax
-        je short sub_B3A2F
+        je short KbdIdleWait
         LD xor, ax, ax
 loc_B3A47:
         ret

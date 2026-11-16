@@ -6,7 +6,7 @@ extern __CHK, __STOSD, AdvancePlayoffs, BuildPlayoffs, byte_DE268, careerdb, car
 extern dword_DDD34, dword_DDD3C, FileClose, FileOpenRead, FileOpenRW, FileReadAt, FileWriteAt, FreeMemBlock
 extern GetFileSize, keydb, keydb_size, leaguedbnames, lggameidx, lgplayteam, lgschedrec, MakePath
 extern MessageBox, monthdays_m1, msg_GenSchedule, rand_, ReadSchedGame, ReadTeamRec, RestoreDialogBg, savleague1
-extern savleague2, seasondb, seasondb_size, SeriesWinner, SimulateGame, str_extDB, sub_8E8A0, teamdivision
+extern savleague2, seasondb, seasondb_size, SeriesWinner, SimulateGame, str_extDB, OpenArtArchiveErr, teamdivision
 extern teamdivslot, word_DDD48, word_DDD4A, WriteFile, WriteSchedGame, WriteTeamRec
 global LoadLeagueGameRef, DateKey, NormalizeDate, UpdateSeasonSchedule, UpdateSeasonSchedule_pop3, UpdatePlayoffSeries, SeriesLength_jt, SeriesLength
 global SeriesLength_bo1, SeriesLength_bo3, SeriesLength_n3, SeriesLength_n4, SeriesLength_bo7, RandomizeSchedule, SimScheduleDay
@@ -244,7 +244,7 @@ UpdateSeasonSchedule:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [seasondb], eax
         mov eax, esp
@@ -260,7 +260,7 @@ UpdateSeasonSchedule:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [careerdb], eax
         mov eax, esp
@@ -276,7 +276,7 @@ UpdateSeasonSchedule:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [keydb], eax
         mov eax, esp

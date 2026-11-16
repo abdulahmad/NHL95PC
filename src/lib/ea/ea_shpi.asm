@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_A2000 progbits alloc exec nowrite align=1
 extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, DrawDestBuffer
-extern dword_F6138, strncpy_, strrchr_, AllocMemBlockEx, ResizeMemBlock, FindCachedFile, sub_9762C, unpack
-extern DosFileInfo, sub_B0100, sub_B0148, bcopy, DosOpenFile, DosCloseFile, DosReadFile, DosSeekFile
+extern ScaledRowBuffer, strncpy_, strrchr_, AllocMemBlockEx, ResizeMemBlock, FindCachedFile, UnpackedSize, unpack
+extern DosFileInfo, GetBytesLE, PutBytesLE, bcopy, DosOpenFile, DosCloseFile, DosReadFile, DosSeekFile
 extern SetBlitSource, CopyRowKeyFF
 global DrawShapeQuad, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
 global loc_A220B, loc_A22A7, loc_A22DC, loc_A22E5, loc_A2338, loc_A2358, loc_A237C, loc_A23A6
@@ -23,7 +23,7 @@ DrawShapeQuad:
         mov edx, dword [byte eax+02h]
         sar edx, 10h
         mov dword [byte esp+054h], edx
-        push dword_F6138
+        push ScaledRowBuffer
         add eax, byte 10h
         push eax
         call SetBlitSource
@@ -165,7 +165,7 @@ loc_A20F9:
         neg eax
         mov dword [byte esp+024h], eax
 loc_A21D1:
-        mov eax, dword_F6138
+        mov eax, ScaledRowBuffer
         mov edx, 8000h
         mov esi, edx
 loc_A21DD:
@@ -344,7 +344,7 @@ loc_A23C6:
         mov eax, ebp
         sar eax, 10h
         add eax, ecx
-        add eax, dword [nosplit edx*4+dword_F6138]
+        add eax, dword [nosplit edx*4+ScaledRowBuffer]
         push eax
         mov eax, dword [DrawDestBuffer]
         add eax, dword [byte esp+060h]
@@ -493,7 +493,7 @@ loc_A259A:
         mov eax, ebp
         sar eax, 10h
         add eax, ecx
-        add eax, dword [nosplit ebx*4+dword_F6138]
+        add eax, dword [nosplit ebx*4+ScaledRowBuffer]
         push eax
         mov eax, dword [DrawDestBuffer]
         add eax, dword [byte esp+058h]
@@ -630,7 +630,7 @@ loc_A2704:
         push ebp
         lea eax, [byte esp+04h]
         push eax
-        call sub_9762C
+        call UnpackedSize
         mov esi, eax
         add esp, byte 8
 loc_A2727:
@@ -833,14 +833,14 @@ ConvertShapeBank:
         push byte 4
         mov edx, dword [byte esp+040h]
         push edx
-        call sub_B0100
+        call GetBytesLE
         mov ebp, eax
         add esp, byte 8
         push byte 2
         mov eax, dword [byte esp+040h]
         add eax, byte 4
         push eax
-        call sub_B0100
+        call GetBytesLE
         mov esi, eax
         add esp, byte 8
         mov dword [byte esp+010h], eax
@@ -861,14 +861,14 @@ ConvertShapeBank:
         mov eax, dword [byte esp+048h]
         add eax, byte 4
         push eax
-        call sub_B0148
+        call PutBytesLE
         add esp, byte 0Ch
         push byte 4
         push esi
         mov eax, dword [byte esp+048h]
         add eax, byte 8
         push eax
-        call sub_B0148
+        call PutBytesLE
         add esp, byte 0Ch
         lea edi, [nosplit esi*8+00h]
         sub ebp, byte 6
@@ -901,7 +901,7 @@ loc_A29C6:
         push byte 4
         mov edx, dword [byte esp+01Ch]
         push edx
-        call sub_B0100
+        call GetBytesLE
         add esp, byte 8
         add eax, byte 10h
         mov esi, dword [byte esp+014h]
@@ -910,16 +910,16 @@ loc_A29C6:
         push byte 4
         mov ebx, dword [byte esp+028h]
         push ebx
-        call sub_B0100
+        call GetBytesLE
         add esp, byte 8
         push eax
         push ebp
-        call sub_B0148
+        call PutBytesLE
         add esp, byte 0Ch
         push byte 4
         push esi
         push edi
-        call sub_B0148
+        call PutBytesLE
         add esp, byte 0Ch
         add esi, dword [byte esp+040h]
         push byte 10h

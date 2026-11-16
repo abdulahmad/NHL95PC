@@ -147,7 +147,7 @@ void Gameloop(void)
                 if (ovlseq != -1 && ovlstep != -1 && !ovlartbank) {
                     MakePath(path, fileoncd[ovlartfiles[ovlseq]] == 1 ? (char *)cddriveptr : 0,
                         (char *)ovlartnames[ovlseq], (char *)str_PPV);
-                    ovlartbank = sub_8E8A0(path, 0x20);
+                    ovlartbank = OpenArtArchiveErr(path, 0x20);
                     for (i = 0; i < ShapeBankCount(ovlartbank); i++) ovlstepart[i] = ShapeBankEntry(ovlartbank, i);
                 }
                 joysampling = joysampling_save;

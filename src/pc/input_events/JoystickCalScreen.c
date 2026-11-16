@@ -40,8 +40,8 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
     (void)title;
     joycalactive = 1;
     ((void (*)(void))joycalprehook)();
-    if (side) sub_B387E();
-    else sub_B384E();
+    if (side) JoyDefaultCalib2();
+    else JoyDefaultCalib1();
     TextSetColors(0, 0);
     buttons = ReadJoyRaw() >> shift;
     if ((buttons & 0x30) == 0) {
@@ -71,7 +71,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
             if (s.cur & 0x30) break;
             s.cur = JoyButtonMap(s.cur);
             if (s.cur == prev) continue;
-            sub_B4C61();
+            WaitRetraceStart();
             if (prev != -1) DrawArtOpaque((int)back, joycalx[prev], joycaly[prev]);
             GrabBlock((int)back, joycalx[s.cur], joycaly[s.cur]);
             DrawArt(s.shape, joycalx[s.cur], joycaly[s.cur]);

@@ -17,7 +17,7 @@ extern rockteamcues, rocktunes, rpl_x, rpl_x_e16, rpl_y, SaveHilight, savepal, s
 extern scrolly, SelectRinkBM, SelectScreenBM, SetClipWindow, SetDialogColors, SetPalette, SetRinkScroll, SetScreenSize
 extern SetTickDeadline, SetViewRect, sounddev, spritedrawcount, str_ADROCKU, str_BothTeams, str_Gad1, str_Gadget5
 extern str_Gadget6, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_ROCKDITI, str_SBROCKU, FlushZones
-extern SetZoneScreen, SetZoneOrigin, BeginZoneFrame, sub_8E8A0, MviGetFrame, SetScreenTarget, VgaBlitKeyedHot, FillRectColor
+extern SetZoneScreen, SetZoneOrigin, BeginZoneFrame, OpenArtArchiveErr, MviGetFrame, SetScreenTarget, VgaBlitKeyed, FillRectColor
 extern VgaBlitKeyedFlipV, teamrockcuetbl, teamrocktune, teamtunefiles, teamtunepathsel, TextRestoreState, TextSaveState, TextSetFont
 extern TicksSinceLastCall, viewscrollx, viewscrolly, WaitTickDeadline
 global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, GadgetSoundStub, bothneitherstrs, DrawGadgetButton
@@ -580,7 +580,7 @@ InstantReplay:
         push byte 0
         lea eax, [byte esp+08h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [gadgetfile], eax
         push str_Gad1
@@ -591,7 +591,7 @@ InstantReplay:
         push byte 0
         push byte 0
         push eax
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         mov eax, 6
         call DrawGadgetButton
@@ -1598,7 +1598,7 @@ ReplayControlLoop:
         push ebp
         mov edx, dword [gadgetshape]
         push edx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         mov eax, 2
         call DrawGadgetButton
@@ -1728,7 +1728,7 @@ ReplaySaveHilight:
         push byte 0
         lea eax, [byte esp+04Ch]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [gadgetfile], eax
         push str_Gad1
@@ -2052,7 +2052,7 @@ ReplaySaveHilight_n3:
         push byte 0
         lea eax, [byte esp+04Ch]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [gadgetfile], eax
         push str_Gad1

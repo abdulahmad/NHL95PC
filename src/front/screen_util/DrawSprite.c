@@ -5,7 +5,7 @@
    Left: mode/clip/remap register choices and the first flip test's cached value. */
 #define DrawSprite DrawSprite_decl
 #define MarkZoneRect sub_6AB7C_decl
-#define VgaBlitKeyedHot sub_B4CD8_decl
+#define VgaBlitKeyed sub_B4CD8_decl
 #define VgaBlitKeyedFlipV sub_B500C_decl
 #define VgaBlitRemap sub_B4E50_decl
 #define VgaBlitRemapFlipV sub_B52B4_decl
@@ -16,7 +16,7 @@
 #include "nhl95.h"
 #undef DrawSprite
 #undef MarkZoneRect
-#undef VgaBlitKeyedHot
+#undef VgaBlitKeyed
 #undef VgaBlitKeyedFlipV
 #undef VgaBlitRemap
 #undef VgaBlitRemapFlipV
@@ -35,7 +35,7 @@ typedef struct {
 } SprHdr;
 
 void MarkZoneRect(int n, int x0, int y0, int x1, int y1);
-void __cdecl VgaBlitKeyedHot(SprHdr *s, int x, int y);
+void __cdecl VgaBlitKeyed(SprHdr *s, int x, int y);
 void __cdecl VgaBlitKeyedFlipV(SprHdr *s, int x, int y);
 void __cdecl VgaBlitRemap(SprHdr *s, int x, int y);
 void __cdecl VgaBlitRemapFlipV(SprHdr *s, int x, int y);
@@ -122,7 +122,7 @@ void DrawSprite(SprHdr *spr, int x, int y, int flip, short pal, int unused)
     if (spr->flags) s.mode += 8;
     MarkZoneRect(spritedrawcount++, s.sx, s.sy, s.sx + spr->w, s.sy + spr->h);
     switch ((unsigned short)s.mode) {
-    case 8: VgaBlitKeyedHot(spr, s.sx, s.sy); break;
+    case 8: VgaBlitKeyed(spr, s.sx, s.sy); break;
     case 9: VgaBlitKeyedFlipV(spr, s.sx, s.sy); break;
     case 10: VgaBlitRemap(spr, s.sx, s.sy); break;
     case 11: VgaBlitRemapFlipV(spr, s.sx, s.sy); break;

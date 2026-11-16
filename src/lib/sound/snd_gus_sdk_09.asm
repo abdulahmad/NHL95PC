@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B2720 progbits alloc exec nowrite align=1
-global GusConvertAddr16, sub_B273C, loc_B278E
+global GusConvertAddr16, GusRegsToAddr, loc_B278E
 GusConvertAddr16:
         push ebp
         mov ebp, esp
@@ -17,7 +17,7 @@ GusConvertAddr16:
         pop ebp
         ret
         db 090h
-sub_B273C:
+GusRegsToAddr:
         push ebp
         mov ebp, esp
         push ecx

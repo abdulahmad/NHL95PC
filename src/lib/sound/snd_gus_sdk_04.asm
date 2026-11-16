@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_B0100 progbits alloc exec nowrite align=1
-extern byte_D89E4, KeyedDraw, RowCopyFunc, dword_D86C0, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
-global sub_B0100, loc_B010E, loc_B0123, sub_B0128, loc_B0132, loc_B0144, sub_B0148, loc_B015B
-global loc_B016A, sub_B0170, loc_B018F, loc_B01A3, sub_B01B0, loc_B01BD, loc_B01CE, loc_B01DC
-global loc_B01E1, sub_B01E4, loc_B0205, sub_B0228, sub_B026C, loc_B027D, loc_B0285, sub_B0288
-sub_B0100:
+extern byte_D89E4, KeyedDraw, RowCopyFunc, DmaDefaultMode, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
+global GetBytesLE, loc_B010E, loc_B0123, GetBytesBE, loc_B0132, loc_B0144, PutBytesLE, loc_B015B
+global loc_B016A, PutBytesBE, loc_B018F, loc_B01A3, CopyRowShadowKeyed, loc_B01BD, loc_B01CE, loc_B01DC
+global loc_B01E1, DrawArtKeyedRemap, loc_B0205, DrawArtKeyedRemapOwnPos, RemapBytes, loc_B027D, loc_B0285, SetDmaDefaultMode
+GetBytesLE:
         push esi
         push edi
         mov edx, dword [byte esp+0Ch]
@@ -29,7 +29,7 @@ loc_B0123:
         pop edi
         pop esi
         ret
-sub_B0128:
+GetBytesBE:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         xor ebx, ebx
@@ -47,7 +47,7 @@ loc_B0144:
         mov eax, ebx
         ret
         db 090h
-sub_B0148:
+PutBytesLE:
         sub esp, byte 4
         mov eax, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -66,7 +66,7 @@ loc_B016A:
         add esp, byte 4
         ret
         db 08Bh,0C0h
-sub_B0170:
+PutBytesBE:
         sub esp, byte 4
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
@@ -92,7 +92,7 @@ loc_B01A3:
         add esp, byte 4
         ret
         db 00h,00h,00h,00h,00h,00h,00h
-sub_B01B0:
+CopyRowShadowKeyed:
         push esi
         mov ecx, dword [byte esp+010h]
         mov ebx, dword [byte esp+08h]
@@ -120,7 +120,7 @@ loc_B01E1:
         pop esi
         ret
         db 090h
-sub_B01E4:
+DrawArtKeyedRemap:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
@@ -133,7 +133,7 @@ sub_B01E4:
         add esp, byte 0Ch
         ret
 loc_B0205:
-        mov dword [RowCopyFunc], sub_B01B0
+        mov dword [RowCopyFunc], CopyRowShadowKeyed
         push eax
         push ebx
         push edx
@@ -142,7 +142,7 @@ loc_B0205:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
-sub_B0228:
+DrawArtKeyedRemapOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -151,7 +151,7 @@ sub_B0228:
         sar eax, 10h
         push eax
         push edx
-        call sub_B01E4
+        call DrawArtKeyedRemap
         add esp, byte 0Ch
         ret
         mov edx, dword [byte esp+04h]
@@ -166,10 +166,10 @@ sub_B0228:
         sub ebx, eax
         push ebx
         push edx
-        call sub_B01E4
+        call DrawArtKeyedRemap
         add esp, byte 0Ch
         ret
-sub_B026C:
+RemapBytes:
         push ebp
         LD mov, ebp, esp
         push edi
@@ -187,6 +187,6 @@ loc_B0285:
         pop edi
         leave
         ret
-sub_B0288:
-        mov dword [dword_D86C0], eax
+SetDmaDefaultMode:
+        mov dword [DmaDefaultMode], eax
         ret

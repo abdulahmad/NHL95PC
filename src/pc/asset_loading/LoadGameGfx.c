@@ -15,9 +15,9 @@ void LoadGameGfx(void)
     SetScreenTarget();
     scrpitch = 0x52;
     MakePath(path, fileoncd[0xA0] == 1 ? (char *)cddriveptr : 0, (char *)str_HILIGHT, (char *)str_VFN);
-    hilightfont = sub_8E8A0(path, 0x20);
+    hilightfont = OpenArtArchiveErr(path, 0x20);
     MakePath(path, fileoncd[0x10B] == 1 ? (char *)cddriveptr : 0, (char *)str_Numshp, (char *)str_PPV);
-    numshpbank = sub_8E8A0(path, 0x20);
+    numshpbank = OpenArtArchiveErr(path, 0x20);
     for (i = 0; i < 10; i++) {
         sprintf(name, (char *)str_04d, i);
         numshapes[i] = FindShape(numshpbank, name);
@@ -41,9 +41,9 @@ void ReloadGameGfx(void)
 
     scrpitch = 0x52;
     MakePath(path, fileoncd[0xA0] == 1 ? (char *)cddriveptr : 0, (char *)str_HILIGHT, (char *)str_VFN);
-    hilightfont = sub_8E8A0(path, 0x20);
+    hilightfont = OpenArtArchiveErr(path, 0x20);
     MakePath(path, fileoncd[0x10B] == 1 ? (char *)cddriveptr : 0, (char *)str_Numshp, (char *)str_PPV);
-    numshpbank = sub_8E8A0(path, 0x20);
+    numshpbank = OpenArtArchiveErr(path, 0x20);
     for (i = 0; i < 10; i++) {
         sprintf(name, (char *)str_04d, i);
         numshapes[i] = FindShape(numshpbank, name);

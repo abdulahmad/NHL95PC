@@ -4268,3 +4268,22 @@ SndDriverTable,D4BA0,"entry points, driver type and open handle of the seven sou
 SndHandleTable,EDE88,copies of the driver table entries for the open sound handles
 SndHandleType,F243E,"driver type per open sound handle (1 music, 3 MIDI port, 4 digital, 5 speaker)"
 SndTimerHandle,D4F96,"open sound handle that is serviced first on each timer tick, or -1"
+DmaDefaultMode,D86C0,Default DMA mode value
+ScaledRowBuffer,F6138,Row buffer for the mapped-triangle rasteriser
+GusDosResult,F799C,Result of the last DOS file call
+GusMidiXmitCallback,D87D0,MIDI transmit callback
+GusMidiRecvCallback,D87D4,MIDI receive callback
+GusMidiControlPort,D876C,MIDI control and status port
+GusMidiDataPort,D876E,MIDI data port
+GusVoiceAllocMask,F7B78,Bit mask of voices in use
+JoyRawX1,D4158,Timed count for joystick 1 X
+JoyRawY1,D415C,Timed count for joystick 1 Y
+JoyRawX2,D4160,Timed count for joystick 2 X
+JoyRawY2,D4164,Timed count for joystick 2 Y
+JoyButtonBits,D4168,Joystick button bits from the last read
+JoyPortMask,D416A,Axis bits still present on port 201h
+DebugTabWidth,D4546,Debug monitor tab width
+ColourRemap,D42E4,256-entry colour remap table
+SlowDeadline,D4530,Slow-tick deadline
+PointerCount,D3038,Pointer show count
+FatalErrorHook,D2F74,Routine FatalError returns into instead of the boxed message

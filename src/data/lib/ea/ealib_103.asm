@@ -2,6 +2,6 @@
 bits 32
 %include "hockey.inc"
 section s_F6138 nobits alloc noexec write align=1
-global dword_F6138
-dword_F6138:
+global ScaledRowBuffer
+ScaledRowBuffer:
         resb 6208

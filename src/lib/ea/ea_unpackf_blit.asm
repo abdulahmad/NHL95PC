@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
 extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
-extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, sub_A2FD0
-extern sub_A3050, _EFG_Format_, bcopy, UnpackArtRle
+extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, FlipArtHorizontal
+extern FlipArtVertical, RemapArt, bcopy, UnpackArtRle
 global ToUpperChar, loc_9C5A4, ReturnFalse, FindNearestColor, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
 global loc_9C70C, loc_9C71B, loc_9C72B, loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873
 global loc_9C880, TextPrintCentered, ShapePixelSize, DrawArtAnyFormat, loc_9C924, loc_9C969, loc_9C97D, loc_9C97F
@@ -372,7 +372,7 @@ loc_9C9D3:
         add esp, byte 8
         sub dword [byte esp+08h], eax
         push esi
-        call sub_A2FD0
+        call FlipArtHorizontal
         add esp, byte 4
 loc_9CA00:
         mov eax, dword [byte esp+028h]
@@ -389,13 +389,13 @@ loc_9CA00:
         add esp, byte 8
         sub ebp, eax
         push esi
-        call sub_A3050
+        call FlipArtVertical
         add esp, byte 4
 loc_9CA2B:
         cmp dword [byte esp+020h], byte 0
         je short loc_9CA3B
         push esi
-        call _EFG_Format_
+        call RemapArt
         add esp, byte 4
 loc_9CA3B:
         mov eax, dword [byte esp+01Ch]

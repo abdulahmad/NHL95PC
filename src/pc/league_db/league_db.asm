@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_6BE95 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, addtimer, attdb, attdb_size, boxfillcolor, boxlitecolor, boxshadecolor
-extern btn_LeagueExists, byte_D416A, byte_D42C3, careerdb, careerdb_size, carteamsdb, carteamsdb_size, CheckDatabases
+extern btn_LeagueExists, JoyPortMask, byte_D42C3, careerdb, careerdb_size, carteamsdb, carteamsdb_size, CheckDatabases
 extern ctlavailmask, curdbname, dbdirty, dbexistsmsg, DeleteDir, dlgtextbg, dlgtextfg, DrawButtons
 extern DrawEditRosters, DrawScrollBar, dword_C4CFC, dword_C71E0, cursndbank, dword_CDA24, dword_CDA38, rostereditmode
 extern fascrollbar_len, fascrollbar_thumb, fascrollbar_top, fascrollbar_count, dword_D0C20, dword_EA2B0, falisttop, editptrspr
@@ -21,11 +21,11 @@ extern speechbank, sprintf_, str_3dKbytesOfFree2, str_C4, str_Current2, str_Curr
 extern str_dot, str_EnterANewDatabase, str_ErrorGettingDiskSpace, str_extDB, str_fmt2d, str_FreeAgents, str_Joycal, str_Left
 extern str_LEFTJOYSTICK, str_Pal24, str_Pointer11, str_Puck, str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_S5
 extern str_SaveAsGameDatabases, str_SavingDatabases, str_Scrn3, str_space, str_Temp7, str_XXXKbytesOfFree2, strcat_, strcpy_
-extern strlen_, strupr_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
+extern strlen_, strupr_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, SndQuery, SetDigiChannelVolume, SetPalette, FillRect, XorBar, DrawArtOpaque
 extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, WriteFile
-extern RemoveKeyboardHandler, KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E
-extern sub_B387E, ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, CreateBitmap, FillRectColor
+extern InstallKeyboardHandler, KeyDown, InitMouse, FindShape, CalibrateJoystick, JoyButtonMap, ReadJoyRaw, JoyDefaultCalib1
+extern JoyDefaultCalib2, ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, WaitRetraceStart, CreateBitmap, FillRectColor
 extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, btn_RosterList, fascrollbar, DefaultFont
 extern unknown_libname_1
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
@@ -358,7 +358,7 @@ LoadLeagueDbsMem:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [seasondb], eax
         mov eax, esp
@@ -374,7 +374,7 @@ LoadLeagueDbsMem:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [careerdb], eax
         mov eax, esp
@@ -390,7 +390,7 @@ LoadLeagueDbsMem:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [carteamsdb], eax
         mov eax, esp
@@ -406,7 +406,7 @@ LoadLeagueDbsMem:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [keydb], eax
         mov eax, esp
@@ -422,7 +422,7 @@ LoadLeagueDbsMem:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [teamsdb], eax
         mov eax, esp
@@ -438,7 +438,7 @@ LoadLeagueDbsMem:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [attdb], eax
         mov eax, esp

@@ -83,7 +83,7 @@ void LoadRink(int rink)
         tiles = AllocMemBlock((char *)str_TILES, size, 0);
         if (!LoadFileToBlockShared(path, tiles)) FatalError((char *)str_ErrorLoadingFile, path);
         MakePath(path, fileoncd[rinkfileidx[rink]] == 1 ? (char *)cddriveptr : 0, (char *)rinkarenas + (t = rink * 12), (char *)str_Map);
-        smap = sub_8E8A0(path, 0);
+        smap = OpenArtArchiveErr(path, 0);
         n = size / 64;
         BlitTileMap((unsigned char *)smap, (unsigned char *)tiles, n, ARENA(t, 6), ARENA(t = rink * 12, 4), 0);
         if (ARENA(t, 8) > 0) BlitTileMap((unsigned char *)smap, (unsigned char *)tiles, n, ARENA(t, 0xA), ARENA(t, 8), 0x6000);

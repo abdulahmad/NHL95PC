@@ -19,7 +19,7 @@ extern dword_EDAB4, MemViewTop, MemViewCount, dword_EDE68, MemViewTitle, MemView
 extern dword_EDE7C, MemViewMode, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, MarkDescPurgeable, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId, PutBlock
-extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, sub_93000, PrintBoxedText, DebugSetLine, sub_936C0
+extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, sub_93000, PrintBoxedText, DebugSetLine, DebugShowLines
 extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered
 extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, sub_9D090, sub_9D2E0, FindShape, ClearScreen, KbdGetKey, KbdFlush
 extern SaveDrawState, RestoreDrawState, FindFirstFile, PollHotkeys, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
@@ -242,7 +242,7 @@ DebugLogPrintf:
         call fputs_
 loc_93B26:
         mov eax, esp
-        call sub_936C0
+        call DebugShowLines
 loc_93B2D:
         add esp, 104h
         ret

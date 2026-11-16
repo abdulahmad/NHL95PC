@@ -5,7 +5,7 @@ section s_9F226 progbits alloc exec nowrite align=1
 extern __GETDS, str_BLASTER, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_
 extern int386x_, memset_, outp_, GetPatchEntry, strtoul_, SbMixRateDiv, SbMixerOpen, SbMixerClose
 extern SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetRate, SbStreamSetSample, SbStreamStart, SbStreamIdle
-extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, sub_AA1D9, unk_D522E, unk_D5254, unk_D5258
+extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, SbSetStereo, unk_D522E, unk_D5254, unk_D5258
 extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
 extern word_F3718
 global ParseBlasterEnv, loc_9F25C, loc_9F293, loc_9F29D, loc_9F2AE, loc_9F2B7, loc_9F2C1
@@ -400,7 +400,7 @@ loc_9F60B:
 loc_9F615:
         movsx eax, word [byte esp+0Eh]
         push eax
-        call sub_AA1D9
+        call SbSetStereo
         jmp short loc_9F5E5
 SbSetTrack:
         push ds

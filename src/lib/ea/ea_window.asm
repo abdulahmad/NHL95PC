@@ -7,8 +7,8 @@ extern byte_D42C6, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42
 extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, FatalError, fontcolor, off_D42A4
 extern AllocMemBlock, AllocMemBlockEx, FindCachedFile, FillRowTable, LoadFileCached, DosOpenFile, DosCloseFile, DosReadFile
 extern ZeroMem
-global subwindowdefadr, loc_8E816, sub_8E81C, loc_8E82B, LoadBank, loc_8E853, loc_8E868, sub_8E86A
-global unk_8E870, sub_8E8A0, sub_8E8B8, sub_8E8D0, loc_8E8ED, sub_8E8F0, sub_8E908, LoadDataFileExt
+global subwindowdefadr, loc_8E816, LoadFileCachedQuiet, loc_8E82B, LoadBank, loc_8E853, loc_8E868, LoadFileCachedFlag
+global str_LocateshapeSHAPENOTFOUND, OpenArtArchiveErr, OpenArtArchive, OpenArtArchiveFlag, loc_8E8ED, LoadDataFileErr, LoadFileAllocQuiet, LoadDataFileExt
 global loc_8E963, loc_8E991, loc_8E9B4, TextSetColors, TextSetCursor, TextSaveState, TextRestoreState, TextSetFont
 global loc_8EA81, loc_8EA83, loc_8EA98, loc_8EAAA, loc_8EABF, loc_8EAD1
 subwindowdefadr:
@@ -57,7 +57,7 @@ loc_8E816:
         pop edi
         pop esi
         ret
-sub_8E81C:
+LoadFileCachedQuiet:
         push ebp
         LD mov, ebp, esp
         LD xor, eax, eax
@@ -98,34 +98,34 @@ loc_8E853:
 loc_8E868:
         leave
         ret
-sub_8E86A:
+LoadFileCachedFlag:
         jmp near LoadFileCached
         db 00h
-unk_8E870:
+str_LocateshapeSHAPENOTFOUND:
         db 06Ch,06Fh,063h,061h,074h,065h,073h,068h,061h,070h,065h,020h,02Dh,020h,027h,025h
         db 02Dh,034h,02Eh,034h,073h,027h,020h,053h,048h,041h,050h,045h,020h,04Eh,04Fh,054h
         db 020h,046h,04Fh,055h,04Eh,044h,0Dh,0Ah,00h,00h,00h,00h,00h,00h,00h,00h
-sub_8E8A0:
+OpenArtArchiveErr:
         push byte 1
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8E8D0
+        call OpenArtArchiveFlag
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_8E8B8:
+OpenArtArchive:
         push byte 0
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8E8D0
+        call OpenArtArchiveFlag
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_8E8D0:
+OpenArtArchiveFlag:
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+0Ch]
@@ -140,7 +140,7 @@ sub_8E8D0:
 loc_8E8ED:
         ret
         db 08Bh,0C0h
-sub_8E8F0:
+LoadDataFileErr:
         push byte 1
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -150,7 +150,7 @@ sub_8E8F0:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_8E908:
+LoadFileAllocQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
         push edx

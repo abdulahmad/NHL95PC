@@ -4,23 +4,23 @@ bits 32
 section s_97300 progbits alloc exec nowrite align=1
 extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
 extern dword_EDEF4, dword_EDEF8, FatalError, off_D3088, off_D308C, strncmp_, bcopy
-global SkipCopyrightHeader, loc_97329, sub_97334, loc_97338, loc_9734A, PackedTypeOf, loc_973BC, loc_973D9
+global SkipCopyrightHeader, loc_97329, UnpackReadBE, loc_97338, loc_9734A, PackedTypeOf, loc_973BC, loc_973D9
 global loc_97406, loc_97429, loc_97462, loc_97481, loc_974AF, loc_974B8, loc_974C3, loc_974CE
 global loc_974D9, loc_974E4, loc_974EF, loc_974FA, loc_97505, loc_97510, loc_9751B, loc_9752F
 global loc_97542, loc_97562, loc_9756D, loc_97578, loc_97583, loc_9758E, loc_97599, loc_975A4
-global loc_975B8, loc_975CB, loc_975E3, loc_975EE, loc_97621, loc_97623, sub_9762C, loc_97677
-global loc_97679, sub_9767C, loc_976B7, loc_976D7, loc_976EE, loc_97703, sub_97714, loc_97720
-global sub_97740, loc_977A3, loc_97803, loc_97840, loc_9787D, loc_97885, loc_97893, loc_97897
+global loc_975B8, loc_975CB, loc_975E3, loc_975EE, loc_97621, loc_97623, UnpackedSize, loc_97677
+global loc_97679, HuffGetBits, loc_976B7, loc_976D7, loc_976EE, loc_97703, HuffGetLength, loc_97720
+global UnpackHuffman, loc_977A3, loc_97803, loc_97840, loc_9787D, loc_97885, loc_97893, loc_97897
 global loc_978A6, loc_978B0, loc_978D3, loc_978E4, loc_97911, loc_97923, loc_9793A, loc_97963
 global loc_97995, loc_979AE, loc_979CD, loc_979E6, ExpandBytePair, loc_979FA, loc_97A26, UnpackBytePair
 global loc_97A9A, loc_97AD1, loc_97AF6, loc_97B2A, loc_97B30, loc_97B56, loc_97B84, loc_97B9C
-global UnpackDelta, loc_97BE4, loc_97BEF, loc_97C10, loc_97C24, sub_97C2C, loc_97C58, loc_97C8A
+global UnpackDelta, loc_97BE4, loc_97BEF, loc_97C10, loc_97C24, UnpackRunLength, loc_97C58, loc_97C8A
 global loc_97C96, loc_97CA2, loc_97CAD, loc_97CB8, loc_97CBD, loc_97CBF, loc_97CCF, loc_97CD3
-global sub_97CE0, loc_97D13, loc_97D40, loc_97D5A, loc_97D63, loc_97D87, loc_97D92, loc_97DAA
+global UnpackRefPack, loc_97D13, loc_97D40, loc_97D5A, loc_97D63, loc_97D87, loc_97D92, loc_97DAA
 global loc_97DB3, loc_97DDA, loc_97DE9, loc_97E10, loc_97E19, loc_97E60, loc_97E6F, loc_97E7D
 global loc_97E9E, loc_97EA4, loc_97EAD, unpack, loc_97EE1, loc_97F3C, loc_97F49, loc_97F64
 global loc_97F7D, loc_97F8D, loc_97F9F, loc_97FB1, loc_97FBE, loc_97FCB, loc_97FE1, loc_97FEF
-global loc_98009, loc_9801E, UnpackTo, sub_98044
+global loc_98009, loc_9801E, UnpackTo, UnpackQuiet
 SkipCopyrightHeader:
         push ebx
         push ecx
@@ -51,7 +51,7 @@ loc_97329:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_97334:
+UnpackReadBE:
         push ebx
         push ecx
         xor ebx, ebx
@@ -371,7 +371,7 @@ loc_97623:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_9762C:
+UnpackedSize:
         push esi
         push edi
         mov edi, dword [byte esp+0Ch]
@@ -397,7 +397,7 @@ sub_9762C:
         jg short loc_97677
         lea eax, [byte edx+02h]
         mov edx, 3
-        call sub_97334
+        call UnpackReadBE
         pop edi
         pop esi
         ret
@@ -407,7 +407,7 @@ loc_97679:
         pop edi
         pop esi
         ret
-sub_9767C:
+HuffGetBits:
         push ebx
         push ecx
         push edx
@@ -421,11 +421,11 @@ sub_9767C:
         cmp eax, byte 10h
         jle short loc_976B7
         sub eax, byte 10h
-        call sub_9767C
+        call HuffGetBits
         mov edx, eax
         shl edx, 10h
         mov eax, 10h
-        call sub_9767C
+        call HuffGetBits
         or eax, edx
         jmp short loc_97703
 loc_976B7:
@@ -469,7 +469,7 @@ loc_97703:
         pop ebx
         ret
         db 090h
-sub_97714:
+HuffGetLength:
         push ebx
         push edx
         mov ebx, 2
@@ -478,17 +478,17 @@ loc_97720:
         add ebx, ebx
         inc edx
         mov eax, 1
-        call sub_9767C
+        call HuffGetBits
         test eax, eax
         je short loc_97720
         mov eax, edx
-        call sub_9767C
+        call HuffGetBits
         add eax, ebx
         sub eax, byte 4
         pop edx
         pop ebx
         ret
-sub_97740:
+UnpackHuffman:
         push ecx
         push esi
         push edi
@@ -521,14 +521,14 @@ loc_977A3:
         mov dword [dword_EDEE0], esi
         mov dword [dword_EDEE4], esi
         xor eax, eax
-        call sub_9767C
+        call HuffGetBits
         mov eax, 18h
-        call sub_9767C
+        call HuffGetBits
         mov dword [dword esp+02C4h], eax
         test ebx, ebx
         je near loc_979E6
         mov eax, 8
-        call sub_9767C
+        call HuffGetBits
         mov byte [dword esp+02D4h], al
         mov edi, 1
         xor edx, edx
@@ -540,7 +540,7 @@ loc_97803:
         mov eax, edx
         sub eax, esi
         mov dword [dword esp+ebx+0240h], eax
-        call sub_97714
+        call HuffGetLength
         mov dword [dword esp+02D0h], eax
         mov dword [dword esp+ebx+0200h], eax
         add esi, eax
@@ -574,7 +574,7 @@ loc_97840:
         xor ebp, ebp
         mov cl, 1
 loc_9787D:
-        call sub_97714
+        call HuffGetLength
         inc eax
         je short loc_97897
 loc_97885:
@@ -613,7 +613,7 @@ loc_978D3:
         jae short loc_978D3
 loc_978E4:
         mov eax, edx
-        call sub_9767C
+        call HuffGetBits
         sub eax, dword [dword esp+edx*4+0240h]
         mov dl, byte [dword esp+eax+0100h]
         cmp dl, byte [dword esp+02D4h]
@@ -624,7 +624,7 @@ loc_978E4:
         mov dword [dword_EDEE8], eax
         jmp short loc_978B0
 loc_97911:
-        call sub_97714
+        call HuffGetLength
         test eax, eax
         je short loc_9793A
         mov ebx, dword [dword_EDEE8]
@@ -640,11 +640,11 @@ loc_97923:
         jmp short loc_97923
 loc_9793A:
         mov eax, ebp
-        call sub_9767C
+        call HuffGetBits
         test eax, eax
         jne short loc_97963
         mov eax, 8
-        call sub_9767C
+        call HuffGetBits
         mov edx, dword [dword_EDEE8]
         mov byte [edx], al
         inc edx
@@ -920,7 +920,7 @@ loc_97C24:
         pop ebx
         ret
         db 090h
-sub_97C2C:
+UnpackRunLength:
         push ebx
         push ecx
         push esi
@@ -1020,7 +1020,7 @@ loc_97CD3:
         pop ebx
         ret
         db 090h
-sub_97CE0:
+UnpackRefPack:
         push ecx
         push esi
         push edi
@@ -1290,7 +1290,7 @@ unpack:
 loc_97EE1:
         push ebp
         push edi
-        call sub_9762C
+        call UnpackedSize
         add esp, byte 8
         mov dword [esp], eax
         mov eax, edi
@@ -1348,14 +1348,14 @@ loc_97F8D:
         mov ebx, 1
         mov edx, esi
         mov eax, ecx
-        call sub_97CE0
+        call UnpackRefPack
         mov edi, eax
         jmp short loc_98009
 loc_97F9F:
         mov ebx, 1
         mov edx, esi
         mov eax, ebp
-        call sub_97740
+        call UnpackHuffman
         mov edi, eax
         jmp short loc_98009
 loc_97FB1:
@@ -1383,7 +1383,7 @@ loc_97FCB:
 loc_97FE1:
         mov edx, esi
         mov eax, ecx
-        call sub_97C2C
+        call UnpackRunLength
         mov dword [esp], eax
         jmp short loc_98009
 loc_97FEF:
@@ -1425,7 +1425,7 @@ UnpackTo:
         add esp, byte 10h
         ret
         db 08Bh,0C0h
-sub_98044:
+UnpackQuiet:
         push byte 0
         mov edx, dword [byte esp+010h]
         push edx

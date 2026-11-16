@@ -3,24 +3,24 @@
 #define DrawEditText DrawEditText_decl
 #define DrawEditCursor DrawEditCursor_decl
 #define TickDeadlinePassed TickDeadlinePassed_decl
-#define sub_B3D46 sub_B3D46_decl
-#define sub_B3D64 sub_B3D64_decl
+#define SetSlowDeadline sub_B3D46_decl
+#define SlowDeadlinePassed sub_B3D64_decl
 #include "nhl95.h"
 #undef EditTextField
 #undef DrawEditText
 #undef DrawEditCursor
 #undef TickDeadlinePassed
-#undef sub_B3D46
-#undef sub_B3D64
+#undef SetSlowDeadline
+#undef SlowDeadlinePassed
 
 void DrawEditText(int flags);
 void DrawEditCursor(int flags);
 int TickDeadlinePassed(void);
-void __cdecl sub_B3D46(int n);
-int sub_B3D64(void);
+void __cdecl SetSlowDeadline(int n);
+int SlowDeadlinePassed(void);
 
 /* DRAFT under 10.0 GA: 7 differing, same size, no goto. The poll is an inner
-   `while (!(key = PollKey())) { if (sub_B3D64()) { key = 0; break; } idle }`, the blink an early
+   `while (!(key = PollKey())) { if (SlowDeadlinePassed()) { key = 0; break; } idle }`, the blink an early
    `if (!key) { ...; continue; }`, and Watcom's jump straightening gives the EXE's bottom poll. Left: the
    parameters x and w tie at savings 3 and w takes EBP (the EXE has x in EBP and w at [esp]); tieorder: that
    one swap gives the EXE bytes. With the dead parameter x as the insert state instead of ins, x's savings
@@ -50,17 +50,17 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
     ins = 0;
     DrawEditCursor(flags);
     SetTickDeadline(timeout);
-    sub_B3D46(4);
+    SetSlowDeadline(4);
     for (;;) {
         while (!(key = PollKey())) {
-            if (sub_B3D64()) {
+            if (SlowDeadlinePassed()) {
                 key = 0;
                 break;
             }
             if (idle) idle();
         }
         if (!key) {
-            sub_B3D46(4);
+            SetSlowDeadline(4);
             c = editcuron;
             editcuron = 1;
             DrawEditCursor(flags);

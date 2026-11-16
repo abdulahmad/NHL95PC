@@ -63,13 +63,13 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     }
     if (!err) {
         MakePath(s.path, dir, (char *)leaguedbnames[5], ext);
-        seasondb = (unsigned char *)sub_8E8A0(s.path, 0x20);
+        seasondb = (unsigned char *)OpenArtArchiveErr(s.path, 0x20);
         seasondb_size = GetFileSize(s.path);
         MakePath(s.path, dir, (char *)leaguedbnames[1], ext);
-        careerdb = (unsigned char *)sub_8E8A0(s.path, 0x20);
+        careerdb = (unsigned char *)OpenArtArchiveErr(s.path, 0x20);
         careerdb_size = GetFileSize(s.path);
         MakePath(s.path, dir, (char *)leaguedbnames[0], ext);
-        keydb = (unsigned char *)sub_8E8A0(s.path, 0x20);
+        keydb = (unsigned char *)OpenArtArchiveErr(s.path, 0x20);
         keydb_size = GetFileSize(s.path);
     }
     if (!err && day > 0) {

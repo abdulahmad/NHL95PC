@@ -22,7 +22,7 @@ extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern MarkZoneRect, MemLargestFree, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, ShapeBankCount, FillRect
+extern MarkZoneRect, MemLargestFree, LoadBank, OpenArtArchiveErr, TextSetColors, TextSetFont, ShapeBankCount, FillRect
 extern FillRectClipped, PrintString, SortIndices, FindShape, JoyButtonMap, SetClipWindow, VgaBlitKeyedFlipV, PutPixel
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
@@ -624,7 +624,7 @@ checkwindow_popx:
 ;-----------------------------------------------------------------------------
 ; LoadTeamPPV                                     66497  95 PC, low confidence
 ; Team: when MemLargestFree() >= ovlmemneed[team], opens the team's .PPV (name
-; ovlartnames[team], CD flag via ovlartfiles into fileoncd) with sub_8E8A0;
+; ovlartnames[team], CD flag via ovlartfiles into fileoncd) with OpenArtArchiveErr;
 ; joysampling held off while loading
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hud/checkwindow.c (LoadTeamPPV)
@@ -666,7 +666,7 @@ LoadTeamPPV:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [ovlartbank], eax
         xor esi, esi
@@ -1872,7 +1872,7 @@ LoadTeamPalette:
         push byte 0
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov ebp, eax
@@ -1913,7 +1913,7 @@ LoadTeamPalette:
         push byte 0
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov ebp, eax

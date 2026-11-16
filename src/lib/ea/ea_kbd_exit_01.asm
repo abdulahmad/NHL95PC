@@ -7,13 +7,13 @@ extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveSt
 extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, FindNearestColor
 extern PrintStringCentered, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
 extern SetBitmapClip, DefaultFont
-global sub_981AD, sub_981B0, sub_981D4, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
-global AskExitToDos, loc_984CF, ShowMessageBox, sub_9862C, DosGetVector, DosSetVector, sub_9867E
-sub_981AD:
+global EnableInterrupts, SaveBoxBackground, RestoreBoxBackground, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
+global AskExitToDos, loc_984CF, ShowMessageBox, PauseUntilKey, DosGetVector, DosSetVector, ConsoleMessageThunk
+EnableInterrupts:
         sti
         ret
         db 00h
-sub_981B0:
+SaveBoxBackground:
         push ecx
         push esi
         push edi
@@ -34,7 +34,7 @@ sub_981B0:
         pop ecx
         ret
         db 08Bh,0C0h
-sub_981D4:
+RestoreBoxBackground:
         push ecx
         push esi
         push edi
@@ -116,7 +116,7 @@ ShowPromptBox:
         mov ebx, dword [dword esp+0B8h]
         mov edx, dword [dword esp+0B4h]
         mov eax, esi
-        call sub_981B0
+        call SaveBoxBackground
         call SetScreenTarget
         push byte 0
         call FindNearestColor
@@ -206,7 +206,7 @@ loc_983F1:
         mov ebx, dword [dword esp+0B8h]
         mov edx, dword [dword esp+0B4h]
         mov eax, dword [dword esp+0ACh]
-        call sub_981D4
+        call RestoreBoxBackground
         call dword [off_D3074]
         lea eax, [byte esp+060h]
         push eax
@@ -290,7 +290,7 @@ ShowMessageBox:
         mov ebx, 0BEh
         xor edx, edx
         mov eax, esi
-        call sub_981B0
+        call SaveBoxBackground
         call SetScreenTarget
         push byte 0
         call FindNearestColor
@@ -323,7 +323,7 @@ ShowMessageBox:
         mov ebx, 0BEh
         xor edx, edx
         mov eax, esi
-        call sub_981D4
+        call RestoreBoxBackground
         call dword [off_D3074]
         lea eax, [byte esp+060h]
         push eax
@@ -346,7 +346,7 @@ ShowMessageBox:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_9862C:
+PauseUntilKey:
         push byte 1
         push byte 18h
         mov ecx, 120h
@@ -396,5 +396,5 @@ DosSetVector:
         pop ds
         pop es
         ret
-sub_9867E:
+ConsoleMessageThunk:
         jmp near WriteConsoleMessage

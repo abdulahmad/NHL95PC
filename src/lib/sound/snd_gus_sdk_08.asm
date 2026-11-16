@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_B19E0 progbits alloc exec nowrite align=1
 extern byte_D8B0E, byte_D8B10, GusVoiceIrqBits, byte_F79E8, dword_D89DC, dword_F79F8, dword_F79FC, dword_F7A00
-extern dword_F7B78, inp_, outp_, outpw_, GusEnterCritical, GusLeaveCritical, GusSetVoiceCallbacks, word_D8764
+extern GusVoiceAllocMask, inp_, outp_, outpw_, GusEnterCritical, GusLeaveCritical, GusSetVoiceCallbacks, word_D8764
 extern word_D8766, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort, GusActiveVoices
-global sub_B19E0, sub_B1A04, loc_B1A35, loc_B1ABF, sub_B1AC8, loc_B1AF9, loc_B1B83, sub_B1B8C
-global sub_B1BF8, sub_B1C70, loc_B1C8A, loc_B1CA9, sub_B1CBC, loc_B1CE9, loc_B1D46, loc_B1D71
-global loc_B1D8B, loc_B1DA5, loc_B1DA6, loc_B1DD7, loc_B1E19, loc_B1E22, sub_B1E2C, sub_B1E64
+global GusResetTimers, GusStartTimer2, loc_B1A35, loc_B1ABF, GusStartTimer1, loc_B1AF9, loc_B1B83, GusStopTimer1
+global GusStopTimer2, GusResetVoiceAlloc, loc_B1C8A, loc_B1CA9, GusAllocVoice, loc_B1CE9, loc_B1D46, loc_B1D71
+global loc_B1D8B, loc_B1DA5, loc_B1DA6, loc_B1DD7, loc_B1E19, loc_B1E22, GusReleaseVoice, GusAddVoicePriority
 global GusPeek, GusPoke, GusPokeFill, loc_B1FC4, loc_B1FC6, loc_B1FD1, loc_B2000, loc_B203D
 global loc_B2043, loc_B2045, loc_B2067, GusTestDramBank, loc_B20C5, loc_B20F1, loc_B211D, loc_B2149
 global loc_B2175, loc_B2181, loc_B21E7, loc_B21F4, loc_B21FA, loc_B2214
-sub_B19E0:
+GusResetTimers:
         push ebp
         mov ebp, esp
         push edx
@@ -26,7 +26,7 @@ sub_B19E0:
         pop edx
         pop ebp
         ret
-sub_B1A04:
+GusStartTimer2:
         push ebp
         mov ebp, esp
         push ebx
@@ -85,7 +85,7 @@ loc_B1ABF:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B1AC8:
+GusStartTimer1:
         push ebp
         mov ebp, esp
         push ebx
@@ -144,7 +144,7 @@ loc_B1B83:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B1B8C:
+GusStopTimer1:
         push ebp
         mov ebp, esp
         push edx
@@ -176,7 +176,7 @@ sub_B1B8C:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B1BF8:
+GusStopTimer2:
         push ebp
         mov ebp, esp
         push edx
@@ -208,7 +208,7 @@ sub_B1BF8:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_B1C70:
+GusResetVoiceAlloc:
         push ebp
         mov ebp, esp
         push ebx
@@ -218,7 +218,7 @@ sub_B1C70:
         xor edx, edx
         xor ebx, ebx
         mov byte [byte_D8B10], ah
-        mov dword [dword_F7B78], edx
+        mov dword [GusVoiceAllocMask], edx
         jmp short loc_B1CA9
 loc_B1C8A:
         xor edx, edx
@@ -239,7 +239,7 @@ loc_B1CA9:
         pop ebx
         pop ebp
         ret
-sub_B1CBC:
+GusAllocVoice:
         push ebp
         mov ebp, esp
         push ebx
@@ -263,12 +263,12 @@ loc_B1CE9:
         mov ecx, ebx
         shl eax, cl
         mov ecx, eax
-        mov eax, dword [dword_F7B78]
+        mov eax, dword [GusVoiceAllocMask]
         test ecx, eax
         jne short loc_B1D46
         mov edx, eax
         or edx, ecx
-        mov dword [dword_F7B78], edx
+        mov dword [GusVoiceAllocMask], edx
         and ebx, 0FFFFh
         lea eax, [nosplit ebx*4+00h]
         sub eax, ebx
@@ -333,13 +333,13 @@ loc_B1DD7:
         mov eax, 1
         mov cl, dl
         shl eax, cl
-        mov ecx, dword [dword_F7B78]
+        mov ecx, dword [GusVoiceAllocMask]
         or ecx, eax
         lea eax, [nosplit edx*4+00h]
         sub eax, edx
         mov ebx, dword [dword_D89DC]
         mov dword [nosplit eax*4+dword_F79FC], esi
-        mov dword [dword_F7B78], ecx
+        mov dword [GusVoiceAllocMask], ecx
         mov dword [nosplit eax*4+dword_F79F8], ebx
         inc ebx
         mov dword [nosplit eax*4+dword_F7A00], edi
@@ -357,7 +357,7 @@ loc_B1E22:
         pop ebp
         ret
         db 090h
-sub_B1E2C:
+GusReleaseVoice:
         push ebp
         mov ebp, esp
         push ecx
@@ -369,10 +369,10 @@ sub_B1E2C:
         mov eax, 1
         shl eax, cl
         mov ecx, eax
-        mov edx, dword [dword_F7B78]
+        mov edx, dword [GusVoiceAllocMask]
         not ecx
         and edx, ecx
-        mov dword [dword_F7B78], edx
+        mov dword [GusVoiceAllocMask], edx
         call GusLeaveCritical
         popfw
         lea esp, [byte ebp-08h]
@@ -381,7 +381,7 @@ sub_B1E2C:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B1E64:
+GusAddVoicePriority:
         push ebp
         mov ebp, esp
         push ebx

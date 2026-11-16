@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_AFAE0 progbits alloc exec nowrite align=1
-extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, DrawDestBuffer, dword_F6138, SetBlitSource, CopyRowFast
-global sub_AFAE0, loc_AFB37, loc_AFB4E, loc_AFB5C, loc_AFBD3, loc_AFBD9, loc_AFCB1, loc_AFCBD
+extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, DrawDestBuffer, ScaledRowBuffer, SetBlitSource, CopyRowFast
+global RasterMappedTriangle, loc_AFB37, loc_AFB4E, loc_AFB5C, loc_AFBD3, loc_AFBD9, loc_AFCB1, loc_AFCBD
 global loc_AFCEB, loc_AFD87, loc_AFDBC, loc_AFDC5, loc_AFE18, loc_AFE38, loc_AFE5C, loc_AFE86
 global loc_AFEA4, loc_AFEA6, loc_AFEE4, loc_AFF0C, loc_AFF7C, loc_B001F, loc_B002A, loc_B005E
 global loc_B0078, loc_B007A, loc_B00B8, loc_B00DB
-sub_AFAE0:
+RasterMappedTriangle:
         push esi
         push edi
         push ebp
@@ -16,7 +16,7 @@ sub_AFAE0:
         mov edx, dword [byte eax+02h]
         sar edx, 10h
         mov dword [byte esp+054h], edx
-        push dword_F6138
+        push ScaledRowBuffer
         add eax, byte 10h
         push eax
         call SetBlitSource
@@ -158,7 +158,7 @@ loc_AFBD9:
         neg eax
         mov dword [byte esp+024h], eax
 loc_AFCB1:
-        mov eax, dword_F6138
+        mov eax, ScaledRowBuffer
         mov edx, 8000h
         mov esi, edx
 loc_AFCBD:
@@ -337,7 +337,7 @@ loc_AFEA6:
         mov eax, ebp
         sar eax, 10h
         add eax, ecx
-        add eax, dword [nosplit edx*4+dword_F6138]
+        add eax, dword [nosplit edx*4+ScaledRowBuffer]
         push eax
         mov eax, dword [DrawDestBuffer]
         add eax, dword [byte esp+060h]
@@ -486,7 +486,7 @@ loc_B007A:
         mov eax, ebp
         sar eax, 10h
         add eax, ecx
-        add eax, dword [nosplit ebx*4+dword_F6138]
+        add eax, dword [nosplit ebx*4+ScaledRowBuffer]
         push eax
         mov eax, dword [DrawDestBuffer]
         add eax, dword [byte esp+058h]

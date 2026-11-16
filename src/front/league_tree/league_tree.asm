@@ -5,7 +5,7 @@ section s_2970A progbits alloc exec nowrite align=1
 extern __CHK, boxfillcolor, boxlitecolor, boxshadecolor, FileClose, FileOpenRead, fputchar, FreeMemBlock
 extern leaguedbnames, lgstate, MakePath, playofftree, playofftree_p1, PlayoffTreeScreen, pochampion, ReadSchedGame
 extern ReadTeamNames, statsfromleague, statsleague, str_extDB, str_LSSCHED, str_space, str_Space2, strcat_
-extern strcmp_, strcpy_, strlen_, sub_8E8A0, FillRect, FillRectColor, PlotPixel, teamcitynames
+extern strcmp_, strcpy_, strlen_, OpenArtArchiveErr, FillRect, FillRectColor, PlotPixel, teamcitynames
 extern treeteamnames
 global LoadPlayoffModeTree, TreeSeriesWinner, OpenStatsSchedule, LoadLeagueTree, FitPlayerName, DrawBevelBox
 ;-----------------------------------------------------------------------------
@@ -368,7 +368,7 @@ TreeSeriesWinner:
 ;-----------------------------------------------------------------------------
 ; OpenStatsSchedule                            29A97  95 PC, medium confidence
 ; Opens the league schedule DB (leaguedbnames[6]) or LSSCHED.DB as a
-; shape-style file (sub_8E8A0) into *out
+; shape-style file (OpenArtArchiveErr) into *out
 ;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/OpenStatsSchedule.c
 %ifdef CBUILD
@@ -404,7 +404,7 @@ OpenStatsSchedule:
         push byte 20h
         lea eax, [byte ebp-024h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-04h]

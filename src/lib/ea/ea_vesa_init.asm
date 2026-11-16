@@ -8,7 +8,7 @@ extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, GraphicsReady, dword_
 extern dword_D3050, dword_D3054, dword_D3058, ScreenWidth, BackBufferWidth, dword_D30D8, dword_D30DC, dword_D30E0
 extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108
 extern dword_D4F4C, dword_D4F50, dword_EDABA, vesapresent, dword_EDCBC, FatalError, FreeMemBlock, spawnl_
-extern strncmp_, MemPtrSize, sub_8E8A0, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
+extern strncmp_, MemPtrSize, OpenArtArchiveErr, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
 extern VesaSetBankArg, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
 global ProbeVesa, loc_8DF8B, loc_8DFB0, loc_8DFEA, loc_8E011, loc_8E06C, initgraphics, loc_8E0A0
 global loc_8E0AE, loc_8E0C6, loc_8E0D5, loc_8E0DE, loc_8E0FA, loc_8E113, loc_8E12F, loc_8E148
@@ -43,7 +43,7 @@ loc_8DF8B:
 loc_8DFB0:
         push byte 0
         push str_CEavesaDat
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov esi, eax

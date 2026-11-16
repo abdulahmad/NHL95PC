@@ -7,7 +7,7 @@ extern fileoncd, FreeMemBlock, GetInputEvent, GetTicks, MakePath, ptrupdatefn, r
 extern rinkfileidx, rinkhtiles, rinkscrollx, rinkscrolly, rinktilebm, rinkwtiles, scrollx, scrolly
 extern SetDrawBitmap, str_CRESTS3, str_ErrorLoadingFile, str_extBIN, str_InvalidFileSize, str_Map, str_Pal16, str_Rink2
 extern str_Til, str_TILES, SetZoneFlags, SetHiddenWindow, SelectHiddenWindow, SetBackgroundWindow, EraseZones, SetZoneScreen
-extern SetZoneOrigin, AllocMemBlock, MemPtrSize, LoadBank, sub_8E8A0, SetPalette, DrawShape, GetFileSize
+extern SetZoneOrigin, AllocMemBlock, MemPtrSize, LoadBank, OpenArtArchiveErr, SetPalette, DrawShape, GetFileSize
 extern LoadFileToBlockShared, FindShape, CreateBitmap, deskbankname
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
 ;-----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ LoadRink:
         push byte 0
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov ebp, eax
         add esp, byte 8
         mov dword [byte esp+014h], eax
@@ -721,7 +721,7 @@ LoadCrestsPalette:
         push byte 0
         lea eax, [dword esp+0304h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov esi, eax
         mov eax, 1E0h

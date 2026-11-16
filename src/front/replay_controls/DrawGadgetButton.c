@@ -10,7 +10,7 @@
 #define FlushZones sub_6ADA7_decl
 #define DrawRinkSideObjects DrawRinkSideObjects_decl
 #define ReplayControlLoop ReplayControlLoop_decl
-#define VgaBlitKeyedHot sub_B4CD8_decl
+#define VgaBlitKeyed sub_B4CD8_decl
 #define replayplay replayplay_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
 #define VgaBlitKeyedFlipV sub_B500C_decl
@@ -22,7 +22,7 @@
 #undef FlushZones
 #undef DrawRinkSideObjects
 #undef ReplayControlLoop
-#undef VgaBlitKeyedHot
+#undef VgaBlitKeyed
 #undef replayplay
 #undef TicksSinceLastCall
 #undef VgaBlitKeyedFlipV
@@ -58,7 +58,7 @@ void SetZoneScreen(int x0, int y0, int x1, int y1);
 void FlushZones(void);
 void DrawRinkSideObjects(short vx, short vy);
 int ReplayControlLoop(int *step);
-void __cdecl VgaBlitKeyedHot(int art, int x, int y);  /* graphics library: draw art (opaque) */
+void __cdecl VgaBlitKeyed(int art, int x, int y);  /* graphics library: draw art (opaque) */
 extern unsigned char *replayplay;  /* E03A4: the replay frame being played */
 int __cdecl TicksSinceLastCall(void);
 
@@ -101,9 +101,9 @@ void InstantReplay(int mode)
         MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
     else
         MakePath(path, fileoncd[0x96] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget5, (char *)str_PPV);
-    gadgetfile = sub_8E8A0(path, 0);
+    gadgetfile = OpenArtArchiveErr(path, 0);
     gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
-    VgaBlitKeyedHot(gadgetshape, 0, 0);
+    VgaBlitKeyed(gadgetshape, 0, 0);
     DrawGadgetButton(6);
     DrawGadgetButton(2);
     DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
@@ -409,7 +409,7 @@ int ReplayControlLoop(int *step)
         dword_ED754 = 4;
         SelectScreenBM();
         SetClipWindow(0, 0x140, 0, 0x20);
-        VgaBlitKeyedHot(gadgetshape, 0, 0);
+        VgaBlitKeyed(gadgetshape, 0, 0);
         DrawGadgetButton(2);
         DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }

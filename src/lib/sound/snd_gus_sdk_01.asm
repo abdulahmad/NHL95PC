@@ -6,12 +6,12 @@ extern str_GF1PATCH110, str_110, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, GusDma
 extern byte_F5978, byte_F5979, byte_F597A, byte_F59F8, byte_F59F9, byte_F5A00, byte_F5A01, byte_F5A04
 extern byte_F5C0B, GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, GusOpenCount, dword_D7ABC
 extern dword_D87DC, dword_D87E0, dword_D89D8, dword_F59FC, dword_F6016, dword_F6116, inp_, inpw_
-extern outp_, outpw_, strcmp_, strncmp_, GusProbePort, sub_B0A14, sub_B0A40, sub_B0A5C
-extern sub_B0A78, GusHookIrq, GusUnhookIrq, GusDownload, GusDramDmaDone, sub_B10D0, GusClearIrqState, GusEnterCritical
-extern GusLeaveCritical, GusWaveIrqHandler, GusMidiIrqHandler, GusDelay, GusSetBasePort, GusClearCallbacks, sub_B14E4, sub_B151C
-extern GusRunInitTable, sub_B1A04, sub_B1BF8, sub_B1CBC, sub_B1E2C, sub_B1E64, GusPeek, GusPoke
+extern outp_, outpw_, strcmp_, strncmp_, GusProbePort, GusDosRead, GusDosClose, GusDosSeek
+extern GusDosOpen, GusHookIrq, GusUnhookIrq, GusDownload, GusDramDmaDone, GusCalcVoiceAddrs, GusClearIrqState, GusEnterCritical
+extern GusLeaveCritical, GusWaveIrqHandler, GusMidiIrqHandler, GusDelay, GusSetBasePort, GusClearCallbacks, GusClaimVoiceCallbacks, GusClaimTimerCallbacks
+extern GusRunInitTable, GusStartTimer2, GusStopTimer2, GusAllocVoice, GusReleaseVoice, GusAddVoicePriority, GusPeek, GusPoke
 extern GusTestDramBank, unk_F5BF8, GusBasePort, GusIrqStatusPort, word_D8768, word_D876A, GusVoiceSelectPort, GusRegSelectPort
-extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, word_F6128, word_F799C
+extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, word_F6128, GusDosResult
 extern GusIrqFlags, GusActiveVoices
 global GusReadPatchHeader, loc_AA23E, loc_AA250, loc_AA274, loc_AA29D, loc_AA2C2, loc_AA2EE, loc_AA2F7
 global GusLoadPatch, loc_AA322, loc_AA337, loc_AA34B, loc_AA38B, loc_AA39E, loc_AA3C5, loc_AA3D0
@@ -66,15 +66,15 @@ GusReadPatchHeader:
         push ecx
         push esi
         mov esi, edx
-        call sub_B0A78
+        call GusDosOpen
         mov ecx, eax
         test eax, eax
         jge short loc_AA23E
         mov edx, eax
-        mov word [word_F799C], ax
+        mov word [GusDosResult], ax
         neg edx
         mov eax, 10h
-        mov word [word_F799C], dx
+        mov word [GusDosResult], dx
         jmp near loc_AA2F7
 loc_AA23E:
         cmp eax, byte 0FFFFFFFFh
@@ -88,11 +88,11 @@ loc_AA23E:
         ret
 loc_AA250:
         mov ebx, 81h
-        call sub_B0A14
+        call GusDosRead
         cmp ax, 81h
         je short loc_AA274
         mov eax, ecx
-        call sub_B0A40
+        call GusDosClose
         mov eax, 0Eh
         lea esp, [byte ebp-0Ch]
         pop esi
@@ -108,7 +108,7 @@ loc_AA274:
         test eax, eax
         je short loc_AA29D
         mov eax, ecx
-        call sub_B0A40
+        call GusDosClose
         mov eax, 0Eh
         lea esp, [byte ebp-0Ch]
         pop esi
@@ -123,7 +123,7 @@ loc_AA29D:
         test eax, eax
         jge short loc_AA2C2
         mov eax, ecx
-        call sub_B0A40
+        call GusDosClose
         mov eax, 0Fh
         lea esp, [byte ebp-0Ch]
         pop esi
@@ -135,11 +135,11 @@ loc_AA2C2:
         mov ebx, 3Fh
         lea edx, [dword esi+081h]
         mov eax, ecx
-        call sub_B0A14
+        call GusDosRead
         cmp ax, 3Fh
         je short loc_AA2EE
         mov eax, ecx
-        call sub_B0A40
+        call GusDosClose
         mov eax, 0Eh
         lea esp, [byte ebp-0Ch]
         pop esi
@@ -149,7 +149,7 @@ loc_AA2C2:
         ret
 loc_AA2EE:
         mov eax, ecx
-        call sub_B0A40
+        call GusDosClose
         xor eax, eax
 loc_AA2F7:
         lea esp, [byte ebp-0Ch]
@@ -197,15 +197,15 @@ loc_AA34B:
         mov word [byte eax+01Ah], 400h
         mov eax, esi
         mov dword [byte ebp-01Ch], ebx
-        call sub_B0A78
+        call GusDosOpen
         mov esi, eax
         mov edi, eax
         test eax, eax
         jge short loc_AA38B
-        mov word [word_F799C], ax
+        mov word [GusDosResult], ax
         neg esi
         mov eax, 10h
-        mov word [word_F799C], si
+        mov word [GusDosResult], si
         jmp near loc_AA74C
 loc_AA38B:
         cmp eax, byte 0FFFFFFFFh
@@ -219,13 +219,13 @@ loc_AA38B:
 loc_AA39E:
         mov edx, 0C0h
         xor ebx, ebx
-        call sub_B0A5C
+        call GusDosSeek
         xor edx, edx
         mov dx, ax
         test edx, edx
         je short loc_AA3C5
         mov eax, esi
-        call sub_B0A40
+        call GusDosClose
         mov eax, edx
         lea esp, [byte ebp-08h]
         pop edi
@@ -240,12 +240,12 @@ loc_AA3D0:
         lea edx, [byte ebp-064h]
         mov ebx, 2Fh
         mov eax, edi
-        call sub_B0A14
+        call GusDosRead
         and eax, 0FFFFh
         cmp eax, byte 2Fh
         je short loc_AA406
         mov eax, edi
-        call sub_B0A40
+        call GusDosClose
         mov eax, dword [byte ebp-024h]
         call GusUnloadPatch
         mov eax, 0Eh
@@ -289,12 +289,12 @@ loc_AA45D:
         lea edx, [dword ebp-0C4h]
         mov ebx, 60h
         mov eax, edi
-        call sub_B0A14
+        call GusDosRead
         and eax, 0FFFFh
         cmp eax, byte 60h
         je short loc_AA496
         mov eax, edi
-        call sub_B0A40
+        call GusDosClose
         mov eax, dword [byte ebp-024h]
         call GusUnloadPatch
         mov eax, 0Eh
@@ -377,7 +377,7 @@ loc_AA58A:
         test ebx, ebx
         jne short loc_AA5B6
         mov eax, edi
-        call sub_B0A40
+        call GusDosClose
         mov eax, dword [byte ebp-024h]
         call GusUnloadPatch
         mov eax, 6
@@ -409,12 +409,12 @@ loc_AA5D0:
         mov edx, dword [edx]
         mov bx, ax
         mov eax, edi
-        call sub_B0A14
+        call GusDosRead
         and eax, 0FFFFh
         cmp eax, ecx
         je short loc_AA617
         mov eax, edi
-        call sub_B0A40
+        call GusDosClose
         mov eax, dword [byte ebp-024h]
         call GusUnloadPatch
         mov eax, 0Eh
@@ -481,7 +481,7 @@ loc_AA679:
         je short loc_AA6B6
 loc_AA69C:
         mov eax, edi
-        call sub_B0A40
+        call GusDosClose
         mov eax, dword [byte ebp-024h]
         call GusUnloadPatch
         mov eax, edx
@@ -521,7 +521,7 @@ loc_AA6F7:
         mov eax, esi
         mov dword [byte ebp-010h], ecx
         mov ecx, dword [byte ebp-034h]
-        call sub_B10D0
+        call GusCalcVoiceAddrs
         inc ecx
         add esi, byte 49h
         mov dword [byte ebp-034h], ecx
@@ -544,7 +544,7 @@ loc_AA72E:
         jb near loc_AA3D0
         mov eax, edi
         mov edx, dword [byte ebp-024h]
-        call sub_B0A40
+        call GusDosClose
         mov eax, dword [byte ebp-01Ch]
         mov word [edx], ax
         xor eax, eax
@@ -1409,11 +1409,11 @@ loc_AB200:
         mov eax, GusVoiceRampEnd
         mov word [word_F611A], dx
         mov word [word_F6118], bx
-        call sub_B151C
+        call GusClaimTimerCallbacks
         test eax, eax
         jne short loc_AB236
         mov eax, GusVoiceWaveEnd
-        call sub_B14E4
+        call GusClaimVoiceCallbacks
         test eax, eax
         je short loc_AB23B
 loc_AB236:
@@ -2214,7 +2214,7 @@ GusStartVibratoTimer:
         push edx
         mov eax, GusVibratoTick
         mov edx, 0BBh
-        call sub_B1A04
+        call GusStartTimer2
         lea esp, [byte ebp-04h]
         pop edx
         pop ebp
@@ -2223,7 +2223,7 @@ GusStartVibratoTimer:
 GusStopVibratoTimer:
         push ebp
         mov ebp, esp
-        call sub_B1BF8
+        call GusStopTimer2
         mov esp, ebp
         pop ebp
         ret
@@ -2702,7 +2702,7 @@ loc_ABF95:
         mov eax, ebx
         mov byte [byte ecx+016h], 0
         xor dl, dl
-        call sub_B1E2C
+        call GusReleaseVoice
         mov byte [nosplit ebx*4+byte_F5978], dl
         mov byte [nosplit ebx*4+byte_F5979], dl
         mov eax, dword [ecx]
@@ -2896,7 +2896,7 @@ loc_AC1F2:
         je near loc_AC673
         mov eax, dword [byte ebp-02Ch]
         mov edx, GusStopNoteVoices
-        call sub_B1CBC
+        call GusAllocVoice
         mov edx, eax
         mov dword [byte ebp-028h], eax
         cmp eax, byte 0FFFFFFFFh
@@ -3323,7 +3323,7 @@ loc_AC766:
         add ebx, ecx
         mov eax, ecx
         add ebx, unk_F5BF8
-        call sub_B1E64
+        call GusAddVoicePriority
         mov al, byte [byte ebx+013h]
         test al, 1
         je near loc_ACC20

@@ -171,7 +171,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     SetScreenTarget();
     TextSaveState(f.state);
     MakePath(f.name, fileoncd[0x21A] == 1 ? (char *)cddriveptr : 0, (char *)str_Indus0302, (char *)str_VFN);
-    f.font = sub_8E8A0(f.name, 0x20);
+    f.font = OpenArtArchiveErr(f.name, 0x20);
     TextSetFont(f.font);
 
     /* The crests, each copied into its own bitmap. */

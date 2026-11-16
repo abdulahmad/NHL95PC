@@ -9,7 +9,7 @@ extern editx, edity, fontcolor, fputchar, FreeMemBlock, GetInputEvent, InputInst
 extern listscroll, MouseSetPos, pointerspr, PollKey, PrintMenuText, PrintShadowText, ptrupdatefn, SetTextColors
 extern SetTickDeadline, str_DBOX, str_Dot, str_extDB, str_ORG, str_Pointer6, str_Space, strlen_
 extern AllocMemBlock, TextSetColors, PutBlock, TextWidthN, FillRect, FillRectClipped, XorRectClipped, DrawArt
-extern GrabBlock, TextPrintAt, KeyDown, MouseRead, sub_B3D46, sub_B3D64, SetScreenTarget, FillRectColor
+extern GrabBlock, TextPrintAt, KeyDown, MouseRead, SetSlowDeadline, SlowDeadlinePassed, SetScreenTarget, FillRectColor
 extern TickDeadlinePassed, unknown_libname_4
 global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNullCallback, SetListItemColors, ListHitTest, DrawListItem
 global DrawListItem_x, DrawListItems, ListDialog, MeasureTextLine, SetDialogColors, TrackButtons, TrackButtons_x, DrawButtons
@@ -2281,7 +2281,7 @@ RunMessageBox:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CritErrHandler                                                  3149D  95 PC
-; INT 24h handler installed at startup (sub_B3036): sets criterrflag = -1 and
+; INT 24h handler installed at startup (InstallBreakHandler): sets criterrflag = -1 and
 ; returns 0 (ignore); checked by database_merge disk-space code
 ;-----------------------------------------------------------------------------
 ; C: src/pc/dialogs/CritErrHandler.c
@@ -2551,7 +2551,7 @@ EditTextField:
         call SetTickDeadline
         add esp, byte 4
         push byte 4
-        call sub_B3D46
+        call SetSlowDeadline
         add esp, byte 4
         jmp near .17
 .1:
@@ -2667,7 +2667,7 @@ EditTextField:
         mov dword [byte esp+04h], eax
         test eax, eax
         jne short .18
-        call sub_B3D64
+        call SlowDeadlinePassed
         test eax, eax
         je near EditTextField.1
         xor ebx, ebx
@@ -2676,7 +2676,7 @@ EditTextField:
         cmp dword [byte esp+04h], byte 0
         jne near EditTextField.2
         push byte 4
-        call sub_B3D46
+        call SetSlowDeadline
         add esp, byte 4
         mov edx, dword [editcuron]
         mov dword [editcuron], 1

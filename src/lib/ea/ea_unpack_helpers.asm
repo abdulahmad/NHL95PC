@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_A2F40 progbits alloc exec nowrite align=1
-extern _FtoS_, byte_D42E4, KeyedDraw, RowCopyFunc, forcedecpt_, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId
-extern PutBlock, sub_B01B0, sub_B026C, bcopy, BlitBlockShadow
-global sub_A2F40, loc_A2F61, sub_A2F84, sub_A2FD0, loc_A3006, loc_A3015, loc_A3024, loc_A302C
-global sub_A3050, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, _EFG_Format_, sub_A30F8, loc_A3105
+extern _FtoS_, ColourRemap, KeyedDraw, RowCopyFunc, forcedecpt_, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId
+extern PutBlock, CopyRowShadowKeyed, RemapBytes, bcopy, BlitBlockShadow
+global DrawArtShadow, loc_A2F61, DrawArtShadowOwnPos, FlipArtHorizontal, loc_A3006, loc_A3015, loc_A3024, loc_A302C
+global FlipArtVertical, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, RemapArt, RemapShapeBank, loc_A3105
 global loc_A312B, loc_A312C, loc_A313F, loc_A3172, loc_A317C, loc_A3189, loc_A3196, loc_A3199
 global loc_A319E, loc_A31BF, loc_A31EE, loc_A31F2, loc_A31FA, loc_A3210
-sub_A2F40:
+DrawArtShadow:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
@@ -21,7 +21,7 @@ sub_A2F40:
         add esp, byte 0Ch
         ret
 loc_A2F61:
-        mov dword [RowCopyFunc], sub_B01B0
+        mov dword [RowCopyFunc], CopyRowShadowKeyed
         push eax
         push ebx
         push edx
@@ -30,7 +30,7 @@ loc_A2F61:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
-sub_A2F84:
+DrawArtShadowOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -39,7 +39,7 @@ sub_A2F84:
         sar eax, 10h
         push eax
         push edx
-        call sub_A2F40
+        call DrawArtShadow
         add esp, byte 0Ch
         ret
         mov edx, dword [byte esp+04h]
@@ -54,11 +54,11 @@ sub_A2F84:
         sub ebx, eax
         push ebx
         push edx
-        call sub_A2F40
+        call DrawArtShadow
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h
-sub_A2FD0:
+FlipArtHorizontal:
         push esi
         push edi
         push ebp
@@ -112,7 +112,7 @@ loc_A302C:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_A3050:
+FlipArtVertical:
         push esi
         push edi
         push ebp
@@ -167,7 +167,7 @@ loc_A30AA:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-_EFG_Format_:
+RemapArt:
         mov ebx, dword [byte esp+04h]
         mov edx, dword [byte ebx+02h]
         sar edx, 10h
@@ -175,14 +175,14 @@ _EFG_Format_:
         sar eax, 10h
         imul eax, edx
         push eax
-        push byte_D42E4
+        push ColourRemap
         lea eax, [byte ebx+010h]
         push eax
-        call sub_B026C
+        call RemapBytes
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
-sub_A30F8:
+RemapShapeBank:
         push esi
         push edi
         sub esp, byte 8
@@ -203,7 +203,7 @@ loc_A3105:
         call ShapeBankEntry
         add esp, byte 8
         push eax
-        call _EFG_Format_
+        call RemapArt
         add esp, byte 4
 loc_A312B:
         inc esi

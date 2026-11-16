@@ -10,7 +10,7 @@ extern statsbgnames, statsbgshapes, statscategory, statsgoaliebuf, statspal, sta
 extern statsplayerbuf, statsplayoffs, statsredrawcb, statsskaterbuf, statsteambuf, statsteamorder, statsteamsel, str_calendar
 extern str_easndesk2, str_EASNvfn, str_embpal, str_embpal2, str_embpal3, str_gstat, str_gstat2, str_gstat3
 extern str_keys, str_keys2, str_keys3, str_Pal6, str_Pal7, str_Pal8, str_pstat, str_pstat2
-extern str_pstat3, str_tstat, str_tstat2, str_tstat3, AllocMemBlock, MemLargestFree, LoadBank, sub_8E8A0
+extern str_pstat3, str_tstat, str_tstat2, str_tstat3, AllocMemBlock, MemLargestFree, LoadBank, OpenArtArchiveErr
 extern SetPalette, DrawArtKeyColour, FindShape, ClearScreen, VgaSetPalette, SetScreenTarget, SetColorRemap, TeamRosterScreen
 extern TeamStatsScreen, standingsmenubar, rostermenubar, playercardmenubar, teamstatsmenubar, skaterstatsmenubar, goaliestatsmenubar
 global GameTeamStatsScreen, GameTeamStatsScreen_common, GameSkaterStatsScreen, GameSkaterStatsScreen_x, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu_jt, GameStandingsMenu
@@ -336,7 +336,7 @@ GameStandingsScreen:
         jne short .1
         push ebx
         push str_EASNvfn
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [easnfontbuf], eax
 .1:
@@ -1025,7 +1025,7 @@ EasnStandingsScreen:
         jne short .1
         push ebx
         push str_EASNvfn
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [easnfontbuf], eax
 .1:
@@ -1739,7 +1739,7 @@ CalStandingsScreen:
         jne short .1
         push ebx
         push str_EASNvfn
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [easnfontbuf], eax
 .1:

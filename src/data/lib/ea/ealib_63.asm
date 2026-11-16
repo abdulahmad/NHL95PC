@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D4F96 progbits alloc noexec write align=1
-extern PutBlock, DrawArtXor, DrawArt, sub_A2F40, str_Fsh, str_3sh, str_SHPI, str_SHPM
+extern PutBlock, DrawArtXor, DrawArt, DrawArtShadow, str_Fsh, str_3sh, str_SHPI, str_SHPM
 extern str_Error0, str_NoSuchFileOr, str_ArgumentListTooBig, str_ExecFormatError, str_BadFileNumber, str_NotEnoughMemory, str_PermissionDenied, str_FileExists
 extern str_CrossDeviceLink, str_InvalidArgument, str_FileTableOverflow, str_TooManyOpenFiles, str_NoSpaceLeftOn, str_ArgumentTooLarge, str_ResultTooLarge, str_ResourceDeadlockWouldOccur
 global byte_D4FE8, byte_D506C, __real87, SndTimerHandle, dword_D4F9A, dword_D4FA0, dword_D4FA4, dword_D4FEB
@@ -70,7 +70,7 @@ off_D516C:
         dd PutBlock
         dd DrawArtXor
         dd DrawArt
-        dd sub_A2F40
+        dd DrawArtShadow
 off_D517C:
         dd str_Fsh
         dd str_3sh

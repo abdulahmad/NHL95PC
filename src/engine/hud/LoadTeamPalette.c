@@ -12,14 +12,14 @@ void LoadTeamPalette(int home, int vis, unsigned char *pal)
     int i;
 
     MakePath(path, fileoncd[0xA1] == 1 ? (char *)cddriveptr : 0, (char *)str_HOMEPALS4, (char *)str_extBIN);
-    buf = (unsigned char *)sub_8E8A0(path, 0);
+    buf = (unsigned char *)OpenArtArchiveErr(path, 0);
     s = buf + home * 0x1C0;
     for (i = 0; i < 0xC0; i++) pal[0x180 + i] = s[i];
     s += 0xC0;
     for (i = 0; i < 0x100; i++) homeremap[i] = s[i];
     FreeMemBlock((int)buf);
     MakePath(path, fileoncd[0x2B] == 1 ? (char *)cddriveptr : 0, (char *)str_AWAYPALS, (char *)str_extBIN);
-    buf = (unsigned char *)sub_8E8A0(path, 0);
+    buf = (unsigned char *)OpenArtArchiveErr(path, 0);
     s = buf + vis * 0x1C0;
     for (i = 0; i < 0xC0; i++) pal[0x240 + i] = s[i];
     s += 0xC0;

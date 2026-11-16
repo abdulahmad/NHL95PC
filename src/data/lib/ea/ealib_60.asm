@@ -2,24 +2,24 @@
 bits 32
 %include "hockey.inc"
 section s_D2C84 progbits alloc noexec write align=1
-extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, bcopy, PollHotkeys, str_Jan
+extern __null_int23_exit_, memlist1, BiosKeyCall, ReturnZero, ExitProgram, bcopy, PollHotkeys, str_Jan
 extern str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul, str_Aug, str_Sep
 extern str_Oct, str_Nov, str_Dec
 global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
 global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, joyenablemask, cpuinfo_b0
-global cpuinfo_b1, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, joyedgedir, byte_D41CC
+global cpuinfo_b1, JoyButtonBits, JoyPortMask, byte_D4174, byte_D4175, byte_D4176, joyedgedir, byte_D41CC
 global byte_D41CD, byte_D4244, byte_D4245, byte_D4246, byte_D4280, byte_D42C0, byte_D42C1, byte_D42C2
-global byte_D42C3, byte_D42C4, byte_D42C5, byte_D42C6, byte_D42E4, ResourceArchiveName, DebugRow, byte_D4545
-global byte_D4546, __8087, FpuType, BiosKeyFunc, KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask
-global dword_D2D5C, dword_D2D62, dword_D2D68, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, dword_D2F74
+global byte_D42C3, byte_D42C4, byte_D42C5, byte_D42C6, ColourRemap, ResourceArchiveName, DebugRow, byte_D4545
+global DebugTabWidth, __8087, FpuType, BiosKeyFunc, KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask
+global dword_D2D5C, dword_D2D62, dword_D2D68, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, FatalErrorHook
 global dword_D2F78, dword_D2F7A, dword_D2F7C, dword_D2F80, dword_D2F84, dword_D2F88, dword_D2F8C, dword_D2F90
 global joycalactive, tickcount, slowtickcount, oldint8off, mouseminx, mouseminy, mousemaxx, mousemaxy
 global dword_D2FFC, MouseButtonState, dword_D301C, GraphicsReady, MousePresent, mousex, mousey, mousebtns
-global dword_D3038, dword_D303C, dword_D3044, dword_D3048, dword_D304C, dword_D3050, dword_D3054, dword_D3058
+global PointerCount, dword_D303C, dword_D3044, dword_D3048, dword_D304C, dword_D3050, dword_D3054, dword_D3058
 global cpuinfo_d0, cpuinfo_d1, dword_D3090, dword_D3096, ScreenWidth, dword_D30A8, cliprect_x0, cliprect_y0
 global cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase
 global BackBufferWidth, dword_D30D8, dword_D30DC, dword_D30E0, dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0
-global dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108, dword_D4158, dword_D415C, dword_D4160, dword_D4164
+global dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108, JoyRawX1, JoyRawY1, JoyRawX2, JoyRawY2
 global JoyAxisY2, JoyAxisMask, JoyX1Threshold, dword_D417B, JoyX1Center, dword_D4183, dword_D4187, dword_D418B
 global dword_D418F, JoyY1Threshold, dword_D4197, JoyY1Center, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
 global JoyXScale, JoyYScale, dword_D41CE, dword_D41EA, bailout_vec, FpuFlags, dword_D41FC, dword_D4200
@@ -29,7 +29,7 @@ global dword_D4248, dword_D424C, dword_D4250, dword_D4254, dword_D4258, dword_D4
 global dword_D4268, dword_D426C, dword_D4270, dword_D4274, dword_D4278, dword_D427C, tickdeadline, ticklast
 global dword_D429C, fontcolor, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8
 global dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, RowCopyFunc, HeapList
-global HeapRover, HeapLargestFree, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, dword_D4530
+global HeapRover, HeapLargestFree, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, SlowDeadline
 global DebugMode, DebugScreenBase, DebugLineWidth, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
 global MemViewRed, MemViewShowDetail, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
 global ExitHook, Int23Hook, off_D2F70, off_D306C, off_D3070, off_D3074, mousepollfn, off_D3088
@@ -38,7 +38,7 @@ global unk_D44B0, unk_D44CE, DefaultFont, unk_D45F8, unk_D47B4, word_D2D60, word
 global word_D2D6E, saved_ss, oldint8sel, word_D3004, word_D3006, word_D3008, word_D3094, word_D309A
 global EmuHookFlags, word_D41FA
 BiosKeyFunc:
-        dd sub_B2CCD
+        dd BiosKeyCall
         db 00h,00h,00h,00h
 KeyBuffer:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -137,7 +137,7 @@ Int23Hook:
         dd __null_int23_exit_
 off_D2F70:
         dd __null_int23_exit_
-dword_D2F74:
+FatalErrorHook:
         db 00h,00h,00h,00h
 dword_D2F78:
         db 00h,00h
@@ -200,7 +200,7 @@ mousey:
         db 00h,00h,00h,00h
 mousebtns:
         db 00h,00h,00h,00h
-dword_D3038:
+PointerCount:
         db 00h,00h,00h,00h
 dword_D303C:
         db 00h,00h,00h,00h
@@ -227,20 +227,20 @@ cpuinfo_b0:
 cpuinfo_b1:
         db 00h,00h,00h,00h
 off_D306C:
-        dd sub_B300C
+        dd ReturnZero
 off_D3070:
-        dd sub_B300C
+        dd ReturnZero
 off_D3074:
-        dd sub_B300C
+        dd ReturnZero
 mousepollfn:
-        dd sub_B300C
-        dd sub_B300C
-        dd sub_B300C
-        dd sub_B300C
+        dd ReturnZero
+        dd ReturnZero
+        dd ReturnZero
+        dd ReturnZero
 off_D3088:
-        dd sub_B300C
+        dd ReturnZero
 off_D308C:
-        dd sub_B300C
+        dd ReturnZero
 dword_D3090:
         db 00h,00h,00h,00h
 word_D3094:
@@ -559,17 +559,17 @@ dword_D4108:
         db 00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
         db 00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
         db 00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
-dword_D4158:
+JoyRawX1:
         db 00h,00h,00h,00h
-dword_D415C:
+JoyRawY1:
         db 00h,00h,00h,00h
-dword_D4160:
+JoyRawX2:
         db 00h,00h,00h,00h
-dword_D4164:
+JoyRawY2:
         db 00h,00h,00h,00h
-byte_D4168:
+JoyButtonBits:
         db 00h,00h
-byte_D416A:
+JoyPortMask:
         db 0Fh,00h
 JoyAxisY2:
         db 00h,00h,00h,00h
@@ -630,7 +630,7 @@ unk_D41D2:
 dword_D41EA:
         db 00h,00h,00h,00h,00h,00h
 bailout_vec:
-        dd sub_B345D
+        dd ExitProgram
 FpuFlags:
         db 00h,00h,00h,00h
 EmuHookFlags:
@@ -760,7 +760,7 @@ dword_D42DC:
         db 00h,00h,00h,00h
 dword_D42E0:
         dd unk_D45F8
-byte_D42E4:
+ColourRemap:
         db 00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
         db 010h,011h,012h,013h,014h,015h,016h,017h,018h,019h,01Ah,01Bh,01Ch,01Dh,01Eh,01Fh
         db 020h,021h,022h,023h,024h,025h,026h,027h,028h,029h,02Ah,02Bh,02Ch,02Dh,02Eh,02Fh
@@ -821,7 +821,7 @@ unk_D44CE:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h
-dword_D4530:
+SlowDeadline:
         db 00h,00h,00h,00h
 DebugMode:
         db 02h,00h,00h,00h,00h,00h,00h,00h
@@ -833,7 +833,7 @@ DebugRow:
         db 00h
 byte_D4545:
         db 07h
-byte_D4546:
+DebugTabWidth:
         db 08h,02Fh
 DebugLogOn:
         db 00h,00h,00h,00h
@@ -874,15 +874,15 @@ dword_D45A4:
 dword_D45B0:
         db 00h,00h,00h,00h
 joycalprehook:
-        dd sub_B300C
+        dd ReturnZero
 joycalposthook:
-        dd sub_B300C
-        dd sub_B300C
-        dd sub_B300C
-        dd sub_B300C
-        dd sub_B300C
-        dd sub_B300C
-        dd sub_B300C
+        dd ReturnZero
+        dd ReturnZero
+        dd ReturnZero
+        dd ReturnZero
+        dd ReturnZero
+        dd ReturnZero
+        dd ReturnZero
         db 00h,00h,00h,00h
 DefaultFont:
         db 046h,050h,043h,031h,020h,08Eh,08h,08h,00h,08h,06h,01h,00h,00h,00h,0FFh

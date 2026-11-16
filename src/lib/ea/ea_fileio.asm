@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_B3B00 progbits alloc exec nowrite align=1
-extern str_OpenhandleSFILEERROR, ResourceArchiveName, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, dword_D4530
+extern str_OpenhandleSFILEERROR, ResourceArchiveName, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, SlowDeadline
 extern PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, FatalError, slowtickcount
-extern sprintf_, AngleFromDelta, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
+extern sprintf_, AngleFromDelta, TableSin, TableCos, unk_D4448, unk_D44B0, unk_D44CE
 global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, loc_B3B6E, loc_B3BB9, loc_B3BEE
 global loc_B3C2B, loc_B3C53, DosCloseFile, loc_B3C6E, DosWriteFile, DosReadFile, loc_B3C76, loc_B3C85
 global loc_B3C9C, loc_B3CAF, loc_B3CB1, DosSeekFile, FindFirstFile, loc_B3CF4, loc_B3D02, loc_B3D08
-global loc_B3D0A, loc_B3D22, loc_B3D26, sub_B3D2A, sub_B3D46, sub_B3D56, sub_B3D64, DebugLineCount
-global loc_B3D85, vecdist, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, sub_B3DFC
+global loc_B3D0A, loc_B3D22, loc_B3D26, FindNextFile, SetSlowDeadline, WaitSlowDeadline, SlowDeadlinePassed, DebugLineCount
+global loc_B3D85, vecdist, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, SprintfSaveRegs
 DosCallSplitDx:
         push ecx
         push edx
@@ -237,7 +237,7 @@ loc_B3D22:
 loc_B3D26:
         LD xor, eax, eax
         jmp short loc_B3D22
-sub_B3D2A:
+FindNextFile:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -251,19 +251,19 @@ sub_B3D2A:
         jmp short loc_B3D0A
         mov eax, dword [slowtickcount]
         ret
-sub_B3D46:
+SetSlowDeadline:
         mov eax, dword [byte esp+04h]
         add eax, dword [slowtickcount]
-        mov dword [dword_D4530], eax
+        mov dword [SlowDeadline], eax
         ret
-sub_B3D56:
+WaitSlowDeadline:
         mov eax, dword [slowtickcount]
-        sub eax, dword [dword_D4530]
-        js short sub_B3D56
+        sub eax, dword [SlowDeadline]
+        js short WaitSlowDeadline
         ret
-sub_B3D64:
+SlowDeadlinePassed:
         mov ebx, dword [slowtickcount]
-        sub ebx, dword [dword_D4530]
+        sub ebx, dword [SlowDeadline]
         LD sbb, eax, eax
         inc eax
         ret
@@ -300,7 +300,7 @@ loc_B3DB9:
         cmp eax, 80h
         jg short loc_B3DDD
         push eax
-        call sub_B4A66
+        call TableCos
         add esp, byte 4
         LD mov, ebx, eax
         mov eax, dword [byte ebp+08h]
@@ -315,7 +315,7 @@ loc_B3DD4:
         ret
 loc_B3DDD:
         push eax
-        call sub_B4A60
+        call TableSin
         add esp, byte 4
         LD mov, ebx, eax
         mov eax, dword [byte ebp+0Ch]
@@ -329,7 +329,7 @@ loc_B3DF1:
         leave
         ret
         db 00h,00h
-sub_B3DFC:
+SprintfSaveRegs:
         mov dword [PrintfSavedEbx], ebx
         mov dword [PrintfSavedEcx], ecx
         mov dword [PrintfSavedEdx], edx

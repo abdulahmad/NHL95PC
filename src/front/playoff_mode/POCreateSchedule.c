@@ -27,7 +27,7 @@ int POCreateSchedule(int *teams, char *dir)
     int r;
 
     MakePath(path, dir, (char *)str_ScheduleDb, 0);
-    po = (unsigned char *)sub_8E8B8(path, 0x20) + 2;
+    po = (unsigned char *)OpenArtArchive(path, 0x20) + 2;
     if (!po) return 1;
     *(int *)(po + 0x50) = *(int *)(po + 0x54) = *(int *)(po + 0x58) = *(int *)(po + 0x5C) = *(int *)(po + 0x60)
         = *(int *)(po + 0x64) = *(int *)(po + 0x68) = *(int *)(po + 0x6C) = *(int *)(po + 0x70) = *(int *)(po + 0x74)
@@ -36,13 +36,13 @@ int POCreateSchedule(int *teams, char *dir)
     POInitSchedule(po, teams);
     if (teamconf[HomeTeam] != teamconf[VisTeam]) {
         MakePath(dbpath, dir, (char *)leaguedbnames[5], (char *)str_extDB);
-        seasondb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
+        seasondb = (unsigned char *)OpenArtArchiveErr(dbpath, 0x20);
         seasondb_size = GetFileSize(dbpath);
         MakePath(dbpath, dir, (char *)leaguedbnames[1], (char *)str_extDB);
-        careerdb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
+        careerdb = (unsigned char *)OpenArtArchiveErr(dbpath, 0x20);
         careerdb_size = GetFileSize(dbpath);
         MakePath(dbpath, dir, (char *)leaguedbnames[0], (char *)str_extDB);
-        keydb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
+        keydb = (unsigned char *)OpenArtArchiveErr(dbpath, 0x20);
         keydb_size = GetFileSize(dbpath);
         POPreSimRound1(po, HomeTeam, VisTeam);
         POSeedRound2(po);

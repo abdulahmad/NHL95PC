@@ -3652,7 +3652,7 @@ extern int FreeSpaceList; /* D2F64 */
 extern int ExitHook; /* D2F68 */
 extern int Int23Hook; /* D2F6C */
 extern int off_D2F70; /* D2F70 */
-extern int dword_D2F74; /* D2F74 */
+extern int FatalErrorHook; /* D2F74 */
 extern int dword_D2F78; /* D2F78 */
 extern int dword_D2F7A; /* D2F7A */
 extern int dword_D2F7C; /* D2F7C */
@@ -3681,7 +3681,7 @@ extern int MousePresent; /* D3028 */
 extern int mousex; /* D302C */
 extern int mousey; /* D3030 */
 extern int mousebtns; /* D3034 */
-extern int dword_D3038; /* D3038 */
+extern int PointerCount; /* D3038 */
 extern int dword_D303C; /* D303C */
 extern unsigned char joyenablemask; /* D3040 */
 extern int dword_D3044; /* D3044 */
@@ -3728,12 +3728,12 @@ extern int dword_D30F4; /* D30F4 */
 extern int dword_D30F8; /* D30F8 */
 extern int ScreenRowTable[]; /* D3104 */
 extern int dword_D4108[]; /* D4108 */
-extern int dword_D4158; /* D4158 */
-extern int dword_D415C; /* D415C */
-extern int dword_D4160; /* D4160 */
-extern int dword_D4164; /* D4164 */
-extern unsigned char byte_D4168; /* D4168 */
-extern unsigned char byte_D416A; /* D416A */
+extern int JoyRawX1; /* D4158 */
+extern int JoyRawY1; /* D415C */
+extern int JoyRawX2; /* D4160 */
+extern int JoyRawY2; /* D4164 */
+extern unsigned char JoyButtonBits; /* D4168 */
+extern unsigned char JoyPortMask; /* D416A */
 extern int JoyAxisY2; /* D416C */
 extern int JoyAxisMask; /* D4170 */
 extern unsigned char byte_D4174; /* D4174 */
@@ -3827,7 +3827,7 @@ extern int dword_D42D4; /* D42D4 */
 extern int dword_D42D8; /* D42D8 */
 extern int dword_D42DC; /* D42DC */
 extern int dword_D42E0; /* D42E0 */
-extern unsigned char byte_D42E4[]; /* D42E4 */
+extern unsigned char ColourRemap[]; /* D42E4 */
 extern int RowCopyFunc; /* D43E4 */
 extern int HeapList; /* D43E8 */
 extern int HeapRover; /* D43EC */
@@ -3842,13 +3842,13 @@ extern unsigned char unk_D4448[]; /* D4448 */
 extern int dword_D44AC; /* D44AC */
 extern unsigned char unk_D44B0[]; /* D44B0 */
 extern unsigned char unk_D44CE[]; /* D44CE */
-extern int dword_D4530; /* D4530 */
+extern int SlowDeadline; /* D4530 */
 extern int DebugMode; /* D4534 */
 extern int DebugScreenBase; /* D453C */
 extern int DebugLineWidth; /* D4540 */
 extern unsigned char DebugRow; /* D4544 */
 extern unsigned char byte_D4545; /* D4545 */
-extern unsigned char byte_D4546; /* D4546 */
+extern unsigned char DebugTabWidth; /* D4546 */
 extern int DebugLogOn[]; /* D4548 */
 extern int MemViewBlack; /* D457C */
 extern int MemViewWhite; /* D4580 */
@@ -4527,7 +4527,7 @@ extern short word_D86B4; /* D86B4 */
 extern short word_D86B6; /* D86B6 */
 extern int BlitColumnOffsets; /* D86B8 */
 extern int BlitSourcePtr; /* D86BC */
-extern int dword_D86C0; /* D86C0 */
+extern int DmaDefaultMode; /* D86C0 */
 extern unsigned char byte_D86C8[]; /* D86C8 */
 extern short word_D86DA[]; /* D86DA */
 extern int dword_D86DC[]; /* D86DC */
@@ -4538,8 +4538,8 @@ extern short word_D8764; /* D8764 */
 extern short word_D8766; /* D8766 */
 extern short word_D8768; /* D8768 */
 extern short word_D876A; /* D876A */
-extern short word_D876C; /* D876C */
-extern short word_D876E; /* D876E */
+extern short GusMidiControlPort; /* D876C */
+extern short GusMidiDataPort; /* D876E */
 extern short GusVoiceSelectPort; /* D8770 */
 extern short GusRegSelectPort; /* D8772 */
 extern short GusDataLowPort; /* D8774 */
@@ -4559,8 +4559,8 @@ extern int GusTimer1Callback; /* D87C0 */
 extern int GusTimer2Callback; /* D87C4 */
 extern int GusWaveIrqCallback; /* D87C8 */
 extern int GusVolumeIrqCallback; /* D87CC */
-extern int dword_D87D0; /* D87D0 */
-extern int dword_D87D4; /* D87D4 */
+extern int GusMidiXmitCallback; /* D87D0 */
+extern int GusMidiRecvCallback; /* D87D4 */
 extern unsigned char byte_D87D8; /* D87D8 */
 extern int dword_D87DC[]; /* D87DC */
 extern int dword_D87E0[]; /* D87E0 */
@@ -5435,9 +5435,9 @@ extern short word_F6118; /* F6118 */
 extern short word_F611A; /* F611A */
 extern short word_F6128; /* F6128 */
 extern int dword_F612C; /* F612C */
-extern int dword_F6138[]; /* F6138 */
+extern int ScaledRowBuffer[]; /* F6138 */
 extern unsigned char GusDmaChannels[]; /* F7978 */
-extern short word_F799C; /* F799C */
+extern short GusDosResult; /* F799C */
 extern short GusIrqFlags; /* F799E */
 extern short GusActiveVoices; /* F79A0 */
 extern short GusCriticalDepth; /* F79A2 */
@@ -5458,7 +5458,7 @@ extern unsigned char byte_F79E8; /* F79E8 */
 extern int dword_F79F8[]; /* F79F8 */
 extern int dword_F79FC[]; /* F79FC */
 extern int dword_F7A00[]; /* F7A00 */
-extern int dword_F7B78; /* F7B78 */
+extern int GusVoiceAllocMask; /* F7B78 */
 extern unsigned char stackarea[]; /* F7B88 */
 
 #endif

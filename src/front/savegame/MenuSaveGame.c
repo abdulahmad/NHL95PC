@@ -65,7 +65,7 @@ int MenuSaveGame(void)
         if (FileCreate(s.path, &s.h)) FatalError((char *)str_H2);
         if (FileWriteAt(s.h, exhstate, -1, 0x75)) FatalError((char *)str_h3);
         MakePath(s.path, 0, (char *)str_Gsummary3, (char *)str_extDB);
-        p = sub_8E8A0(s.path, 0);
+        p = OpenArtArchiveErr(s.path, 0);
         if (FileWriteAt(s.h, (void *)p, -1, GetFileSize(s.path))) FatalError((char *)str_H4);
         FreeMemBlock(p);
         if (FileWriteAt(s.h, othergames, -1, 0xC)) FatalError((char *)str_h5);

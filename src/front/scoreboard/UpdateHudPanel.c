@@ -3,7 +3,7 @@
 #include "nhl95.h"
 #undef DrawPanelClock
 
-#define PUTDIGIT ((void (__cdecl *)(int spr, int x, int y))VgaBlitKeyedHot)
+#define PUTDIGIT ((void (__cdecl *)(int spr, int x, int y))VgaBlitKeyed)
 
 /* UpdateHudPanel: on the screen bitmap, tick the panel clock and both penalty lists (unless the
  clock was already stopped, or a replay is up), refresh both teams' line energies, and draw the
@@ -38,7 +38,7 @@ void UpdateHudPanel(void)
         hmpanelpens = 0;
     } else {
         if (!hmpanelpens) {
-            VgaBlitKeyed(hmpanelspr);
+            VgaBlitKeyedAtOwnPos(hmpanelspr);
             hmpanelpens = 1;
         }
         DrawPanelPenalties((struct PenSlot *)hudpenhome, 0x48);
@@ -53,7 +53,7 @@ void UpdateHudPanel(void)
         awpanelpens = 0;
     } else {
         if (!awpanelpens) {
-            VgaBlitKeyed(awpanelspr);
+            VgaBlitKeyedAtOwnPos(awpanelspr);
             awpanelpens = 1;
         }
         DrawPanelPenalties((struct PenSlot *)hudpenaway, 0xBF);

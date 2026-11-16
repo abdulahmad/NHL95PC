@@ -6,19 +6,19 @@ extern _dos_close_, _dos_getvect_, _dos_open_, _dos_read_, _dos_setvect_, byte_D
 extern GusPlayDmaChannel, GusRecordDmaChannel, byte_F79C8, dword_D86DC, GusDmaBusy, dword_F79BC, dword_F79C0, dword_F79C4
 extern inp_, lseek_, outp_, outpw_, GusDelay, GusSetDmaCallbacks, GusServiceIrq, GusPokeFill
 extern GusConvertAddr16, GusDmaChannels, word_D86DA, word_D86E0, GusIrqStatusPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort
-extern GusIrqPending, word_D8ACC, word_F799C, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA
+extern GusIrqPending, word_D8ACC, GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA
 extern word_F79C9
-global GusSetupDmaChannel, loc_B0815, loc_B083B, GusProgramDma, loc_B08B5, loc_B08D7, GusMaskDma, sub_B09A4
-global loc_B0A09, sub_B0A14, sub_B0A40, loc_B0A58, sub_B0A5C, loc_B0A71, sub_B0A78, loc_B0A9A
+global GusSetupDmaChannel, loc_B0815, loc_B083B, GusProgramDma, loc_B08B5, loc_B08D7, GusMaskDma, GusDmaCount
+global loc_B0A09, GusDosRead, GusDosClose, loc_B0A58, GusDosSeek, loc_B0A71, GusDosOpen, loc_B0A9A
 global loc_B0A9D, GusSetVect, GusGetVect, GusHookIrq, loc_B0B2F, loc_B0B4B, GusUnhookIrq, loc_B0B98
 global loc_B0BB4, loc_B0BB9, GusSendEoi, loc_B0BFD, GusInitPlayDma, loc_B0C23, loc_B0C2C, GusInitRecordDma
 global loc_B0C47, loc_B0C53, GusInitDma, loc_B0C7F, loc_B0C98, loc_B0CAF, GusStartDramDma, loc_B0D14
 global loc_B0D3D, loc_B0D4F, GusDownload, loc_B0DA1, loc_B0DDA, loc_B0DEF, loc_B0E02, loc_B0E22
-global loc_B0E4B, loc_B0E50, loc_B0E69, loc_B0E72, sub_B0E7C, loc_B0E95, loc_B0EBB, loc_B0EDB
+global loc_B0E4B, loc_B0E50, loc_B0E69, loc_B0E72, GusDmaNextChunk, loc_B0E95, loc_B0EBB, loc_B0EDB
 global loc_B0F0B, loc_B0F10, loc_B0F2B, loc_B0F59, loc_B0F9F, GusDramDmaDone, loc_B0FB6, loc_B0FE0
-global loc_B0FE6, loc_B0FFC, loc_B1003, loc_B1019, loc_B101B, sub_B1024, sub_B103C, loc_B10BB
-global sub_B10D0, loc_B10F6, loc_B10F8, loc_B1129, loc_B112B, loc_B116E, loc_B11BA, loc_B11C0
-global GusClearIrqState, GusEnterCritical, sub_B1237, loc_B1250, loc_B1252, GusLeaveCritical, loc_B126E, loc_B1289
+global loc_B0FE6, loc_B0FFC, loc_B1003, loc_B1019, loc_B101B, GusDmaIdle, GusStopDma, loc_B10BB
+global GusCalcVoiceAddrs, loc_B10F6, loc_B10F8, loc_B1129, loc_B112B, loc_B116E, loc_B11BA, loc_B11C0
+global GusClearIrqState, GusEnterCritical, GusTryEnterCritical, loc_B1250, loc_B1252, GusLeaveCritical, loc_B126E, loc_B1289
 GusSetupDmaChannel:
         push ebp
         mov ebp, esp
@@ -189,7 +189,7 @@ GusMaskDma:
         pop edx
         pop ebp
         ret
-sub_B09A4:
+GusDmaCount:
         push ebp
         mov ebp, esp
         push ebx
@@ -235,7 +235,7 @@ loc_B0A09:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_B0A14:
+GusDosRead:
         push ebp
         mov ebp, esp
         push ecx
@@ -249,18 +249,18 @@ sub_B0A14:
         mov ebx, edx
         mov edx, esi
         call _dos_read_
-        mov word [word_F799C], ax
+        mov word [GusDosResult], ax
         mov eax, dword [byte ebp-0Ch]
         lea esp, [byte ebp-08h]
         pop esi
         pop ecx
         pop ebp
         ret
-sub_B0A40:
+GusDosClose:
         push ebp
         mov ebp, esp
         call _dos_close_
-        mov word [word_F799C], ax
+        mov word [GusDosResult], ax
         test ax, ax
         je short loc_B0A58
         mov eax, 10h
@@ -268,7 +268,7 @@ loc_B0A58:
         mov esp, ebp
         pop ebp
         ret
-sub_B0A5C:
+GusDosSeek:
         push ebp
         mov ebp, esp
         call lseek_
@@ -284,7 +284,7 @@ loc_B0A71:
         pop ebp
         ret
         db 090h
-sub_B0A78:
+GusDosOpen:
         push ebp
         mov ebp, esp
         push ebx
@@ -293,7 +293,7 @@ sub_B0A78:
         lea ebx, [byte ebp-0Ch]
         xor edx, edx
         call _dos_open_
-        mov word [word_F799C], ax
+        mov word [GusDosResult], ax
         test ax, ax
         jne short loc_B0A9A
         mov eax, dword [byte ebp-0Ch]
@@ -503,7 +503,7 @@ loc_B0C7F:
         pop ebp
         ret
 loc_B0C98:
-        mov eax, sub_B0E7C
+        mov eax, GusDmaNextChunk
         call GusSetDmaCallbacks
         test eax, eax
         je short loc_B0CAF
@@ -567,7 +567,7 @@ loc_B0D4F:
         mov byte [byte_F79C8], cl
         xor eax, eax
         mov ax, word [byte ebp+08h]
-        call sub_B0E7C
+        call GusDmaNextChunk
         lea esp, [byte ebp-04h]
         pop esi
         pop ebp
@@ -675,7 +675,7 @@ loc_B0E72:
         pop ebp
         ret 4
         db 090h
-sub_B0E7C:
+GusDmaNextChunk:
         push ebp
         mov ebp, esp
         push ebx
@@ -825,7 +825,7 @@ loc_B101B:
         pop ebp
         ret
         db 090h
-sub_B1024:
+GusDmaIdle:
         push ebp
         mov ebp, esp
         cmp dword [GusDmaBusy], byte 0
@@ -835,7 +835,7 @@ sub_B1024:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B103C:
+GusStopDma:
         push ebp
         mov ebp, esp
         push ebx
@@ -877,7 +877,7 @@ loc_B10BB:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_B10D0:
+GusCalcVoiceAddrs:
         push ebp
         mov ebp, esp
         push ebx
@@ -1011,7 +1011,7 @@ GusClearIrqState:
 GusEnterCritical:
         inc word [GusCriticalDepth]
         ret
-sub_B1237:
+GusTryEnterCritical:
         pushfw
         cli
         cmp word [GusCriticalDepth], byte 0

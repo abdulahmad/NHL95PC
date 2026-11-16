@@ -34,10 +34,10 @@ extern str_Pal27, str_Pal28, str_PCT2, str_Penalty, str_PIM4, str_Play1, str_Pla
 extern str_Pntr3, str_Pntr4, str_Pointer13, str_Pointer14, str_Pos2, str_Power, str_Pstat3, str_Pstat4
 extern str_PT2, str_RosterIncomplete2, str_S2dSS, str_S2dSS2, str_S6, str_S7, str_SA3, str_Scratch2
 extern str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_Teams2, str_Tstat2, str_W6
-extern strcmp_, stub_8C218, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
+extern strcmp_, stub_8C218, AllocMemBlock, PushMemDescriptorLocked, LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, SndQuery, SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect
 extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, DrawArtKeyColour, DrawArtMasked, MouseRead
-extern SetViewRect, FindShape, ClearScreen, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, sub_B4C84
+extern SetViewRect, FindShape, ClearScreen, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetraceEnd
 extern SetColorRemap, FillRectColor, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
 extern unk_DBD1C, unknown_libname_1, vgapage, VisTeam, WaitKey, write_
 global GameLineEditor, GameRosterCmp, GameLineEditorLoop, LineEdHitTest, LoadGameRoster, DrawGameLineJerseys_jt, DrawGameLineJerseys, DrawGameLineJerseys_st1
@@ -2650,7 +2650,7 @@ DrawLineEditorScreen:
         push byte 0
         lea eax, [dword esp+0104h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov ecx, eax
         test edi, edi
@@ -2995,7 +2995,7 @@ LoadJerseyColours:
         push byte 0
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov ebp, eax
         test edi, edi

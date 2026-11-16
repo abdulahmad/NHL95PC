@@ -18,7 +18,7 @@ extern seriesgameno, SetClipWindow, SetDialogColors, SetPalette, SetTickDeadline
 extern str_4dKbytesOfFree, str_BangPal, str_Bkgd, str_Db, str_dot, str_E1, str_E2, str_E31
 extern str_E32, str_Embpal, str_Embscup, str_extDB, str_F1, str_F2, str_fmtSlashDb, str_GameSet
 extern str_Palette, str_PleaseEnterNewPlay, str_PO, str_Schedule, str_ScheduleDb, str_Temp2, str_Tied, strcat_
-extern strcpy_, sub_8E8A0, sub_8E8B8, DrawArtOpaqueAtOwnPos, SetScreenTarget, teamabbrevs, teamconf, teamdivflags
+extern strcpy_, OpenArtArchiveErr, OpenArtArchive, DrawArtOpaqueAtOwnPos, SetScreenTarget, teamabbrevs, teamconf, teamdivflags
 extern TextInputDialog, TextSetColors, unknown_libname_1, VgaSetPalette, ViewPlayoffHilights, VisTeam, WaitTickDeadline, WriteFile
 extern WriteModeState
 global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateSchedule_x, POSetSeriesTeams, POInitSchedule, SeriesWinner
@@ -956,7 +956,7 @@ POCreateSchedule:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8B8
+        call OpenArtArchive
         add esp, byte 8
         lea esi, [byte eax+02h]
         test esi, esi
@@ -998,7 +998,7 @@ POCreateSchedule:
         push byte 20h
         lea eax, [byte esp+044h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [seasondb], eax
         lea eax, [byte esp+040h]
@@ -1014,7 +1014,7 @@ POCreateSchedule:
         push byte 20h
         lea eax, [byte esp+044h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [careerdb], eax
         lea eax, [byte esp+040h]
@@ -1030,7 +1030,7 @@ POCreateSchedule:
         push byte 20h
         lea eax, [byte esp+044h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [keydb], eax
         lea eax, [byte esp+040h]
@@ -2518,7 +2518,7 @@ POHandleElimination:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [seasondb], eax
         mov eax, esp
@@ -2534,7 +2534,7 @@ POHandleElimination:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [careerdb], eax
         mov eax, esp
@@ -2550,7 +2550,7 @@ POHandleElimination:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [keydb], eax
         mov eax, esp
@@ -3056,7 +3056,7 @@ POAfterGame:
         push byte 20h
         lea eax, [byte esp+08h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [seasondb], eax
         lea eax, [byte esp+04h]
@@ -3072,7 +3072,7 @@ POAfterGame:
         push byte 20h
         lea eax, [byte esp+08h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [careerdb], eax
         lea eax, [byte esp+04h]
@@ -3088,7 +3088,7 @@ POAfterGame:
         push byte 20h
         lea eax, [byte esp+08h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [keydb], eax
         lea eax, [byte esp+04h]
@@ -3847,7 +3847,7 @@ LoadScheduleDB:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8B8
+        call OpenArtArchive
         add esp, byte 8
         mov dword [esi], eax
         test eax, eax
@@ -3861,7 +3861,7 @@ LoadScheduleDB:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8B8
+        call OpenArtArchive
         add esp, byte 8
         mov dword [esi], eax
 .1:

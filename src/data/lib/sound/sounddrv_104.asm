@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_F7978 nobits alloc noexec write align=1
 global GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, byte_F79C8, GusVoiceIrqBits, byte_F79E8
-global dword_F79BC, dword_F79C0, dword_F79C4, dword_F79F8, dword_F79FC, dword_F7A00, dword_F7B78, GusDmaChannels
-global word_F799C, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA, word_F79C9
+global dword_F79BC, dword_F79C0, dword_F79C4, dword_F79F8, dword_F79FC, dword_F7A00, GusVoiceAllocMask, GusDmaChannels
+global GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA, word_F79C9
 GusDmaChannels:
         resb 36
-word_F799C:
+GusDosResult:
         resb 2
 GusIrqFlags:
         resb 2
@@ -49,5 +49,5 @@ dword_F79FC:
         resb 4
 dword_F7A00:
         resb 376
-dword_F7B78:
+GusVoiceAllocMask:
         resb 16

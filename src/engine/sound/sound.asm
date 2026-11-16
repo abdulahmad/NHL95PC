@@ -8,7 +8,7 @@ extern oneminsaid, dword_D2427, crowdsamples, dword_ED7A4, gameopts, gmode, last
 extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
 extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
 extern SayPlayerNumber, SayPlayoffResult, SayPlayoffTonight, SayScoringPeriod, SayTonightIntro, SetTickDeadline, sounddev, SpeechBusy
-extern sub_8E8B8, sub_8E908, PlaySong, PlayPatchFull, StopSongId, ReleaseSong, SongFinished, MidiProgramChange
+extern OpenArtArchive, LoadFileAllocQuiet, PlaySong, PlayPatchFull, StopSongId, ReleaseSong, SongFinished, MidiProgramChange
 extern MidiSetVolume, MidiPitchBend, MidiNoteOn, MidiNoteOff, teamabbrevs, WaitTickDeadline
 global SndLoadFile, sndcb_addesp8_x, SndLoadFile2, Crowd_Noise, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, sfx
 global FreeDigiSample, StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PlayCrowdSample_ret, PaOneMinuteLeft, PaSpeechBusy
@@ -16,7 +16,7 @@ global PaGoal, PaPlayerNumber, PaPenalty, PaPenaltyShot, PaTonightIntro, PaTonig
 global PaGoodnight, PaLineups, PaElseNhl, PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
 ;-----------------------------------------------------------------------------
 ; SndLoadFile                                     59493  95 PC, low confidence
-; Sound-library file load callback: sub_8E8B8 with the load flags cursndbank
+; Sound-library file load callback: OpenArtArchive with the load flags cursndbank
 ; (20h, set by the sound config)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/SndLoadFile.c
@@ -31,7 +31,7 @@ SndLoadFile:
         mov ebx, dword [cursndbank]
         push ebx
         push edx
-        call sub_8E8B8
+        call OpenArtArchive
 sndcb_addesp8_x:
         add esp, byte 8
         pop ecx
@@ -39,7 +39,7 @@ sndcb_addesp8_x:
         ret
 ;-----------------------------------------------------------------------------
 ; SndLoadFile2                                    594B2  95 PC, low confidence
-; Second sound-library load callback: sub_8E908 with the load flags
+; Second sound-library load callback: LoadFileAllocQuiet with the load flags
 ; cursndbank
 ;-----------------------------------------------------------------------------
 SndLoadFile2:
@@ -50,7 +50,7 @@ SndLoadFile2:
         mov ebx, dword [cursndbank]
         push ebx
         push edx
-        call sub_8E908
+        call LoadFileAllocQuiet
         jmp short sndcb_addesp8_x
 %endif ; C
 ;-----------------------------------------------------------------------------

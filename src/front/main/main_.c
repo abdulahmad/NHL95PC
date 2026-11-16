@@ -1,23 +1,23 @@
 /* Main / startup: the program entry. */
 #define sub_8DF54 sub_8DF54_decl
 #define InstallTimer InstallTimer_decl
-#define sub_B3036 sub_B3036_decl
+#define InstallBreakHandler sub_B3036_decl
 #define subwindowdefadr sub_8E7A0_decl
 #define InitZoneManager sub_6A9CE_decl
 #define LoadNhlCfg LoadNhlCfg_decl
 #define RunIntro RunIntro_decl
-#define sub_B30F4 sub_B30F4_decl
+#define CalibrateJoystick sub_B30F4_decl
 #define JoyResetCentres sub_B33DB_decl
 #define MainDeskLoop MainDeskLoop_decl
 #include "nhl95.h"
 #undef sub_8DF54
 #undef InstallTimer
-#undef sub_B3036
+#undef InstallBreakHandler
 #undef subwindowdefadr
 #undef InitZoneManager
 #undef LoadNhlCfg
 #undef RunIntro
-#undef sub_B30F4
+#undef CalibrateJoystick
 #undef JoyResetCentres
 #undef MainDeskLoop
 
@@ -37,12 +37,12 @@ void _dos_gettime(DosTime *t);                 /* Watcom CRT _dos_gettime_ */
 void srand(unsigned seed);                     /* Watcom CRT srand_ */
 void __cdecl sub_8DF54(int a, int b);          /* memory library: set up */
 void InstallTimer(void);
-void __cdecl sub_B3036(int (*fn)(void));       /* DOS critical error handler */
+void __cdecl InstallBreakHandler(int (*fn)(void));       /* DOS critical error handler */
 int __cdecl subwindowdefadr(void *buf, int a, int w, int h, int flags);
 void InitZoneManager(int n);
 void LoadNhlCfg(void);
 void RunIntro(void);
-int sub_B30F4(void);
+int CalibrateJoystick(void);
 void __cdecl JoyResetCentres(int n);
 void MainDeskLoop(void);
 
@@ -123,7 +123,7 @@ void main_(void)
     if (InitMouse()) ctlavailmask |= 1;
     InputInstall();
     ((void (*)(void))mousepollfn)();
-    sub_B3036(CritErrHandler);
+    InstallBreakHandler(CritErrHandler);
     InitFileLocations();
     SetScreenSize(0x140, 0xC8);
     screenbm = subwindowdefadr(&BackBufferWidth, 0, 0xA8, 0x140, 0x20);
@@ -133,27 +133,27 @@ void main_(void)
     pntrshapes = LoadBank(s.path, 0);
     pointerspr = FindShape(pntrshapes, (char *)str_Pntr);
     MakePath(s.path, fileoncd[0x162] == 1 ? (char *)cddriveptr : 0, (char *)str_S1, (char *)str_VFN);
-    mainfont = s1font = sub_8E8A0(s.path, 0x20);
+    mainfont = s1font = OpenArtArchiveErr(s.path, 0x20);
     MakePath(s.path, fileoncd[0x169] == 1 ? (char *)cddriveptr : 0, (char *)str_Scor2b, (char *)str_VFN);
-    scor2font = sub_8E8A0(s.path, 0x20);
+    scor2font = OpenArtArchiveErr(s.path, 0x20);
     MakePath(s.path, fileoncd[0x16A] == 1 ? (char *)cddriveptr : 0, (char *)str_Scor3b, (char *)str_VFN);
-    scor3font = sub_8E8A0(s.path, 0x20);
+    scor3font = OpenArtArchiveErr(s.path, 0x20);
     MakePath(s.path, fileoncd[0x1C4] == 1 ? (char *)cddriveptr : 0, (char *)str_Kaufm020, (char *)str_VFN);
-    kaufmfont = sub_8E8A0(s.path, 0x20);
+    kaufmfont = OpenArtArchiveErr(s.path, 0x20);
     TextSetFont(s1font);
     LoadModeState(exhstate);
     LoadNhlCfg();
     RunIntro();
-    s.drive = sub_B30F4();
-    JoyResetCentres(((byte_D416A & 0xF) == 0xF) + 1);
-    if ((byte_D416A & 3) && (dword_D4158 || dword_D415C)) {
+    s.drive = CalibrateJoystick();
+    JoyResetCentres(((JoyPortMask & 0xF) == 0xF) + 1);
+    if ((JoyPortMask & 3) && (JoyRawX1 || JoyRawY1)) {
         JoystickCalScreen(1, 0, 0, (char *)str_ConfigureLeftJoystick);
         if (joyenablemask & 1) {
             ctlavailmask |= 2;
             joypresent[0] = 1;
         }
     }
-    if ((byte_D416A & 0xC) && (dword_D4160 || dword_D4164)) {
+    if ((JoyPortMask & 0xC) && (JoyRawX2 || JoyRawY2)) {
         JoystickCalScreen(2, 8, 1, (char *)str_ConfigureRightJoystick);
         if (joyenablemask & 2) {
             ctlavailmask |= 4;

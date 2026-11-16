@@ -12,7 +12,7 @@ extern rosterisfa, rosterlist, rostersel, rosterslot, rosterteam, rosterteamrec,
 extern SelectRosterTeam, ShowFreeAgents, SplitPlayerName, str_ChooseWhichTeamTo, str_DoesNotExist, str_EnterNameOfPlayer, str_ForAllSelectedPlayers, str_FreeAgentList
 extern str_Goalies, str_InTheFreeAgent, str_IsAlreadyDisplayedOn, str_Move, str_MustBeTheSame, str_NotEnoughSpaceFA, str_Players, str_PlayersAndGoalies
 extern str_Roster1, str_Roster2, str_space, str_TheNumberOfSelected, str_TMP, str_ToFreeAgentList, strcat_, strcmp_
-extern strcpy_, strlwr_, sub_8E8A0, teamcitynames, teamdivflags, TeamRecPtr, teamsdb, teamsdb_size
+extern strcpy_, strlwr_, OpenArtArchiveErr, teamcitynames, teamdivflags, TeamRecPtr, teamsdb, teamsdb_size
 extern tmpdbpath, unk_EAC84
 global MoveToFreeAgents, RemovePlayerFromTeam, LoadTempDatabases, DeleteTempDatabases, SwapSelectedPlayers, SelectMatchingPlayers, SetRosterTeamMenus, FindPlayer
 ;-----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ LoadTempDatabases:
         call MakePath
         push byte 20h
         push tmpdbpath
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [seasondb], eax
         push tmpdbpath
@@ -264,7 +264,7 @@ LoadTempDatabases:
         call MakePath
         push byte 20h
         push tmpdbpath
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [careerdb], eax
         push tmpdbpath
@@ -278,7 +278,7 @@ LoadTempDatabases:
         call MakePath
         push byte 20h
         push tmpdbpath
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [carteamsdb], eax
         push tmpdbpath
@@ -292,7 +292,7 @@ LoadTempDatabases:
         call MakePath
         push byte 20h
         push tmpdbpath
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [keydb], eax
         push tmpdbpath
@@ -306,7 +306,7 @@ LoadTempDatabases:
         call MakePath
         push byte 20h
         push tmpdbpath
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [teamsdb], eax
         push tmpdbpath
@@ -320,7 +320,7 @@ LoadTempDatabases:
         call MakePath
         push byte 20h
         push tmpdbpath
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [attdb], eax
         push tmpdbpath

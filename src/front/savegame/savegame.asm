@@ -9,7 +9,7 @@ extern MessageBox, MouseSetPos, msg_NoSaveSpace, msg_SavingLeagueGame, msg_Savin
 extern pointerspr, postate, ptrupdatefn, RestoreDialogBg, SaveGameState, SaveLeagueGameRef, SaveModeState, SetDialogColors
 extern SetTickDeadline, sprintf_, str_AGameYouRequire, str_AGameYouRequire2, str_AGameYouRequire3, str_Db4, str_DemoNhl, str_Dialog
 extern str_Err1, str_extDB, str_GameSav5, str_Gsummary3, str_GsummaryDb4, str_Nhl3, str_Pointer22, str_Prmt
-extern str_Sav3, str_Savegame, strcat_, AllocMemBlock, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
+extern str_Sav3, str_Savegame, strcat_, AllocMemBlock, LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, PutBlock, DrawArtOpaque, DrawArtKeyFF, DrawArt, GrabBlock, TextPrintAt
 extern GetFileSize, MouseRead, FindShape, SetScreenTarget, str_H2, str_h3, str_H4, str_h5
 extern str_h6, str_h7, str_H1, str_A32, unknown_libname_1, ViewHilights, WaitTickDeadline, WriteModeState
@@ -147,7 +147,7 @@ MenuSaveGame:
         push byte 0
         lea eax, [byte esp+070h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov esi, eax
         add esp, byte 8
         mov edi, eax

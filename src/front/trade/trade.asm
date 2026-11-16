@@ -25,7 +25,7 @@ extern str_FromLeague, str_Gstat2, str_HOMEPALS, str_HOMEPALS2, str_Keys2, str_L
 extern str_Menubuff7, str_Pal21, str_Pal22, str_PINFO, str_PLAYER, str_Pntr2, str_Pointer10, str_Pstat2
 extern str_S12, str_S4, str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Show, str_Shrt
 extern str_space, str_star, str_Statistics, str_Temp6, str_TheJerseyNumber2d2, str_Tstat, str_VFN, strcat_
-extern strcmp_, strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, sub_8E8A0
+extern strcmp_, strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, OpenArtArchiveErr
 extern TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SetPalette, PutBlock, DrawArtOpaqueAtOwnPos, DrawArt
 extern GrabBlock, DrawArtKeyColour, PrintBoxedText, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
 extern SetScreenTarget, SetColorRemap, CreateBitmap, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
@@ -989,7 +989,7 @@ LoadTradeTeamPals:
         push byte 0
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov ecx, eax
@@ -1030,7 +1030,7 @@ LoadTradeTeamPals:
         push byte 0
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov ecx, eax
@@ -3033,7 +3033,7 @@ TradeScreen:
         push byte 0
         lea eax, [dword esp+0614h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [dword esp+0630h], eax
         push eax
@@ -3550,7 +3550,7 @@ LoadHomePals:
         push byte 0
         lea eax, [dword esp+0184h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov ecx, eax

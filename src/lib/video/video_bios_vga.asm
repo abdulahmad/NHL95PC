@@ -10,7 +10,7 @@ extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7
 extern mousepollfn, off_D567C, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
 extern SavedTextColumns, word_D4FE4, word_D4FE6, word_D4FE9
 global PrintfSaveRegs, SaveTextMode, loc_B3ED7, RestoreTextMode, loc_B3F23, loc_B3F3D, loc_B3F4B, DetectCPU
-global loc_B3FAC, FillMem, ZeroMem, loc_B3FC8, sub_B3FE0, sub_B3FEC, loc_B401F, loc_B402B
+global loc_B3FAC, FillMem, ZeroMem, loc_B3FC8, ResetHotkeyState, KbdGetKeyQuiet, loc_B401F, loc_B402B
 global loc_B4030, loc_B403F, loc_B4049, loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0
 global PollHotkeys, loc_B40D1, SetupRectFillBlend, SetupRectFill, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
 global loc_B415E, loc_B4165, loc_B4173, loc_B417A, loc_B4190, loc_B4197, loc_B41A1, loc_B41A8
@@ -28,12 +28,12 @@ global loc_B487B, loc_B488F, loc_B48AD, loc_B48C3, loc_B48D4, loc_B48E7, loc_B48
 global loc_B4911, loc_B4929, loc_B4935, loc_B4945, loc_B4948, loc_B494D, loc_B497F, loc_B499A
 global loc_B49A7, loc_B49B7, loc_B49BA, AngleFromDelta, loc_B49D4, loc_B49DD, loc_B49E8, loc_B4A00
 global unk_B4A0C, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E, loc_B4A45, loc_B4A49, loc_B4A50
-global loc_B4A57, sub_B4A60, sub_B4A66, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, DispatchHotkey
-global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, sub_B4AFD, loc_B4B0D, loc_B4B1E, loc_B4B20
+global loc_B4A57, TableSin, TableCos, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, DispatchHotkey
+global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, RegisterHotkey, loc_B4B0D, loc_B4B1E, loc_B4B20
 global loc_B4B27, loc_B4B39, loc_B4B3B, SetTextMode, VgaSetPalette, loc_B4BA0, SetScreenTarget, SetClipWindow
-global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, WaitRetrace, loc_B4C48, loc_B4C4F
-global loc_B4C56, sub_B4C61, loc_B4C6B, loc_B4C72, sub_B4C84, loc_B4C8E, loc_B4C95, sub_B4CA7
-global sub_B4CB4
+global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, ResetRetraceTimeout, WaitRetrace, loc_B4C48, loc_B4C4F
+global loc_B4C56, WaitRetraceStart, loc_B4C6B, loc_B4C72, WaitRetraceEnd, loc_B4C8E, loc_B4C95, InRetrace
+global VgaBlitKeyedHot
 PrintfSaveRegs:
         mov dword [PrintfSavedEbx], ebx
         mov dword [PrintfSavedEcx], ecx
@@ -166,11 +166,11 @@ loc_B3FC8:
         leave
         ret
         db 00h
-sub_B3FE0:
+ResetHotkeyState:
         mov dword [dword_D4FA0], 0
         ret
         db 00h
-sub_B3FEC:
+KbdGetKeyQuiet:
         call KbdGetKey
         LD or, ax, ax
         je short loc_B402B
@@ -1167,10 +1167,10 @@ loc_B4A57:
         sub eax, 100h
         leave
         ret
-sub_B4A60:
+TableSin:
         mov eax, dword [byte esp+04h]
         jmp short loc_B4A6C
-sub_B4A66:
+TableCos:
         mov eax, dword [byte esp+04h]
         inc ah
 loc_B4A6C:
@@ -1232,7 +1232,7 @@ loc_B4AF2:
         inc dword [dword_D5562]
         leave
         ret
-sub_B4AFD:
+RegisterHotkey:
         push ebp
         LD mov, ebp, esp
         mov eax, dword [byte ebp+0Ch]
@@ -1347,7 +1347,7 @@ loc_B4C04:
         mov dword [dword_D30C0], edx
         ret
         db 00h
-sub_B4C28:
+ResetRetraceTimeout:
         mov dword [dword_D429C], 2710h
         ret
 WaitRetrace:
@@ -1360,52 +1360,52 @@ loc_B4C48:
         in al, dx
         test al, 8
         loopne loc_B4C48
-        jecxz sub_B4C28
+        jecxz ResetRetraceTimeout
 loc_B4C4F:
         in al, dx
         test al, 8
         loope loc_B4C4F
-        jecxz sub_B4C28
+        jecxz ResetRetraceTimeout
 loc_B4C56:
         mov dword [dword_D429C], 186A0h
         ret
-sub_B4C61:
+WaitRetraceStart:
         mov dx, 3DAh
         mov ecx, dword [dword_D429C]
 loc_B4C6B:
         in al, dx
         test al, 8
         loopne loc_B4C6B
-        jecxz sub_B4C28
+        jecxz ResetRetraceTimeout
 loc_B4C72:
         in al, dx
         test al, 8
         loope loc_B4C72
-        jecxz sub_B4C28
+        jecxz ResetRetraceTimeout
         mov dword [dword_D429C], 186A0h
         ret
-sub_B4C84:
+WaitRetraceEnd:
         mov dx, 3DAh
         mov ecx, dword [dword_D429C]
 loc_B4C8E:
         in al, dx
         test al, 8
         loope loc_B4C8E
-        jecxz sub_B4C28
+        jecxz ResetRetraceTimeout
 loc_B4C95:
         in al, dx
         test al, 8
         loopne loc_B4C95
-        jecxz sub_B4C28
+        jecxz ResetRetraceTimeout
         mov dword [dword_D429C], 186A0h
         ret
-sub_B4CA7:
+InRetrace:
         mov dx, 3DAh
         in al, dx
         and ax, byte 8
         ret
         db 00h,00h,00h
-sub_B4CB4:
+VgaBlitKeyedHot:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE0h

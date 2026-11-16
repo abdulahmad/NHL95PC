@@ -11,7 +11,7 @@ int CalStandingsScreen(void)
 
     FreeCalendarIfLowMem();
     if (statsplayoffs) {
-        if (!easnfontbuf) easnfontbuf = sub_8E8A0((char *)str_EASNvfn, 0);
+        if (!easnfontbuf) easnfontbuf = OpenArtArchiveErr((char *)str_EASNvfn, 0);
         if (!embscupbank) {
             if (!statsplayoffs)
                 MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);

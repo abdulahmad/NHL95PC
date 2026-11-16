@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B5D80 progbits alloc exec nowrite align=1
-extern byte_D42E4, VesaBankShift, byte_D89E4, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30BC
+extern ColourRemap, VesaBankShift, byte_D89E4, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30BC
 extern dword_D30C0, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase, ScreenRowTable, dword_D4F4C, dword_D4F50
 extern BlitColumnOffsets, BlitSourcePtr
 global PutPixel, loc_B5DAC, PlotPixel, loc_B5DBC, loc_B5DD8, loc_B5DE0, VesaSetBankArg, VesaSetBank
@@ -1817,7 +1817,7 @@ loc_B6CFA:
 loc_B6CFD:
         lodsb
         LD mov, bl, al
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         LD cmp, al, ah
         je short loc_B6D0F
         stosb
@@ -1898,7 +1898,7 @@ loc_B6DAC:
         mov ecx, dword [byte ebp-0Ch]
 loc_B6DAF:
         lodsb
-        mov al, byte [dword eax+byte_D42E4]
+        mov al, byte [dword eax+ColourRemap]
         cmp al, 0FFh
         je short loc_B6DBF
         stosb
@@ -2529,7 +2529,7 @@ CopyRowRemapKeyed:
 loc_B7340:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
-        mov al, byte [dword eax+byte_D42E4]
+        mov al, byte [dword eax+ColourRemap]
         mov byte [edi], al
         add edx, byte 4
         inc edi
@@ -2552,7 +2552,7 @@ loc_B7340:
 loc_B7379:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
-        mov al, byte [dword eax+byte_D42E4]
+        mov al, byte [dword eax+ColourRemap]
         cmp al, 0FFh
         je short loc_B738A
         mov byte [edi], al
@@ -2608,7 +2608,7 @@ loc_B73CD:
 loc_B73F9:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
-        mov al, byte [dword eax+byte_D42E4]
+        mov al, byte [dword eax+ColourRemap]
         cmp al, 0FFh
         je short loc_B7416
         cmp al, 0FEh

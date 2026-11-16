@@ -9,8 +9,8 @@ extern hmpanelpens, awpanelpens, hmlinetimer, awlinetimer, FatalError, gmode, hm
 extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome
 extern j_unlink_, lcboxon, leaguedbnames, linesprites, lseek_, MessageBox, MouseSetPos, msg_NeedKbytes
 extern msg_GameDiskSpace, rmdir_, scoredigits, SelectRinkBM, SelectScreenBM, sprintf_, str_backslash2, str_dot
-extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_star, strcat_, strcpy_, VgaBlitKeyedHot
-extern VgaBlitKeyed, TeamLineEnergy, TickPanelClock, TickPanelPenalties, unknown_libname_1, unknown_libname_2
+extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_star, strcat_, strcpy_, VgaBlitKeyed
+extern VgaBlitKeyedAtOwnPos, TeamLineEnergy, TickPanelClock, TickPanelPenalties, unknown_libname_1, unknown_libname_2
 global MakePath, DeleteFiles, DeleteDir, FileOpenRead, FileOpenRead_x, FileOpenWrite, FileOpenRW, FileCreate
 global FileClose, FileReadAt, FileReadAt_x, FileReadAt_x2, FileWriteAt, ReadKeyRec, ReadKeyRec_x, WriteKeyRec
 global CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, ReadTeamRec_x, ReadGSummaryRec, DiskSpaceShort, CheckGameDiskSpace

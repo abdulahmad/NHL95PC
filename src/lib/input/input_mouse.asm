@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_B2D38 progbits alloc exec nowrite align=1
 extern mouseminx, mouseminy, mousemaxx, mousemaxy, dword_D2FFC, MouseButtonState, dword_D301C, MousePresent
-extern dword_D3038, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollfn, mousex, mousey
+extern PointerCount, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollfn, mousex, mousey
 extern off_D306C, off_D3070, off_D3074, AddExitHandler, word_D3004, word_D3006, word_D3008
-global MouseReadButtons, loc_B2D57, loc_B2D5E, MouseSetSensitivity, loc_B2D92, sub_B2D94, loc_B2DB2, MouseSetPos
-global MouseRead, sub_B2DEF, SetViewRect, MouseReadMotion, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
-global loc_B2EEA, sub_B2EF6, sub_B2EFD, MouseRestoreSensitivity, InitMouse, loc_B2F7C, loc_B3006
+global MouseReadButtons, loc_B2D57, loc_B2D5E, MouseSetSensitivity, loc_B2D92, MouseSetSensitivityDefault, loc_B2DB2, MouseSetPos
+global MouseRead, MouseSetXRange, SetViewRect, MouseReadMotion, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
+global loc_B2EEA, PointerCountUp, PointerCountDown, MouseRestoreSensitivity, InitMouse, loc_B2F7C, loc_B3006
 MouseReadButtons:
         LD xor, eax, eax
         dec dword [MouseButtonState]
@@ -42,7 +42,7 @@ MouseSetSensitivity:
 loc_B2D92:
         leave
         ret
-sub_B2D94:
+MouseSetSensitivityDefault:
         push ebp
         LD mov, ebp, esp
         cmp dword [MousePresent], byte 0
@@ -78,7 +78,7 @@ MouseRead:
         mov dword [ebx], edx
         leave
         ret
-sub_B2DEF:
+MouseSetXRange:
         push ebp
         LD mov, ebp, esp
         mov eax, dword [byte ebp+08h]
@@ -157,11 +157,11 @@ loc_B2EEA:
         mov eax, dword [mousebtns]
         inc dword [MouseButtonState]
         ret
-sub_B2EF6:
-        inc dword [dword_D3038]
+PointerCountUp:
+        inc dword [PointerCount]
         ret
-sub_B2EFD:
-        dec dword [dword_D3038]
+PointerCountDown:
+        dec dword [PointerCount]
         ret
 MouseRestoreSensitivity:
         pusha
@@ -174,7 +174,7 @@ MouseRestoreSensitivity:
         ret
 InitMouse:
         mov dword [MousePresent], 0
-        mov dword [dword_D3038], 0
+        mov dword [PointerCount], 0
         mov dword [dword_D303C], 0
         LD xor, eax, eax
         int 33h
@@ -210,9 +210,9 @@ loc_B2F7C:
         push byte 20h
         push byte 20h
         call MouseSetSensitivity
-        mov dword [off_D306C], sub_B2EFD
-        mov dword [off_D3070], sub_B2EFD
-        mov dword [off_D3074], sub_B2EF6
+        mov dword [off_D306C], PointerCountDown
+        mov dword [off_D3070], PointerCountDown
+        mov dword [off_D3074], PointerCountUp
         mov dword [mousepollfn], MouseReadMotion
         push MouseRestoreSensitivity
         call AddExitHandler

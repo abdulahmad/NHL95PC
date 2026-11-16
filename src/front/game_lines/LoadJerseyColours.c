@@ -18,7 +18,7 @@ void LoadJerseyColours(int away, int unused, unsigned char *dst)
 
     out = dst;
     MakePath(path, fileoncd[0xA1] == 1 ? (char *)cddriveptr : 0, (char *)str_HOMEPALS3, (char *)str_extBIN);
-    buf = (unsigned char *)sub_8E8A0(path, 0);
+    buf = (unsigned char *)OpenArtArchiveErr(path, 0);
     dst = buf + (away ? VisTeam : HomeTeam) * 0x1C0;
     for (i = 0; i < 0xB4; i++) out[0xCC + i] = dst[i];
     for (i = 0xB4; i < 0xC0; i++) out[0x198 + i] = dst[i];

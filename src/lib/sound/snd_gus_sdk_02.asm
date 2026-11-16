@@ -14,7 +14,7 @@ extern dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8
 extern dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC, dword_D84D0
 extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_F612C, getenv_, inp_
 extern nullsub_4, off_D846C, outp_, strtoul_, GusSetChannelVolume, GusSetChannelBend, GusSetChannelModulation, GusSetSustain
-extern GusSetChannelPan, GusChannelNotesOff, GusMixAdd8, GusClearMixBuffer, GusDownload, sub_B14E4, sub_B1CBC, GusPoke
+extern GusSetChannelPan, GusChannelNotesOff, GusMixAdd8, GusClearMixBuffer, GusDownload, GusClaimVoiceCallbacks, GusAllocVoice, GusPoke
 extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
 extern word_D84C6, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
 global GusFillStreamBuffer, loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002
@@ -914,14 +914,14 @@ loc_AEB45:
         LD mov, eax, esi
         call GusPoke
         mov eax, GusStreamVoiceIrq
-        call sub_B14E4
+        call GusClaimVoiceCallbacks
         LD xor, eax, eax
         LD xor, edx, edx
-        call sub_B1CBC
+        call GusAllocVoice
         mov dword [byte_D849C], eax
         LD xor, eax, eax
         LD xor, edx, edx
-        call sub_B1CBC
+        call GusAllocVoice
         mov dword [byte_D84A0], eax
         mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D849C]

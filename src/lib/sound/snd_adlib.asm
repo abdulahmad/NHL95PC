@@ -4,7 +4,7 @@ bits 32
 section s_9DE9C progbits alloc exec nowrite align=1
 extern __GETDS, byte_F2F42, byte_F2F43, byte_F3196, byte_F3197, dword_D4F9A, dword_F2F28, dword_F3108
 extern memcpy_, GetPatchEntry, FixedMulRound, OplFlush, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
-extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, sub_B4A60, unk_F21FC, unk_F3148, word_F2F3C
+extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, TableSin, unk_F21FC, unk_F3148, word_F2F3C
 extern word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450, word_F3452
 global AdlibDetect, AdlibOpen, AdlibInit, loc_9DEE3, loc_9DF3A
 global loc_9DF46, loc_9DF5C, AdlibClose, AdlibService, loc_9DF94, loc_9DFEF
@@ -744,7 +744,7 @@ loc_9E601:
         and eax, 0FFFFh
         sar eax, 6
         push eax
-        call sub_B4A60
+        call TableSin
         add esp, byte 4
         push eax
         movsx eax, word [byte esi+08h]

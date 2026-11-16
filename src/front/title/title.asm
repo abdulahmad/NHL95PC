@@ -25,11 +25,11 @@ extern str_Pio, str_Pion, str_Pioneer1, str_Pioneer2, str_Pioneer3, str_Pioneer4
 extern str_PPV, str_Rockditi, str_Scrbrd2, str_Scrn2, str_Shp0, str_Srb3, str_Stanley, str_Title
 extern str_Title30, strlen_, CmvCreate, CmvDestroy, CmvReadHeader, CmvDecodeFrame, CmvFrameCount, CmvWidth
 extern CmvHeight, CmvFrameRate, CmvPaletteFirst, CmvPaletteCount, CmvPalette, CdStreamCreate, CdStreamClose, CdStreamOpen
-extern CdStreamService, CdStreamNextChunk, CdStreamReleaseChunk, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState
+extern CdStreamService, CdStreamNextChunk, CdStreamReleaseChunk, AllocMemBlock, PushMemDescriptorLocked, LoadBank, OpenArtArchiveErr, TextSaveState
 extern TextRestoreState, TextSetFont, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume
 extern PutBlock, DrawBitmap, DrawArtOr, FillRect, DrawArtOpaqueAtOwnPos, DrawArtKeyFF, DrawArtKeyFFAtOwnPos, FreeBitmap
 extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, ReadJoyRaw, ClearScreen, SaveDrawState
-extern RestoreDrawState, VgaSetPalette, SetScreenTarget, VgaBlitKeyedHot, VgaBlitKeyed, SetColorRemap, VgaBlitRemap, CreateBitmap
+extern RestoreDrawState, VgaSetPalette, SetScreenTarget, VgaBlitKeyed, VgaBlitKeyedAtOwnPos, SetColorRemap, VgaBlitRemap, CreateBitmap
 extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
 extern TickDeadlinePassed, TicksSinceLastCall, blackpal, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
 extern lcsel_aw

@@ -1,0 +1,148 @@
+sub_A9C9C SbHookIrq {source_game=PC-new,confidence=medium} installs the Sound Blaster interrupt handler and unmasks its IRQ
+sub_A9D1D SbUnhookIrq {source_game=PC-new,confidence=medium} masks the Sound Blaster IRQ and restores the old handler
+sub_A9D4C SbIrqHandler {source_game=PC-new,confidence=medium} Sound Blaster interrupt handler: acknowledges the DSP, mixes the next half buffer and ends the interrupt
+sub_A9D54 SbIrqHandler+08h {no_record}
+sub_A9DEB SbDspWrite {source_game=PC-new,confidence=medium} writes a byte to the DSP once it is ready
+sub_A9E0F SbDspRead {source_game=PC-new,confidence=medium} reads a byte from the DSP once one is waiting
+sub_A9E34 SbCardClose {source_game=PC-new,confidence=medium} stops the DMA, restores the PIC masks and resets the DSP
+sub_A9E55 SbDspReset {source_game=PC-new,confidence=medium} resets the DSP and waits for its AAh answer
+sub_A9F1A SbDspVersion {source_game=PC-new,confidence=medium} asks the DSP for its version (command E1h)
+sub_A9F93 SbCardOpen {source_game=PC-new,confidence=low} stores the port, IRQ and DMA channel, saves the PIC masks, resets the DSP and starts output
+sub_AA14D SbStopDma {source_game=PC-new,confidence=medium} masks the Sound Blaster DMA channel
+sub_AA1B2 SbDmaCount {source_game=PC-new,confidence=medium} reads the DMA channel's remaining count
+sub_AA1D9 SbSetStereo {source_game=PC-new,confidence=low} sets mixer register 0Eh: stereo output and the output filter
+VgaBlitKeyed VgaBlitKeyedAtOwnPos {source_game=PC-new,confidence=low} draws a shape at its own position skipping colour FFh
+VgaBlitKeyedHot VgaBlitKeyed {source_game=PC-new,confidence=low} draws a shape at a position skipping colour FFh (sprite mode 0)
+sub_B4CB4 VgaBlitKeyedHot {source_game=PC-new,confidence=low} VgaBlitKeyed at a position less the shape's hotspot
+sub_B3FE0 ResetHotkeyState {source_game=PC-new,confidence=low} clears the hotkey busy flag
+sub_B3FEC KbdGetKeyQuiet {source_game=PC-new,confidence=low} returns the next key or 0; the entries after it also dispatch hotkeys
+sub_B4A60 TableSin {source_game=PC-new,confidence=medium} sine of an angle from the sine table
+sub_B4A66 TableCos {source_game=PC-new,confidence=medium} cosine of an angle from the sine table (a quarter turn on)
+sub_B4AFD RegisterHotkey {source_game=PC-new,confidence=medium} adds a key to the hotkey table (at most 64)
+sub_B4C28 ResetRetraceTimeout {source_game=PC-new,confidence=medium} resets the retrace wait timeout after a wait timed out
+sub_B4C61 WaitRetraceStart {source_game=PC-new,confidence=medium} waits for the end of the current retrace, then for the next one to start
+sub_B4C84 WaitRetraceEnd {source_game=PC-new,confidence=medium} waits for a retrace, then for it to end
+sub_B4CA7 InRetrace {source_game=PC-new,confidence=medium} returns nonzero during vertical retrace
+sub_B0100 GetBytesLE {source_game=PC-new,confidence=medium} Reads an n-byte value stored low byte first
+sub_B0128 GetBytesBE {source_game=PC-new,confidence=medium} Reads an n-byte value stored high byte first
+sub_B0148 PutBytesLE {source_game=96PC,confidence=medium} Stores n bytes of a value low byte first
+sub_B0170 PutBytesBE {source_game=PC-new,confidence=medium} Stores n bytes of a value high byte first
+sub_B01B0 CopyRowShadowKeyed {source_game=PC-new,confidence=low} Copies a row skipping colour 0FFh and darkening the screen under colour 0FEh
+sub_B01E4 DrawArtKeyedRemap {source_game=96PC,confidence=medium} Draws art through the remap; keyed path uses the shadow row copy
+sub_B0228 DrawArtKeyedRemapOwnPos {source_game=PC-new,confidence=medium} Draws art through the remap at the position stored in its header
+sub_B026C RemapBytes {source_game=PC-new,confidence=medium} Translates a run of bytes through a 256-entry table
+sub_B0288 SetDmaDefaultMode {source_game=PC-new,confidence=low} Sets the default DMA mode value; unused
+dword_D86C0 DmaDefaultMode {source_game=PC-new,confidence=low} Default DMA mode value
+sub_AFAE0 RasterMappedTriangle {source_game=96PC,confidence=low} Texture maps a triangle of art onto the screen row by row
+dword_F6138 ScaledRowBuffer {source_game=96PC,confidence=medium} Row buffer for the mapped-triangle rasteriser
+sub_B09A4 GusDmaCount {source_game=PC-new,confidence=medium} Reads how many bytes a DMA channel still has to transfer
+sub_B0A14 GusDosRead {source_game=PC-new,confidence=medium} Reads from a DOS file and keeps the DOS result
+sub_B0A40 GusDosClose {source_game=PC-new,confidence=medium} Closes a DOS file and keeps the DOS result
+sub_B0A5C GusDosSeek {source_game=PC-new,confidence=medium} Seeks in a DOS file
+sub_B0A78 GusDosOpen {source_game=PC-new,confidence=medium} Opens a DOS file and returns its handle or a negative error
+word_F799C GusDosResult {source_game=96PC,confidence=medium} Result of the last DOS file call
+sub_B0E7C GusDmaNextChunk {source_game=PC-new,confidence=low} Starts the next chunk of a card DMA transfer when one finishes
+sub_B1024 GusDmaIdle {source_game=PC-new,confidence=medium} Returns 1 when no card DMA transfer is running
+sub_B103C GusStopDma {source_game=PC-new,confidence=medium} Stops the card DMA transfer and masks both channels
+sub_B10D0 GusCalcVoiceAddrs {source_game=PC-new,confidence=low} Works out the card start/loop/end address registers for a voice
+sub_B1237 GusTryEnterCritical {source_game=PC-new,confidence=medium} Enters the critical section only if it is not already held
+sub_B14E4 GusClaimVoiceCallbacks {source_game=PC-new,confidence=medium} Claims the wave and volume callbacks
+sub_B151C GusClaimTimerCallbacks {source_game=PC-new,confidence=medium} Claims the timer 1 and timer 2 callbacks
+sub_B1598 GusClaimMidiRecvCallback {source_game=PC-new,confidence=medium} Claims the MIDI receive callback
+sub_B15B8 GusClaimMidiXmitCallback {source_game=PC-new,confidence=medium} Claims the MIDI transmit callback
+sub_B15D8 GusClaimTimerCallback {source_game=PC-new,confidence=medium} Claims the timer callback
+dword_D87D0 GusMidiXmitCallback {source_game=96PC,confidence=medium} MIDI transmit callback
+dword_D87D4 GusMidiRecvCallback {source_game=96PC,confidence=medium} MIDI receive callback
+word_D876C GusMidiControlPort {source_game=96PC,confidence=medium} MIDI control and status port
+word_D876E GusMidiDataPort {source_game=96PC,confidence=medium} MIDI data port
+sub_B273C GusRegsToAddr {source_game=PC-new,confidence=low} Turns a pair of voice address registers back into a card address
+sub_B19E0 GusResetTimers {source_game=PC-new,confidence=low} Clears the timer state
+sub_B1A04 GusStartTimer2 {source_game=PC-new,confidence=medium} Sets the callback and count for card timer 2 and starts it
+sub_B1AC8 GusStartTimer1 {source_game=PC-new,confidence=medium} Sets the callback and count for card timer 1 and starts it
+sub_B1B8C GusStopTimer1 {source_game=PC-new,confidence=medium} Stops card timer 1
+sub_B1BF8 GusStopTimer2 {source_game=PC-new,confidence=medium} Stops card timer 2
+sub_B1C70 GusResetVoiceAlloc {source_game=PC-new,confidence=low} Marks every voice free
+sub_B1CBC GusAllocVoice {source_game=PC-new,confidence=low} Finds a free voice or steals one
+sub_B1E2C GusReleaseVoice {source_game=PC-new,confidence=low} Marks a voice free
+sub_B1E64 GusAddVoicePriority {source_game=PC-new,confidence=low} Adds to a voice's priority value
+dword_F7B78 GusVoiceAllocMask {source_game=PC-new,confidence=low} Bit mask of voices in use
+sub_B300C ReturnZero {source_game=96PC,confidence=medium} Returns 0; default for the joystick and mouse hooks
+sub_B3036 InstallBreakHandler {source_game=96PC,confidence=medium} Hooks the critical-error vector and registers its removal at exit
+sub_B30F4 CalibrateJoystick {source_game=96PC,confidence=low} Times the four joystick axes on port 201h and keeps the button bits
+dword_D4158 JoyRawX1 {source_game=96PC,confidence=low} Timed count for joystick 1 X
+dword_D415C JoyRawY1 {source_game=96PC,confidence=low} Timed count for joystick 1 Y
+dword_D4160 JoyRawX2 {source_game=96PC,confidence=low} Timed count for joystick 2 X
+dword_D4164 JoyRawY2 {source_game=96PC,confidence=low} Timed count for joystick 2 Y
+byte_D4168 JoyButtonBits {source_game=96PC,confidence=medium} Joystick button bits from the last read
+byte_D416A JoyPortMask {source_game=96PC,confidence=medium} Axis bits still present on port 201h
+sub_B3421 JoyScaledX {source_game=PC-new,confidence=low} Joystick 1 X scaled to -31..+31
+sub_B345D ExitProgram {source_game=96PC,confidence=medium} Exits with code 0
+sub_B384E JoyDefaultCalib1 {source_game=PC-new,confidence=low} Enables joystick 1 with the default calibration
+sub_B387E JoyDefaultCalib2 {source_game=PC-new,confidence=low} Enables joystick 2 with the default calibration
+sub_B38AE Joy2ScaledX {source_game=PC-new,confidence=low} Second joystick X scaled to -31..+31
+sub_B3A2F KbdIdleWait {source_game=PC-new,confidence=low} Calls the keyboard idle hook until it returns a key or the tick deadline passes
+sub_97334 UnpackReadBE {source_game=PC-new,confidence=medium} Reads an n-byte value stored high byte first
+sub_9762C UnpackedSize {source_game=96PC,confidence=medium} Returns the unpacked size of packed data
+sub_9767C HuffGetBits {source_game=PC-new,confidence=low} Reads n bits from the Huffman bit stream
+sub_97714 HuffGetLength {source_game=PC-new,confidence=low} Reads a variable-length count from the Huffman bit stream
+sub_97740 UnpackHuffman {source_game=96PC,confidence=low} Unpacks Huffman packed data (types 30h-34h)
+sub_97C2C UnpackRunLength {source_game=96PC,confidence=low} Unpacks run length coded data (type 7Ah/7Bh)
+sub_97CE0 UnpackRefPack {source_game=PC-new,confidence=low} Unpacks RefPack data (type 10h)
+sub_98044 UnpackQuiet {source_game=PC-new,confidence=low} Unpacks without stopping on an unknown pack type
+sub_8E81C LoadFileCachedQuiet {source_game=PC-new,confidence=low} Loads a file through the file cache without the error message; unused
+sub_8E86A LoadFileCachedFlag {source_game=PC-new,confidence=low} Jumps to LoadFileCached with the caller's error flag
+unk_8E870 str_LocateshapeSHAPENOTFOUND {source_game=PC-new,confidence=medium} Message for a shape that is not in its bank
+sub_8E8A0 OpenArtArchiveErr {source_game=96PC,confidence=low} Opens a data file through the cache with the error message and returns its handle
+sub_8E8B8 OpenArtArchive {source_game=96PC,confidence=low} Opens a data file through the cache and returns its handle
+sub_8E8D0 OpenArtArchiveFlag {source_game=PC-new,confidence=low} Opens a data file with the caller's error flag and returns its handle
+sub_8E8F0 LoadDataFileErr {source_game=96PC,confidence=low} Loads a data file with the error message
+sub_8E908 LoadFileAllocQuiet {source_game=96PC,confidence=low} Loads a file into a new block without the error message
+sub_9333C SaveFileBlockErr {source_game=PC-new,confidence=low} Saves a memory block to a file with the error message
+sub_93354 SaveFileBlockQuiet {source_game=PC-new,confidence=low} Saves a memory block to a file without the error message
+sub_933FB umul32 {source_game=PC-new,confidence=medium} Unsigned 32-bit multiply; followed by the unlabelled divide helpers
+unk_936AC DebugShowLinesJumpTable {source_game=96PC,confidence=medium} Jump table for the control characters in DebugShowLines
+sub_936C0 DebugShowLines {source_game=96PC,confidence=medium} Writes a string to the debug monitor handling control characters and scrolling
+sub_93914 DebugSetTabWidth {source_game=PC-new,confidence=low} Sets the debug monitor tab width when it is at least 1
+byte_D4546 DebugTabWidth {source_game=PC-new,confidence=low} Debug monitor tab width
+sub_93924 DebugSetPage {source_game=PC-new,confidence=low} Points the debug monitor at a 32K page of monochrome video memory
+sub_A2F40 DrawArtShadow {source_game=PC-new,confidence=medium} Draws art keyed with colour 0FEh darkening the screen under it
+sub_A2F84 DrawArtShadowOwnPos {source_game=PC-new,confidence=medium} Draws shadow art at the position stored in its header
+sub_A2FD0 FlipArtHorizontal {source_game=96PC,confidence=medium} Mirrors art left to right and fixes its hotspot
+sub_A3050 FlipArtVertical {source_game=96PC,confidence=medium} Mirrors art top to bottom and fixes its hotspot
+_EFG_Format_ RemapArt {source_game=PC-new,confidence=medium} Translates every pixel of an art through the colour remap
+sub_A30F8 RemapShapeBank {source_game=PC-new,confidence=medium} Remaps every art in a shape bank except the '!' entries
+byte_D42E4 ColourRemap {source_game=96PC,confidence=medium} 256-entry colour remap table
+sub_981AD EnableInterrupts {source_game=PC-new,confidence=medium} Turns interrupts back on
+sub_981B0 SaveBoxBackground {source_game=PC-new,confidence=low} Grabs the screen under a message box
+sub_981D4 RestoreBoxBackground {source_game=PC-new,confidence=low} Draws the saved screen back over a message box
+sub_9862C PauseUntilKey {source_game=96PC,confidence=medium} Shows PAUSE - PRESS ANY KEY and waits
+sub_9867E ConsoleMessageThunk {source_game=PC-new,confidence=low} Jumps to WriteConsoleMessage; unused
+sub_B3D2A FindNextFile {source_game=PC-new,confidence=medium} DOS find-next using the shared DTA
+sub_B3D46 SetSlowDeadline {source_game=PC-new,confidence=medium} Sets a deadline n slow ticks from now
+sub_B3D56 WaitSlowDeadline {source_game=PC-new,confidence=medium} Waits until the slow-tick deadline passes
+sub_B3D64 SlowDeadlinePassed {source_game=PC-new,confidence=medium} Returns 1 once the slow-tick deadline has passed
+dword_D4530 SlowDeadline {source_game=PC-new,confidence=medium} Slow-tick deadline
+sub_B3DFC SprintfSaveRegs {source_game=PC-new,confidence=medium} Calls sprintf keeping every register
+sub_B2D94 MouseSetSensitivityDefault {source_game=PC-new,confidence=medium} Sets mouse sensitivity with the default double-speed threshold
+sub_B2DEF MouseSetXRange {source_game=PC-new,confidence=medium} Sets the mouse X range; the Y range setter follows unlabelled
+sub_B2EF6 PointerCountUp {source_game=96PC,confidence=medium} Increments the pointer show count
+sub_B2EFD PointerCountDown {source_game=96PC,confidence=medium} Decrements the pointer show count
+dword_D3038 PointerCount {source_game=96PC,confidence=medium} Pointer show count
+RemoveKeyboardHandler InstallKeyboardHandler {source_game=96PC,confidence=medium} Hooks INT 9, 16h and 23h and registers the removal at exit
+sub_B2A9B RemoveKeyboardHandler {source_game=96PC,confidence=medium} Restores the INT 9, 16h and 23h vectors
+sub_B2B0A KeyboardIrqHandler {source_game=PC-new,confidence=medium} INT 9 handler that reads scan codes into the key table
+unk_B2C00 IretStub {source_game=96PC,confidence=medium} INT 23h handler that ignores Ctrl-Break
+sub_B2CCD BiosKeyCall {source_game=96PC,confidence=medium} Calls BIOS INT 16h with ax
+sub_B2D27 FatalErrorEnd {source_game=PC-new,confidence=low} Unreached return after FatalError; the hook setter follows unlabelled
+dword_D2F74 FatalErrorHook {source_game=PC-new,confidence=low} Routine FatalError returns into instead of the boxed message
+sub_A35EC __int7_pl3 {source_game=96PC,confidence=medium} Coprocessor trap (ring 3 extender) into the 387 emulator
+sub_A3610 __int7_X32VM {source_game=96PC,confidence=medium} Coprocessor trap (X32VM extender) into the 387 emulator
+sub_A365C __int7 {source_game=96PC,confidence=medium} Coprocessor trap into the 387 emulator
+unk_A5613 EmuMantissaMasks {source_game=96PC,confidence=medium} Mantissa masks used by ExtToInt
+unk_A57C6 EmuRemPolyCoefs {source_game=96PC,confidence=low} Constants used by RemainderStep
+unk_A5BC2 EmuLog2PolyNum {source_game=96PC,confidence=medium} Log2 polynomial numerator
+unk_A5BE0 EmuLog2PolyDen {source_game=96PC,confidence=medium} Log2 polynomial denominator
+unk_A5E36 EmuSinPolyCoefs {source_game=96PC,confidence=medium} Sine polynomial coefficients
+unk_A5E90 EmuCosPolyCoefs {source_game=96PC,confidence=medium} Cosine polynomial coefficients
+unk_A5EEA EmuSinCosTermCounts {source_game=96PC,confidence=medium} Polynomial term counts for SinCosCore
+nullsub_3 EmuNoOp {source_game=96PC,confidence=medium} Empty routine

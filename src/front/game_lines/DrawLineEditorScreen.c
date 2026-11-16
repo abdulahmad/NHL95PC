@@ -35,7 +35,7 @@ void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n)
     bank = LoadBank(s.path, 0);
     for (i = 0; i < 0x100; i++) s.remap[i] = i;
     MakePath(s.path, fileoncd[0xA1] == 1 ? (char *)cddriveptr : 0, (char *)str_HOMEPALS3, (char *)str_extBIN);
-    pals = sub_8E8A0(s.path, 0);
+    pals = OpenArtArchiveErr(s.path, 0);
     src = (unsigned char *)pals + 0xC0 + (team ? VisTeam : HomeTeam) * 0x1C0;
     for (i = 0x80; i < 0x100; i++) s.remap[i] = src[i];
     FreeMemBlock(pals);

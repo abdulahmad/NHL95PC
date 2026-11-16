@@ -5,7 +5,7 @@ section s_A3274 progbits alloc exec nowrite align=1
 extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, Hook387Flag, Hook387Saved, dword_D4D11, unk_D657C, Hook387Save
 global unk_A3274, unk_A3278, unk_A327C, unk_A327E, unk_A3280, unk_A3282, unk_A32CE, unk_A32D0
 global unk_A32D4, unk_A32D6, unk_A331E, unk_A3322, unk_A332C, unk_A338C, jpt_A33EC, jpt_A34EC
-global sub_A35EC, sub_A3610, sub_A365C, EmuTrapExit, loc_A369A, loc_A3706, loc_A370C, loc_A3732
+global __int7_pl3, __int7_X32VM, __int7, EmuTrapExit, loc_A369A, loc_A3706, loc_A370C, loc_A3732
 global loc_A3735, loc_A373E, loc_A3747, loc_A3750, loc_A3759, loc_A3761, loc_A3769, loc_A379C
 global loc_A37B3, RoundToSingle, loc_A37CE, loc_A37E2, RoundToDouble, loc_A3804, loc_A381B, RoundToDouble_32
 global loc_A3839, loc_A3874, RaiseFpuError, loc_A38DD, EaEax, EaEcx, EaEdx, EaEbx
@@ -45,16 +45,16 @@ global loc_A53D2, Emu387IntToLd, loc_A53DB, loc_A53F6, loc_A53FA, LoadM64Real, l
 global loc_A544B, loc_A5453, loc_A545F, loc_A546C, loc_A5478, StoreM32Real, loc_A54A9, loc_A54B7
 global loc_A54DA, loc_A54E5, loc_A54F8, loc_A5503, StoreM64Real, loc_A5523, loc_A5534, loc_A5559
 global loc_A5563, loc_A556A, loc_A558C, loc_A559E, loc_A55A2, loc_A55A4, loc_A55CA, LoadM32Real
-global loc_A55EF, loc_A55FD, loc_A5607, unk_A5613, ExtToInt, loc_A56A8, loc_A56B3, loc_A56BE
+global loc_A55EF, loc_A55FD, loc_A5607, EmuMantissaMasks, ExtToInt, loc_A56A8, loc_A56B3, loc_A56BE
 global loc_A56CC, loc_A5703, loc_A5705, loc_A570D, loc_A5720, loc_A5722, loc_A576A, loc_A5772
-global loc_A5776, loc_A5782, loc_A5785, loc_A57AA, loc_A57BA, unk_A57C6, EmuRemainder, loc_A5849
+global loc_A5776, loc_A5782, loc_A5785, loc_A57AA, loc_A57BA, EmuRemPolyCoefs, EmuRemainder, loc_A5849
 global loc_A585C, loc_A585E, loc_A5886, loc_A58B6, loc_A58B8, loc_A58D2, RemainderStep, loc_A5918
 global loc_A594E, loc_A5969, loc_A59DC, loc_A5A0A, loc_A5A2A, loc_A5A33, EmuRoundInt, loc_A5A4E
 global loc_A5A6E, RoundMantissa, loc_A5AB3, loc_A5ABF, loc_A5AC1, loc_A5AC6, loc_A5ADB, loc_A5AE7
 global loc_A5AF2, loc_A5AFC, loc_A5AFE, loc_A5B02, loc_A5B12, loc_A5B19, EmuExamine, loc_A5B38
-global loc_A5B6A, loc_A5B6C, loc_A5B8C, loc_A5B92, loc_A5B94, loc_A5BAB, unk_A5BC2, unk_A5BE0
+global loc_A5B6A, loc_A5B6C, loc_A5B8C, loc_A5B92, loc_A5B94, loc_A5BAB, EmuLog2PolyNum, EmuLog2PolyDen
 global AddOne, EmuLog2, Log2Core, loc_A5C76, loc_A5CB5, loc_A5CD1, loc_A5CDD, loc_A5E26
-global unk_A5E36, unk_A5E90, unk_A5EEA, SinCosCore, loc_A5F1E, loc_A5F6D, loc_A5F99, loc_A5FC3
+global EmuSinPolyCoefs, EmuCosPolyCoefs, EmuSinCosTermCounts, SinCosCore, loc_A5F1E, loc_A5F6D, loc_A5F99, loc_A5FC3
 global loc_A5FCC, loc_A5FD9, loc_A5FF3, loc_A6031, loc_A603C, loc_A605A, loc_A606F, loc_A6078
 global loc_A6085, loc_A60A8, loc_A60B4, loc_A60BC, loc_A60DD, loc_A60E2, EmuSin, EmuCos
 global EmuTan, EmuTan_E, EmuAtan, loc_A6162, loc_A6183, loc_A6192, loc_A61A3, loc_A61A9
@@ -62,7 +62,7 @@ global loc_A61AF, loc_A61BB, loc_A61BF, loc_A61CA, loc_A61CC, loc_A62BB, loc_A62
 global EmuExp2, loc_A6333, loc_A6346, loc_A634F, loc_A635A, loc_A6377, loc_A638D, loc_A63A3
 global loc_A63B5, loc_A63C0, loc_A63C9, loc_A63D2, loc_A63DA, sub_A63E0, PolyEval, loc_A6417
 global PolyEvalOdd, __hook387, loc_A6500, loc_A650C, loc_A6558, loc_A655A, __unhook387, loc_A6593
-global loc_A65B7, nullsub_3, __init_80x87, loc_A65D8
+global loc_A65B7, EmuNoOp, __init_80x87, loc_A65D8
 unk_A3274:
         db 00h,00h,00h,00h
 unk_A3278:
@@ -275,7 +275,7 @@ jpt_A34EC:
         dd EmuReservedOp
         dd EmuFdivp
         dd EmuReservedOp
-sub_A35EC:
+__int7_pl3:
         sti
         pusha
         LD mov, ebp, esp
@@ -291,7 +291,7 @@ sub_A35EC:
         popa
         iret
         db 087h,0DBh,090h
-sub_A3610:
+__int7_X32VM:
         sti
         mov eax, dword [byte esp+0Ch]
         push dword [byte ss:eax+014h]
@@ -331,7 +331,7 @@ sub_A3610:
         mov eax, dword [ss:eax]
         iret
         db 087h,0DBh
-sub_A365C:
+__int7:
         sti
         sub esp, byte 0Ch
         push eax
@@ -2987,7 +2987,7 @@ loc_A5607:
         pop ebx
         pop ecx
         ret
-unk_A5613:
+EmuMantissaMasks:
         db 0FFh,0FFh,0FFh,07Fh,0FFh,0FFh,0FFh,03Fh,0FFh,0FFh,0FFh,01Fh,0FFh,0FFh,0FFh,0Fh
         db 0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh,03h,0FFh,0FFh,0FFh,01h,0FFh,0FFh,0FFh,00h
         db 0FFh,0FFh,07Fh,00h,0FFh,0FFh,03Fh,00h,0FFh,0FFh,01Fh,00h,0FFh,0FFh,0Fh,00h
@@ -3023,7 +3023,7 @@ loc_A56CC:
         mov ecx, dword [edi]
         add bx, byte 20h
         jl short loc_A5722
-        mov eax, dword [nosplit cs:ebx*4+unk_A5613]
+        mov eax, dword [nosplit cs:ebx*4+EmuMantissaMasks]
         LD and, ecx, eax
         xor dword [edi], ecx
         inc eax
@@ -3061,7 +3061,7 @@ loc_A5722:
         mov esi, dword [byte edi+04h]
         add bx, byte 20h
         jl short loc_A5785
-        mov eax, dword [nosplit cs:ebx*4+unk_A5613]
+        mov eax, dword [nosplit cs:ebx*4+EmuMantissaMasks]
         LD and, esi, eax
         xor dword [byte edi+04h], esi
         inc eax
@@ -3118,7 +3118,7 @@ loc_A57BA:
         pop esi
         pop edi
         ret
-unk_A57C6:
+EmuRemPolyCoefs:
         db 04Eh,018h,0E6h,0C0h,0E4h,0C7h,0D1h,0B5h,0FAh,03Fh,029h,0Bh,01h,08h,08h,09Bh
         db 0C6h,084h,0FBh,0BFh,01Ah,026h,0C5h,06Ch,02Eh,02h,046h,09Dh,0FBh,03Fh,02Ah,098h
         db 06Bh,0Ah,09Dh,0B9h,02Bh,0BAh,0FBh,0BFh,071h,01h,02Bh,095h,027h,027h,08Eh,0E3h
@@ -3278,7 +3278,7 @@ loc_A5969:
         or ch, 1
 loc_A59DC:
         LD mov, eax, edi
-        lea edx, [unk_A57C6]
+        lea edx, [EmuRemPolyCoefs]
         mov ebx, 8
         call PolyEvalOdd
         shr ch, 1
@@ -3489,10 +3489,10 @@ loc_A5BAB:
         pop ebx
         ret
         db 090h
-unk_A5BC2:
+EmuLog2PolyNum:
         db 0E9h,046h,0E9h,0B5h,09Ah,0ADh,020h,0CAh,0FEh,0BFh,09h,065h,07Fh,0B5h,00h,051h
         db 012h,083h,03h,040h,028h,0D2h,0ACh,09Dh,095h,0F8h,03Fh,080h,05h,0C0h
-unk_A5BE0:
+EmuLog2PolyDen:
         db 00h,00h,00h,00h,00h,00h,00h,080h,0FFh,03Fh,0BBh,076h,070h,03Eh,05Bh,02h
         db 0ACh,08Eh,04h,0C0h,060h,0EFh,033h,0A9h,0D0h,01Fh,04h,09Ch,07h,040h,096h,0BBh
         db 083h,06Ch,0E0h,0F4h,05Fh,0C0h,08h,0C0h
@@ -3613,7 +3613,7 @@ loc_A5CDD:
         mov dword [byte edi+04h], edx
         mov word [byte edi+08h], si
         mov ebx, 3
-        lea ecx, [unk_A5BE0]
+        lea ecx, [EmuLog2PolyDen]
         call PolyEval
         push eax
         push edx
@@ -3621,7 +3621,7 @@ loc_A5CDD:
         mov eax, dword [edi]
         mov edx, dword [byte edi+04h]
         mov si, word [byte edi+08h]
-        lea ecx, [unk_A5BC2]
+        lea ecx, [EmuLog2PolyNum]
         mov ebx, 2
         call PolyEval
         pop ecx
@@ -3703,21 +3703,21 @@ loc_A5E26:
         pop edi
         ret
         db 090h
-unk_A5E36:
+EmuSinPolyCoefs:
         db 059h,053h,06Ah,085h,081h,03Bh,096h,0CAh,0CEh,03Fh,08Fh,0F8h,0C0h,09Dh,039h,09Fh
         db 03Fh,0D7h,0D6h,0BFh,0E5h,04Bh,068h,043h,09Dh,030h,092h,0B0h,0DEh,03Fh,07Fh,01Ch
         db 027h,0AAh,03Fh,02Bh,032h,0D7h,0E5h,0BFh,07Dh,09Ch,039h,0B6h,02Ah,01Dh,0EFh,0B8h
         db 0ECh,03Fh,0Ch,0D0h,00h,0Dh,0D0h,00h,0Dh,0D0h,0F2h,0BFh,088h,088h,088h,088h
         db 088h,088h,088h,088h,0F8h,03Fh,0AAh,0AAh,0AAh,0AAh,0AAh,0AAh,0AAh,0AAh,0FCh,0BFh
         db 00h,00h,00h,00h,00h,00h,00h,080h,0FFh,03Fh
-unk_A5E90:
+EmuCosPolyCoefs:
         db 08Fh,0F8h,0C0h,09Dh,039h,09Fh,03Fh,0D7h,0D2h,03Fh,05h,0E9h,0E4h,03h,046h,0A5h
         db 0CBh,0C9h,0DAh,0BFh,0AAh,0BDh,0C4h,0C6h,07Fh,0C7h,076h,08Fh,0E2h,03Fh,097h,0E3h
         db 0FAh,0C4h,0BBh,07Dh,0F2h,093h,0E9h,0BFh,0Dh,0D0h,00h,0Dh,0D0h,00h,0Dh,0D0h
         db 0EFh,03Fh,0Bh,0B6h,060h,0Bh,0B6h,060h,0Bh,0B6h,0F5h,0BFh,0AAh,0AAh,0AAh,0AAh
         db 0AAh,0AAh,0AAh,0AAh,0FAh,03Fh,00h,00h,00h,00h,00h,00h,00h,080h,0FEh,0BFh
         db 00h,00h,00h,00h,00h,00h,00h,080h,0FFh,03Fh
-unk_A5EEA:
+EmuSinCosTermCounts:
         db 00h,00h,01h,00h,02h,00h,03h,00h,04h,00h,04h,00h,05h,00h,05h,00h
         db 06h,00h
 SinCosCore:
@@ -3800,7 +3800,7 @@ loc_A5FCC:
         jle short loc_A5FD9
         mov cx, 8
 loc_A5FD9:
-        mov cx, word [nosplit cs:ecx*2+unk_A5EEA]
+        mov cx, word [nosplit cs:ecx*2+EmuSinCosTermCounts]
         push ecx
         mov eax, dword [byte ebp-014h]
         inc al
@@ -3823,7 +3823,7 @@ loc_A5FF3:
         mov ebx, 8
         LD sub, ebx, ecx
         lea ecx, [ecx+ecx*4]
-        lea ecx, [nosplit ecx*2+unk_A5E90]
+        lea ecx, [nosplit ecx*2+EmuCosPolyCoefs]
         call PolyEval
         mov dword [byte ebp-0Ch], eax
         mov dword [byte ebp-08h], edx
@@ -3842,7 +3842,7 @@ loc_A603C:
         LD sub, ebx, ecx
         lea ecx, [ecx+ecx*4]
         LD add, ecx, ecx
-        lea edx, [unk_A5E36]
+        lea edx, [EmuSinPolyCoefs]
         LD add, edx, ecx
         call PolyEvalOdd
 loc_A605A:
@@ -4358,7 +4358,7 @@ loc_A650C:
         test eax, eax
         jne short loc_A6558
         mov eax, 7
-        mov ebx, sub_A365C
+        mov ebx, __int7
         mov ecx, cs
         call _dos_setvect_
         mov es, word [esp]
@@ -4428,7 +4428,7 @@ loc_A65B7:
         pop ecx
         pop ebx
         ret
-nullsub_3:
+EmuNoOp:
         ret
 __init_80x87:
         push ax

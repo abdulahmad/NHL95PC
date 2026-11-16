@@ -1,7 +1,7 @@
 /* File utils: panel line indicator. */
 #include "nhl95.h"
 
-#define PUTSPRITE ((void (__cdecl *)(int spr, int x, int y))VgaBlitKeyedHot)
+#define PUTSPRITE ((void (__cdecl *)(int spr, int x, int y))VgaBlitKeyed)
 
 /* DrawPanelLine: draw the line indicator of team side (away when set) for line on the screen bitmap:
  crossing between the forward lines (< 4), the extra lines (< 6) and the rest resets that side's line timer

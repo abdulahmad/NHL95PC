@@ -11,7 +11,7 @@ void LoadPhotoBankF(void)
 
     if (photobankf != 0) return;
     MakePath(path, fileoncd[0x90] == 1 ? (char *)cddriveptr : (char *)photobankf, (char *)str_F000149, (char *)str_PPV);
-    photobankf = sub_8E8A0(path, 0x20);
+    photobankf = OpenArtArchiveErr(path, 0x20);
     for (i = 0; i < 105; i++) {
         sprintf(name, (char *)str_04d, i);
         photoptrsf[i] = FindShape(photobankf, name);
@@ -40,7 +40,7 @@ void LoadPlayerPhotos(void)
             else sprintf(name, (char *)str_D00_D49, half, half);
         }
         MakePath(path, fileoncd[b] == 1 ? (char *)cddriveptr : 0, name, (char *)str_PPV);
-        photobanks[b] = sub_8E8A0(path, 0x20);
+        photobanks[b] = OpenArtArchiveErr(path, 0x20);
         IndexPhotoBank(b);
     }
     LoadPhotoBankF();

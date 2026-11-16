@@ -585,13 +585,13 @@ int POAfterGame(unsigned char *p)
     s[4] = hmscore[0];
     s[5] = awscore;
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
-    seasondb = (unsigned char *)sub_8E8A0(f.path, 0x20);
+    seasondb = (unsigned char *)OpenArtArchiveErr(f.path, 0x20);
     seasondb_size = GetFileSize(f.path);
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[1], (char *)str_extDB);
-    careerdb = (unsigned char *)sub_8E8A0(f.path, 0x20);
+    careerdb = (unsigned char *)OpenArtArchiveErr(f.path, 0x20);
     careerdb_size = GetFileSize(f.path);
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[0], (char *)str_extDB);
-    keydb = (unsigned char *)sub_8E8A0(f.path, 0x20);
+    keydb = (unsigned char *)OpenArtArchiveErr(f.path, 0x20);
     keydb_size = GetFileSize(f.path);
     if (idx < 8) {
         for (w = 0; w < 8; w++)

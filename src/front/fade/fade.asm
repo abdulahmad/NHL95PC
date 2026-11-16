@@ -4,7 +4,7 @@ bits 32
 section s_76429 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, blitclipbottom, blitclipleft, blitclipright, blitcliptop, ClearScreen, dlgfillcol
 extern fadeend, fadeend2, fadepal, fadepal2, fadestart, fadestart2, fadestep, fadestep2
-extern FillRect, fputchar, j___delay_, palfadedin, PrintString, stub_8C218, SetScreenTarget, sub_B4C84
+extern FillRect, fputchar, j___delay_, palfadedin, PrintString, stub_8C218, SetScreenTarget, WaitRetraceEnd
 extern vgapage, VgaSetPalette
 global FadePalStep, FadePalStep_ret, FadePalStepSlow, SetPalette768, RandLfsrByte, BlitClipRect, str_Scratch2, str_Dress2
 global str_Player2, str_GoalieW2, str_RosterIncomplete2, PrintLineEdStatus
@@ -221,7 +221,7 @@ SetPalette768:
         xor edi, edi
         jmp short .2
 .1:
-        call sub_B4C84
+        call WaitRetraceEnd
         lea eax, [edi+ebp]
         push eax
         push dword 80h

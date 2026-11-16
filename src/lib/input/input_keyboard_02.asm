@@ -4,14 +4,14 @@ bits 32
 section s_B29F0 progbits alloc exec nowrite align=1
 extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12
 extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, BiosKeyFunc
-extern KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74
+extern KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask, dword_D2D5C, dword_D2D62, dword_D2D68, FatalErrorHook
 extern GraphicsReady, PrintBoxedText, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
 extern WaitKey, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
-global RemoveKeyboardHandler, loc_B2A9A, sub_B2A9B, loc_B2B09, sub_B2B0A, loc_B2B3A, loc_B2B81, loc_B2B85
+global InstallKeyboardHandler, loc_B2A9A, RemoveKeyboardHandler, loc_B2B09, KeyboardIrqHandler, loc_B2B3A, loc_B2B81, loc_B2B85
 global loc_B2BA5, loc_B2BA9, loc_B2BC0, loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5
-global loc_B2BED, unk_B2C00, Int16Handler, loc_B2C3B, Int16Service, loc_B2C68, loc_B2C6D, loc_B2C85
-global loc_B2CAC, KeyDown, sub_B2CCD, FatalError, loc_B2D01, loc_B2D11, sub_B2D27
-RemoveKeyboardHandler:
+global loc_B2BED, IretStub, Int16Handler, loc_B2C3B, Int16Service, loc_B2C68, loc_B2C6D, loc_B2C85
+global loc_B2CAC, KeyDown, BiosKeyCall, FatalError, loc_B2D01, loc_B2D11, FatalErrorEnd
+InstallKeyboardHandler:
         cmp word [word_D2D6E], byte 0
         jne near loc_B2A9A
         o16 mov word [word_D2D6E], ds
@@ -33,25 +33,25 @@ RemoveKeyboardHandler:
         mov word [word_D2D6C], dx
         mov dx, cs
         mov ebx, 9
-        mov eax, sub_B2B0A
+        mov eax, KeyboardIrqHandler
         call DosSetVector
         mov dx, cs
         mov ebx, 16h
         mov eax, Int16Handler
         mov dx, cs
         mov ebx, 23h
-        mov eax, unk_B2C00
+        mov eax, IretStub
         call DosSetVector
         pop eax
         out 21h, al
         mov ebx, Int16Service
         mov dword [BiosKeyFunc], ebx
-        push sub_B2A9B
+        push RemoveKeyboardHandler
         call AddExitHandler
         add esp, byte 4
 loc_B2A9A:
         ret
-sub_B2A9B:
+RemoveKeyboardHandler:
         cmp word [word_D2D6E], byte 0
         je short loc_B2B09
         mov word [word_D2D6E], 0
@@ -74,12 +74,12 @@ sub_B2A9B:
         and byte [0417h], 0F0h
         pop eax
         out 21h, al
-        mov ebx, sub_B2CCD
+        mov ebx, BiosKeyCall
         mov dword [BiosKeyFunc], ebx
         popa
 loc_B2B09:
         ret
-sub_B2B0A:
+KeyboardIrqHandler:
         push eax
         push ebx
         push ds
@@ -169,7 +169,7 @@ loc_B2BED:
         test byte [byte_D2D2F], 1
         je short loc_B2BE5
         jmp short loc_B2BDC
-unk_B2C00:
+IretStub:
         db 0CFh
 Int16Handler:
         push ebx
@@ -266,7 +266,7 @@ KeyDown:
         movzx eax, byte [dword ebx+KeyStateTable]
         leave
         ret
-sub_B2CCD:
+BiosKeyCall:
         movzx eax, ax
         int 16h
         movzx eax, ax
@@ -274,7 +274,7 @@ sub_B2CCD:
         db 00h,00h
 FatalError:
         pop eax
-        cmp dword [dword_D2F74], byte 0
+        cmp dword [FatalErrorHook], byte 0
         jne short loc_B2D11
         cmp dword [GraphicsReady], byte 0
         je short loc_B2D01
@@ -289,16 +289,16 @@ loc_B2D01:
         call PrintfSaveRegs
         call dword [bailout_vec]
 loc_B2D11:
-        push dword [dword_D2F74]
+        push dword [FatalErrorHook]
         call RestoreTextMode
         call PrintfSaveRegs
         call dword [bailout_vec]
-sub_B2D27:
+FatalErrorEnd:
         ret
         push ebp
         LD mov, ebp, esp
         mov eax, dword [byte ebp+08h]
-        mov dword [dword_D2F74], eax
+        mov dword [FatalErrorHook], eax
         leave
         ret
         db 00h,00h,00h

@@ -20,7 +20,7 @@ extern str_Gtpo, str_LAAtMTL, str_League, str_LeagueCalled, str_LP, str_Lp, str_
 extern str_Nhl, str_NHL, str_Nhl2, str_Noar, str_None, str_Open, str_Open2, str_OpenBut
 extern str_Playoffs, str_PlayOffSeriesCalled, str_Po, str_PO2, str_Po2, str_PoGameSav, str_Pointer5, str_Sav
 extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, AllocMemBlock
-extern LoadBank, sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt
+extern LoadBank, OpenArtArchiveErr, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt
 extern GrabBlock, PrintString, TextPrintAt, MouseRead, FindShape, FindFirstFile, SetScreenTarget, FillRectColor
 extern teamabbrevs, unknown_libname_1, unknown_libname_2, unlink_, ViewPlayoffHilights
 global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy
@@ -2222,7 +2222,7 @@ SelectSavedFile:
         push byte 0
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov ebx, eax
         add esp, byte 8
         mov edx, dword [byte eax+042h]

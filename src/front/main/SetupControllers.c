@@ -36,6 +36,6 @@ void SetupControllers(void)
     }
     InitMouse();
     MouseSetPos(0xA0, 0x64);
-    RemoveKeyboardHandler();
+    InstallKeyboardHandler();
     joysampling = 0;
 }

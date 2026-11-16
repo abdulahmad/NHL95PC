@@ -85,7 +85,7 @@ int TonightsGameScreen(int home, int away)
     gad[10] = FindShape(titlebank, (char *)str_Top);
     TextSaveState(state);
     MakePath(name, fileoncd[0x21A] == 1 ? (char *)cddriveptr : 0, (char *)str_Indus030, (char *)str_VFN);
-    font = sub_8E8A0(name, 0x20);
+    font = OpenArtArchiveErr(name, 0x20);
     TextSetFont(font);
     SetTextColors(0x40, 0);
     if (!err) {

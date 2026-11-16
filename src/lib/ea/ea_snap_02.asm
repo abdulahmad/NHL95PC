@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9D352 progbits alloc exec nowrite align=1
 extern __hook387, __8087, _Extender, Is8087, __real87, FpuFlags, FpuSystemFlags, OldFpuVectorOffset
-extern sub_A35EC, sub_A365C, EmuHookFlags, word_D41FA, OldFpuVectorSelector, FpuCr0Bits
+extern __int7_pl3, __int7, EmuHookFlags, word_D41FA, OldFpuVectorSelector, FpuCr0Bits
 global InitFpuFlags, loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, MakeFpuGate, HookCoprocessorVector
 global loc_9D471, loc_9D486, SetSystemFpuFlag
 InitFpuFlags:
@@ -32,7 +32,7 @@ loc_9D3A4:
         push ds
         mov cx, cs
         mov ds, ecx
-        lea edx, [sub_A365C]
+        lea edx, [__int7]
         int 21h
         pop ds
         mov al, 4
@@ -67,7 +67,7 @@ loc_9D409:
 loc_9D41C:
         ret
 MakeFpuGate:
-        lea ecx, [sub_A365C]
+        lea ecx, [__int7]
         mov dx, cs
         shl edx, 10h
         mov dx, cx
@@ -89,13 +89,13 @@ HookCoprocessorVector:
         push cs
         pop ds
         jl short loc_9D471
-        lea edx, [sub_A35EC]
+        lea edx, [__int7_pl3]
         int 21h
         pop ds
         call SetSystemFpuFlag
         jmp short loc_9D486
 loc_9D471:
-        lea edx, [sub_A365C]
+        lea edx, [__int7]
         int 21h
         pop ds
         mov ecx, cr0

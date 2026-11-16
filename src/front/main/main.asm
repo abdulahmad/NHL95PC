@@ -4,13 +4,13 @@ bits 32
 %include "hockey.inc"
 section s_10010 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, addtimer, awardtype, awardwinners
-extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, fadeendlvl, byte_D416A, fadepalbuf
+extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, fadeendlvl, JoyPortMask, fadepalbuf
 extern byte_D9299, camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, clockticks
 extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoiseOff, CrowdNoiseReset, ctl1dev
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
 extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
-extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, BackBufferWidth, dword_D4158, dword_D415C, dword_D4160
-extern dword_D4164, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, dword_E9A9E, escrequest
+extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, BackBufferWidth, JoyRawX1, JoyRawY1, JoyRawX2
+extern JoyRawY2, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, dword_E9A9E, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
 extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
 extern gameover, gamepal, gameresult, gmode, gsp, HomeTeam, hudclockhund, hudclockmin
@@ -35,10 +35,10 @@ extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, s
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
 extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, FreeGameMemory, EnsureFreeMemory, InitZoneManager
 extern FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, AllocMemBlock, PushMemDescriptorLocked, sub_8DF54, initgraphics
-extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, ReleaseAllVoices, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
-extern DisableMidiMusic, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry, RemoveKeyboardHandler, KeyDown
-extern SetViewRect, InitMouse, sub_B3036, FindShape, sub_B30F4, JoyResetCentres, ReadJoyRaw, ClearScreen
-extern KbdFlush, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetrace, sub_B4C84, teamabbrevs
+extern subwindowdefadr, LoadBank, OpenArtArchiveErr, TextSetFont, ReleaseAllVoices, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
+extern DisableMidiMusic, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry, InstallKeyboardHandler, KeyDown
+extern SetViewRect, InitMouse, InstallBreakHandler, FindShape, CalibrateJoystick, JoyResetCentres, ReadJoyRaw, ClearScreen
+extern KbdFlush, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetrace, WaitRetraceEnd, teamabbrevs
 extern TicksSinceLastCall, treeteamnames, blackpal, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
 extern awardwinners_e06, awardwinners_e08, awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly
 extern VisTeam, vtoa, WaitTickDeadline, SortPending
@@ -275,7 +275,7 @@ main_:
         call InputInstall
         call dword [mousepollfn]
         push CritErrHandler
-        call sub_B3036
+        call InstallBreakHandler
         add esp, byte 4
         call InitFileLocations
         mov edx, 0C8h
@@ -330,7 +330,7 @@ main_:
         push byte 20h
         lea eax, [byte esp+03Ch]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [s1font], eax
         mov dword [mainfont], eax
@@ -348,7 +348,7 @@ main_:
         push byte 20h
         lea eax, [byte esp+03Ch]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [scor2font], eax
         mov ecx, str_VFN
@@ -365,7 +365,7 @@ main_:
         push byte 20h
         lea eax, [byte esp+03Ch]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [scor3font], eax
         mov ecx, str_VFN
@@ -382,7 +382,7 @@ main_:
         push byte 20h
         lea eax, [byte esp+03Ch]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [kaufmfont], eax
         mov edx, dword [s1font]
@@ -393,9 +393,9 @@ main_:
         call LoadModeState
         call LoadNhlCfg
         call RunIntro
-        call sub_B30F4
+        call CalibrateJoystick
         mov dword [byte esp+054h], eax
-        mov al, byte [byte_D416A]
+        mov al, byte [JoyPortMask]
         and al, 0Fh
         cmp al, 0Fh
         sete al
@@ -404,11 +404,11 @@ main_:
         push eax
         call JoyResetCentres
         add esp, byte 4
-        test byte [byte_D416A], 3
+        test byte [JoyPortMask], 3
         je short .20
-        cmp dword [dword_D4158], byte 0
+        cmp dword [JoyRawX1], byte 0
         jne short .19
-        cmp dword [dword_D415C], byte 0
+        cmp dword [JoyRawY1], byte 0
         je short .20
 .19:
         push str_ConfigureLeftJoystick
@@ -422,11 +422,11 @@ main_:
         or byte [ctlavailmask], 2
         mov dword [joypresent], 1
 .20:
-        test byte [byte_D416A], 0Ch
+        test byte [JoyPortMask], 0Ch
         je short .22
-        cmp dword [dword_D4160], byte 0
+        cmp dword [JoyRawX2], byte 0
         jne short .21
-        cmp dword [dword_D4164], byte 0
+        cmp dword [JoyRawY2], byte 0
         je short .22
 .21:
         push str_ConfigureRightJoystick
@@ -728,7 +728,7 @@ SetupControllers:
         push dword 0A0h
         call MouseSetPos
         add esp, byte 8
-        call RemoveKeyboardHandler
+        call InstallKeyboardHandler
         xor ebp, ebp
         mov dword [joysampling], ebp
         pop ebp
@@ -2029,7 +2029,7 @@ RunGameFrames:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SetFullPalette                               11550  95 PC, medium confidence
-; Sets all 256 palette entries in two 128-colour blocks, waiting (sub_B4C84)
+; Sets all 256 palette entries in two 128-colour blocks, waiting (WaitRetraceEnd)
 ; before each
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/HandleHotKey.c (SetFullPalette)
@@ -2050,7 +2050,7 @@ SetFullPalette:
         xor edi, edi
         jmp short .2
 .1:
-        call sub_B4C84
+        call WaitRetraceEnd
         lea eax, [edi+ebp]
         push eax
         push dword 80h
@@ -2471,7 +2471,7 @@ Gameloop:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [ovlartbank], eax
         xor esi, esi
@@ -2725,7 +2725,7 @@ PlayGame:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [ovlartbank], eax
         xor esi, esi

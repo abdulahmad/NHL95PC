@@ -9,7 +9,7 @@ void SetPalette768(unsigned char *pal)
     int o;
 
     for (i = 0, o = 0; i < 0x100; i += 0x80, o += 0x180) {
-        sub_B4C84();
+        WaitRetraceEnd();
         VgaSetPalette(i, 0x80, pal + o);
     }
 }

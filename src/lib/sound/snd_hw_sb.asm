@@ -11,7 +11,7 @@ extern dword_D6E3C, dword_D6E40, dword_D6E44, dword_D6E50, dword_D6E54, dword_D6
 extern dword_D6F6C, dword_D6F80, dword_D6F84, dword_D6F88, dword_D6F94, dword_D6F98, dword_D6F9C, dword_D6FA0
 extern dword_D6FA8, dword_D70B0, dword_D70C4, dword_D70C8, dword_D70CC, dword_D70D8, dword_D70DC, dword_D70E0
 extern dword_D70E4, dword_D70EC, dword_D7200, dword_D7204, dword_D7208, dword_D720C, dword_D7614, dword_D7A1E
-extern dword_D7A22, off_D71F0, sub_A9E34, sub_A9F93, sub_AA1B2, tolower_, word_D7214, word_D7216
+extern dword_D7A22, off_D71F0, SbCardClose, SbCardOpen, SbDmaCount, tolower_, word_D7214, word_D7216
 extern word_D7218, word_D721A, word_D721C, word_D721E, word_D7220, word_D7222, word_D7224, word_D7226
 extern word_D7228, word_D722A, word_D722C, word_D722E, word_D7230, word_D7232, word_D7234, word_D7236
 extern word_D7238, word_D723A, word_D723C, word_D723E, word_D7240, word_D7242, word_D7244, word_D7246
@@ -4284,7 +4284,7 @@ loc_A9B8F:
         ret
         db 00h,00h,00h
 SbDmaHalfReady:
-        call sub_AA1B2
+        call SbDmaCount
         cmp eax, dword [dword_D7A1E]
         jge short loc_A9BB5
         LD xor, eax, eax
@@ -4313,7 +4313,7 @@ SbDmaStart:
         push dword [byte ebp+08h]
         push edx
         push eax
-        call sub_A9F93
+        call SbCardOpen
         add esp, byte 14h
         cmp eax, byte 0FFFFFFFFh
         je short loc_A9C08
@@ -4325,7 +4325,7 @@ SbDmaStart:
 loc_A9C08:
         LD xor, eax, eax
         mov byte [byte_D7618], al
-        call sub_A9E34
+        call SbCardClose
         mov eax, 0FFFFFFFFh
         leave
         ret
@@ -4336,7 +4336,7 @@ SbDmaStop:
         je short loc_A9C33
         LD xor, eax, eax
         mov byte [byte_D7618], al
-        call sub_A9E34
+        call SbCardClose
 loc_A9C33:
         popfw
         pop esi

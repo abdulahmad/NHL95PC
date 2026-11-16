@@ -10,7 +10,7 @@ void LoadScoreboardGfx(void)
     char path[16];
 
     MakePath(path, fileoncd[0x16C] == 1 ? (char *)cddriveptr : 0, (char *)str_scrbrd1, (char *)str_PPV);
-    scrbrdshapes = sub_8E8A0(path, 0x20);
+    scrbrdshapes = OpenArtArchiveErr(path, 0x20);
     ProjectPointList(scrbrdshapes, (char *)str_LineCodes0, scoredigits);
     ProjectPointList(scrbrdshapes, (char *)str_LineCodes1, clockdigits);
     ProjectPointList(scrbrdshapes, (char *)str_LineCodes2, penaltydigits);

@@ -176,7 +176,7 @@ void LoadTeamPPV(short seq)
     joysampling_save = joysampling;
     joysampling = 0;
     MakePath(name, fileoncd[ovlartfiles[seq]] == 1 ? (char *)cddriveptr : 0, (char *)ovlartnames[seq], (char *)str_PPV);
-    ovlartbank = sub_8E8A0(name, 0x20);
+    ovlartbank = OpenArtArchiveErr(name, 0x20);
     for (i = 0; i < ShapeBankCount(ovlartbank); i++) {
         sprintf(name, (char *)str_04d2, i);
         ovlstepart[i] = FindShape(ovlartbank, name);

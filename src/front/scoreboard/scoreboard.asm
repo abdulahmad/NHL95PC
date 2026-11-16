@@ -19,8 +19,8 @@ extern msg_GameDiskSpace, hudotname, PaPreloadClips, penaltydigits, perioddigits
 extern randomd0, ReloadGameGfx, rmdir_, scoredigits, seed, SelectRinkBM, SelectScreenBM, SeriesLength
 extern SetScreenSize, SetupControllers, SetupDemoGame, ShowLoadingScreen, sprintf_, str_backslash2, str_Crests4, str_dot
 extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_PPV, str_Scrbrd2, str_Srb3, str_Stanley
-extern str_star, strcat_, strcpy_, AllocMemBlock, sub_8E8A0, FillRect, FindShape, ReadJoyRaw
-extern VgaBlitKeyedHot, VgaBlitKeyed, SetColorRemap, VgaBlitRemap, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
+extern str_star, strcat_, strcpy_, AllocMemBlock, OpenArtArchiveErr, FillRect, FindShape, ReadJoyRaw
+extern VgaBlitKeyed, VgaBlitKeyedAtOwnPos, SetColorRemap, VgaBlitRemap, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
 extern unknown_libname_2, VisTeam, lcsel_aw
 global DrawPanelScore, DrawPanelLine, DrawPanelLine_x, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel, UpdateHudPanel_x
 global DrawPanelClock, DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties
@@ -68,7 +68,7 @@ DrawPanelScore:
 .3:
         mov ecx, dword [nosplit eax*4+scoredigits]
         push ecx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 4
         push dword 109h
@@ -96,7 +96,7 @@ DrawPanelScore:
 .6:
         mov edx, dword [nosplit eax*4+scoredigits]
         push edx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 4
         push byte 38h
@@ -108,7 +108,7 @@ DrawPanelScore:
         mov ebx, dword [nosplit edx*4+scoredigits]
         push ebx
 .7:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         call SelectRinkBM
         pop esi
@@ -199,7 +199,7 @@ DrawPanelLine:
         mov edi, dword [nosplit eax*4+linesprites]
         push edi
 .6:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         call SelectRinkBM
 DrawPanelLine_x:
@@ -451,7 +451,7 @@ UpdateHudPanel:
         jne short .5
         mov edi, dword [hmpanelspr]
         push edi
-        call VgaBlitKeyed
+        call VgaBlitKeyedAtOwnPos
         add esp, byte 4
         mov dword [hmpanelpens], 1
 .5:
@@ -495,7 +495,7 @@ UpdateHudPanel:
         jne short .10
         mov ebp, dword [awpanelspr]
         push ebp
-        call VgaBlitKeyed
+        call VgaBlitKeyedAtOwnPos
         add esp, byte 4
         mov dword [awpanelpens], 1
 .10:
@@ -539,7 +539,7 @@ DrawPanelClock:
         push dword 0AAh
         mov edx, dword [clockcolon]
         push edx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         cmp dword [hudclocksec], byte 0Ah
         jge short .1
@@ -559,7 +559,7 @@ DrawPanelClock:
         mov ecx, dword [nosplit eax*4+clockdigits]
         push ecx
 .2:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 3
         push dword 95h
@@ -570,7 +570,7 @@ DrawPanelClock:
         idiv ebx
         mov edi, dword [nosplit edx*4+clockdigits]
         push edi
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 3
         push dword 0A1h
@@ -600,7 +600,7 @@ DrawPanelClock:
         mov ecx, dword [nosplit eax*4+clockdigits]
         push ecx
 .5:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 3
         push dword 95h
@@ -611,7 +611,7 @@ DrawPanelClock:
         idiv ebx
         mov edi, dword [nosplit edx*4+clockdigits]
         push edi
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 3
         push dword 0A1h
@@ -622,7 +622,7 @@ DrawPanelClock:
         idiv ebx
         mov ebp, dword [nosplit eax*4+clockdigits]
         push ebp
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 3
         push dword 0AAh
@@ -634,7 +634,7 @@ DrawPanelClock:
         mov eax, dword [nosplit edx*4+clockdigits]
         push eax
 .6:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         mov eax, dword [hudclockmin]
         mov dword [panelprevmin], eax
@@ -716,7 +716,7 @@ DrawHudPanel:
         push byte 0
         lea eax, [byte esp+08h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edi, eax
         add esp, byte 8
         mov dword [byte esp+014h], eax
@@ -725,7 +725,7 @@ DrawHudPanel:
         call FindShape
         add esp, byte 8
         push eax
-        call VgaBlitKeyed
+        call VgaBlitKeyedAtOwnPos
         add esp, byte 4
         mov edx, dword [hmscore-2]
         sar edx, 10h
@@ -763,7 +763,7 @@ DrawHudPanel:
         call FindShape
         add esp, byte 8
         push eax
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 16h
         push dword 0A0h
@@ -779,7 +779,7 @@ DrawHudPanel:
         call FindShape
         add esp, byte 8
         push eax
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         mov esi, dword [byte esp+014h]
         push esi
@@ -799,7 +799,7 @@ DrawHudPanel:
         push byte 0
         lea eax, [byte esp+08h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov esi, eax
         add esp, byte 8
         mov dh, 67h
@@ -846,14 +846,14 @@ DrawHudPanel:
         mov eax, dword [hudhomeline]
         mov edx, dword [nosplit eax*4+linesprites]
         push edx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push byte 14h
         push dword 0FBh
         mov eax, dword [hudawayline]
         mov ebx, dword [nosplit eax*4+linesprites]
         push ebx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         add esp, byte 18h
         pop ebp
@@ -946,7 +946,7 @@ DrawPanelClockDigits:
         push dword 0AAh
         mov edi, dword [clockcolon]
         push edi
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
 .1:
         mov eax, dword [panelprevsec]
@@ -978,7 +978,7 @@ DrawPanelClockDigits:
         mov ebx, dword [nosplit eax*4+clockdigits]
         push ebx
 .3:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
 .4:
         mov ebx, 0Ah
@@ -998,7 +998,7 @@ DrawPanelClockDigits:
         push dword 95h
         mov esi, dword [nosplit edx*4+clockdigits]
         push esi
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
 .5:
         mov ebx, 0Ah
@@ -1048,7 +1048,7 @@ DrawPanelClockDigits:
         mov esi, dword [nosplit eax*4+clockdigits]
         push esi
 .8:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
 .9:
         mov ebx, 0Ah
@@ -1068,7 +1068,7 @@ DrawPanelClockDigits:
         push dword 95h
         mov ebp, dword [nosplit edx*4+clockdigits]
         push ebp
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
 .10:
         mov eax, dword [panelprevsec]
@@ -1090,7 +1090,7 @@ DrawPanelClockDigits:
         push dword 0A1h
         mov ebx, dword [nosplit eax*4+clockdigits]
         push ebx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
 .11:
         mov ebx, 0Ah
@@ -1111,7 +1111,7 @@ DrawPanelClockDigits:
         mov ecx, dword [nosplit edx*4+clockdigits]
         push ecx
 .12:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         jmp near UpdateHudPanel_x
 %endif ; C
@@ -1327,7 +1327,7 @@ DrawLineGroupBars:
         jne short .4
         mov ebp, dword [edx]
         push ebp
-        call VgaBlitKeyed
+        call VgaBlitKeyedAtOwnPos
         add esp, byte 4
         mov dword [esi], 1
 .4:
@@ -1341,7 +1341,7 @@ DrawLineGroupBars:
         jne short .6
         mov ebx, dword [byte edx+04h]
         push ebx
-        call VgaBlitKeyed
+        call VgaBlitKeyedAtOwnPos
         add esp, byte 4
         mov dword [esi], 1
 .6:
@@ -1354,7 +1354,7 @@ DrawLineGroupBars:
         jne short .8
         mov ecx, dword [byte edx+08h]
         push ecx
-        call VgaBlitKeyed
+        call VgaBlitKeyedAtOwnPos
         add esp, byte 4
         mov dword [esi], 1
 .8:
@@ -1500,7 +1500,7 @@ DrawPanelPenalties:
         mov edx, dword [nosplit eax*4+penaltydigits]
         push edx
 .3:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+010h]
@@ -1515,7 +1515,7 @@ DrawPanelPenalties:
         idiv ebx
         mov edx, dword [nosplit edx*4+penaltydigits]
         push edx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         lea eax, [byte edi+01Bh]
         cmp word [byte ebp+02h], byte 0Ah
@@ -1537,7 +1537,7 @@ DrawPanelPenalties:
         mov ebx, dword [nosplit eax*4+penaltydigits]
         push ebx
 .5:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+021h]
@@ -1553,7 +1553,7 @@ DrawPanelPenalties:
         idiv ebx
         mov edx, dword [nosplit edx*4+penaltydigits]
         push edx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+02Ah]
@@ -1566,7 +1566,7 @@ DrawPanelPenalties:
         idiv ebx
         mov ebx, dword [nosplit eax*4+penaltydigits]
         push ebx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+030h]
@@ -1585,35 +1585,35 @@ DrawPanelPenalties:
         push edx
         mov ebp, dword [dword_DC2B8]
         push ebp
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+010h]
         push eax
         mov eax, dword [dword_DC2B8]
         push eax
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+01Bh]
         push eax
         mov edx, dword [dword_DC2B8]
         push edx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+021h]
         push eax
         mov ebx, dword [dword_DC2B8]
         push ebx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+02Ah]
         push eax
         mov ecx, dword [dword_DC2B8]
         push ecx
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+030h]
@@ -1621,7 +1621,7 @@ DrawPanelPenalties:
         mov ebp, dword [dword_DC2B8]
         push ebp
 .7:
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
         add esp, byte 0Ch
         inc dword [byte esp+04h]
         add esi, byte 5

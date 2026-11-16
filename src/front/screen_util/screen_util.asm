@@ -13,8 +13,8 @@ extern off_CF67F, penaltydigits, postate, scoredigits, scrbrdshapes, spritedrawc
 extern statsplayoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode, statsteamsel, str_BroadcastBooth, str_HomeLineTags, str_Homp
 extern str_IntermissionDesk, str_LeagueCalendar, str_LgPlayoffsTitle, str_LgSeasonTitle, str_LineCodes0, str_LineCodes1, str_LineCodes2, str_LineNames
 extern str_PlayOffsSfx, str_PlayoffTree, str_POTitle, str_PPV, str_RinkSide, str_scrbrd1, str_SeasonPlayOffsSfx, str_SeasonSfx
-extern str_SportsCentral, str_VisLineTags, str_Visp, strcpy_, strncpy_, MarkZoneRect, sub_8E8A0, ProjectPointList
-extern FindShape, VgaBlitKeyedHot, SetColorRemap, VgaBlitRemap, VgaBlitKeyedFlipV, VgaBlitRemapFlipV, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHV
+extern str_SportsCentral, str_VisLineTags, str_Visp, strcpy_, strncpy_, MarkZoneRect, OpenArtArchiveErr, ProjectPointList
+extern FindShape, VgaBlitKeyed, SetColorRemap, VgaBlitRemap, VgaBlitKeyedFlipV, VgaBlitRemapFlipV, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHV
 extern VgaBlitRemapFlipH, VgaBlitRemapFlipHV, awayremap_eC0, homeremap_eC0, vgapage
 global LoadScoreboardGfx, DrawSprite_jt, DrawSprite, DrawSprite_b0, DrawSprite_b1, DrawSprite_b2, DrawSprite_b3, DrawSprite_b4
 global DrawSprite_b5, DrawSprite_b6, DrawSprite_b7, NullBlit, NullFunc_1D024, AddDirtyRect, SetupStatsSourceMenu_jt, SetupStatsSourceMenu
@@ -53,7 +53,7 @@ LoadScoreboardGfx:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [scrbrdshapes], eax
         push scoredigits
@@ -309,7 +309,7 @@ DrawSprite_b0:
         push ebp
         push edi
         push esi
-        call VgaBlitKeyedHot
+        call VgaBlitKeyed
 .1:
         add esp, byte 0Ch
 .x:

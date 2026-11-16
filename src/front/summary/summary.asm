@@ -20,7 +20,7 @@ extern str_NoPenalties, str_NoScoring, str_OT, str_Ots, str_OtShape, str_Pal13, 
 extern str_Per2, str_Per3, str_Period, str_PP, str_PRDS, str_Rd, str_RParen2, str_S2
 extern str_S3, str_Scra2, str_SDD, str_SH, str_ShotsOnGoal, str_SS4, str_St, str_Summ2
 extern str_Th, str_Tlu2, str_Top2, str_VFN, strcat_, strcpy_, EnsureFreeMemory, AllocMemBlock
-extern PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
+extern PushMemDescriptorLocked, LoadBank, OpenArtArchiveErr, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
 extern LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, PutBlock, DrawShape, DrawArtHotspot, FindShape
 extern ClearScreen, VgaSetPalette, SetScreenTarget, SetClipWindow, CreateBitmap, teamstartlag, VisTeam, vscrestbmp
 extern WaitClickTimeout, WaitTickDeadline
@@ -150,7 +150,7 @@ GameSummaryScreen:
         push byte 20h
         lea eax, [dword esp+05D8h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [dword esp+077Ch], eax
         push eax

@@ -27,7 +27,7 @@ void DrawLineGroupBars(int *drawn, int *inds, int line, int *energy, int x)
     case 2:
     case 3:
         if (!*drawn) {
-            VgaBlitKeyed(inds[0]);
+            VgaBlitKeyedAtOwnPos(inds[0]);
             *drawn = 1;
         }
         row = 8;
@@ -37,7 +37,7 @@ void DrawLineGroupBars(int *drawn, int *inds, int line, int *energy, int x)
     case 4:
     case 5:
         if (!*drawn) {
-            VgaBlitKeyed(inds[1]);
+            VgaBlitKeyedAtOwnPos(inds[1]);
             *drawn = 1;
         }
         row = 0xE;
@@ -47,7 +47,7 @@ void DrawLineGroupBars(int *drawn, int *inds, int line, int *energy, int x)
     case 6:
     case 7:
         if (!*drawn) {
-            VgaBlitKeyed(inds[2]);
+            VgaBlitKeyedAtOwnPos(inds[2]);
             *drawn = 1;
         }
         row = 0xE;

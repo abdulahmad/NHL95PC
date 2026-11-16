@@ -60,13 +60,13 @@ void POHandleElimination(int mode, unsigned char *po)
     }
     SetDialogColors(0x41, 0x40, 0x42, 0x40, 0);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
-    seasondb = (unsigned char *)sub_8E8A0(s.path, 0x20);
+    seasondb = (unsigned char *)OpenArtArchiveErr(s.path, 0x20);
     seasondb_size = GetFileSize(s.path);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[1], (char *)str_extDB);
-    careerdb = (unsigned char *)sub_8E8A0(s.path, 0x20);
+    careerdb = (unsigned char *)OpenArtArchiveErr(s.path, 0x20);
     careerdb_size = GetFileSize(s.path);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[0], (char *)str_extDB);
-    keydb = (unsigned char *)sub_8E8A0(s.path, 0x20);
+    keydb = (unsigned char *)OpenArtArchiveErr(s.path, 0x20);
     keydb_size = GetFileSize(s.path);
     if (mode == 1) {
         FadePalStep(0, s.pal, 0x10);

@@ -46,7 +46,7 @@ void ReplaySaveHilight(int unused, int x, int y)
             TextRestoreState(st);
             FreeMemBlock(gadgetfile);
             MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
-            gadgetfile = sub_8E8A0(path, 0);
+            gadgetfile = OpenArtArchiveErr(path, 0);
             gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
             WaitTickDeadline();
             RestoreDialogBg();
@@ -127,7 +127,7 @@ void ReplaySaveHilight(int unused, int x, int y)
         MessageBox(0, 0, (char *)msg_NoHilightSpace, 3, 0, 0, 0, 0, 0);
         FreeMemBlock(gadgetfile);
         MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
-        gadgetfile = sub_8E8A0(path, 0);
+        gadgetfile = OpenArtArchiveErr(path, 0);
         gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
         WaitTickDeadline();
         RestoreDialogBg();

@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_93308 progbits alloc exec nowrite align=1
-extern str_SavefileblockaOPENFAILEDFOR, DebugRow, byte_D4545, byte_D4546, DebugMode, DebugScreenBase, DebugLineWidth, FatalError
+extern str_SavefileblockaOPENFAILEDFOR, DebugRow, byte_D4545, DebugTabWidth, DebugMode, DebugScreenBase, DebugLineWidth, FatalError
 extern MemDescPtr, MemDescSize, bcopy, CreateHandle, DosCloseFile, DosWriteFile, ZeroMem, vsprintf_
-global SaveDataFile, sub_9333C, sub_93354, savefileblocka, loc_933C7, loc_933CB, loc_933E8, imul32
-global sub_933FB, IntSqrt, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
+global SaveDataFile, SaveFileBlockErr, SaveFileBlockQuiet, savefileblocka, loc_933C7, loc_933CB, loc_933E8, imul32
+global umul32, IntSqrt, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
 global SortIndices, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, DebugPrintf
-global loc_93622, DebugSetLine, loc_93671, loc_936A4, unk_936AC, sub_936C0, loc_936E8, loc_93705
+global loc_93622, DebugSetLine, loc_93671, loc_936A4, DebugShowLinesJumpTable, DebugShowLines, loc_936E8, loc_93705
 global loc_9374E, loc_9377C, loc_937A8, loc_937E5, loc_9380C, loc_93818, loc_9382A, loc_9382F
 global loc_93839, DebugScrollUp, loc_938C1, DebugClearScreen, loc_938D9, loc_938EA, DebugSetRow, loc_93906
-global DebugSetAttr, sub_93914, loc_93922, sub_93924
+global DebugSetAttr, DebugSetTabWidth, loc_93922, DebugSetPage
 SaveDataFile:
         sub esp, byte 28h
         mov eax, dword [byte esp+030h]
@@ -30,7 +30,7 @@ SaveDataFile:
         add esp, byte 28h
         ret
         db 090h
-sub_9333C:
+SaveFileBlockErr:
         push byte 1
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -40,7 +40,7 @@ sub_9333C:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_93354:
+SaveFileBlockQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -110,7 +110,7 @@ imul32:
         mov edx, dword [byte esp+08h]
         imul edx
         ret
-sub_933FB:
+umul32:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mul edx
@@ -323,7 +323,7 @@ DebugPrintf:
         xor ebx, ebx
         mov dword [dword esp+0100h], ebx
         mov eax, esp
-        call sub_936C0
+        call DebugShowLines
 loc_93622:
         add esp, 104h
         ret
@@ -359,18 +359,18 @@ loc_93671:
         xor esi, esi
         mov dword [dword esp+0100h], esi
         mov eax, esp
-        call sub_936C0
+        call DebugShowLines
 loc_936A4:
         add esp, 104h
         pop esi
         ret
-unk_936AC:
+DebugShowLinesJumpTable:
         dd loc_9377C
         dd loc_937A8
         dd loc_937E5
         dd loc_9380C
         dd loc_93818
-sub_936C0:
+DebugShowLines:
         push ebx
         push ecx
         push edx
@@ -444,7 +444,7 @@ loc_9374E:
         sar edx, 1Fh
         mov ecx, 0A0h
         idiv ecx
-        jmp dword [dword cs:ebx+unk_936AC]
+        jmp dword [dword cs:ebx+DebugShowLinesJumpTable]
 loc_9377C:
         mov ebx, dword [DebugLineWidth]
         cmp ebx, byte 2
@@ -464,7 +464,7 @@ loc_9377C:
         pop ebx
         ret
 loc_937A8:
-        cmp byte [byte_D4546], 1
+        cmp byte [DebugTabWidth], 1
         jbe near loc_9382F
         imul ebx, eax, dword 0A0h
         mov edx, dword [DebugLineWidth]
@@ -475,7 +475,7 @@ loc_937A8:
         sar eax, 1
         mov edx, eax
         xor ecx, ecx
-        mov cl, byte [byte_D4546]
+        mov cl, byte [DebugTabWidth]
         sar edx, 1Fh
         idiv ecx
         inc eax
@@ -599,15 +599,15 @@ DebugSetAttr:
         mov byte [byte_D4545], al
         ret
         db 08Bh,0C0h
-sub_93914:
+DebugSetTabWidth:
         mov eax, dword [byte esp+04h]
         cmp eax, byte 1
         jl short loc_93922
-        mov byte [byte_D4546], al
+        mov byte [DebugTabWidth], al
 loc_93922:
         ret
         db 090h
-sub_93924:
+DebugSetPage:
         mov eax, dword [byte esp+04h]
         shl eax, 0Fh
         add eax, 0B0000h

@@ -5,7 +5,7 @@ section s_C5679 progbits alloc noexec write align=1
 extern exhfiles, pofiles, lgfiles, StatsSel9394Season, StatsSel9394Playoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode
 extern NullBlit, CmpPoints, CmpGAA, CmpTeamStandings, CmpTeamScoring, CmpTeamDefense, CmpTeamPP, CmpTeamPK
 extern CmpTeamPenalties, CmpGoals, CmpAssists, CmpPPGoals, CmpSHGoals, CmpPlusMinus, CmpPIM, CmpShootPct
-extern CmpGoalieWins, CmpSavePct, VgaBlitKeyedHot, VgaBlitRemap, VgaBlitKeyedFlipV, VgaBlitRemapFlipV, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHV
+extern CmpGoalieWins, CmpSavePct, VgaBlitKeyed, VgaBlitRemap, VgaBlitKeyedFlipV, VgaBlitRemapFlipV, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHV
 extern VgaBlitRemapFlipH, VgaBlitRemapFlipHV, str_3000, str_3001, str_3002, str_3003, str_3004, str_3005
 extern str_3006, str_3007, str_3008, str_3009, str_300, str_OT2, str_BOS, str_BUF3
 extern str_CGY, str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL
@@ -870,7 +870,7 @@ dword_C66D4:
         dd NullBlit
         dd NullBlit
         dd NullBlit
-        dd VgaBlitKeyedHot
+        dd VgaBlitKeyed
         dd VgaBlitKeyedFlipV
         dd VgaBlitRemap
         dd VgaBlitRemapFlipV

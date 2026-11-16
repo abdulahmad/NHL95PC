@@ -8,6 +8,6 @@ void LoadTransparentRinkEndOverlay(void)
     char path[16];
 
     MakePath(path, fileoncd[0x1AA] == 1 ? (char *)cddriveptr : 0, (char *)str_Trinknd, (char *)str_PPV);
-    rinkendbank = sub_8E8A0(path, 0x20);
+    rinkendbank = OpenArtArchiveErr(path, 0x20);
     rinkendart = FindShape(rinkendbank, (char *)str_0000);
 }

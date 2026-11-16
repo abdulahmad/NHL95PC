@@ -16,7 +16,7 @@ extern ReadTeamNames, RestoreDialogBg, savedname, savleague1, savleague2, Select
 extern str_bangpal, str_dot, str_easndesk, str_extBIN, str_extDB, str_extID, str_extLP, str_extnum
 extern str_extxx, str_floppydrv, str_FromLeague, str_HOMEPALS, str_LLSN, str_LLST, str_PINFO, str_PLAYER
 extern str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Show, str_star, str_Statistics, strcat_
-extern strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, sub_8E8A0, MouseRead
+extern strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, OpenArtArchiveErr, MouseRead
 extern FindShape, ClearScreen, VgaSetPalette, CreateBitmap, teamcitynames, TradeScreen, treeteamnames, unknown_libname_1
 extern unknown_libname_2, word_DDD48, word_DDD4A, WriteLeagueTeamEntry
 global AddHumanTeam, AddHumanTeam_msgbox, AddHumanTeam_exit, RemoveHumanTeam, CheckMasterPassword, FmtFromLeague, BuildLeagueList, LeagueCheckStub

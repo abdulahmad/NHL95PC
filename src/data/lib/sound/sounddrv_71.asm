@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D8ACC progbits alloc noexec write align=1
 extern __InitFiles_, __chk8087_, __delay_init_, __full_io_exit_, __setEFGfmt_, __setenvp_, j___sys_fini_387_emulator, j___sys_init_387_emulator
-extern SaveSS, GusMidiInit, GusSizeDram, GusInitDma, sub_B19E0, sub_B1C70
+extern SaveSS, GusMidiInit, GusSizeDram, GusInitDma, GusResetTimers, GusResetVoiceAlloc
 global GusDmaReady, byte_D8B0E, byte_D8B10, InitRtnsEntry, FiniRtnsEntry, GusInitTable, word_D8ACC
 word_D8ACC:
         db 0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh
@@ -44,6 +44,6 @@ GusInitTable:
         db 00h,00h
         dd GusInitDma
         db 00h,00h
-        dd sub_B19E0
+        dd GusResetTimers
         db 00h,00h
-        dd sub_B1C70
+        dd GusResetVoiceAlloc

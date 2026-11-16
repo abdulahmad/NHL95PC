@@ -74,7 +74,7 @@ int TradeScreen(char *dir, int *teams, int b, int c, int d)
     ClearScreen(0);
     TextSaveState(state);
     MakePath(path, fileoncd[0xE7] == 1 ? (char *)cddriveptr : 0, (char *)str_S12, (char *)str_VFN);
-    font = sub_8E8A0(path, 0);
+    font = OpenArtArchiveErr(path, 0);
     TextSetFont(font);
     MakePath(path, fileoncd[0xE8] == 1 ? (char *)cddriveptr : 0, (char *)str_Lineditp, 0);
     bank = LoadBank(path, 0);

@@ -1285,7 +1285,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008E738,sub_8E738,DrawShapeZoomedHotspot,PC-new,,,,low,second copy of DrawShapeScaledHotspot (unused),ea_timer,manual-trace
 0008E780,sub_8E780,DrawShapeZoomed,PC-new,,,,low,passes its arguments on to DrawShapeScaled (unused),ea_timer,manual-trace
 0008E7A0,sub_8E7A0,subwindowdefadr,PC-new,,,,high,"prints its own name: ""subwindowdefadr - OUT OF ROW SPACE""",ea_window,manual-trace
+0008E81C,sub_8E81C,LoadFileCachedQuiet,PC-new,,,,low,Loads a file through the file cache without the error message; unused,ea_window,manual-trace
 0008E83C,sub_8E83C,LoadBank,PC-new,,,,medium,"graphics library: load an art bank file (path, flags), returns the bank",ea_window,manual-trace
+0008E86A,sub_8E86A,LoadFileCachedFlag,PC-new,,,,low,Jumps to LoadFileCached with the caller's error flag,ea_window,manual-trace
+0008E8A0,sub_8E8A0,OpenArtArchiveErr,96PC,,,,low,Opens a data file through the cache with the error message and returns its handle,ea_window,manual-trace
+0008E8B8,sub_8E8B8,OpenArtArchive,96PC,,,,low,Opens a data file through the cache and returns its handle,ea_window,manual-trace
+0008E8D0,sub_8E8D0,OpenArtArchiveFlag,PC-new,,,,low,Opens a data file with the caller's error flag and returns its handle,ea_window,manual-trace
+0008E8F0,sub_8E8F0,LoadDataFileErr,96PC,,,,low,Loads a data file with the error message,ea_window,manual-trace
+0008E908,sub_8E908,LoadFileAllocQuiet,96PC,,,,low,Loads a file into a new block without the error message,ea_window,manual-trace
 0008E920,sub_8E920,LoadDataFileExt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.969),ea_window,match96
 0008E9C0,sub_8E9C0,TextSetColors,PC-new,,,,medium,text library: set the foreground and background text colours,ea_window,manual-trace
 0008E9D4,sub_8E9D4,TextSetCursor,PC-new,,,,medium,sets the text cursor position,ea_window,manual-trace
@@ -1469,16 +1476,22 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00093284,strcspn_,strcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 68 bytes),watcom_clib_20,flirt
 000932D0,sub_932D0,WriteFile,PC-new,,,,medium,"file library: write a buffer to a file (path, buf, size)",ea_gfx_13,manual-trace
 00093308,sub_93308,SaveDataFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.75),ea_fileblock,match96+97
+0009333C,sub_9333C,SaveFileBlockErr,PC-new,,,,low,Saves a memory block to a file with the error message,ea_fileblock,manual-trace
+00093354,sub_93354,SaveFileBlockQuiet,PC-new,,,,low,Saves a memory block to a file without the error message,ea_fileblock,manual-trace
 0009336C,sub_9336C,savefileblocka,PC-new,,,,high,"prints its own name: ""savefileblocka - OPEN FAILED FOR FILE <%s>""",ea_fileblock,manual-trace
 000933F0,sub_933F0,imul32,PC-new,,,,medium,EA math helper (cdecl): returns [esp+4]*[esp+8] signed (imul edx); skatetopuck squares x and y with it,ea_fileblock,manual-trace
+000933FB,sub_933FB,umul32,PC-new,,,,medium,Unsigned 32-bit multiply; followed by the unlabelled divide helpers,ea_fileblock,manual-trace
 00093470,sub_93470,IntSqrt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.954),ea_fileblock,match96
 00093540,sub_93540,SortIndices,PC-new,,,,medium,"sort library: sort n indices by their keys (n, keys, idx)",ea_fileblock,manual-trace
 000935E0,sub_935E0,DebugPrintf,PC-new,,,,high,vsprintf into a 100h stack buffer and pass it to sub_936C0 only when dword_D4534 >= 2 (debug level); DebugMonitor/DumpStatsLog use it for their debug text,ea_fileblock,manual-trace
 0009362C,sub_9362C,DebugSetLine,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.941),ea_fileblock,match96+97
+000936C0,sub_936C0,DebugShowLines,96PC,,,,medium,Writes a string to the debug monitor handling control characters and scrolling,ea_fileblock,manual-trace
 00093844,sub_93844,DebugScrollUp,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.854),ea_fileblock,match96
 000938C8,sub_938C8,DebugClearScreen,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_fileblock,match96
 000938F4,sub_938F4,DebugSetRow,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_fileblock,match96
 00093908,sub_93908,DebugSetAttr,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.948),ea_fileblock,match96
+00093914,sub_93914,DebugSetTabWidth,PC-new,,,,low,Sets the debug monitor tab width when it is at least 1,ea_fileblock,manual-trace
+00093924,sub_93924,DebugSetPage,PC-new,,,,low,Points the debug monitor at a 32K page of monochrome video memory,ea_fileblock,manual-trace
 00093938,sub_93938,DebugLogOpen,PC-new,,,,low,opens the debug log file unless it is already open,ea_debug,manual-trace
 00093A40,sub_93A40,DebugLogClose,PC-new,,,,medium,writes the closing date and time to the debug log and closes it,ea_debug,manual-trace
 00093AA4,sub_93AA4,DebugLog,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.921),ea_debug,match96
@@ -1562,21 +1575,34 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000972E5,sub_972E5,NullDriverPlayDigi,PC-new,,,,medium,null sound driver digital playback entry: does nothing,eacsndf_core,manual-trace
 000972F0,_os_handle_3,_os_handle_3,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_23,flirt
 00097300,sub_97300,SkipCopyrightHeader,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.964),ea_unpack,match96
+00097334,sub_97334,UnpackReadBE,PC-new,,,,medium,Reads an n-byte value stored high byte first,ea_unpack,manual-trace
 00097350,sub_97350,PackedTypeOf,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.954),ea_unpack,match96
+0009762C,sub_9762C,UnpackedSize,96PC,,,,medium,Returns the unpacked size of packed data,ea_unpack,manual-trace
+0009767C,sub_9767C,HuffGetBits,PC-new,,,,low,Reads n bits from the Huffman bit stream,ea_unpack,manual-trace
+00097714,sub_97714,HuffGetLength,PC-new,,,,low,Reads a variable-length count from the Huffman bit stream,ea_unpack,manual-trace
+00097740,sub_97740,UnpackHuffman,96PC,,,,low,Unpacks Huffman packed data (types 30h-34h),ea_unpack,manual-trace
 000979F8,sub_979F8,ExpandBytePair,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.93),ea_unpack,match96+97
 00097A38,sub_97A38,UnpackBytePair,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.521),ea_unpack,match96+97
 00097BB8,sub_97BB8,UnpackDelta,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_unpack,match96
+00097C2C,sub_97C2C,UnpackRunLength,96PC,,,,low,Unpacks run length coded data (type 7Ah/7Bh),ea_unpack,manual-trace
+00097CE0,sub_97CE0,UnpackRefPack,PC-new,,,,low,Unpacks RefPack data (type 10h),ea_unpack,manual-trace
 00097EB8,sub_97EB8,unpack,PC-new,,,,high,"prints its own name: ""unpack - INVALID PACK CODE (%x)""",ea_unpack,manual-trace
 00098028,sub_98028,UnpackTo,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_unpack,match96
+00098044,sub_98044,UnpackQuiet,PC-new,,,,low,Unpacks without stopping on an unknown pack type,ea_unpack,manual-trace
 0009805E,_fmemmove_,_fmemmove_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 98 bytes),watcom_clib_24,flirt
 000980E5,utoa_,utoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 74 bytes),watcom_clib_24,flirt
 0009812F,itoa_,itoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_24,flirt
 0009814A,fgets_,fgets_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 99 bytes),watcom_clib_24,flirt
+000981AD,sub_981AD,EnableInterrupts,PC-new,,,,medium,Turns interrupts back on,ea_kbd_exit_01,manual-trace
+000981B0,sub_981B0,SaveBoxBackground,PC-new,,,,low,Grabs the screen under a message box,ea_kbd_exit_01,manual-trace
+000981D4,sub_981D4,RestoreBoxBackground,PC-new,,,,low,Draws the saved screen back over a message box,ea_kbd_exit_01,manual-trace
 000981F8,sub_981F8,ShowPromptBox,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.879),ea_kbd_exit_01,match96
 000984A8,sub_984A8,AskExitToDos,PC-new,,,,medium,"same library routine as the 96 PC AskExitToDos (similarity 0.909, dp)",ea_kbd_exit_01,match96
 000984D0,sub_984D0,ShowMessageBox,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.654),ea_kbd_exit_01,match96
+0009862C,sub_9862C,PauseUntilKey,96PC,,,,medium,Shows PAUSE - PRESS ANY KEY and waits,ea_kbd_exit_01,manual-trace
 0009864C,sub_9864C,DosGetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_kbd_exit_01,match96+97
 00098664,sub_98664,DosSetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.952),ea_kbd_exit_01,match96+97
+0009867E,sub_9867E,ConsoleMessageThunk,PC-new,,,,low,Jumps to WriteConsoleMessage; unused,ea_kbd_exit_01,manual-trace
 00098683,__fatal_runtime_error_,__fatal_runtime_error_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_25,flirt
 000986A0,nullsub_7,nullsub_7,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_25,flirt
 000986C0,unknown_libname_22,MemLock,PC-new,watcom_clib,,,medium,sets a lock word to 1 (MemUnlock clears it),watcom_clib_25,manual-trace
@@ -1850,9 +1876,17 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A2EB4,getche_,getche_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_41,flirt
 000A2ED1,__qread_,__qread_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_41,flirt
 000A2EF0,__FDFS,__FDFS,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 76 bytes),watcom_clib_41,flirt
-000A30D0,sub_A30D0,_EFG_Format_,PC-new,,,,medium,same routine as the matched 97 PC routine (sem 1.0),ea_unpack_helpers,match97
+000A2F40,sub_A2F40,DrawArtShadow,PC-new,,,,medium,Draws art keyed with colour 0FEh darkening the screen under it,ea_unpack_helpers,manual-trace
+000A2F84,sub_A2F84,DrawArtShadowOwnPos,PC-new,,,,medium,Draws shadow art at the position stored in its header,ea_unpack_helpers,manual-trace
+000A2FD0,sub_A2FD0,FlipArtHorizontal,96PC,,,,medium,Mirrors art left to right and fixes its hotspot,ea_unpack_helpers,manual-trace
+000A3050,sub_A3050,FlipArtVertical,96PC,,,,medium,Mirrors art top to bottom and fixes its hotspot,ea_unpack_helpers,manual-trace
+000A30D0,sub_A30D0,RemapArt,PC-new,,,,medium,Translates every pixel of an art through the colour remap,ea_unpack_helpers,manual-trace
+000A30F8,sub_A30F8,RemapShapeBank,PC-new,,,,medium,Remaps every art in a shape bank except the '!' entries,ea_unpack_helpers,manual-trace
 000A321C,forcedecpt_,forcedecpt_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 72 bytes),watcom_clib_42,flirt
 000A3264,__cnvs2d_,__cnvs2d_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_42,flirt
+000A35EC,sub_A35EC,__int7_pl3,96PC,,,,medium,Coprocessor trap (ring 3 extender) into the 387 emulator,watcom_emu387,manual-trace
+000A3610,sub_A3610,__int7_X32VM,96PC,,,,medium,Coprocessor trap (X32VM extender) into the 387 emulator,watcom_emu387,manual-trace
+000A365C,sub_A365C,__int7,96PC,,,,medium,Coprocessor trap into the 387 emulator,watcom_emu387,manual-trace
 000A3680,sub_A3680,EmuTrapExit,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.811),watcom_emu387,match96+97
 000A37B4,sub_A37B4,RoundToSingle,PC-new,,,,high,"same library routine as the 96 PC RoundToSingle (similarity 1.0, dp)",watcom_emu387,match96
 000A37F0,sub_A37F0,RoundToDouble,PC-new,,,,high,same library code as the 96 PC RoundToDouble at the same offset from the shared routines,watcom_emu387,match96
@@ -2013,7 +2047,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A6452,sub_A6452,PolyEvalOdd,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A649A,__hook387,__hook387,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 202 bytes),watcom_emu387,flirt
 000A6564,__unhook387,__unhook387,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 89 bytes),watcom_emu387,flirt
-000A65BD,nullsub_3,nullsub_3,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_emu387,flirt
+000A65BD,nullsub_3,EmuNoOp,96PC,watcom_clib,,,medium,Empty routine,watcom_emu387,manual-trace
 000A65BE,__init_80x87,__init_80x87,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 39 bytes),watcom_emu387,flirt
 000A65E8,sub_A65E8,PcSpkHwInit,PC-new,,,,medium,"sets PIT channel 2 to square wave mode, silences the speaker and sets the voice volumes",snd_hw_pcspk_opl,manual-trace
 000A6612,sub_A6612,PcSpkHwClose,PC-new,,,,medium,silences the speaker,snd_hw_pcspk_opl,manual-trace
@@ -2066,6 +2100,18 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A9C1B,sub_A9C1B,SbDmaStop,PC-new,,,,low,stops the DMA output,snd_hw_sb,manual-trace
 000A9C37,sub_A9C37,SbMixPause,PC-new,,,,low,sets the mix pause flag (the code after it clears it),snd_hw_sb,manual-trace
 000A9C4A,sub_A9C4A,SbConvertMix,PC-new,,,,low,clips the 16-bit mix into 8-bit samples in the free half of the DMA buffer,snd_hw_sb,manual-trace
+000A9C9C,sub_A9C9C,SbHookIrq,PC-new,,,,medium,installs the Sound Blaster interrupt handler and unmasks its IRQ,snd_hw_irq_dma,manual-trace
+000A9D1D,sub_A9D1D,SbUnhookIrq,PC-new,,,,medium,masks the Sound Blaster IRQ and restores the old handler,snd_hw_irq_dma,manual-trace
+000A9D4C,sub_A9D4C,SbIrqHandler,PC-new,,,,medium,"Sound Blaster interrupt handler: acknowledges the DSP, mixes the next half buffer and ends the interrupt",snd_hw_irq_dma,manual-trace
+000A9DEB,sub_A9DEB,SbDspWrite,PC-new,,,,medium,writes a byte to the DSP once it is ready,snd_hw_irq_dma,manual-trace
+000A9E0F,sub_A9E0F,SbDspRead,PC-new,,,,medium,reads a byte from the DSP once one is waiting,snd_hw_irq_dma,manual-trace
+000A9E34,sub_A9E34,SbCardClose,PC-new,,,,medium,"stops the DMA, restores the PIC masks and resets the DSP",snd_hw_irq_dma,manual-trace
+000A9E55,sub_A9E55,SbDspReset,PC-new,,,,medium,resets the DSP and waits for its AAh answer,snd_hw_irq_dma,manual-trace
+000A9F1A,sub_A9F1A,SbDspVersion,PC-new,,,,medium,asks the DSP for its version (command E1h),snd_hw_irq_dma,manual-trace
+000A9F93,sub_A9F93,SbCardOpen,PC-new,,,,low,"stores the port, IRQ and DMA channel, saves the PIC masks, resets the DSP and starts output",snd_hw_irq_dma,manual-trace
+000AA14D,sub_AA14D,SbStopDma,PC-new,,,,medium,masks the Sound Blaster DMA channel,snd_hw_irq_dma,manual-trace
+000AA1B2,sub_AA1B2,SbDmaCount,PC-new,,,,medium,reads the DMA channel's remaining count,snd_hw_irq_dma,manual-trace
+000AA1D9,sub_AA1D9,SbSetStereo,PC-new,,,,low,sets mixer register 0Eh: stereo output and the output filter,snd_hw_irq_dma,manual-trace
 000AA200,outp_,outp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_44,flirt
 000AA210,sub_AA210,GusReadPatchHeader,PC-new,,,,medium,opens a .PAT patch file and checks its GF1PATCH110 header,snd_gus_sdk_01,manual-trace
 000AA300,sub_AA300,GusLoadPatch,PC-new,,,,medium,loads the layers and waves of a .PAT patch into GUS memory,snd_gus_sdk_01,manual-trace
@@ -2144,7 +2190,17 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000AF943,__dospawn,__dospawn,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 206 bytes),watcom_clib_46,flirt
 000AFA11,pcopy_,pcopy_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 68 bytes),watcom_clib_46,flirt
 000AFA55,_splitpath2_,_splitpath2_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 137 bytes),watcom_clib_46,flirt
+000AFAE0,sub_AFAE0,RasterMappedTriangle,96PC,,,,low,Texture maps a triangle of art onto the screen row by row,snd_gus_sdk_03,manual-trace
 000B00E4,strrchr_,strrchr_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 26 bytes),watcom_clib_47,flirt
+000B0100,sub_B0100,GetBytesLE,PC-new,,,,medium,Reads an n-byte value stored low byte first,snd_gus_sdk_04,manual-trace
+000B0128,sub_B0128,GetBytesBE,PC-new,,,,medium,Reads an n-byte value stored high byte first,snd_gus_sdk_04,manual-trace
+000B0148,sub_B0148,PutBytesLE,96PC,,,,medium,Stores n bytes of a value low byte first,snd_gus_sdk_04,manual-trace
+000B0170,sub_B0170,PutBytesBE,PC-new,,,,medium,Stores n bytes of a value high byte first,snd_gus_sdk_04,manual-trace
+000B01B0,sub_B01B0,CopyRowShadowKeyed,PC-new,,,,low,Copies a row skipping colour 0FFh and darkening the screen under colour 0FEh,snd_gus_sdk_04,manual-trace
+000B01E4,sub_B01E4,DrawArtKeyedRemap,96PC,,,,medium,Draws art through the remap; keyed path uses the shadow row copy,snd_gus_sdk_04,manual-trace
+000B0228,sub_B0228,DrawArtKeyedRemapOwnPos,PC-new,,,,medium,Draws art through the remap at the position stored in its header,snd_gus_sdk_04,manual-trace
+000B026C,sub_B026C,RemapBytes,PC-new,,,,medium,Translates a run of bytes through a 256-entry table,snd_gus_sdk_04,manual-trace
+000B0288,sub_B0288,SetDmaDefaultMode,PC-new,,,,low,Sets the default DMA mode value; unused,snd_gus_sdk_04,manual-trace
 000B028E,DoEFormat_,DoEFormat_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 167 bytes),watcom_clib_48,flirt
 000B0335,DoFFormat_,DoFFormat_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 99 bytes),watcom_clib_48,flirt
 000B0398,AdjField_,AdjField_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 107 bytes),watcom_clib_48,flirt
@@ -2153,6 +2209,11 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B07D0,sub_B07D0,GusSetupDmaChannel,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_05,match96+97
 000B085C,sub_B085C,GusProgramDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
 000B097C,sub_B097C,GusMaskDma,PC-new,,,,high,same library code as the 96 PC GusMaskDma at the same offset from the shared routines,snd_gus_sdk_05,match96
+000B09A4,sub_B09A4,GusDmaCount,PC-new,,,,medium,Reads how many bytes a DMA channel still has to transfer,snd_gus_sdk_05,manual-trace
+000B0A14,sub_B0A14,GusDosRead,PC-new,,,,medium,Reads from a DOS file and keeps the DOS result,snd_gus_sdk_05,manual-trace
+000B0A40,sub_B0A40,GusDosClose,PC-new,,,,medium,Closes a DOS file and keeps the DOS result,snd_gus_sdk_05,manual-trace
+000B0A5C,sub_B0A5C,GusDosSeek,PC-new,,,,medium,Seeks in a DOS file,snd_gus_sdk_05,manual-trace
+000B0A78,sub_B0A78,GusDosOpen,PC-new,,,,medium,Opens a DOS file and returns its handle or a negative error,snd_gus_sdk_05,manual-trace
 000B0AA4,sub_B0AA4,GusSetVect,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_05,match96+97
 000B0AB0,sub_B0AB0,GusGetVect,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_05,match96+97
 000B0ABC,sub_B0ABC,GusHookIrq,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.981),snd_gus_sdk_05,match96+97
@@ -2163,9 +2224,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B0C5C,sub_B0C5C,GusInitDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
 000B0CB8,sub_B0CB8,GusStartDramDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.981),snd_gus_sdk_05,match96+97
 000B0D6C,sub_B0D6C,GusDownload,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.989),snd_gus_sdk_05,match96+97
+000B0E7C,sub_B0E7C,GusDmaNextChunk,PC-new,,,,low,Starts the next chunk of a card DMA transfer when one finishes,snd_gus_sdk_05,manual-trace
 000B0FA8,sub_B0FA8,GusDramDmaDone,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.656),snd_gus_sdk_05,match96+97
+000B1024,sub_B1024,GusDmaIdle,PC-new,,,,medium,Returns 1 when no card DMA transfer is running,snd_gus_sdk_05,manual-trace
+000B103C,sub_B103C,GusStopDma,PC-new,,,,medium,Stops the card DMA transfer and masks both channels,snd_gus_sdk_05,manual-trace
+000B10D0,sub_B10D0,GusCalcVoiceAddrs,PC-new,,,,low,Works out the card start/loop/end address registers for a voice,snd_gus_sdk_05,manual-trace
 000B121C,sub_B121C,GusClearIrqState,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
 000B122F,sub_B122F,GusEnterCritical,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
+000B1237,sub_B1237,GusTryEnterCritical,PC-new,,,,medium,Enters the critical section only if it is not already held,snd_gus_sdk_05,manual-trace
 000B1256,sub_B1256,GusLeaveCritical,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
 000B128C,inp_,inp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_49,flirt
 000B12A0,sub_B12A0,GusWaveIrqHandler,PC-new,,,,high,"same library routine as the 97 PC GusWaveIrqHandler (similarity 1.0, dp)",snd_gus_sdk_06,match97
@@ -2176,15 +2242,27 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B145C,sub_B145C,GusClaimCallback,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_06,match96+97
 000B1484,sub_B1484,GusClaimVoiceCallback,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.95),snd_gus_sdk_06,match96+97
 000B14AC,sub_B14AC,GusSetDmaCallbacks,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_06,match96+97
+000B14E4,sub_B14E4,GusClaimVoiceCallbacks,PC-new,,,,medium,Claims the wave and volume callbacks,snd_gus_sdk_06,manual-trace
+000B151C,sub_B151C,GusClaimTimerCallbacks,PC-new,,,,medium,Claims the timer 1 and timer 2 callbacks,snd_gus_sdk_06,manual-trace
 000B1554,sub_B1554,GusSetVoiceCallbacks,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.473),snd_gus_sdk_06,match96+97
+000B1598,sub_B1598,GusClaimMidiRecvCallback,PC-new,,,,medium,Claims the MIDI receive callback,snd_gus_sdk_06,manual-trace
+000B15B8,sub_B15B8,GusClaimMidiXmitCallback,PC-new,,,,medium,Claims the MIDI transmit callback,snd_gus_sdk_06,manual-trace
+000B15D8,sub_B15D8,GusClaimTimerCallback,PC-new,,,,medium,Claims the timer callback,snd_gus_sdk_06,manual-trace
 000B15F8,sub_B15F8,GusMidiIrqService,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_06,match96+97
 000B1680,sub_B1680,GusReadIrqSource,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_06,match96+97
 000B16BC,sub_B16BC,GusServiceIrq,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_06,match96+97
 000B1951,inpw_,inpw_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 9 bytes),watcom_clib_50,flirt
 000B195C,sub_B195C,GusRunInitTable,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_07,match96+97
 000B19C7,outpw_,outpw_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 11 bytes),watcom_clib_51,flirt
-000B19E0,sub_B19E0,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus_sdk_08,unmatched
-000B1C70,sub_B1C70,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus_sdk_08,unmatched
+000B19E0,sub_B19E0,GusResetTimers,PC-new,,,,low,Clears the timer state,snd_gus_sdk_08,manual-trace
+000B1A04,sub_B1A04,GusStartTimer2,PC-new,,,,medium,Sets the callback and count for card timer 2 and starts it,snd_gus_sdk_08,manual-trace
+000B1AC8,sub_B1AC8,GusStartTimer1,PC-new,,,,medium,Sets the callback and count for card timer 1 and starts it,snd_gus_sdk_08,manual-trace
+000B1B8C,sub_B1B8C,GusStopTimer1,PC-new,,,,medium,Stops card timer 1,snd_gus_sdk_08,manual-trace
+000B1BF8,sub_B1BF8,GusStopTimer2,PC-new,,,,medium,Stops card timer 2,snd_gus_sdk_08,manual-trace
+000B1C70,sub_B1C70,GusResetVoiceAlloc,PC-new,,,,low,Marks every voice free,snd_gus_sdk_08,manual-trace
+000B1CBC,sub_B1CBC,GusAllocVoice,PC-new,,,,low,Finds a free voice or steals one,snd_gus_sdk_08,manual-trace
+000B1E2C,sub_B1E2C,GusReleaseVoice,PC-new,,,,low,Marks a voice free,snd_gus_sdk_08,manual-trace
+000B1E64,sub_B1E64,GusAddVoicePriority,PC-new,,,,low,Adds to a voice's priority value,snd_gus_sdk_08,manual-trace
 000B1EA0,sub_B1EA0,GusPeek,PC-new,,,,high,"same library routine as the 97 PC GusPeek (similarity 1.0, dp)",snd_gus_sdk_08,match97
 000B1F1C,sub_B1F1C,GusPoke,PC-new,,,,high,"same library routine as the 97 PC GusPoke (similarity 1.0, dp)",snd_gus_sdk_08,match97
 000B1F9C,sub_B1F9C,GusPokeFill,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_08,match96+97
@@ -2198,6 +2276,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B267E,unknown_libname_6,unknown_libname_6,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 75 bytes),watcom_clib_52,flirt
 000B26C9,sub_B26C9,NormalizeDouble,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_52,match96+97
 000B2720,sub_B2720,GusConvertAddr16,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.926),snd_gus_sdk_09,match96+97
+000B273C,sub_B273C,GusRegsToAddr,PC-new,,,,low,Turns a pair of voice address registers back into a card address,snd_gus_sdk_09,manual-trace
 000B27A0,modf_,modf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 25 bytes),watcom_clib_53,flirt
 000B27BA,__CmpBigInt,__CmpBigInt,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 58 bytes),watcom_clib_53,flirt
 000B27F4,__Rnd2Int,__Rnd2Int,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 107 bytes),watcom_clib_53,flirt
@@ -2205,28 +2284,44 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B28C9,sub_B28C9,BigIntCallHook,PC-new,,,,high,"same library routine as the 97 PC BigIntCallHook (similarity 1.0, dp)",input_keyboard_01,match97
 000B297E,sub_B297E,BigIntNullHook,PC-new,watcom_clib,,,high,same library code as the 96 PC BigIntNullHook at the same offset from the shared routines,watcom_clib_54,match96
 000B2980,frexp_,frexp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 111 bytes),watcom_clib_54,flirt
-000B29F0,sub_B29F0,RemoveKeyboardHandler,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.597),input_keyboard_02,match96
+000B29F0,sub_B29F0,InstallKeyboardHandler,96PC,,,,medium,"Hooks INT 9, 16h and 23h and registers the removal at exit",input_keyboard_02,manual-trace
+000B2A9B,sub_B2A9B,RemoveKeyboardHandler,96PC,,,,medium,"Restores the INT 9, 16h and 23h vectors",input_keyboard_02,manual-trace
+000B2B0A,sub_B2B0A,KeyboardIrqHandler,PC-new,,,,medium,INT 9 handler that reads scan codes into the key table,input_keyboard_02,manual-trace
 000B2C01,sub_B2C01,Int16Handler,PC-new,,,,high,"same library routine as the 96 PC Int16Handler (similarity 0.978, dp)",input_keyboard_02,match96
 000B2C4A,sub_B2C4A,Int16Service,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_keyboard_02,match96+97
 000B2CBE,sub_B2CBE,KeyDown,PC-new,,,,medium,keyboard library: is this key down,input_keyboard_02,manual-trace
+000B2CCD,sub_B2CCD,BiosKeyCall,96PC,,,,medium,Calls BIOS INT 16h with ax,input_keyboard_02,manual-trace
 000B2CD8,sub_B2CD8,FatalError,PC-new,,,,medium,"fatal-error exit, never returns: drops its return address, optionally shows a message (sub_93170 + WaitKey), shuts down and jumps through bailout_vec; callers push short code strings like 'e1' [reviewed: body re-read]",input_keyboard_02,manual-trace
+000B2D27,sub_B2D27,FatalErrorEnd,PC-new,,,,low,Unreached return after FatalError; the hook setter follows unlabelled,input_keyboard_02,manual-trace
 000B2D38,sub_B2D38,MouseReadButtons,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_mouse,match96+97
 000B2D74,sub_B2D74,MouseSetSensitivity,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_mouse,match96+97
+000B2D94,sub_B2D94,MouseSetSensitivityDefault,PC-new,,,,medium,Sets mouse sensitivity with the default double-speed threshold,input_mouse,manual-trace
 000B2DB4,sub_B2DB4,MouseSetPos,PC-new,,,,medium,"input_mouse lib: stores the two stack args as the mouse x/y (D302C/D3030), read back by sub_B2DCA",input_mouse,manual-trace
 000B2DCA,sub_B2DCA,MouseRead,PC-new,,,,medium,"mouse library: read buttons and position (btn, y, x)",input_mouse,manual-trace
+000B2DEF,sub_B2DEF,MouseSetXRange,PC-new,,,,medium,Sets the mouse X range; the Y range setter follows unlabelled,input_mouse,manual-trace
 000B2E1B,sub_B2E1B,SetViewRect,PC-new,,,,medium,"graphics library: set the view rectangle (x, y, w, h)",input_mouse,manual-trace
 000B2E43,sub_B2E43,MouseReadMotion,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.86),input_mouse,match96+97
+000B2EF6,sub_B2EF6,PointerCountUp,96PC,,,,medium,Increments the pointer show count,input_mouse,manual-trace
+000B2EFD,sub_B2EFD,PointerCountDown,96PC,,,,medium,Decrements the pointer show count,input_mouse,manual-trace
 000B2F04,sub_B2F04,MouseRestoreSensitivity,PC-new,,,,high,"same library routine as the 96 PC MouseRestoreSensitivity (similarity 1.0, dp)",input_mouse,match96
 000B2F22,sub_B2F22,InitMouse,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),input_mouse,match96+97
+000B300C,sub_B300C,ReturnZero,96PC,,,,medium,Returns 0; default for the joystick and mouse hooks,input_joystick_misc,manual-trace
 000B3010,sub_B3010,ClearNumLock,PC-new,,,,medium,"same library routine as the 97 PC ClearNumLock (similarity 0.923, best)",input_joystick_misc,match97
+000B3036,sub_B3036,InstallBreakHandler,96PC,,,,medium,Hooks the critical-error vector and registers its removal at exit,input_joystick_misc,manual-trace
 000B308B,sub_B308B,RemoveBreakHandler,PC-new,,,,high,"same library routine as the 96 PC RemoveBreakHandler (similarity 1.0, best)",input_joystick_misc,match96
 000B30B4,sub_B30B4,FindShape,PC-new,,,,medium,"graphics library: find the named art in a bank (bank, name), returns its pointer; 243 calls",input_joystick_misc,manual-trace
 000B30BB,sub_B30BB,FindShapeQuiet,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_joystick_misc,match96+97
+000B30F4,sub_B30F4,CalibrateJoystick,96PC,,,,low,Times the four joystick axes on port 201h and keeps the button bits,input_joystick_misc,manual-trace
 000B3168,sub_B3168,ReadJoystickPorts,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.927),input_joystick_misc,match96+97
 000B33DB,sub_B33DB,JoyResetCentres,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),input_joystick_misc,match96
 000B340B,sub_B340B,JoyButtonMap,PC-new,,,,medium,same routine as the matched 96 PC routine (loose 1.0),input_joystick_misc,match96
+000B3421,sub_B3421,JoyScaledX,PC-new,,,,low,Joystick 1 X scaled to -31..+31,input_joystick_misc,manual-trace
 000B3454,sub_B3454,AddExitHandler,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),input_joystick_misc,match96+97
+000B345D,sub_B345D,ExitProgram,96PC,,,,medium,Exits with code 0,input_joystick_misc,manual-trace
 000B3464,sub_B3464,ReadJoyRaw,PC-new,,,,medium,joystick library: read the raw joystick bits (joyrawbits),input_joystick_misc,manual-trace
+000B384E,sub_B384E,JoyDefaultCalib1,PC-new,,,,low,Enables joystick 1 with the default calibration,input_joystick_misc,manual-trace
+000B387E,sub_B387E,JoyDefaultCalib2,PC-new,,,,low,Enables joystick 2 with the default calibration,input_joystick_misc,manual-trace
+000B38AE,sub_B38AE,Joy2ScaledX,PC-new,,,,low,Second joystick X scaled to -31..+31,input_joystick_misc,manual-trace
 000B392C,sub_B392C,ClearScreen,PC-new,,,,medium,graphics library: clear the screen to a colour,input_joystick_misc,manual-trace
 000B395C,sub_B395C,GetTicks,PC-new,,,,high,returns tickcount (the 100 Hz TimerISR count),input_joystick_misc,manual-trace
 000B3962,sub_B3962,TicksSince,PC-new,,,,high,cdecl: returns tickcount minus the stack argument,input_joystick_misc,manual-trace
@@ -2241,6 +2336,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B39F3,sub_B39F3,KbdPeekKey,PC-new,,,,high,same library code as the 96 PC KbdPeekKey at the same offset from the shared routines,input_joystick_misc,match96
 000B3A18,sub_B3A18,WaitKey,PC-new,,,,medium,loops calling the keyboard read vector off_D42A0 until it returns non-zero; DebugMonitor uses it in single-step mode,input_joystick_misc,manual-trace
 000B3A24,sub_B3A24,KbdFlush,PC-new,,,,medium,same routine as the matched 97 PC routine (loose 1.0),input_joystick_misc,match97
+000B3A2F,sub_B3A2F,KbdIdleWait,PC-new,,,,low,Calls the keyboard idle hook until it returns a key or the tick deadline passes,input_joystick_misc,manual-trace
 000B3A88,sub_B3A88,SaveDrawState,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),input_joystick_misc,match96
 000B3AA1,sub_B3AA1,RestoreDrawState,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),input_joystick_misc,match96
 000B3ABC,sub_B3ABC,bcopy,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.867),input_joystick_misc,match96
@@ -2254,26 +2350,41 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B3C74,sub_B3C74,DosReadFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_fileio,match96+97
 000B3CB3,sub_B3CB3,DosSeekFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_fileio,match96+97
 000B3CC8,sub_B3CC8,FindFirstFile,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.885),ea_fileio,match96
+000B3D2A,sub_B3D2A,FindNextFile,PC-new,,,,medium,DOS find-next using the shared DTA,ea_fileio,manual-trace
+000B3D46,sub_B3D46,SetSlowDeadline,PC-new,,,,medium,Sets a deadline n slow ticks from now,ea_fileio,manual-trace
+000B3D56,sub_B3D56,WaitSlowDeadline,PC-new,,,,medium,Waits until the slow-tick deadline passes,ea_fileio,manual-trace
+000B3D64,sub_B3D64,SlowDeadlinePassed,PC-new,,,,medium,Returns 1 once the slow-tick deadline has passed,ea_fileio,manual-trace
 000B3D74,sub_B3D74,DebugLineCount,PC-new,,,,high,"same library routine as the 97 PC DebugLineCount (similarity 1.0, best)",ea_fileio,match97
 000B3D94,sub_B3D94,vecdist,PC-new,middle93_1.asm,middle94.asm,92G sroot; 95G sroot,medium,"EA math helper (cdecl dx,dy): angle of (dx,dy) via sub_B49C0, then |dx|/cos or |dy|/sin (16.16) = the vector length; skatetopuck compares the player-puck distance with 18h. Plays the role of 93G sroot (sqrt of dx^2+dy^2)",ea_fileio,manual-trace
+000B3DFC,sub_B3DFC,SprintfSaveRegs,PC-new,,,,medium,Calls sprintf keeping every register,ea_fileio,manual-trace
 000B3E4A,sub_B3E4A,PrintfSaveRegs,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),video_bios_vga,match96+97
 000B3E98,sub_B3E98,SaveTextMode,PC-new,,,,high,video library: save the text mode and the BIOS data area,video_bios_vga,manual-trace
 000B3ED8,sub_B3ED8,RestoreTextMode,PC-new,,,,high,video library: restore the text mode and the BIOS data area,video_bios_vga,manual-trace
 000B3F50,sub_B3F50,DetectCPU,PC-new,,,,high,"video library start-up: CPU detection by the alignment-check flag (386 or 486, protected mode); replaced in the port",video_bios_vga,manual-trace
 000B3FB0,sub_B3FB0,FillMem,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),video_bios_vga,match96
 000B3FC2,sub_B3FC2,ZeroMem,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.641),video_bios_vga,match96
+000B3FE0,sub_B3FE0,ResetHotkeyState,PC-new,,,,low,clears the hotkey busy flag,video_bios_vga,manual-trace
+000B3FEC,sub_B3FEC,KbdGetKeyQuiet,PC-new,,,,low,returns the next key or 0; the entries after it also dispatch hotkeys,video_bios_vga,manual-trace
 000B40BF,sub_B40BF,PollHotkeys,PC-new,,,,high,"same library routine as the 96 PC PollHotkeys (similarity 1.0, best)",video_bios_vga,match96
 000B40D4,sub_B40D4,SetupRectFillBlend,PC-new,,,,high,"same library routine as the 96 PC SetupRectFillBlend (similarity 1.0, dp)",video_bios_vga,match96
 000B40E2,sub_B40E2,SetupRectFill,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.988),video_bios_vga,match96+97
 000B49C0,sub_B49C0,AngleFromDelta,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.962),video_bios_vga,match96+97
+000B4A60,sub_B4A60,TableSin,PC-new,,,,medium,sine of an angle from the sine table,video_bios_vga,manual-trace
+000B4A66,sub_B4A66,TableCos,PC-new,,,,medium,cosine of an angle from the sine table (a quarter turn on),video_bios_vga,manual-trace
 000B4AA4,sub_B4AA4,DispatchHotkey,PC-new,,,,high,"same library routine as the 96 PC DispatchHotkey (similarity 1.0, best)",video_bios_vga,match96
+000B4AFD,sub_B4AFD,RegisterHotkey,PC-new,,,,medium,adds a key to the hotkey table (at most 64),video_bios_vga,manual-trace
 000B4B58,sub_B4B58,SetTextMode,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),video_bios_vga,match96
 000B4B88,sub_B4B88,VgaSetPalette,PC-new,,,,medium,"video library: set DAC entries (first, count, rgb)",video_bios_vga,manual-trace
 000B4BA8,sub_B4BA8,SetScreenTarget,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),video_bios_vga,match96
 000B4BC4,sub_B4BC4,SetClipWindow,PC-new,,,,medium,"video library: set the clip window (x1, x2, y1, y2)",video_bios_vga,manual-trace
+000B4C28,sub_B4C28,ResetRetraceTimeout,PC-new,,,,medium,resets the retrace wait timeout after a wait timed out,video_bios_vga,manual-trace
 000B4C33,sub_B4C33,WaitRetrace,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.812),video_bios_vga,match96
-000B4CD8,sub_B4CD8,VgaBlitKeyedHot,PC-new,,,,low,VgaBlitKeyed at a position less the shape's hotspot (sprite mode 0),vga_blitters,manual-trace
-000B4CF2,sub_B4CF2,VgaBlitKeyed,PC-new,,,,low,draws a shape skipping colour FFh,vga_blitters,manual-trace
+000B4C61,sub_B4C61,WaitRetraceStart,PC-new,,,,medium,"waits for the end of the current retrace, then for the next one to start",video_bios_vga,manual-trace
+000B4C84,sub_B4C84,WaitRetraceEnd,PC-new,,,,medium,"waits for a retrace, then for it to end",video_bios_vga,manual-trace
+000B4CA7,sub_B4CA7,InRetrace,PC-new,,,,medium,returns nonzero during vertical retrace,video_bios_vga,manual-trace
+000B4CB4,sub_B4CB4,VgaBlitKeyedHot,PC-new,,,,low,VgaBlitKeyed at a position less the shape's hotspot,video_bios_vga,manual-trace
+000B4CD8,sub_B4CD8,VgaBlitKeyed,PC-new,,,,low,draws a shape at a position skipping colour FFh (sprite mode 0),vga_blitters,manual-trace
+000B4CF2,sub_B4CF2,VgaBlitKeyedAtOwnPos,PC-new,,,,low,draws a shape at its own position skipping colour FFh,vga_blitters,manual-trace
 000B4DD4,sub_B4DD4,SetColorRemap,PC-new,,,,medium,graphics library: set the colour remap table the blitters use,vga_blitters,manual-trace
 000B4DEC,sub_B4DEC,GetColorRemap,PC-new,,,,medium,copies the 256-byte colour remap table out,vga_blitters,manual-trace
 000B4E50,sub_B4E50,VgaBlitRemap,PC-new,,,,low,draws a shape through the colour remap table (sprite mode 2),vga_blitters,manual-trace

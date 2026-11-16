@@ -36,7 +36,7 @@ int SelectSavedFile(void)
         menuact_posettings = (int)EditPlayoffSettings;
         menuact_pohilights = (int)ViewPlayoffHilights;
         MakePath(path, name, (char *)str_ScheduleDb2, 0);
-        buf = (unsigned char *)sub_8E8A0(path, 0);
+        buf = (unsigned char *)OpenArtArchiveErr(path, 0);
         seriesgameno = *(int *)(buf + 0x42) % 7;
         FreeMemBlock((int)buf);
         return t;

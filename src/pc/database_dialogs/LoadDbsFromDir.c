@@ -9,22 +9,22 @@ void LoadDbsFromDir(char *dir, char *ext)
 
     FreeLeagueDbsMem();
     MakePath(path, dir, (char *)leaguedbnames[5], ext);
-    seasondb = (unsigned char *)sub_8E8A0(path, 0x20);
+    seasondb = (unsigned char *)OpenArtArchiveErr(path, 0x20);
     seasondb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[1], ext);
-    careerdb = (unsigned char *)sub_8E8A0(path, 0x20);
+    careerdb = (unsigned char *)OpenArtArchiveErr(path, 0x20);
     careerdb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[3], ext);
-    carteamsdb = (unsigned char *)sub_8E8A0(path, 0x20);
+    carteamsdb = (unsigned char *)OpenArtArchiveErr(path, 0x20);
     carteamsdb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[0], ext);
-    keydb = (unsigned char *)sub_8E8A0(path, 0x20);
+    keydb = (unsigned char *)OpenArtArchiveErr(path, 0x20);
     keydb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[4], ext);
-    teamsdb = (unsigned char *)sub_8E8A0(path, 0x20);
+    teamsdb = (unsigned char *)OpenArtArchiveErr(path, 0x20);
     teamsdb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[2], ext);
-    attdb = (unsigned char *)sub_8E8A0(path, 0x20);
+    attdb = (unsigned char *)OpenArtArchiveErr(path, 0x20);
     attdb_size = GetFileSize(path);
     dbdirty = 0;
 }

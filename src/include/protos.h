@@ -146,7 +146,7 @@ char *strcpy(char *d, const char *s);  /* Watcom CRT strcpy_ */
 int DeskSetExit1(void);  /* 179B6 */
 int FreeDeskBuffers(void);  /* 18D33 */
 void SndLoadFile(int unused, char *name);
-void *__cdecl sub_8E8B8(char *name, int bank);  /* sound library loader, stack args */
+void *__cdecl OpenArtArchive(char *name, int bank);  /* sound library loader, stack args */
 void NudgeRinkScroll(void);  /* 7FC12 */
 void ClampYPosition(Player *p);  /* 4B6F4 */
 void CrowdFadeOut(void);
@@ -212,7 +212,7 @@ void puckunflip(Player *p);  /* 4D907 */
 void CopyRoster1Rec(void);  /* 6DE4C */
 void GetLineEnergies(short team, int *out);  /* 14BEF */
 void DrawLineGroupBars(int *drawn, int *inds, int line, int *energy, int x);  /* 157BD */
-void __cdecl VgaBlitKeyed(int shape);  /* video library: draw one shape */
+void __cdecl VgaBlitKeyedAtOwnPos(int shape);  /* video library: draw one shape */
 short TeamLineEnergy(short team, short line);  /* 5A2EE */
 void DrawButtons(Button *b, int n);  /* 30AE2 */
 void DrawButton(Button *b);  /* 30B16 */
@@ -334,7 +334,7 @@ void __cdecl FatalError(char *msg, ...);  /* B2CD8: printf-style message, then e
 int FileOpenWrite(char *name, int *h);  /* 1453E */
 int SaveHilight(int team);  /* 7FA10 */
 void SetPalette768(unsigned char *pal);  /* 76614 */
-void __cdecl sub_B4C84(void);  /* video library: wait for retrace */
+void __cdecl WaitRetraceEnd(void);  /* video library: wait for retrace */
 void __cdecl VgaSetPalette(int first, int count, unsigned char *rgb);  /* video library: set palette entries */
 int ShowDBError(int *sel, int *state, int msg, int arg);  /* 6ED39 */
 void __cdecl SetScreenTarget(void);  /* video library */
@@ -382,7 +382,7 @@ void LoadGameTeams(int mode);  /* 1BBCC */
 void SetPenaltyStrength(void);  /* 510A9 */
 void MakeSampleRoom(void);  /* 84205 */
 void LoadTransparentRinkEndOverlay(void);  /* 13A2F */
-int __cdecl sub_8E8A0(char *path, int flags);  /* graphics library: load bank */
+int __cdecl OpenArtArchiveErr(char *path, int flags);  /* graphics library: load bank */
 int __cdecl FindShape(int bank, char *name);  /* graphics library: find art */
 void PrintLineEdStatus(int x, int y, char *s);  /* 76771 */
 void __cdecl FillRect(int x, int y, int w, int h, int col);  /* graphics library: fill rect */
@@ -464,7 +464,7 @@ void DrawSettingsHeading(int x, int y, int n, int mode, int colour);  /* 8050F *
 void DrawPanel3D(int x1, int y1, int x2, int y2, int corners);  /* 80682 */
 void IntermissionDesk(void);
 void LoadScreenPalTick(void);  /* 47951 */
-void __cdecl sub_B4C61(void);  /* video library: wait for retrace */
+void __cdecl WaitRetraceStart(void);  /* video library: wait for retrace */
 void MoveInDir(Player *p, short dir);  /* 49260 */
 void CrowdNoiseOff(void);  /* 59748 */
 void MidiSetVolume(int card, int voice, int vol);  /* sound library: set voice volume */
@@ -753,7 +753,7 @@ int LineEdHitTest(int x, int y, int *item);  /* 77F6F */
 void RunDeferredCalls(void);  /* 61A27 */
 void GetMemStats(unsigned *total, unsigned *used, unsigned *gaps, unsigned *biggest);  /* 1002A */
 int InitMouse(void);  /* mouse library: mouse present */
-void RemoveKeyboardHandler(void);  /* mouse library: init */
+void InstallKeyboardHandler(void);  /* mouse library: init */
 void InputInstall(void);  /* 6B410 */
 void PrintOutlinedText(int x, int y, char *s);  /* 17636 */
 void MakeTeamDbFmt(char *out, char *dir, unsigned char *tab, int n);  /* 36207 */
@@ -822,7 +822,7 @@ void checkwindow(void);  /* engine_display */
 void updatereplay(void);  /* engine_display */
 void __cdecl MviGetFrame(int a);  /* 96A78: EA sound library */
 void GadgetSoundStub(void);  /* 7E03F */
-void *__cdecl sub_8E908(char *name, int bank);  /* sound library loader 2, stack args */
+void *__cdecl LoadFileAllocQuiet(char *name, int bank);  /* sound library loader 2, stack args */
 void SndLoadFile2(int unused, char *name);  /* 594B2 */
 void ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
 void TextPrintf(int x, int y, char *fmt, int a);  /* 1FB1C */

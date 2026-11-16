@@ -14,7 +14,7 @@ extern str_Arena, str_Bkgd4, str_Ctbkgd, str_Ctlogo, str_Cttitle1, str_D4, str_D
 extern str_Fowa, str_GIPK, str_Iff4, str_Iff5, str_Indus030, str_Injured, str_Logoaway, str_Logohome
 extern str_Pal10, str_Pal11, str_Pal12, str_Pointer4, str_Rink, str_SAtS, str_Scouting, str_Scra
 extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, AllocMemBlock, PushMemDescriptorLocked
-extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery
+extern LoadBank, OpenArtArchiveErr, TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery
 extern SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, DrawArtHotspot, GrabBlock
 extern SetViewRect, FindShape, ClearScreen, SetScreenTarget, SetClipWindow, FillRectColor, teamabbrevs, teamconf
 extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
@@ -1121,7 +1121,7 @@ TonightsGameScreen:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [dword esp+0F4h], eax
         push eax

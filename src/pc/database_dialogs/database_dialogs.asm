@@ -15,7 +15,7 @@ extern str_Db3, str_DbBut, str_Dbcu, str_Dbdialog, str_Dbno, str_Dbor, str_Dbtm,
 extern str_DBX2, str_Del2, str_Delete2, str_Done2, str_Down2, str_DSBOX, str_extDB, str_Noar2
 extern str_None2, str_Open3, str_Open4, str_Org, str_ORG, str_ORIGINAL, str_Original2, str_Pdbx
 extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, AllocMemBlock, LoadBank
-extern sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt, GrabBlock
+extern OpenArtArchiveErr, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt, GrabBlock
 extern PrintString, TextPrintAt, GetFileSize, KeyDown, MouseRead, FindShape, SetScreenTarget, FillRectColor
 extern teamsdb, teamsdb_size, unknown_libname_1, unknown_libname_2, unknown_libname_4
 global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
@@ -1902,7 +1902,7 @@ LoadDbsFromDir:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [seasondb], eax
         mov eax, esp
@@ -1918,7 +1918,7 @@ LoadDbsFromDir:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [careerdb], eax
         mov eax, esp
@@ -1934,7 +1934,7 @@ LoadDbsFromDir:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [carteamsdb], eax
         mov eax, esp
@@ -1950,7 +1950,7 @@ LoadDbsFromDir:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [keydb], eax
         mov eax, esp
@@ -1966,7 +1966,7 @@ LoadDbsFromDir:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [teamsdb], eax
         mov eax, esp
@@ -1982,7 +1982,7 @@ LoadDbsFromDir:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [attdb], eax
         mov eax, esp

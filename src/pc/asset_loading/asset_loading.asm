@@ -21,7 +21,7 @@ extern songdata, SortCords, sounddev, sprintf_, StartGame, StartPreGame, StopDig
 extern str_04d, str_Adafan, str_Adawards, str_Awards, str_Awardsi, str_Awasong, str_D00_D49, str_D00D49
 extern str_D50_D99, str_D50D99, str_F000149, str_GfxIdList, str_HILIGHT, str_Iff, str_Mtafan, str_Mtawards
 extern str_Numshp, str_Pal3, str_Palmem, str_PPV, str_Scrn, str_Summ, str_Titl, str_Trinknd
-extern str_VFN, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState
+extern str_VFN, AllocMemBlock, PushMemDescriptorLocked, LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState, TextRestoreState
 extern TextSetFont, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, SetPalette
 extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
@@ -119,7 +119,7 @@ LoadPhotoBankF:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [photobankf], eax
         xor esi, esi
@@ -226,7 +226,7 @@ LoadPlayerPhotos:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         mov edx, eax
         add esp, byte 8
         mov eax, esi
@@ -269,7 +269,7 @@ LoadTransparentRinkEndOverlay:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [rinkendbank], eax
         push str_0000
@@ -317,7 +317,7 @@ LoadGameGfx:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [hilightfont], eax
         mov ecx, str_PPV
@@ -334,7 +334,7 @@ LoadGameGfx:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [numshpbank], eax
         xor esi, esi
@@ -414,7 +414,7 @@ ReloadGameGfx:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [hilightfont], eax
         mov ecx, str_PPV
@@ -431,7 +431,7 @@ ReloadGameGfx:
         push byte 20h
         lea eax, [byte esp+04h]
         push eax
-        call sub_8E8A0
+        call OpenArtArchiveErr
         add esp, byte 8
         mov dword [numshpbank], eax
         xor esi, esi

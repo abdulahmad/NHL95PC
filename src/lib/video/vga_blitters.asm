@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_B4CD8 progbits alloc exec nowrite align=1
-extern byte_D42E4, cliprect_y0, cliprect_y1, ScreenWidth, dword_D30BC, dword_D30C0, DrawDestBuffer, DrawVideoBase
+extern ColourRemap, cliprect_y0, cliprect_y1, ScreenWidth, dword_D30BC, dword_D30C0, DrawDestBuffer, DrawVideoBase
 extern CreateMcgaWindow, FillRectSpans, SetupRectFill
-global VgaBlitKeyedHot, VgaBlitKeyed, loc_B4D0C, loc_B4D1A, loc_B4D3C, loc_B4D49, loc_B4D53, loc_B4D5B
+global VgaBlitKeyed, VgaBlitKeyedAtOwnPos, loc_B4D0C, loc_B4D1A, loc_B4D3C, loc_B4D49, loc_B4D53, loc_B4D5B
 global loc_B4D7A, loc_B4D80, loc_B4D9E, loc_B4DA5, loc_B4DAD, SetColorRemap, GetColorRemap, loc_B4E17
 global loc_B4E23, VgaBlitRemap, loc_B4E84, loc_B4E92, loc_B4EB4, loc_B4EC1, loc_B4ED4, loc_B4EDC
 global loc_B4EFB, loc_B4F01, loc_B4F1F, loc_B4F26, loc_B4F2A, loc_B4F3C, loc_B4F40, SetDrawBitmap
@@ -33,7 +33,7 @@ global loc_B5C1C, loc_B5C35, loc_B5C38, loc_B5C45, loc_B5C4C, loc_B5C61, loc_B5C
 global loc_B5C96, loc_B5C9B, loc_B5CA1, loc_B5CA4, loc_B5CAF, loc_B5CCC, loc_B5CD3, loc_B5CD7
 global loc_B5CEB, loc_B5CFB, loc_B5CFF, loc_B5D2A, loc_B5D37, loc_B5D3C, loc_B5D3E, loc_B5D42
 global loc_B5D51, loc_B5D5B, loc_B5D72, loc_B5D77
-VgaBlitKeyedHot:
+VgaBlitKeyed:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE0h
@@ -46,7 +46,7 @@ VgaBlitKeyedHot:
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
         jmp short loc_B4D0C
-VgaBlitKeyed:
+VgaBlitKeyedAtOwnPos:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE0h
@@ -153,7 +153,7 @@ SetColorRemap:
         LD mov, ebp, esp
         push esi
         push edi
-        mov edi, byte_D42E4
+        mov edi, ColourRemap
         mov esi, dword [byte ebp+08h]
         mov ecx, 40h
         rep movsd
@@ -167,7 +167,7 @@ GetColorRemap:
         push esi
         push edi
         mov edi, dword [byte ebp+08h]
-        mov esi, byte_D42E4
+        mov esi, ColourRemap
         mov ecx, 40h
         rep movsd
         pop edi
@@ -179,7 +179,7 @@ GetColorRemap:
         push esi
         push edi
         mov esi, dword [byte ebp+010h]
-        mov edi, byte_D42E4
+        mov edi, ColourRemap
         add edi, dword [byte ebp+08h]
         mov ecx, dword [byte ebp+0Ch]
 loc_B4E17:
@@ -270,7 +270,7 @@ loc_B4EC1:
         cmp al, 0FFh
         je short loc_B4EFB
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
 loc_B4ED4:
         LD sub, edx, ecx
         jle short loc_B4EDC
@@ -313,7 +313,7 @@ loc_B4F26:
 loc_B4F2A:
         lodsb
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B4F2A
         jmp near loc_B4EB4
@@ -323,7 +323,7 @@ loc_B4F3C:
 loc_B4F40:
         lodsb
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B4F40
         add dword [byte ebp-020h], byte 4
@@ -896,7 +896,7 @@ loc_B542F:
         cmp al, 0FFh
         je short loc_B547C
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
 loc_B5442:
         LD sub, edx, ecx
         jle short loc_B544A
@@ -960,7 +960,7 @@ loc_B54C4:
 loc_B54C8:
         lodsb
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B54C8
         jmp near loc_B541E
@@ -970,7 +970,7 @@ loc_B54DA:
 loc_B54DE:
         lodsb
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B54DE
         dec dword [byte ebp-010h]
@@ -1018,7 +1018,7 @@ loc_B5536:
         cmp al, 0FFh
         je short loc_B554D
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         LD add, edx, ecx
         jmp near loc_B546C
 loc_B554D:
@@ -1587,7 +1587,7 @@ loc_B59EC:
         cmp al, 0FFh
         je short loc_B5A28
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
 loc_B5A01:
         LD sub, edx, ecx
         jle short loc_B5A09
@@ -1631,7 +1631,7 @@ loc_B5A57:
         mov al, byte [esi]
         inc esi
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B5A57
         jmp near loc_B59DC
@@ -1642,7 +1642,7 @@ loc_B5A6F:
         mov al, byte [esi]
         inc esi
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B5A6F
         add dword [byte ebp-020h], byte 4
@@ -1860,7 +1860,7 @@ loc_B5C4C:
         cmp al, 0FFh
         je short loc_B5C9B
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
 loc_B5C61:
         LD sub, edx, ecx
         jle short loc_B5C69
@@ -1919,7 +1919,7 @@ loc_B5CD7:
         mov al, byte [esi]
         inc esi
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B5CD7
         jmp near loc_B5C38
@@ -1936,7 +1936,7 @@ loc_B5CFF:
         mov al, byte [esi]
         inc esi
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         stosb
         loop loc_B5CFF
         dec dword [byte ebp-010h]
@@ -1985,7 +1985,7 @@ loc_B5D5B:
         cmp al, 0FFh
         je short loc_B5D72
         movsx ebx, ax
-        mov al, byte [dword ebx+byte_D42E4]
+        mov al, byte [dword ebx+ColourRemap]
         LD add, edx, ecx
         jmp near loc_B5C8B
 loc_B5D72:

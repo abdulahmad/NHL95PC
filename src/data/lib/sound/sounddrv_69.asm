@@ -16,9 +16,9 @@ global dword_D8238, dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8
 global dword_D847C, dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498
 global dword_D84A8, dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC
 global dword_D84D0, dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_D8690, dword_D8696
-global dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC, dword_D86B0, BlitColumnOffsets, BlitSourcePtr, dword_D86C0
+global dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC, dword_D86B0, BlitColumnOffsets, BlitSourcePtr, DmaDefaultMode
 global dword_D86DC, GusDmaBusy, dword_D87A0, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback, GusRecordDoneCallback, GusWaveCallback
-global GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, dword_D87D0, dword_D87D4, dword_D87DC
+global GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, GusMidiXmitCallback, GusMidiRecvCallback, dword_D87DC
 global dword_D87E0, dword_D89D8, dword_D89DC, off_D71F0, off_D846C, word_D7214, word_D7216, word_D7218
 global word_D721A, word_D721C, word_D721E, word_D7220, word_D7222, word_D7224, word_D7226, word_D7228
 global word_D722A, word_D722C, word_D722E, word_D7230, word_D7232, word_D7234, word_D7236, word_D7238
@@ -54,7 +54,7 @@ global word_D73FA, word_D73FC, word_D73FE, word_D7400, word_D7402, word_D7404, w
 global word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, word_D7414, word_D7B64, word_D7DBC
 global word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2, word_D84C6, word_D8694, word_D869A
 global word_D86A0, word_D86A6, word_D86B4, word_D86B6, word_D86DA, word_D86E0, GusBasePort, GusIrqStatusPort
-global word_D8764, word_D8766, word_D8768, word_D876A, word_D876C, word_D876E, GusVoiceSelectPort, GusRegSelectPort
+global word_D8764, word_D8766, word_D8768, word_D876A, GusMidiControlPort, GusMidiDataPort, GusVoiceSelectPort, GusRegSelectPort
 global GusDataLowPort, GusDataHighPort, GusDramPort, GusIrqPending
 off_D71F0:
         dd byte_D6CE0
@@ -1076,7 +1076,7 @@ BlitColumnOffsets:
         db 00h,00h,00h,00h
 BlitSourcePtr:
         db 00h,00h,00h,00h
-dword_D86C0:
+DmaDefaultMode:
         db 011h,00h,00h,00h,00h,00h,00h,00h
 byte_D86C8:
         db 087h,00h,083h,00h,081h,00h,082h,00h,08Fh,00h,08Bh,00h,089h,00h,08Ah,00h
@@ -1106,9 +1106,9 @@ word_D8768:
         db 02Bh,02h
 word_D876A:
         db 02Fh,02h
-word_D876C:
+GusMidiControlPort:
         db 020h,03h
-word_D876E:
+GusMidiDataPort:
         db 021h,03h
 GusVoiceSelectPort:
         db 022h,03h
@@ -1149,9 +1149,9 @@ GusWaveIrqCallback:
         db 00h,00h,00h,00h
 GusVolumeIrqCallback:
         db 00h,00h,00h,00h
-dword_D87D0:
+GusMidiXmitCallback:
         db 00h,00h,00h,00h
-dword_D87D4:
+GusMidiRecvCallback:
         db 00h,00h,00h,00h
 byte_D87D8:
         db 00h,00h,00h,00h

@@ -4,27 +4,27 @@ bits 32
 section s_A9C9C progbits alloc exec nowrite align=1
 extern __GETDS, unk_A9C80, unk_A9C81, unk_A9C83, unk_A9C85, unk_A9C86, unk_A9C88, unk_A9C89
 extern unk_A9C8A, unk_A9C8E, unk_A9C8F, unk_A9C90, unk_A9C91, unk_A9C92, unk_A9C96, unk_A9C98
-global sub_A9C9C, loc_A9CAC, loc_A9CD2, loc_A9CDD, loc_A9CDF, loc_A9CE3, loc_A9CE5, loc_A9CFD
+global SbHookIrq, loc_A9CAC, loc_A9CD2, loc_A9CDD, loc_A9CDF, loc_A9CE3, loc_A9CE5, loc_A9CFD
 global loc_A9CFF, loc_A9D05, loc_A9D07, loc_A9D09, loc_A9D11, loc_A9D13, loc_A9D19, loc_A9D1B
-global sub_A9D1D, loc_A9D30, loc_A9D4B, sub_A9D4C, sub_A9D54, loc_A9D61, loc_A9D63, loc_A9D7D
+global SbUnhookIrq, loc_A9D30, loc_A9D4B, SbIrqHandler, loc_A9D61, loc_A9D63, loc_A9D7D
 global loc_A9D80, loc_A9D82, loc_A9D8E, loc_A9D90, loc_A9D91, loc_A9DA2, loc_A9DA5, loc_A9DA7
 global loc_A9DB3, loc_A9DB5, loc_A9DB6, loc_A9DC5, loc_A9DC8, loc_A9DCA, loc_A9DD6, loc_A9DD8
-global loc_A9DD9, loc_A9DDF, loc_A9DE1, loc_A9DE5, loc_A9DE7, sub_A9DEB, loc_A9DFA, loc_A9DFD
-global loc_A9DFF, loc_A9E0B, loc_A9E0D, loc_A9E0E, sub_A9E0F, loc_A9E1E, loc_A9E21, loc_A9E23
-global loc_A9E30, loc_A9E32, loc_A9E33, sub_A9E34, loc_A9E42, loc_A9E44, loc_A9E4D, loc_A9E4F
-global sub_A9E55, loc_A9E62, loc_A9E64, loc_A9E73, loc_A9E75, loc_A9E7C, loc_A9E7E, loc_A9E80
+global loc_A9DD9, loc_A9DDF, loc_A9DE1, loc_A9DE5, loc_A9DE7, SbDspWrite, loc_A9DFA, loc_A9DFD
+global loc_A9DFF, loc_A9E0B, loc_A9E0D, loc_A9E0E, SbDspRead, loc_A9E1E, loc_A9E21, loc_A9E23
+global loc_A9E30, loc_A9E32, loc_A9E33, SbCardClose, loc_A9E42, loc_A9E44, loc_A9E4D, loc_A9E4F
+global SbDspReset, loc_A9E62, loc_A9E64, loc_A9E73, loc_A9E75, loc_A9E7C, loc_A9E7E, loc_A9E80
 global loc_A9E8D, loc_A9E8F, loc_A9E91, loc_A9E9E, loc_A9EA0, loc_A9EA2, loc_A9EAD, loc_A9EAF
 global loc_A9EB6, loc_A9EB8, loc_A9EBA, loc_A9EC7, loc_A9EC9, loc_A9ECB, loc_A9ED8, loc_A9EDA
 global loc_A9EDC, loc_A9EE7, loc_A9EF7, loc_A9EFA, loc_A9EFC, loc_A9F09, loc_A9F0B, loc_A9F0C
-global loc_A9F15, sub_A9F1A, loc_A9F28, loc_A9F2F, loc_A9F31, loc_A9F33, loc_A9F6C, loc_A9F7F
-global loc_A9F90, sub_A9F93, loc_A9FCD, loc_A9FF9, loc_AA001, loc_AA010, loc_AA05B, loc_AA05D
+global loc_A9F15, SbDspVersion, loc_A9F28, loc_A9F2F, loc_A9F31, loc_A9F33, loc_A9F6C, loc_A9F7F
+global loc_A9F90, SbCardOpen, loc_A9FCD, loc_A9FF9, loc_AA001, loc_AA010, loc_AA05B, loc_AA05D
 global loc_AA068, loc_AA06A, loc_AA06E, loc_AA070, loc_AA081, loc_AA083, loc_AA088, loc_AA08A
 global loc_AA0A0, loc_AA0A2, loc_AA0B8, loc_AA0BA, loc_AA0BD, loc_AA0BF, loc_AA0C4, loc_AA0C6
 global loc_AA0CF, loc_AA0D1, loc_AA0E8, loc_AA0EF, loc_AA0F1, loc_AA0F3, loc_AA10B, loc_AA119
-global loc_AA120, loc_AA122, loc_AA124, loc_AA141, loc_AA148, sub_AA14D, loc_AA163, loc_AA165
-global loc_AA172, loc_AA174, loc_AA1A8, loc_AA1B0, sub_AA1B2, loc_AA1C1, loc_AA1C3, loc_AA1C8
-global loc_AA1CA, sub_AA1D9, loc_AA1EB, loc_AA1ED, loc_AA1F9, loc_AA1FC, loc_AA1FE
-sub_A9C9C:
+global loc_AA120, loc_AA122, loc_AA124, loc_AA141, loc_AA148, SbStopDma, loc_AA163, loc_AA165
+global loc_AA172, loc_AA174, loc_AA1A8, loc_AA1B0, SbDmaCount, loc_AA1C1, loc_AA1C3, loc_AA1C8
+global loc_AA1CA, SbSetStereo, loc_AA1EB, loc_AA1ED, loc_AA1F9, loc_AA1FC, loc_AA1FE
+SbHookIrq:
         pushf
         cli
         push es
@@ -98,7 +98,7 @@ loc_A9D19:
 loc_A9D1B:
         popf
         ret
-sub_A9D1D:
+SbUnhookIrq:
         mov al, byte [unk_A9C91]
         LD or, al, al
         je short loc_A9D4B
@@ -120,12 +120,11 @@ loc_A9D30:
         popf
 loc_A9D4B:
         ret
-sub_A9D4C:
+SbIrqHandler:
         pushf
         pusha
         push ds
         call __GETDS
-sub_A9D54:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         in al, dx
@@ -215,7 +214,7 @@ loc_A9DE7:
         popa
         popf
         iret
-sub_A9DEB:
+SbDspWrite:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Ch
         mov ecx, 3E8h
@@ -238,7 +237,7 @@ loc_A9E0D:
         clc
 loc_A9E0E:
         ret
-sub_A9E0F:
+SbDspRead:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         mov ecx, 3E8h
@@ -261,8 +260,8 @@ loc_A9E32:
         clc
 loc_A9E33:
         ret
-sub_A9E34:
-        call sub_AA14D
+SbCardClose:
+        call SbStopDma
         mov al, byte [unk_A9C8F]
         out 21h, al
         jmp short loc_A9E42
@@ -275,9 +274,9 @@ loc_A9E44:
 loc_A9E4D:
         jmp short loc_A9E4F
 loc_A9E4F:
-        call sub_A9E55
+        call SbDspReset
         ret
-sub_A9E55:
+SbDspReset:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         in al, dx
@@ -411,11 +410,11 @@ loc_A9F15:
         LD sbb, eax, eax
         rol eax, 1
         ret
-sub_A9F1A:
+SbDspVersion:
         push eax
         push ebx
         mov ah, 0E1h
-        call sub_A9DEB
+        call SbDspWrite
         mov ecx, 4E20h
 loc_A9F28:
         pushf
@@ -433,9 +432,9 @@ loc_A9F33:
         popf
         loop loc_A9F28
         LD xor, eax, eax
-        call sub_A9E0F
+        call SbDspRead
         LD mov, ah, al
-        call sub_A9E0F
+        call SbDspRead
         LD mov, ebx, eax
         cmp eax, 201h
         jb short loc_A9F7F
@@ -458,7 +457,7 @@ loc_A9F90:
         pop ebx
         pop eax
         ret
-sub_A9F93:
+SbCardOpen:
         push ebp
         LD mov, ebp, esp
         in al, 21h
@@ -473,12 +472,12 @@ sub_A9F93:
         mov byte [unk_A9C88], al
         mov eax, dword [byte ebp+010h]
         mov byte [unk_A9C89], al
-        call sub_A9E55
+        call SbDspReset
         jae short loc_A9FCD
         leave
         ret
 loc_A9FCD:
-        call sub_A9F1A
+        call SbDspVersion
         mov ebx, dword [unk_A9C8A]
         LD or, ebx, ebx
         je short loc_A9FF9
@@ -488,10 +487,10 @@ loc_A9FCD:
         neg eax
         LD mov, ebx, eax
         mov ah, 40h
-        call sub_A9DEB
+        call SbDspWrite
         jb short loc_A9FF9
         LD mov, ah, bh
-        call sub_A9DEB
+        call SbDspWrite
 loc_A9FF9:
         LD sbb, eax, eax
         rol eax, 1
@@ -500,7 +499,7 @@ loc_A9FF9:
         ret
 loc_AA001:
         mov ah, 0D1h
-        call sub_A9DEB
+        call SbDspWrite
         LD sbb, eax, eax
         rol eax, 1
         jae short loc_AA010
@@ -519,8 +518,8 @@ loc_AA010:
         mov al, 1
         mov byte [unk_A9C85], al
         mov al, byte [unk_A9C88]
-        mov edx, sub_A9D4C
-        call sub_A9C9C
+        mov edx, SbIrqHandler
+        call SbHookIrq
         cli
         LD xor, edx, edx
         mov al, byte [unk_A9C89]
@@ -595,7 +594,7 @@ loc_AA0D1:
         cmp byte [unk_A9C8E], 1
         je short loc_AA10B
         mov ah, 14h
-        call sub_A9DEB
+        call SbDspWrite
         jb short loc_AA141
         mov ecx, 4E20h
 loc_AA0E8:
@@ -614,13 +613,13 @@ loc_AA0F3:
         popf
         loop loc_AA0E8
         mov ah, 0FFh
-        call sub_A9DEB
+        call SbDspWrite
         jb short loc_AA141
-        call sub_A9DEB
+        call SbDspWrite
         jmp short loc_AA141
 loc_AA10B:
         mov ah, 48h
-        call sub_A9DEB
+        call SbDspWrite
         jb short loc_AA141
         mov ecx, 4E20h
 loc_AA119:
@@ -639,11 +638,11 @@ loc_AA124:
         popf
         loop loc_AA119
         mov ah, 0FFh
-        call sub_A9DEB
+        call SbDspWrite
         jb short loc_AA141
-        call sub_A9DEB
+        call SbDspWrite
         mov ah, 90h
-        call sub_A9DEB
+        call SbDspWrite
 loc_AA141:
         LD sbb, eax, eax
         rol eax, 1
@@ -655,7 +654,7 @@ loc_AA148:
         clc
         leave
         ret
-sub_AA14D:
+SbStopDma:
         cmp byte [unk_A9C85], 0
         clc
         je short loc_AA1B0
@@ -679,7 +678,7 @@ loc_AA174:
         mov al, byte [unk_A9C91]
         LD or, al, al
         je short loc_AA1B0
-        call sub_A9D1D
+        call SbUnhookIrq
         mov cl, byte [unk_A9C88]
         cmp cl, 0FFh
         je short loc_AA1B0
@@ -700,7 +699,7 @@ loc_AA1A8:
 loc_AA1B0:
         sti
         ret
-sub_AA1B2:
+SbDmaCount:
         LD xor, eax, eax
         movzx edx, byte [unk_A9C89]
         shl edx, 1
@@ -722,7 +721,7 @@ loc_AA1CA:
         dec eax
         LD sub, eax, ebx
         ret
-sub_AA1D9:
+SbSetStereo:
         push ebp
         LD mov, ebp, esp
         movzx edx, word [unk_A9C86]

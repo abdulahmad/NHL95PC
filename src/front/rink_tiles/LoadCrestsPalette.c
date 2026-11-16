@@ -15,7 +15,7 @@ void LoadCrestsPalette(void)
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     MakePath(path, fileoncd[0x55] == 1 ? (char *)cddriveptr : 0, (char *)str_CRESTS3, (char *)str_extBIN);
-    bank = sub_8E8A0(path, 0);
+    bank = OpenArtArchiveErr(path, 0);
     for (i = 0x1E0; i < 0x300; i++) pal[i] = ((unsigned char *)bank)[i - 0x1E0];
     FreeMemBlock(bank);
     bank = LoadBank((char *)deskbankname, 0);

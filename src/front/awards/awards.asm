@@ -39,7 +39,7 @@ extern str_Mtafan, str_Mtawards, str_Numshp, str_Pal3, str_Palmem, str_Pct, str_
 extern str_PPG, str_PPV, str_Pt, str_Scrn, str_SHG, str_Shots, str_SO, str_SS
 extern str_Summ, str_T, str_Titl, str_Trinknd, str_VFN, str_W, strcat_, strcpy_
 extern strnicmp_, FreeGameMemory, FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, AllocMemBlock, PushMemDescriptorLocked
-extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
+extern LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
 extern ReleaseAllVoices, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry
 extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
