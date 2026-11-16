@@ -4318,7 +4318,7 @@ MouseDeltaX,D2FFC,Mouse motion X since the last read
 MouseForceTwoButtons,D301C,Treat the mouse as two buttons
 MouseButtons,D303C,Mouse buttons
 ViewScreenHeight,D3048,Full screen height the game view is sized against
-ScreenSaveBitmap,D3054,Bitmap holding a copy of the screen
+ViewMaxX,D3054,Screen width less the horizontal margin
 SavedBreakOffset,D3090,Previous ctrl-break handler offset
 BreakCallFunc,D3096,Ctrl-break chain routine
 DrawClipLeft,D30BC,Left edge of the draw target's clip rectangle; x below it is not drawn
@@ -4439,3 +4439,87 @@ __stdout_buf,D4D32,Stdout buffer
 __iob_end,D4D9A,End of the stdio stream table
 __NFiles,D4F20,Number of stdio streams
 _doserrno,F24D0,DOS error number
+KeyReleaseBase,D2C5C,Key state table less 80h so a release scan code (bit 7 set) indexes the right key
+CapsLockState,D2CD4,Caps Lock on/off; toggled by the keyboard handler which also sets the LED
+KeyMapNormal,D2D7C,Scan code to ASCII with no shift key down
+KeyMapShift,D2DD7,Scan code to ASCII with Shift down
+KeyMapCaps,D2E32,Scan code to ASCII with Caps Lock on
+KeyMapCtrl,D2E8D,Scan code to ASCII with Ctrl down
+KeyMapAlt,D2EE8,Scan code to key code with Alt down
+SndInitDone,D41CC,Set once the sound system has been set up
+SndBigEndian,D41CD,Byte order flag for timbre and patch data
+JoyRawButtons,D4244,Button bits from the raw joystick read
+Joy1RawDirection,D4245,Direction bits for joystick 1 from the raw read
+Joy2RawDirection,D4246,Direction bits for joystick 2 from the raw read
+JoyDirLookup,D4280,Direction bits to direction code table
+TextLastChar,D42C1,Last character in the font
+Joy2RawX,D41FC,Joystick 2 raw X
+Joy2RawY,D4200,Joystick 2 raw Y
+Joy2XMin,D4204,Joystick 2 X minimum
+Joy2XMax,D4208,Joystick 2 X maximum
+Joy2XCenter,D420C,Joystick 2 X centre
+Joy2XSettle,D4210,Joystick 2 X settle countdown
+Joy2XMinSeen,D4214,Lowest joystick 2 X seen
+Joy2XMaxSeen,D4218,Highest joystick 2 X seen
+Joy2YMin,D421C,Joystick 2 Y minimum
+Joy2YMax,D4220,Joystick 2 Y maximum
+Joy2YCenter,D4224,Joystick 2 Y centre
+Joy2YSettle,D4228,Joystick 2 Y settle countdown
+Joy2YMinSeen,D422C,Lowest joystick 2 Y seen
+Joy2YMaxSeen,D4230,Highest joystick 2 Y seen
+Joy2XScale,D4234,Joystick 2 X scale factor
+Joy2YScale,D4238,Joystick 2 Y scale factor
+Joy1RawX,D423C,Joystick 1 raw X
+Joy1RawY,D4240,Joystick 1 raw Y
+Joy1XMin,D4248,Joystick 1 X minimum
+Joy1XMax,D424C,Joystick 1 X maximum
+Joy1XCenter,D4250,Joystick 1 X centre
+Joy1XSettle,D4254,Joystick 1 X settle countdown
+Joy1XMinSeen,D4258,Lowest joystick 1 X seen
+Joy1XMaxSeen,D425C,Highest joystick 1 X seen
+Joy1YMin,D4260,Joystick 1 Y minimum
+Joy1YMax,D4264,Joystick 1 Y maximum
+Joy1YCenter,D4268,Joystick 1 Y centre
+Joy1YSettle,D426C,Joystick 1 Y settle countdown
+Joy1YMinSeen,D4270,Lowest joystick 1 Y seen
+Joy1YMaxSeen,D4274,Highest joystick 1 Y seen
+Joy1XScale,D4278,Joystick 1 X scale factor
+Joy1YScale,D427C,Joystick 1 Y scale factor
+RowTableSize,D2F5C,Number of entries in the screen row table buffer (default 0E00h; at least 0CCh)
+RowTableBuffer,D2F60,Buffer for screen row tables; defaults to the static buffer
+MemDescriptorsEnd,D2F7C,End of the memory descriptor array
+MemDescriptors,D2F80,Memory descriptor array allocated by initmemman
+StartupCs,D2F78,Code selector shown by the memory viewer
+StartupDs,D2F7A,Data selector shown by the memory viewer
+SnapFormat,D2F84,Screenshot format; 7 selects the alternate layout
+VesaProbed,D2F88,Set once the VESA BIOS has been probed
+ModeWidthTable,D2F8C,Screen width per video mode (8-byte entries with the height)
+ModeHeightTable,D2F90,Screen height per video mode
+ViewScreenWidth,D3044,Width of the current screen mode
+ViewMarginX,D304C,Horizontal margin taken off the screen width
+ViewMarginY,D3050,Vertical margin taken off the screen height
+ViewMaxY,D3058,Screen height less the vertical margin
+ScreenHeight,D30A8,Screen height
+ScreenBmHeight,D30D8,Screen bitmap height
+ScreenBmClipX0,D30DC,Screen bitmap clip left
+ScreenBmClipY0,D30E0,Screen bitmap clip top
+ScreenBmClipX1,D30E4,Screen bitmap clip right
+ScreenBmClipY1,D30E8,Screen bitmap clip bottom
+ScreenBmOffset,D30EC,Screen bitmap start offset
+ScreenBmRowBytes,D30F0,Screen bitmap bytes per row
+ScreenBmPitch,D30F4,Screen bitmap pitch
+ScreenBmBanked,D30F8,"1 when the screen is a banked VESA mode, 0 for mode 13h"
+SampleChunkSize,D41CE,Chunk size used when loading samples
+PlayPatchHandle,D41EA,Handle of the last patch played
+DefaultSampleInfo,D41D2,Default six-dword sample description copied by LoadSample
+TextBackColor,D42AC,Text background colour
+TextOriginY,D42B4,Text origin Y
+TextLeft,D42D4,Left edge of the text window
+MemViewOpen,D4594,Non-zero while the memory viewer is open
+MemViewRowY,D459C,Screen Y of the memory viewer row being drawn
+MemViewRowX,D45A0,Screen X of the memory viewer row being drawn
+DebugLastKey,D45B0,Last key read by the debug key reader
+UnpackedSizeHook,D3088,Hook asked first for the unpacked size; returns 0 to fall through
+UnpackHook,D308C,Hook asked first to unpack; returns 0 to fall through
+DefaultFontOffsets,D45F8,Character offset table of the built-in font
+DefaultFontWidths,D47B4,Character width table of the built-in font

@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_B29F0 progbits alloc exec nowrite align=1
-extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12
-extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, BiosKeyFunc
+extern __GETDS, bailout_vec, KeyReleaseBase, CapsLockState, KeyStateTable
+extern KeyMapNormal, KeyMapShift, KeyMapCaps, KeyMapCtrl, KeyMapAlt, BiosKeyFunc
 extern KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask, SavedKbdVecOffset, SavedInt16Offset, SavedRealKbdOffset, FatalErrorHook
 extern GraphicsReady, PrintBoxedText, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
 extern WaitKey, SavedKbdVecSelector, SavedInt16Selector, SavedRealKbdSegment, KbdDataSelector
@@ -94,7 +94,7 @@ KeyboardIrqHandler:
         dd KbdDataSelector
         LD or, bl, bl
         jns short .1
-        mov byte [dword ebx+byte_D2C5C], 0
+        mov byte [dword ebx+KeyReleaseBase], 0
         mov al, 20h
         out 20h, al
         pop ds
@@ -107,17 +107,17 @@ KeyboardIrqHandler:
         out 20h, al
         cmp ebx, byte 3Ah
         je short .5
-        test byte [byte_D2D14], 1
+        test byte [KeyStateTable+038h], 1
         jne near .10
-        test byte [byte_D2CF9], 1
+        test byte [KeyStateTable+01Dh], 1
         jne short .8
-        test byte [byte_D2D06], 1
+        test byte [KeyStateTable+02Ah], 1
         jne short .7
-        test byte [byte_D2D12], 1
+        test byte [KeyStateTable+036h], 1
         jne short .7
-        test byte [byte_D2CD4], 1
+        test byte [CapsLockState], 1
         jne short .12
-        mov al, byte [dword ebx+byte_D2D7C]
+        mov al, byte [dword ebx+KeyMapNormal]
 .2:
         cmp al, 80h
         jae short .6
@@ -135,10 +135,10 @@ KeyboardIrqHandler:
         pop eax
         iret
 .5:
-        xor dword [byte_D2CD4], byte 1
+        xor dword [CapsLockState], byte 1
         mov al, 0EDh
         out 60h, al
-        mov al, byte [byte_D2CD4]
+        mov al, byte [CapsLockState]
         shl al, 2
         out 60h, al
         jmp short .4
@@ -150,21 +150,21 @@ KeyboardIrqHandler:
         and ah, 7Fh
         jmp short .3
 .7:
-        mov al, byte [dword ebx+byte_D2DD7]
+        mov al, byte [dword ebx+KeyMapShift]
         jmp short .2
 .8:
-        mov al, byte [dword ebx+byte_D2E8D]
+        mov al, byte [dword ebx+KeyMapCtrl]
 .9:
         jmp short .2
 .10:
-        test byte [byte_D2CF9], 1
+        test byte [KeyStateTable+01Dh], 1
 .11:
-        mov al, byte [dword ebx+byte_D2EE8]
+        mov al, byte [dword ebx+KeyMapAlt]
         jmp short .2
 .12:
-        mov al, byte [dword ebx+byte_D2E32]
+        mov al, byte [dword ebx+KeyMapCaps]
         jmp short .2
-        test byte [byte_D2D2F], 1
+        test byte [KeyStateTable+053h], 1
         je short .11
         jmp short .9
 IretStub:
@@ -252,8 +252,8 @@ Int16Service:
         ret
 .4:
         LD xor, eax, eax
-        mov al, byte [byte_D2D06]
-        or al, byte [byte_D2D12]
+        mov al, byte [KeyStateTable+02Ah]
+        or al, byte [KeyStateTable+036h]
         and al, 1
         LD or, eax, eax
         ret

@@ -5,7 +5,7 @@ section s_71F0C progbits alloc exec nowrite align=1
 extern __CHK, attdb, attdb_size, btn_POHumanOut, CharClassTable, TextCharH, careerdb, careerdb_size
 extern carteamsdb, carteamsdb_size, cddriveptr, ClearInputQueue, CmpFileNames, curdbname, dbdirty, dbdlgrects
 extern dblistcur, dblistorig, dblisttemp, dblisttempnames, dbtablists, deldbmsg, DeleteDir, dlgedgecol1
-extern dlgedgecol2, dlgfillcol, DlgReturnZero, DrawDlgFrame, DrawEditRosters, dword_D42AC, EditTextField, fdlg_arrow
+extern dlgedgecol2, dlgfillcol, DlgReturnZero, DrawDlgFrame, DrawEditRosters, TextBackColor, EditTextField, fdlg_arrow
 extern fdlg_cancel, fdlg_del, fdlg_down, fdlg_noarrow, fdlg_none, fdlg_open, fdlg_tabexh, fdlg_tablp
 extern fdlg_tabnone, fdlg_tabpo, fdlg_up, fdlgmask, fdlgshapes, fdlgtab, FileDlgHitTest, fileoncd
 extern fputchar, FreeLeagueDbsMem, FreeMemBlock, GetInputEvent, keydb, keydb_size, leaguedbnames, LoadBothRosterLists
@@ -196,7 +196,7 @@ InputDialog:
         mov esi, dword [dlgedgecol2]
         xor eax, eax
         mov dword [dlgfillcol], eax
-        mov dword [dword_D42AC], eax
+        mov dword [TextBackColor], eax
         mov dword [dlgedgecol1], esi
         mov dword [dlgedgecol2], edi
         push eax

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8DCF8 progbits alloc exec nowrite align=1
-extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, MemLockHandle
+extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, RowTableSize, RowTableBuffer, MemDescriptorsEnd, MemDescriptors, dword_EDAA8, MemLockHandle
 extern dword_EDAB4, FatalError, int386_, InitMemList, AddHighMemList, MemLargestFree, InitMemDescriptors, GrabLargestBlock
 extern MemLockHandleInit, MemUnlock, DetectCPU, unk_EDF04, MemLock
 global initmemman, InitMemoryPoolDefault, SetupMemoryPool, SetupMemoryPoolReserve
@@ -30,25 +30,25 @@ initmemman:
         and dl, 0F0h
         mov eax, edx
         call _nmalloc_
-        mov dword [dword_D2F80], eax
+        mov dword [MemDescriptors], eax
         add eax, edx
-        mov dword [dword_D2F7C], eax
-        cmp dword [dword_D2F60], byte 0
+        mov dword [MemDescriptorsEnd], eax
+        cmp dword [RowTableBuffer], byte 0
         jne short .2
-        mov dword [dword_D2F60], unk_EDF04
+        mov dword [RowTableBuffer], unk_EDF04
 .2:
-        cmp dword [dword_D2F5C], 0CCh
+        cmp dword [RowTableSize], 0CCh
         jge short .3
         push str_InitmemmanINSUFFICIENTROW
         call FatalError
         add esp, byte 4
 .3:
-        mov edx, dword [dword_D2F5C]
+        mov edx, dword [RowTableSize]
         shl edx, 2
-        mov eax, dword [dword_D2F60]
+        mov eax, dword [RowTableBuffer]
         lea ebx, [eax+edx]
         mov dword [dword_EDAA8], ebx
-        mov edx, dword [dword_D2F5C]
+        mov edx, dword [RowTableSize]
         sub edx, byte 2
         mov dword [eax], edx
         mov dword [byte eax+04h], 0
@@ -58,16 +58,16 @@ initmemman:
         shl eax, 3
         mov dword [byte esp+03Ch], eax
         push edx
-        mov edx, dword [dword_D2F80]
+        mov edx, dword [MemDescriptors]
         push edx
         call InitMemDescriptors
         add esp, byte 8
         push byte 0
         push byte 8
         push byte 8
-        mov ebx, dword [dword_D2F7C]
+        mov ebx, dword [MemDescriptorsEnd]
         push ebx
-        mov eax, dword [dword_D2F80]
+        mov eax, dword [MemDescriptors]
         add eax, dword [byte esp+04Ch]
         push eax
         push byte 0

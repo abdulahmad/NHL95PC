@@ -4,7 +4,7 @@ bits 32
 section s_2FDD1 progbits alloc exec nowrite align=1
 extern __CHK, boxfillcolor, boxlitecolor, boxshadecolor, CharClassTable, TextCharH, TextFontH, ClearInputQueue
 extern criterrflag, dbchoicebtns, dbchoicelines, dbextension, dlgsavebuf, dlgsavex, dlgsavey, dlgtextbg
-extern dlgtextfg, dword_C4B69, dword_D42AC, editbuf, editcuron, editcurw, editmaxw, editpos
+extern dlgtextfg, dword_C4B69, TextBackColor, editbuf, editcuron, editcurw, editmaxw, editpos
 extern editx, edity, fontcolor, fputchar, FreeMemBlock, GetInputEvent, InputInstall, InputRemove
 extern listscroll, MouseSetPos, pointerspr, PollKey, PrintMenuText, PrintShadowText, ptrupdatefn, SetTextColors
 extern SetTickDeadline, str_DBOX, str_Dot, str_extDB, str_ORG, str_Pointer6, str_Space, strlen_
@@ -2499,7 +2499,7 @@ DrawEditText:
         sub eax, edi
         test eax, eax
         jle near DrawEditCursor_ret
-        mov esi, dword [dword_D42AC]
+        mov esi, dword [TextBackColor]
         push esi
         movzx esi, byte [TextFontH]
         sub esi, byte 2

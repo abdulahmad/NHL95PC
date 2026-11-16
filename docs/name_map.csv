@@ -1199,7 +1199,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008CA6C,sub_8CA6C,AddMemListRegion,PC-new,,,,low,adds a region of memory to one memory list type,ea_memman_01,manual-trace
 0008CAF4,sub_8CAF4,AddHighMemList,PC-new,,,,low,adds the HIGHMEM region to one memory list type,ea_memman_01,manual-trace
 0008CBA4,sub_8CBA4,FindMemListBlock,PC-new,,,,low,looks for a block in one memory list type,ea_memman_01,manual-trace
-0008CC5C,sub_8CC5C,SetMemErrorHooks,PC-new,,,,low,stores the two memory manager error hooks,ea_memman_01,manual-trace
+0008CC5C,sub_8CC5C,SetRowTableBuffer,PC-new,,,,medium,Sets the row table buffer and its size before initmemman,ea_memman_01,manual-trace
 0008CC70,sub_8CC70,AllocMemHandleLocked,PC-new,,,,low,allocates a locked block and returns its descriptor,ea_memman_01,manual-trace
 0008CC8C,sub_8CC8C,AllocMemHandle,PC-new,,,,low,allocates an unlocked block and returns its descriptor,ea_memman_01,manual-trace
 0008CCA8,sub_8CCA8,AllocMemBlock,PC-new,,,,medium,"memory manager: allocate a named block (name, size, flags), e.g. the 320 KB 'TEMP' buffer of MenuSoundSettings; freed with FreeMemBlock",ea_memman_01,manual-trace

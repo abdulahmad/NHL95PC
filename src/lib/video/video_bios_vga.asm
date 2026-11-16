@@ -4,7 +4,7 @@ bits 32
 section s_B3E4A progbits alloc exec nowrite align=1
 extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, byte_D4FE8, HotkeyScanTable, HotkeyModTable
 extern AngleOctantTable, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, GraphicsReady, cpuinfo_d0, cpuinfo_d1
-extern ScreenWidth, dword_D30A8, DrawClipLeft, DrawClipRight, BackBufferWidth, RetraceTimeout, PrintfSavedEbx, PrintfSavedEcx
+extern ScreenWidth, ScreenHeight, DrawClipLeft, DrawClipRight, BackBufferWidth, RetraceTimeout, PrintfSavedEbx, PrintfSavedEcx
 extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, RetraceMode, dword_D4FA4, dword_D4FEB, HotkeyNesting
 extern HotkeyFuncTable, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, VgaBlitKeyedAtOwnPos
 extern mousepollfn, off_D567C, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
@@ -1301,9 +1301,9 @@ SetClipWindow:
         jle short .3
         mov edx, dword [ScreenWidth]
 .3:
-        cmp ebx, dword [dword_D30A8]
+        cmp ebx, dword [ScreenHeight]
         jle short .4
-        mov ebx, dword [dword_D30A8]
+        mov ebx, dword [ScreenHeight]
 .4:
         mov dword [cliprect_x0], eax
         mov dword [cliprect_y0], ecx

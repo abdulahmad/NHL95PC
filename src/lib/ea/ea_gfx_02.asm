@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_90A40 progbits alloc exec nowrite align=1
-extern TextFirstChar, byte_D42C1, TextCharW, TextSpacing, TextWidthTable, TextCursorY
+extern TextFirstChar, TextLastChar, TextCharW, TextSpacing, TextWidthTable, TextCursorY
 global TextWidthN
 TextWidthN:
         push esi
@@ -11,7 +11,7 @@ TextWidthN:
         mov edx, dword [byte esp+010h]
         mov ecx, dword [byte esp+014h]
         xor eax, eax
-        movzx esi, byte [byte_D42C1]
+        movzx esi, byte [TextLastChar]
         xor ebx, ebx
         mov bl, byte [TextFirstChar]
         sub esi, ebx

@@ -4,7 +4,7 @@ bits 32
 section s_98B30 progbits alloc exec nowrite align=1
 extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, byte_D4F5C, byte_D4F5D, byte_D4F5E
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
-extern byte_F234E, dword_D2F60, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, SndTimerHandle, dword_D4F9A
+extern byte_F234E, RowTableBuffer, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, SndTimerHandle, dword_D4F9A
 extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, AllocMemBlockEx
 extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, SndHandleService, SndDriverCall, SndHandleMidi, DrawShapeQuad
 extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, ShapeWidth, ShapeHeight, unk_F1884, unk_F21FC
@@ -179,7 +179,7 @@ FillRowTable:
         mov edi, edx
         mov esi, ebx
         xor ebx, ebx
-        mov eax, dword [dword_D2F60]
+        mov eax, dword [RowTableBuffer]
         cmp eax, dword [dword_EDAA8]
         jae short .4
         mov edx, ecx
@@ -270,7 +270,7 @@ removewindow:
         mov dword [byte eax+04h], ebx
         test ebx, ebx
         ja short .5
-        mov esi, dword [dword_D2F60]
+        mov esi, dword [RowTableBuffer]
         xor edi, edi
         cmp esi, eax
         jae short .2

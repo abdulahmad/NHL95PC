@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_B2D38 progbits alloc exec nowrite align=1
 extern mouseminx, mouseminy, mousemaxx, mousemaxy, MouseDeltaX, MouseButtonState, MouseForceTwoButtons, MousePresent
-extern PointerCount, MouseButtons, dword_D3044, ViewScreenHeight, mousebtns, mousepollfn, mousex, mousey
+extern PointerCount, MouseButtons, ViewScreenWidth, ViewScreenHeight, mousebtns, mousepollfn, mousex, mousey
 extern HidePointerKeepHook, HidePointerHook, ShowPointerHook, AddExitHandler, MouseSavedSensX, MouseSavedSensY, MouseSavedThreshold
 global MouseReadButtons, MouseSetSensitivity, MouseSetSensitivityDefault, MouseSetPos, MouseRead, MouseSetXRange, SetViewRect, MouseReadMotion
 global PointerCountUp, PointerCountDown, MouseRestoreSensitivity, InitMouse
@@ -190,14 +190,14 @@ InitMouse:
         mov dword [MousePresent], 2
 .1:
         push dword [ViewScreenHeight]
-        push dword [dword_D3044]
+        push dword [ViewScreenWidth]
         push byte 0
         push byte 0
         call SetViewRect
         mov eax, dword [ViewScreenHeight]
         shr eax, 2
         mov dword [mousex], eax
-        mov eax, dword [dword_D3044]
+        mov eax, dword [ViewScreenWidth]
         shr eax, 2
         mov dword [mousey], eax
         mov ax, 1Bh

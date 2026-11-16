@@ -1,0 +1,91 @@
+byte_D2CF9 KeyStateTable+01Dh {no_record}
+byte_D2D06 KeyStateTable+02Ah {no_record}
+byte_D2D12 KeyStateTable+036h {no_record}
+byte_D2D14 KeyStateTable+038h {no_record}
+byte_D2D2F KeyStateTable+053h {no_record}
+byte_D2C5C KeyReleaseBase {source_game=PC-new,confidence=low} Key state table less 80h so a release scan code (bit 7 set) indexes the right key
+byte_D2CD4 CapsLockState {source_game=PC-new,confidence=medium} Caps Lock on/off; toggled by the keyboard handler which also sets the LED
+byte_D2D7C KeyMapNormal {source_game=PC-new,confidence=medium} Scan code to ASCII with no shift key down
+byte_D2DD7 KeyMapShift {source_game=PC-new,confidence=medium} Scan code to ASCII with Shift down
+byte_D2E32 KeyMapCaps {source_game=PC-new,confidence=medium} Scan code to ASCII with Caps Lock on
+byte_D2E8D KeyMapCtrl {source_game=PC-new,confidence=medium} Scan code to ASCII with Ctrl down
+byte_D2EE8 KeyMapAlt {source_game=PC-new,confidence=medium} Scan code to key code with Alt down
+byte_D41CC SndInitDone {source_game=PC-new,confidence=low} Set once the sound system has been set up
+byte_D41CD SndBigEndian {source_game=PC-new,confidence=low} Byte order flag for timbre and patch data
+byte_D4244 JoyRawButtons {source_game=PC-new,confidence=low} Button bits from the raw joystick read
+byte_D4245 Joy1RawDirection {source_game=PC-new,confidence=low} Direction bits for joystick 1 from the raw read
+byte_D4246 Joy2RawDirection {source_game=PC-new,confidence=low} Direction bits for joystick 2 from the raw read
+byte_D4280 JoyDirLookup {source_game=PC-new,confidence=low} Direction bits to direction code table
+byte_D42C1 TextLastChar {source_game=96PC,confidence=medium} Last character in the font
+dword_D41FC Joy2RawX {source_game=PC-new,confidence=low} Joystick 2 raw X
+dword_D4200 Joy2RawY {source_game=PC-new,confidence=low} Joystick 2 raw Y
+dword_D4204 Joy2XMin {source_game=PC-new,confidence=low} Joystick 2 X minimum
+dword_D4208 Joy2XMax {source_game=PC-new,confidence=low} Joystick 2 X maximum
+dword_D420C Joy2XCenter {source_game=PC-new,confidence=low} Joystick 2 X centre
+dword_D4210 Joy2XSettle {source_game=PC-new,confidence=low} Joystick 2 X settle countdown
+dword_D4214 Joy2XMinSeen {source_game=PC-new,confidence=low} Lowest joystick 2 X seen
+dword_D4218 Joy2XMaxSeen {source_game=PC-new,confidence=low} Highest joystick 2 X seen
+dword_D421C Joy2YMin {source_game=PC-new,confidence=low} Joystick 2 Y minimum
+dword_D4220 Joy2YMax {source_game=PC-new,confidence=low} Joystick 2 Y maximum
+dword_D4224 Joy2YCenter {source_game=PC-new,confidence=low} Joystick 2 Y centre
+dword_D4228 Joy2YSettle {source_game=PC-new,confidence=low} Joystick 2 Y settle countdown
+dword_D422C Joy2YMinSeen {source_game=PC-new,confidence=low} Lowest joystick 2 Y seen
+dword_D4230 Joy2YMaxSeen {source_game=PC-new,confidence=low} Highest joystick 2 Y seen
+dword_D4234 Joy2XScale {source_game=PC-new,confidence=low} Joystick 2 X scale factor
+dword_D4238 Joy2YScale {source_game=PC-new,confidence=low} Joystick 2 Y scale factor
+dword_D423C Joy1RawX {source_game=PC-new,confidence=low} Joystick 1 raw X
+dword_D4240 Joy1RawY {source_game=PC-new,confidence=low} Joystick 1 raw Y
+dword_D4248 Joy1XMin {source_game=PC-new,confidence=low} Joystick 1 X minimum
+dword_D424C Joy1XMax {source_game=PC-new,confidence=low} Joystick 1 X maximum
+dword_D4250 Joy1XCenter {source_game=PC-new,confidence=low} Joystick 1 X centre
+dword_D4254 Joy1XSettle {source_game=PC-new,confidence=low} Joystick 1 X settle countdown
+dword_D4258 Joy1XMinSeen {source_game=PC-new,confidence=low} Lowest joystick 1 X seen
+dword_D425C Joy1XMaxSeen {source_game=PC-new,confidence=low} Highest joystick 1 X seen
+dword_D4260 Joy1YMin {source_game=PC-new,confidence=low} Joystick 1 Y minimum
+dword_D4264 Joy1YMax {source_game=PC-new,confidence=low} Joystick 1 Y maximum
+dword_D4268 Joy1YCenter {source_game=PC-new,confidence=low} Joystick 1 Y centre
+dword_D426C Joy1YSettle {source_game=PC-new,confidence=low} Joystick 1 Y settle countdown
+dword_D4270 Joy1YMinSeen {source_game=PC-new,confidence=low} Lowest joystick 1 Y seen
+dword_D4274 Joy1YMaxSeen {source_game=PC-new,confidence=low} Highest joystick 1 Y seen
+dword_D4278 Joy1XScale {source_game=PC-new,confidence=low} Joystick 1 X scale factor
+dword_D427C Joy1YScale {source_game=PC-new,confidence=low} Joystick 1 Y scale factor
+dword_D2F5C RowTableSize {source_game=PC-new,confidence=medium} Number of entries in the screen row table buffer (default 0E00h; at least 0CCh)
+dword_D2F60 RowTableBuffer {source_game=PC-new,confidence=medium} Buffer for screen row tables; defaults to the static buffer
+SetMemErrorHooks SetRowTableBuffer {source_game=PC-new,confidence=medium} Sets the row table buffer and its size before initmemman
+dword_D2F7C MemDescriptorsEnd {source_game=PC-new,confidence=medium} End of the memory descriptor array
+dword_D2F80 MemDescriptors {source_game=PC-new,confidence=medium} Memory descriptor array allocated by initmemman
+dword_D2F78 StartupCs {source_game=PC-new,confidence=low} Code selector shown by the memory viewer
+dword_D2F7A StartupDs {source_game=PC-new,confidence=low} Data selector shown by the memory viewer
+dword_D2F84 SnapFormat {source_game=PC-new,confidence=low} Screenshot format; 7 selects the alternate layout
+dword_D2F88 VesaProbed {source_game=PC-new,confidence=medium} Set once the VESA BIOS has been probed
+dword_D2F8C ModeWidthTable {source_game=PC-new,confidence=medium} Screen width per video mode (8-byte entries with the height)
+dword_D2F90 ModeHeightTable {source_game=PC-new,confidence=medium} Screen height per video mode
+dword_D3044 ViewScreenWidth {source_game=PC-new,confidence=medium} Width of the current screen mode
+dword_D304C ViewMarginX {source_game=PC-new,confidence=low} Horizontal margin taken off the screen width
+dword_D3050 ViewMarginY {source_game=PC-new,confidence=low} Vertical margin taken off the screen height
+ScreenSaveBitmap ViewMaxX {source_game=PC-new,confidence=low} Screen width less the horizontal margin
+dword_D3058 ViewMaxY {source_game=PC-new,confidence=low} Screen height less the vertical margin
+dword_D30A8 ScreenHeight {source_game=PC-new,confidence=medium} Screen height
+dword_D30D8 ScreenBmHeight {source_game=PC-new,confidence=medium} Screen bitmap height
+dword_D30DC ScreenBmClipX0 {source_game=PC-new,confidence=low} Screen bitmap clip left
+dword_D30E0 ScreenBmClipY0 {source_game=PC-new,confidence=low} Screen bitmap clip top
+dword_D30E4 ScreenBmClipX1 {source_game=PC-new,confidence=low} Screen bitmap clip right
+dword_D30E8 ScreenBmClipY1 {source_game=PC-new,confidence=low} Screen bitmap clip bottom
+dword_D30EC ScreenBmOffset {source_game=PC-new,confidence=low} Screen bitmap start offset
+dword_D30F0 ScreenBmRowBytes {source_game=PC-new,confidence=low} Screen bitmap bytes per row
+dword_D30F4 ScreenBmPitch {source_game=PC-new,confidence=low} Screen bitmap pitch
+dword_D30F8 ScreenBmBanked {source_game=PC-new,confidence=low} 1 when the screen is a banked VESA mode, 0 for mode 13h
+dword_D41CE SampleChunkSize {source_game=PC-new,confidence=low} Chunk size used when loading samples
+dword_D41EA PlayPatchHandle {source_game=PC-new,confidence=low} Handle of the last patch played
+unk_D41D2 DefaultSampleInfo {source_game=PC-new,confidence=low} Default six-dword sample description copied by LoadSample
+dword_D42AC TextBackColor {source_game=PC-new,confidence=low} Text background colour
+dword_D42B4 TextOriginY {source_game=PC-new,confidence=medium} Text origin Y
+dword_D42D4 TextLeft {source_game=96PC,confidence=medium} Left edge of the text window
+dword_D4594 MemViewOpen {source_game=PC-new,confidence=low} Non-zero while the memory viewer is open
+dword_D459C MemViewRowY {source_game=PC-new,confidence=low} Screen Y of the memory viewer row being drawn
+dword_D45A0 MemViewRowX {source_game=PC-new,confidence=low} Screen X of the memory viewer row being drawn
+dword_D45B0 DebugLastKey {source_game=PC-new,confidence=low} Last key read by the debug key reader
+off_D3088 UnpackedSizeHook {source_game=PC-new,confidence=medium} Hook asked first for the unpacked size; returns 0 to fall through
+off_D308C UnpackHook {source_game=PC-new,confidence=medium} Hook asked first to unpack; returns 0 to fall through
+unk_D45F8 DefaultFontOffsets {source_game=PC-new,confidence=low} Character offset table of the built-in font
+unk_D47B4 DefaultFontWidths {source_game=PC-new,confidence=low} Character width table of the built-in font

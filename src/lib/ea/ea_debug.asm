@@ -12,9 +12,9 @@ extern str_TIMES3, str_HexmemdspOS, str_XxMMAPTXT, str_ErrorDumpingMemoryMap, st
 extern str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked, str_Packed, str_Unpacked, str_3d3d3d3dS
 extern str_ShapeIsInvalidDraw, str_MEMSHPTXT, str_ErrorDumpingShapesList, str_ShapeFileName0, str_ShapeFileSizeLd, str_NumberOfShapesD, str_44s66ld, str_Bytes3dRows3d2
 extern str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d, asc_C46F8, str_SCREEN2, asc_C470C
-extern str_2d02d02d2, DebugRow, byte_EDE7D, DebugPrintf, dword_D2F78, dword_D2F7A, dword_D2F80, GraphicsReady
-extern dword_D3044, ViewScreenHeight, DebugMode, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
-extern MemViewRed, MemViewShowDetail, dword_D4594, MemViewCursor, dword_D459C, dword_D45A0, PaletteCursorColours, dword_D45B0
+extern str_2d02d02d2, DebugRow, byte_EDE7D, DebugPrintf, StartupCs, StartupDs, MemDescriptors, GraphicsReady
+extern ViewScreenWidth, ViewScreenHeight, DebugMode, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
+extern MemViewRed, MemViewShowDetail, MemViewOpen, MemViewCursor, MemViewRowY, MemViewRowX, PaletteCursorColours, DebugLastKey
 extern dword_EDAB4, MemViewTop, MemViewCount, MemViewSel, MemViewTitle, MemViewRow, MemViewList, MemViewKey
 extern MemViewFlags, MemViewMode, MemViewPrevSel, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, MarkDescPurgeable, TextSetColors
@@ -386,7 +386,7 @@ DebugGetKey:
         ret
         db 08Dh,040h,00h
 MemViewerGetMode:
-        mov eax, dword [dword_D4594]
+        mov eax, dword [MemViewOpen]
         lea eax, [byte eax+00h]
 MemViewer:
         push ebx
@@ -437,21 +437,21 @@ MemViewer:
         call FindNearestColor
         add esp, byte 4
         mov dword [MemViewRed], eax
-        mov ebp, dword [dword_D459C]
-        mov edi, dword [dword_D45A0]
+        mov ebp, dword [MemViewRowY]
+        mov edi, dword [MemViewRowX]
         cmp dword [dword esp+0B8h], byte 0
         sete al
         and eax, 0FFh
         mov dword [dword esp+0B0h], eax
         xor esi, esi
         mov dword [dword esp+0BCh], esi
-        mov eax, dword [dword_D4594]
+        mov eax, dword [MemViewOpen]
         mov ebx, dword [dword esp+0B8h]
         cmp eax, ebx
         je short .2
-        mov dword [dword_D459C], ebp
-        mov dword [dword_D45A0], edi
-        mov dword [dword_D4594], ebx
+        mov dword [MemViewRowY], ebp
+        mov dword [MemViewRowX], edi
+        mov dword [MemViewOpen], ebx
         cmp dword [dword esp+0B0h], byte 0
         jne short .2
         test ebx, ebx
@@ -493,7 +493,7 @@ MemViewer:
         jmp short MemViewerDrawRows+0Fh
 MemViewerStart:
         mov edx, 1
-        mov dword [dword_D4594], edx
+        mov dword [MemViewOpen], edx
         mov eax, edx
         jmp near MemViewer
         db 08Bh,0C0h
@@ -689,8 +689,8 @@ MemViewerDrawRows:
 .27:
         cmp dword [dword esp+0BCh], byte 0
         je near MemViewer+0E5h
-        mov dword [dword_D459C], ebp
-        mov dword [dword_D45A0], edi
+        mov dword [MemViewRowY], ebp
+        mov dword [MemViewRowX], edi
         call DebugKbdFlush
         cmp dword [dword esp+0B0h], byte 0
         je short .28
@@ -792,9 +792,9 @@ MemViewerDrawList:
         push edx
         mov ebx, dword [dword_EDAB4]
         push ebx
-        mov ecx, dword [dword_D2F7A]
+        mov ecx, dword [StartupDs]
         push ecx
-        mov esi, dword [dword_D2F78]
+        mov esi, dword [StartupCs]
         push esi
         cmp dword [MemViewShowDetail], byte 0
         je short .1
@@ -842,7 +842,7 @@ MemViewerDrawList:
         mov eax, dword [MemViewBlack]
         push eax
         push byte 0
-        mov edx, dword [dword_D3044]
+        mov edx, dword [ViewScreenWidth]
         push edx
         push byte 0
         push byte 0
@@ -858,7 +858,7 @@ MemViewerDrawList:
         mov ebx, dword [MemViewBlack]
         push ebx
         push byte 1
-        mov ecx, dword [dword_D3044]
+        mov ecx, dword [ViewScreenWidth]
         push ecx
         push byte 8
         push byte 0
@@ -874,7 +874,7 @@ MemViewerDrawList:
         mov esi, dword [MemViewBlack]
         push esi
         push byte 1
-        mov edi, dword [dword_D3044]
+        mov edi, dword [ViewScreenWidth]
         push edi
         push byte 11h
         push byte 0
@@ -890,7 +890,7 @@ MemViewerDrawList:
         mov eax, dword [MemViewBlack]
         push eax
         push byte 2
-        mov edx, dword [dword_D3044]
+        mov edx, dword [ViewScreenWidth]
         push edx
         push byte 1Ah
         push byte 0
@@ -1237,7 +1237,7 @@ MemViewerDrawList:
         shl eax, 3
         add eax, byte 1Ch
         push eax
-        mov ebx, dword [dword_D3044]
+        mov ebx, dword [ViewScreenWidth]
         push ebx
         push edi
         jmp short .27
@@ -1245,7 +1245,7 @@ MemViewerDrawList:
         mov ecx, dword [ViewScreenHeight]
         push ecx
         push dword 0C4h
-        mov edi, dword [dword_D3044]
+        mov edi, dword [ViewScreenWidth]
         push edi
         push byte 0
 .27:
@@ -1347,7 +1347,7 @@ MemViewerDrawTitle:
         test ebp, ebp
         jne short .1
         mov dword [edx], str_MEMMANAGER
-        mov ebp, dword [dword_D2F80]
+        mov ebp, dword [MemDescriptors]
         push ebp
         call _os_handle_0
         add esp, byte 4
@@ -2647,7 +2647,7 @@ ShapeInfo:
         jl near .5
         mov edx, dword [byte esi+02h]
         sar edx, 10h
-        cmp edx, dword [dword_D3044]
+        cmp edx, dword [ViewScreenWidth]
         jg short .5
         cmp word [byte esi+06h], byte 0
         jl short .5
@@ -2659,7 +2659,7 @@ ShapeInfo:
         jl short .5
         mov ebx, dword [byte esi+0Ah]
         sar ebx, 10h
-        cmp ebx, dword [dword_D3044]
+        cmp ebx, dword [ViewScreenWidth]
         jg short .5
         cmp word [byte esi+0Eh], byte 0
         jl short .5
@@ -2669,7 +2669,7 @@ ShapeInfo:
         cmp esi, ebp
         jg short .5
         add edx, ebx
-        cmp edx, dword [dword_D3044]
+        cmp edx, dword [ViewScreenWidth]
         jg short .5
         add eax, esi
         cmp eax, ebp
@@ -3580,7 +3580,7 @@ DebugGetKeyUpper:
         push edx
         call ReturnFalse
         call DebugWaitKey
-        mov dword [dword_D45B0], eax
+        mov dword [DebugLastKey], eax
         pop edx
         pop ecx
         pop ebx

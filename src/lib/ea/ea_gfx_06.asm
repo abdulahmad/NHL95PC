@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_91370 progbits alloc exec nowrite align=1
-extern TextFirstChar, byte_D42C1, TextCharW, TextCharH, TextSpacing, cliprect_y0, cliprect_y1, ScreenWidth
-extern dword_D30A8, KeyedDraw, DrawVideoBase, ScreenRowTable, TextOriginX, dword_D42B4, TextFontTag, TextWidthTable
-extern TextCursorX, TextCursorY, dword_D42D4, TextTop, TextRight, TextBottom, RowCopyFunc, fontcolor
+extern TextFirstChar, TextLastChar, TextCharW, TextCharH, TextSpacing, cliprect_y0, cliprect_y1, ScreenWidth
+extern ScreenHeight, KeyedDraw, DrawVideoBase, ScreenRowTable, TextOriginX, TextOriginY, TextFontTag, TextWidthTable
+extern TextCursorX, TextCursorY, TextLeft, TextTop, TextRight, TextBottom, RowCopyFunc, fontcolor
 extern DrawArtOpaqueHotspot, TextFont, TextSetCursor, PutBlock, bcopy, SetClipWindow, PutPixel, VesaSetBankArg
 extern BlitArt, BlitShapeFast
 global DrawArt, DrawShape, DrawArtHotspot, GrabBlock, DrawShapeAtOwnPos, GrabBlockHotspot, PrintStringAtCursor, PrintString
@@ -204,7 +204,7 @@ PrintStringAtCursor:
         mov eax, dword [TextFont]
         mov dword [esp], eax
         xor eax, eax
-        mov al, byte [byte_D42C1]
+        mov al, byte [TextLastChar]
         movzx esi, byte [TextFirstChar]
         sub eax, esi
         inc eax
@@ -267,7 +267,7 @@ PrintStringAtCursor:
         add edi, dword [byte esp+014h]
 .7:
         mov dword [byte esp+04h], edi
-        mov ecx, dword [dword_D42D4]
+        mov ecx, dword [TextLeft]
         test ecx, ecx
         je short .8
         movzx edi, al
@@ -289,7 +289,7 @@ PrintStringAtCursor:
 .10:
         xor ebp, ebp
 .11:
-        add ebp, dword [dword_D42B4]
+        add ebp, dword [TextOriginY]
         and eax, 0FFh
         lea edi, [nosplit eax*4+00h]
         mov eax, dword [TextBottom]
@@ -319,7 +319,7 @@ PrintStringAtCursor:
         push edx
         call DrawArt
         add esp, byte 0Ch
-        mov ebx, dword [dword_D30A8]
+        mov ebx, dword [ScreenHeight]
         push ebx
         push byte 0
         mov ecx, dword [ScreenWidth]

@@ -34,7 +34,7 @@ void DrawEditCursor(int mode)
 /* DrawEditText (31599, PC only; ends in DrawEditCursor's exits): draw the text of the edit field. With a field
    width (editmaxw), first cut editbuf from the end until it fits (in fixed-pitch mode, mode bit 2, by the width of
    "." per character, else by fputchar); clamp editpos to the text; print it at editx, edity (fixed-pitch: a "."
-   per character); then clear the rest of the field (FillRectClipped, TextFontH - 2 high, colour dword_D42AC).
+   per character); then clear the rest of the field (FillRectClipped, TextFontH - 2 high, colour TextBackColor).
    mode: the edit mode bits. No result.
    The fixed-pitch width test keeps its product in len, and the clamp goes through w, as the EXE's registers
    show. */
@@ -67,5 +67,5 @@ void DrawEditText(int mode)
     if (mode & 2) w = len * cw;
     else w = fputchar(editbuf);
     if (editmaxw - w <= 0) return;
-    CLEARRECT(editx + w, edity, editmaxw - w, TextFontH - 2, dword_D42AC);
+    CLEARRECT(editx + w, edity, editmaxw - w, TextFontH - 2, TextBackColor);
 }

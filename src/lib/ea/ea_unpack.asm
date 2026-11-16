@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_97300 progbits alloc exec nowrite align=1
 extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, dword_EDEE0, dword_EDEE4, UnpackSrcPtr, dword_EDEEC, UnpackPairState
-extern dword_EDEF4, dword_EDEF8, FatalError, off_D3088, off_D308C, strncmp_, bcopy
+extern dword_EDEF4, dword_EDEF8, FatalError, UnpackedSizeHook, UnpackHook, strncmp_, bcopy
 global SkipCopyrightHeader, UnpackReadBE, PackedTypeOf, UnpackedSize, HuffGetBits, HuffGetLength, UnpackHuffman, ExpandBytePair
 global UnpackBytePair, UnpackDelta, UnpackRunLength, UnpackRefPack, unpack, UnpackTo, UnpackQuiet
 SkipCopyrightHeader:
@@ -365,7 +365,7 @@ UnpackedSize:
         jle short .1
         push esi
         push edi
-        call dword [off_D3088]
+        call dword [UnpackedSizeHook]
         add esp, byte 8
         test eax, eax
         jne short .2
@@ -1266,7 +1266,7 @@ unpack:
         push ebp
         push esi
         push edi
-        call dword [off_D308C]
+        call dword [UnpackHook]
         add esp, byte 0Ch
         test eax, eax
         je short .1

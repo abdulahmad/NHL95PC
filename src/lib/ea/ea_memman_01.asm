@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_8C990 progbits alloc exec nowrite align=1
 extern str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_ReservememINVALIDSIZE, str_ReservememOUTOFMEMORY, str_ReservememOUTOFMEMORY2, str_ReservememINVALIDTYPEFLAGS
-extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, MemLockHandle
+extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, memblocklist, RowTableSize, RowTableBuffer, FreeSpaceList, MemLockHandle
 extern FatalError, memlist1, FindFreeSpace, CompactMemListDown, CompactMemListUp, MemTrackLargestFree, MemLargestFree, PushMemDescriptor
 extern getmemblock, StrCopyN, FileNamePart, MemUnlock, MemLock
-global InitMemList, AddMemListRegion, AddHighMemList, FindMemListBlock, SetMemErrorHooks, AllocMemHandleLocked, AllocMemHandle, AllocMemBlock
+global InitMemList, AddMemListRegion, AddHighMemList, FindMemListBlock, SetRowTableBuffer, AllocMemHandleLocked, AllocMemHandle, AllocMemBlock
 global AllocMemBlockUnlocked, AllocMemBlockFlags, AllocMemBlockEx, reservemem, ResizeMemPtr, ResizeMemPtrLocked, ResizeMemPtrUnlocked, ResizeMemHandleLocked
 global ResizeMemHandleUnlocked, ResizeMemBlock, findmemblock
 InitMemList:
@@ -264,11 +264,11 @@ FindMemListBlock:
         pop esi
         ret
         db 08Dh,040h,00h
-SetMemErrorHooks:
+SetRowTableBuffer:
         mov eax, dword [byte esp+04h]
-        mov dword [dword_D2F60], eax
+        mov dword [RowTableBuffer], eax
         mov eax, dword [byte esp+08h]
-        mov dword [dword_D2F5C], eax
+        mov dword [RowTableSize], eax
         ret
         db 090h
 AllocMemHandleLocked:

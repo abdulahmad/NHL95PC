@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D090 progbits alloc exec nowrite align=1
-extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, dword_D2F84, ScreenWidth, dword_D30A8
+extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, SnapFormat, ScreenWidth, ScreenHeight
 extern DrawRowBytes, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, AllocMemHandle, PushMemDescriptorLocked
 extern MemDescPtr, SetPalette, DrawShapeAtOwnPos, WriteFileQuiet, FindShape, SaveDrawState, RestoreDrawState, SetScreenTarget
 global SnapScreenToShape, SelectBitmap
@@ -13,7 +13,7 @@ SnapScreenToShape:
         sub esp, 0BCh
         mov edi, dword [dword esp+0CCh]
         xor ebp, ebp
-        cmp dword [dword_D2F84], byte 7
+        cmp dword [SnapFormat], byte 7
         jne short .1
         mov ebp, 1
 .1:
@@ -23,8 +23,8 @@ SnapScreenToShape:
         add esp, byte 4
         call SetScreenTarget
         mov eax, dword [DrawRowBytes]
-        imul eax, dword [dword_D30A8]
-        cmp dword [dword_D2F84], byte 7
+        imul eax, dword [ScreenHeight]
+        cmp dword [SnapFormat], byte 7
         jne short .2
         add eax, eax
 .2:
@@ -96,7 +96,7 @@ SnapScreenToShape:
         mov dword [eax], ecx
         mov dx, word [ScreenWidth]
         mov word [byte eax+04h], dx
-        mov dx, word [dword_D30A8]
+        mov dx, word [ScreenHeight]
         mov word [byte eax+06h], dx
         mov word [byte eax+08h], 0
         mov word [byte eax+0Ah], 0

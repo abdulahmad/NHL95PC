@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D2A6C progbits alloc noexec write align=1
 extern str_YourTeamHasBeen, str_FromThePlayOffs, str_WishToSeeThe, str_OfThePlayOffs, unk_D2A68
-global msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_D2C5C, cddrivestr, vtoa_dt, poslotx, posloty, cddriveptr
+global msg_POTeamOut_arg, msg_POTeamOut_arg2, KeyReleaseBase, cddrivestr, vtoa_dt, poslotx, posloty, cddriveptr
 global msg_POHumanOut, msg_POTeamOut, msg_POGenFinal, str_HaveBeenEliminatedFrom, str_ThePlayOffs, unk_D2AAB, str_WillContinueToThe, str_Series
 global str_YES2, str_NO5, str_GeneratingTheFinalResults, btn_POHumanOut
 msg_POTeamOut_arg:
@@ -69,7 +69,7 @@ posloty:
         db 097h,00h,00h,00h,097h,00h,00h,00h,097h,00h,00h,00h,097h,00h,00h,00h
         db 031h,01h,00h,00h,031h,01h,00h,00h,031h,01h,00h,00h,031h,01h,00h,00h
         db 0E3h,00h,00h,00h,0E3h,00h,00h,00h,0E3h,00h,00h,00h,0E3h,00h,00h,00h
-byte_D2C5C:
+KeyReleaseBase:
         db 0D1h,00h,00h,00h,0D1h,00h,00h,00h,0D1h,00h,00h,00h
 cddrivestr:
         db 061h,03Ah,00h

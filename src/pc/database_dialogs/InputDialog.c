@@ -80,7 +80,7 @@ int InputDialog(int *lines, int n, char *buf, int len, int fw, int numeric, int 
     s.fill = dlgfillcol;
     e1 = dlgedgecol1;
     i = dlgedgecol2;  /* i, not a new local: the second edge colour takes esi */
-    dword_D42AC = dlgfillcol = 0;
+    TextBackColor = dlgfillcol = 0;
     dlgedgecol1 = i;
     dlgedgecol2 = e1;
     DrawDlgFrame(s.x, s.y, s.x + s.fieldw - 1, s.y + 0x11, 0);

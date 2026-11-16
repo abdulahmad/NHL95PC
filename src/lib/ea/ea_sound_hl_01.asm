@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_8EB5B progbits alloc exec nowrite align=1
 extern __GETDS, _makepath_, _splitpath_, addtimer, str_SCN, str_03sFF03dPAT, str_03sFF03dTIM, str_KMS2
-extern str_CFG2, str_VHDR, byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
-extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType, dword_D41CE, dword_D41EA
+extern str_CFG2, str_VHDR, SndInitDone, SndBigEndian, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
+extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType, SampleChunkSize, PlayPatchHandle
 extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, SndTimerHandle, dword_D4F9A, dword_EDCFC, dword_EDD00
 extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
 extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
 extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, ResizeMemHandleUnlocked, PushMemDescriptorLocked, MemDescPtr, MemDescSize
 extern SndDriverHandle, SndHandleClose, SndDriverCall, SndHandleSetTrack, SndHandlePlayDigi, SeqService, SeqUpdate, SeqSendController
 extern SeqNoteOffSlot, SeqSendPitchBend, SeqNoteOn, SeqQueueCommand, SeqSendProgram, AddExitHandler, bcopy, FillMem
-extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
+extern unk_C3FD5, DefaultSampleInfo, unk_F21FC, word_D4F68, word_D4F88
 global SndInit, SndShutdown, SndClearTables, LoadMusicBank, FreeMusicBank, LoadPatchFile, FreeSoundBlock, LoadTimbreFile
 global LoadTimbreFile, AddTimbreBank, FreeTimbreFile, RemoveTimbreBank, LinkPatchTimbres, GetPatchEntry, GetPatchTimbre, LoadSample
 global LoadSample, FreeSample, FindSongSlot, PlaySong, StartSongTracks, StartSongTracks, FindFreeTrack, FindFreeMidiChannel
@@ -28,12 +28,12 @@ SndInit:
         push SeqService
         call addtimer
         add esp, byte 4
-        cmp byte [byte_D41CC], 0
+        cmp byte [SndInitDone], 0
         jne short .1
         push SndShutdown
         call AddExitHandler
         add esp, byte 4
-        mov byte [byte_D41CC], 1
+        mov byte [SndInitDone], 1
 .1:
         xor eax, eax
         pop edx
@@ -318,7 +318,7 @@ LoadTimbreFile:
         test eax, eax
         je near .9
         call AddTimbreBank
-        cmp byte [byte_D41CD], 0
+        cmp byte [SndBigEndian], 0
         je short .1
         mov edx, 6769642Eh
         jmp short .2
@@ -351,7 +351,7 @@ LoadTimbreFile:
         mov esi, eax
         cmp byte [eax], 6
         jne short .6
-        cmp byte [byte_D41CD], 0
+        cmp byte [SndBigEndian], 0
         je short .4
         mov ebp, dword [byte eax+02h]
         jmp short .5
@@ -493,7 +493,7 @@ LinkPatchTimbres:
 .7:
         cmp dword [nosplit ecx*4+dword_EDE34], byte 0
         je near .12
-        cmp byte [byte_D41CD], 0
+        cmp byte [SndBigEndian], 0
         je short .8
         mov byte [byte esp+04h], 80h
         mov al, byte [ebx]
@@ -616,18 +616,18 @@ LoadSample:
         shl eax, 3
         mov ecx, 6
         lea edi, [dword eax+dword_EDCFC]
-        mov esi, unk_D41D2
+        mov esi, DefaultSampleInfo
         rep movsd
         mov ecx, dword_EDCFC
         add ecx, eax
-        mov edx, dword [dword_D41CE]
+        mov edx, dword [SampleChunkSize]
         inc edx
-        mov dword [dword_D41CE], edx
+        mov dword [SampleChunkSize], edx
         cmp edx, 200h
         ja short .3
-        mov dword [dword_D41CE], 200h
+        mov dword [SampleChunkSize], 200h
 .3:
-        mov eax, dword [dword_D41CE]
+        mov eax, dword [SampleChunkSize]
         mov dword [ecx], eax
         mov ebx, esp
         mov edx, str_KMS2
@@ -1004,13 +1004,13 @@ PlayPatch:
         mov edx, 7Fh
         jmp short .7
 .6:
-        mov eax, dword [dword_D41EA]
+        mov eax, dword [PlayPatchHandle]
         add eax, byte 0Ch
         mov dword [byte esp+04h], eax
-        mov eax, dword [dword_D41EA]
+        mov eax, dword [PlayPatchHandle]
         inc eax
         and eax, byte 3
-        mov dword [dword_D41EA], eax
+        mov dword [PlayPatchHandle], eax
         mov al, byte [byte esp+04h]
         or al, 0C0h
         mov byte [ecx], al
@@ -1909,7 +1909,7 @@ MidiNoteOff:
         add esp, byte 4
         ret
 SetSoundByteOrder:
-        mov byte [byte_D41CD], al
+        mov byte [SndBigEndian], al
         ret
 FindSoundChunk:
         push ebx

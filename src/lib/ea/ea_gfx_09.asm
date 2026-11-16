@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_92890 progbits alloc exec nowrite align=1
-extern TextFirstChar, byte_D42C1, TextCharW, TextCharH, TextSpacing, cliprect_y0, cliprect_y1, ScreenWidth
-extern dword_D30A8, dword_D42AC, TextOriginX, dword_D42B4, TextFontTag, TextWidthTable, TextCursorX, TextCursorY
-extern dword_D42D4, TextTop, TextRight, TextBottom, fontcolor, TextFont, TextSetCursor, PutBlock
+extern TextFirstChar, TextLastChar, TextCharW, TextCharH, TextSpacing, cliprect_y0, cliprect_y1, ScreenWidth
+extern ScreenHeight, TextBackColor, TextOriginX, TextOriginY, TextFontTag, TextWidthTable, TextCursorX, TextCursorY
+extern TextLeft, TextTop, TextRight, TextBottom, fontcolor, TextFont, TextSetCursor, PutBlock
 extern FillRectClipped, SetClipWindow, PutPixel
 global TextPrint, TextPrintAt, TextPutCharAt
 TextPrint:
@@ -15,7 +15,7 @@ TextPrint:
         mov eax, dword [TextFont]
         mov dword [byte esp+02Ch], eax
         xor eax, eax
-        mov al, byte [byte_D42C1]
+        mov al, byte [TextLastChar]
         movzx esi, byte [TextFirstChar]
         sub eax, esi
         inc eax
@@ -27,7 +27,7 @@ TextPrint:
         mov dword [byte esp+010h], eax
         mov eax, dword [fontcolor]
         mov dword [byte esp+03Ch], eax
-        mov eax, dword [dword_D42AC]
+        mov eax, dword [TextBackColor]
         mov dword [byte esp+0Ch], eax
         cmp dword [TextFontTag], 464E544Dh
         sete al
@@ -80,7 +80,7 @@ TextPrint:
         add edi, dword [byte esp+038h]
 .7:
         mov dword [byte esp+08h], edi
-        mov ecx, dword [dword_D42D4]
+        mov ecx, dword [TextLeft]
         test ecx, ecx
         je short .8
         movzx edi, al
@@ -102,7 +102,7 @@ TextPrint:
 .10:
         xor ebp, ebp
 .11:
-        add ebp, dword [dword_D42B4]
+        add ebp, dword [TextOriginY]
         and eax, 0FFh
         lea edi, [nosplit eax*4+00h]
         mov eax, dword [TextBottom]
@@ -131,7 +131,7 @@ TextPrint:
         push ecx
         call PutBlock
         add esp, byte 0Ch
-        mov esi, dword [dword_D30A8]
+        mov esi, dword [ScreenHeight]
         push esi
         push byte 0
         mov edi, dword [ScreenWidth]

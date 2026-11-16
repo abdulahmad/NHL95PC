@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_8E7A0 progbits alloc exec nowrite align=1
-extern str_SUBWINDOW, str_SubwindowdefadrOUTOFROW, TextFirstChar, byte_D42C1, TextCharW, TextCharH, TextSpacing, TextFontH
-extern TextFontAscent, dword_D42AC, TextOriginX, dword_D42B4, TextShadowOn, TextFontTag, TextWidthTable, TextCursorX
-extern TextCursorY, dword_D42D4, TextTop, TextRight, TextBottom, FatalError, fontcolor, TextFont
+extern str_SUBWINDOW, str_SubwindowdefadrOUTOFROW, TextFirstChar, TextLastChar, TextCharW, TextCharH, TextSpacing, TextFontH
+extern TextFontAscent, TextBackColor, TextOriginX, TextOriginY, TextShadowOn, TextFontTag, TextWidthTable, TextCursorX
+extern TextCursorY, TextLeft, TextTop, TextRight, TextBottom, FatalError, fontcolor, TextFont
 extern AllocMemBlock, AllocMemBlockEx, FindCachedFile, FillRowTable, LoadFileCached, DosOpenFile, DosCloseFile, DosReadFile
 extern ZeroMem
 global subwindowdefadr, LoadFileCachedQuiet, LoadBank, LoadFileCachedFlag, str_LocateshapeSHAPENOTFOUND, OpenArtArchiveErr, OpenArtArchive, OpenArtArchiveFlag
@@ -229,14 +229,14 @@ TextSetColors:
         mov eax, dword [byte esp+04h]
         mov dword [fontcolor], eax
         mov eax, dword [byte esp+08h]
-        mov dword [dword_D42AC], eax
+        mov dword [TextBackColor], eax
         ret
         db 090h
 TextSetCursor:
         mov eax, dword [byte esp+04h]
         mov dword [TextOriginX], eax
         mov eax, dword [byte esp+08h]
-        mov dword [dword_D42B4], eax
+        mov dword [TextOriginY], eax
         ret
         db 090h
 TextSaveState:
@@ -270,7 +270,7 @@ TextSetFont:
         mov bl, byte [byte edx+04h]
         mov byte [TextFirstChar], bl
         mov bl, byte [byte edx+05h]
-        mov byte [byte_D42C1], bl
+        mov byte [TextLastChar], bl
         mov bl, byte [byte edx+06h]
         mov byte [TextCharW], bl
         mov bl, byte [byte edx+07h]
@@ -315,7 +315,7 @@ TextSetFont:
         je short .5
         add edx, eax
 .5:
-        mov dword [dword_D42D4], edx
+        mov dword [TextLeft], edx
         mov edx, dword [byte eax+018h]
         sar edx, 10h
         test edx, edx

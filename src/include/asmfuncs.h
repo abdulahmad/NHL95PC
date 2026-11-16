@@ -704,7 +704,7 @@ extern void InitMemList(); /* 8C990 */
 extern void AddMemListRegion(); /* 8CA6C */
 extern void AddHighMemList(); /* 8CAF4 */
 extern void FindMemListBlock(); /* 8CBA4 */
-extern void SetMemErrorHooks(); /* 8CC5C */
+extern void SetRowTableBuffer(); /* 8CC5C */
 extern void AllocMemHandle(); /* 8CC8C */
 extern void AllocMemBlockUnlocked(); /* 8CCC4 */
 extern void AllocMemBlockFlags(); /* 8CCE0 */
