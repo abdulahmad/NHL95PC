@@ -1125,7 +1125,7 @@
 ;  9D4A7  __sys_fini_387_emulator                  lib/watcom/watcom_clib_36.asm                1
 ;  9D521  EmuRestoreFpuVector                      lib/ea/ea_snap_03.asm                        1
 ;  9D55C  EmuRestoreRealVector                     lib/ea/ea_snap_03.asm                        1
-;  9D57D  sub_9D57D                                lib/ea/ea_snap_03.asm                        1
+;  9D57D  __save_8087_                             lib/ea/ea_snap_03.asm                        1
 ;  9D582  loc_9D582                                lib/ea/ea_snap_03.asm                        1
 ;  9D5C1  __chk8087_                               lib/watcom/watcom_clib_37.asm                1
 ;  9D601  __delay_init_                            lib/watcom/watcom_clib_37.asm                1
@@ -1370,7 +1370,7 @@
 ;  B27F4  __Rnd2Int                                lib/watcom/watcom_clib_53.asm                1
 ;  B285F  __Bin2String                             lib/watcom/watcom_clib_53.asm                1
 ;  B28C9  BigIntCallHook                           lib/input/input_keyboard_01.asm              1
-;  B297E  sub_B297E                                lib/watcom/watcom_clib_54.asm                1
+;  B297E  BigIntNullHook                           lib/watcom/watcom_clib_54.asm                1
 ;  B2980  frexp_                                   lib/watcom/watcom_clib_54.asm                1
 ;  B29F0  RemoveKeyboardHandler                    lib/input/input_keyboard_02.asm              3
 ;  B2CBE  KeyDown                                  lib/input/input_keyboard_02.asm              6
@@ -1412,7 +1412,7 @@
 ;  B3B44  CreateHandle                             lib/ea/ea_fileio.asm                         1
 ;  B3B5A  openhandle                               lib/ea/ea_fileio.asm                         2
 ;  B3C60  DosCloseFile                             lib/ea/ea_fileio.asm                         7
-;  B3C70  sub_B3C70                                lib/ea/ea_fileio.asm                         1
+;  B3C70  DosWriteFile                             lib/ea/ea_fileio.asm                         1
 ;  B3C74  DosReadFile                              lib/ea/ea_fileio.asm                         6
 ;  B3CB3  DosSeekFile                              lib/ea/ea_fileio.asm                         3
 ;  B3CC8  FindFirstFile                            lib/ea/ea_fileio.asm                         3

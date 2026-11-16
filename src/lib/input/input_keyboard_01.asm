@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_B28C9 progbits alloc exec nowrite align=1
-extern sub_B297E
+extern BigIntNullHook
 global BigIntCallHook
 BigIntCallHook:
-        call sub_B297E
+        call BigIntNullHook
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h
         db 00h,00h,00h,00h,0Ah,00h,00h,00h,00h,00h,00h,00h,064h,00h,00h,00h
         db 00h,00h,00h,00h,0E8h,03h,00h,00h,00h,00h,00h,00h,010h,027h,00h,00h

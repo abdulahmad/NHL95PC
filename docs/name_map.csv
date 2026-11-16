@@ -1471,7 +1471,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009D4A7,__sys_fini_387_emulator,__sys_fini_387_emulator,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 122 bytes),watcom_clib_36,flirt
 0009D521,sub_9D521,EmuRestoreFpuVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_snap_03,match96+97
 0009D55C,sub_9D55C,EmuRestoreRealVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),ea_snap_03,match96+97
+0009D57D,sub_9D57D,__save_8087_,PC-new,,,,high,same library code as the 96 PC __save_8087_ at the same offset from the shared routines,ea_snap_03,match96
 0009D586,__init_8087_,__init_8087_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 49 bytes),watcom_clib_37,flirt
+0009D5B7,sub_9D5B7,_fpreset_,PC-new,,,,high,same library code as the 96 PC _fpreset_ at the same offset from the shared routines,watcom_clib_37,match96
 0009D5C1,__chk8087_,__chk8087_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 64 bytes),watcom_clib_37,flirt
 0009D601,__delay_init_,__delay_init_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 50 bytes),watcom_clib_37,flirt
 0009D633,__delay_,__delay_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 56 bytes),watcom_clib_37,flirt
@@ -1542,6 +1544,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A2D16,tell_,tell_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 17 bytes),watcom_clib_41,flirt
 000A2D27,__InitFiles_,__InitFiles_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 120 bytes),watcom_clib_41,flirt
 000A2D9F,__full_io_exit_,__full_io_exit_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 12 bytes),watcom_clib_41,flirt
+000A2DAB,sub_A2DAB,fcloseall_,PC-new,,,,high,same library code as the 96 PC fcloseall_ at the same offset from the shared routines,watcom_clib_41,match96
 000A2DB0,docloseall_,docloseall_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 82 bytes),watcom_clib_41,flirt
 000A2E02,__qwrite_,__qwrite_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 124 bytes),watcom_clib_41,flirt
 000A2E85,__flushall_,__flushall_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 47 bytes),watcom_clib_41,flirt
@@ -1553,8 +1556,16 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A3264,__cnvs2d_,__cnvs2d_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_42,flirt
 000A3680,sub_A3680,EmuTrapExit,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.811),watcom_emu387,match96+97
 000A37B4,sub_A37B4,RoundToSingle,PC-new,,,,high,"same library routine as the 96 PC RoundToSingle (similarity 1.0, dp)",watcom_emu387,match96
+000A37F0,sub_A37F0,RoundToDouble,PC-new,,,,high,same library code as the 96 PC RoundToDouble at the same offset from the shared routines,watcom_emu387,match96
 000A3890,sub_A3890,RaiseFpuError,PC-new,,,,high,"same library routine as the 96 PC RaiseFpuError (similarity 1.0, dp)",watcom_emu387,match96
+000A38DE,sub_A38DE,EaEax,PC-new,,,,high,same library code as the 96 PC EaEax at the same offset from the shared routines,watcom_emu387,match96
+000A38E4,sub_A38E4,EaEcx,PC-new,,,,high,same library code as the 96 PC EaEcx at the same offset from the shared routines,watcom_emu387,match96
+000A38EA,sub_A38EA,EaEdx,PC-new,,,,high,same library code as the 96 PC EaEdx at the same offset from the shared routines,watcom_emu387,match96
+000A38F0,sub_A38F0,EaEbx,PC-new,,,,high,same library code as the 96 PC EaEbx at the same offset from the shared routines,watcom_emu387,match96
 000A38F6,sub_A38F6,EaEsp,PC-new,,,,high,"same library routine as the 96 PC EaEsp (similarity 1.0, dp)",watcom_emu387,match96
+000A38FE,sub_A38FE,EaDisp32,PC-new,,,,high,same library code as the 96 PC EaDisp32 at the same offset from the shared routines,watcom_emu387,match96
+000A3904,sub_A3904,EaEsi,PC-new,,,,high,same library code as the 96 PC EaEsi at the same offset from the shared routines,watcom_emu387,match96
+000A390A,sub_A390A,EaEdi,PC-new,,,,high,same library code as the 96 PC EaEdi at the same offset from the shared routines,watcom_emu387,match96
 000A3910,sub_A3910,EaEaxDisp8,PC-new,,,,high,"same library routine as the 96 PC EaEaxDisp8 (similarity 1.0, dp)",watcom_emu387,match96
 000A3918,sub_A3918,EaEcxDisp8,PC-new,,,,high,"same library routine as the 96 PC EaEcxDisp8 (similarity 1.0, dp)",watcom_emu387,match96
 000A3920,sub_A3920,EaEdxDisp8,PC-new,,,,high,"same library routine as the 96 PC EaEdxDisp8 (similarity 1.0, dp)",watcom_emu387,match96
@@ -1572,6 +1583,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A398E,sub_A398E,EaEsiDisp32,PC-new,,,,high,"same library routine as the 96 PC EaEsiDisp32 (similarity 1.0, dp)",watcom_emu387,match96
 000A3997,sub_A3997,EaEdiDisp32,PC-new,,,,high,"same library routine as the 96 PC EaEdiDisp32 (similarity 1.0, dp)",watcom_emu387,match96
 000A39A0,sub_A39A0,EaSib,PC-new,,,,high,"same library routine as the 96 PC EaSib (similarity 1.0, dp)",watcom_emu387,match96
+000A39D8,sub_A39D8,EmuUnsupported,PC-new,,,,high,same library code as the 96 PC EmuUnsupported at the same offset from the shared routines,watcom_emu387,match96
 000A39DD,sub_A39DD,EmuFaddM32,PC-new,,,,high,"same library routine as the 96 PC EmuFaddM32 (similarity 1.0, dp)",watcom_emu387,match96
 000A39FC,sub_A39FC,EmuFmulM32,PC-new,,,,high,"same library routine as the 96 PC EmuFmulM32 (similarity 1.0, dp)",watcom_emu387,match96
 000A3A1B,sub_A3A1B,EmuFcomM32,PC-new,,,,high,"same library routine as the 96 PC EmuFcomM32 (similarity 1.0, dp)",watcom_emu387,match96
@@ -1586,6 +1598,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A3B2B,sub_A3B2B,EmuFldenv,PC-new,,,,high,"same library routine as the 96 PC EmuFldenv (similarity 1.0, dp)",watcom_emu387,match96
 000A3B49,sub_A3B49,EmuFldcw,PC-new,,,,high,"same library routine as the 96 PC EmuFldcw (similarity 1.0, dp)",watcom_emu387,match96
 000A3B89,sub_A3B89,EmuFstenv,PC-new,,,,high,"same library routine as the 96 PC EmuFstenv (similarity 1.0, dp)",watcom_emu387,match96
+000A3B9D,sub_A3B9D,EmuFstcw,PC-new,,,,high,same library code as the 96 PC EmuFstcw at the same offset from the shared routines,watcom_emu387,match96
 000A3BAB,sub_A3BAB,EmuFiaddM32,PC-new,,,,high,"same library routine as the 96 PC EmuFiaddM32 (similarity 1.0, dp)",watcom_emu387,match96
 000A3BCA,sub_A3BCA,EmuFimulM32,PC-new,,,,high,"same library routine as the 96 PC EmuFimulM32 (similarity 1.0, dp)",watcom_emu387,match96
 000A3BE9,sub_A3BE9,EmuFicomM32,PC-new,,,,high,"same library routine as the 96 PC EmuFicomM32 (similarity 1.0, dp)",watcom_emu387,match96
@@ -1612,6 +1625,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A3F01,sub_A3F01,EmuFstpM64,PC-new,,,,high,"same library routine as the 96 PC EmuFstpM64 (similarity 1.0, dp)",watcom_emu387,match96
 000A3F16,sub_A3F16,EmuFrstor,PC-new,,,,high,"same library routine as the 96 PC EmuFrstor (similarity 1.0, dp)",watcom_emu387,match96
 000A3F5D,sub_A3F5D,EmuFsave,PC-new,,,,high,"same library routine as the 96 PC EmuFsave (similarity 1.0, dp)",watcom_emu387,match96
+000A3F88,sub_A3F88,EmuFstswM16,PC-new,,,,high,same library code as the 96 PC EmuFstswM16 at the same offset from the shared routines,watcom_emu387,match96
 000A3F96,sub_A3F96,EmuFiaddM16,PC-new,,,,high,"same library routine as the 96 PC EmuFiaddM16 (similarity 1.0, dp)",watcom_emu387,match96
 000A3FB7,sub_A3FB7,EmuFimulM16,PC-new,,,,high,"same library routine as the 96 PC EmuFimulM16 (similarity 1.0, dp)",watcom_emu387,match96
 000A3FD8,sub_A3FD8,EmuFicomM16,PC-new,,,,high,"same library routine as the 96 PC EmuFicomM16 (similarity 1.0, dp)",watcom_emu387,match96
@@ -1623,8 +1637,12 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A4098,sub_A4098,EmuFildM16,PC-new,,,,high,"same library routine as the 96 PC EmuFildM16 (similarity 1.0, dp)",watcom_emu387,match96
 000A40D4,sub_A40D4,EmuFistM16,PC-new,,,,high,"same library routine as the 96 PC EmuFistM16 (similarity 1.0, dp)",watcom_emu387,match96
 000A411C,sub_A411C,EmuFistpM16,PC-new,,,,high,"same library routine as the 96 PC EmuFistpM16 (similarity 1.0, dp)",watcom_emu387,match96
+000A414C,sub_A414C,EmuFbld,PC-new,,,,high,same library code as the 96 PC EmuFbld at the same offset from the shared routines,watcom_emu387,match96
 000A4151,sub_A4151,EmuFildM64,PC-new,,,,high,"same library routine as the 96 PC EmuFildM64 (similarity 1.0, dp)",watcom_emu387,match96
+000A418B,sub_A418B,EmuFbstp,PC-new,,,,high,same library code as the 96 PC EmuFbstp at the same offset from the shared routines,watcom_emu387,match96
 000A4190,sub_A4190,EmuFistpM64,PC-new,,,,high,"same library routine as the 96 PC EmuFistpM64 (similarity 1.0, dp)",watcom_emu387,match96
+000A41B4,sub_A41B4,EmuReservedOp,PC-new,,,,high,same library code as the 96 PC EmuReservedOp at the same offset from the shared routines,watcom_emu387,match96
+000A41B9,sub_A41B9,EmuDispatchD9Reg,PC-new,,,,high,same library code as the 96 PC EmuDispatchD9Reg at the same offset from the shared routines,watcom_emu387,match96
 000A41E6,sub_A41E6,EmuFaddSt,PC-new,,,,high,"same library routine as the 96 PC EmuFaddSt (similarity 1.0, dp)",watcom_emu387,match96
 000A41FB,sub_A41FB,EmuFmulSt,PC-new,,,,high,"same library routine as the 96 PC EmuFmulSt (similarity 1.0, dp)",watcom_emu387,match96
 000A4210,sub_A4210,EmuFcomSt,PC-new,,,,high,"same library routine as the 96 PC EmuFcomSt (similarity 1.0, dp)",watcom_emu387,match96
@@ -1635,22 +1653,31 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A4273,sub_A4273,EmuFdivrSt,PC-new,,,,high,"same library routine as the 96 PC EmuFdivrSt (similarity 1.0, dp)",watcom_emu387,match96
 000A4288,sub_A4288,EmuFldSt,PC-new,,,,high,"same library routine as the 96 PC EmuFldSt (similarity 1.0, dp)",watcom_emu387,match96
 000A42D0,sub_A42D0,EmuFxch,PC-new,,,,high,"same library routine as the 96 PC EmuFxch (similarity 1.0, dp)",watcom_emu387,match96
+000A42F8,sub_A42F8,EmuFtstFxam,PC-new,,,,high,same library code as the 96 PC EmuFtstFxam at the same offset from the shared routines,watcom_emu387,match96
+000A4379,sub_A4379,EmuSignOps,PC-new,,,,high,same library code as the 96 PC EmuSignOps at the same offset from the shared routines,watcom_emu387,match96
+000A4594,sub_A4594,EmuLogOps,PC-new,,,,high,same library code as the 96 PC EmuLogOps at the same offset from the shared routines,watcom_emu387,match96
+000A469E,sub_A469E,EmuRemOps,PC-new,,,,high,same library code as the 96 PC EmuRemOps at the same offset from the shared routines,watcom_emu387,match96
+000A47B6,sub_A47B6,EmuFucompp,PC-new,,,,high,same library code as the 96 PC EmuFucompp at the same offset from the shared routines,watcom_emu387,match96
+000A483F,sub_A483F,EmuDispatchDBReg,PC-new,,,,high,same library code as the 96 PC EmuDispatchDBReg at the same offset from the shared routines,watcom_emu387,match96
 000A4899,sub_A4899,EmuFaddToSt,PC-new,,,,high,"same library routine as the 96 PC EmuFaddToSt (similarity 1.0, dp)",watcom_emu387,match96
 000A48AE,sub_A48AE,EmuFmulToSt,PC-new,,,,high,"same library routine as the 96 PC EmuFmulToSt (similarity 1.0, dp)",watcom_emu387,match96
 000A48C3,sub_A48C3,EmuFsubrToSt,PC-new,,,,high,"same library routine as the 96 PC EmuFsubrToSt (similarity 1.0, dp)",watcom_emu387,match96
 000A48D8,sub_A48D8,EmuFsubToSt,PC-new,,,,high,"same library routine as the 96 PC EmuFsubToSt (similarity 1.0, dp)",watcom_emu387,match96
 000A48ED,sub_A48ED,EmuFdivrToSt,PC-new,,,,high,"same library routine as the 96 PC EmuFdivrToSt (similarity 1.0, dp)",watcom_emu387,match96
 000A4902,sub_A4902,EmuFdivToSt,PC-new,,,,high,"same library routine as the 96 PC EmuFdivToSt (similarity 1.0, dp)",watcom_emu387,match96
+000A4917,sub_A4917,EmuFfree,PC-new,,,,high,same library code as the 96 PC EmuFfree at the same offset from the shared routines,watcom_emu387,match96
 000A4936,sub_A4936,EmuFstSt,PC-new,,,,high,"same library routine as the 96 PC EmuFstSt (similarity 1.0, dp)",watcom_emu387,match96
 000A4962,sub_A4962,EmuFucom,PC-new,,,,high,"same library routine as the 96 PC EmuFucom (similarity 1.0, dp)",watcom_emu387,match96
 000A4974,sub_A4974,EmuFucomp,PC-new,,,,high,"same library routine as the 96 PC EmuFucomp (similarity 1.0, dp)",watcom_emu387,match96
 000A4986,sub_A4986,EmuFstpSt,PC-new,,,,high,"same library routine as the 96 PC EmuFstpSt (similarity 1.0, dp)",watcom_emu387,match96
 000A49B2,sub_A49B2,EmuFaddp,PC-new,,,,medium,"same library routine as the 96 PC EmuFaddp (similarity 0.923, dp)",watcom_emu387,match96
 000A49FD,sub_A49FD,EmuFmulp,PC-new,,,,medium,"same library routine as the 96 PC EmuFmulp (similarity 0.923, dp)",watcom_emu387,match96
+000A4A48,sub_A4A48,EmuFcompp,PC-new,,,,high,same library code as the 96 PC EmuFcompp at the same offset from the shared routines,watcom_emu387,match96
 000A4AD1,sub_A4AD1,EmuFsubrp,PC-new,,,,medium,"same library routine as the 96 PC EmuFsubrp (similarity 0.923, dp)",watcom_emu387,match96
 000A4B1C,sub_A4B1C,EmuFsubp,PC-new,,,,medium,"same library routine as the 96 PC EmuFsubp (similarity 0.923, dp)",watcom_emu387,match96
 000A4B67,sub_A4B67,EmuFdivrp,PC-new,,,,medium,"same library routine as the 96 PC EmuFdivrp (similarity 0.923, dp)",watcom_emu387,match96
 000A4BB2,sub_A4BB2,EmuFdivp,PC-new,,,,medium,"same library routine as the 96 PC EmuFdivp (similarity 0.923, dp)",watcom_emu387,match96
+000A4BFD,sub_A4BFD,EmuDispatchDFReg,PC-new,,,,high,same library code as the 96 PC EmuDispatchDFReg at the same offset from the shared routines,watcom_emu387,match96
 000A4D96,sub_A4D96,EmuSub,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A4DA4,sub_A4DA4,EmuAdd,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),watcom_emu387,match96+97
 000A4DCE,sub_A4DCE,AddExtRaw,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
@@ -1680,6 +1707,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A5EFC,sub_A5EFC,SinCosCore,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
 000A60F3,sub_A60F3,EmuSin,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A60FD,sub_A60FD,EmuCos,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A610A,sub_A610A,EmuTan,PC-new,,,,high,same library code as the 96 PC EmuTan at the same offset from the shared routines,watcom_emu387,match96
 000A6140,sub_A6140,EmuAtan,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A6314,sub_A6314,EmuExp2,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A6400,sub_A6400,PolyEval,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
@@ -1727,6 +1755,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B0627,strtod_,strtod_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 425 bytes),watcom_clib_48,flirt
 000B07D0,sub_B07D0,GusSetupDmaChannel,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_05,match96+97
 000B085C,sub_B085C,GusProgramDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
+000B097C,sub_B097C,GusMaskDma,PC-new,,,,high,same library code as the 96 PC GusMaskDma at the same offset from the shared routines,snd_gus_sdk_05,match96
 000B0AA4,sub_B0AA4,GusSetVect,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_05,match96+97
 000B0AB0,sub_B0AB0,GusGetVect,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_05,match96+97
 000B0ABC,sub_B0ABC,GusHookIrq,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.981),snd_gus_sdk_05,match96+97
@@ -1777,7 +1806,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B27F4,__Rnd2Int,__Rnd2Int,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 107 bytes),watcom_clib_53,flirt
 000B285F,__Bin2String,__Bin2String,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 106 bytes),watcom_clib_53,flirt
 000B28C9,sub_B28C9,BigIntCallHook,PC-new,,,,high,"same library routine as the 97 PC BigIntCallHook (similarity 1.0, dp)",input_keyboard_01,match97
-000B297E,sub_B297E,sub_B297E,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 2 bytes),watcom_clib_54,flirt
+000B297E,sub_B297E,BigIntNullHook,PC-new,watcom_clib,,,high,same library code as the 96 PC BigIntNullHook at the same offset from the shared routines,watcom_clib_54,match96
 000B2980,frexp_,frexp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 111 bytes),watcom_clib_54,flirt
 000B29F0,sub_B29F0,RemoveKeyboardHandler,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.597),input_keyboard_02,match96
 000B2C01,sub_B2C01,Int16Handler,PC-new,,,,high,"same library routine as the 96 PC Int16Handler (similarity 0.978, dp)",input_keyboard_02,match96
@@ -1812,6 +1841,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B39B7,sub_B39B7,WaitTicks,PC-new,,,,high,cdecl: busy-waits until tickcount reaches tickcount-at-entry + the stack argument; no caller in the EXE,input_joystick_misc,manual-trace
 000B39D0,sub_B39D0,KbdGetKey,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_joystick_misc,match96+97
 000B39ED,sub_B39ED,PollKey,PC-new,,,,medium,jmp through the keyboard read vector off_D42A0 (returns 0 when no key); DebugMonitor's non-stepping key read,input_joystick_misc,manual-trace
+000B39F3,sub_B39F3,KbdPeekKey,PC-new,,,,high,same library code as the 96 PC KbdPeekKey at the same offset from the shared routines,input_joystick_misc,match96
 000B3A18,sub_B3A18,WaitKey,PC-new,,,,medium,loops calling the keyboard read vector off_D42A0 until it returns non-zero; DebugMonitor uses it in single-step mode,input_joystick_misc,manual-trace
 000B3A24,sub_B3A24,KbdFlush,PC-new,,,,medium,same routine as the matched 97 PC routine (loose 1.0),input_joystick_misc,match97
 000B3A88,sub_B3A88,SaveDrawState,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),input_joystick_misc,match96
@@ -1823,6 +1853,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B3B44,sub_B3B44,CreateHandle,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_fileio,match96
 000B3B5A,sub_B3B5A,openhandle,PC-new,,,,high,"prints its own name: ""openhandle - %s FILE ERROR""",ea_fileio,manual-trace
 000B3C60,sub_B3C60,DosCloseFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_fileio,match96+97
+000B3C70,sub_B3C70,DosWriteFile,PC-new,,,,high,same library code as the 96 PC DosWriteFile at the same offset from the shared routines,ea_fileio,match96
 000B3C74,sub_B3C74,DosReadFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_fileio,match96+97
 000B3CB3,sub_B3CB3,DosSeekFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_fileio,match96+97
 000B3CC8,sub_B3CC8,FindFirstFile,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.885),ea_fileio,match96

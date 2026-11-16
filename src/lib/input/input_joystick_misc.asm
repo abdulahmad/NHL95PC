@@ -28,7 +28,7 @@ global loc_B3750, loc_B3767, loc_B3781, loc_B3797, loc_B37C2, loc_B37CB, loc_B37
 global loc_B380D, loc_B3824, loc_B3838, loc_B3845, sub_B384E, sub_B387E, sub_B38AE, loc_B38BD
 global loc_B38DC, loc_B38FB, loc_B391A, ClearScreen, GetTicks, TicksSince, TicksSinceLastCall, ResetTicks
 global SetTickDeadline, WaitTickDeadline, TickDeadlinePassed, WaitTicks, loc_B39C3, KbdGetKey, loc_B39DE, loc_B39EC
-global PollKey, sub_B39F3, loc_B3A01, loc_B3A07, WaitKey, KbdFlush, sub_B3A2F, loc_B3A47
+global PollKey, KbdPeekKey, loc_B3A01, loc_B3A07, WaitKey, KbdFlush, sub_B3A2F, loc_B3A47
 global loc_B3A59, loc_B3A70, SaveDrawState, RestoreDrawState, bcopy, loc_B3ADF
 sub_B300C:
         LD xor, eax, eax
@@ -833,7 +833,7 @@ loc_B39EC:
         ret
 PollKey:
         jmp dword [KbdIdleHook]
-sub_B39F3:
+KbdPeekKey:
         mov ah, 1
         call dword [BiosKeyFunc]
         jne short loc_B3A01

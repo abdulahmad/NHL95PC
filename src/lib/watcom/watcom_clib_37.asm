@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_9D586 progbits alloc exec nowrite align=1
 extern __init_80x87, str_UnknownError, __8087, FpuType, delaycount, loc_9D582, off_D51E4, off_D6600
-extern off_D6604, sub_9D57D, unk_F24D0, unk_F24D4, __no87, DefaultControlWord
-global __init_8087_, loc_9D5A7, sub_9D5B7, __chk8087_, loc_9D5EA, loc_9D5FF, __delay_init_, loc_9D60F
+extern off_D6604, __save_8087_, unk_F24D0, unk_F24D4, __no87, DefaultControlWord
+global __init_8087_, loc_9D5A7, _fpreset_, __chk8087_, loc_9D5EA, loc_9D5FF, __delay_init_, loc_9D60F
 global loc_9D61F, __delay_, loc_9D659, loc_9D65D, loc_9D666, ErrnoPtr, __get_doserrno_ptr_, strerror_
 global loc_9D680, loc_9D686
 __init_8087_:
@@ -12,7 +12,7 @@ __init_8087_:
         push edx
         cmp byte [FpuType], 0
         je short loc_9D5A7
-        mov edx, sub_9D57D
+        mov edx, __save_8087_
         mov ebx, loc_9D582
         mov dword [off_D6600], edx
         mov dword [off_D6604], ebx
@@ -23,7 +23,7 @@ loc_9D5A7:
         pop edx
         pop ebx
         ret
-sub_9D5B7:
+_fpreset_:
         cmp byte [FpuType], 0
         jne short __init_8087_
         ret

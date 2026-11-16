@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_B297E progbits alloc exec nowrite align=1
-global sub_B297E, frexp_, loc_B29A7, loc_B29DC
-sub_B297E:
+global BigIntNullHook, frexp_, loc_B29A7, loc_B29DC
+BigIntNullHook:
         pop edi
         ret
 frexp_:

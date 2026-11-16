@@ -8,7 +8,7 @@ extern inp_, lseek_, outp_, outpw_, GusDelay, GusSetDmaCallbacks, GusServiceIrq,
 extern GusConvertAddr16, GusDmaChannels, word_D86DA, word_D86E0, GusIrqStatusPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort
 extern GusIrqPending, word_D8ACC, word_F799C, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA
 extern word_F79C9
-global GusSetupDmaChannel, loc_B0815, loc_B083B, GusProgramDma, loc_B08B5, loc_B08D7, sub_B097C, sub_B09A4
+global GusSetupDmaChannel, loc_B0815, loc_B083B, GusProgramDma, loc_B08B5, loc_B08D7, GusMaskDma, sub_B09A4
 global loc_B0A09, sub_B0A14, sub_B0A40, loc_B0A58, sub_B0A5C, loc_B0A71, sub_B0A78, loc_B0A9A
 global loc_B0A9D, GusSetVect, GusGetVect, GusHookIrq, loc_B0B2F, loc_B0B4B, GusUnhookIrq, loc_B0B98
 global loc_B0BB4, loc_B0BB9, GusSendEoi, loc_B0BFD, GusInitPlayDma, loc_B0C23, loc_B0C2C, GusInitRecordDma
@@ -172,7 +172,7 @@ loc_B08D7:
         pop esi
         pop ebp
         ret 4
-sub_B097C:
+GusMaskDma:
         push ebp
         mov ebp, esp
         push edx
@@ -847,9 +847,9 @@ sub_B103C:
         xor ebx, ebx
         mov dword [GusDmaBusy], ebx
         xor eax, eax
-        call sub_B097C
+        call GusMaskDma
         mov eax, 1
-        call sub_B097C
+        call GusMaskDma
         and byte [byte_F79C8], 0DEh
         xor eax, eax
         mov edx, 41h
