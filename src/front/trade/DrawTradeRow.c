@@ -10,7 +10,7 @@ void DrawTradeRow(int side)
 
     row = tradecursor[side] * 0x16;
     base = side * 0x268;
-    sub_93170(side * 0x1C0 + 5, byte_D42C3 * tradecursor[side] + 0x1D, (char *)str_C2dS,
+    PrintBoxedText(side * 0x1C0 + 5, byte_D42C3 * tradecursor[side] + 0x1D, (char *)str_C2dS,
               traderoster[base + row], tradejersey[base + row],
               traderoster + base + row + 3);
 }

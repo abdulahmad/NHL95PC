@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* HighlightGridCell: for the cell of the 4 x 7 team grid tab holding team (x 62 20 + 85 per
- column, y 86 + 92 per row): on, draw two nested frames in colour 80h (sub_92F50: the 74 x 61 box and one a pixel
+ column, y 86 + 92 per row): on, draw two nested frames in colour 80h (XorRectOutline: the 74 x 61 box and one a pixel
  bigger round it); off, erase them (sub_93000 with 0). */
 void HighlightGridCell(int team, unsigned char *tab, int on)
 {
@@ -30,8 +30,8 @@ void HighlightGridCell(int team, unsigned char *tab, int on)
                 x3 = x + 0x4B;
                 y3 = r * 92 + 0x94;
                 if (on) {
-                    sub_92F50(x, y, x2, y2, 0x80);
-                    sub_92F50(x0, y0, x3, y3, 0x80);
+                    XorRectOutline(x, y, x2, y2, 0x80);
+                    XorRectOutline(x0, y0, x3, y3, 0x80);
                 } else {
                     sub_93000(x, y, x2, y2, 0);
                     sub_93000(x0, y0, x3, y3, 0);

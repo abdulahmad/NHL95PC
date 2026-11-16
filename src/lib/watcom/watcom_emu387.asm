@@ -7,28 +7,28 @@ global unk_A3274, unk_A3278, unk_A327C, unk_A327E, unk_A3280, unk_A3282, unk_A32
 global unk_A32D4, unk_A32D6, unk_A331E, unk_A3322, unk_A332C, unk_A338C, jpt_A33EC, jpt_A34EC
 global sub_A35EC, sub_A3610, sub_A365C, EmuTrapExit, loc_A369A, loc_A3706, loc_A370C, loc_A3732
 global loc_A3735, loc_A373E, loc_A3747, loc_A3750, loc_A3759, loc_A3761, loc_A3769, loc_A379C
-global loc_A37B3, sub_A37B4, loc_A37CE, loc_A37E2, sub_A37F0, loc_A3804, loc_A381B, sub_A3822
-global loc_A3839, loc_A3874, sub_A3890, loc_A38DD, sub_A38DE, sub_A38E4, sub_A38EA, sub_A38F0
-global sub_A38F6, sub_A38FE, sub_A3904, sub_A390A, sub_A3910, sub_A3918, sub_A3920, sub_A3928
-global sub_A3930, sub_A393A, sub_A3944, sub_A394C, sub_A3954, sub_A395D, sub_A3966, sub_A396F
-global sub_A3978, sub_A3983, sub_A398E, sub_A3997, sub_A39A0, loc_A39D6, sub_A39D8, sub_A39DD
-global sub_A39FC, sub_A3A1B, sub_A3A37, sub_A3A53, sub_A3A72, sub_A3A91, sub_A3AB0, sub_A3ACF
-global sub_A3B09, sub_A3B1A, sub_A3B2B, sub_A3B49, loc_A3B68, loc_A3B7A, loc_A3B84, sub_A3B89
-global sub_A3B9D, sub_A3BAB, sub_A3BCA, sub_A3BE9, sub_A3C05, sub_A3C21, sub_A3C40, sub_A3C5F
-global sub_A3C7E, sub_A3C9D, sub_A3CD7, sub_A3D13, sub_A3D37, sub_A3D5A, sub_A3D7D, sub_A3D9D
-global sub_A3DBD, sub_A3DE0, sub_A3E03, sub_A3E26, sub_A3E49, sub_A3E90, sub_A3ECE, sub_A3EE3
-global sub_A3F01, sub_A3F16, loc_A3F44, sub_A3F5D, loc_A3F6F, sub_A3F88, sub_A3F96, sub_A3FB7
-global sub_A3FD8, sub_A3FF6, sub_A4014, sub_A4035, sub_A4056, sub_A4077, sub_A4098, sub_A40D4
-global loc_A4107, sub_A411C, loc_A4143, sub_A414C, sub_A4151, sub_A418B, sub_A4190, sub_A41B4
-global sub_A41B9, jpt_A41C1, loc_A41E1, sub_A41E6, sub_A41FB, sub_A4210, sub_A4222, sub_A4234
-global sub_A4249, sub_A425E, sub_A4273, sub_A4288, sub_A42D0, sub_A42F8, jpt_A4300, loc_A4320
+global loc_A37B3, RoundToSingle, loc_A37CE, loc_A37E2, sub_A37F0, loc_A3804, loc_A381B, sub_A3822
+global loc_A3839, loc_A3874, RaiseFpuError, loc_A38DD, sub_A38DE, sub_A38E4, sub_A38EA, sub_A38F0
+global EaEsp, sub_A38FE, sub_A3904, sub_A390A, EaEaxDisp8, EaEcxDisp8, EaEdxDisp8, EaEbxDisp8
+global EaEspDisp8, EaEbpDisp8, EaEsiDisp8, EaEdiDisp8, EaEaxDisp32, EaEcxDisp32, EaEdxDisp32, EaEbxDisp32
+global EaEspDisp32, EaEbpDisp32, EaEsiDisp32, EaEdiDisp32, EaSib, loc_A39D6, sub_A39D8, EmuFaddM32
+global EmuFmulM32, EmuFcomM32, EmuFcompM32, EmuFsubM32, EmuFsubrM32, EmuFdivM32, EmuFdivrM32, EmuFldM32
+global EmuFstM32, EmuFstpM32, EmuFldenv, EmuFldcw, loc_A3B68, loc_A3B7A, loc_A3B84, EmuFstenv
+global sub_A3B9D, EmuFiaddM32, EmuFimulM32, EmuFicomM32, EmuFicompM32, EmuFisubM32, EmuFisubrM32, EmuFidivM32
+global EmuFidivrM32, EmuFildM32, EmuFistM32, EmuFistpM32, EmuFaddM64, EmuFmulM64, EmuFcomM64, EmuFcompM64
+global EmuFsubM64, EmuFsubrM64, EmuFdivM64, EmuFdivrM64, EmuFldM80, EmuFldM64, EmuFstM64, EmuFstpM80
+global EmuFstpM64, EmuFrstor, loc_A3F44, EmuFsave, loc_A3F6F, sub_A3F88, EmuFiaddM16, EmuFimulM16
+global EmuFicomM16, EmuFicompM16, EmuFisubM16, EmuFisubrM16, EmuFidivM16, EmuFidivrM16, EmuFildM16, EmuFistM16
+global loc_A4107, EmuFistpM16, loc_A4143, sub_A414C, EmuFildM64, sub_A418B, EmuFistpM64, sub_A41B4
+global sub_A41B9, jpt_A41C1, loc_A41E1, EmuFaddSt, EmuFmulSt, EmuFcomSt, EmuFcompSt, EmuFsubSt
+global EmuFsubrSt, EmuFdivSt, EmuFdivrSt, EmuFldSt, EmuFxch, sub_A42F8, jpt_A4300, loc_A4320
 global loc_A432D, loc_A433A, loc_A436B, sub_A4379, jpt_A4381, loc_A43A1, loc_A43E4, loc_A4429
 global loc_A446E, loc_A44B3, loc_A44F8, loc_A453D, sub_A4594, jpt_A459C, loc_A45BC, loc_A45C9
 global loc_A4610, loc_A465C, loc_A467D, sub_A469E, jpt_A46A6, loc_A46C6, loc_A46F0, loc_A4737
 global loc_A4744, loc_A479C, loc_A47A9, sub_A47B6, jpt_A47BE, loc_A47DE, sub_A483F, jpt_A4847
-global loc_A4867, loc_A4873, sub_A4899, sub_A48AE, sub_A48C3, sub_A48D8, sub_A48ED, sub_A4902
-global sub_A4917, sub_A4936, sub_A4962, sub_A4974, sub_A4986, sub_A49B2, sub_A49FD, sub_A4A48
-global jpt_A4A50, loc_A4A70, sub_A4AD1, sub_A4B1C, sub_A4B67, sub_A4BB2, sub_A4BFD, jpt_A4C05
+global loc_A4867, loc_A4873, EmuFaddToSt, EmuFmulToSt, EmuFsubrToSt, EmuFsubToSt, EmuFdivrToSt, EmuFdivToSt
+global sub_A4917, EmuFstSt, EmuFucom, EmuFucomp, EmuFstpSt, EmuFaddp, EmuFmulp, sub_A4A48
+global jpt_A4A50, loc_A4A70, EmuFsubrp, EmuFsubp, EmuFdivrp, EmuFdivp, sub_A4BFD, jpt_A4C05
 global loc_A4C25, loc_A4C6E, loc_A4CD3, loc_A4CFD, loc_A4D15, loc_A4D45, loc_A4D52, loc_A4D54
 global loc_A4D76, loc_A4D7A, loc_A4D86, EmuSub, EmuAdd, loc_A4DAB, AddExtRaw, AddMantissas
 global loc_A4E1D, loc_A4E1E, loc_A4E21, loc_A4E32, loc_A4E6D, loc_A4E81, loc_A4E96, loc_A4EB7
@@ -44,14 +44,14 @@ global Emu387LdToInt, loc_A535B, loc_A5394, loc_A53A1, loc_A53B2, loc_A53B5, loc
 global loc_A53D2, Emu387IntToLd, loc_A53DB, loc_A53F6, loc_A53FA, LoadM64Real, loc_A542A, loc_A5438
 global loc_A544B, loc_A5453, loc_A545F, loc_A546C, loc_A5478, StoreM32Real, loc_A54A9, loc_A54B7
 global loc_A54DA, loc_A54E5, loc_A54F8, loc_A5503, StoreM64Real, loc_A5523, loc_A5534, loc_A5559
-global loc_A5563, loc_A556A, loc_A558C, loc_A559E, loc_A55A2, loc_A55A4, loc_A55CA, sub_A55CE
+global loc_A5563, loc_A556A, loc_A558C, loc_A559E, loc_A55A2, loc_A55A4, loc_A55CA, LoadM32Real
 global loc_A55EF, loc_A55FD, loc_A5607, unk_A5613, ExtToInt, loc_A56A8, loc_A56B3, loc_A56BE
 global loc_A56CC, loc_A5703, loc_A5705, loc_A570D, loc_A5720, loc_A5722, loc_A576A, loc_A5772
 global loc_A5776, loc_A5782, loc_A5785, loc_A57AA, loc_A57BA, unk_A57C6, EmuRemainder, loc_A5849
 global loc_A585C, loc_A585E, loc_A5886, loc_A58B6, loc_A58B8, loc_A58D2, RemainderStep, loc_A5918
 global loc_A594E, loc_A5969, loc_A59DC, loc_A5A0A, loc_A5A2A, loc_A5A33, EmuRoundInt, loc_A5A4E
 global loc_A5A6E, RoundMantissa, loc_A5AB3, loc_A5ABF, loc_A5AC1, loc_A5AC6, loc_A5ADB, loc_A5AE7
-global loc_A5AF2, loc_A5AFC, loc_A5AFE, loc_A5B02, loc_A5B12, loc_A5B19, sub_A5B1A, loc_A5B38
+global loc_A5AF2, loc_A5AFC, loc_A5AFE, loc_A5B02, loc_A5B12, loc_A5B19, EmuExamine, loc_A5B38
 global loc_A5B6A, loc_A5B6C, loc_A5B8C, loc_A5B92, loc_A5B94, loc_A5BAB, unk_A5BC2, unk_A5BE0
 global AddOne, EmuLog2, Log2Core, loc_A5C76, loc_A5CB5, loc_A5CD1, loc_A5CDD, loc_A5E26
 global unk_A5E36, unk_A5E90, unk_A5EEA, SinCosCore, loc_A5F1E, loc_A5F6D, loc_A5F99, loc_A5FC3
@@ -100,180 +100,180 @@ unk_A332C:
         dd sub_A38E4
         dd sub_A38EA
         dd sub_A38F0
-        dd sub_A39A0
+        dd EaSib
         dd sub_A38FE
         dd sub_A3904
         dd sub_A390A
-        dd sub_A3910
-        dd sub_A3918
-        dd sub_A3920
-        dd sub_A3928
-        dd sub_A39A0
-        dd sub_A393A
-        dd sub_A3944
-        dd sub_A394C
-        dd sub_A3954
-        dd sub_A395D
-        dd sub_A3966
-        dd sub_A396F
-        dd sub_A39A0
-        dd sub_A3983
-        dd sub_A398E
-        dd sub_A3997
+        dd EaEaxDisp8
+        dd EaEcxDisp8
+        dd EaEdxDisp8
+        dd EaEbxDisp8
+        dd EaSib
+        dd EaEbpDisp8
+        dd EaEsiDisp8
+        dd EaEdiDisp8
+        dd EaEaxDisp32
+        dd EaEcxDisp32
+        dd EaEdxDisp32
+        dd EaEbxDisp32
+        dd EaSib
+        dd EaEbpDisp32
+        dd EaEsiDisp32
+        dd EaEdiDisp32
 unk_A338C:
         dd sub_A38DE
         dd sub_A38E4
         dd sub_A38EA
         dd sub_A38F0
-        dd sub_A38F6
+        dd EaEsp
         dd sub_A38FE
         dd sub_A3904
         dd sub_A390A
-        dd sub_A3910
-        dd sub_A3918
-        dd sub_A3920
-        dd sub_A3928
-        dd sub_A3930
-        dd sub_A393A
-        dd sub_A3944
-        dd sub_A394C
-        dd sub_A3954
-        dd sub_A395D
-        dd sub_A3966
-        dd sub_A396F
-        dd sub_A3978
-        dd sub_A3983
-        dd sub_A398E
-        dd sub_A3997
+        dd EaEaxDisp8
+        dd EaEcxDisp8
+        dd EaEdxDisp8
+        dd EaEbxDisp8
+        dd EaEspDisp8
+        dd EaEbpDisp8
+        dd EaEsiDisp8
+        dd EaEdiDisp8
+        dd EaEaxDisp32
+        dd EaEcxDisp32
+        dd EaEdxDisp32
+        dd EaEbxDisp32
+        dd EaEspDisp32
+        dd EaEbpDisp32
+        dd EaEsiDisp32
+        dd EaEdiDisp32
 jpt_A33EC:
-        dd sub_A39DD
-        dd sub_A3ACF
-        dd sub_A3BAB
-        dd sub_A3C9D
-        dd sub_A3D37
-        dd sub_A3E90
-        dd sub_A3F96
-        dd sub_A4098
-        dd sub_A39FC
+        dd EmuFaddM32
+        dd EmuFldM32
+        dd EmuFiaddM32
+        dd EmuFildM32
+        dd EmuFaddM64
+        dd EmuFldM64
+        dd EmuFiaddM16
+        dd EmuFildM16
+        dd EmuFmulM32
         dd sub_A39D8
-        dd sub_A3BCA
+        dd EmuFimulM32
         dd sub_A39D8
-        dd sub_A3D5A
+        dd EmuFmulM64
         dd sub_A39D8
-        dd sub_A3FB7
+        dd EmuFimulM16
         dd sub_A39D8
-        dd sub_A3A1B
-        dd sub_A3B09
-        dd sub_A3BE9
-        dd sub_A3CD7
-        dd sub_A3D7D
-        dd sub_A3ECE
-        dd sub_A3FD8
-        dd sub_A40D4
-        dd sub_A3A37
-        dd sub_A3B1A
-        dd sub_A3C05
-        dd sub_A3D13
-        dd sub_A3D9D
-        dd sub_A3F01
-        dd sub_A3FF6
-        dd sub_A411C
-        dd sub_A3A53
-        dd sub_A3B2B
-        dd sub_A3C21
+        dd EmuFcomM32
+        dd EmuFstM32
+        dd EmuFicomM32
+        dd EmuFistM32
+        dd EmuFcomM64
+        dd EmuFstM64
+        dd EmuFicomM16
+        dd EmuFistM16
+        dd EmuFcompM32
+        dd EmuFstpM32
+        dd EmuFicompM32
+        dd EmuFistpM32
+        dd EmuFcompM64
+        dd EmuFstpM64
+        dd EmuFicompM16
+        dd EmuFistpM16
+        dd EmuFsubM32
+        dd EmuFldenv
+        dd EmuFisubM32
         dd sub_A39D8
-        dd sub_A3DBD
-        dd sub_A3F16
-        dd sub_A4014
+        dd EmuFsubM64
+        dd EmuFrstor
+        dd EmuFisubM16
         dd sub_A414C
-        dd sub_A3A72
-        dd sub_A3B49
-        dd sub_A3C40
-        dd sub_A3E49
-        dd sub_A3DE0
+        dd EmuFsubrM32
+        dd EmuFldcw
+        dd EmuFisubrM32
+        dd EmuFldM80
+        dd EmuFsubrM64
         dd sub_A39D8
-        dd sub_A4035
-        dd sub_A4151
-        dd sub_A3A91
-        dd sub_A3B89
-        dd sub_A3C5F
+        dd EmuFisubrM16
+        dd EmuFildM64
+        dd EmuFdivM32
+        dd EmuFstenv
+        dd EmuFidivM32
         dd sub_A39D8
-        dd sub_A3E03
-        dd sub_A3F5D
-        dd sub_A4056
+        dd EmuFdivM64
+        dd EmuFsave
+        dd EmuFidivM16
         dd sub_A418B
-        dd sub_A3AB0
+        dd EmuFdivrM32
         dd sub_A3B9D
-        dd sub_A3C7E
-        dd sub_A3EE3
-        dd sub_A3E26
+        dd EmuFidivrM32
+        dd EmuFstpM80
+        dd EmuFdivrM64
         dd sub_A3F88
-        dd sub_A4077
-        dd sub_A4190
+        dd EmuFidivrM16
+        dd EmuFistpM64
 jpt_A34EC:
-        dd sub_A41E6
-        dd sub_A4288
+        dd EmuFaddSt
+        dd EmuFldSt
         dd sub_A41B4
         dd sub_A41B4
-        dd sub_A4899
+        dd EmuFaddToSt
         dd sub_A4917
-        dd sub_A49B2
+        dd EmuFaddp
         dd sub_A4917
-        dd sub_A41FB
-        dd sub_A42D0
+        dd EmuFmulSt
+        dd EmuFxch
         dd sub_A41B4
         dd sub_A41B4
-        dd sub_A48AE
-        dd sub_A42D0
-        dd sub_A49FD
-        dd sub_A42D0
-        dd sub_A4210
+        dd EmuFmulToSt
+        dd EmuFxch
+        dd EmuFmulp
+        dd EmuFxch
+        dd EmuFcomSt
         dd sub_A41B9
         dd sub_A41B4
         dd sub_A41B4
-        dd sub_A4210
-        dd sub_A4936
+        dd EmuFcomSt
+        dd EmuFstSt
         dd sub_A41B4
-        dd sub_A4936
-        dd sub_A4222
-        dd sub_A4986
+        dd EmuFstSt
+        dd EmuFcompSt
+        dd EmuFstpSt
         dd sub_A41B4
         dd sub_A41B4
-        dd sub_A4222
-        dd sub_A4986
+        dd EmuFcompSt
+        dd EmuFstpSt
         dd sub_A4A48
-        dd sub_A4986
-        dd sub_A4234
+        dd EmuFstpSt
+        dd EmuFsubSt
         dd sub_A42F8
         dd sub_A41B4
         dd sub_A483F
-        dd sub_A48C3
-        dd sub_A4962
-        dd sub_A4AD1
+        dd EmuFsubrToSt
+        dd EmuFucom
+        dd EmuFsubrp
         dd sub_A4BFD
-        dd sub_A4249
+        dd EmuFsubrSt
         dd sub_A4379
         dd sub_A47B6
         dd sub_A41B4
-        dd sub_A48D8
-        dd sub_A4974
-        dd sub_A4B1C
+        dd EmuFsubToSt
+        dd EmuFucomp
+        dd EmuFsubp
         dd sub_A41B4
-        dd sub_A425E
+        dd EmuFdivSt
         dd sub_A4594
         dd sub_A41B4
         dd sub_A41B4
-        dd sub_A48ED
+        dd EmuFdivrToSt
         dd sub_A41B4
-        dd sub_A4B67
+        dd EmuFdivrp
         dd sub_A41B4
-        dd sub_A4273
+        dd EmuFdivrSt
         dd sub_A469E
         dd sub_A41B4
         dd sub_A41B4
-        dd sub_A4902
+        dd EmuFdivToSt
         dd sub_A41B4
-        dd sub_A4BB2
+        dd EmuFdivp
         dd sub_A41B4
 sub_A35EC:
         sti
@@ -475,7 +475,7 @@ loc_A379C:
         jmp dword [nosplit cs:edx*4+jpt_A34EC]
 loc_A37B3:
         ret
-sub_A37B4:
+RoundToSingle:
         lea ebx, [byte edi+ebp+01Ch]
         mov edx, 0FFFFFF00h
         mov eax, dword [byte ebx+04h]
@@ -534,7 +534,7 @@ loc_A3874:
         or dh, byte [dword cs:eax+unk_A331E]
         mov word [byte ds:ebp+04h], dx
         jmp near EmuTrapExit
-sub_A3890:
+RaiseFpuError:
         or byte [byte ds:ebp+04h], al
         test byte [byte ds:ebp+00h], al
         jne short loc_A38DD
@@ -586,7 +586,7 @@ sub_A38F0:
         LD xor, ebx, ebx
         add ebx, dword [byte ebp+01Ch]
         ret
-sub_A38F6:
+EaEsp:
         LD xor, ebx, ebx
         add ebx, dword [byte ebp+018h]
         LD mov, ecx, edx
@@ -603,91 +603,91 @@ sub_A390A:
         LD xor, ebx, ebx
         add ebx, dword [byte ebp+0Ch]
         ret
-sub_A3910:
+EaEaxDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+028h]
         ret
-sub_A3918:
+EaEcxDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+024h]
         ret
-sub_A3920:
+EaEdxDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+020h]
         ret
-sub_A3928:
+EaEbxDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+01Ch]
         ret
-sub_A3930:
+EaEspDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+018h]
         LD mov, ecx, edx
         ret
-sub_A393A:
+EaEbpDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+014h]
         LD mov, ecx, edx
         ret
-sub_A3944:
+EaEsiDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+010h]
         ret
-sub_A394C:
+EaEdiDisp8:
         movsx ebx, byte [esi]
         inc esi
         add ebx, dword [byte ebp+0Ch]
         ret
-sub_A3954:
+EaEaxDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+028h]
         ret
-sub_A395D:
+EaEcxDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+024h]
         ret
-sub_A3966:
+EaEdxDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+020h]
         ret
-sub_A396F:
+EaEbxDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+01Ch]
         ret
-sub_A3978:
+EaEspDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+018h]
         LD mov, ecx, edx
         ret
-sub_A3983:
+EaEbpDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+014h]
         LD mov, ecx, edx
         ret
-sub_A398E:
+EaEsiDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+010h]
         ret
-sub_A3997:
+EaEdiDisp32:
         mov ebx, dword [esi]
         add esi, byte 4
         add ebx, dword [byte ebp+0Ch]
         ret
-sub_A39A0:
+EaSib:
         mov bl, byte [esi]
         inc esi
         push ebx
@@ -715,77 +715,77 @@ loc_A39D6:
         ret
 sub_A39D8:
         jmp near EmuTrapExit
-sub_A39DD:
+EmuFaddM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuAdd
         jmp dword [byte ds:ebp+076h]
-sub_A39FC:
+EmuFmulM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuMul
         jmp dword [byte ds:ebp+076h]
-sub_A3A1B:
+EmuFcomM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near loc_A3874
-sub_A3A37:
+EmuFcompM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near sub_A3822
-sub_A3A53:
+EmuFsubM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A3A72:
+EmuFsubrM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte ebp+06Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A3A91:
+EmuFdivM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A3AB0:
+EmuFdivrM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
-        call sub_A55CE
+        call LoadM32Real
         lea eax, [byte ebp+06Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A3ACF:
+EmuFldM32:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -794,19 +794,19 @@ sub_A3ACF:
         and word [byte ds:ebp+08h], bx
         mov eax, dword [es:esi]
         lea edx, [byte edi+ebp+01Ch]
-        call sub_A55CE
+        call LoadM32Real
         jmp near EmuTrapExit
-sub_A3B09:
+EmuFstM32:
         lea eax, [byte edi+ebp+01Ch]
         call StoreM32Real
         mov dword [es:esi], eax
         jmp near EmuTrapExit
-sub_A3B1A:
+EmuFstpM32:
         lea eax, [byte edi+ebp+01Ch]
         call StoreM32Real
         mov dword [es:esi], eax
         jmp near loc_A3839
-sub_A3B2B:
+EmuFldenv:
         mov ecx, 7
         push ds
         push es
@@ -819,7 +819,7 @@ sub_A3B2B:
         pop es
         pop ds
         jmp near EmuTrapExit
-sub_A3B49:
+EmuFldcw:
         mov ax, word [es:esi]
         mov word [byte ds:ebp+00h], ax
         and ax, 300h
@@ -835,11 +835,11 @@ loc_A3B68:
         mov dword [byte ds:ebp+076h], edx
         jmp short loc_A3B84
 loc_A3B7A:
-        lea edx, [sub_A37B4]
+        lea edx, [RoundToSingle]
         mov dword [byte ds:ebp+076h], edx
 loc_A3B84:
         jmp near EmuTrapExit
-sub_A3B89:
+EmuFstenv:
         mov ecx, 7
         LD mov, ebx, edi
         LD mov, edi, esi
@@ -851,7 +851,7 @@ sub_A3B9D:
         mov ax, word [byte ds:ebp+00h]
         mov word [es:esi], ax
         jmp near EmuTrapExit
-sub_A3BAB:
+EmuFiaddM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -860,7 +860,7 @@ sub_A3BAB:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuAdd
         jmp dword [byte ds:ebp+076h]
-sub_A3BCA:
+EmuFimulM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -869,7 +869,7 @@ sub_A3BCA:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuMul
         jmp dword [byte ds:ebp+076h]
-sub_A3BE9:
+EmuFicomM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -877,7 +877,7 @@ sub_A3BE9:
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near loc_A3874
-sub_A3C05:
+EmuFicompM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -885,7 +885,7 @@ sub_A3C05:
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near sub_A3822
-sub_A3C21:
+EmuFisubM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -894,7 +894,7 @@ sub_A3C21:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A3C40:
+EmuFisubrM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -903,7 +903,7 @@ sub_A3C40:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A3C5F:
+EmuFidivM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -912,7 +912,7 @@ sub_A3C5F:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A3C7E:
+EmuFidivrM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
         call LoadM32Int
@@ -921,7 +921,7 @@ sub_A3C7E:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A3C9D:
+EmuFildM32:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -932,7 +932,7 @@ sub_A3C9D:
         lea edx, [byte edi+ebp+01Ch]
         call LoadM32Int
         jmp near EmuTrapExit
-sub_A3CD7:
+EmuFistM32:
         lea ebx, [byte edi+ebp+01Ch]
         push dword [ebx]
         push dword [byte ebx+04h]
@@ -949,7 +949,7 @@ sub_A3CD7:
         pop dword [byte ebx+04h]
         pop dword [ebx]
         jmp near EmuTrapExit
-sub_A3D13:
+EmuFistpM32:
         lea eax, [byte edi+ebp+01Ch]
         mov dx, word [byte ds:ebp+00h]
         and dx, 0C00h
@@ -958,7 +958,7 @@ sub_A3D13:
         call StoreM32Int
         mov dword [es:esi], eax
         jmp near loc_A3839
-sub_A3D37:
+EmuFaddM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -968,7 +968,7 @@ sub_A3D37:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuAdd
         jmp dword [byte ds:ebp+076h]
-sub_A3D5A:
+EmuFmulM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -978,7 +978,7 @@ sub_A3D5A:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuMul
         jmp dword [byte ds:ebp+076h]
-sub_A3D7D:
+EmuFcomM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -987,7 +987,7 @@ sub_A3D7D:
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near loc_A3874
-sub_A3D9D:
+EmuFcompM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -996,7 +996,7 @@ sub_A3D9D:
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near sub_A3822
-sub_A3DBD:
+EmuFsubM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -1006,7 +1006,7 @@ sub_A3DBD:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A3DE0:
+EmuFsubrM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -1016,7 +1016,7 @@ sub_A3DE0:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A3E03:
+EmuFdivM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -1026,7 +1026,7 @@ sub_A3E03:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A3E26:
+EmuFdivrM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
         lea ebx, [byte ebp+06Ch]
@@ -1036,7 +1036,7 @@ sub_A3E26:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A3E49:
+EmuFldM80:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1050,7 +1050,7 @@ sub_A3E49:
         mov ax, word [byte es:esi+08h]
         mov word [byte edi+ebp+024h], ax
         jmp near EmuTrapExit
-sub_A3E90:
+EmuFldM64:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1062,13 +1062,13 @@ sub_A3E90:
         lea ebx, [byte edi+ebp+01Ch]
         call LoadM64Real
         jmp near EmuTrapExit
-sub_A3ECE:
+EmuFstM64:
         lea eax, [byte edi+ebp+01Ch]
         call StoreM64Real
         mov dword [es:esi], eax
         mov dword [byte es:esi+04h], edx
         jmp near EmuTrapExit
-sub_A3EE3:
+EmuFstpM80:
         mov eax, dword [byte edi+ebp+01Ch]
         mov dword [es:esi], eax
         mov eax, dword [byte edi+ebp+020h]
@@ -1076,13 +1076,13 @@ sub_A3EE3:
         mov ax, word [byte edi+ebp+024h]
         mov word [byte es:esi+08h], ax
         jmp near loc_A3839
-sub_A3F01:
+EmuFstpM64:
         lea eax, [byte edi+ebp+01Ch]
         call StoreM64Real
         mov dword [es:esi], eax
         mov dword [byte es:esi+04h], edx
         jmp near loc_A3839
-sub_A3F16:
+EmuFrstor:
         mov ecx, 7
         push ds
         push es
@@ -1108,7 +1108,7 @@ loc_A3F44:
         pop es
         pop ds
         jmp near EmuTrapExit
-sub_A3F5D:
+EmuFsave:
         mov ecx, 7
         LD mov, ebx, edi
         LD mov, edi, esi
@@ -1128,7 +1128,7 @@ sub_A3F88:
         mov ax, word [byte ds:ebp+04h]
         mov word [es:esi], ax
         jmp near EmuTrapExit
-sub_A3F96:
+EmuFiaddM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1138,7 +1138,7 @@ sub_A3F96:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuAdd
         jmp dword [byte ds:ebp+076h]
-sub_A3FB7:
+EmuFimulM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1148,7 +1148,7 @@ sub_A3FB7:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuMul
         jmp dword [byte ds:ebp+076h]
-sub_A3FD8:
+EmuFicomM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1157,7 +1157,7 @@ sub_A3FD8:
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near loc_A3874
-sub_A3FF6:
+EmuFicompM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1166,7 +1166,7 @@ sub_A3FF6:
         lea edx, [byte ebp+06Ch]
         call EmuCompare
         jmp near sub_A3822
-sub_A4014:
+EmuFisubM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1176,7 +1176,7 @@ sub_A4014:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A4035:
+EmuFisubrM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1186,7 +1186,7 @@ sub_A4035:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A4056:
+EmuFidivM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1196,7 +1196,7 @@ sub_A4056:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A4077:
+EmuFidivrM16:
         mov ax, word [es:esi]
         cwde
         lea edx, [byte ebp+06Ch]
@@ -1206,7 +1206,7 @@ sub_A4077:
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A4098:
+EmuFildM16:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1218,7 +1218,7 @@ sub_A4098:
         lea edx, [byte edi+ebp+01Ch]
         call LoadM32Int
         jmp near EmuTrapExit
-sub_A40D4:
+EmuFistM16:
         lea ebx, [byte edi+ebp+01Ch]
         push dword [ebx]
         push dword [byte ebx+04h]
@@ -1241,7 +1241,7 @@ loc_A4107:
         pop dword [byte ebx+04h]
         pop dword [ebx]
         jmp near EmuTrapExit
-sub_A411C:
+EmuFistpM16:
         lea eax, [byte edi+ebp+01Ch]
         mov dx, word [byte ds:ebp+00h]
         and dx, 0C00h
@@ -1258,7 +1258,7 @@ loc_A4143:
         jmp near loc_A3839
 sub_A414C:
         jmp near EmuTrapExit
-sub_A4151:
+EmuFildM64:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1271,7 +1271,7 @@ sub_A4151:
         jmp near EmuTrapExit
 sub_A418B:
         jmp near loc_A3839
-sub_A4190:
+EmuFistpM64:
         lea eax, [byte edi+ebp+01Ch]
         mov dx, word [byte ds:ebp+00h]
         and dx, 0C00h
@@ -1295,53 +1295,53 @@ jpt_A41C1:
         dd sub_A41B4
 loc_A41E1:
         jmp near EmuTrapExit
-sub_A41E6:
+EmuFaddSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuAdd
         jmp dword [byte ds:ebp+076h]
-sub_A41FB:
+EmuFmulSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuMul
         jmp dword [byte ds:ebp+076h]
-sub_A4210:
+EmuFcomSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuCompare
         jmp near loc_A3874
-sub_A4222:
+EmuFcompSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuCompare
         jmp near sub_A3822
-sub_A4234:
+EmuFsubSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A4249:
+EmuFsubrSt:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A425E:
+EmuFdivSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A4273:
+EmuFdivrSt:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte edi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A4288:
+EmuFldSt:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1355,7 +1355,7 @@ sub_A4288:
         mov ax, word [byte esi+ebp+024h]
         mov word [byte edi+ebp+024h], ax
         jmp near EmuTrapExit
-sub_A42D0:
+EmuFxch:
         lea ebx, [byte edi+ebp+01Ch]
         lea esi, [byte esi+ebp+01Ch]
         mov eax, dword [esi]
@@ -1400,7 +1400,7 @@ loc_A433A:
         jmp near loc_A3874
 loc_A436B:
         lea eax, [byte edi+ebp+01Ch]
-        call sub_A5B1A
+        call EmuExamine
         jmp near EmuTrapExit
 sub_A4379:
         jmp dword [nosplit cs:ebx*4+jpt_A4381]
@@ -1676,37 +1676,37 @@ loc_A4873:
         mov dword [byte ds:ebp+076h], edx
         LD sub, edi, edi
         jmp near EmuTrapExit
-sub_A4899:
+EmuFaddToSt:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuAdd
         jmp dword [byte ds:ebp+076h]
-sub_A48AE:
+EmuFmulToSt:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuMul
         jmp dword [byte ds:ebp+076h]
-sub_A48C3:
+EmuFsubrToSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A48D8:
+EmuFsubToSt:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuSub
         jmp dword [byte ds:ebp+076h]
-sub_A48ED:
+EmuFdivrToSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
-sub_A4902:
+EmuFdivToSt:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
@@ -1718,7 +1718,7 @@ sub_A4917:
         mov bx, word [dword cs:esi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
         jmp near EmuTrapExit
-sub_A4936:
+EmuFstSt:
         mov eax, dword [byte edi+ebp+01Ch]
         mov dword [byte esi+ebp+01Ch], eax
         mov eax, dword [byte edi+ebp+020h]
@@ -1728,17 +1728,17 @@ sub_A4936:
         mov bx, word [dword cs:esi+unk_A32CE]
         and word [byte ds:ebp+08h], bx
         jmp near EmuTrapExit
-sub_A4962:
+EmuFucom:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuCompare
         jmp near loc_A3874
-sub_A4974:
+EmuFucomp:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuCompare
         jmp near sub_A3822
-sub_A4986:
+EmuFstpSt:
         mov eax, dword [byte edi+ebp+01Ch]
         mov dword [byte esi+ebp+01Ch], eax
         mov eax, dword [byte edi+ebp+020h]
@@ -1748,7 +1748,7 @@ sub_A4986:
         mov bx, word [dword cs:esi+unk_A32CE]
         and word [byte ds:ebp+08h], bx
         jmp near loc_A3839
-sub_A49B2:
+EmuFaddp:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
@@ -1762,7 +1762,7 @@ sub_A49B2:
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
-sub_A49FD:
+EmuFmulp:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
@@ -1806,7 +1806,7 @@ loc_A4A70:
         lea edx, [byte edi+ebp+01Ch]
         call EmuCompare
         jmp near sub_A3822
-sub_A4AD1:
+EmuFsubrp:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
@@ -1820,7 +1820,7 @@ sub_A4AD1:
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
-sub_A4B1C:
+EmuFsubp:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
@@ -1834,7 +1834,7 @@ sub_A4B1C:
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
-sub_A4B67:
+EmuFdivrp:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
@@ -1848,7 +1848,7 @@ sub_A4B67:
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
-sub_A4BB2:
+EmuFdivp:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
@@ -2292,7 +2292,7 @@ DivideMantissas:
         jne short loc_A5062
         mov al, 1
         mov ah, 81h
-        call sub_A3890
+        call RaiseFpuError
         mov edx, 0C0000000h
         LD sub, eax, eax
         mov si, 0FFFFh
@@ -2300,7 +2300,7 @@ DivideMantissas:
 loc_A5062:
         mov al, 4
         mov ah, 83h
-        call sub_A3890
+        call RaiseFpuError
         mov edx, 80000000h
         LD sub, eax, eax
         or si, 7FFFh
@@ -2783,7 +2783,7 @@ loc_A5438:
         push eax
         mov al, 1
         mov ah, 81h
-        call sub_A3890
+        call RaiseFpuError
         pop eax
         or edx, 40000000h
 loc_A544B:
@@ -2950,14 +2950,14 @@ loc_A55A4:
         push eax
         mov al, 8
         mov ah, 84h
-        call sub_A3890
+        call RaiseFpuError
         pop eax
 loc_A55CA:
         pop esi
         pop ebx
         pop ecx
         ret
-sub_A55CE:
+LoadM32Real:
         push ecx
         push ebx
         LD mov, ebx, edx
@@ -3426,7 +3426,7 @@ loc_A5B12:
         neg edi
 loc_A5B19:
         ret
-sub_A5B1A:
+EmuExamine:
         push ebx
         push edx
         LD mov, ebx, eax

@@ -8,8 +8,8 @@ extern byte_F5C0B, GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiI
 extern dword_D87DC, dword_D87E0, dword_D89D8, dword_F59FC, dword_F6016, dword_F6116, inp_, inpw_
 extern outp_, outpw_, strcmp_, strncmp_, GusProbePort, sub_B0A14, sub_B0A40, sub_B0A5C
 extern sub_B0A78, GusHookIrq, GusUnhookIrq, GusDownload, GusDramDmaDone, sub_B10D0, GusClearIrqState, GusEnterCritical
-extern GusLeaveCritical, sub_B12A0, sub_B131C, GusDelay, GusSetBasePort, GusClearCallbacks, sub_B14E4, sub_B151C
-extern GusRunInitTable, sub_B1A04, sub_B1BF8, sub_B1CBC, sub_B1E2C, sub_B1E64, sub_B1EA0, sub_B1F1C
+extern GusLeaveCritical, GusWaveIrqHandler, GusMidiIrqHandler, GusDelay, GusSetBasePort, GusClearCallbacks, sub_B14E4, sub_B151C
+extern GusRunInitTable, sub_B1A04, sub_B1BF8, sub_B1CBC, sub_B1E2C, sub_B1E64, GusPeek, GusPoke
 extern GusTestDramBank, unk_F5BF8, GusBasePort, GusIrqStatusPort, word_D8768, word_D876A, GusVoiceSelectPort, GusRegSelectPort
 extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, word_F6128, word_F799C
 extern GusIrqFlags, GusActiveVoices
@@ -704,12 +704,12 @@ GusHookIrqs:
         push ecx
         push esi
         mov esi, eax
-        mov ebx, sub_B12A0
+        mov ebx, GusWaveIrqHandler
         mov ecx, cs
         call GusHookIrq
         cmp esi, edx
         je short loc_AA906
-        mov ebx, sub_B131C
+        mov ebx, GusMidiIrqHandler
         mov eax, edx
         mov ecx, cs
         call GusHookIrq
@@ -4381,7 +4381,7 @@ loc_AD3D6:
         inc ecx
         mov dl, byte [byte esi-01h]
         inc ebx
-        call sub_B1F1C
+        call GusPoke
 loc_AD3E5:
         cmp ecx, byte 0Fh
         jb short loc_AD3D6
@@ -4408,7 +4408,7 @@ GusPeekBlock:
         jmp short loc_AD41E
 loc_AD411:
         mov eax, ebx
-        call sub_B1EA0
+        call GusPeek
         inc ecx
         inc edx
         inc ebx
@@ -4472,10 +4472,10 @@ loc_AD4A1:
 loc_AD4B8:
         mov eax, 1Eh
         xor edx, edx
-        call sub_B1F1C
+        call GusPoke
         mov eax, 1Fh
         xor edx, edx
-        call sub_B1F1C
+        call GusPoke
         xor eax, eax
 loc_AD4D2:
         lea esp, [byte ebp-010h]

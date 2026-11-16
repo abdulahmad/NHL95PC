@@ -5,10 +5,10 @@ section s_981AD progbits alloc exec nowrite align=1
 extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, BackBufferWidth, joycalactive, joycalposthook, joycalprehook, mousepollfn
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
 extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, sub_9C5B0
-extern sub_A1800, sub_A1840, KbdGetKey, SaveDrawState, RestoreDrawState, sub_B3D74, SetScreenTarget, CreateBitmap
+extern sub_A1800, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
 extern sub_B6F84, DefaultFont
 global sub_981AD, sub_981B0, sub_981D4, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
-global sub_984A8, loc_984CF, ShowMessageBox, sub_9862C, DosGetVector, DosSetVector, sub_9867E
+global AskExitToDos, loc_984CF, ShowMessageBox, sub_9862C, DosGetVector, DosSetVector, sub_9867E
 sub_981AD:
         sti
         ret
@@ -164,7 +164,7 @@ ShowPromptBox:
         add esp, byte 8
         call dword [off_D3074]
         push BackBufferWidth
-        call sub_A1840
+        call ResetClipRect
         add esp, byte 4
 loc_983B1:
         call dword [mousepollfn]
@@ -234,7 +234,7 @@ loc_983F1:
         pop esi
         ret 8
         db 08Bh,0C0h
-sub_984A8:
+AskExitToDos:
         push byte 7
         push byte 18h
         mov ecx, 0A0h
@@ -317,7 +317,7 @@ ShowMessageBox:
         call dword [off_D3074]
         mov ecx, dword [dword esp+0B0h]
         push ecx
-        call sub_B3D74
+        call DebugLineCount
         add esp, byte 4
         call dword [off_D306C]
         mov ebx, 0BEh

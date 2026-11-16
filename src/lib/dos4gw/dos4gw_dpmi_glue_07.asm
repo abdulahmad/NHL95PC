@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A18FB progbits alloc exec nowrite align=1
-extern sub_A1948
+extern IntrLoadRegs
 global _DoINTR_
 _DoINTR_:
         pusha
@@ -11,7 +11,7 @@ _DoINTR_:
         push es
         push ds
         push edx
-        call sub_A1948
+        call IntrLoadRegs
         push ebx
         push ds
         push ebp

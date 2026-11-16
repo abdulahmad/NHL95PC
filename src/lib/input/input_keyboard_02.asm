@@ -5,11 +5,11 @@ section s_B29F0 progbits alloc exec nowrite align=1
 extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12
 extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, BiosKeyFunc
 extern KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74
-extern GraphicsReady, sub_93170, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
+extern GraphicsReady, PrintBoxedText, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
 extern WaitKey, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
 global RemoveKeyboardHandler, loc_B2A9A, sub_B2A9B, loc_B2B09, sub_B2B0A, loc_B2B3A, loc_B2B81, loc_B2B85
 global loc_B2BA5, loc_B2BA9, loc_B2BC0, loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5
-global loc_B2BED, unk_B2C00, sub_B2C01, loc_B2C3B, Int16Service, loc_B2C68, loc_B2C6D, loc_B2C85
+global loc_B2BED, unk_B2C00, Int16Handler, loc_B2C3B, Int16Service, loc_B2C68, loc_B2C6D, loc_B2C85
 global loc_B2CAC, KeyDown, sub_B2CCD, FatalError, loc_B2D01, loc_B2D11, sub_B2D27
 RemoveKeyboardHandler:
         cmp word [word_D2D6E], byte 0
@@ -37,7 +37,7 @@ RemoveKeyboardHandler:
         call DosSetVector
         mov dx, cs
         mov ebx, 16h
-        mov eax, sub_B2C01
+        mov eax, Int16Handler
         mov dx, cs
         mov ebx, 23h
         mov eax, unk_B2C00
@@ -171,7 +171,7 @@ loc_B2BED:
         jmp short loc_B2BDC
 unk_B2C00:
         db 0CFh
-sub_B2C01:
+Int16Handler:
         push ebx
         push ecx
         push edx
@@ -281,7 +281,7 @@ FatalError:
         call SetScreenTarget
         push byte 0
         push byte 0
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 8
         call WaitKey
 loc_B2D01:

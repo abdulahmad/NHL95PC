@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_A1948 progbits alloc exec nowrite align=1
-global sub_A1948, unk_A197C, __Slash_C_, loc_A1C88, loc_A1C96
-sub_A1948:
+global IntrLoadRegs, unk_A197C, __Slash_C_, loc_A1C88, loc_A1C96
+IntrLoadRegs:
         and eax, 0FFh
         lea eax, [eax+eax*2]
         db 02Eh,08Dh,080h

@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
 extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
-extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, sub_91FA4, sub_92CD0, sub_A2FD0
+extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, sub_91FA4, TextPrintAt, sub_A2FD0
 extern sub_A3050, _EFG_Format_, bcopy, UnpackArtRle
-global sub_9C594, loc_9C5A4, ReturnFalse, sub_9C5B0, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
+global ToUpperChar, loc_9C5A4, ReturnFalse, sub_9C5B0, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
 global loc_9C70C, loc_9C71B, loc_9C72B, loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873
-global loc_9C880, sub_9C890, sub_9C8D0, DrawArtAnyFormat, loc_9C924, loc_9C969, loc_9C97D, loc_9C97F
+global loc_9C880, sub_9C890, ShapePixelSize, DrawArtAnyFormat, loc_9C924, loc_9C969, loc_9C97D, loc_9C97F
 global loc_9C991, loc_9C9C1, loc_9C9D3, loc_9CA00, loc_9CA2B, loc_9CA3B, loc_9CA60, DrawArtAnyFormatAt
 global DrawArtAnyFormatOwnPos, sub_9CAB4, sub_9CADC, sub_9CB00, sub_9CB24, sub_9CB4C, sub_9CB70, sub_9CB94
 global sub_9CBBC, sub_9CBE0, sub_9CC04, sub_9CC2C, sub_9CC50, sub_9CC74, sub_9CC9C, sub_9CCC0
@@ -15,7 +15,7 @@ global sub_9CCE4, sub_9CD0C, sub_9CD30, sub_9CD54, sub_9CD7C, sub_9CDA0, sub_9CD
 global sub_9CE10, sub_9CE34, sub_9CE5C, sub_9CE80, sub_9CEA4, sub_9CECC, sub_9CEF0, sub_9CF14
 global sub_9CF3C, sub_9CF60, sub_9CF84, sub_9CFAC, sub_9CFD0, sub_9CFF4, sub_9D01C, sub_9D040
 global sub_9D064
-sub_9C594:
+ToUpperChar:
         mov eax, dword [byte esp+04h]
         cmp eax, byte 61h
         jb short loc_9C5A4
@@ -253,13 +253,13 @@ sub_9C890:
         push eax
         mov edi, dword [byte esp+014h]
         push edi
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         pop edi
         pop esi
         ret
         db 00h,00h
-sub_9C8D0:
+ShapePixelSize:
         push edx
         mov edx, dword [byte eax+02h]
         sar edx, 10h
@@ -296,7 +296,7 @@ DrawArtAnyFormat:
 loc_9C924:
         push byte 20h
         mov eax, edi
-        call sub_9C8D0
+        call ShapePixelSize
         push eax
         push str_Unpackf
         call AllocMemBlock
@@ -320,7 +320,7 @@ loc_9C924:
         jmp short loc_9C97F
 loc_9C969:
         mov eax, edi
-        call sub_9C8D0
+        call ShapePixelSize
         push eax
         push edx
         push edi

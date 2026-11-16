@@ -8,7 +8,7 @@ extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, d
 extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00
 extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
 extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
-extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, PushMemDescriptorLocked, sub_8DBD4, MemDescSize
+extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, PushMemDescriptorLocked, MemDescPtr, MemDescSize
 extern sub_97166, sub_971BE, SndDriverCall, sub_9720B, sub_97268, sub_98F11, sub_98F46, sub_99522
 extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, AddExitHandler, bcopy, FillMem
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
@@ -211,7 +211,7 @@ loc_8ED0A:
         push byte_F23CC
         mov edx, dword [byte esp+018h]
         push edx
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         push eax
         call bcopy
@@ -382,7 +382,7 @@ loc_8EEFF:
         mov eax, dword [esp]
         mov edx, dword [eax]
         push edx
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         mov edx, ebp
         call sub_8FE89
@@ -1441,7 +1441,7 @@ sub_8F98F:
         test eax, eax
         je near loc_8FAEA
         push eax
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         mov edi, eax
         xor dl, dl
@@ -1598,7 +1598,7 @@ sub_8FB24:
         test eax, eax
         jl short loc_8FB87
         push edi
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         mov edi, esi
         mov edx, edi
@@ -1646,7 +1646,7 @@ sub_8FB8E:
         test eax, eax
         jl short loc_8FB87
         push edi
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         mov edi, esi
         mov edx, edi

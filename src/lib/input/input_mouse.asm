@@ -7,7 +7,7 @@ extern dword_D3038, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollf
 extern off_D306C, off_D3070, off_D3074, AddExitHandler, word_D3004, word_D3006, word_D3008
 global MouseReadButtons, loc_B2D57, loc_B2D5E, MouseSetSensitivity, loc_B2D92, sub_B2D94, loc_B2DB2, MouseSetPos
 global MouseRead, sub_B2DEF, SetViewRect, MouseReadMotion, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
-global loc_B2EEA, sub_B2EF6, sub_B2EFD, sub_B2F04, InitMouse, loc_B2F7C, loc_B3006
+global loc_B2EEA, sub_B2EF6, sub_B2EFD, MouseRestoreSensitivity, InitMouse, loc_B2F7C, loc_B3006
 MouseReadButtons:
         LD xor, eax, eax
         dec dword [MouseButtonState]
@@ -163,7 +163,7 @@ sub_B2EF6:
 sub_B2EFD:
         dec dword [dword_D3038]
         ret
-sub_B2F04:
+MouseRestoreSensitivity:
         pusha
         mov ax, 1Ah
         mov bx, word [word_D3004]
@@ -214,7 +214,7 @@ loc_B2F7C:
         mov dword [off_D3070], sub_B2EFD
         mov dword [off_D3074], sub_B2EF6
         mov dword [mousepollfn], MouseReadMotion
-        push sub_B2F04
+        push MouseRestoreSensitivity
         call AddExitHandler
         add esp, byte 20h
 loc_B3006:

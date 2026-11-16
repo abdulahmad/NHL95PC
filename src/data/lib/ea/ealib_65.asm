@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D544C progbits alloc noexec write align=1
-extern sub_A2ADC
+extern NoFloatSupport
 global str_SHPI2, byte_D545C, byte_D54DC, byte_D6074, dword_D5562, dword_D5566, dword_D5670, dword_D5674
 global dword_D5678, dword_D5D78, dword_D6178, dword_D6578, off_D5668, off_D566C, off_D567C, off_D5742
 global unk_D5744, unk_D5748, unk_D574E, unk_D5756, unk_D5760, unk_D576C, unk_D577A, unk_D578A
@@ -53,9 +53,9 @@ dword_D5566:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h
 off_D5668:
-        dd sub_A2ADC
+        dd NoFloatSupport
 off_D566C:
-        dd sub_A2ADC
+        dd NoFloatSupport
 dword_D5670:
         db 01h,00h,00h,00h
 dword_D5674:

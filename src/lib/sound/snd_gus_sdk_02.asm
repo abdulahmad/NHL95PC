@@ -14,7 +14,7 @@ extern dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8
 extern dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC, dword_D84D0
 extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_F612C, getenv_, inp_
 extern nullsub_4, off_D846C, outp_, strtoul_, sub_AB658, sub_AB6D0, sub_AB80C, sub_ACC3C
-extern sub_AD2A8, sub_AD344, sub_AD7CC, sub_ADC96, GusDownload, sub_B14E4, sub_B1CBC, sub_B1F1C
+extern sub_AD2A8, sub_AD344, sub_AD7CC, sub_ADC96, GusDownload, sub_B14E4, sub_B1CBC, GusPoke
 extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
 extern word_D84C6, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
 global sub_ADEE9, loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002
@@ -704,11 +704,11 @@ loc_AE88F:
         LD mov, esi, eax
         movzx edx, byte [esi]
         mov eax, dword [dword_D84B8]
-        call sub_B1F1C
+        call GusPoke
         movzx edx, byte [byte esi+01h]
         mov eax, dword [dword_D84B8]
         inc eax
-        call sub_B1F1C
+        call GusPoke
         mov ebx, dword [dword_D84B0]
         jmp short loc_AE8E3
 loc_AE8DD:
@@ -906,13 +906,13 @@ loc_AEA68:
 loc_AEB45:
         LD xor, edx, edx
         LD mov, eax, esi
-        call sub_B1F1C
+        call GusPoke
         inc esi
         cmp esi, dword [dword_D84B8]
         jbe short loc_AEB45
         LD xor, edx, edx
         LD mov, eax, esi
-        call sub_B1F1C
+        call GusPoke
         mov eax, sub_AE903
         call sub_B14E4
         LD xor, eax, eax

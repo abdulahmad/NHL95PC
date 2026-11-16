@@ -8,7 +8,7 @@ extern sprintf_, AngleFromDelta, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk
 global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, loc_B3B6E, loc_B3BB9, loc_B3BEE
 global loc_B3C2B, loc_B3C53, DosCloseFile, loc_B3C6E, sub_B3C70, DosReadFile, loc_B3C76, loc_B3C85
 global loc_B3C9C, loc_B3CAF, loc_B3CB1, DosSeekFile, FindFirstFile, loc_B3CF4, loc_B3D02, loc_B3D08
-global loc_B3D0A, loc_B3D22, loc_B3D26, sub_B3D2A, sub_B3D46, sub_B3D56, sub_B3D64, sub_B3D74
+global loc_B3D0A, loc_B3D22, loc_B3D26, sub_B3D2A, sub_B3D46, sub_B3D56, sub_B3D64, DebugLineCount
 global loc_B3D85, vecdist, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, sub_B3DFC
 DosCallSplitDx:
         push ecx
@@ -267,7 +267,7 @@ sub_B3D64:
         LD sbb, eax, eax
         inc eax
         ret
-sub_B3D74:
+DebugLineCount:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFFCh

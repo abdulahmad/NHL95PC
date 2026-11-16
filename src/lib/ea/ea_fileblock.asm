@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_93308 progbits alloc exec nowrite align=1
 extern str_SavefileblockaOPENFAILEDFOR, DebugRow, byte_D4545, byte_D4546, DebugMode, DebugScreenBase, DebugLineWidth, FatalError
-extern sub_8DBD4, MemDescSize, bcopy, CreateHandle, DosCloseFile, sub_B3C70, ZeroMem, vsprintf_
+extern MemDescPtr, MemDescSize, bcopy, CreateHandle, DosCloseFile, sub_B3C70, ZeroMem, vsprintf_
 global SaveDataFile, sub_9333C, sub_93354, savefileblocka, loc_933C7, loc_933CB, loc_933E8, imul32
 global sub_933FB, IntSqrt, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
 global SortIndices, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, DebugPrintf
@@ -61,7 +61,7 @@ savefileblocka:
         mov edi, eax
         add esp, byte 4
         push esi
-        call sub_8DBD4
+        call MemDescPtr
         mov esi, eax
         add esp, byte 4
         mov eax, esp

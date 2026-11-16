@@ -8,7 +8,7 @@ extern rinkfileidx, rinkhtiles, rinkscrollx, rinkscrolly, rinktilebm, rinkwtiles
 extern SetDrawBitmap, str_CRESTS3, str_ErrorLoadingFile, str_extBIN, str_InvalidFileSize, str_Map, str_Pal16, str_Rink2
 extern str_Til, str_TILES, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52
 extern sub_6AF97, AllocMemBlock, MemPtrSize, LoadBank, sub_8E8A0, SetPalette, DrawShape, GetFileSize
-extern sub_92EE4, FindShape, CreateBitmap, deskbankname
+extern LoadFileToBlockShared, FindShape, CreateBitmap, deskbankname
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
 ;-----------------------------------------------------------------------------
 ; LoadRink                                                        3377C  95 PC
@@ -155,7 +155,7 @@ LoadRink:
         push eax
         lea eax, [byte esp+04h]
         push eax
-        call sub_92EE4
+        call LoadFileToBlockShared
         add esp, byte 8
         test eax, eax
         jne short .9

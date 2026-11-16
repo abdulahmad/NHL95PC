@@ -63,7 +63,7 @@ void DrawFileDlgTabs(void)
         if ((fdlgmask[0] & 0x40) == 0)
             PrintString((char *)str_Playoffs, 0xAB, 0x64);
         if ((fdlgmask[0] & 0x20) == 0)
-            sub_92CD0((char *)str_Exhibition, 0xA7, 0x4C);
+            TextPrintAt((char *)str_Exhibition, 0xA7, 0x4C);
         if (*(int *)fdlgfilelists[fdlgtab] <= 6)
             DrawArt(fdlg_noarrow, 0x18, 0x46);
         else

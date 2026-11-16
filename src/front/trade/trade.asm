@@ -27,7 +27,7 @@ extern str_S12, str_S4, str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelT
 extern str_space, str_star, str_Statistics, str_Temp6, str_TheJerseyNumber2d2, str_Tstat, str_VFN, strcat_
 extern strcmp_, strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, sub_8E8A0
 extern TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SetPalette, PutBlock, sub_9121C, DrawArt
-extern GrabBlock, sub_91FE0, sub_93170, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
+extern GrabBlock, sub_91FE0, PrintBoxedText, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
 extern SetScreenTarget, SetColorRemap, CreateBitmap, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
 extern tradeclick, tradecursor, tradejersey, traderemap1, traderemap2, traderesult, traderoster, tradeside
 extern tradeslot, treeteamnames, unequaltrademsg, tradestatsmenubar, tradelinesmenubar, unk_D12C8, unknown_libname_1, unknown_libname_2
@@ -944,7 +944,7 @@ DrawTradeRow:
         shl eax, 6
         add eax, byte 5
         push eax
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 18h
         pop esi
         pop edx
@@ -1291,7 +1291,7 @@ DrawTradeScreen:
         shl eax, 6
         add eax, byte 5
         push eax
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 18h
         inc esi
         cmp esi, byte 1Ch

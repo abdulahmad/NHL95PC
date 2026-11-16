@@ -59,9 +59,9 @@ void DrawEditText(int mode)
     len = w;
     if (w < editpos) editpos = w;
     if (mode & 2) {
-        for (i = 0; i < len; i++) sub_92CD0((char *)str_Dot, editx + cw * i, edity);
+        for (i = 0; i < len; i++) TextPrintAt((char *)str_Dot, editx + cw * i, edity);
     } else {
-        sub_92CD0(editbuf, editx, edity);
+        TextPrintAt(editbuf, editx, edity);
     }
     if (!editmaxw) return;
     if (mode & 2) w = len * cw;

@@ -6,7 +6,7 @@ extern __GETDS, GusMidiIrq, GusWaveIrq, GusVoiceIrqBits, dword_D87A0, GusMidiIrq
 extern GusRecordDoneCallback, GusWaveCallback, GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, dword_D87D0
 extern dword_D87D4, inp_, outp_, GusSendEoi, GusBasePort, GusIrqStatusPort, word_D876C, word_D876E
 extern GusRegSelectPort, GusDataHighPort, GusDramPort, GusIrqFlags, GusCriticalDepth
-global sub_B12A0, loc_B12DD, loc_B12EC, loc_B1311, sub_B131C, loc_B1358, loc_B1365, loc_B1392
+global GusWaveIrqHandler, loc_B12DD, loc_B12EC, loc_B1311, GusMidiIrqHandler, loc_B1358, loc_B1365, loc_B1392
 global GusDelay, loc_B13AF, GusSetBasePort, loc_B13E7, loc_B13EF, loc_B13F6, loc_B13FB, GusClearCallbacks
 global GusClaimCallback, loc_B146B, loc_B1476, loc_B147B, GusClaimVoiceCallback, loc_B1493, loc_B149E, loc_B14A3
 global GusSetDmaCallbacks, loc_B14DA, loc_B14DC, sub_B14E4, loc_B1512, loc_B1514, sub_B151C, loc_B154A
@@ -15,7 +15,7 @@ global loc_B15D1, sub_B15D8, loc_B15F1, GusMidiIrqService, loc_B1646, loc_B166D,
 global loc_B16B3, GusServiceIrq, loc_B16D8, loc_B16F3, loc_B1706, loc_B1735, loc_B1772, loc_B17B9
 global loc_B1813, loc_B186E, loc_B1877, loc_B18C7, loc_B18DC, loc_B18F1, loc_B18F3, loc_B1902
 global loc_B1917, loc_B192C, loc_B192E, loc_B1938
-sub_B12A0:
+GusWaveIrqHandler:
         pusha
         push ds
         push es
@@ -54,7 +54,7 @@ loc_B1311:
         popa
         iret
         db 08Dh,040h,00h
-sub_B131C:
+GusMidiIrqHandler:
         pusha
         push ds
         push es

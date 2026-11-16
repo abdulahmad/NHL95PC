@@ -185,7 +185,7 @@ int SaveGameNameDlg(char *path)
             for (i = 0; path[i] != '.'; i++);
             path[i] = 0;
             TextSetColors(0xFA, 0xF9);
-            sub_92CD0(path, tx, ty);
+            TextPrintAt(path, tx, ty);
             ClearInputQueue();
             MouseSetPos(0x181, 0xFE);
             GrabBlock(bm, 0x181, 0xFE);

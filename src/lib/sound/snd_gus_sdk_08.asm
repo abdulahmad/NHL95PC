@@ -8,7 +8,7 @@ extern word_D8766, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPor
 global sub_B19E0, sub_B1A04, loc_B1A35, loc_B1ABF, sub_B1AC8, loc_B1AF9, loc_B1B83, sub_B1B8C
 global sub_B1BF8, sub_B1C70, loc_B1C8A, loc_B1CA9, sub_B1CBC, loc_B1CE9, loc_B1D46, loc_B1D71
 global loc_B1D8B, loc_B1DA5, loc_B1DA6, loc_B1DD7, loc_B1E19, loc_B1E22, sub_B1E2C, sub_B1E64
-global sub_B1EA0, sub_B1F1C, GusPokeFill, loc_B1FC4, loc_B1FC6, loc_B1FD1, loc_B2000, loc_B203D
+global GusPeek, GusPoke, GusPokeFill, loc_B1FC4, loc_B1FC6, loc_B1FD1, loc_B2000, loc_B203D
 global loc_B2043, loc_B2045, loc_B2067, GusTestDramBank, loc_B20C5, loc_B20F1, loc_B211D, loc_B2149
 global loc_B2175, loc_B2181, loc_B21E7, loc_B21F4, loc_B21FA, loc_B2214
 sub_B19E0:
@@ -403,7 +403,7 @@ sub_B1E64:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_B1EA0:
+GusPeek:
         push ebp
         mov ebp, esp
         push ebx
@@ -444,7 +444,7 @@ sub_B1EA0:
         pop ebp
         ret
         db 090h
-sub_B1F1C:
+GusPoke:
         push ebp
         mov ebp, esp
         push ebx
@@ -580,22 +580,22 @@ GusTestDramBank:
         sub esp, byte 18h
         mov ebx, eax
         mov ecx, eax
-        call sub_B1EA0
+        call GusPeek
         xor cl, 20h
         mov byte [byte ebp-028h], al
         mov byte [byte ebp-01Ch], al
         mov eax, ecx
         mov edx, 55h
-        call sub_B1EA0
+        call GusPeek
         mov byte [byte ebp-020h], al
         mov byte [byte ebp-018h], al
         mov eax, ebx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ecx
         xor edx, edx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ebx
-        call sub_B1EA0
+        call GusPeek
         cmp al, 55h
         je short loc_B20C5
         xor al, al
@@ -603,12 +603,12 @@ GusTestDramBank:
 loc_B20C5:
         mov eax, ebx
         xor edx, edx
-        call sub_B1F1C
+        call GusPoke
         mov edx, 55h
         mov eax, ecx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ebx
-        call sub_B1EA0
+        call GusPeek
         test al, al
         je short loc_B20F1
         xor al, al
@@ -623,12 +623,12 @@ loc_B20C5:
 loc_B20F1:
         mov edx, 0AAh
         mov eax, ebx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ecx
         xor edx, edx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ebx
-        call sub_B1EA0
+        call GusPeek
         cmp al, 0AAh
         je short loc_B211D
         xor al, al
@@ -643,12 +643,12 @@ loc_B20F1:
 loc_B211D:
         mov edx, 0FFh
         mov eax, ebx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ecx
         xor edx, edx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ebx
-        call sub_B1EA0
+        call GusPeek
         cmp al, 0FFh
         je short loc_B2149
         xor al, al
@@ -666,11 +666,11 @@ loc_B2149:
         xor edx, edx
         mov eax, ebx
         mov dl, byte [byte ebp-028h]
-        call sub_B1F1C
+        call GusPoke
         xor edx, edx
         mov eax, ecx
         mov dl, byte [byte ebp-020h]
-        call sub_B1F1C
+        call GusPoke
         mov al, 1
         lea esp, [byte ebp-014h]
         pop edi
@@ -697,25 +697,25 @@ loc_B2181:
         or esi, edx
         mov eax, esi
         mov edx, 0AAh
-        call sub_B1EA0
+        call GusPeek
         mov byte [byte ebp-024h], al
         mov eax, esi
-        call sub_B1F1C
+        call GusPoke
         mov eax, ecx
         xor edx, edx
-        call sub_B1F1C
+        call GusPoke
         mov eax, ebx
-        call sub_B1EA0
+        call GusPeek
         cmp al, 0AAh
         jne short loc_B21E7
         xor edx, edx
         mov eax, ebx
         mov dl, byte [byte ebp-01Ch]
-        call sub_B1F1C
+        call GusPoke
         xor edx, edx
         mov eax, ecx
         mov dl, byte [byte ebp-018h]
-        call sub_B1F1C
+        call GusPoke
         xor al, al
         lea esp, [byte ebp-014h]
         pop edi
@@ -730,7 +730,7 @@ loc_B21E7:
         mov eax, esi
         mov dl, byte [byte ebp-024h]
         inc edi
-        call sub_B1F1C
+        call GusPoke
 loc_B21F4:
         cmp di, byte 4
         jne short loc_B2181
@@ -738,11 +738,11 @@ loc_B21FA:
         xor edx, edx
         mov eax, ebx
         mov dl, byte [byte ebp-01Ch]
-        call sub_B1F1C
+        call GusPoke
         xor edx, edx
         mov eax, ecx
         mov dl, byte [byte ebp-018h]
-        call sub_B1F1C
+        call GusPoke
         mov al, 2
 loc_B2214:
         lea esp, [byte ebp-014h]

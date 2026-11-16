@@ -24,7 +24,7 @@ void PrintMenuTextGrey(int x, int y, char *s)
     PrintString(buf, x, y);
 }
 
-/* PrintMenuTextAlt: the same through the other text printer (sub_92CD0). */
+/* PrintMenuTextAlt: the same through the other text printer (TextPrintAt). */
 void PrintMenuTextAlt(int x, int y, char *s)
 {
     char buf[80];
@@ -32,5 +32,5 @@ void PrintMenuTextAlt(int x, int y, char *s)
 
     for (i = 0; s[i] && i < 0x4F; i++) buf[i] = s[i];
     buf[i] = s[i];
-    sub_92CD0(buf, x, y);
+    TextPrintAt(buf, x, y);
 }

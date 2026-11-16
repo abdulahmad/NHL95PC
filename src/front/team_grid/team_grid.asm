@@ -5,7 +5,7 @@ section s_37B92 progbits alloc exec nowrite align=1
 extern __CHK, AllocMemBlock, byte_D42C3, cddriveptr, crestnames, dlgtextbg, dlgtextfg, DrawArt
 extern fileoncd, FindShape, fputchar, FreeMemBlock, GrabBlock, gridcellbuf, gridcellx, gridcelly
 extern LoadBank, MakePath, memset_, PrintCenteredText, PrintShadowText, PutBlock, SetClipWindow, SetTextColors
-extern str_Back, str_Callogo2, strcpy_, sub_92F50, sub_93000
+extern str_Back, str_Callogo2, strcpy_, XorRectOutline, sub_93000
 global TeamGridHitTest, DrawTeamGridName, SaveGridCellBg, RestoreGridCellBg, HighlightGridCell, DrawTeamGrid
 ;-----------------------------------------------------------------------------
 ; TeamGridHitTest                                                 37B92  95 PC
@@ -413,7 +413,7 @@ HighlightGridCell:
         push eax
         push ebx
         push edx
-        call sub_92F50
+        call XorRectOutline
         add esp, byte 14h
         push dword 80h
         mov edx, dword [byte esp+014h]
@@ -423,7 +423,7 @@ HighlightGridCell:
         push ebp
         mov ecx, dword [byte esp+028h]
         push ecx
-        call sub_92F50
+        call XorRectOutline
         jmp short .6
 .5:
         push ecx

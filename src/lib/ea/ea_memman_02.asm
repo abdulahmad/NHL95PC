@@ -9,13 +9,13 @@ global MergeFreeSpace, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, su
 global sub_8D494, sub_8D4B0, sub_8D4E8, loc_8D521, loc_8D53A, loc_8D542, sub_8D548, sub_8D558
 global loc_8D591, loc_8D5B0, loc_8D5B8, sub_8D5C0, sub_8D5D0, FindFreeSpace, loc_8D640, loc_8D653
 global loc_8D670, loc_8D683, loc_8D697, loc_8D6AA, loc_8D6D8, loc_8D708, loc_8D70A, FindCachedFileData
-global loc_8D727, FindCachedFile, loc_8D78F, loc_8D79E, loc_8D7EA, loc_8D803, sub_8D80C, sub_8D844
+global loc_8D727, FindCachedFile, loc_8D78F, loc_8D79E, loc_8D7EA, loc_8D803, CompactDownLocked, sub_8D844
 global loc_8D85F, loc_8D861, loc_8D874, loc_8D87F, loc_8D88C, loc_8D898, loc_8D8AB, loc_8D8EC
-global loc_8D93F, loc_8D946, loc_8D94E, sub_8D958, sub_8D990, loc_8D9A6, loc_8D9AC, loc_8D9C0
+global loc_8D93F, loc_8D946, loc_8D94E, CompactUpLocked, sub_8D990, loc_8D9A6, loc_8D9AC, loc_8D9C0
 global loc_8D9CA, loc_8D9D6, loc_8D9E6, loc_8DA16, loc_8DA6E, loc_8DA8F, sub_8DA98, loc_8DAAD
 global sub_8DAB8, sub_8DAE4, loc_8DB05, loc_8DB12, sub_8DB20, sub_8DB2C, loc_8DB39, loc_8DB42
 global loc_8DB49, sub_8DB4C, loc_8DB60, loc_8DB6D, sub_8DB78, getmemblock, loc_8DBB1, MemPtrSize
-global sub_8DBD4, MemDescSize
+global MemDescPtr, MemDescSize
 PushMemDescriptorLocked:
         mov edx, dword [MemLockHandle]
         push edx
@@ -555,7 +555,7 @@ loc_8D803:
         pop edi
         pop esi
         ret
-sub_8D80C:
+CompactDownLocked:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
@@ -689,7 +689,7 @@ loc_8D94E:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_8D958:
+CompactUpLocked:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
@@ -963,7 +963,7 @@ MemPtrSize:
         mov eax, dword [byte eax+014h]
         ret
         db 08Dh,040h,00h
-sub_8DBD4:
+MemDescPtr:
         mov eax, dword [byte esp+04h]
         mov eax, dword [eax]
         ret

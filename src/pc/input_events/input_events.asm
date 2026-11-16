@@ -13,7 +13,7 @@ extern PrintShadowText, ptrstep, ptrupdatefn, RemoveTimerCallback, RunEditRoster
 extern SetTextColors, speechbank, str_dot, str_Joycal, str_Left, str_LEFTJOYSTICK, str_Pal24, str_Puck
 extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, FillRect, DrawArtOpaque
-extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, RemoveKeyboardHandler
+extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, RemoveKeyboardHandler
 extern KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E, sub_B387E
 extern ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, FillRectColor, TeamRecPtr, teamsdb
 extern teamsdb_size, unk_C27F5, DefaultFont
@@ -872,7 +872,7 @@ PrintMenuTextGrey_ret:
         ret
 ;-----------------------------------------------------------------------------
 ; PrintMenuTextAlt                             6B910  95 PC, medium confidence
-; Copies up to 79 chars to a local buffer and prints with sub_92CD0 (shares
+; Copies up to 79 chars to a local buffer and prints with TextPrintAt (shares
 ; PrintMenuTextGrey tail); no refs
 ;-----------------------------------------------------------------------------
 PrintMenuTextAlt:
@@ -902,7 +902,7 @@ PrintMenuTextAlt:
         push ecx
         lea eax, [byte esp+08h]
         push eax
-        call sub_92CD0
+        call TextPrintAt
         jmp short PrintMenuTextGrey_common
 %endif ; C
 ;-----------------------------------------------------------------------------

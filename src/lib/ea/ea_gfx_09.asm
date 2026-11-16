@@ -11,7 +11,7 @@ global loc_92993, loc_92995, loc_929B9, loc_929BB, loc_92A3D, loc_92A6A, loc_92A
 global loc_92AC5, loc_92AD9, loc_92AED, loc_92B02, loc_92B17, loc_92B2C, loc_92B41, loc_92B56
 global loc_92B6B, loc_92B80, loc_92B95, loc_92B9B, loc_92BBF, loc_92BE1, loc_92BE7, loc_92BF7
 global loc_92C0D, loc_92C29, loc_92C3A, loc_92C3D, loc_92C56, loc_92C74, loc_92C7A, loc_92C86
-global loc_92CA5, loc_92CAC, loc_92CAF, loc_92CB9, loc_92CC6, sub_92CD0, sub_92CF0
+global loc_92CA5, loc_92CAC, loc_92CAF, loc_92CB9, loc_92CC6, TextPrintAt, sub_92CF0
 sub_92890:
         push esi
         push edi
@@ -416,7 +416,7 @@ loc_92CC6:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_92CD0:
+TextPrintAt:
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+0Ch]

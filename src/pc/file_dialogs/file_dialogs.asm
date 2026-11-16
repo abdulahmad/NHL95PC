@@ -21,7 +21,7 @@ extern str_Nhl, str_NHL, str_Nhl2, str_Noar, str_None, str_Open, str_Open2, str_
 extern str_Playoffs, str_PlayOffSeriesCalled, str_Po, str_PO2, str_Po2, str_PoGameSav, str_Pointer5, str_Sav
 extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, AllocMemBlock
 extern LoadBank, sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, sub_91284, DrawArt
-extern GrabBlock, PrintString, sub_92CD0, MouseRead, FindShape, FindFirstFile, SetScreenTarget, FillRectColor
+extern GrabBlock, PrintString, TextPrintAt, MouseRead, FindShape, FindFirstFile, SetScreenTarget, FillRectColor
 extern teamabbrevs, unknown_libname_1, unknown_libname_2, unlink_, ViewPlayoffHilights
 global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy
 global DrawFileDlg_jt, DrawFileDlg, DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3, DrawFileDlg_n2, DrawFileDlg_n1
@@ -536,7 +536,7 @@ DrawFileDlgTabs:
         push byte 4Ch
         push dword 0A7h
         push str_Exhibition
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
 .4:
         mov eax, dword [fdlgtab]

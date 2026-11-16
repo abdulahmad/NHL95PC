@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D2C84 progbits alloc noexec write align=1
-extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, bcopy, sub_B40BF, str_Jan
+extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, bcopy, PollHotkeys, str_Jan
 extern str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul, str_Aug, str_Sep
 extern str_Oct, str_Nov, str_Dec
 global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
@@ -717,7 +717,7 @@ ticklast:
 dword_D429C:
         db 0A0h,086h,01h,00h
 KbdIdleHook:
-        dd sub_B40BF
+        dd PollHotkeys
 off_D42A4:
         dd DefaultFont
 fontcolor:

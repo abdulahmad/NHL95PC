@@ -16,7 +16,7 @@ extern str_DBX2, str_Del2, str_Delete2, str_Done2, str_Down2, str_DSBOX, str_ext
 extern str_None2, str_Open3, str_Open4, str_Org, str_ORG, str_ORIGINAL, str_Original2, str_Pdbx
 extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, AllocMemBlock, LoadBank
 extern sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, sub_91284, DrawArt, GrabBlock
-extern PrintString, sub_92CD0, GetFileSize, KeyDown, MouseRead, FindShape, SetScreenTarget, FillRectColor
+extern PrintString, TextPrintAt, GetFileSize, KeyDown, MouseRead, FindShape, SetScreenTarget, FillRectColor
 extern teamsdb, teamsdb_size, unknown_libname_1, unknown_libname_2, unknown_libname_4
 global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
 global DrawDbDialog, DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1, DbDialogHitTest
@@ -705,7 +705,7 @@ DrawDbDialogButtons:
         push byte 4Ch
         push dword 0B1h
         push str_Current4
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
 .4:
         mov eax, dword [fdlgtab]

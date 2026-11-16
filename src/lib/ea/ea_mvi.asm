@@ -4,7 +4,7 @@ bits 32
 section s_96440 progbits alloc exec nowrite align=1
 extern _os_handle_3, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal, str_DATABUFFER, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, DebugPrintf, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable, FreeMemBlock
-extern sub_8CC70, AllocMemBlock, sub_8CCC4, PushMemDescriptorLocked, sub_8DBD4, sub_8E8F0, FreeBitmap, SaveDrawState
+extern sub_8CC70, AllocMemBlock, sub_8CCC4, PushMemDescriptorLocked, MemDescPtr, sub_8E8F0, FreeBitmap, SaveDrawState
 extern RestoreDrawState, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile, SetScreenTarget, SetClipWindow
 extern CreateBitmap, sub_B5E00, BlitShapeClipped
 global sub_96440, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
@@ -443,7 +443,7 @@ loc_9687D:
         jmp near loc_9699E
 loc_968A8:
         push eax
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         push eax
         call _os_handle_3

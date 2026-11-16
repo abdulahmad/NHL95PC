@@ -9,7 +9,7 @@ extern editx, edity, fontcolor, fputchar, FreeMemBlock, GetInputEvent, InputInst
 extern listscroll, MouseSetPos, pointerspr, PollKey, PrintMenuText, PrintShadowText, ptrupdatefn, SetTextColors
 extern SetTickDeadline, str_DBOX, str_Dot, str_extDB, str_ORG, str_Pointer6, str_Space, strlen_
 extern AllocMemBlock, TextSetColors, PutBlock, TextWidthN, FillRect, sub_90EC0, sub_91044, DrawArt
-extern GrabBlock, sub_92CD0, KeyDown, MouseRead, sub_B3D46, sub_B3D64, SetScreenTarget, FillRectColor
+extern GrabBlock, TextPrintAt, KeyDown, MouseRead, sub_B3D46, sub_B3D64, SetScreenTarget, FillRectColor
 extern TickDeadlinePassed, unknown_libname_4
 global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNullCallback, SetListItemColors, ListHitTest, DrawListItem
 global DrawListItem_x, DrawListItems, ListDialog, MeasureTextLine, SetDialogColors, TrackButtons, TrackButtons_x, DrawButtons
@@ -2465,7 +2465,7 @@ DrawEditText:
         add eax, dword [editx]
         push eax
         push str_Dot
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         inc esi
 .6:
@@ -2479,7 +2479,7 @@ DrawEditText:
         push ecx
         mov esi, dword [editbuf]
         push esi
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
 .8:
         cmp dword [editmaxw], byte 0

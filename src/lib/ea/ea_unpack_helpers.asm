@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2F40 progbits alloc exec nowrite align=1
-extern _FtoS_, byte_D42E4, KeyedDraw, RowCopyFunc, forcedecpt_, ShapeBankCount, ShapeBankEntry, sub_90373
+extern _FtoS_, byte_D42E4, KeyedDraw, RowCopyFunc, forcedecpt_, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId
 extern PutBlock, sub_B01B0, sub_B026C, bcopy, sub_B763B
 global sub_A2F40, loc_A2F61, sub_A2F84, sub_A2FD0, loc_A3006, loc_A3015, loc_A3024, loc_A302C
 global sub_A3050, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, _EFG_Format_, sub_A30F8, loc_A3105
@@ -194,7 +194,7 @@ loc_A3105:
         push eax
         push esi
         push edi
-        call sub_90373
+        call ShapeBankEntryId
         add esp, byte 0Ch
         cmp byte [esp], 21h
         je short loc_A312B

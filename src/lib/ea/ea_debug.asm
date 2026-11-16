@@ -18,11 +18,11 @@ extern MemViewRed, MemViewShowDetail, dword_D4594, dword_D4598, dword_D459C, dwo
 extern dword_EDAB4, MemViewTop, MemViewCount, dword_EDE68, MemViewTitle, MemViewRow, MemViewList, dword_EDE78
 extern dword_EDE7C, MemViewMode, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, sub_8D484, TextSetColors
-extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, sub_90373, PutBlock
-extern DrawBitmap, FillRect, sub_92CD0, sub_92F50, sub_93000, sub_93170, DebugSetLine, sub_936C0
-extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, sub_9C594, ReturnFalse, sub_9C5B0, sub_9C890
+extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId, PutBlock
+extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, sub_93000, PrintBoxedText, DebugSetLine, sub_936C0
+extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, ToUpperChar, ReturnFalse, sub_9C5B0, sub_9C890
 extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, sub_9D090, sub_9D2E0, FindShape, ClearScreen, KbdGetKey, KbdFlush
-extern SaveDrawState, RestoreDrawState, FindFirstFile, sub_B40BF, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
+extern SaveDrawState, RestoreDrawState, FindFirstFile, PollHotkeys, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
 extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3
 extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
 extern MemViewStrings, str_X_DebugSprintf, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, str_W_DumpMemoryMap
@@ -396,9 +396,9 @@ sub_93C88:
         push ebx
         push ecx
         push edx
-        call sub_B40BF
+        call PollHotkeys
         push eax
-        call sub_9C594
+        call ToUpperChar
         add esp, byte 4
         pop edx
         pop ecx
@@ -887,7 +887,7 @@ loc_94212:
         push byte 0
         lea eax, [byte ebp-02Eh]
         push eax
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         mov ebx, dword [MemViewBlack]
@@ -903,7 +903,7 @@ loc_94212:
         push byte 0
         lea eax, [dword ebp-082h]
         push eax
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         mov esi, dword [MemViewBlack]
@@ -919,7 +919,7 @@ loc_94212:
         push byte 0
         lea eax, [dword ebp-0D6h]
         push eax
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         mov eax, dword [MemViewBlack]
@@ -1073,7 +1073,7 @@ loc_9448D:
         push byte 0
         lea eax, [byte ebp-02Eh]
         push eax
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         jmp near loc_94551
@@ -1192,7 +1192,7 @@ loc_945D8:
         push byte 0
         lea eax, [dword ebp-082h]
         push eax
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         jmp near loc_946C0
@@ -1508,7 +1508,7 @@ MemViewerBlockInfo:
         push str_044X00000000
         push byte 3Dh
         push byte 38h
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         call ReturnFalse
         mov edi, 0F8h
@@ -1519,7 +1519,7 @@ loc_94987:
         push byte 3Dh
         push edi
         push unk_C433C
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
 loc_949A4:
@@ -1558,7 +1558,7 @@ loc_949BF:
         push esi
         push edi
         push str_SYSTEM
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         mov esi, 55h
@@ -1578,7 +1578,7 @@ loc_94A1D:
         push esi
         push edi
         push str_SPACE3
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         add esi, byte 8
@@ -1605,14 +1605,14 @@ loc_94A86:
         push edi
         push str_LOWMemoryBlock
 loc_94A8D:
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         mov esi, ebp
         push esi
         push edi
         push str_ConventionalMemory
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         lea ebp, [byte esi+014h]
@@ -1628,7 +1628,7 @@ loc_94AC6:
         push edi
         push str_NonRelocatableBlock
 loc_94ACD:
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         mov esi, ebp
@@ -1637,7 +1637,7 @@ loc_94ACD:
         push esi
         push edi
         push str_ALIGNFlagIsSet
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         add esi, byte 0Ah
@@ -1650,7 +1650,7 @@ loc_94AFA:
         push str_PRIORITY1d
         push esi
         push edi
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         call ReturnFalse
         add esi, byte 0Ah
@@ -1660,7 +1660,7 @@ loc_94B20:
         push str_SequenceD
         push esi
         push edi
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         call ReturnFalse
         add esi, byte 0Ah
@@ -1669,7 +1669,7 @@ loc_94B20:
         push esi
         push edi
         push str_BlockIsPURGABLE
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
 loc_94B57:
@@ -1750,7 +1750,7 @@ loc_94C1A:
         call KbdGetKey
         mov dword [byte esp+030h], eax
         push eax
-        call sub_9C594
+        call ToUpperChar
         add esp, byte 4
         mov edx, eax
         test eax, eax
@@ -2303,7 +2303,7 @@ loc_95210:
         push esi
         mov ecx, dword [byte esp+02Ch]
         push ecx
-        call sub_90373
+        call ShapeBankEntryId
         add esp, byte 0Ch
         cmp byte [esp], 21h
         jne short loc_95228
@@ -2367,7 +2367,7 @@ loc_952B4:
         push edi
         mov ecx, dword [byte esp+02Ch]
         push ecx
-        call sub_90373
+        call ShapeBankEntryId
         add esp, byte 0Ch
         push edi
         mov esi, dword [byte esp+028h]
@@ -2401,7 +2401,7 @@ loc_952B4:
         push str_44s05x
         push dword 0C0h
         push byte 0
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 14h
         call ReturnFalse
         cmp byte [esp], 21h
@@ -2675,7 +2675,7 @@ loc_955C5:
         push str_3d3d3d3dS
         push dword 0C0h
         push byte 70h
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 20h
         call ReturnFalse
         cmp word [byte esi+04h], byte 0
@@ -2866,7 +2866,7 @@ loc_9585D:
         push esi
         mov ebp, dword [dword esp+08Ch]
         push ebp
-        call sub_90373
+        call ShapeBankEntryId
         add esp, byte 0Ch
         mov eax, dword [byte esp+074h]
         mov ebp, dword [edi+eax]
@@ -3018,7 +3018,7 @@ loc_959E7:
         push byte 26h
         push ebx
         push edx
-        call sub_92F50
+        call XorRectOutline
         add esp, byte 14h
         call ReturnFalse
         mov dword [dword esp+0318h], esi
@@ -3248,7 +3248,7 @@ loc_95CF0:
         push ebx
         mov ecx, dword [dword esp+0310h]
         push ecx
-        call sub_92F50
+        call XorRectOutline
         add esp, byte 14h
         mov eax, dword [dword esp+031Ch]
         inc eax
@@ -3270,7 +3270,7 @@ loc_95D5D:
         push ecx
         mov eax, dword [dword esp+0324h]
         push eax
-        call sub_92F50
+        call XorRectOutline
         add esp, byte 14h
         call ReturnFalse
         mov eax, edi
@@ -3299,7 +3299,7 @@ loc_95D5D:
         push str_033d022X
         push dword 0C0h
         push byte 44h
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 14h
         call ReturnFalse
         mov edx, dword [MemViewBlack]
@@ -3312,7 +3312,7 @@ loc_95D5D:
         push str_R022d
         push dword 0C0h
         push dword 8Ch
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         call ReturnFalse
         mov ecx, dword [MemViewBlack]
@@ -3325,7 +3325,7 @@ loc_95D5D:
         push str_G022d
         push dword 0C0h
         push dword 0B4h
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         call ReturnFalse
         mov edx, dword [MemViewBlack]
@@ -3338,7 +3338,7 @@ loc_95D5D:
         push str_B022d
         push dword 0C0h
         push dword 0DCh
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         call ReturnFalse
         call WaitTickDeadline
@@ -3374,13 +3374,13 @@ loc_95EF1:
         push asc_C46F8
         push byte 0Dh
         push esi
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         push edi
         push asc_C46F8
         push ebp
         push byte 7
-        call sub_93170
+        call PrintBoxedText
         add esp, byte 10h
         call ReturnFalse
         add ebp, byte 0Ah
@@ -3629,7 +3629,7 @@ sub_96144:
         call sub_96164
         call sub_96170
         push eax
-        call sub_9C594
+        call ToUpperChar
         add esp, byte 4
         pop edx
         pop ecx

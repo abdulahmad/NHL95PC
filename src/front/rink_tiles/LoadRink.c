@@ -1,6 +1,6 @@
 /* Rink tiles: loading the rink. */
 #define MemPtrSize sub_8DBC0_decl
-#define sub_92EE4 sub_92EE4_decl
+#define LoadFileToBlockShared sub_92EE4_decl
 #define sub_6A0F6 sub_6A0F6_decl
 #define sub_6A156 sub_6A156_decl
 #define sub_6A106 sub_6A106_decl
@@ -9,7 +9,7 @@
 #define sub_6AF97 sub_6AF97_decl
 #include "nhl95.h"
 #undef MemPtrSize
-#undef sub_92EE4
+#undef LoadFileToBlockShared
 #undef sub_6A0F6
 #undef sub_6A156
 #undef sub_6A106
@@ -18,7 +18,7 @@
 #undef sub_6AF97
 
 int __cdecl MemPtrSize(int blk);              /* memory library: block size */
-int __cdecl sub_92EE4(char *path, int buf);  /* file library: load a file into buf */
+int __cdecl LoadFileToBlockShared(char *path, int buf);  /* file library: load a file into buf */
 void sub_6A0F6(int bm);
 void sub_6A156(int bm);
 void sub_6A106(void);
@@ -81,7 +81,7 @@ void LoadRink(int rink)
         t = size;
         if (t % 64) FatalError((char *)str_InvalidFileSize, path, t);
         tiles = AllocMemBlock((char *)str_TILES, size, 0);
-        if (!sub_92EE4(path, tiles)) FatalError((char *)str_ErrorLoadingFile, path);
+        if (!LoadFileToBlockShared(path, tiles)) FatalError((char *)str_ErrorLoadingFile, path);
         MakePath(path, fileoncd[rinkfileidx[rink]] == 1 ? (char *)cddriveptr : 0, (char *)rinkarenas + (t = rink * 12), (char *)str_Map);
         smap = sub_8E8A0(path, 0);
         n = size / 64;

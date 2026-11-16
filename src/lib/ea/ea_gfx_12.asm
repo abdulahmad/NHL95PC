@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_93170 progbits alloc exec nowrite align=1
-extern byte_D42E4, KeyedDraw, RowCopyFunc, DrawArtOpaque, sub_92CD0, bcopy, sub_B6D47, vsprintf_
-global sub_93170, sub_931D0, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, sub_93240
-sub_93170:
+extern byte_D42E4, KeyedDraw, RowCopyFunc, DrawArtOpaque, TextPrintAt, bcopy, sub_B6D47, vsprintf_
+global PrintBoxedText, sub_931D0, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, sub_93240
+PrintBoxedText:
         sub esp, 104h
         lea eax, [dword esp+0114h]
         mov dword [dword esp+0100h], eax
@@ -18,7 +18,7 @@ sub_93170:
         push ebx
         lea eax, [byte esp+08h]
         push eax
-        call sub_92CD0
+        call TextPrintAt
         add esp, byte 0Ch
         xor ecx, ecx
         mov dword [dword esp+0100h], ecx

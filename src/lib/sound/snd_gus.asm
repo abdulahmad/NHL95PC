@@ -40,7 +40,7 @@ global loc_A1548, loc_A154A, loc_A155F, loc_A159B, loc_A159D, loc_A15A2, sub_A15
 global loc_A1696, loc_A169B, loc_A16B5, loc_A16BA, loc_A16C8, loc_A16D6, loc_A16E4, loc_A1715
 global loc_A171E, loc_A1726, loc_A1753, loc_A1755, loc_A1757, loc_A176D, loc_A1776, loc_A1780
 global loc_A17A5, loc_A17A7, loc_A17BD, loc_A17C6, loc_A17D0, loc_A17F7, loc_A17F9, sub_A1800
-global sub_A1840, sub_A185C
+global ResetClipRect, ResetClipWindow
 sub_9FFCA:
         push dword 4Ch
         call __CHK
@@ -2212,7 +2212,7 @@ sub_A1800:
         pop esi
         ret
         db 00h,00h
-sub_A1840:
+ResetClipRect:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte eax+04h]
         push edx
@@ -2225,7 +2225,7 @@ sub_A1840:
         add esp, byte 14h
         ret
         db 08Dh,040h,00h
-sub_A185C:
+ResetClipWindow:
         mov edx, dword [dword_D30A8]
         push edx
         push byte 0

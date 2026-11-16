@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_91CE7 progbits alloc exec nowrite align=1
 extern __doopen_, close_file_
-global sub_91CE7, loc_91D08
-sub_91CE7:
+global freopen_, loc_91D08
+freopen_:
         push ecx
         push esi
         mov esi, eax

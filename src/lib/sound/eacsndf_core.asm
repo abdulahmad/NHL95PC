@@ -4,7 +4,7 @@ bits 32
 section s_96A60 progbits alloc exec nowrite align=1
 extern __GETDS, _os_handle_3, byte_EDEAC, byte_F243E, dword_D4BC8, sndhandlecount, dword_D4F96, dword_EDE8C
 extern dword_EDE90, dword_EDE94, dword_EDE98, dword_EDE9C, dword_EDEA0, dword_EDEA4, dword_EDEA8, dword_EDEB0
-extern off_D4BA0, sub_8DBD4, sub_96A10, bcopy, DosReadFile, unk_EDE88
+extern off_D4BA0, MemDescPtr, sub_96A10, bcopy, DosReadFile, unk_EDE88
 global sub_96A60, sub_96A78, sub_96A80, sub_96A94, loc_96AA4, loc_96AB2, loc_96AC0, sub_96AC4
 global loc_96B15, loc_96B38, loc_96B73, loc_96BA1, loc_96BC5, loc_96C15, loc_96C2B, loc_96C43
 global sub_96C4C, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E, loc_96D27, loc_96D5E
@@ -447,7 +447,7 @@ sub_96E7C:
         mov dword [byte esp+0Ch], esi
         mov ecx, dword [byte ebp+030h]
         push ecx
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         add eax, dword [byte ebp+02Ch]
         push eax
@@ -475,7 +475,7 @@ loc_96EFF:
         je short loc_96F3D
         mov edx, dword [byte ebp+030h]
         push edx
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         push eax
         call _os_handle_3
@@ -563,7 +563,7 @@ loc_96FC7:
         add ebp, eax
         mov eax, dword [byte edi+030h]
         push eax
-        call sub_8DBD4
+        call MemDescPtr
         add esp, byte 4
         push eax
         call _os_handle_3

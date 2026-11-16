@@ -12,7 +12,7 @@ extern SavedTextColumns, word_D4FE4, word_D4FE6, word_D4FE9
 global PrintfSaveRegs, SaveTextMode, loc_B3ED7, RestoreTextMode, loc_B3F23, loc_B3F3D, loc_B3F4B, DetectCPU
 global loc_B3FAC, FillMem, ZeroMem, loc_B3FC8, sub_B3FE0, sub_B3FEC, loc_B401F, loc_B402B
 global loc_B4030, loc_B403F, loc_B4049, loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0
-global sub_B40BF, loc_B40D1, sub_B40D4, SetupRectFill, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
+global PollHotkeys, loc_B40D1, SetupRectFillBlend, SetupRectFill, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
 global loc_B415E, loc_B4165, loc_B4173, loc_B417A, loc_B4190, loc_B4197, loc_B41A1, loc_B41A8
 global loc_B41B3, loc_B41C3, loc_B41C8, loc_B41DC, loc_B41E8, loc_B41EA, loc_B4204, loc_B4211
 global loc_B421C, loc_B4222, loc_B4228, loc_B4238, loc_B423E, loc_B4242, loc_B4246, jpt_B4253
@@ -28,7 +28,7 @@ global loc_B487B, loc_B488F, loc_B48AD, loc_B48C3, loc_B48D4, loc_B48E7, loc_B48
 global loc_B4911, loc_B4929, loc_B4935, loc_B4945, loc_B4948, loc_B494D, loc_B497F, loc_B499A
 global loc_B49A7, loc_B49B7, loc_B49BA, AngleFromDelta, loc_B49D4, loc_B49DD, loc_B49E8, loc_B4A00
 global unk_B4A0C, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E, loc_B4A45, loc_B4A49, loc_B4A50
-global loc_B4A57, sub_B4A60, sub_B4A66, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, sub_B4AA4
+global loc_B4A57, sub_B4A60, sub_B4A66, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, DispatchHotkey
 global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, sub_B4AFD, loc_B4B0D, loc_B4B1E, loc_B4B20
 global loc_B4B27, loc_B4B39, loc_B4B3B, SetTextMode, VgaSetPalette, loc_B4BA0, SetScreenTarget, SetClipWindow
 global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, WaitRetrace, loc_B4C48, loc_B4C4F
@@ -179,14 +179,14 @@ sub_B3FEC:
         LD or, ax, ax
         je short loc_B402B
         push eax
-        call sub_B4AA4
+        call DispatchHotkey
         add esp, byte 4
         ret
         call KbdGetKey
         LD or, ax, ax
         je short loc_B401F
         push eax
-        call sub_B4AA4
+        call DispatchHotkey
         add esp, byte 4
         ret
 loc_B401F:
@@ -238,17 +238,17 @@ loc_B40B0:
         mov byte [byte_D4FE8], 3
         mov word [word_D4FE6], ax
         jmp short loc_B4057
-sub_B40BF:
+PollHotkeys:
         call KbdGetKey
         LD or, eax, eax
         je short loc_B40D1
         push eax
-        call sub_B4AA4
+        call DispatchHotkey
         add esp, byte 4
 loc_B40D1:
         ret
         db 00h,00h
-sub_B40D4:
+SetupRectFillBlend:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
@@ -1196,7 +1196,7 @@ loc_B4A96:
         neg eax
         ret
         db 00h,00h
-sub_B4AA4:
+DispatchHotkey:
         push ebp
         LD mov, ebp, esp
         dec dword [dword_D5562]

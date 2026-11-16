@@ -425,7 +425,7 @@ void setplayer(Player *p, int pl);
 void PuckIChk(void);  /* 56E52 */
 int DiskSpaceShort(int drive, int *kb);  /* 14825 */
 void DrawTradeRow(int side);  /* 3E7B3 */
-int __cdecl sub_93170(int x, int y, char *fmt, ...);  /* graphics library: printf at x y */
+int __cdecl PrintBoxedText(int x, int y, char *fmt, ...);  /* graphics library: printf at x y */
 void puckshadow(Player *p);  /* 56ECF */
 void SetShotMode(Player *p);  /* 5786E */
 void FitPlayerName(char *dst, char *first, char *last, int maxw);  /* 29C75 */
@@ -520,7 +520,7 @@ void LoadCupFinalSeries(void);  /* 15B76 */
 int LoadScheduleDB(int *db);  /* 891B2 */
 void InitSpeechSlots(int size);  /* 83459 */
 int __cdecl sub_8CC70(char *name, int size, int flags);  /* memory library: allocate */
-int __cdecl sub_8DBD4(int buf);  /* memory library */
+int __cdecl MemDescPtr(int buf);  /* memory library */
 void InitSpeech(unsigned char id, int size, int copybuf, int copylen);  /* 8357A */
 int __cdecl addtimer(void (*fn)(void));  /* timer library: add tick handler */
 void BuildSavedGameLabels(void);  /* 1D518 */
@@ -915,7 +915,7 @@ int AskMasterPassword(int t, char *names, char *key);  /* 3A49E */
 void EncryptPassword(char *pw, int t);  /* 3A597 */
 int AskTeamPassword(int t, char *ents);  /* 3A395 */
 void SaveGridCellBg(int team, unsigned char *tab, int bm, int x, int y);  /* 37D6A */
-void __cdecl sub_92F50(int x1, int y1, int x2, int y2, int c);  /* graphics library: frame */
+void __cdecl XorRectOutline(int x1, int y1, int x2, int y2, int c);  /* graphics library: frame */
 void __cdecl sub_93000(int x1, int y1, int x2, int y2, int c);  /* graphics library: erase frame */
 void HighlightGridCell(int team, unsigned char *tab, int on);  /* 37EA6 */
 int LeagueSetHitTest(int x, int y, int *item);  /* 7A9C8 */
@@ -944,7 +944,7 @@ int MenuMergeUpdateDbs(void);  /* 333D7 */
 void DrawLineJerseys(unsigned char *nums, int art, unsigned char side);  /* 75046 */
 int FileDlgHitTest(int x, int y, int *item);  /* 2C3FF */
 void a2touchpuck(Player *p);  /* 4DE14 */
-void __cdecl sub_92CD0(char *s, int x, int y);  /* graphics library: print text */
+void __cdecl TextPrintAt(char *s, int x, int y);  /* graphics library: print text */
 void DrawDbDialogButtons(void);  /* 72605 */
 int GameStandingsScreen(void);  /* 203FA */
 int EasnStandingsScreen(void);  /* 20D97 */
