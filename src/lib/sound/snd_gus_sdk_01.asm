@@ -2,16 +2,16 @@
 bits 32
 %include "hockey.inc"
 section s_AA210 progbits alloc exec nowrite align=1
-extern str_GF1PATCH110, str_110, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, GusDmaLatchBits, byte_D87D8, GusDramSized
-extern byte_F5978, byte_F5979, byte_F597A, byte_F59F8, byte_F59F9, byte_F5A00, byte_F5A01, byte_F5A04
-extern byte_F5C0B, GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, GusOpenCount, dword_D7ABC
-extern dword_D87DC, dword_D87E0, dword_D89D8, dword_F59FC, dword_F6016, dword_F6116, inp_, inpw_
+extern str_GF1PATCH110, str_110, GusIrqLatchBits, GusVolumeCurve, GusMidiReady, GusDmaLatchBits, GusMidiInitFlag, GusDramSized
+extern GusMidiVoices, GusMidiVoiceNote, GusMidiVoiceVelocity
+extern GusWaveVoiceFlags, GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, GusOpenCount, GusPitchTable
+extern GusNoteFreqTable, GusNoteFreqUpper, GusFreqDivisor, inp_, inpw_
 extern outp_, outpw_, strcmp_, strncmp_, GusProbePort, GusDosRead, GusDosClose, GusDosSeek
 extern GusDosOpen, GusHookIrq, GusUnhookIrq, GusDownload, GusDramDmaDone, GusCalcVoiceAddrs, GusClearIrqState, GusEnterCritical
 extern GusLeaveCritical, GusWaveIrqHandler, GusMidiIrqHandler, GusDelay, GusSetBasePort, GusClearCallbacks, GusClaimVoiceCallbacks, GusClaimTimerCallbacks
 extern GusRunInitTable, GusStartTimer2, GusStopTimer2, GusAllocVoice, GusReleaseVoice, GusAddVoicePriority, GusPeek, GusPoke
-extern GusTestDramBank, unk_F5BF8, GusBasePort, GusIrqStatusPort, GusIrqLatchPort, GusDmaLatchPort, GusVoiceSelectPort, GusRegSelectPort
-extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, GusDramSize, GusDosResult
+extern GusTestDramBank, GusWaveVoices, GusBasePort, GusIrqStatusPort, GusIrqLatchPort, GusDmaLatchPort, GusVoiceSelectPort, GusRegSelectPort
+extern GusDataLowPort, GusDataHighPort, GusDramSize, GusDosResult
 extern GusIrqFlags, GusActiveVoices
 global GusReadPatchHeader, GusLoadPatch, GusUnloadPatch, GusSetPatchFlags, GusStopDmaAndTimers, GusUnhookIrqs, GusHookIrqs, GusOpenCard
 global GusStopAllVoices, GusOpen, GusClose, GusSetIrqDmaLatches, GusResetVoices, GusMidiInit, GusVoiceUpdateVolume, GusSetChannelVolume
@@ -1328,9 +1328,9 @@ GusMidiInit:
         push edx
         mov ah, 1
         xor edx, edx
-        mov byte [byte_D87D8], ah
-        mov byte [byte_D7AEC], ah
-        mov eax, unk_F5BF8
+        mov byte [GusMidiInitFlag], ah
+        mov byte [GusMidiReady], ah
+        mov eax, GusWaveVoices
         jmp short .2
 .1:
         add eax, byte 21h
@@ -1345,7 +1345,7 @@ GusMidiInit:
 .2:
         cmp edx, byte 20h
         jl short .1
-        mov eax, byte_F59F8
+        mov eax, GusMidiVoices+080h
         xor edx, edx
         jmp short .4
 .3:
@@ -1368,8 +1368,8 @@ GusMidiInit:
         mov ebx, 7Fh
         xor edx, edx
         mov eax, GusVoiceRampEnd
-        mov word [word_F611A], dx
-        mov word [word_F6118], bx
+        mov word [GusMidiVoices+07A2h], dx
+        mov word [GusMidiVoices+07A0h], bx
         call GusClaimTimerCallbacks
         test eax, eax
         jne short .5
@@ -1402,23 +1402,23 @@ GusVoiceUpdateVolume:
         mov eax, ebx
         shl eax, 5
         add eax, ebx
-        mov ebx, unk_F5BF8
+        mov ebx, GusWaveVoices
         add ebx, eax
-        cmp byte [byte_D7AEC], 0
+        cmp byte [GusMidiReady], 0
         je short .1
         xor eax, eax
         mov al, byte [byte ebx+01Ch]
-        movzx esi, byte [dword eax+byte_D7A3C]
-        mov eax, dword [word_F6118-2]
+        movzx esi, byte [dword eax+GusVolumeCurve]
+        mov eax, dword [GusMidiVoices+07A0h-2]
         sar eax, 10h
         add eax, byte 40h
         imul eax, esi
-        mov dl, byte [dword edx+byte_D7A3C]
+        mov dl, byte [dword edx+GusVolumeCurve]
         and edx, 0FFh
         jmp short .2
 .1:
         xor eax, eax
-        mov esi, dword [word_F6118-2]
+        mov esi, dword [GusMidiVoices+07A0h-2]
         mov al, byte [byte ebx+01Ch]
         sar esi, 10h
         add eax, 80h
@@ -1438,7 +1438,7 @@ GusVoiceUpdateVolume:
         xor eax, eax
         mov al, byte [byte ebx+01Dh]
         shl eax, 4
-        cmp byte [dword eax+byte_F5A04], 0
+        cmp byte [dword eax+GusMidiVoices+08Ch], 0
         je short .4
 .3:
         xor edx, edx
@@ -1755,8 +1755,8 @@ GusSetChannelVolume:
         mov ecx, dword [byte ebp-010h]
         call GusEnterCritical
         shl ecx, 4
-        mov esi, unk_F5BF8
-        mov byte [dword ecx+byte_F59F9], bl
+        mov esi, GusWaveVoices
+        mov byte [dword ecx+GusMidiVoices+081h], bl
         xor ecx, ecx
         jmp short .5
 .3:
@@ -1798,7 +1798,7 @@ GusSetChannelBend:
         pushfw
         cli
         call GusEnterCritical
-        mov ecx, unk_F5BF8
+        mov ecx, GusWaveVoices
         xor esi, esi
         jmp near .5
 .1:
@@ -1815,7 +1815,7 @@ GusSetChannelBend:
         mov edx, dword [ecx]
         cmp byte [byte edx+047h], 0
         jne short .2
-        cmp byte [dword eax+byte_F5A01], 0
+        cmp byte [dword eax+GusMidiVoices+089h], 0
         je short .3
 .2:
         mov edx, 1
@@ -1847,7 +1847,7 @@ GusSetChannelBend:
         shl eax, 4
         cmp esi, edx
         jb near .1
-        mov word [dword eax+word_F59FA], di
+        mov word [dword eax+GusMidiVoices+082h], di
         call GusLeaveCritical
         popfw
         lea esp, [byte ebp-010h]
@@ -1873,8 +1873,8 @@ GusSetMasterVolume:
         jle short .2
         mov eax, 7Fh
 .2:
-        mov ecx, unk_F5BF8
-        mov word [word_F6118], ax
+        mov ecx, GusWaveVoices
+        mov word [GusMidiVoices+07A0h], ax
         pushfw
         cli
         call GusEnterCritical
@@ -1887,7 +1887,7 @@ GusSetMasterVolume:
         mov al, byte [byte ecx+01Dh]
         shl eax, 4
         xor edx, edx
-        mov dl, byte [dword eax+byte_F59F9]
+        mov dl, byte [dword eax+GusMidiVoices+081h]
         mov eax, ebx
         call GusVoiceUpdateVolume
 .4:
@@ -1939,11 +1939,11 @@ GusSetChannelModulation:
         shl esi, 4
         pushfw
         cli
-        add esi, byte_F59F8
+        add esi, GusMidiVoices+080h
         call GusEnterCritical
         xor eax, eax
         mov byte [byte esi+0Bh], 0
-        mov ecx, unk_F5BF8
+        mov ecx, GusWaveVoices
         mov al, byte [byte esi+09h]
         mov byte [byte esi+0Ah], bl
         mov dword [byte ebp-020h], eax
@@ -1991,10 +1991,10 @@ GusSetChannelModulation:
         je short .11
         test eax, eax
         je short .10
-        mov dx, word [word_F611A]
+        mov dx, word [GusMidiVoices+07A2h]
         mov ebx, edx
         inc ebx
-        mov word [word_F611A], bx
+        mov word [GusMidiVoices+07A2h], bx
         test dx, dx
         jne short .10
         call GusStartVibratoTimer
@@ -2002,9 +2002,9 @@ GusSetChannelModulation:
 .10:
         test eax, eax
         jne short .11
-        mov dx, word [word_F611A]
+        mov dx, word [GusMidiVoices+07A2h]
         dec dx
-        mov word [word_F611A], dx
+        mov word [GusMidiVoices+07A2h], dx
         jne short .11
         call GusStopVibratoTimer
 .11:
@@ -2053,7 +2053,7 @@ GusVibratoTick:
         push edx
         push esi
         push edi
-        mov ebx, unk_F5BF8
+        mov ebx, GusWaveVoices
         xor esi, esi
         jmp near .5
 .1:
@@ -2065,7 +2065,7 @@ GusVibratoTick:
         xor eax, eax
         mov al, byte [byte ebx+01Dh]
         shl eax, 4
-        cmp byte [dword eax+byte_F5A01], 0
+        cmp byte [dword eax+GusMidiVoices+089h], 0
         je near .4
 .2:
         mov edx, dword [byte ebx+0Ah]
@@ -2198,8 +2198,8 @@ GusVoiceSetVibrato:
         shl ebx, 5
         shl eax, 4
         add ebx, ecx
-        add eax, byte_F59F8
-        add ebx, unk_F5BF8
+        add eax, GusMidiVoices+080h
+        add ebx, GusWaveVoices
         movzx esi, byte [byte eax+09h]
         mov ecx, dword [ebx]
         test esi, esi
@@ -2270,12 +2270,12 @@ GusVoiceSetVibrato:
         mov eax, edi
         div dword [byte ebp-010h]
         mov edx, dword [byte ebp-01Ch]
-        mov edx, dword [nosplit edx*4+dword_D7ABC]
+        mov edx, dword [nosplit edx*4+GusPitchTable]
         shl edx, cl
         mov dword [byte ebp-024h], edx
         mov edx, dword [byte ebp-020h]
         mov cl, al
-        mov edi, dword [nosplit edx*4+dword_D7ABC]
+        mov edi, dword [nosplit edx*4+GusPitchTable]
         mov eax, esi
         shl edi, cl
         xor edx, edx
@@ -2322,8 +2322,8 @@ GusVoiceSetEnvelope:
         push edi
         sub esp, byte 8
         mov ecx, edx
-        mov ebx, unk_F5BF8
-        mov edi, byte_F59F8
+        mov ebx, GusWaveVoices
+        mov edi, GusMidiVoices+080h
         mov edx, eax
         shl ecx, 4
         shl eax, 5
@@ -2489,11 +2489,11 @@ GusNoteFrequency:
 .1:
         cmp edx, 80h
         jl short .2
-        mov eax, dword [dword_D89D8]
+        mov eax, dword [GusFreqDivisor]
         jmp short .4
 .2:
-        mov eax, dword [nosplit edx*4+dword_D87DC]
-        mov ebx, dword [nosplit edx*4+dword_D87E0]
+        mov eax, dword [nosplit edx*4+GusNoteFreqTable]
+        mov ebx, dword [nosplit edx*4+GusNoteFreqUpper]
         cmp edx, byte 5Fh
         jl short .3
         sar eax, 5
@@ -2533,7 +2533,7 @@ GusVoiceStopRamp:
         mov ebx, eax
         shl ebx, 5
         add ebx, eax
-        add ebx, unk_F5BF8
+        add ebx, GusWaveVoices
         mov ah, byte [byte ebx+013h]
         test ah, 1
         je near .1
@@ -2624,7 +2624,7 @@ GusVoiceStopWave:
         mov eax, ecx
         shl eax, 5
         add eax, ecx
-        mov ecx, unk_F5BF8
+        mov ecx, GusWaveVoices
         add ecx, eax
         test byte [byte ecx+013h], 1
         je near .3
@@ -2660,20 +2660,20 @@ GusVoiceStopWave:
         mov byte [byte ecx+016h], 0
         xor dl, dl
         call GusReleaseVoice
-        mov byte [nosplit ebx*4+byte_F5978], dl
-        mov byte [nosplit ebx*4+byte_F5979], dl
+        mov byte [nosplit ebx*4+GusMidiVoices], dl
+        mov byte [nosplit ebx*4+GusMidiVoiceNote], dl
         mov eax, dword [ecx]
         cmp byte [byte eax+047h], 0
         jne short .2
         xor eax, eax
         mov al, byte [byte ecx+01Dh]
         shl eax, 4
-        cmp byte [dword eax+byte_F5A01], 0
+        cmp byte [dword eax+GusMidiVoices+089h], 0
         je short .3
 .2:
-        mov dx, word [word_F611A]
+        mov dx, word [GusMidiVoices+07A2h]
         dec dx
-        mov word [word_F611A], dx
+        mov word [GusMidiVoices+07A2h], dx
         jne short .3
         call GusStopVibratoTimer
 .3:
@@ -2700,7 +2700,7 @@ GusStopNoteVoices:
         xor edx, edx
 .1:
         lea ebx, [nosplit edx*2+00h]
-        mov eax, dword [dword ebx+ecx*8+dword_F6016]
+        mov eax, dword [dword ebx+ecx*8+GusMidiVoices+069Eh]
         sar eax, 10h
         cmp eax, byte 0FFFFFFFFh
         je short .2
@@ -2712,14 +2712,14 @@ GusStopNoteVoices:
         xor edx, edx
 .3:
         lea eax, [nosplit edx*2+00h]
-        mov ebx, dword [dword eax+ecx*8+dword_F6016]
+        mov ebx, dword [dword eax+ecx*8+GusMidiVoices+069Eh]
         sar ebx, 10h
         cmp ebx, byte 0FFFFFFFFh
         je short .4
         mov eax, ebx
         mov esi, ebx
         shl eax, 5
-        test byte [dword esi+eax+byte_F5C0B], 1
+        test byte [dword esi+eax+GusWaveVoiceFlags], 1
         je short .4
         mov eax, ebx
         call GusVoiceStopWave
@@ -2755,7 +2755,7 @@ GusMidiNoteOn:
         jmp near .39
 .1:
         mov eax, dword [byte ebp+08h]
-        mov edx, byte_F59F8
+        mov edx, GusMidiVoices+080h
         shl eax, 4
         add edx, eax
         mov dword [byte ebp-010h], edx
@@ -2793,7 +2793,7 @@ GusMidiNoteOn:
         jmp short .5
 .4:
         mov ebx, dword [byte ebp-01Ch]
-        mov ebx, dword [nosplit ebx*4+dword_D87DC]
+        mov ebx, dword [nosplit ebx*4+GusNoteFreqTable]
 .5:
         cmp word [byte edi+01Ah], 400h
         je short .8
@@ -2862,13 +2862,13 @@ GusMidiNoteOn:
         mov dword [byte ebp+eax*4-040h], edx
         mov al, byte [byte ebp-01Ch]
         xor ah, ah
-        mov byte [nosplit edx*4+byte_F5979], al
-        mov byte [nosplit edx*4+byte_F5978], ah
+        mov byte [nosplit edx*4+GusMidiVoiceNote], al
+        mov byte [nosplit edx*4+GusMidiVoices], ah
         mov al, byte [byte ebp+08h]
-        mov byte [nosplit edx*4+byte_F597A], al
+        mov byte [nosplit edx*4+GusMidiVoiceVelocity], al
         mov eax, edx
         shl edx, 5
-        mov ecx, unk_F5BF8
+        mov ecx, GusWaveVoices
         add edx, eax
         add ecx, edx
         mov al, byte [byte ebp+08h]
@@ -2884,15 +2884,15 @@ GusMidiNoteOn:
         mov dword [byte ebp-014h], 7Fh
 .14:
         mov al, byte [byte ebp-014h]
-        mov dl, byte [byte_D7AEC]
+        mov dl, byte [GusMidiReady]
         mov byte [byte ecx+01Ch], al
         test dl, dl
         je short .15
         mov edx, dword [byte ebp-014h]
         xor eax, eax
-        mov al, byte [dword edx+byte_D7A3C]
+        mov al, byte [dword edx+GusVolumeCurve]
         mov dword [byte ebp-030h], eax
-        mov eax, dword [word_F6118-2]
+        mov eax, dword [GusMidiVoices+07A0h-2]
         sar eax, 10h
         mov edx, dword [byte ebp-030h]
         add eax, byte 40h
@@ -2904,12 +2904,12 @@ GusMidiNoteOn:
         mov dword [byte ebp-030h], eax
         mov edx, dword [byte ebp-030h]
         xor eax, eax
-        mov al, byte [dword edx+byte_D7A3C]
+        mov al, byte [dword edx+GusVolumeCurve]
         mov edx, dword [byte ebp-0Ch]
         imul edx, eax
         jmp short .16
 .15:
-        mov eax, dword [word_F6118-2]
+        mov eax, dword [GusMidiVoices+07A0h-2]
         mov edx, dword [byte ebp-014h]
         sar eax, 10h
         add edx, 80h
@@ -3126,10 +3126,10 @@ GusMidiNoteOn:
         mov edx, 1
         mov ebx, dword [byte ebp+08h]
         call GusVoiceSetVibrato
-        mov ax, word [word_F611A]
+        mov ax, word [GusMidiVoices+07A2h]
         mov edx, eax
         inc edx
-        mov word [word_F611A], dx
+        mov word [GusMidiVoices+07A2h], dx
         test ax, ax
         jne short .28
         call GusStartVibratoTimer
@@ -3193,7 +3193,7 @@ GusMidiNoteOn:
         mov eax, dword [byte ebp+edx*4-040h]
         mov cx, word [byte ebp+ebx*4-040h]
         inc ebx
-        mov word [dword esi+eax*8+word_F6018], cx
+        mov word [dword esi+eax*8+GusMidiVoices+06A0h], cx
 .34:
         cmp ebx, dword [byte ebp-020h]
         jl short .33
@@ -3203,7 +3203,7 @@ GusMidiNoteOn:
         mov ecx, dword [byte ebp+edx*4-040h]
         mov esi, 0FFFFFFFFh
         inc ebx
-        mov word [dword eax+ecx*8+word_F6018], si
+        mov word [dword eax+ecx*8+GusMidiVoices+06A0h], si
 .36:
         cmp ebx, byte 4
         jl short .35
@@ -3235,17 +3235,17 @@ GusMidiNoteOff:
         call GusEnterCritical
         mov eax, edx
         shl eax, 4
-        test byte [dword eax+byte_F59F8], 1
+        test byte [dword eax+GusMidiVoices+080h], 1
         je short .3
         xor ecx, ecx
 .1:
         lea ebx, [nosplit ecx*4+00h]
         mov ah, byte [byte ebp-01Ch]
-        cmp ah, byte [dword ebx+byte_F5979]
+        cmp ah, byte [dword ebx+GusMidiVoiceNote]
         jne short .2
-        cmp dl, byte [dword ebx+byte_F597A]
+        cmp dl, byte [dword ebx+GusMidiVoiceVelocity]
         jne short .2
-        or byte [dword ebx+byte_F5978], 1
+        or byte [dword ebx+GusMidiVoices], 1
 .2:
         inc ecx
         cmp ecx, byte 20h
@@ -3256,9 +3256,9 @@ GusMidiNoteOff:
 .4:
         lea eax, [nosplit esi*4+00h]
         mov bh, byte [byte ebp-01Ch]
-        cmp bh, byte [dword eax+byte_F5979]
+        cmp bh, byte [dword eax+GusMidiVoiceNote]
         jne short .5
-        cmp dl, byte [dword eax+byte_F597A]
+        cmp dl, byte [dword eax+GusMidiVoiceVelocity]
         je short .6
 .5:
         inc esi
@@ -3270,7 +3270,7 @@ GusMidiNoteOff:
         xor edi, edi
 .7:
         lea eax, [nosplit edi*2+00h]
-        mov ecx, dword [dword eax+esi*8+dword_F6016]
+        mov ecx, dword [dword eax+esi*8+GusMidiVoices+069Eh]
         sar ecx, 10h
         cmp ecx, byte 0FFFFFFFFh
         je near .21
@@ -3279,18 +3279,18 @@ GusMidiNoteOff:
         mov edx, 20h
         add ebx, ecx
         mov eax, ecx
-        add ebx, unk_F5BF8
+        add ebx, GusWaveVoices
         call GusAddVoicePriority
         mov al, byte [byte ebx+013h]
         test al, 1
         je near .21
         test al, 4
         jne near .21
-        mov dl, byte [nosplit ecx*4+byte_F5978]
+        mov dl, byte [nosplit ecx*4+GusMidiVoices]
         xor dh, dh
         and dl, 0FEh
-        mov byte [nosplit ecx*4+byte_F5979], dh
-        mov byte [nosplit ecx*4+byte_F5978], dl
+        mov byte [nosplit ecx*4+GusMidiVoiceNote], dh
+        mov byte [nosplit ecx*4+GusMidiVoices], dl
         mov al, byte [byte ebx+013h]
         and al, 0F9h
         mov ah, al
@@ -3636,24 +3636,24 @@ GusSetSustain:
         shl eax, 4
         test edx, edx
         je short .1
-        or byte [dword eax+byte_F59F8], 1
+        or byte [dword eax+GusMidiVoices+080h], 1
         jmp short .5
 .1:
-        mov dh, byte [dword eax+byte_F59F8]
+        mov dh, byte [dword eax+GusMidiVoices+080h]
         and dh, 0FEh
         xor ebx, ebx
-        mov byte [dword eax+byte_F59F8], dh
+        mov byte [dword eax+GusMidiVoices+080h], dh
         jmp short .4
 .2:
         lea eax, [nosplit ebx*4+00h]
-        cmp cl, byte [dword eax+byte_F597A]
+        cmp cl, byte [dword eax+GusMidiVoiceVelocity]
         jne short .3
-        test byte [dword eax+byte_F5978], 1
+        test byte [dword eax+GusMidiVoices], 1
         je short .3
-        cmp byte [dword eax+byte_F5979], 0
+        cmp byte [dword eax+GusMidiVoiceNote], 0
         je short .3
         xor edx, edx
-        mov al, byte [dword eax+byte_F5979]
+        mov al, byte [dword eax+GusMidiVoiceNote]
         mov dl, cl
         and eax, 0FFh
         call GusMidiNoteOff
@@ -3682,7 +3682,7 @@ GusVoiceWaveEnd:
         mov ecx, eax
         shl ecx, 5
         add ecx, eax
-        add ecx, unk_F5BF8
+        add ecx, GusWaveVoices
         test byte [byte ecx+013h], 1
         je short .2
         mov dl, byte [byte ecx+014h]
@@ -3740,7 +3740,7 @@ GusVoiceRampEnd:
         mov ebx, eax
         shl ebx, 5
         add ebx, eax
-        add ebx, unk_F5BF8
+        add ebx, GusWaveVoices
         test byte [byte ebx+013h], 1
         je near .19
         mov cl, byte [byte ebx+015h]
@@ -3893,7 +3893,7 @@ GusVoiceRampEnd:
         xor eax, eax
         mov al, byte [byte ebx+01Dh]
         shl eax, 4
-        cmp byte [dword eax+byte_F5A04], 0
+        cmp byte [dword eax+GusMidiVoices+08Ch], 0
         je near .18
 .8:
         xor eax, eax
@@ -4057,7 +4057,7 @@ GusStopPatchVoices:
         mov edx, eax
         pushfw
         cli
-        mov ebx, unk_F5BF8
+        mov ebx, GusWaveVoices
         call GusEnterCritical
         mov dword [byte ebp-01Ch], ebx
         xor ebx, ebx
@@ -4108,7 +4108,7 @@ GusStopPatchVoices:
         mov ax, word [GusActiveVoices]
         cmp ebx, eax
         jb short .1
-        mov ecx, unk_F5BF8
+        mov ecx, GusWaveVoices
         xor ebx, ebx
         jmp short .16
 .9:
@@ -4171,7 +4171,7 @@ GusForgetPatch:
         push ebx
         push edx
         mov ebx, eax
-        mov eax, byte_F59F8
+        mov eax, GusMidiVoices+080h
         xor edx, edx
         cmp edx, byte 20h
         jl short .1
@@ -4199,7 +4199,7 @@ GusSetChannelPatch:
         push ebp
         mov ebp, esp
         shl edx, 4
-        mov dword [dword edx+dword_F59FC], eax
+        mov dword [dword edx+GusMidiVoices+084h], eax
         mov esp, ebp
         pop ebp
         ret
@@ -4216,13 +4216,13 @@ GusSetChannelPan:
         shl eax, 4
         cmp ebx, byte 0FFFFFFFFh
         jne short .1
-        mov byte [dword eax+byte_F5A00], 10h
+        mov byte [dword eax+GusMidiVoices+088h], 10h
         jmp near .5
 .1:
-        mov esi, unk_F5BF8
+        mov esi, GusWaveVoices
         sar ebx, 3
         xor ecx, ecx
-        mov byte [dword eax+byte_F5A00], bl
+        mov byte [dword eax+GusMidiVoices+088h], bl
         pushfw
         cli
         call GusEnterCritical
@@ -4273,7 +4273,7 @@ GusChannelNotesOff:
         pushfw
         cli
         call GusEnterCritical
-        mov ebx, unk_F5BF8
+        mov ebx, GusWaveVoices
         xor edx, edx
         jmp short .3
 .1:
@@ -4291,7 +4291,7 @@ GusChannelNotesOff:
         mov ax, word [GusActiveVoices]
         cmp edx, eax
         jb short .1
-        mov ebx, unk_F5BF8
+        mov ebx, GusWaveVoices
         xor edx, edx
         jmp short .6
 .4:

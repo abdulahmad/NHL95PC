@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_B5D80 progbits alloc exec nowrite align=1
 extern ColourRemap, VesaBankShift, RemapTable, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, DrawClipLeft
-extern DrawClipRight, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase, ScreenRowTable, VesaBank, dword_D4F50
+extern DrawClipRight, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase, ScreenRowTable, VesaBank, VesaWindowGranularity
 extern BlitColumnOffsets, BlitSourcePtr
 global PutPixel, PlotPixel, VesaSetBankArg, VesaSetBank, VesaSetBankJumpTable, VesaSetMode, VgaSetModeTwice, VesaSetDisplayStart
 global BlitBlockHot, BlitBlock, BlitBlockXorHot, BlitBlockXor, BlitBlockXor, BlitBlockAndHot, BlitBlockAnd, AndPixelClipped
@@ -73,7 +73,7 @@ VesaSetBankJumpTable:
         push ebp
         push esi
         push edi
-        mov ecx, dword [dword_D4F50]
+        mov ecx, dword [VesaWindowGranularity]
         shl al, cl
         movzx edx, al
         mov ax, 4F05h
@@ -92,7 +92,7 @@ VesaSetBankJumpTable:
         push ebp
         push esi
         push edi
-        mov ecx, dword [dword_D4F50]
+        mov ecx, dword [VesaWindowGranularity]
         shl al, cl
         movzx edx, al
         push edx

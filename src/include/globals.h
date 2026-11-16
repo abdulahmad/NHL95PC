@@ -3893,7 +3893,7 @@ extern unsigned char _osminor; /* D4D10 */
 extern int FpeHandler; /* D4D11 */
 extern unsigned char __iob[]; /* D4D18 */
 extern unsigned char __stdout_buf[]; /* D4D32 */
-extern unsigned char unk_D4D4C[]; /* D4D4C */
+extern unsigned char PerrorSeparator[]; /* D4D4C */
 extern unsigned char __iob_flags; /* D4D59 */
 extern unsigned char __iob_end[]; /* D4D9A */
 extern unsigned char __NFiles[]; /* D4F20 */
@@ -3909,45 +3909,45 @@ extern unsigned char SavedTextPage; /* D4F45 */
 extern short SavedTextColumns; /* D4F46 */
 extern unsigned char SavedTextRows; /* D4F48 */
 extern int VesaBank; /* D4F4C */
-extern int dword_D4F50; /* D4F50 */
+extern int VesaWindowGranularity; /* D4F50 */
 extern unsigned char VesaBankShift; /* D4F54 */
-extern int dword_D4F58; /* D4F58 */
-extern unsigned char byte_D4F5C; /* D4F5C */
-extern unsigned char byte_D4F5D; /* D4F5D */
-extern unsigned char byte_D4F5E; /* D4F5E */
+extern int SeqQueueHead; /* D4F58 */
+extern unsigned char SeqQueueCount; /* D4F5C */
+extern unsigned char SeqTickCount; /* D4F5D */
+extern unsigned char SeqServiceBusy; /* D4F5E */
 extern int sndhandlecount; /* D4F64 */
-extern short word_D4F68[]; /* D4F68 */
-extern short word_D4F88; /* D4F88 */
-extern int dword_D4F8A; /* D4F8A */
-extern int dword_D4F8E; /* D4F8E */
-extern int dword_D4F92; /* D4F92 */
+extern short MidiChannelBits[]; /* D4F68 */
+extern short ActiveSongCount; /* D4F88 */
+extern int SongReleasedFlag; /* D4F8A */
+extern int MidiSfxEnabled; /* D4F8E */
+extern int MidiMusicEnabled; /* D4F92 */
 extern int SndTimerHandle; /* D4F96 */
-extern int dword_D4F9A; /* D4F9A */
+extern int MidiTickCount; /* D4F9A */
 extern int RetraceMode; /* D4FA0 */
-extern int dword_D4FA4[]; /* D4FA4 */
-extern short word_D4FE4; /* D4FE4 */
-extern short word_D4FE6; /* D4FE6 */
-extern unsigned char byte_D4FE8; /* D4FE8 */
-extern short word_D4FE9; /* D4FE9 */
-extern int dword_D4FEB; /* D4FEB */
+extern int KbdKeyTranslate[]; /* D4FA4 */
+extern short KbdLastKey; /* D4FE4 */
+extern short KbdPrevKey; /* D4FE6 */
+extern unsigned char KbdRepeatDelay; /* D4FE8 */
+extern short KbdHeldKey; /* D4FE9 */
+extern int KbdRepeatTick; /* D4FEB */
 extern int DosErrnoTable[]; /* D4FF1 */
 extern int SopenMask; /* D5008 */
 extern int __NHandles; /* D500C */
-extern unsigned char unk_D5010[]; /* D5010 */
+extern unsigned char IoModeTable[]; /* D5010 */
 extern int __io_mode; /* D5060 */
-extern int dword_D5064; /* D5064 */
-extern int dword_D5068; /* D5068 */
-extern unsigned char byte_D506C[]; /* D506C */
+extern int NearestColorCache; /* D5064 */
+extern int NearestColorResult; /* D5068 */
+extern unsigned char PaletteUsable[]; /* D506C */
 extern int ArtDrawModeFuncs[]; /* D516C */
-extern int off_D517C[]; /* D517C */
-extern int dword_D5184[]; /* D5184 */
-extern int off_D518C[]; /* D518C */
+extern int SnapFileExts[]; /* D517C */
+extern int SnapShapeSizes[]; /* D5184 */
+extern int SnapShapeTags[]; /* D518C */
 extern int FpuSystemFlags; /* D5194 */
 extern int OldFpuVectorOffset; /* D51D4 */
 extern short OldFpuVectorSelector; /* D51D8 */
 extern short FpuCr0Bits; /* D51DA */
 extern unsigned char __real87; /* D51DC */
-extern int off_D51E4[]; /* D51E4 */
+extern int StrErrorTable[]; /* D51E4 */
 extern unsigned char byte_D5224; /* D5224 */
 extern unsigned char unk_D522E[]; /* D522E */
 extern int dword_D524C; /* D524C */
@@ -3986,10 +3986,10 @@ extern int __EFG_printf; /* D5668 */
 extern int __EFG_scanf; /* D566C */
 extern int __heap_enabled; /* D5670 */
 extern int __amblksiz; /* D5674 */
-extern int dword_D5678; /* D5678 */
-extern int off_D567C[]; /* D567C */
+extern int RectFillMaxShades; /* D5678 */
+extern int RectFillPatternPtrs[]; /* D567C */
 extern unsigned char off_D5742[]; /* D5742 */
-extern unsigned char unk_D5744[]; /* D5744 */
+extern unsigned char RectFillPatterns[]; /* D5744 */
 extern unsigned char unk_D5748[]; /* D5748 */
 extern unsigned char unk_D574E[]; /* D574E */
 extern unsigned char unk_D5756[]; /* D5756 */
@@ -4028,7 +4028,7 @@ extern unsigned char unk_D5C76[]; /* D5C76 */
 extern unsigned char unk_D5CC0[]; /* D5CC0 */
 extern unsigned char unk_D5D0C[]; /* D5D0C */
 extern unsigned char unk_D5D5A[]; /* D5D5A */
-extern int dword_D5D78[]; /* D5D78 */
+extern int CosTable[]; /* D5D78 */
 extern unsigned char unk_D5DAA[]; /* D5DAA */
 extern unsigned char unk_D5DFC[]; /* D5DFC */
 extern unsigned char unk_D5E50[]; /* D5E50 */
@@ -4038,17 +4038,17 @@ extern unsigned char unk_D5F58[]; /* D5F58 */
 extern unsigned char unk_D5FB4[]; /* D5FB4 */
 extern unsigned char unk_D6012[]; /* D6012 */
 extern unsigned char AngleOctantTable[]; /* D6074 */
-extern int dword_D6178[]; /* D6178 */
-extern int dword_D6578[]; /* D6578 */
+extern int CosTableFine[]; /* D6178 */
+extern int CosTableEnd[]; /* D6578 */
 extern unsigned char EmuTrapFrame[]; /* D657C */
 extern unsigned char Hook387Flag; /* D65F8 */
 extern unsigned char Hook387Saved; /* D65F9 */
 extern short DefaultControlWord; /* D65FC */
 extern int EmuInitHook; /* D6600 */
 extern int EmuFiniHook; /* D6604 */
-extern unsigned short word_D6608[]; /* D6608 */
-extern unsigned char byte_D6770; /* D6770 */
-extern unsigned char byte_D6774[]; /* D6774 */
+extern unsigned short PcSpkVoiceTable[]; /* D6608 */
+extern unsigned char PcSpkState; /* D6770 */
+extern unsigned char PcSpkVoiceLevel[]; /* D6774 */
 extern unsigned char byte_D6775; /* D6775 */
 extern unsigned char byte_D6776; /* D6776 */
 extern unsigned char byte_D6777; /* D6777 */
@@ -4063,21 +4063,21 @@ extern unsigned char byte_D6786; /* D6786 */
 extern unsigned char byte_D6787; /* D6787 */
 extern unsigned char byte_D6788; /* D6788 */
 extern unsigned char byte_D6789; /* D6789 */
-extern unsigned char byte_D678C[]; /* D678C */
+extern unsigned char PcSpkOutLevel[]; /* D678C */
 extern unsigned char byte_D678D; /* D678D */
 extern unsigned char byte_D678E; /* D678E */
 extern unsigned char byte_D678F; /* D678F */
 extern unsigned char byte_D6790; /* D6790 */
 extern unsigned char byte_D679A; /* D679A */
-extern short word_D679C; /* D679C */
-extern int dword_D67A0; /* D67A0 */
-extern int dword_D67A4; /* D67A4 */
-extern unsigned char byte_D67A8[]; /* D67A8 */
-extern unsigned char unk_D67B4[]; /* D67B4 */
-extern unsigned short word_D67F4[]; /* D67F4 */
-extern unsigned short word_D683C[]; /* D683C */
-extern unsigned short word_D687C[]; /* D687C */
-extern unsigned char unk_D68FC[]; /* D68FC */
+extern short OplPort; /* D679C */
+extern int OplRegDelay; /* D67A0 */
+extern int OplDataDelay; /* D67A4 */
+extern unsigned char OplOperatorOffsets[]; /* D67A8 */
+extern unsigned char OplDefaultVoice[]; /* D67B4 */
+extern unsigned short OplFNumTable[]; /* D67F4 */
+extern unsigned short OplVolumeTable[]; /* D683C */
+extern unsigned short OplVelocityTable[]; /* D687C */
+extern unsigned char OplRegShadow[]; /* D68FC */
 extern unsigned char unk_D691C[]; /* D691C */
 extern unsigned char unk_D699C[]; /* D699C */
 extern unsigned char unk_D69B9[]; /* D69B9 */
@@ -4085,8 +4085,8 @@ extern unsigned char unk_D69FF[]; /* D69FF */
 extern unsigned char unk_D6A1F[]; /* D6A1F */
 extern unsigned char unk_D6A9F[]; /* D6A9F */
 extern unsigned char unk_D6ABC[]; /* D6ABC */
-extern int dword_D6B00[]; /* D6B00 */
-extern unsigned char byte_D6CE0; /* D6CE0 */
+extern int NotePitchTable[]; /* D6B00 */
+extern unsigned char SbStreamChannels; /* D6CE0 */
 extern unsigned char byte_D6CE1; /* D6CE1 */
 extern unsigned char byte_D6CE3; /* D6CE3 */
 extern int dword_D6CE4; /* D6CE4 */
@@ -4147,12 +4147,12 @@ extern unsigned char byte_D70EB; /* D70EB */
 extern int dword_D70EC; /* D70EC */
 extern signed char byte_D70F0[]; /* D70F0 */
 extern int dword_D7178[]; /* D7178 */
-extern int off_D71F0[]; /* D71F0 */
-extern int dword_D7200; /* D7200 */
-extern int dword_D7204; /* D7204 */
-extern int dword_D7208; /* D7208 */
-extern int dword_D720C; /* D720C */
-extern short word_D7214[]; /* D7214 */
+extern int SbStreamTable[]; /* D71F0 */
+extern int SbMixSrcPos; /* D7200 */
+extern int SbMixStep; /* D7204 */
+extern int SbMixSrcEnd; /* D7208 */
+extern int SbMixCount; /* D720C */
+extern short SbMixBuffer[]; /* D7214 */
 extern short word_D7216; /* D7216 */
 extern short word_D7218; /* D7218 */
 extern short word_D721A; /* D721A */
@@ -4408,26 +4408,26 @@ extern short word_D740C; /* D740C */
 extern short word_D740E; /* D740E */
 extern short word_D7410; /* D7410 */
 extern short word_D7412; /* D7412 */
-extern short word_D7414[]; /* D7414 */
-extern int dword_D7614; /* D7614 */
-extern unsigned char byte_D7618; /* D7618 */
-extern unsigned char byte_D7619; /* D7619 */
-extern unsigned char byte_D781C[]; /* D781C */
-extern int dword_D7A1E; /* D7A1E */
-extern int dword_D7A22; /* D7A22 */
+extern short MixVolumeTable[]; /* D7414 */
+extern int SbMixReadPos; /* D7614 */
+extern unsigned char SbDmaRunning; /* D7618 */
+extern unsigned char SbMixPaused; /* D7619 */
+extern unsigned char SbSignTable[]; /* D781C */
+extern int SbDmaHalfSize; /* D7A1E */
+extern int SbDmaBuffer; /* D7A22 */
 extern int GusOpenCount; /* D7A28 */
 extern unsigned char GusIrqLatchBits[]; /* D7A2C */
-extern unsigned char byte_D7A3C[]; /* D7A3C */
-extern int dword_D7ABC[]; /* D7ABC */
-extern unsigned char byte_D7AEC; /* D7AEC */
+extern unsigned char GusVolumeCurve[]; /* D7A3C */
+extern int GusPitchTable[]; /* D7ABC */
+extern unsigned char GusMidiReady; /* D7AEC */
 extern int GusStreamActive; /* D7AF0 */
-extern int dword_D7AF4; /* D7AF4 */
-extern int dword_D7AF8; /* D7AF8 */
+extern int GusStreamLeftBuf; /* D7AF4 */
+extern int GusStreamLeftPending; /* D7AF8 */
 extern int GusStreamBusyLeft; /* D7AFC */
-extern int dword_D7B00; /* D7B00 */
-extern int dword_D7B04; /* D7B04 */
+extern int GusStreamRightBuf; /* D7B00 */
+extern int GusStreamRightPending; /* D7B04 */
 extern int GusStreamBusyRight; /* D7B08 */
-extern int dword_D7B0C; /* D7B0C */
+extern int GusStreamChannels; /* D7B0C */
 extern unsigned char byte_D7B18; /* D7B18 */
 extern int dword_D7B1C; /* D7B1C */
 extern int dword_D7B30; /* D7B30 */
@@ -4440,7 +4440,7 @@ extern int dword_D7B50; /* D7B50 */
 extern unsigned char byte_D7B58; /* D7B58 */
 extern unsigned char byte_D7B5C; /* D7B5C */
 extern int dword_D7B60; /* D7B60 */
-extern short word_D7B64[]; /* D7B64 */
+extern short GusStreamStepsChan0[]; /* D7B64 */
 extern int dword_D7D64; /* D7D64 */
 extern unsigned char byte_D7D70; /* D7D70 */
 extern int dword_D7D74; /* D7D74 */
@@ -4454,7 +4454,7 @@ extern int dword_D7DA8; /* D7DA8 */
 extern unsigned char byte_D7DB0; /* D7DB0 */
 extern unsigned char byte_D7DB4; /* D7DB4 */
 extern int dword_D7DB8; /* D7DB8 */
-extern short word_D7DBC[]; /* D7DBC */
+extern short GusStreamStepsChan1[]; /* D7DBC */
 extern int dword_D7FBC; /* D7FBC */
 extern unsigned char byte_D7FC8; /* D7FC8 */
 extern int dword_D7FCC; /* D7FCC */
@@ -4468,7 +4468,7 @@ extern int dword_D8000; /* D8000 */
 extern unsigned char byte_D8008; /* D8008 */
 extern unsigned char byte_D800C; /* D800C */
 extern int dword_D8010; /* D8010 */
-extern short word_D8014[]; /* D8014 */
+extern short GusStreamStepsChan2[]; /* D8014 */
 extern int dword_D8214; /* D8214 */
 extern unsigned char byte_D8220; /* D8220 */
 extern int dword_D8224; /* D8224 */
@@ -4482,22 +4482,22 @@ extern int dword_D8258; /* D8258 */
 extern unsigned char byte_D8260; /* D8260 */
 extern unsigned char byte_D8264; /* D8264 */
 extern int dword_D8268; /* D8268 */
-extern short word_D826C[]; /* D826C */
-extern int off_D846C[]; /* D846C */
+extern short GusStreamStepsChan3[]; /* D826C */
+extern int GusStreamTable[]; /* D846C */
 extern int GusStreamBufSize; /* D847C */
 extern int GusStreamHalfSize; /* D8480 */
-extern int dword_D8484; /* D8484 */
-extern int dword_D8488; /* D8488 */
-extern int dword_D848C; /* D848C */
-extern int dword_D8490; /* D8490 */
-extern int dword_D8494; /* D8494 */
-extern int dword_D8498; /* D8498 */
-extern int byte_D849C; /* D849C */
-extern unsigned char byte_D84A0; /* D84A0 */
-extern int dword_D84A8; /* D84A8 */
-extern int dword_D84AC; /* D84AC */
-extern int dword_D84B0; /* D84B0 */
-extern int dword_D84B4; /* D84B4 */
+extern int GusStreamQuarterSize; /* D8484 */
+extern int GusStreamBufShift; /* D8488 */
+extern int GusStreamHalfShift; /* D848C */
+extern int GusStreamQuarterLog2; /* D8490 */
+extern int GusFillCount; /* D8494 */
+extern int GusStreamState; /* D8498 */
+extern int GusStreamVoiceLeft; /* D849C */
+extern unsigned char GusStreamVoiceRight; /* D84A0 */
+extern int GusFillScratch; /* D84A8 */
+extern int GusFillDest; /* D84AC */
+extern int GusStreamCardLeft; /* D84B0 */
+extern int GusStreamCardRight; /* D84B4 */
 extern int GusStreamCardEnd; /* D84B8 */
 extern short GusStreamLoopLo; /* D84BC */
 extern short GusStreamLoopHi; /* D84BE */
@@ -4506,13 +4506,13 @@ extern short GusStreamStartHi; /* D84C2 */
 extern int GusStreamEndLo; /* D84C4 */
 extern short GusStreamEndHi; /* D84C6 */
 extern int GusEnvVarName; /* D84CC */
-extern int dword_D84D0[]; /* D84D0 */
-extern int dword_D8510[]; /* D8510 */
-extern int dword_D8550[]; /* D8550 */
-extern int dword_D8590[]; /* D8590 */
-extern int dword_D85D0[]; /* D85D0 */
-extern int dword_D8610[]; /* D8610 */
-extern int dword_D8690; /* D8690 */
+extern int GusChanBendRange[]; /* D84D0 */
+extern int GusChanBendCents[]; /* D8510 */
+extern int GusChanRpnMsb[]; /* D8550 */
+extern int GusChanRpnLsb[]; /* D8590 */
+extern int GusChanVolume[]; /* D85D0 */
+extern int GusChanExpression[]; /* D8610 */
+extern int ExecParamBlock; /* D8690 */
 extern short word_D8694; /* D8694 */
 extern int dword_D8696; /* D8696 */
 extern short word_D869A; /* D869A */
@@ -4522,9 +4522,9 @@ extern int dword_D86A2; /* D86A2 */
 extern short word_D86A6; /* D86A6 */
 extern int dword_D86A8; /* D86A8 */
 extern int dword_D86AC; /* D86AC */
-extern int dword_D86B0; /* D86B0 */
-extern short word_D86B4; /* D86B4 */
-extern short word_D86B6; /* D86B6 */
+extern int SpawnSavedEsp; /* D86B0 */
+extern short SpawnSavedSs; /* D86B4 */
+extern short SpawnSavedDs; /* D86B6 */
 extern int BlitColumnOffsets; /* D86B8 */
 extern int BlitSourcePtr; /* D86BC */
 extern int DmaDefaultMode; /* D86C0 */
@@ -4534,8 +4534,8 @@ extern int GusIrqOldHandler[]; /* D86DC */
 extern short GusIrqOldSelector[]; /* D86E0 */
 extern unsigned short GusBasePort; /* D8760 */
 extern short GusIrqStatusPort; /* D8762 */
-extern short word_D8764; /* D8764 */
-extern short word_D8766; /* D8766 */
+extern short GusTimer1Count; /* D8764 */
+extern short GusTimer2Count; /* D8766 */
 extern short GusIrqLatchPort; /* D8768 */
 extern short GusDmaLatchPort; /* D876A */
 extern short GusMidiControlPort; /* D876C */
@@ -4561,11 +4561,11 @@ extern int GusWaveIrqCallback; /* D87C8 */
 extern int GusVolumeIrqCallback; /* D87CC */
 extern int GusMidiXmitCallback; /* D87D0 */
 extern int GusMidiRecvCallback; /* D87D4 */
-extern unsigned char byte_D87D8; /* D87D8 */
-extern int dword_D87DC[]; /* D87DC */
-extern int dword_D87E0[]; /* D87E0 */
-extern int dword_D89D8; /* D89D8 */
-extern int dword_D89DC; /* D89DC */
+extern unsigned char GusMidiInitFlag; /* D87D8 */
+extern int GusNoteFreqTable[]; /* D87DC */
+extern int GusNoteFreqUpper[]; /* D87E0 */
+extern int GusFreqDivisor; /* D89D8 */
+extern int GusVoiceAllocAge; /* D89DC */
 extern unsigned char GusDramSized; /* D89E0 */
 extern unsigned char RemapTable[]; /* D89E4 */
 extern short word_D8ACC[]; /* D8ACC */
@@ -5275,11 +5275,11 @@ extern unsigned char byte_EDCC3; /* EDCC3 */
 extern unsigned char byte_EDCC5; /* EDCC5 */
 extern unsigned char byte_EDCC7; /* EDCC7 */
 extern int timercallbacks[]; /* EDCDC */
-extern int dword_EDCFC[]; /* EDCFC */
-extern int dword_EDD00[]; /* EDD00 */
-extern int dword_EDD04[]; /* EDD04 */
-extern int dword_EDE34[]; /* EDE34 */
-extern int dword_EDE5C; /* EDE5C */
+extern int SampleTable[]; /* EDCFC */
+extern int SampleTableSize[]; /* EDD00 */
+extern int SongTable[]; /* EDD04 */
+extern int TimbreBanks[]; /* EDE34 */
+extern int PatchFile; /* EDE5C */
 extern int MemViewTop; /* EDE60 */
 extern int MemViewCount; /* EDE64 */
 extern int MemViewSel; /* EDE68 */
@@ -5288,7 +5288,7 @@ extern int MemViewRow; /* EDE70 */
 extern int MemViewList; /* EDE74 */
 extern int MemViewKey; /* EDE78 */
 extern int MemViewFlags; /* EDE7C */
-extern unsigned char byte_EDE7D; /* EDE7D */
+extern unsigned char MemViewAttrFlags; /* EDE7D */
 extern int MemViewMode; /* EDE80 */
 extern int MemViewPrevSel; /* EDE84 */
 extern int SndHandleTable[]; /* EDE88 */
@@ -5302,13 +5302,13 @@ extern int dword_EDEA4[]; /* EDEA4 */
 extern int dword_EDEA8[]; /* EDEA8 */
 extern unsigned char byte_EDEAC[]; /* EDEAC */
 extern int dword_EDEB0[]; /* EDEB0 */
-extern int dword_EDEE0; /* EDEE0 */
-extern int dword_EDEE4; /* EDEE4 */
+extern int HuffBitBuffer; /* EDEE0 */
+extern int HuffBitCount; /* EDEE4 */
 extern int UnpackSrcPtr; /* EDEE8 */
-extern int dword_EDEEC; /* EDEEC */
+extern int BytePairSrc; /* EDEEC */
 extern int UnpackPairState; /* EDEF0 */
-extern int dword_EDEF4; /* EDEF4 */
-extern int dword_EDEF8; /* EDEF8 */
+extern int BytePairDst; /* EDEF4 */
+extern int BytePairStack; /* EDEF8 */
 extern int MemLockHandleStore; /* EDEFC */
 extern int __OpenStreams; /* EDF00 */
 extern unsigned char unk_EDF04[]; /* EDF04 */
@@ -5354,21 +5354,21 @@ extern int __ClosedStreams; /* F24C8 */
 extern int delaycount; /* F24CC */
 extern unsigned char _doserrno[]; /* F24D0 */
 extern unsigned char ErrnoVar[]; /* F24D4 */
-extern unsigned char unk_F24D8[]; /* F24D8 */
+extern unsigned char PcSpkVoices[]; /* F24D8 */
 extern unsigned char byte_F24D9[]; /* F24D9 */
 extern unsigned char unk_F27D8[]; /* F27D8 */
 extern unsigned char byte_F27EE[]; /* F27EE */
 extern unsigned char byte_F27EF[]; /* F27EF */
 extern int dword_F27F6[]; /* F27F6 */
 extern unsigned char byte_F27FD[]; /* F27FD */
-extern int dword_F2F28[]; /* F2F28 */
+extern int AdlibVoices[]; /* F2F28 */
 extern short word_F2F3C[]; /* F2F3C */
 extern short word_F2F3E[]; /* F2F3E */
 extern short word_F2F40[]; /* F2F40 */
 extern unsigned char byte_F2F42[]; /* F2F42 */
 extern unsigned char byte_F2F43[]; /* F2F43 */
 extern short word_F2F44[]; /* F2F44 */
-extern int dword_F3108[]; /* F3108 */
+extern int AdlibChanState[]; /* F3108 */
 extern unsigned char unk_F3148[]; /* F3148 */
 extern short word_F3150[]; /* F3150 */
 extern unsigned char byte_F3196[]; /* F3196 */
@@ -5376,18 +5376,18 @@ extern unsigned char byte_F3197[]; /* F3197 */
 extern short word_F344E; /* F344E */
 extern short word_F3450; /* F3450 */
 extern short word_F3452; /* F3452 */
-extern short word_F3454[]; /* F3454 */
-extern short word_F3456[]; /* F3456 */
-extern short word_F345C[]; /* F345C */
-extern int dword_F3462[]; /* F3462 */
+extern short SbMidiVoices[]; /* F3454 */
+extern short SbVoiceRate[]; /* F3456 */
+extern short SbChanVolume[]; /* F345C */
+extern int SbVoiceSample[]; /* F3462 */
 extern int dword_F34DC[]; /* F34DC */
-extern unsigned char unk_F3534[]; /* F3534 */
-extern short word_F3538[]; /* F3538 */
-extern short word_F354A[]; /* F354A */
+extern unsigned char SbChanRecords[]; /* F3534 */
+extern short SbChanTrack[]; /* F3538 */
+extern short SbChanBend[]; /* F354A */
 extern short word_F3714; /* F3714 */
 extern short word_F3716; /* F3716 */
 extern short word_F3718; /* F3718 */
-extern short word_F371C[]; /* F371C */
+extern short GusPatchState[]; /* F371C */
 extern int dword_F371E[]; /* F371E */
 extern short word_F531C; /* F531C */
 extern short GusDriverBasePort; /* F531E */
@@ -5416,9 +5416,9 @@ extern int CMainArgv; /* F58DC */
 extern int RationalAllocLimit; /* F58E0 */
 extern short RationalAllocFlags; /* F58E2 */
 extern unsigned char Hook387Save[]; /* F58E4 */
-extern unsigned char byte_F5978[]; /* F5978 */
-extern unsigned char byte_F5979[]; /* F5979 */
-extern unsigned char byte_F597A[]; /* F597A */
+extern unsigned char GusMidiVoices[]; /* F5978 */
+extern unsigned char GusMidiVoiceNote[]; /* F5979 */
+extern unsigned char GusMidiVoiceVelocity[]; /* F597A */
 extern unsigned char byte_F59F8[]; /* F59F8 */
 extern unsigned char byte_F59F9[]; /* F59F9 */
 extern short word_F59FA[]; /* F59FA */
@@ -5426,8 +5426,8 @@ extern int dword_F59FC[]; /* F59FC */
 extern unsigned char byte_F5A00[]; /* F5A00 */
 extern unsigned char byte_F5A01[]; /* F5A01 */
 extern unsigned char byte_F5A04[]; /* F5A04 */
-extern unsigned char unk_F5BF8[]; /* F5BF8 */
-extern unsigned char byte_F5C0B[]; /* F5C0B */
+extern unsigned char GusWaveVoices[]; /* F5BF8 */
+extern unsigned char GusWaveVoiceFlags[]; /* F5C0B */
 extern int dword_F6016[]; /* F6016 */
 extern short word_F6018[]; /* F6018 */
 extern int dword_F6116[]; /* F6116 */

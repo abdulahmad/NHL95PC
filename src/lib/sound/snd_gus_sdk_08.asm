@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_B19E0 progbits alloc exec nowrite align=1
-extern byte_D8B0E, byte_D8B10, GusVoiceIrqBits, byte_F79E8, dword_D89DC, dword_F79F8, dword_F79FC, dword_F7A00
-extern GusVoiceAllocMask, inp_, outp_, outpw_, GusEnterCritical, GusLeaveCritical, GusSetVoiceCallbacks, word_D8764
-extern word_D8766, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort, GusActiveVoices
+extern byte_D8B0E, byte_D8B10, GusVoiceIrqBits, byte_F79E8, GusVoiceAllocAge, dword_F79F8, dword_F79FC, dword_F7A00
+extern GusVoiceAllocMask, inp_, outp_, outpw_, GusEnterCritical, GusLeaveCritical, GusSetVoiceCallbacks, GusTimer1Count
+extern GusTimer2Count, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort, GusActiveVoices
 global GusResetTimers, GusStartTimer2, GusStartTimer1, GusStopTimer1, GusStopTimer2, GusResetVoiceAlloc, GusAllocVoice, GusReleaseVoice
 global GusAddVoicePriority, GusPeek, GusPoke, GusPokeFill, GusTestDramBank
 GusResetTimers:
@@ -63,13 +63,13 @@ GusStartTimer2:
         mov dl, byte [byte_F79E8]
         xor eax, eax
         or dl, 2
-        mov ax, word [word_D8764]
+        mov ax, word [GusTimer1Count]
         mov byte [byte_F79E8], dl
         mov edx, 4
         call outp_
         xor eax, eax
         mov edx, dword [byte_F79E8]
-        mov ax, word [word_D8766]
+        mov ax, word [GusTimer2Count]
         call outp_
         call GusLeaveCritical
         popfw
@@ -122,13 +122,13 @@ GusStartTimer1:
         mov dl, byte [byte_F79E8]
         xor eax, eax
         or dl, 1
-        mov ax, word [word_D8764]
+        mov ax, word [GusTimer1Count]
         mov byte [byte_F79E8], dl
         mov edx, 4
         call outp_
         xor eax, eax
         mov edx, dword [byte_F79E8]
-        mov ax, word [word_D8766]
+        mov ax, word [GusTimer2Count]
         call outp_
         call GusLeaveCritical
         popfw
@@ -268,12 +268,12 @@ GusAllocVoice:
         and ebx, 0FFFFh
         lea eax, [nosplit ebx*4+00h]
         sub eax, ebx
-        mov edx, dword [dword_D89DC]
+        mov edx, dword [GusVoiceAllocAge]
         mov dword [nosplit eax*4+dword_F79FC], esi
         mov dword [nosplit eax*4+dword_F79F8], edx
         inc edx
         mov dword [nosplit eax*4+dword_F7A00], edi
-        mov dword [dword_D89DC], edx
+        mov dword [GusVoiceAllocAge], edx
         call GusLeaveCritical
         popfw
         mov eax, ebx
@@ -333,13 +333,13 @@ GusAllocVoice:
         or ecx, eax
         lea eax, [nosplit edx*4+00h]
         sub eax, edx
-        mov ebx, dword [dword_D89DC]
+        mov ebx, dword [GusVoiceAllocAge]
         mov dword [nosplit eax*4+dword_F79FC], esi
         mov dword [GusVoiceAllocMask], ecx
         mov dword [nosplit eax*4+dword_F79F8], ebx
         inc ebx
         mov dword [nosplit eax*4+dword_F7A00], edi
-        mov dword [dword_D89DC], ebx
+        mov dword [GusVoiceAllocAge], ebx
 .8:
         call GusLeaveCritical
         popfw

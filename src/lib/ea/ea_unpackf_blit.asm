@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
-extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
+extern str_Unpackf, str_Unpacking, PaletteUsable, cliprect_x0, cliprect_x1, DebugPrintf, NearestColorCache, NearestColorResult
 extern fputchar, FreeMemBlock, ArtDrawModeFuncs, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, FlipArtHorizontal
 extern FlipArtVertical, RemapArt, bcopy, UnpackArtRle
 global ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered, ShapePixelSize, DrawArtAnyFormat, DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos
@@ -25,7 +25,7 @@ FindNearestColor:
         push edi
         push ebp
         sub esp, 330h
-        mov edx, dword [dword_D5068]
+        mov edx, dword [NearestColorResult]
         test edx, edx
         je short .1
         mov ecx, dword [dword esp+0340h]
@@ -43,11 +43,11 @@ FindNearestColor:
         shl edx, 4
         or edx, ecx
         or eax, edx
-        mov edx, dword [dword_D5068]
+        mov edx, dword [NearestColorResult]
         movzx edi, byte [edx+eax]
         jmp near .13
 .1:
-        cmp dword [dword_D5064], byte 0
+        cmp dword [NearestColorCache], byte 0
         jne short .2
         mov eax, esp
         push eax
@@ -75,7 +75,7 @@ FindNearestColor:
         add eax, byte 4
         mov byte [dword esp+0308h], al
         mov esi, 9
-        mov eax, dword [dword_D5064]
+        mov eax, dword [NearestColorCache]
         test eax, eax
         jne short .3
         mov eax, esp
@@ -91,7 +91,7 @@ FindNearestColor:
         sub bl, 4
         mov byte [dword esp+0324h], bl
 .4:
-        cmp byte [dword edx+byte_D506C], 0
+        cmp byte [dword edx+PaletteUsable], 0
         je near .8
         mov bl, byte [dword esp+0318h]
         mov bh, byte [byte eax+01h]
@@ -155,7 +155,7 @@ FindNearestColor:
         and eax, byte 3Fh
         mov byte [dword esp+0310h], al
         mov ebp, 270Fh
-        mov eax, dword [dword_D5064]
+        mov eax, dword [NearestColorCache]
         test eax, eax
         jne short .9
         mov eax, esp
@@ -169,7 +169,7 @@ FindNearestColor:
         mov bl, byte [eax]
         mov byte [dword esp+0314h], bl
         inc eax
-        cmp byte [dword edx+byte_D506C], 0
+        cmp byte [dword edx+PaletteUsable], 0
         je near .12
         mov ebx, dword [dword esp+0325h]
         sar ebx, 18h

@@ -4523,3 +4523,132 @@ UnpackedSizeHook,D3088,Hook asked first for the unpacked size; returns 0 to fall
 UnpackHook,D308C,Hook asked first to unpack; returns 0 to fall through
 DefaultFontOffsets,D45F8,Character offset table of the built-in font
 DefaultFontWidths,D47B4,Character width table of the built-in font
+SbMixBuffer,D7214,Sound Blaster mix accumulator of 16-bit words
+GusStreamChannels,D7B0C,Four GUS stream channel records of 258h bytes
+GusStreamStepsChan0,D7B64,Sample step table of stream channel 0
+GusStreamStepsChan1,D7DBC,Sample step table of stream channel 1
+GusStreamStepsChan2,D8014,Sample step table of stream channel 2
+GusStreamStepsChan3,D826C,Sample step table of stream channel 3
+ExecParamBlock,D8690,DOS exec parameter block for spawning a program
+GusNoteFreqTable,D87DC,GUS frequency per note
+GusNoteFreqUpper,D87E0,"Frequency of the next note up, read for bends"
+SpawnSavedEsp,D86B0,Stack pointer saved across the DOS exec call
+SpawnSavedSs,D86B4,Stack selector saved across the DOS exec call
+SpawnSavedDs,D86B6,Data selector saved across the DOS exec call
+GusChanBendRange,D84D0,Pitch bend range in semitones per MIDI channel
+GusChanBendCents,D8510,Pitch bend range fine part per MIDI channel
+GusChanRpnMsb,D8550,Registered parameter number MSB per MIDI channel (controller 65h)
+GusChanRpnLsb,D8590,Registered parameter number LSB per MIDI channel (controller 64h)
+GusChanVolume,D85D0,Channel volume per MIDI channel (controller 7)
+GusChanExpression,D8610,Expression per MIDI channel (controller 0Bh)
+GusFreqDivisor,D89D8,Divisor used to turn note frequencies into GUS frequency control values
+GusVoiceAllocAge,D89DC,Running counter used to pick the oldest voice
+GusTimer1Count,D8764,Count loaded into card timer 1
+GusTimer2Count,D8766,Count loaded into card timer 2
+SbStreamTable,D71F0,Sound Blaster stream records by channel
+GusStreamTable,D846C,GUS stream records by channel
+MixVolumeTable,D7414,Volume scaling table shared by the mixers
+SbMixSrcPos,D7200,Mixer source position
+SbMixStep,D7204,Mixer source step
+SbMixSrcEnd,D7208,Mixer source end
+SbMixCount,D720C,Samples left to mix
+SbMixReadPos,D7614,Read position in the mix buffer for the DMA convert
+SbDmaHalfSize,D7A1E,Half the Sound Blaster DMA buffer size
+SbDmaBuffer,D7A22,Sound Blaster DMA buffer
+SbDmaRunning,D7618,Set while Sound Blaster DMA runs
+SbMixPaused,D7619,Set while the mixer is paused
+SbSignTable,D781C,Clipped 16-bit sum to unsigned 8-bit sample table
+GusVolumeCurve,D7A3C,MIDI velocity and volume to GUS log volume
+GusMidiReady,D7AEC,Set once the GUS MIDI layer is set up
+GusPitchTable,D7ABC,Pitch multipliers for bend and vibrato
+GusMidiInitFlag,D87D8,Set by GusMidiInit
+GusStreamLeftBuf,D7AF4,Host buffer for the left stream half
+GusStreamRightBuf,D7B00,Host buffer for the right stream half
+GusStreamLeftPending,D7AF8,Left half waits for refill
+GusStreamRightPending,D7B04,Right half waits for refill
+GusStreamQuarterSize,D8484,Quarter of the stream buffer size
+GusStreamQuarterLog2,D8490,Log2 of the quarter buffer size
+GusStreamHalfShift,D848C,Log2 of the half buffer size
+GusStreamBufShift,D8488,Log2 of the buffer size
+GusStreamCardLeft,D84B0,Card memory address of the left stream half
+GusStreamCardRight,D84B4,Card memory address of the right stream half
+GusStreamState,D8498,Stream state
+GusFillCount,D8494,Samples handled by the current fill step
+GusFillScratch,D84A8,Scratch value used during the fill
+GusFillDest,D84AC,Fill destination
+GusStreamVoiceLeft,D849C,Voice playing the left stream half
+GusStreamVoiceRight,D84A0,Voice playing the right stream half
+SbStreamChannels,D6CE0,Four Sound Blaster stream channel records of 144h bytes
+PcSpkState,D6770,PC speaker driver state bytes
+PcSpkVoiceLevel,D6774,Level per PC speaker voice
+PcSpkOutLevel,D678C,Output level per PC speaker voice
+PcSpkVoiceTable,D6608,PC speaker voice records indexed by voice
+OplPort,D679C,OPL base port (388h)
+OplRegDelay,D67A0,Delay count after writing an OPL register number
+OplDataDelay,D67A4,Delay count after writing an OPL data byte
+OplOperatorOffsets,D67A8,OPL operator register offset per voice
+OplDefaultVoice,D67B4,Default OPL voice register values
+OplFNumTable,D67F4,OPL F-number per semitone
+OplVolumeTable,D683C,Volume to OPL attenuation
+OplVelocityTable,D687C,Velocity to OPL attenuation
+OplRegShadow,D68FC,Shadow copy of the OPL registers and the pending-write buffers
+NotePitchTable,D6B00,Pitch step per note for the sample streams
+PcSpkVoices,F24D8,PC speaker MIDI voice and channel records
+AdlibVoices,F2F28,AdLib MIDI voice and channel records
+AdlibChanState,F3108,AdLib per-channel state
+SbMidiVoices,F3454,Sound Blaster MIDI voice and channel records
+SbVoiceSample,F3462,Sample per Sound Blaster voice
+SbChanRecords,F3534,Sound Blaster per-channel records
+SbVoiceRate,F3456,Rate per Sound Blaster voice
+SbChanVolume,F345C,Volume per Sound Blaster MIDI channel
+SbChanTrack,F3538,Track per Sound Blaster MIDI channel
+SbChanBend,F354A,Pitch bend per Sound Blaster MIDI channel
+GusPatchState,F371C,"GUS driver voice, channel and patch records"
+GusMidiVoices,F5978,GUS MIDI layer voice and channel records
+GusMidiVoiceNote,F5979,Note per GUS MIDI voice
+GusMidiVoiceVelocity,F597A,Velocity per GUS MIDI voice
+GusWaveVoiceFlags,F5C0B,Flags byte of each GUS wave voice record (bit 0 set while the voice plays)
+GusWaveVoices,F5BF8,GUS wave voice records (33 bytes per voice)
+RectFillPatterns,D5744,"Dither patterns for rectangle fills, one run per shade count"
+RectFillPatternPtrs,D567C,Pattern run per shade count for SetupRectFill
+RectFillMaxShades,D5678,Highest shade count with a pattern
+CosTable,D5D78,Cosine table read by TableCos
+CosTableFine,D6178,Fine cosine step table read by TableCos
+CosTableEnd,D6578,Entry past the cosine table
+KbdRepeatDelay,D4FE8,Countdown before a held key repeats
+KbdLastKey,D4FE4,Last key returned by KbdGetKeyQuiet
+KbdPrevKey,D4FE6,Key before the last one
+KbdHeldKey,D4FE9,Key being held
+KbdKeyTranslate,D4FA4,Key code translation table for KbdGetKeyQuiet
+KbdRepeatTick,D4FEB,Tick of the last key repeat
+MidiTickCount,D4F9A,Tick counter shared by the MIDI drivers
+PaletteUsable,D506C,1 for each palette entry FindNearestColor may pick
+NearestColorCache,D5064,Last colour looked up by FindNearestColor
+NearestColorResult,D5068,Last palette index found by FindNearestColor
+SnapShapeSizes,D5184,Shape size per screenshot format
+SnapFileExts,D517C,File extension per screenshot format
+SnapShapeTags,D518C,Shape file tag per screenshot format
+StrErrorTable,D51E4,errno message strings for strerror
+IoModeTable,D5010,Default stream modes for the standard handles
+MemViewAttrFlags,EDE7D,Flags tested by the memory viewer row draw
+SampleTable,EDCFC,Loaded sample records (8 bytes each)
+SampleTableSize,EDD00,Second dword of each sample record
+SongTable,EDD04,Song slot records
+TimbreBanks,EDE34,Loaded timbre banks
+PatchFile,EDE5C,Loaded patch file
+HuffBitBuffer,EDEE0,Huffman bit buffer
+HuffBitCount,EDEE4,Bits left in the Huffman bit buffer
+BytePairSrc,EDEEC,Byte pair unpack source
+BytePairDst,EDEF4,Byte pair unpack destination
+BytePairStack,EDEF8,Byte pair expansion stack
+SeqQueueCount,D4F5C,Commands waiting in the sequencer queue
+SeqTickCount,D4F5D,Sequencer tick counter
+SeqServiceBusy,D4F5E,Set while the sequencer service runs
+VesaWindowGranularity,D4F50,VESA window granularity used by the bank switcher
+SeqQueueHead,D4F58,Sequencer command queue head
+SongReleasedFlag,D4F8A,Set when a song has been released
+MidiSfxEnabled,D4F8E,MIDI sound effects on
+MidiMusicEnabled,D4F92,MIDI music on
+PerrorSeparator,D4D4C,""": "" separator printed by perror"
+MidiChannelBits,D4F68,Bit for each MIDI channel
+ActiveSongCount,D4F88,Songs or voices in use

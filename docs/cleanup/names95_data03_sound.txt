@@ -1,0 +1,632 @@
+word_D7214 SbMixBuffer {source_game=PC-new,confidence=medium} Sound Blaster mix accumulator of 16-bit words
+word_D7216 SbMixBuffer+02h {no_record}
+word_D7218 SbMixBuffer+04h {no_record}
+word_D721A SbMixBuffer+06h {no_record}
+word_D721C SbMixBuffer+08h {no_record}
+word_D721E SbMixBuffer+0Ah {no_record}
+word_D7220 SbMixBuffer+0Ch {no_record}
+word_D7222 SbMixBuffer+0Eh {no_record}
+word_D7224 SbMixBuffer+010h {no_record}
+word_D7226 SbMixBuffer+012h {no_record}
+word_D7228 SbMixBuffer+014h {no_record}
+word_D722A SbMixBuffer+016h {no_record}
+word_D722C SbMixBuffer+018h {no_record}
+word_D722E SbMixBuffer+01Ah {no_record}
+word_D7230 SbMixBuffer+01Ch {no_record}
+word_D7232 SbMixBuffer+01Eh {no_record}
+word_D7234 SbMixBuffer+020h {no_record}
+word_D7236 SbMixBuffer+022h {no_record}
+word_D7238 SbMixBuffer+024h {no_record}
+word_D723A SbMixBuffer+026h {no_record}
+word_D723C SbMixBuffer+028h {no_record}
+word_D723E SbMixBuffer+02Ah {no_record}
+word_D7240 SbMixBuffer+02Ch {no_record}
+word_D7242 SbMixBuffer+02Eh {no_record}
+word_D7244 SbMixBuffer+030h {no_record}
+word_D7246 SbMixBuffer+032h {no_record}
+word_D7248 SbMixBuffer+034h {no_record}
+word_D724A SbMixBuffer+036h {no_record}
+word_D724C SbMixBuffer+038h {no_record}
+word_D724E SbMixBuffer+03Ah {no_record}
+word_D7250 SbMixBuffer+03Ch {no_record}
+word_D7252 SbMixBuffer+03Eh {no_record}
+word_D7254 SbMixBuffer+040h {no_record}
+word_D7256 SbMixBuffer+042h {no_record}
+word_D7258 SbMixBuffer+044h {no_record}
+word_D725A SbMixBuffer+046h {no_record}
+word_D725C SbMixBuffer+048h {no_record}
+word_D725E SbMixBuffer+04Ah {no_record}
+word_D7260 SbMixBuffer+04Ch {no_record}
+word_D7262 SbMixBuffer+04Eh {no_record}
+word_D7264 SbMixBuffer+050h {no_record}
+word_D7266 SbMixBuffer+052h {no_record}
+word_D7268 SbMixBuffer+054h {no_record}
+word_D726A SbMixBuffer+056h {no_record}
+word_D726C SbMixBuffer+058h {no_record}
+word_D726E SbMixBuffer+05Ah {no_record}
+word_D7270 SbMixBuffer+05Ch {no_record}
+word_D7272 SbMixBuffer+05Eh {no_record}
+word_D7274 SbMixBuffer+060h {no_record}
+word_D7276 SbMixBuffer+062h {no_record}
+word_D7278 SbMixBuffer+064h {no_record}
+word_D727A SbMixBuffer+066h {no_record}
+word_D727C SbMixBuffer+068h {no_record}
+word_D727E SbMixBuffer+06Ah {no_record}
+word_D7280 SbMixBuffer+06Ch {no_record}
+word_D7282 SbMixBuffer+06Eh {no_record}
+word_D7284 SbMixBuffer+070h {no_record}
+word_D7286 SbMixBuffer+072h {no_record}
+word_D7288 SbMixBuffer+074h {no_record}
+word_D728A SbMixBuffer+076h {no_record}
+word_D728C SbMixBuffer+078h {no_record}
+word_D728E SbMixBuffer+07Ah {no_record}
+word_D7290 SbMixBuffer+07Ch {no_record}
+word_D7292 SbMixBuffer+07Eh {no_record}
+word_D7294 SbMixBuffer+080h {no_record}
+word_D7296 SbMixBuffer+082h {no_record}
+word_D7298 SbMixBuffer+084h {no_record}
+word_D729A SbMixBuffer+086h {no_record}
+word_D729C SbMixBuffer+088h {no_record}
+word_D729E SbMixBuffer+08Ah {no_record}
+word_D72A0 SbMixBuffer+08Ch {no_record}
+word_D72A2 SbMixBuffer+08Eh {no_record}
+word_D72A4 SbMixBuffer+090h {no_record}
+word_D72A6 SbMixBuffer+092h {no_record}
+word_D72A8 SbMixBuffer+094h {no_record}
+word_D72AA SbMixBuffer+096h {no_record}
+word_D72AC SbMixBuffer+098h {no_record}
+word_D72AE SbMixBuffer+09Ah {no_record}
+word_D72B0 SbMixBuffer+09Ch {no_record}
+word_D72B2 SbMixBuffer+09Eh {no_record}
+word_D72B4 SbMixBuffer+0A0h {no_record}
+word_D72B6 SbMixBuffer+0A2h {no_record}
+word_D72B8 SbMixBuffer+0A4h {no_record}
+word_D72BA SbMixBuffer+0A6h {no_record}
+word_D72BC SbMixBuffer+0A8h {no_record}
+word_D72BE SbMixBuffer+0AAh {no_record}
+word_D72C0 SbMixBuffer+0ACh {no_record}
+word_D72C2 SbMixBuffer+0AEh {no_record}
+word_D72C4 SbMixBuffer+0B0h {no_record}
+word_D72C6 SbMixBuffer+0B2h {no_record}
+word_D72C8 SbMixBuffer+0B4h {no_record}
+word_D72CA SbMixBuffer+0B6h {no_record}
+word_D72CC SbMixBuffer+0B8h {no_record}
+word_D72CE SbMixBuffer+0BAh {no_record}
+word_D72D0 SbMixBuffer+0BCh {no_record}
+word_D72D2 SbMixBuffer+0BEh {no_record}
+word_D72D4 SbMixBuffer+0C0h {no_record}
+word_D72D6 SbMixBuffer+0C2h {no_record}
+word_D72D8 SbMixBuffer+0C4h {no_record}
+word_D72DA SbMixBuffer+0C6h {no_record}
+word_D72DC SbMixBuffer+0C8h {no_record}
+word_D72DE SbMixBuffer+0CAh {no_record}
+word_D72E0 SbMixBuffer+0CCh {no_record}
+word_D72E2 SbMixBuffer+0CEh {no_record}
+word_D72E4 SbMixBuffer+0D0h {no_record}
+word_D72E6 SbMixBuffer+0D2h {no_record}
+word_D72E8 SbMixBuffer+0D4h {no_record}
+word_D72EA SbMixBuffer+0D6h {no_record}
+word_D72EC SbMixBuffer+0D8h {no_record}
+word_D72EE SbMixBuffer+0DAh {no_record}
+word_D72F0 SbMixBuffer+0DCh {no_record}
+word_D72F2 SbMixBuffer+0DEh {no_record}
+word_D72F4 SbMixBuffer+0E0h {no_record}
+word_D72F6 SbMixBuffer+0E2h {no_record}
+word_D72F8 SbMixBuffer+0E4h {no_record}
+word_D72FA SbMixBuffer+0E6h {no_record}
+word_D72FC SbMixBuffer+0E8h {no_record}
+word_D72FE SbMixBuffer+0EAh {no_record}
+word_D7300 SbMixBuffer+0ECh {no_record}
+word_D7302 SbMixBuffer+0EEh {no_record}
+word_D7304 SbMixBuffer+0F0h {no_record}
+word_D7306 SbMixBuffer+0F2h {no_record}
+word_D7308 SbMixBuffer+0F4h {no_record}
+word_D730A SbMixBuffer+0F6h {no_record}
+word_D730C SbMixBuffer+0F8h {no_record}
+word_D730E SbMixBuffer+0FAh {no_record}
+word_D7310 SbMixBuffer+0FCh {no_record}
+word_D7312 SbMixBuffer+0FEh {no_record}
+word_D7314 SbMixBuffer+0100h {no_record}
+word_D7316 SbMixBuffer+0102h {no_record}
+word_D7318 SbMixBuffer+0104h {no_record}
+word_D731A SbMixBuffer+0106h {no_record}
+word_D731C SbMixBuffer+0108h {no_record}
+word_D731E SbMixBuffer+010Ah {no_record}
+word_D7320 SbMixBuffer+010Ch {no_record}
+word_D7322 SbMixBuffer+010Eh {no_record}
+word_D7324 SbMixBuffer+0110h {no_record}
+word_D7326 SbMixBuffer+0112h {no_record}
+word_D7328 SbMixBuffer+0114h {no_record}
+word_D732A SbMixBuffer+0116h {no_record}
+word_D732C SbMixBuffer+0118h {no_record}
+word_D732E SbMixBuffer+011Ah {no_record}
+word_D7330 SbMixBuffer+011Ch {no_record}
+word_D7332 SbMixBuffer+011Eh {no_record}
+word_D7334 SbMixBuffer+0120h {no_record}
+word_D7336 SbMixBuffer+0122h {no_record}
+word_D7338 SbMixBuffer+0124h {no_record}
+word_D733A SbMixBuffer+0126h {no_record}
+word_D733C SbMixBuffer+0128h {no_record}
+word_D733E SbMixBuffer+012Ah {no_record}
+word_D7340 SbMixBuffer+012Ch {no_record}
+word_D7342 SbMixBuffer+012Eh {no_record}
+word_D7344 SbMixBuffer+0130h {no_record}
+word_D7346 SbMixBuffer+0132h {no_record}
+word_D7348 SbMixBuffer+0134h {no_record}
+word_D734A SbMixBuffer+0136h {no_record}
+word_D734C SbMixBuffer+0138h {no_record}
+word_D734E SbMixBuffer+013Ah {no_record}
+word_D7350 SbMixBuffer+013Ch {no_record}
+word_D7352 SbMixBuffer+013Eh {no_record}
+word_D7354 SbMixBuffer+0140h {no_record}
+word_D7356 SbMixBuffer+0142h {no_record}
+word_D7358 SbMixBuffer+0144h {no_record}
+word_D735A SbMixBuffer+0146h {no_record}
+word_D735C SbMixBuffer+0148h {no_record}
+word_D735E SbMixBuffer+014Ah {no_record}
+word_D7360 SbMixBuffer+014Ch {no_record}
+word_D7362 SbMixBuffer+014Eh {no_record}
+word_D7364 SbMixBuffer+0150h {no_record}
+word_D7366 SbMixBuffer+0152h {no_record}
+word_D7368 SbMixBuffer+0154h {no_record}
+word_D736A SbMixBuffer+0156h {no_record}
+word_D736C SbMixBuffer+0158h {no_record}
+word_D736E SbMixBuffer+015Ah {no_record}
+word_D7370 SbMixBuffer+015Ch {no_record}
+word_D7372 SbMixBuffer+015Eh {no_record}
+word_D7374 SbMixBuffer+0160h {no_record}
+word_D7376 SbMixBuffer+0162h {no_record}
+word_D7378 SbMixBuffer+0164h {no_record}
+word_D737A SbMixBuffer+0166h {no_record}
+word_D737C SbMixBuffer+0168h {no_record}
+word_D737E SbMixBuffer+016Ah {no_record}
+word_D7380 SbMixBuffer+016Ch {no_record}
+word_D7382 SbMixBuffer+016Eh {no_record}
+word_D7384 SbMixBuffer+0170h {no_record}
+word_D7386 SbMixBuffer+0172h {no_record}
+word_D7388 SbMixBuffer+0174h {no_record}
+word_D738A SbMixBuffer+0176h {no_record}
+word_D738C SbMixBuffer+0178h {no_record}
+word_D738E SbMixBuffer+017Ah {no_record}
+word_D7390 SbMixBuffer+017Ch {no_record}
+word_D7392 SbMixBuffer+017Eh {no_record}
+word_D7394 SbMixBuffer+0180h {no_record}
+word_D7396 SbMixBuffer+0182h {no_record}
+word_D7398 SbMixBuffer+0184h {no_record}
+word_D739A SbMixBuffer+0186h {no_record}
+word_D739C SbMixBuffer+0188h {no_record}
+word_D739E SbMixBuffer+018Ah {no_record}
+word_D73A0 SbMixBuffer+018Ch {no_record}
+word_D73A2 SbMixBuffer+018Eh {no_record}
+word_D73A4 SbMixBuffer+0190h {no_record}
+word_D73A6 SbMixBuffer+0192h {no_record}
+word_D73A8 SbMixBuffer+0194h {no_record}
+word_D73AA SbMixBuffer+0196h {no_record}
+word_D73AC SbMixBuffer+0198h {no_record}
+word_D73AE SbMixBuffer+019Ah {no_record}
+word_D73B0 SbMixBuffer+019Ch {no_record}
+word_D73B2 SbMixBuffer+019Eh {no_record}
+word_D73B4 SbMixBuffer+01A0h {no_record}
+word_D73B6 SbMixBuffer+01A2h {no_record}
+word_D73B8 SbMixBuffer+01A4h {no_record}
+word_D73BA SbMixBuffer+01A6h {no_record}
+word_D73BC SbMixBuffer+01A8h {no_record}
+word_D73BE SbMixBuffer+01AAh {no_record}
+word_D73C0 SbMixBuffer+01ACh {no_record}
+word_D73C2 SbMixBuffer+01AEh {no_record}
+word_D73C4 SbMixBuffer+01B0h {no_record}
+word_D73C6 SbMixBuffer+01B2h {no_record}
+word_D73C8 SbMixBuffer+01B4h {no_record}
+word_D73CA SbMixBuffer+01B6h {no_record}
+word_D73CC SbMixBuffer+01B8h {no_record}
+word_D73CE SbMixBuffer+01BAh {no_record}
+word_D73D0 SbMixBuffer+01BCh {no_record}
+word_D73D2 SbMixBuffer+01BEh {no_record}
+word_D73D4 SbMixBuffer+01C0h {no_record}
+word_D73D6 SbMixBuffer+01C2h {no_record}
+word_D73D8 SbMixBuffer+01C4h {no_record}
+word_D73DA SbMixBuffer+01C6h {no_record}
+word_D73DC SbMixBuffer+01C8h {no_record}
+word_D73DE SbMixBuffer+01CAh {no_record}
+word_D73E0 SbMixBuffer+01CCh {no_record}
+word_D73E2 SbMixBuffer+01CEh {no_record}
+word_D73E4 SbMixBuffer+01D0h {no_record}
+word_D73E6 SbMixBuffer+01D2h {no_record}
+word_D73E8 SbMixBuffer+01D4h {no_record}
+word_D73EA SbMixBuffer+01D6h {no_record}
+word_D73EC SbMixBuffer+01D8h {no_record}
+word_D73EE SbMixBuffer+01DAh {no_record}
+word_D73F0 SbMixBuffer+01DCh {no_record}
+word_D73F2 SbMixBuffer+01DEh {no_record}
+word_D73F4 SbMixBuffer+01E0h {no_record}
+word_D73F6 SbMixBuffer+01E2h {no_record}
+word_D73F8 SbMixBuffer+01E4h {no_record}
+word_D73FA SbMixBuffer+01E6h {no_record}
+word_D73FC SbMixBuffer+01E8h {no_record}
+word_D73FE SbMixBuffer+01EAh {no_record}
+word_D7400 SbMixBuffer+01ECh {no_record}
+word_D7402 SbMixBuffer+01EEh {no_record}
+word_D7404 SbMixBuffer+01F0h {no_record}
+word_D7406 SbMixBuffer+01F2h {no_record}
+word_D7408 SbMixBuffer+01F4h {no_record}
+word_D740A SbMixBuffer+01F6h {no_record}
+word_D740C SbMixBuffer+01F8h {no_record}
+word_D740E SbMixBuffer+01FAh {no_record}
+word_D7410 SbMixBuffer+01FCh {no_record}
+word_D7412 SbMixBuffer+01FEh {no_record}
+dword_D7B0C GusStreamChannels {source_game=PC-new,confidence=medium} Four GUS stream channel records of 258h bytes
+byte_D7B18 GusStreamChannels+0Ch {no_record}
+byte_D7B58 GusStreamChannels+04Ch {no_record}
+byte_D7B5C GusStreamChannels+050h {no_record}
+byte_D7D70 GusStreamChannels+0264h {no_record}
+byte_D7DB0 GusStreamChannels+02A4h {no_record}
+byte_D7DB4 GusStreamChannels+02A8h {no_record}
+byte_D7FC8 GusStreamChannels+04BCh {no_record}
+byte_D8008 GusStreamChannels+04FCh {no_record}
+byte_D800C GusStreamChannels+0500h {no_record}
+byte_D8220 GusStreamChannels+0714h {no_record}
+byte_D8260 GusStreamChannels+0754h {no_record}
+byte_D8264 GusStreamChannels+0758h {no_record}
+dword_D7B1C GusStreamChannels+010h {no_record}
+dword_D7B30 GusStreamChannels+024h {no_record}
+dword_D7B34 GusStreamChannels+028h {no_record}
+dword_D7B38 GusStreamChannels+02Ch {no_record}
+dword_D7B44 GusStreamChannels+038h {no_record}
+dword_D7B48 GusStreamChannels+03Ch {no_record}
+dword_D7B4C GusStreamChannels+040h {no_record}
+dword_D7B50 GusStreamChannels+044h {no_record}
+dword_D7B60 GusStreamChannels+054h {no_record}
+dword_D7D64 GusStreamChannels+0258h {no_record}
+dword_D7D74 GusStreamChannels+0268h {no_record}
+dword_D7D88 GusStreamChannels+027Ch {no_record}
+dword_D7D8C GusStreamChannels+0280h {no_record}
+dword_D7D90 GusStreamChannels+0284h {no_record}
+dword_D7D9C GusStreamChannels+0290h {no_record}
+dword_D7DA0 GusStreamChannels+0294h {no_record}
+dword_D7DA4 GusStreamChannels+0298h {no_record}
+dword_D7DA8 GusStreamChannels+029Ch {no_record}
+dword_D7DB8 GusStreamChannels+02ACh {no_record}
+dword_D7FBC GusStreamChannels+04B0h {no_record}
+dword_D7FCC GusStreamChannels+04C0h {no_record}
+dword_D7FE0 GusStreamChannels+04D4h {no_record}
+dword_D7FE4 GusStreamChannels+04D8h {no_record}
+dword_D7FE8 GusStreamChannels+04DCh {no_record}
+dword_D7FF4 GusStreamChannels+04E8h {no_record}
+dword_D7FF8 GusStreamChannels+04ECh {no_record}
+dword_D7FFC GusStreamChannels+04F0h {no_record}
+dword_D8000 GusStreamChannels+04F4h {no_record}
+dword_D8010 GusStreamChannels+0504h {no_record}
+dword_D8214 GusStreamChannels+0708h {no_record}
+dword_D8224 GusStreamChannels+0718h {no_record}
+dword_D8238 GusStreamChannels+072Ch {no_record}
+dword_D823C GusStreamChannels+0730h {no_record}
+dword_D8240 GusStreamChannels+0734h {no_record}
+dword_D824C GusStreamChannels+0740h {no_record}
+dword_D8250 GusStreamChannels+0744h {no_record}
+dword_D8254 GusStreamChannels+0748h {no_record}
+dword_D8258 GusStreamChannels+074Ch {no_record}
+dword_D8268 GusStreamChannels+075Ch {no_record}
+word_D7B64 GusStreamStepsChan0 {source_game=PC-new,confidence=low} Sample step table of stream channel 0
+word_D7DBC GusStreamStepsChan1 {source_game=PC-new,confidence=low} Sample step table of stream channel 1
+word_D8014 GusStreamStepsChan2 {source_game=PC-new,confidence=low} Sample step table of stream channel 2
+word_D826C GusStreamStepsChan3 {source_game=PC-new,confidence=low} Sample step table of stream channel 3
+dword_D8690 ExecParamBlock {source_game=PC-new,confidence=medium} DOS exec parameter block for spawning a program
+dword_D8696 ExecParamBlock+06h {no_record}
+dword_D869C ExecParamBlock+0Ch {no_record}
+dword_D86A2 ExecParamBlock+012h {no_record}
+dword_D86A8 ExecParamBlock+018h {no_record}
+dword_D86AC ExecParamBlock+01Ch {no_record}
+word_D8694 ExecParamBlock+04h {no_record}
+word_D869A ExecParamBlock+0Ah {no_record}
+word_D86A0 ExecParamBlock+010h {no_record}
+word_D86A6 ExecParamBlock+016h {no_record}
+dword_D87DC GusNoteFreqTable {source_game=PC-new,confidence=medium} GUS frequency per note
+dword_D87E0 GusNoteFreqUpper {source_game=PC-new,confidence=low} Frequency of the next note up, read for bends
+dword_D86B0 SpawnSavedEsp {source_game=PC-new,confidence=medium} Stack pointer saved across the DOS exec call
+word_D86B4 SpawnSavedSs {source_game=PC-new,confidence=medium} Stack selector saved across the DOS exec call
+word_D86B6 SpawnSavedDs {source_game=PC-new,confidence=medium} Data selector saved across the DOS exec call
+dword_D84D0 GusChanBendRange {source_game=PC-new,confidence=medium} Pitch bend range in semitones per MIDI channel
+dword_D8510 GusChanBendCents {source_game=PC-new,confidence=low} Pitch bend range fine part per MIDI channel
+dword_D8550 GusChanRpnMsb {source_game=PC-new,confidence=medium} Registered parameter number MSB per MIDI channel (controller 65h)
+dword_D8590 GusChanRpnLsb {source_game=PC-new,confidence=medium} Registered parameter number LSB per MIDI channel (controller 64h)
+dword_D85D0 GusChanVolume {source_game=PC-new,confidence=medium} Channel volume per MIDI channel (controller 7)
+dword_D8610 GusChanExpression {source_game=PC-new,confidence=medium} Expression per MIDI channel (controller 0Bh)
+dword_D89D8 GusFreqDivisor {source_game=PC-new,confidence=low} Divisor used to turn note frequencies into GUS frequency control values
+dword_D89DC GusVoiceAllocAge {source_game=PC-new,confidence=low} Running counter used to pick the oldest voice
+word_D8764 GusTimer1Count {source_game=PC-new,confidence=low} Count loaded into card timer 1
+word_D8766 GusTimer2Count {source_game=PC-new,confidence=low} Count loaded into card timer 2
+off_D71F0 SbStreamTable {source_game=PC-new,confidence=medium} Sound Blaster stream records by channel
+off_D846C GusStreamTable {source_game=PC-new,confidence=medium} GUS stream records by channel
+word_D7414 MixVolumeTable {source_game=PC-new,confidence=low} Volume scaling table shared by the mixers
+dword_D7200 SbMixSrcPos {source_game=PC-new,confidence=low} Mixer source position
+dword_D7204 SbMixStep {source_game=PC-new,confidence=low} Mixer source step
+dword_D7208 SbMixSrcEnd {source_game=PC-new,confidence=low} Mixer source end
+dword_D720C SbMixCount {source_game=PC-new,confidence=low} Samples left to mix
+dword_D7614 SbMixReadPos {source_game=PC-new,confidence=low} Read position in the mix buffer for the DMA convert
+dword_D7A1E SbDmaHalfSize {source_game=PC-new,confidence=low} Half the Sound Blaster DMA buffer size
+dword_D7A22 SbDmaBuffer {source_game=PC-new,confidence=low} Sound Blaster DMA buffer
+byte_D7618 SbDmaRunning {source_game=PC-new,confidence=low} Set while Sound Blaster DMA runs
+byte_D7619 SbMixPaused {source_game=PC-new,confidence=low} Set while the mixer is paused
+byte_D781C SbSignTable {source_game=PC-new,confidence=low} Clipped 16-bit sum to unsigned 8-bit sample table
+byte_D7A3C GusVolumeCurve {source_game=PC-new,confidence=low} MIDI velocity and volume to GUS log volume
+byte_D7AEC GusMidiReady {source_game=PC-new,confidence=low} Set once the GUS MIDI layer is set up
+dword_D7ABC GusPitchTable {source_game=PC-new,confidence=low} Pitch multipliers for bend and vibrato
+byte_D87D8 GusMidiInitFlag {source_game=PC-new,confidence=low} Set by GusMidiInit
+dword_D7AF4 GusStreamLeftBuf {source_game=PC-new,confidence=low} Host buffer for the left stream half
+dword_D7B00 GusStreamRightBuf {source_game=PC-new,confidence=low} Host buffer for the right stream half
+dword_D7AF8 GusStreamLeftPending {source_game=PC-new,confidence=low} Left half waits for refill
+dword_D7B04 GusStreamRightPending {source_game=PC-new,confidence=low} Right half waits for refill
+dword_D8484 GusStreamQuarterSize {source_game=96PC,confidence=medium} Quarter of the stream buffer size
+dword_D8490 GusStreamQuarterLog2 {source_game=PC-new,confidence=low} Log2 of the quarter buffer size
+dword_D848C GusStreamHalfShift {source_game=PC-new,confidence=low} Log2 of the half buffer size
+dword_D8488 GusStreamBufShift {source_game=PC-new,confidence=low} Log2 of the buffer size
+dword_D84B0 GusStreamCardLeft {source_game=96PC,confidence=low} Card memory address of the left stream half
+dword_D84B4 GusStreamCardRight {source_game=96PC,confidence=low} Card memory address of the right stream half
+dword_D8498 GusStreamState {source_game=PC-new,confidence=low} Stream state
+dword_D8494 GusFillCount {source_game=PC-new,confidence=low} Samples handled by the current fill step
+dword_D84A8 GusFillScratch {source_game=PC-new,confidence=low} Scratch value used during the fill
+dword_D84AC GusFillDest {source_game=PC-new,confidence=low} Fill destination
+byte_D849C GusStreamVoiceLeft {source_game=96PC,confidence=medium} Voice playing the left stream half
+byte_D84A0 GusStreamVoiceRight {source_game=96PC,confidence=medium} Voice playing the right stream half
+byte_D6CE0 SbStreamChannels {source_game=PC-new,confidence=medium} Four Sound Blaster stream channel records of 144h bytes
+byte_D6CE1 SbStreamChannels+01h {no_record}
+byte_D6CE3 SbStreamChannels+03h {no_record}
+byte_D6D1E SbStreamChannels+03Eh {no_record}
+byte_D6D1F SbStreamChannels+03Fh {no_record}
+byte_D6D24 SbStreamChannels+044h {no_record}
+byte_D6E24 SbStreamChannels+0144h {no_record}
+byte_D6E25 SbStreamChannels+0145h {no_record}
+byte_D6E27 SbStreamChannels+0147h {no_record}
+byte_D6E62 SbStreamChannels+0182h {no_record}
+byte_D6E63 SbStreamChannels+0183h {no_record}
+byte_D6E68 SbStreamChannels+0188h {no_record}
+byte_D6F68 SbStreamChannels+0288h {no_record}
+byte_D6F69 SbStreamChannels+0289h {no_record}
+byte_D6F6B SbStreamChannels+028Bh {no_record}
+byte_D6FA6 SbStreamChannels+02C6h {no_record}
+byte_D6FA7 SbStreamChannels+02C7h {no_record}
+byte_D6FAC SbStreamChannels+02CCh {no_record}
+byte_D70AC SbStreamChannels+03CCh {no_record}
+byte_D70AD SbStreamChannels+03CDh {no_record}
+byte_D70AF SbStreamChannels+03CFh {no_record}
+byte_D70EA SbStreamChannels+040Ah {no_record}
+byte_D70EB SbStreamChannels+040Bh {no_record}
+byte_D70F0 SbStreamChannels+0410h {no_record}
+dword_D6CE4 SbStreamChannels+04h {no_record}
+dword_D6CF8 SbStreamChannels+018h {no_record}
+dword_D6CFC SbStreamChannels+01Ch {no_record}
+dword_D6D00 SbStreamChannels+020h {no_record}
+dword_D6D0C SbStreamChannels+02Ch {no_record}
+dword_D6D10 SbStreamChannels+030h {no_record}
+dword_D6D14 SbStreamChannels+034h {no_record}
+dword_D6D18 SbStreamChannels+038h {no_record}
+dword_D6D20 SbStreamChannels+040h {no_record}
+dword_D6E28 SbStreamChannels+0148h {no_record}
+dword_D6E3C SbStreamChannels+015Ch {no_record}
+dword_D6E40 SbStreamChannels+0160h {no_record}
+dword_D6E44 SbStreamChannels+0164h {no_record}
+dword_D6E50 SbStreamChannels+0170h {no_record}
+dword_D6E54 SbStreamChannels+0174h {no_record}
+dword_D6E58 SbStreamChannels+0178h {no_record}
+dword_D6E5C SbStreamChannels+017Ch {no_record}
+dword_D6E64 SbStreamChannels+0184h {no_record}
+dword_D6F6C SbStreamChannels+028Ch {no_record}
+dword_D6F80 SbStreamChannels+02A0h {no_record}
+dword_D6F84 SbStreamChannels+02A4h {no_record}
+dword_D6F88 SbStreamChannels+02A8h {no_record}
+dword_D6F94 SbStreamChannels+02B4h {no_record}
+dword_D6F98 SbStreamChannels+02B8h {no_record}
+dword_D6F9C SbStreamChannels+02BCh {no_record}
+dword_D6FA0 SbStreamChannels+02C0h {no_record}
+dword_D6FA8 SbStreamChannels+02C8h {no_record}
+dword_D70B0 SbStreamChannels+03D0h {no_record}
+dword_D70C4 SbStreamChannels+03E4h {no_record}
+dword_D70C8 SbStreamChannels+03E8h {no_record}
+dword_D70CC SbStreamChannels+03ECh {no_record}
+dword_D70D8 SbStreamChannels+03F8h {no_record}
+dword_D70DC SbStreamChannels+03FCh {no_record}
+dword_D70E0 SbStreamChannels+0400h {no_record}
+dword_D70E4 SbStreamChannels+0404h {no_record}
+dword_D70EC SbStreamChannels+040Ch {no_record}
+byte_D6770 PcSpkState {source_game=PC-new,confidence=low} PC speaker driver state bytes
+byte_D6774 PcSpkVoiceLevel {source_game=PC-new,confidence=low} Level per PC speaker voice
+byte_D6775 PcSpkState+05h {no_record}
+byte_D6776 PcSpkState+06h {no_record}
+byte_D6777 PcSpkState+07h {no_record}
+byte_D6778 PcSpkState+08h {no_record}
+byte_D6785 PcSpkState+015h {no_record}
+byte_D6786 PcSpkState+016h {no_record}
+byte_D6787 PcSpkState+017h {no_record}
+byte_D6788 PcSpkState+018h {no_record}
+byte_D6789 PcSpkState+019h {no_record}
+byte_D678C PcSpkOutLevel {source_game=PC-new,confidence=low} Output level per PC speaker voice
+byte_D678D PcSpkState+01Dh {no_record}
+byte_D678E PcSpkState+01Eh {no_record}
+byte_D678F PcSpkState+01Fh {no_record}
+byte_D6790 PcSpkState+020h {no_record}
+byte_D679A PcSpkState+02Ah {no_record}
+word_D677B PcSpkState+0Bh {no_record}
+word_D677D PcSpkState+0Dh {no_record}
+word_D677F PcSpkState+0Fh {no_record}
+word_D6781 PcSpkState+011h {no_record}
+word_D6783 PcSpkState+013h {no_record}
+word_D6608 PcSpkVoiceTable {source_game=PC-new,confidence=low} PC speaker voice records indexed by voice
+word_D679C OplPort {source_game=PC-new,confidence=medium} OPL base port (388h)
+dword_D67A0 OplRegDelay {source_game=PC-new,confidence=low} Delay count after writing an OPL register number
+dword_D67A4 OplDataDelay {source_game=PC-new,confidence=low} Delay count after writing an OPL data byte
+byte_D67A8 OplOperatorOffsets {source_game=PC-new,confidence=medium} OPL operator register offset per voice
+unk_D67B4 OplDefaultVoice {source_game=PC-new,confidence=low} Default OPL voice register values
+word_D67F4 OplFNumTable {source_game=PC-new,confidence=medium} OPL F-number per semitone
+word_D683C OplVolumeTable {source_game=PC-new,confidence=low} Volume to OPL attenuation
+word_D687C OplVelocityTable {source_game=PC-new,confidence=low} Velocity to OPL attenuation
+unk_D68FC OplRegShadow {source_game=PC-new,confidence=low} Shadow copy of the OPL registers and the pending-write buffers
+unk_D691C OplRegShadow+020h {no_record}
+unk_D699C OplRegShadow+0A0h {no_record}
+unk_D69B9 OplRegShadow+0BDh {no_record}
+unk_D69FF OplRegShadow+0103h {no_record}
+unk_D6A1F OplRegShadow+0123h {no_record}
+unk_D6A9F OplRegShadow+01A3h {no_record}
+unk_D6ABC OplRegShadow+01C0h {no_record}
+dword_D6B00 NotePitchTable {source_game=PC-new,confidence=low} Pitch step per note for the sample streams
+unk_F24D8 PcSpkVoices {source_game=PC-new,confidence=low} PC speaker MIDI voice and channel records
+byte_F24D9 PcSpkVoices+01h {no_record}
+byte_F27EE PcSpkVoices+0316h {no_record}
+byte_F27EF PcSpkVoices+0317h {no_record}
+byte_F27FD PcSpkVoices+0325h {no_record}
+dword_F27F6 PcSpkVoices+031Eh {no_record}
+unk_F27D8 PcSpkVoices+0300h {no_record}
+dword_F2F28 AdlibVoices {source_game=PC-new,confidence=low} AdLib MIDI voice and channel records
+byte_F2F42 AdlibVoices+01Ah {no_record}
+byte_F2F43 AdlibVoices+01Bh {no_record}
+byte_F3196 AdlibVoices+026Eh {no_record}
+byte_F3197 AdlibVoices+026Fh {no_record}
+dword_F3108 AdlibChanState {source_game=PC-new,confidence=low} AdLib per-channel state
+unk_F3148 AdlibVoices+0220h {no_record}
+word_F2F3C AdlibVoices+014h {no_record}
+word_F2F3E AdlibVoices+016h {no_record}
+word_F2F40 AdlibVoices+018h {no_record}
+word_F2F44 AdlibVoices+01Ch {no_record}
+word_F3150 AdlibVoices+0228h {no_record}
+word_F344E AdlibVoices+0526h {no_record}
+word_F3450 AdlibVoices+0528h {no_record}
+word_F3452 AdlibVoices+052Ah {no_record}
+word_F3454 SbMidiVoices {source_game=PC-new,confidence=low} Sound Blaster MIDI voice and channel records
+dword_F3462 SbVoiceSample {source_game=PC-new,confidence=low} Sample per Sound Blaster voice
+dword_F34DC SbMidiVoices+088h {no_record}
+unk_F3534 SbChanRecords {source_game=PC-new,confidence=low} Sound Blaster per-channel records
+word_F3456 SbVoiceRate {source_game=PC-new,confidence=low} Rate per Sound Blaster voice
+word_F345C SbChanVolume {source_game=PC-new,confidence=low} Volume per Sound Blaster MIDI channel
+word_F3538 SbChanTrack {source_game=PC-new,confidence=low} Track per Sound Blaster MIDI channel
+word_F354A SbChanBend {source_game=PC-new,confidence=low} Pitch bend per Sound Blaster MIDI channel
+word_F3714 SbMidiVoices+02C0h {no_record}
+word_F3716 SbMidiVoices+02C2h {no_record}
+word_F3718 SbMidiVoices+02C4h {no_record}
+word_F371C GusPatchState {source_game=PC-new,confidence=low} GUS driver voice, channel and patch records
+byte_F5320 GusPatchState+01C04h {no_record}
+byte_F5321 GusPatchState+01C05h {no_record}
+dword_F371E GusPatchState+02h {no_record}
+dword_F532A GusPatchState+01C0Eh {no_record}
+dword_F5332 GusPatchState+01C16h {no_record}
+dword_F558C GusPatchState+01E70h {no_record}
+dword_F55E4 GusPatchState+01EC8h {no_record}
+dword_F55E8 GusPatchState+01ECCh {no_record}
+dword_F55EC GusPatchState+01ED0h {no_record}
+dword_F55F0 GusPatchState+01ED4h {no_record}
+dword_F55F4 GusPatchState+01ED8h {no_record}
+dword_F58D0 GusPatchState+021B4h {no_record}
+unk_F53AC GusPatchState+01C90h {no_record}
+unk_F55F8 GusPatchState+01EDCh {no_record}
+word_F531C GusPatchState+01C00h {no_record}
+word_F5324 GusPatchState+01C08h {no_record}
+word_F5326 GusPatchState+01C0Ah {no_record}
+word_F53B0 GusPatchState+01C94h {no_record}
+word_F53C2 GusPatchState+01CA6h {no_record}
+word_F58D2 GusPatchState+021B6h {no_record}
+word_F58D4 GusPatchState+021B8h {no_record}
+word_F58D6 GusPatchState+021BAh {no_record}
+byte_F5978 GusMidiVoices {source_game=PC-new,confidence=low} GUS MIDI layer voice and channel records
+byte_F5979 GusMidiVoiceNote {source_game=PC-new,confidence=low} Note per GUS MIDI voice
+byte_F597A GusMidiVoiceVelocity {source_game=PC-new,confidence=low} Velocity per GUS MIDI voice
+byte_F59F8 GusMidiVoices+080h {no_record}
+byte_F59F9 GusMidiVoices+081h {no_record}
+byte_F5A00 GusMidiVoices+088h {no_record}
+byte_F5A01 GusMidiVoices+089h {no_record}
+byte_F5A04 GusMidiVoices+08Ch {no_record}
+byte_F5C0B GusWaveVoiceFlags {source_game=PC-new,confidence=low} Flags byte of each GUS wave voice record (bit 0 set while the voice plays)
+dword_F59FC GusMidiVoices+084h {no_record}
+dword_F6016 GusMidiVoices+069Eh {no_record}
+dword_F6116 GusMidiVoices+079Eh {no_record}
+unk_F5BF8 GusWaveVoices {source_game=PC-new,confidence=low} GUS wave voice records (33 bytes per voice)
+word_F59FA GusMidiVoices+082h {no_record}
+word_F6018 GusMidiVoices+06A0h {no_record}
+word_F6118 GusMidiVoices+07A0h {no_record}
+word_F611A GusMidiVoices+07A2h {no_record}
+unk_D5744 RectFillPatterns {source_game=PC-new,confidence=medium} Dither patterns for rectangle fills, one run per shade count
+unk_D5748 RectFillPatterns+04h {no_record}
+unk_D574E RectFillPatterns+0Ah {no_record}
+unk_D5756 RectFillPatterns+012h {no_record}
+unk_D5760 RectFillPatterns+01Ch {no_record}
+unk_D576C RectFillPatterns+028h {no_record}
+unk_D577A RectFillPatterns+036h {no_record}
+unk_D578A RectFillPatterns+046h {no_record}
+unk_D579C RectFillPatterns+058h {no_record}
+unk_D57B0 RectFillPatterns+06Ch {no_record}
+unk_D57C6 RectFillPatterns+082h {no_record}
+unk_D57DE RectFillPatterns+09Ah {no_record}
+unk_D57F8 RectFillPatterns+0B4h {no_record}
+unk_D5814 RectFillPatterns+0D0h {no_record}
+unk_D5832 RectFillPatterns+0EEh {no_record}
+unk_D5852 RectFillPatterns+010Eh {no_record}
+unk_D5874 RectFillPatterns+0130h {no_record}
+unk_D5898 RectFillPatterns+0154h {no_record}
+unk_D58BE RectFillPatterns+017Ah {no_record}
+unk_D58E6 RectFillPatterns+01A2h {no_record}
+unk_D5910 RectFillPatterns+01CCh {no_record}
+unk_D593C RectFillPatterns+01F8h {no_record}
+unk_D596A RectFillPatterns+0226h {no_record}
+unk_D599A RectFillPatterns+0256h {no_record}
+unk_D59CC RectFillPatterns+0288h {no_record}
+unk_D5A00 RectFillPatterns+02BCh {no_record}
+unk_D5A36 RectFillPatterns+02F2h {no_record}
+unk_D5A6E RectFillPatterns+032Ah {no_record}
+unk_D5AA8 RectFillPatterns+0364h {no_record}
+unk_D5AE4 RectFillPatterns+03A0h {no_record}
+unk_D5B22 RectFillPatterns+03DEh {no_record}
+unk_D5B62 RectFillPatterns+041Eh {no_record}
+unk_D5BA4 RectFillPatterns+0460h {no_record}
+unk_D5BE8 RectFillPatterns+04A4h {no_record}
+unk_D5C2E RectFillPatterns+04EAh {no_record}
+unk_D5C76 RectFillPatterns+0532h {no_record}
+unk_D5CC0 RectFillPatterns+057Ch {no_record}
+unk_D5D0C RectFillPatterns+05C8h {no_record}
+unk_D5D5A RectFillPatterns+0616h {no_record}
+unk_D5DAA RectFillPatterns+0666h {no_record}
+unk_D5DFC RectFillPatterns+06B8h {no_record}
+unk_D5E50 RectFillPatterns+070Ch {no_record}
+unk_D5EA6 RectFillPatterns+0762h {no_record}
+unk_D5EFE RectFillPatterns+07BAh {no_record}
+unk_D5F58 RectFillPatterns+0814h {no_record}
+unk_D5FB4 RectFillPatterns+0870h {no_record}
+unk_D6012 RectFillPatterns+08CEh {no_record}
+off_D567C RectFillPatternPtrs {source_game=PC-new,confidence=medium} Pattern run per shade count for SetupRectFill
+dword_D5678 RectFillMaxShades {source_game=PC-new,confidence=low} Highest shade count with a pattern
+dword_D5D78 CosTable {source_game=PC-new,confidence=medium} Cosine table read by TableCos
+dword_D6178 CosTableFine {source_game=PC-new,confidence=low} Fine cosine step table read by TableCos
+dword_D6578 CosTableEnd {source_game=PC-new,confidence=low} Entry past the cosine table
+byte_D4FE8 KbdRepeatDelay {source_game=PC-new,confidence=low} Countdown before a held key repeats
+word_D4FE4 KbdLastKey {source_game=PC-new,confidence=low} Last key returned by KbdGetKeyQuiet
+word_D4FE6 KbdPrevKey {source_game=PC-new,confidence=low} Key before the last one
+word_D4FE9 KbdHeldKey {source_game=PC-new,confidence=low} Key being held
+dword_D4FA4 KbdKeyTranslate {source_game=PC-new,confidence=low} Key code translation table for KbdGetKeyQuiet
+dword_D4FEB KbdRepeatTick {source_game=PC-new,confidence=low} Tick of the last key repeat
+dword_D4F9A MidiTickCount {source_game=PC-new,confidence=low} Tick counter shared by the MIDI drivers
+byte_D506C PaletteUsable {source_game=PC-new,confidence=medium} 1 for each palette entry FindNearestColor may pick
+dword_D5064 NearestColorCache {source_game=PC-new,confidence=low} Last colour looked up by FindNearestColor
+dword_D5068 NearestColorResult {source_game=PC-new,confidence=low} Last palette index found by FindNearestColor
+dword_D5184 SnapShapeSizes {source_game=PC-new,confidence=low} Shape size per screenshot format
+off_D517C SnapFileExts {source_game=PC-new,confidence=low} File extension per screenshot format
+off_D518C SnapShapeTags {source_game=PC-new,confidence=low} Shape file tag per screenshot format
+off_D51E4 StrErrorTable {source_game=PC-new,confidence=medium} errno message strings for strerror
+unk_D5010 IoModeTable {source_game=PC-new,confidence=low} Default stream modes for the standard handles
+byte_EDE7D MemViewAttrFlags {source_game=PC-new,confidence=low} Flags tested by the memory viewer row draw
+dword_EDCFC SampleTable {source_game=PC-new,confidence=medium} Loaded sample records (8 bytes each)
+dword_EDD00 SampleTableSize {source_game=PC-new,confidence=low} Second dword of each sample record
+dword_EDD04 SongTable {source_game=PC-new,confidence=low} Song slot records
+dword_EDE34 TimbreBanks {source_game=PC-new,confidence=medium} Loaded timbre banks
+dword_EDE5C PatchFile {source_game=PC-new,confidence=low} Loaded patch file
+dword_EDEE0 HuffBitBuffer {source_game=PC-new,confidence=low} Huffman bit buffer
+dword_EDEE4 HuffBitCount {source_game=PC-new,confidence=low} Bits left in the Huffman bit buffer
+dword_EDEEC BytePairSrc {source_game=PC-new,confidence=low} Byte pair unpack source
+dword_EDEF4 BytePairDst {source_game=PC-new,confidence=low} Byte pair unpack destination
+dword_EDEF8 BytePairStack {source_game=PC-new,confidence=low} Byte pair expansion stack
+byte_D4F5C SeqQueueCount {source_game=PC-new,confidence=low} Commands waiting in the sequencer queue
+byte_D4F5D SeqTickCount {source_game=PC-new,confidence=low} Sequencer tick counter
+byte_D4F5E SeqServiceBusy {source_game=PC-new,confidence=low} Set while the sequencer service runs
+dword_D4F50 VesaWindowGranularity {source_game=PC-new,confidence=low} VESA window granularity used by the bank switcher
+dword_D4F58 SeqQueueHead {source_game=PC-new,confidence=low} Sequencer command queue head
+dword_D4F8A SongReleasedFlag {source_game=PC-new,confidence=low} Set when a song has been released
+dword_D4F8E MidiSfxEnabled {source_game=PC-new,confidence=medium} MIDI sound effects on
+dword_D4F92 MidiMusicEnabled {source_game=PC-new,confidence=medium} MIDI music on
+unk_D4D4C PerrorSeparator {source_game=PC-new,confidence=low} ": " separator printed by perror
+word_D4F68 MidiChannelBits {source_game=PC-new,confidence=low} Bit for each MIDI channel
+word_D4F88 ActiveSongCount {source_game=PC-new,confidence=low} Songs or voices in use

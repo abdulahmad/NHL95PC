@@ -2,20 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_EDCFC nobits alloc noexec write align=1
-global byte_EDE7D, dword_EDCFC, dword_EDD00, dword_EDD04, dword_EDE34, dword_EDE5C, MemViewTop
+global MemViewAttrFlags, SampleTable, SampleTableSize, SongTable, TimbreBanks, PatchFile, MemViewTop
 global MemViewCount, MemViewSel, MemViewTitle, MemViewRow, MemViewList, MemViewKey, MemViewFlags, MemViewMode
 global MemViewPrevSel
-global dword_EDEE0, dword_EDEE4, UnpackSrcPtr, dword_EDEEC, UnpackPairState, dword_EDEF4
-global dword_EDEF8, MemLockHandleStore, __OpenStreams, SndHandleTable
-dword_EDCFC:
+global HuffBitBuffer, HuffBitCount, UnpackSrcPtr, BytePairSrc, UnpackPairState, BytePairDst
+global BytePairStack, MemLockHandleStore, __OpenStreams, SndHandleTable
+SampleTable:
         resb 4
-dword_EDD00:
+SampleTableSize:
         resb 4
-dword_EDD04:
+SongTable:
         resb 304
-dword_EDE34:
+TimbreBanks:
         resb 40
-dword_EDE5C:
+PatchFile:
         resb 4
 MemViewTop:
         resb 4
@@ -33,7 +33,7 @@ MemViewKey:
         resb 4
 MemViewFlags:
         resb 1
-byte_EDE7D:
+MemViewAttrFlags:
         resb 3
 MemViewMode:
         resb 4
@@ -51,19 +51,19 @@ SndHandleTable:
         resb 4
         resb 4
         resb 48
-dword_EDEE0:
+HuffBitBuffer:
         resb 4
-dword_EDEE4:
+HuffBitCount:
         resb 4
 UnpackSrcPtr:
         resb 4
-dword_EDEEC:
+BytePairSrc:
         resb 4
 UnpackPairState:
         resb 4
-dword_EDEF4:
+BytePairDst:
         resb 4
-dword_EDEF8:
+BytePairStack:
         resb 4
 MemLockHandleStore:
         resb 4

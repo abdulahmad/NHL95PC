@@ -2,20 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_ADEE9 progbits alloc exec nowrite align=1
-extern byte_D7B18, byte_D7B58, byte_D7B5C, byte_D7D70, byte_D7DB0, byte_D7DB4, byte_D7FC8, byte_D8008
-extern byte_D800C, byte_D8220, byte_D8260, byte_D8264, byte_D849C, byte_D84A0, dword_D6B00, dword_D7ABC
-extern GusStreamActive, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight, dword_D7B0C
-extern dword_D7B1C, dword_D7B30, dword_D7B34, dword_D7B38, dword_D7B44, dword_D7B48, dword_D7B4C, dword_D7B50
-extern dword_D7B60, dword_D7D64, dword_D7D74, dword_D7D88, dword_D7D8C, dword_D7D90, dword_D7D9C, dword_D7DA0
-extern dword_D7DA4, dword_D7DA8, dword_D7DB8, dword_D7FBC, dword_D7FCC, dword_D7FE0, dword_D7FE4, dword_D7FE8
-extern dword_D7FF4, dword_D7FF8, dword_D7FFC, dword_D8000, dword_D8010, dword_D8214, dword_D8224, dword_D8238
-extern dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8258, dword_D8268, GusStreamBufSize
-extern GusStreamHalfSize, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498, dword_D84A8
-extern dword_D84AC, dword_D84B0, dword_D84B4, GusStreamCardEnd, GusStreamStartLo, GusStreamEndLo, GusEnvVarName, dword_D84D0
-extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, GusEnvConfig, getenv_, inp_
-extern GusStreamNoOp, off_D846C, outp_, strtoul_, GusSetChannelVolume, GusSetChannelBend, GusSetChannelModulation, GusSetSustain
+extern GusStreamVoiceLeft, GusStreamVoiceRight, NotePitchTable, GusPitchTable
+extern GusStreamActive, GusStreamLeftBuf, GusStreamLeftPending, GusStreamBusyLeft, GusStreamRightBuf, GusStreamRightPending, GusStreamBusyRight, GusStreamChannels
+extern GusStreamBufSize
+extern GusStreamHalfSize, GusStreamQuarterSize, GusStreamBufShift, GusStreamHalfShift, GusStreamQuarterLog2, GusFillCount, GusStreamState, GusFillScratch
+extern GusFillDest, GusStreamCardLeft, GusStreamCardRight, GusStreamCardEnd, GusStreamStartLo, GusStreamEndLo, GusEnvVarName, GusChanBendRange
+extern GusChanBendCents, GusChanRpnMsb, GusChanRpnLsb, GusChanVolume, GusChanExpression, GusEnvConfig, getenv_, inp_
+extern GusStreamNoOp, GusStreamTable, outp_, strtoul_, GusSetChannelVolume, GusSetChannelBend, GusSetChannelModulation, GusSetSustain
 extern GusSetChannelPan, GusChannelNotesOff, GusMixAdd8, GusClearMixBuffer, GusDownload, GusClaimVoiceCallbacks, GusAllocVoice, GusPoke
-extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, GusStreamLoopLo, GusStreamLoopHi, GusStreamStartHi
+extern MixVolumeTable, GusStreamStepsChan0, GusStreamStepsChan1, GusStreamStepsChan2, GusStreamStepsChan3, GusStreamLoopLo, GusStreamLoopHi, GusStreamStartHi
 extern GusStreamEndHi, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
 global GusFillStreamBuffer, GusStreamVoiceIrq, GusServiceStream, GusStartStream, GusStopStream, GusStreamStart, GusStreamIdle, GusStreamPlayNote
 global GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetBend, GusStreamSetRate, GusStreamSetSample, GusStreamApplyBend, GusStreamBusy
@@ -29,137 +24,137 @@ GusFillStreamBuffer:
         push ebx
         LD or, eax, eax
         jne short .2
-        mov eax, dword [dword_D7AF4]
-        mov dword [dword_D8494], eax
-        cmp dword [dword_D8498], byte 0
+        mov eax, dword [GusStreamLeftBuf]
+        mov dword [GusFillCount], eax
+        cmp dword [GusStreamState], byte 0
         je short .1
-        mov dword [dword_D7AF8], 2
+        mov dword [GusStreamLeftPending], 2
         jmp short .4
 .1:
-        cmp dword [dword_D7AF8], byte 0
+        cmp dword [GusStreamLeftPending], byte 0
         je near .71
-        dec dword [dword_D7AF8]
+        dec dword [GusStreamLeftPending]
         jmp short .4
 .2:
-        mov eax, dword [dword_D7B00]
-        mov dword [dword_D8494], eax
-        cmp dword [dword_D8498], byte 0
+        mov eax, dword [GusStreamRightBuf]
+        mov dword [GusFillCount], eax
+        cmp dword [GusStreamState], byte 0
         je short .3
-        mov dword [dword_D7B04], 2
+        mov dword [GusStreamRightPending], 2
         jmp short .4
 .3:
-        cmp dword [dword_D7B04], byte 0
+        cmp dword [GusStreamRightPending], byte 0
         je near .71
-        dec dword [dword_D7AF8]
+        dec dword [GusStreamLeftPending]
         jmp short .4
 .4:
-        mov ebx, dword [dword_D8494]
-        mov ecx, dword [dword_D8484]
+        mov ebx, dword [GusFillCount]
+        mov ecx, dword [GusStreamQuarterSize]
         call GusClearMixBuffer
-        cmp byte [dword_D7B0C], 0
+        cmp byte [GusStreamChannels], 0
         je near .20
-        cmp byte [byte_D7B18], 0
+        cmp byte [GusStreamChannels+0Ch], 0
         jne near .11
-        mov edx, dword [dword_D7B4C]
-        mov eax, dword [dword_D7B50]
-        mov ecx, dword [dword_D8490]
+        mov edx, dword [GusStreamChannels+040h]
+        mov eax, dword [GusStreamChannels+044h]
+        mov ecx, dword [GusStreamQuarterLog2]
         shld edx, eax, cl
         shl eax, cl
-        add eax, dword [dword_D7B48]
-        adc edx, dword [dword_D7B44]
-        cmp edx, dword [dword_D7B34]
+        add eax, dword [GusStreamChannels+03Ch]
+        adc edx, dword [GusStreamChannels+038h]
+        cmp edx, dword [GusStreamChannels+028h]
         jae short .6
-        mov eax, dword [dword_D7B44]
+        mov eax, dword [GusStreamChannels+038h]
         LD mov, esi, eax
         mov dword [byte ebp-010h], esi
-        mov ecx, dword [dword_D7B48]
-        mov edi, dword [dword_D7B4C]
-        mov edx, dword [dword_D7B50]
-        mov ebx, word_D7B64
-        mov eax, dword [dword_D8484]
-        push dword [dword_D8494]
+        mov ecx, dword [GusStreamChannels+03Ch]
+        mov edi, dword [GusStreamChannels+040h]
+        mov edx, dword [GusStreamChannels+044h]
+        mov ebx, GusStreamStepsChan0
+        mov eax, dword [GusStreamQuarterSize]
+        push dword [GusFillCount]
         call GusMixAdd8
         add esp, byte 4
 .5:
-        mov dword [dword_D7B48], ecx
+        mov dword [GusStreamChannels+03Ch], ecx
         sub esi, dword [byte ebp-010h]
-        add dword [dword_D7B44], esi
+        add dword [GusStreamChannels+038h], esi
         jmp near .20
 .6:
         mov dword [byte ebp-04h], 0
 .7:
-        mov eax, dword [dword_D7B44]
-        mov ebx, dword [dword_D7B34]
+        mov eax, dword [GusStreamChannels+038h]
+        mov ebx, dword [GusStreamChannels+028h]
         LD sub, ebx, eax
         mov dword [byte ebp-08h], ebx
         LD mov, esi, eax
         mov dword [byte ebp-010h], eax
         add eax, dword [byte ebp-08h]
         mov dword [byte ebp-0Ch], eax
-        mov ecx, dword [dword_D7B48]
-        mov edi, dword [dword_D7B4C]
-        mov edx, dword [dword_D7B50]
+        mov ecx, dword [GusStreamChannels+03Ch]
+        mov edi, dword [GusStreamChannels+040h]
+        mov edx, dword [GusStreamChannels+044h]
 .8:
         movzx eax, byte [esi]
-        mov ebx, word_D7B64
+        mov ebx, GusStreamStepsChan0
         mov ax, word [ebx+eax*2]
         mov ebx, dword [byte ebp-04h]
         shl ebx, 1
-        add ebx, dword [dword_D8494]
+        add ebx, dword [GusFillCount]
         add word [ebx], ax
         inc dword [byte ebp-04h]
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [byte ebp-0Ch]
         jae short .9
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamQuarterSize]
         cmp eax, dword [byte ebp-04h]
         jne short .8
         jmp short .5
 .9:
-        cmp dword [dword_D7B0C], byte 1
+        cmp dword [GusStreamChannels], byte 1
         jne short .10
-        cmp dword [dword_D7B1C], byte 0
+        cmp dword [GusStreamChannels+010h], byte 0
         je short .10
-        mov eax, dword [dword_D7B30]
-        mov dword [dword_D7B48], ecx
-        mov dword [dword_D7B44], eax
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamChannels+024h]
+        mov dword [GusStreamChannels+03Ch], ecx
+        mov dword [GusStreamChannels+038h], eax
+        mov eax, dword [GusStreamQuarterSize]
         cmp dword [byte ebp-04h], eax
         jne near .7
         jmp near .20
 .10:
-        mov dword [dword_D7B0C], 0
+        mov dword [GusStreamChannels], 0
         jmp near .20
 .11:
-        mov esi, dword [dword_D7B44]
-        mov ecx, dword [dword_D7B34]
+        mov esi, dword [GusStreamChannels+038h]
+        mov ecx, dword [GusStreamChannels+028h]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D7B60]
+        cmp ecx, dword [GusStreamChannels+054h]
         jbe short .12
-        mov ecx, dword [dword_D7B60]
+        mov ecx, dword [GusStreamChannels+054h]
 .12:
         LD add, ecx, esi
         mov dword [byte ebp-04h], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D7B58]
-        mov edi, dword [dword_D8494]
+        mov dl, byte [GusStreamChannels+04Ch]
+        mov edi, dword [GusFillCount]
 .13:
-        mov eax, dword [dword_D7B38]
+        mov eax, dword [GusStreamChannels+02Ch]
         cmp eax, 10000h
         je short .15
 .14:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D7B64]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan0]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D7B64]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan0]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
@@ -170,151 +165,151 @@ GusFillStreamBuffer:
         jmp short .16
 .15:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D7B64]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan0]
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D7B64]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan0]
         add word [edi+ecx*2], ax
         inc ecx
         inc esi
         cmp esi, dword [byte ebp-04h]
         jb short .15
 .16:
-        cmp esi, dword [dword_D7B34]
+        cmp esi, dword [GusStreamChannels+028h]
         je short .17
-        mov byte [byte_D7B58], dl
-        mov dword [dword_D7B44], esi
+        mov byte [GusStreamChannels+04Ch], dl
+        mov dword [GusStreamChannels+038h], esi
         jmp short .20
 .17:
-        cmp dword [dword_D7B0C], byte 1
+        cmp dword [GusStreamChannels], byte 1
         jne short .19
-        cmp dword [dword_D7B1C], byte 0
+        cmp dword [GusStreamChannels+010h], byte 0
         je short .19
-        mov dl, byte [byte_D7B5C]
-        mov byte [byte_D7B58], dl
-        mov eax, dword [dword_D7B44]
-        add eax, dword [dword_D7B60]
+        mov dl, byte [GusStreamChannels+050h]
+        mov byte [GusStreamChannels+04Ch], dl
+        mov eax, dword [GusStreamChannels+038h]
+        add eax, dword [GusStreamChannels+054h]
         LD sub, eax, esi
         LD or, eax, eax
         je short .18
-        mov esi, dword [dword_D7B30]
+        mov esi, dword [GusStreamChannels+024h]
         LD add, eax, esi
         mov dword [byte ebp-04h], eax
         jmp near .13
 .18:
-        mov eax, dword [dword_D7B30]
-        mov dword [dword_D7B44], eax
+        mov eax, dword [GusStreamChannels+024h]
+        mov dword [GusStreamChannels+038h], eax
         jmp short .20
 .19:
-        mov dword [dword_D7B0C], 0
+        mov dword [GusStreamChannels], 0
 .20:
-        cmp byte [dword_D7D64], 0
+        cmp byte [GusStreamChannels+0258h], 0
         je near .36
-        cmp byte [byte_D7D70], 0
+        cmp byte [GusStreamChannels+0264h], 0
         jne near .27
-        mov edx, dword [dword_D7DA4]
-        mov eax, dword [dword_D7DA8]
-        mov ecx, dword [dword_D8490]
+        mov edx, dword [GusStreamChannels+0298h]
+        mov eax, dword [GusStreamChannels+029Ch]
+        mov ecx, dword [GusStreamQuarterLog2]
         shld edx, eax, cl
         shl eax, cl
-        add eax, dword [dword_D7DA0]
-        adc edx, dword [dword_D7D9C]
-        cmp edx, dword [dword_D7D8C]
+        add eax, dword [GusStreamChannels+0294h]
+        adc edx, dword [GusStreamChannels+0290h]
+        cmp edx, dword [GusStreamChannels+0280h]
         jae short .22
-        mov eax, dword [dword_D7D9C]
+        mov eax, dword [GusStreamChannels+0290h]
         LD mov, esi, eax
         mov dword [byte ebp-010h], esi
-        mov ecx, dword [dword_D7DA0]
-        mov edi, dword [dword_D7DA4]
-        mov edx, dword [dword_D7DA8]
-        mov ebx, word_D7DBC
-        mov eax, dword [dword_D8484]
-        push dword [dword_D8494]
+        mov ecx, dword [GusStreamChannels+0294h]
+        mov edi, dword [GusStreamChannels+0298h]
+        mov edx, dword [GusStreamChannels+029Ch]
+        mov ebx, GusStreamStepsChan1
+        mov eax, dword [GusStreamQuarterSize]
+        push dword [GusFillCount]
         call GusMixAdd8
         add esp, byte 4
 .21:
-        mov dword [dword_D7DA0], ecx
+        mov dword [GusStreamChannels+0294h], ecx
         sub esi, dword [byte ebp-010h]
-        add dword [dword_D7D9C], esi
+        add dword [GusStreamChannels+0290h], esi
         jmp near .36
 .22:
         mov dword [byte ebp-04h], 0
 .23:
-        mov eax, dword [dword_D7D9C]
-        mov ebx, dword [dword_D7D8C]
+        mov eax, dword [GusStreamChannels+0290h]
+        mov ebx, dword [GusStreamChannels+0280h]
         LD sub, ebx, eax
         mov dword [byte ebp-08h], ebx
         LD mov, esi, eax
         mov dword [byte ebp-010h], eax
         add eax, dword [byte ebp-08h]
         mov dword [byte ebp-0Ch], eax
-        mov ecx, dword [dword_D7DA0]
-        mov edi, dword [dword_D7DA4]
-        mov edx, dword [dword_D7DA8]
+        mov ecx, dword [GusStreamChannels+0294h]
+        mov edi, dword [GusStreamChannels+0298h]
+        mov edx, dword [GusStreamChannels+029Ch]
 .24:
         movzx eax, byte [esi]
-        mov ebx, word_D7DBC
+        mov ebx, GusStreamStepsChan1
         mov ax, word [ebx+eax*2]
         mov ebx, dword [byte ebp-04h]
         shl ebx, 1
-        add ebx, dword [dword_D8494]
+        add ebx, dword [GusFillCount]
         add word [ebx], ax
         inc dword [byte ebp-04h]
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [byte ebp-0Ch]
         jae short .25
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamQuarterSize]
         cmp eax, dword [byte ebp-04h]
         jne short .24
         jmp short .21
 .25:
-        cmp dword [dword_D7D64], byte 1
+        cmp dword [GusStreamChannels+0258h], byte 1
         jne short .26
-        cmp dword [dword_D7D74], byte 0
+        cmp dword [GusStreamChannels+0268h], byte 0
         je short .26
-        mov eax, dword [dword_D7D88]
-        mov dword [dword_D7DA0], ecx
-        mov dword [dword_D7D9C], eax
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamChannels+027Ch]
+        mov dword [GusStreamChannels+0294h], ecx
+        mov dword [GusStreamChannels+0290h], eax
+        mov eax, dword [GusStreamQuarterSize]
         cmp dword [byte ebp-04h], eax
         jne near .23
         jmp near .36
 .26:
-        mov dword [dword_D7D64], 0
+        mov dword [GusStreamChannels+0258h], 0
         jmp near .36
 .27:
-        mov esi, dword [dword_D7D9C]
-        mov ecx, dword [dword_D7D8C]
+        mov esi, dword [GusStreamChannels+0290h]
+        mov ecx, dword [GusStreamChannels+0280h]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D7DB8]
+        cmp ecx, dword [GusStreamChannels+02ACh]
         jbe short .28
-        mov ecx, dword [dword_D7DB8]
+        mov ecx, dword [GusStreamChannels+02ACh]
 .28:
         LD add, ecx, esi
         mov dword [byte ebp-04h], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D7DB0]
-        mov edi, dword [dword_D8494]
+        mov dl, byte [GusStreamChannels+02A4h]
+        mov edi, dword [GusFillCount]
 .29:
-        mov eax, dword [dword_D7D90]
+        mov eax, dword [GusStreamChannels+0284h]
         cmp eax, 10000h
         je short .31
 .30:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D7DBC]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan1]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D7DBC]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan1]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
@@ -325,151 +320,151 @@ GusFillStreamBuffer:
         jmp short .32
 .31:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D7DBC]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan1]
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D7DBC]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan1]
         add word [edi+ecx*2], ax
         inc ecx
         inc esi
         cmp esi, dword [byte ebp-04h]
         jb short .31
 .32:
-        cmp esi, dword [dword_D7D8C]
+        cmp esi, dword [GusStreamChannels+0280h]
         je short .33
-        mov byte [byte_D7DB0], dl
-        mov dword [dword_D7D9C], esi
+        mov byte [GusStreamChannels+02A4h], dl
+        mov dword [GusStreamChannels+0290h], esi
         jmp short .36
 .33:
-        cmp dword [dword_D7D64], byte 1
+        cmp dword [GusStreamChannels+0258h], byte 1
         jne short .35
-        cmp dword [dword_D7D74], byte 0
+        cmp dword [GusStreamChannels+0268h], byte 0
         je short .35
-        mov dl, byte [byte_D7DB4]
-        mov byte [byte_D7DB0], dl
-        mov eax, dword [dword_D7D9C]
-        add eax, dword [dword_D7DB8]
+        mov dl, byte [GusStreamChannels+02A8h]
+        mov byte [GusStreamChannels+02A4h], dl
+        mov eax, dword [GusStreamChannels+0290h]
+        add eax, dword [GusStreamChannels+02ACh]
         LD sub, eax, esi
         LD or, eax, eax
         je short .34
-        mov esi, dword [dword_D7D88]
+        mov esi, dword [GusStreamChannels+027Ch]
         LD add, eax, esi
         mov dword [byte ebp-04h], eax
         jmp near .29
 .34:
-        mov eax, dword [dword_D7D88]
-        mov dword [dword_D7D9C], eax
+        mov eax, dword [GusStreamChannels+027Ch]
+        mov dword [GusStreamChannels+0290h], eax
         jmp short .36
 .35:
-        mov dword [dword_D7D64], 0
+        mov dword [GusStreamChannels+0258h], 0
 .36:
-        cmp byte [dword_D7FBC], 0
+        cmp byte [GusStreamChannels+04B0h], 0
         je near .52
-        cmp byte [byte_D7FC8], 0
+        cmp byte [GusStreamChannels+04BCh], 0
         jne near .43
-        mov edx, dword [dword_D7FFC]
-        mov eax, dword [dword_D8000]
-        mov ecx, dword [dword_D8490]
+        mov edx, dword [GusStreamChannels+04F0h]
+        mov eax, dword [GusStreamChannels+04F4h]
+        mov ecx, dword [GusStreamQuarterLog2]
         shld edx, eax, cl
         shl eax, cl
-        add eax, dword [dword_D7FF8]
-        adc edx, dword [dword_D7FF4]
-        cmp edx, dword [dword_D7FE4]
+        add eax, dword [GusStreamChannels+04ECh]
+        adc edx, dword [GusStreamChannels+04E8h]
+        cmp edx, dword [GusStreamChannels+04D8h]
         jae short .38
-        mov eax, dword [dword_D7FF4]
+        mov eax, dword [GusStreamChannels+04E8h]
         LD mov, esi, eax
         mov dword [byte ebp-010h], esi
-        mov ecx, dword [dword_D7FF8]
-        mov edi, dword [dword_D7FFC]
-        mov edx, dword [dword_D8000]
-        mov ebx, word_D8014
-        mov eax, dword [dword_D8484]
-        push dword [dword_D8494]
+        mov ecx, dword [GusStreamChannels+04ECh]
+        mov edi, dword [GusStreamChannels+04F0h]
+        mov edx, dword [GusStreamChannels+04F4h]
+        mov ebx, GusStreamStepsChan2
+        mov eax, dword [GusStreamQuarterSize]
+        push dword [GusFillCount]
         call GusMixAdd8
         add esp, byte 4
 .37:
-        mov dword [dword_D7FF8], ecx
+        mov dword [GusStreamChannels+04ECh], ecx
         sub esi, dword [byte ebp-010h]
-        add dword [dword_D7FF4], esi
+        add dword [GusStreamChannels+04E8h], esi
         jmp near .52
 .38:
         mov dword [byte ebp-04h], 0
 .39:
-        mov eax, dword [dword_D7FF4]
-        mov ebx, dword [dword_D7FE4]
+        mov eax, dword [GusStreamChannels+04E8h]
+        mov ebx, dword [GusStreamChannels+04D8h]
         LD sub, ebx, eax
         mov dword [byte ebp-08h], ebx
         LD mov, esi, eax
         mov dword [byte ebp-010h], eax
         add eax, dword [byte ebp-08h]
         mov dword [byte ebp-0Ch], eax
-        mov ecx, dword [dword_D7FF8]
-        mov edi, dword [dword_D7FFC]
-        mov edx, dword [dword_D8000]
+        mov ecx, dword [GusStreamChannels+04ECh]
+        mov edi, dword [GusStreamChannels+04F0h]
+        mov edx, dword [GusStreamChannels+04F4h]
 .40:
         movzx eax, byte [esi]
-        mov ebx, word_D8014
+        mov ebx, GusStreamStepsChan2
         mov ax, word [ebx+eax*2]
         mov ebx, dword [byte ebp-04h]
         shl ebx, 1
-        add ebx, dword [dword_D8494]
+        add ebx, dword [GusFillCount]
         add word [ebx], ax
         inc dword [byte ebp-04h]
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [byte ebp-0Ch]
         jae short .41
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamQuarterSize]
         cmp eax, dword [byte ebp-04h]
         jne short .40
         jmp short .37
 .41:
-        cmp dword [dword_D7FBC], byte 1
+        cmp dword [GusStreamChannels+04B0h], byte 1
         jne short .42
-        cmp dword [dword_D7FCC], byte 0
+        cmp dword [GusStreamChannels+04C0h], byte 0
         je short .42
-        mov eax, dword [dword_D7FE0]
-        mov dword [dword_D7FF8], ecx
-        mov dword [dword_D7FF4], eax
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamChannels+04D4h]
+        mov dword [GusStreamChannels+04ECh], ecx
+        mov dword [GusStreamChannels+04E8h], eax
+        mov eax, dword [GusStreamQuarterSize]
         cmp dword [byte ebp-04h], eax
         jne near .39
         jmp near .52
 .42:
-        mov dword [dword_D7FBC], 0
+        mov dword [GusStreamChannels+04B0h], 0
         jmp near .52
 .43:
-        mov esi, dword [dword_D7FF4]
-        mov ecx, dword [dword_D7FE4]
+        mov esi, dword [GusStreamChannels+04E8h]
+        mov ecx, dword [GusStreamChannels+04D8h]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D8010]
+        cmp ecx, dword [GusStreamChannels+0504h]
         jbe short .44
-        mov ecx, dword [dword_D8010]
+        mov ecx, dword [GusStreamChannels+0504h]
 .44:
         LD add, ecx, esi
         mov dword [byte ebp-04h], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D8008]
-        mov edi, dword [dword_D8494]
+        mov dl, byte [GusStreamChannels+04FCh]
+        mov edi, dword [GusFillCount]
 .45:
-        mov eax, dword [dword_D7FE8]
+        mov eax, dword [GusStreamChannels+04DCh]
         cmp eax, 10000h
         je short .47
 .46:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D8014]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan2]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D8014]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan2]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
@@ -480,151 +475,151 @@ GusFillStreamBuffer:
         jmp short .48
 .47:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D8014]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan2]
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D8014]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan2]
         add word [edi+ecx*2], ax
         inc ecx
         inc esi
         cmp esi, dword [byte ebp-04h]
         jb short .47
 .48:
-        cmp esi, dword [dword_D7FE4]
+        cmp esi, dword [GusStreamChannels+04D8h]
         je short .49
-        mov byte [byte_D8008], dl
-        mov dword [dword_D7FF4], esi
+        mov byte [GusStreamChannels+04FCh], dl
+        mov dword [GusStreamChannels+04E8h], esi
         jmp short .52
 .49:
-        cmp dword [dword_D7FBC], byte 1
+        cmp dword [GusStreamChannels+04B0h], byte 1
         jne short .51
-        cmp dword [dword_D7FCC], byte 0
+        cmp dword [GusStreamChannels+04C0h], byte 0
         je short .51
-        mov dl, byte [byte_D800C]
-        mov byte [byte_D8008], dl
-        mov eax, dword [dword_D7FF4]
-        add eax, dword [dword_D8010]
+        mov dl, byte [GusStreamChannels+0500h]
+        mov byte [GusStreamChannels+04FCh], dl
+        mov eax, dword [GusStreamChannels+04E8h]
+        add eax, dword [GusStreamChannels+0504h]
         LD sub, eax, esi
         LD or, eax, eax
         je short .50
-        mov esi, dword [dword_D7FE0]
+        mov esi, dword [GusStreamChannels+04D4h]
         LD add, eax, esi
         mov dword [byte ebp-04h], eax
         jmp near .45
 .50:
-        mov eax, dword [dword_D7FE0]
-        mov dword [dword_D7FF4], eax
+        mov eax, dword [GusStreamChannels+04D4h]
+        mov dword [GusStreamChannels+04E8h], eax
         jmp short .52
 .51:
-        mov dword [dword_D7FBC], 0
+        mov dword [GusStreamChannels+04B0h], 0
 .52:
-        cmp byte [dword_D8214], 0
+        cmp byte [GusStreamChannels+0708h], 0
         je near .68
-        cmp byte [byte_D8220], 0
+        cmp byte [GusStreamChannels+0714h], 0
         jne near .59
-        mov edx, dword [dword_D8254]
-        mov eax, dword [dword_D8258]
-        mov ecx, dword [dword_D8490]
+        mov edx, dword [GusStreamChannels+0748h]
+        mov eax, dword [GusStreamChannels+074Ch]
+        mov ecx, dword [GusStreamQuarterLog2]
         shld edx, eax, cl
         shl eax, cl
-        add eax, dword [dword_D8250]
-        adc edx, dword [dword_D824C]
-        cmp edx, dword [dword_D823C]
+        add eax, dword [GusStreamChannels+0744h]
+        adc edx, dword [GusStreamChannels+0740h]
+        cmp edx, dword [GusStreamChannels+0730h]
         jae short .54
-        mov eax, dword [dword_D824C]
+        mov eax, dword [GusStreamChannels+0740h]
         LD mov, esi, eax
         mov dword [byte ebp-010h], esi
-        mov ecx, dword [dword_D8250]
-        mov edi, dword [dword_D8254]
-        mov edx, dword [dword_D8258]
-        mov ebx, word_D826C
-        mov eax, dword [dword_D8484]
-        push dword [dword_D8494]
+        mov ecx, dword [GusStreamChannels+0744h]
+        mov edi, dword [GusStreamChannels+0748h]
+        mov edx, dword [GusStreamChannels+074Ch]
+        mov ebx, GusStreamStepsChan3
+        mov eax, dword [GusStreamQuarterSize]
+        push dword [GusFillCount]
         call GusMixAdd8
         add esp, byte 4
 .53:
-        mov dword [dword_D8250], ecx
+        mov dword [GusStreamChannels+0744h], ecx
         sub esi, dword [byte ebp-010h]
-        add dword [dword_D824C], esi
+        add dword [GusStreamChannels+0740h], esi
         jmp near .68
 .54:
         mov dword [byte ebp-04h], 0
 .55:
-        mov eax, dword [dword_D824C]
-        mov ebx, dword [dword_D823C]
+        mov eax, dword [GusStreamChannels+0740h]
+        mov ebx, dword [GusStreamChannels+0730h]
         LD sub, ebx, eax
         mov dword [byte ebp-08h], ebx
         LD mov, esi, eax
         mov dword [byte ebp-010h], eax
         add eax, dword [byte ebp-08h]
         mov dword [byte ebp-0Ch], eax
-        mov ecx, dword [dword_D8250]
-        mov edi, dword [dword_D8254]
-        mov edx, dword [dword_D8258]
+        mov ecx, dword [GusStreamChannels+0744h]
+        mov edi, dword [GusStreamChannels+0748h]
+        mov edx, dword [GusStreamChannels+074Ch]
 .56:
         movzx eax, byte [esi]
-        mov ebx, word_D826C
+        mov ebx, GusStreamStepsChan3
         mov ax, word [ebx+eax*2]
         mov ebx, dword [byte ebp-04h]
         shl ebx, 1
-        add ebx, dword [dword_D8494]
+        add ebx, dword [GusFillCount]
         add word [ebx], ax
         inc dword [byte ebp-04h]
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [byte ebp-0Ch]
         jae short .57
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamQuarterSize]
         cmp eax, dword [byte ebp-04h]
         jne short .56
         jmp short .53
 .57:
-        cmp dword [dword_D8214], byte 1
+        cmp dword [GusStreamChannels+0708h], byte 1
         jne short .58
-        cmp dword [dword_D8224], byte 0
+        cmp dword [GusStreamChannels+0718h], byte 0
         je short .58
-        mov eax, dword [dword_D8238]
-        mov dword [dword_D8250], ecx
-        mov dword [dword_D824C], eax
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamChannels+072Ch]
+        mov dword [GusStreamChannels+0744h], ecx
+        mov dword [GusStreamChannels+0740h], eax
+        mov eax, dword [GusStreamQuarterSize]
         cmp dword [byte ebp-04h], eax
         jne near .55
         jmp near .68
 .58:
-        mov dword [dword_D8214], 0
+        mov dword [GusStreamChannels+0708h], 0
         jmp near .68
 .59:
-        mov esi, dword [dword_D824C]
-        mov ecx, dword [dword_D823C]
+        mov esi, dword [GusStreamChannels+0740h]
+        mov ecx, dword [GusStreamChannels+0730h]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D8268]
+        cmp ecx, dword [GusStreamChannels+075Ch]
         jbe short .60
-        mov ecx, dword [dword_D8268]
+        mov ecx, dword [GusStreamChannels+075Ch]
 .60:
         LD add, ecx, esi
         mov dword [byte ebp-04h], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D8260]
-        mov edi, dword [dword_D8494]
+        mov dl, byte [GusStreamChannels+0754h]
+        mov edi, dword [GusFillCount]
 .61:
-        mov eax, dword [dword_D8240]
+        mov eax, dword [GusStreamChannels+0734h]
         cmp eax, 10000h
         je short .63
 .62:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D826C]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan3]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D826C]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan3]
         add word [edi+ecx*2], ax
         inc ecx
         add word [edi+ecx*2], ax
@@ -635,54 +630,54 @@ GusFillStreamBuffer:
         jmp short .64
 .63:
         movzx ebx, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        mov ax, word [nosplit edx*2+word_D826C]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan3]
         add word [edi+ecx*2], ax
         inc ecx
         LD add, dl, bh
-        mov ax, word [nosplit edx*2+word_D826C]
+        mov ax, word [nosplit edx*2+GusStreamStepsChan3]
         add word [edi+ecx*2], ax
         inc ecx
         inc esi
         cmp esi, dword [byte ebp-04h]
         jb short .63
 .64:
-        cmp esi, dword [dword_D823C]
+        cmp esi, dword [GusStreamChannels+0730h]
         je short .65
-        mov byte [byte_D8260], dl
-        mov dword [dword_D824C], esi
+        mov byte [GusStreamChannels+0754h], dl
+        mov dword [GusStreamChannels+0740h], esi
         jmp short .68
 .65:
-        cmp dword [dword_D8214], byte 1
+        cmp dword [GusStreamChannels+0708h], byte 1
         jne short .67
-        cmp dword [dword_D8224], byte 0
+        cmp dword [GusStreamChannels+0718h], byte 0
         je short .67
-        mov dl, byte [byte_D8264]
-        mov byte [byte_D8260], dl
-        mov eax, dword [dword_D824C]
-        add eax, dword [dword_D8268]
+        mov dl, byte [GusStreamChannels+0758h]
+        mov byte [GusStreamChannels+0754h], dl
+        mov eax, dword [GusStreamChannels+0740h]
+        add eax, dword [GusStreamChannels+075Ch]
         LD sub, eax, esi
         LD or, eax, eax
         je short .66
-        mov esi, dword [dword_D8238]
+        mov esi, dword [GusStreamChannels+072Ch]
         LD add, eax, esi
         mov dword [byte ebp-04h], eax
         jmp near .61
 .66:
-        mov eax, dword [dword_D8238]
-        mov dword [dword_D824C], eax
+        mov eax, dword [GusStreamChannels+072Ch]
+        mov dword [GusStreamChannels+0740h], eax
         jmp short .68
 .67:
-        mov dword [dword_D8214], 0
+        mov dword [GusStreamChannels+0708h], 0
 .68:
-        mov ebx, dword [dword_D8494]
-        mov ecx, dword [dword_D8484]
+        mov ebx, dword [GusFillCount]
+        mov ecx, dword [GusStreamQuarterSize]
         call GusStreamNoOp
-        mov eax, dword [dword_D8494]
-        mov dword [dword_D84A8], eax
-        mov dword [dword_D84AC], eax
-        cmp eax, dword [dword_D7AF4]
+        mov eax, dword [GusFillCount]
+        mov dword [GusFillScratch], eax
+        mov dword [GusFillDest], eax
+        cmp eax, dword [GusStreamLeftBuf]
         jne short .69
         LD mov, esi, eax
         movzx edx, byte [esi]
@@ -692,14 +687,14 @@ GusFillStreamBuffer:
         mov eax, dword [GusStreamCardEnd]
         inc eax
         call GusPoke
-        mov ebx, dword [dword_D84B0]
+        mov ebx, dword [GusStreamCardLeft]
         jmp short .70
 .69:
-        mov ebx, dword [dword_D84B4]
+        mov ebx, dword [GusStreamCardRight]
 .70:
         mov eax, 1
         push eax
-        mov eax, dword_D84A8
+        mov eax, GusFillScratch
         mov edx, dword [GusStreamHalfSize]
         mov ecx, 41h
         call GusDownload
@@ -712,14 +707,14 @@ GusFillStreamBuffer:
 GusStreamVoiceIrq:
         cmp dword [GusStreamActive], byte 0
         je near .3
-        cmp eax, dword [byte_D849C]
+        cmp eax, dword [GusStreamVoiceLeft]
         je short .1
-        cmp eax, dword [byte_D84A0]
+        cmp eax, dword [GusStreamVoiceRight]
         jne near .3
         pushf
         cli
         mov dx, word [GusVoiceSelectPort]
-        mov al, byte [byte_D84A0]
+        mov al, byte [GusStreamVoiceRight]
         out dx, al
         mov al, 0
         mov dx, word [GusRegSelectPort]
@@ -747,7 +742,7 @@ GusStreamVoiceIrq:
         pushf
         cli
         mov dx, word [GusVoiceSelectPort]
-        mov al, byte [byte_D84A0]
+        mov al, byte [GusStreamVoiceRight]
         out dx, al
         mov al, 0Bh
         mov dx, word [GusRegSelectPort]
@@ -813,7 +808,7 @@ GusStartStream:
         mov ecx, 4
         LD xor, esi, esi
 .1:
-        mov ebx, dword [nosplit esi*4+off_D846C]
+        mov ebx, dword [nosplit esi*4+GusStreamTable]
         mov dword [byte ebx+04h], 0FFh
         inc esi
         loop .1
@@ -822,33 +817,33 @@ GusStartStream:
         shr eax, 1
         mov dword [GusStreamHalfSize], eax
         shr eax, 1
-        mov dword [dword_D8484], eax
+        mov dword [GusStreamQuarterSize], eax
         mov eax, 1
-        mov dword [dword_D8490], 0
+        mov dword [GusStreamQuarterLog2], 0
 .2:
         shl eax, 1
-        inc dword [dword_D8490]
-        cmp eax, dword [dword_D8484]
+        inc dword [GusStreamQuarterLog2]
+        cmp eax, dword [GusStreamQuarterSize]
         jb short .2
-        mov eax, dword [dword_D8490]
+        mov eax, dword [GusStreamQuarterLog2]
         inc eax
-        mov dword [dword_D848C], eax
+        mov dword [GusStreamHalfShift], eax
         inc eax
-        mov dword [dword_D8488], eax
+        mov dword [GusStreamBufShift], eax
         mov eax, dword [byte ebp+08h]
-        mov dword [dword_D7AF4], eax
+        mov dword [GusStreamLeftBuf], eax
         add eax, dword [GusStreamHalfSize]
-        mov dword [dword_D7B00], eax
+        mov dword [GusStreamRightBuf], eax
         push es
         push ds
         pop es
         mov edi, dword [byte ebp+08h]
-        mov ecx, dword [dword_D8484]
+        mov ecx, dword [GusStreamQuarterSize]
         cld
         rep stosd
         pop es
         mov eax, dword [byte ebp+0Ch]
-        mov dword [dword_D84B0], eax
+        mov dword [GusStreamCardLeft], eax
         push ebx
         LD mov, ebx, eax
         and ebx, 0FFFC000h
@@ -860,7 +855,7 @@ GusStartStream:
         mov dword [GusStreamLoopLo], eax
         mov eax, dword [byte ebp+0Ch]
         add eax, dword [GusStreamHalfSize]
-        mov dword [dword_D84B4], eax
+        mov dword [GusStreamCardRight], eax
         push ebx
         LD mov, ebx, eax
         and ebx, 0FFFC000h
@@ -882,10 +877,10 @@ GusStartStream:
         shl eax, 9
         pop ebx
         mov dword [GusStreamEndLo], eax
-        mov dword [dword_D8498], 0
-        mov dword [dword_D7AF8], 1
-        mov dword [dword_D7B04], 1
-        mov esi, dword [dword_D84B0]
+        mov dword [GusStreamState], 0
+        mov dword [GusStreamLeftPending], 1
+        mov dword [GusStreamRightPending], 1
+        mov esi, dword [GusStreamCardLeft]
 .3:
         LD xor, edx, edx
         LD mov, eax, esi
@@ -901,13 +896,13 @@ GusStartStream:
         LD xor, eax, eax
         LD xor, edx, edx
         call GusAllocVoice
-        mov dword [byte_D849C], eax
+        mov dword [GusStreamVoiceLeft], eax
         LD xor, eax, eax
         LD xor, edx, edx
         call GusAllocVoice
-        mov dword [byte_D84A0], eax
+        mov dword [GusStreamVoiceRight], eax
         mov dx, word [GusVoiceSelectPort]
-        mov al, byte [byte_D849C]
+        mov al, byte [GusStreamVoiceLeft]
         out dx, al
         mov al, 1
         mov dx, word [GusRegSelectPort]
@@ -983,7 +978,7 @@ GusStartStream:
         mov al, 7
         out dx, al
         mov dx, word [GusVoiceSelectPort]
-        mov al, byte [byte_D84A0]
+        mov al, byte [GusStreamVoiceRight]
         out dx, al
         mov al, 1
         mov dx, word [GusRegSelectPort]
@@ -1024,7 +1019,7 @@ GusStartStream:
         pushf
         cli
         mov dx, word [GusVoiceSelectPort]
-        mov al, byte [byte_D84A0]
+        mov al, byte [GusStreamVoiceRight]
         out dx, al
         mov al, 0Bh
         mov dx, word [GusRegSelectPort]
@@ -1058,7 +1053,7 @@ GusStartStream:
         pop ax
         out dx, al
         popf
-        mov dword [dword_D8498], 0Fh
+        mov dword [GusStreamState], 0Fh
         mov dword [GusStreamActive], 1
         popf
         pop edi
@@ -1071,11 +1066,11 @@ GusStopStream:
         cli
         cmp dword [GusStreamActive], byte 0
         je near .1
-        mov dword [dword_D8498], 0
+        mov dword [GusStreamState], 0
         pushf
         cli
         mov dx, word [GusVoiceSelectPort]
-        mov al, byte [byte_D84A0]
+        mov al, byte [GusStreamVoiceRight]
         out dx, al
         mov al, 0
         mov dx, word [GusRegSelectPort]
@@ -1098,7 +1093,7 @@ GusStopStream:
         out dx, al
         popf
         mov dx, word [GusVoiceSelectPort]
-        mov al, byte [byte_D849C]
+        mov al, byte [GusStreamVoiceLeft]
         out dx, al
         mov al, 0
         mov dx, word [GusRegSelectPort]
@@ -1134,7 +1129,7 @@ GusStreamStart:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae near .4
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         mov eax, dword [byte ebp+01Ch]
         cmp eax, byte 0
         jne short .1
@@ -1178,7 +1173,7 @@ GusStreamStart:
         LD xor, eax, eax
 .2:
         mov al, byte [edi]
-        mov bx, word [nosplit eax*2+word_D7414]
+        mov bx, word [nosplit eax*2+MixVolumeTable]
         inc edi
         LD add, dl, bl
         LD add, dl, bh
@@ -1206,7 +1201,7 @@ GusStreamIdle:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae short .1
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         cmp dword [esi], byte 0
         jne short .2
 .1:
@@ -1227,13 +1222,13 @@ GusStreamPlayNote:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae short .3
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         LD xor, ebx, ebx
         mov bl, byte [byte ebp+0Ch]
         mov dword [byte esi+08h], ebx
         cmp bl, 0FFh
         je short .1
-        mov eax, dword [nosplit ebx*4+dword_D6B00]
+        mov eax, dword [nosplit ebx*4+NotePitchTable]
         mul dword [byte esi+02Ch]
         and eax, 0FFFF0000h
         and edx, 0FFFFh
@@ -1267,7 +1262,7 @@ GusStreamRelease:
         jae short .1
         cmp esi, byte 1
         jle short .1
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         mov eax, dword [byte esi+01Ch]
         mov dword [byte esi+028h], eax
         mov dword [esi], 0
@@ -1284,7 +1279,7 @@ GusStreamStop:
         jae short .1
         cmp esi, byte 1
         jle short .1
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         mov dword [esi], 0
 .1:
         pop esi
@@ -1298,7 +1293,7 @@ GusStreamSetVolume:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae short .2
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         mov al, byte [byte ebp+0Ch]
         cmp al, byte [byte esi+04h]
         je short .2
@@ -1342,7 +1337,7 @@ GusStreamSetBend:
         movzx esi, word [byte ebp+08h]
         cmp esi, byte 4
         jae short .1
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         movsx eax, word [byte ebp+0Ch]
         mov dword [byte esi+048h], eax
 .1:
@@ -1356,7 +1351,7 @@ GusStreamSetRate:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae short .3
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         mov ecx, 5622h
         LD xor, edx, edx
         mov eax, dword [byte ebp+0Ch]
@@ -1375,11 +1370,11 @@ GusStreamSetRate:
         mov eax, dword [byte esi+02Ch]
         cmp eax, 10000h
         je short .1
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamQuarterSize]
         shr eax, 2
         jmp short .2
 .1:
-        mov eax, dword [dword_D8484]
+        mov eax, dword [GusStreamQuarterSize]
         shr eax, 1
 .2:
         mov dword [byte esi+054h], eax
@@ -1394,7 +1389,7 @@ GusStreamSetSample:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae short .1
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         LD xor, eax, eax
         mov byte [byte esi+0Ch], al
         mov eax, dword [byte ebp+0Ch]
@@ -1423,7 +1418,7 @@ GusStreamApplyBend:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae short .4
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         mov ebx, dword [byte esi+08h]
         mov byte [byte ebp-01h], bl
         mov edi, dword [byte esi+034h]
@@ -1435,7 +1430,7 @@ GusStreamApplyBend:
         LD xor, ebx, ebx
         mov bl, byte [byte ebp-01h]
         add bl, byte [byte ebp+018h]
-        mov eax, dword [nosplit ebx*4+dword_D6B00]
+        mov eax, dword [nosplit ebx*4+NotePitchTable]
         mul dword [byte esi+02Ch]
         shl edx, 10h
         shr eax, 10h
@@ -1481,7 +1476,7 @@ GusStreamGetVolume:
         mov esi, dword [byte ebp+08h]
         cmp esi, byte 4
         jae short .1
-        mov esi, dword [nosplit esi*4+off_D846C]
+        mov esi, dword [nosplit esi*4+GusStreamTable]
         movzx eax, byte [byte esi+04h]
         pop esi
         leave
@@ -1625,7 +1620,7 @@ GusMidiPitchBend:
         xor ah, ah
         mov byte [byte ebp-010h], ah
         lea eax, [nosplit esi*4+00h]
-        mov ecx, dword [dword eax+dword_D84D0]
+        mov ecx, dword [dword eax+GusChanBendRange]
         test ecx, ecx
         je near .2
         shl ebx, 7
@@ -1669,11 +1664,11 @@ GusMidiPitchBend:
         mov eax, ecx
         div dword [byte ebp-014h]
         mov cl, bl
-        mov ebx, dword [nosplit edi*4+dword_D7ABC]
+        mov ebx, dword [nosplit edi*4+GusPitchTable]
         mov edx, dword [byte ebp-01Ch]
         shl ebx, cl
         mov cl, al
-        mov eax, dword [nosplit edx*4+dword_D7ABC]
+        mov eax, dword [nosplit edx*4+GusPitchTable]
         shl eax, cl
         mov edi, dword [byte ebp-018h]
         sub eax, ebx
@@ -1800,15 +1795,15 @@ GusMidiController:
         pop ebp
         ret
 .8:
-        cmp dword [nosplit ecx*4+dword_D8550], byte 0
+        cmp dword [nosplit ecx*4+GusChanRpnMsb], byte 0
         jne near .21
-        cmp dword [nosplit ecx*4+dword_D8590], byte 0
+        cmp dword [nosplit ecx*4+GusChanRpnLsb], byte 0
         jne near .21
         cmp eax, byte 18h
         jle short .9
         mov eax, 18h
 .9:
-        mov dword [nosplit ecx*4+dword_D84D0], eax
+        mov dword [nosplit ecx*4+GusChanBendRange], eax
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1816,11 +1811,11 @@ GusMidiController:
         pop ebp
         ret
 .10:
-        cmp dword [nosplit ecx*4+dword_D8550], byte 0
+        cmp dword [nosplit ecx*4+GusChanRpnMsb], byte 0
         jne near .21
-        cmp dword [nosplit ecx*4+dword_D8590], byte 0
+        cmp dword [nosplit ecx*4+GusChanRpnLsb], byte 0
         jne near .21
-        mov dword [nosplit ecx*4+dword_D8510], ebx
+        mov dword [nosplit ecx*4+GusChanBendCents], ebx
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1828,11 +1823,11 @@ GusMidiController:
         pop ebp
         ret
 .11:
-        cmp dword [dword ebx+dword_D8550], byte 0
+        cmp dword [dword ebx+GusChanRpnMsb], byte 0
         jne near .21
-        cmp dword [dword ebx+dword_D8590], byte 0
+        cmp dword [dword ebx+GusChanRpnLsb], byte 0
         jne near .21
-        add dword [dword ebx+dword_D8510], eax
+        add dword [dword ebx+GusChanBendCents], eax
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1840,11 +1835,11 @@ GusMidiController:
         pop ebp
         ret
 .12:
-        cmp dword [dword ebx+dword_D8550], byte 0
+        cmp dword [dword ebx+GusChanRpnMsb], byte 0
         jne near .21
-        cmp dword [dword ebx+dword_D8590], byte 0
+        cmp dword [dword ebx+GusChanRpnLsb], byte 0
         jne near .21
-        sub dword [dword ebx+dword_D8510], eax
+        sub dword [dword ebx+GusChanBendCents], eax
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1852,9 +1847,9 @@ GusMidiController:
         pop ebp
         ret
 .13:
-        mov edx, dword [nosplit ecx*4+dword_D8610]
+        mov edx, dword [nosplit ecx*4+GusChanExpression]
         imul edx, ebx
-        mov dword [nosplit ecx*4+dword_D85D0], ebx
+        mov dword [nosplit ecx*4+GusChanVolume], ebx
         mov ebx, 7Fh
         mov eax, edx
         sar edx, 1Fh
@@ -1878,9 +1873,9 @@ GusMidiController:
         pop ebp
         ret
 .15:
-        mov edx, dword [nosplit ecx*4+dword_D85D0]
+        mov edx, dword [nosplit ecx*4+GusChanVolume]
         imul edx, ebx
-        mov dword [nosplit ecx*4+dword_D8610], ebx
+        mov dword [nosplit ecx*4+GusChanExpression], ebx
         mov ebx, 7Fh
         mov eax, edx
         sar edx, 1Fh
@@ -1908,7 +1903,7 @@ GusMidiController:
         pop ebp
         ret
 .17:
-        mov dword [dword ebx+dword_D8590], eax
+        mov dword [dword ebx+GusChanRpnLsb], eax
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1916,7 +1911,7 @@ GusMidiController:
         pop ebp
         ret
 .18:
-        mov dword [dword ebx+dword_D8550], eax
+        mov dword [dword ebx+GusChanRpnMsb], eax
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1937,8 +1932,8 @@ GusMidiController:
         call GusSetChannelBend
         mov eax, ecx
         mov edx, esi
-        mov dword [dword ebx+dword_D85D0], esi
-        mov dword [dword ebx+dword_D8610], edi
+        mov dword [dword ebx+GusChanVolume], esi
+        mov dword [dword ebx+GusChanExpression], edi
         call GusSetChannelVolume
         mov edx, 0FFFFFFFFh
         mov eax, ecx

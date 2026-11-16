@@ -5,13 +5,13 @@ section s_8EB5B progbits alloc exec nowrite align=1
 extern __GETDS, _makepath_, _splitpath_, addtimer, str_SCN, str_03sFF03dPAT, str_03sFF03dTIM, str_KMS2
 extern str_CFG2, str_VHDR, SndInitDone, SndBigEndian, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
 extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType, SampleChunkSize, PlayPatchHandle
-extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, SndTimerHandle, dword_D4F9A, dword_EDCFC, dword_EDD00
-extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
+extern sndhandlecount, SongReleasedFlag, MidiSfxEnabled, MidiMusicEnabled, SndTimerHandle, MidiTickCount, SampleTable, SampleTableSize
+extern SongTable, TimbreBanks, PatchFile, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
 extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
 extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, ResizeMemHandleUnlocked, PushMemDescriptorLocked, MemDescPtr, MemDescSize
 extern SndDriverHandle, SndHandleClose, SndDriverCall, SndHandleSetTrack, SndHandlePlayDigi, SeqService, SeqUpdate, SeqSendController
 extern SeqNoteOffSlot, SeqSendPitchBend, SeqNoteOn, SeqQueueCommand, SeqSendProgram, AddExitHandler, bcopy, FillMem
-extern unk_C3FD5, DefaultSampleInfo, unk_F21FC, word_D4F68, word_D4F88
+extern unk_C3FD5, DefaultSampleInfo, unk_F21FC, MidiChannelBits, ActiveSongCount
 global SndInit, SndShutdown, SndClearTables, LoadMusicBank, FreeMusicBank, LoadPatchFile, FreeSoundBlock, LoadTimbreFile
 global LoadTimbreFile, AddTimbreBank, FreeTimbreFile, RemoveTimbreBank, LinkPatchTimbres, GetPatchEntry, GetPatchTimbre, LoadSample
 global LoadSample, FreeSample, FindSongSlot, PlaySong, StartSongTracks, StartSongTracks, FindFreeTrack, FindFreeMidiChannel
@@ -62,7 +62,7 @@ SndShutdown:
         mov eax, edx
         shl eax, 2
         sub eax, edx
-        mov eax, dword [nosplit eax*8+dword_EDCFC]
+        mov eax, dword [nosplit eax*8+SampleTable]
         call FreeSample
         inc edx
         cmp edx, byte 0Dh
@@ -111,7 +111,7 @@ SndClearTables:
 .5:
         movsx edx, ax
         xor esi, esi
-        mov dword [nosplit edx*4+dword_EDE34], esi
+        mov dword [nosplit edx*4+TimbreBanks], esi
         inc eax
 .6:
         cmp ax, 0Ah
@@ -134,9 +134,9 @@ SndClearTables:
         shl edx, 2
         sub edx, ebx
         xor edi, edi
-        mov dword [nosplit edx*8+dword_EDCFC], edi
-        mov dword [nosplit edx*8+dword_EDD00], edi
-        mov dword [nosplit edx*8+dword_EDD04], edi
+        mov dword [nosplit edx*8+SampleTable], edi
+        mov dword [nosplit edx*8+SampleTableSize], edi
+        mov dword [nosplit edx*8+SongTable], edi
         inc eax
 .10:
         cmp ax, 0Dh
@@ -155,7 +155,7 @@ SndClearTables:
         cmp ax, 4
         jl short .11
         xor esi, esi
-        mov dword [dword_EDE5C], esi
+        mov dword [PatchFile], esi
         mov dword [sndhandlecount], esi
         mov dword [SndTimerHandle], 0FFFFFFFFh
         jmp near LoadSample+0BDh
@@ -293,7 +293,7 @@ LoadPatchFile:
         mov edx, eax
         mov eax, 2
         call SndLoadFile
-        mov dword [dword_EDE5C], eax
+        mov dword [PatchFile], eax
         pop edx
         ret
 FreeSoundBlock:
@@ -400,9 +400,9 @@ AddTimbreBank:
 .1:
         mov edx, eax
         shl edx, 2
-        cmp dword [dword edx+dword_EDE34], byte 0
+        cmp dword [dword edx+TimbreBanks], byte 0
         jne short .2
-        mov dword [dword edx+dword_EDE34], ebx
+        mov dword [dword edx+TimbreBanks], ebx
         pop edx
         pop ebx
         ret
@@ -432,10 +432,10 @@ RemoveTimbreBank:
 .1:
         mov edx, eax
         shl edx, 2
-        cmp ebx, dword [dword edx+dword_EDE34]
+        cmp ebx, dword [dword edx+TimbreBanks]
         jne short .2
         xor esi, esi
-        mov dword [dword edx+dword_EDE34], esi
+        mov dword [dword edx+TimbreBanks], esi
         pop esi
         pop edx
         pop ebx
@@ -454,11 +454,11 @@ LinkPatchTimbres:
         push edx
         push ebp
         sub esp, byte 8
-        cmp dword [dword_EDE5C], byte 0
+        cmp dword [PatchFile], byte 0
         je near .14
         xor ebx, ebx
         mov dword [esp], ebx
-        inc word [word_D4F88]
+        inc word [ActiveSongCount]
 .1:
         xor eax, eax
         mov al, byte [esp]
@@ -491,7 +491,7 @@ LinkPatchTimbres:
 .6:
         xor ecx, ecx
 .7:
-        cmp dword [nosplit ecx*4+dword_EDE34], byte 0
+        cmp dword [nosplit ecx*4+TimbreBanks], byte 0
         je near .12
         cmp byte [SndBigEndian], 0
         je short .8
@@ -512,7 +512,7 @@ LinkPatchTimbres:
         mov al, byte [byte ebx+01h]
         mov byte [byte esp+04h], al
 .9:
-        mov eax, dword [nosplit ecx*4+dword_EDE34]
+        mov eax, dword [nosplit ecx*4+TimbreBanks]
         mov edx, dword [byte esp+04h]
         call FindSoundChunk
         mov dword [byte ebx+010h], eax
@@ -540,7 +540,7 @@ LinkPatchTimbres:
         mov dword [esp], ebx
         cmp ebx, 100h
         jl near .1
-        dec word [word_D4F88]
+        dec word [ActiveSongCount]
 .14:
         add esp, byte 8
         pop ebp
@@ -551,7 +551,7 @@ LinkPatchTimbres:
 GetPatchEntry:
         push ds
         call __GETDS
-        mov edx, dword [dword_EDE5C]
+        mov edx, dword [PatchFile]
         test edx, edx
         jne short .2
 .1:
@@ -578,7 +578,7 @@ GetPatchEntry:
 GetPatchTimbre:
         push ds
         call __GETDS
-        cmp dword [dword_EDE5C], byte 0
+        cmp dword [PatchFile], byte 0
         jne short .1
         xor eax, eax
         pop ds
@@ -615,10 +615,10 @@ LoadSample:
         mov eax, ecx
         shl eax, 3
         mov ecx, 6
-        lea edi, [dword eax+dword_EDCFC]
+        lea edi, [dword eax+SampleTable]
         mov esi, DefaultSampleInfo
         rep movsd
-        mov ecx, dword_EDCFC
+        mov ecx, SampleTable
         add ecx, eax
         mov edx, dword [SampleChunkSize]
         inc edx
@@ -679,14 +679,14 @@ FreeSample:
         sub eax, edx
         mov edx, eax
         shl edx, 3
-        mov ebx, dword_EDCFC
+        mov ebx, SampleTable
         add ebx, edx
         lea eax, [byte ebx+04h]
         call FreeMemPtr
         lea eax, [byte ebx+08h]
         call FreeMemPtr
         xor ebx, ebx
-        mov dword [dword edx+dword_EDCFC], ebx
+        mov dword [dword edx+SampleTable], ebx
 .1:
         pop edx
         pop ebx
@@ -700,7 +700,7 @@ FindSongSlot:
         mov eax, edx
         shl eax, 2
         sub eax, edx
-        cmp ecx, dword [nosplit eax*8+dword_EDCFC]
+        cmp ecx, dword [nosplit eax*8+SampleTable]
         jne short .2
         mov eax, edx
         pop edx
@@ -725,7 +725,7 @@ StartSongTracks:
         shl eax, 2
         sub eax, ebx
         shl eax, 3
-        mov ebx, dword_EDCFC
+        mov ebx, SampleTable
         add ebx, eax
         mov dword [byte esp+010h], ebx
         mov eax, edx
@@ -746,7 +746,7 @@ StartSongTracks:
         mov byte [byte esp+020h], al
         xor ah, ah
         mov byte [byte esp+028h], ah
-        inc word [word_D4F88]
+        inc word [ActiveSongCount]
 .1:
         cmp byte [byte esp+020h], 0
         je near .6
@@ -853,7 +853,7 @@ StartSongTracks:
         jmp near .1
 .6:
         mov eax, dword [byte esp+04h]
-        dec word [word_D4F88]
+        dec word [ActiveSongCount]
         add esp, byte 2Ch
         pop ebp
         pop edi
@@ -887,7 +887,7 @@ FindFreeMidiChannel:
         jmp short .3
 .1:
         movsx edx, ax
-        mov bx, word [nosplit edx*2+word_D4F68]
+        mov bx, word [nosplit edx*2+MidiChannelBits]
         and ebx, 0FFFFh
         xor ecx, ecx
         mov cx, si
@@ -945,7 +945,7 @@ PlayPatch:
         mov eax, 0FFFFFFFFh
         jmp near .8
 .2:
-        cmp dword [dword_D4F8E], byte 0
+        cmp dword [MidiSfxEnabled], byte 0
         jne short .3
         xor eax, eax
         jmp near .8
@@ -975,10 +975,10 @@ PlayPatch:
         mov esi, 0A0h
 .5:
         mov ecx, unk_F21FC
-        mov ebx, dword [dword_D4F9A]
+        mov ebx, dword [MidiTickCount]
         add ecx, ebx
         lea edi, [byte ebx+04h]
-        mov dword [dword_D4F9A], edi
+        mov dword [MidiTickCount], edi
         mov ebx, dword [esp]
         cmp bx, 80h
         jb short .6
@@ -1042,7 +1042,7 @@ PlayPatch:
 .7:
         call SeqNoteOn
         cwde
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
 .8:
         add esp, byte 0Ch
         pop edi
@@ -1063,10 +1063,10 @@ ReleaseAllVoices:
         push ebx
         push ecx
         push edx
-        cmp dword [dword_D4F8E], byte 0
+        cmp dword [MidiSfxEnabled], byte 0
         je short .4
         xor edx, edx
-        inc word [word_D4F88]
+        inc word [ActiveSongCount]
         mov ecx, 1
         jmp short .3
 .1:
@@ -1083,7 +1083,7 @@ ReleaseAllVoices:
 .3:
         cmp dx, byte 20h
         jl short .1
-        dec word [word_D4F88]
+        dec word [ActiveSongCount]
 .4:
         pop edx
         pop ecx
@@ -1102,10 +1102,10 @@ StopSongId:
         mov eax, 0FFFFFFFFh
         jmp near LoadSample+0BCh
 .1:
-        inc word [word_D4F88]
+        inc word [ActiveSongCount]
         cmp eax, 100h
         jae short .4
-        cmp dword [dword_D4F8E], byte 0
+        cmp dword [MidiSfxEnabled], byte 0
         jne short .2
         xor eax, eax
         jmp near LoadSample+0BCh
@@ -1136,9 +1136,9 @@ StopSongId:
         cmp di, byte 20h
         jl short .5
         mov ecx, unk_F21FC
-        add ecx, dword [dword_D4F9A]
+        add ecx, dword [MidiTickCount]
         xor edi, edi
-        add dword [dword_D4F9A], byte 4
+        add dword [MidiTickCount], byte 4
         jmp short .10
 .8:
         cmp ebp, dword [byte esi+02h]
@@ -1184,9 +1184,9 @@ StopSongId:
         call SeqQueueCommand
         call SeqUpdate
         xor eax, eax
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
 .11:
-        dec word [word_D4F88]
+        dec word [ActiveSongCount]
         jmp near LoadSample+0BCh
 ReleaseSong:
         push ebx
@@ -1197,7 +1197,7 @@ ReleaseSong:
         mov edi, edx
         mov eax, byte_F1A1C
         xor ebx, ebx
-        inc word [word_D4F88]
+        inc word [ActiveSongCount]
         jmp short .3
 .1:
         cmp esi, dword [byte eax+02h]
@@ -1223,7 +1223,7 @@ ReleaseSong:
 .3:
         cmp bx, byte 18h
         jl short .1
-        dec word [word_D4F88]
+        dec word [ActiveSongCount]
         xor eax, eax
         pop edi
         pop esi
@@ -1325,13 +1325,13 @@ SongReleased:
         push edi
         push ebp
         mov ecx, unk_F21FC
-        mov edx, dword [dword_D4F9A]
+        mov edx, dword [MidiTickCount]
         add ecx, edx
         mov esi, byte_F1A1C
-        mov dword [dword_D4F8A], 1
+        mov dword [SongReleasedFlag], 1
         xor edi, edi
         lea ebp, [byte edx+04h]
-        mov dword [dword_D4F9A], ebp
+        mov dword [MidiTickCount], ebp
         jmp short .10
 .8:
         cmp byte [byte esi+01h], 0
@@ -1350,7 +1350,7 @@ SongReleased:
 .10:
         cmp di, byte 18h
         jl short .8
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
         jmp near LoadSample+0BCh
         push ebx
         push ecx
@@ -1378,28 +1378,28 @@ SongReleased:
         cmp si, byte 18h
         jl short .11
         xor edx, edx
-        mov dword [dword_D4F8A], edx
+        mov dword [SongReleasedFlag], edx
         pop esi
         pop edx
         pop ecx
         pop ebx
         ret
 EnableMidiSfx:
-        mov dword [dword_D4F8E], 1
+        mov dword [MidiSfxEnabled], 1
         ret
 DisableMidiSfx:
         push edx
         xor edx, edx
-        mov dword [dword_D4F8E], edx
+        mov dword [MidiSfxEnabled], edx
         pop edx
         ret
 EnableMidiMusic:
-        mov dword [dword_D4F92], 1
+        mov dword [MidiMusicEnabled], 1
         ret
 DisableMidiMusic:
         push edx
         xor edx, edx
-        mov dword [dword_D4F92], edx
+        mov dword [MidiMusicEnabled], edx
         pop edx
         ret
 LoadDigiFile:

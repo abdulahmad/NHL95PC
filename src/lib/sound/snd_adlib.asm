@@ -2,10 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_9DE9C progbits alloc exec nowrite align=1
-extern __GETDS, byte_F2F42, byte_F2F43, byte_F3196, byte_F3197, dword_D4F9A, dword_F2F28, dword_F3108
+extern __GETDS, MidiTickCount, AdlibVoices, AdlibChanState
 extern memcpy_, GetPatchEntry, FixedMulRound, OplFlush, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
-extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, TableSin, unk_F21FC, unk_F3148, word_F2F3C
-extern word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450, word_F3452
+extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, TableSin, unk_F21FC
 global AdlibDetect, AdlibOpen, AdlibInit, AdlibClose, AdlibService, AdlibLoadTimbre, AdlibNoteOff, AdlibController
 global AdlibProgramChange, AdlibPitchBend, AdlibVoiceSetup, AdlibVoiceRelease, AdlibVoiceResetEnvelopes, jpt_9E414, AdlibEnvelopeStep, AdlibEnvelopeStep
 global AdlibStartLfo, AdlibStepLfo, AdlibStartPitchEnv, AdlibStepPitchEnv, AdlibMidi, AdlibApplyModulation, AdlibModulationJumps, AdlibModulationJumps
@@ -30,10 +29,10 @@ AdlibInit:
         call __GETDS
         push esi
         push edi
-        mov word [word_F3452], 1FFh
+        mov word [AdlibVoices+052Ah], 1FFh
         xor ebx, ebx
-        mov word [word_F3450], bx
-        mov word [word_F344E], bx
+        mov word [AdlibVoices+0528h], bx
+        mov word [AdlibVoices+0526h], bx
         xor edx, edx
         jmp short .2
 .1:
@@ -43,19 +42,19 @@ AdlibInit:
         shl eax, 4
         sub eax, ebx
         add eax, eax
-        mov ecx, dword_F2F28
+        mov ecx, AdlibVoices
         add ecx, eax
-        mov dword [nosplit ebx*4+dword_F3108], ecx
+        mov dword [nosplit ebx*4+AdlibChanState], ecx
         xor ebx, ebx
-        mov dword [dword eax+dword_F2F28], ebx
+        mov dword [dword eax+AdlibVoices], ebx
         xor esi, esi
-        mov word [dword eax+word_F2F3C], si
+        mov word [dword eax+AdlibVoices+014h], si
         xor edi, edi
-        mov word [dword eax+word_F2F40], di
-        mov word [dword eax+word_F2F3E], 1FFh
-        mov byte [dword eax+byte_F2F42], 9
-        mov byte [dword eax+byte_F2F43], 0FFh
-        mov word [dword eax+word_F2F44], 64h
+        mov word [dword eax+AdlibVoices+018h], di
+        mov word [dword eax+AdlibVoices+016h], 1FFh
+        mov byte [dword eax+AdlibVoices+01Ah], 9
+        mov byte [dword eax+AdlibVoices+01Bh], 0FFh
+        mov word [dword eax+AdlibVoices+01Ch], 64h
         inc edx
 .2:
         cmp dx, byte 10h
@@ -67,8 +66,8 @@ AdlibInit:
         xor eax, eax
         mov ax, dx
         imul eax, byte 56h
-        mov byte [dword eax+byte_F3196], cl
-        mov word [dword eax+word_F3150], dx
+        mov byte [dword eax+AdlibVoices+026Eh], cl
+        mov word [dword eax+AdlibVoices+0228h], dx
         inc edx
 .4:
         cmp dx, byte 9
@@ -97,13 +96,13 @@ AdlibService:
         jmp near .6
 .1:
         movsx eax, si
-        movsx edx, word [word_F3450]
+        movsx edx, word [AdlibVoices+0528h]
         test eax, edx
         je short .5
         xor eax, eax
         mov ax, di
         imul eax, byte 56h
-        mov ecx, unk_F3148
+        mov ecx, AdlibVoices+0220h
         add ecx, eax
         cmp word [byte ecx+028h], byte 0
         jne short .2
@@ -113,9 +112,9 @@ AdlibService:
         call AdlibVoiceResetEnvelopes
         mov eax, esi
         not eax
-        and word [word_F3450], ax
-        and word [word_F344E], ax
-        or word [word_F3452], si
+        and word [AdlibVoices+0528h], ax
+        and word [AdlibVoices+0526h], ax
+        or word [AdlibVoices+052Ah], si
         mov edx, dword [ecx]
         and word [byte edx+014h], ax
         mov ecx, dword [ecx]
@@ -195,7 +194,7 @@ AdlibNoteOff:
         sub esp, byte 4
         mov byte [esp], dl
         movzx esi, al
-        mov esi, dword [nosplit esi*4+dword_F3108]
+        mov esi, dword [nosplit esi*4+AdlibChanState]
         mov di, word [byte esi+014h]
         xor edx, edx
         mov ebx, 1
@@ -207,7 +206,7 @@ AdlibNoteOff:
         je short .3
         movsx eax, dx
         imul eax, byte 56h
-        add eax, unk_F3148
+        add eax, AdlibVoices+0220h
         cmp esi, dword [eax]
         jne short .3
         mov cl, byte [esp]
@@ -218,7 +217,7 @@ AdlibNoteOff:
         or word [byte esi+018h], bx
         jmp short .5
 .2:
-        or word [word_F344E], bx
+        or word [AdlibVoices+0526h], bx
         sar word [byte eax+054h], 1
         lea edx, [byte eax+08h]
         mov eax, dword [byte eax+04h]
@@ -245,7 +244,7 @@ AdlibController:
         mov byte [byte esp+04h], al
         xor ecx, ecx
         mov cl, al
-        mov ecx, dword [nosplit ecx*4+dword_F3108]
+        mov ecx, dword [nosplit ecx*4+AdlibChanState]
         lea esi, [byte ecx+04h]
         cmp dl, 40h
         jb short .2
@@ -322,7 +321,7 @@ AdlibController:
         mov ax, si
         imul eax, byte 56h
         xor edx, edx
-        mov dl, byte [dword eax+byte_F3197]
+        mov dl, byte [dword eax+AdlibVoices+026Fh]
         xor eax, eax
         mov al, byte [byte esp+04h]
         call AdlibNoteOff
@@ -353,16 +352,16 @@ AdlibController:
         xor eax, eax
         mov ax, si
         imul eax, byte 56h
-        add eax, unk_F3148
+        add eax, AdlibVoices+0220h
         lea edx, [byte eax+08h]
         mov eax, dword [byte eax+04h]
         mov ebx, 1
         call AdlibVoiceResetEnvelopes
         mov eax, edi
         not eax
-        and word [word_F3450], ax
-        and word [word_F344E], ax
-        or word [word_F3452], di
+        and word [AdlibVoices+0528h], ax
+        and word [AdlibVoices+0526h], ax
+        or word [AdlibVoices+052Ah], di
         and word [byte ecx+014h], ax
         and word [byte ecx+018h], ax
 .16:
@@ -379,12 +378,12 @@ AdlibController:
         ret
 AdlibProgramChange:
         and eax, 0FFh
-        mov eax, dword [nosplit eax*4+dword_F3108]
+        mov eax, dword [nosplit eax*4+AdlibChanState]
         mov byte [byte eax+01Bh], dl
         ret
 AdlibPitchBend:
         and eax, 0FFh
-        mov eax, dword [nosplit eax*4+dword_F3108]
+        mov eax, dword [nosplit eax*4+AdlibChanState]
         add eax, byte 4
         add edx, edx
         mov word [byte eax+08h], dx
@@ -770,10 +769,10 @@ AdlibMidi:
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
         mov eax, unk_F21FC
-        mov edx, dword [dword_D4F9A]
+        mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx
-        add dword [dword_D4F9A], byte 4
+        add dword [MidiTickCount], byte 4
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
         mov eax, dword [byte ebp+018h]
@@ -921,7 +920,7 @@ AdlibMidi:
 .17:
         jmp near .2
 .18:
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
         mov esp, ebp
         pop ebp
         pop edi
@@ -1351,7 +1350,7 @@ AdlibNoteOn:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         shl eax, 2
-        mov eax, dword [dword eax+dword_F3108]
+        mov eax, dword [dword eax+AdlibChanState]
         mov dword [byte ebp-038h], eax
         cmp byte [byte ebp-04h], 9
         jne short .3
@@ -1390,11 +1389,11 @@ AdlibNoteOn:
         xor eax, eax
         mov ax, word [byte ebp-028h]
         imul eax, byte 56h
-        mov edx, unk_F3148
+        mov edx, AdlibVoices+0220h
         add edx, eax
         mov dword [byte ebp-03Ch], edx
         movsx edx, word [byte ebp-024h]
-        movsx eax, word [word_F3450]
+        movsx eax, word [AdlibVoices+0528h]
         test edx, eax
         je short .8
         mov eax, dword [byte ebp-03Ch]
@@ -1434,13 +1433,13 @@ AdlibNoteOn:
         mov eax, dword [byte eax+04h]
         call AdlibVoiceResetEnvelopes
         mov eax, dword [byte ebp-024h]
-        or word [word_F3450], ax
+        or word [AdlibVoices+0528h], ax
         mov eax, dword [byte ebp-024h]
         not eax
-        and word [word_F3452], ax
+        and word [AdlibVoices+052Ah], ax
         mov eax, dword [byte ebp-024h]
         not eax
-        and word [word_F344E], ax
+        and word [AdlibVoices+0526h], ax
         mov edx, dword [byte ebp-024h]
         not edx
         mov eax, dword [byte ebp-038h]
@@ -1489,7 +1488,7 @@ AdlibNoteOn:
         mov dx, word [byte ebp-02Ch]
         cmp edx, eax
         jge near .21
-        mov ax, word [word_F3452]
+        mov ax, word [AdlibVoices+052Ah]
         mov edx, dword [byte ebp-038h]
         and ax, word [byte edx+016h]
         mov dword [byte ebp-014h], eax
@@ -1512,7 +1511,7 @@ AdlibNoteOn:
         xor eax, eax
         mov ax, word [byte ebp-028h]
         imul eax, byte 56h
-        mov edx, unk_F3148
+        mov edx, AdlibVoices+0220h
         add edx, eax
         mov dword [byte ebp-03Ch], edx
         mov eax, dword [byte ebp-014h]
@@ -1522,12 +1521,12 @@ AdlibNoteOn:
         mov word [byte ebp-024h], dx
         mov eax, dword [byte ebp-024h]
         not eax
-        and word [word_F3452], ax
+        and word [AdlibVoices+052Ah], ax
         mov eax, dword [byte ebp-024h]
         not eax
-        and word [word_F344E], ax
+        and word [AdlibVoices+0526h], ax
         mov eax, dword [byte ebp-024h]
-        or word [word_F3450], ax
+        or word [AdlibVoices+0528h], ax
         mov eax, dword [byte ebp-024h]
         mov edx, dword [byte ebp-038h]
         or word [byte edx+014h], ax
@@ -1563,7 +1562,7 @@ AdlibNoteOn:
         call AdlibVoiceSetup
         jmp near .27
 .21:
-        mov ax, word [word_F344E]
+        mov ax, word [AdlibVoices+0526h]
         mov edx, dword [byte ebp-038h]
         and ax, word [byte edx+016h]
         mov dword [byte ebp-030h], eax
@@ -1586,7 +1585,7 @@ AdlibNoteOn:
         xor eax, eax
         mov ax, word [byte ebp-028h]
         imul eax, byte 56h
-        mov edx, unk_F3148
+        mov edx, AdlibVoices+0220h
         add edx, eax
         mov dword [byte ebp-03Ch], edx
         mov ebx, 1
@@ -1602,12 +1601,12 @@ AdlibNoteOn:
         mov word [byte ebp-024h], dx
         mov eax, dword [byte ebp-024h]
         not eax
-        and word [word_F3452], ax
+        and word [AdlibVoices+052Ah], ax
         mov eax, dword [byte ebp-024h]
         not eax
-        and word [word_F344E], ax
+        and word [AdlibVoices+0526h], ax
         mov eax, dword [byte ebp-024h]
-        or word [word_F3450], ax
+        or word [AdlibVoices+0528h], ax
         mov eax, dword [byte ebp-024h]
         mov edx, dword [byte ebp-038h]
         or word [byte edx+014h], ax
@@ -1651,12 +1650,12 @@ AdlibNoteOn:
         call AdlibVoiceResetEnvelopes
         mov eax, dword [byte ebp-018h]
         not eax
-        and word [word_F3452], ax
+        and word [AdlibVoices+052Ah], ax
         mov eax, dword [byte ebp-018h]
         not eax
-        and word [word_F344E], ax
+        and word [AdlibVoices+0526h], ax
         mov eax, dword [byte ebp-018h]
-        or word [word_F3450], ax
+        or word [AdlibVoices+0528h], ax
         mov eax, dword [byte ebp-018h]
         mov edx, dword [byte ebp-038h]
         or word [byte edx+014h], ax
@@ -1725,11 +1724,11 @@ AdlibNoteOn:
         xor eax, eax
         mov ax, word [byte ebp-028h]
         imul eax, byte 56h
-        mov edx, unk_F3148
+        mov edx, AdlibVoices+0220h
         add edx, eax
         mov dword [byte ebp-03Ch], edx
         movsx edx, word [byte ebp-024h]
-        movsx eax, word [word_F3450]
+        movsx eax, word [AdlibVoices+0528h]
         test edx, eax
         je short .33
         mov eax, dword [byte ebp-03Ch]
@@ -1757,12 +1756,12 @@ AdlibNoteOn:
         call AdlibVoiceResetEnvelopes
         mov eax, dword [byte ebp-018h]
         not eax
-        and word [word_F3452], ax
+        and word [AdlibVoices+052Ah], ax
         mov eax, dword [byte ebp-018h]
         not eax
-        and word [word_F344E], ax
+        and word [AdlibVoices+0526h], ax
         mov eax, dword [byte ebp-018h]
-        or word [word_F3450], ax
+        or word [AdlibVoices+0528h], ax
         mov eax, dword [byte ebp-018h]
         mov edx, dword [byte ebp-038h]
         or word [byte edx+014h], ax

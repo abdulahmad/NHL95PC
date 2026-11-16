@@ -2,20 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_D6608 progbits alloc noexec write align=1
-global byte_D6770, byte_D6774, byte_D6775, byte_D6776, byte_D6777, byte_D6778, byte_D6785, byte_D6786
-global byte_D6787, byte_D6788, byte_D6789, byte_D678C, byte_D678D, byte_D678E, byte_D678F, byte_D6790
-global byte_D679A, byte_D67A8, byte_D6CE0, byte_D6CE1, byte_D6CE3, byte_D6D1E, byte_D6D1F, byte_D6D24
-global byte_D6E24, byte_D6E25, byte_D6E27, byte_D6E62, byte_D6E63, byte_D6E68, byte_D6F68, byte_D6F69
-global byte_D6F6B, byte_D6FA6, byte_D6FA7, byte_D6FAC, byte_D70AC, byte_D70AD, byte_D70AF, byte_D70EA
-global byte_D70EB, byte_D70F0, dword_D67A0, dword_D67A4, dword_D6B00, dword_D6CE4, dword_D6CF8, dword_D6CFC
-global dword_D6D00, dword_D6D0C, dword_D6D10, dword_D6D14, dword_D6D18, dword_D6D20, dword_D6E28, dword_D6E3C
-global dword_D6E40, dword_D6E44, dword_D6E50, dword_D6E54, dword_D6E58, dword_D6E5C, dword_D6E64, dword_D6F6C
-global dword_D6F80, dword_D6F84, dword_D6F88, dword_D6F94, dword_D6F98, dword_D6F9C, dword_D6FA0, dword_D6FA8
-global dword_D70B0, dword_D70C4, dword_D70C8, dword_D70CC, dword_D70D8, dword_D70DC, dword_D70E0, dword_D70E4
-global dword_D70EC, unk_D67B4, unk_D68FC, unk_D691C, unk_D699C, unk_D69B9, unk_D69FF, unk_D6A1F
-global unk_D6A9F, unk_D6ABC, word_D6608, word_D677B, word_D677D, word_D677F, word_D6781, word_D6783
-global word_D679C, word_D67F4, word_D683C, word_D687C
-word_D6608:
+global PcSpkState, PcSpkVoiceLevel
+global PcSpkOutLevel
+global OplOperatorOffsets, SbStreamChannels
+global OplRegDelay, OplDataDelay, NotePitchTable
+global OplDefaultVoice, OplRegShadow
+global PcSpkVoiceTable
+global OplPort, OplFNumTable, OplVolumeTable, OplVelocityTable
+PcSpkVoiceTable:
         db 00h,00h,00h,00h,0F1h,0FDh,0B0h,0EFh,03Dh,0E2h,08Ah,0D5h,08Eh,0C9h,03Eh,0BEh
         db 090h,0B3h,07Ch,0A9h,0F9h,09Fh,0FFh,096h,085h,08Eh,085h,086h,0F9h,07Eh,0D8h,077h
         db 01Eh,071h,0C5h,06Ah,0C7h,064h,01Fh,05Fh,0C8h,059h,0BEh,054h,0FDh,04Fh,07Fh,04Bh
@@ -39,75 +33,56 @@ word_D6608:
         db 034h,029h,0A7h,02Bh,040h,02Eh,00h,031h,0EAh,033h,00h,037h,045h,03Ah,0BCh,03Dh
         db 068h,041h,04Ch,045h,06Bh,049h,0C8h,04Dh,068h,052h,04Fh,057h,080h,05Ch,00h,062h
         db 0D4h,067h,00h,06Eh,08Ah,074h,079h,07Bh
-byte_D6770:
+PcSpkState:
         db 00h,00h,00h,00h
-byte_D6774:
+PcSpkVoiceLevel:
         db 00h
-byte_D6775:
         db 00h
-byte_D6776:
         db 00h
-byte_D6777:
         db 00h
-byte_D6778:
         db 00h,00h,00h
-word_D677B:
         db 00h,00h
-word_D677D:
         db 00h,00h
-word_D677F:
         db 00h,00h
-word_D6781:
         db 00h,00h
-word_D6783:
         db 00h,00h
-byte_D6785:
         db 00h
-byte_D6786:
         db 00h
-byte_D6787:
         db 00h
-byte_D6788:
         db 00h
-byte_D6789:
         db 00h,00h,00h
-byte_D678C:
+PcSpkOutLevel:
         db 00h
-byte_D678D:
         db 00h
-byte_D678E:
         db 00h
-byte_D678F:
         db 00h
-byte_D6790:
         db 00h,00h,00h,09Ch,02Eh,00h,00h,00h,00h,00h
-byte_D679A:
         db 00h,00h
-word_D679C:
+OplPort:
         db 088h,03h,00h,00h
-dword_D67A0:
+OplRegDelay:
         db 020h,00h,00h,00h
-dword_D67A4:
+OplDataDelay:
         db 08Ch,00h,00h,00h
-byte_D67A8:
+OplOperatorOffsets:
         db 00h,01h,02h,08h,09h,0Ah,010h,011h,012h,00h,00h,00h
-unk_D67B4:
+OplDefaultVoice:
         db 023h,043h,063h,083h,0E3h,020h,040h,060h,080h,0E0h,0C0h,0A0h,0B0h,00h,00h,00h
         db 015h,00h,017h,00h,018h,00h,019h,00h,01Bh,00h,01Dh,00h,01Eh,00h,020h,00h
         db 022h,00h,024h,00h,026h,00h,028h,00h,02Bh,00h,02Dh,00h,030h,00h,033h,00h
         db 036h,00h,039h,00h,03Dh,00h,040h,00h,044h,00h,048h,00h,04Ch,00h,051h,00h
-word_D67F4:
+OplFNumTable:
         db 056h,00h,05Bh,00h,060h,00h,066h,00h,06Ch,00h,072h,00h,079h,00h,080h,00h
         db 088h,00h,090h,00h,099h,00h,0A2h,00h,0ABh,00h,0B6h,00h,0C0h,00h,0CCh,00h
         db 0D8h,00h,0E5h,00h,0F2h,00h,01h,01h,010h,01h,020h,01h,032h,01h,044h,01h
         db 057h,01h,06Bh,01h,081h,01h,098h,01h,0B0h,01h,0CAh,01h,0E5h,01h,02h,02h
         db 020h,02h,041h,02h,063h,02h,087h,02h
-word_D683C:
+OplVolumeTable:
         db 028h,028h,015h,029h,0FEh,029h,0E4h,02Ah,0C7h,02Bh,0A7h,02Ch,084h,02Dh,05Eh,02Eh
         db 035h,02Fh,0Ah,030h,0DBh,030h,0AAh,031h,077h,032h,040h,033h,08h,034h,0CDh,034h
         db 090h,035h,050h,036h,0Eh,037h,0CAh,037h,084h,038h,03Ch,039h,0F1h,039h,0A5h,03Ah
         db 057h,03Bh,07h,03Ch,0B5h,03Ch,061h,03Dh,0Bh,03Eh,0B4h,03Eh,05Bh,03Fh,00h,040h
-word_D687C:
+OplVelocityTable:
         db 00h,00h,0D0h,04h,09Fh,09h,06Fh,0Eh,03Eh,013h,0Eh,018h,0DDh,01Ch,0ADh,021h
         db 07Ch,026h,04Ch,027h,017h,028h,0DEh,028h,0A1h,029h,060h,02Ah,01Bh,02Bh,0D2h,02Bh
         db 086h,02Ch,037h,02Dh,0E4h,02Dh,08Eh,02Eh,035h,02Fh,0D9h,02Fh,07Bh,030h,019h,031h
@@ -116,10 +91,7 @@ word_D687C:
         db 04Ah,03Ah,0C4h,03Ah,03Ch,03Bh,0B2h,03Bh,027h,03Ch,09Bh,03Ch,0Dh,03Dh,07Eh,03Dh
         db 0EDh,03Dh,05Ch,03Eh,0C8h,03Eh,034h,03Fh,09Fh,03Fh,00h,040h,00h,040h,00h,040h
         db 00h,040h,00h,040h,00h,040h,00h,040h,00h,040h,00h,040h,00h,040h,00h,040h
-unk_D68FC:
-        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D691C:
+OplRegShadow:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -128,19 +100,15 @@ unk_D691C:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D699C:
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D69B9:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h
-unk_D69FF:
-        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D6A1F:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -149,16 +117,16 @@ unk_D6A1F:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D6A9F:
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D6ABC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D6B00:
+NotePitchTable:
         db 00h,08h,00h,00h,079h,08h,00h,00h,0FAh,08h,00h,00h,083h,09h,00h,00h
         db 014h,0Ah,00h,00h,0ADh,0Ah,00h,00h,050h,0Bh,00h,00h,0FCh,0Bh,00h,00h
         db 0B3h,0Ch,00h,00h,074h,0Dh,00h,00h,041h,0Eh,00h,00h,01Ah,0Fh,00h,00h
@@ -189,36 +157,22 @@ dword_D6B00:
         db 06h,00h,010h,00h,096h,0F3h,010h,00h,0A1h,0F5h,011h,00h,05h,07h,013h,00h
         db 0AAh,028h,014h,00h,089h,05Bh,015h,00h,0A7h,0A0h,016h,00h,01Ah,0F9h,017h,00h
         db 08h,066h,019h,00h,0AAh,0E8h,01Ah,00h,049h,082h,01Ch,00h,043h,034h,01Eh,00h
-byte_D6CE0:
+SbStreamChannels:
         db 00h
-byte_D6CE1:
         db 00h,00h
-byte_D6CE3:
         db 00h
-dword_D6CE4:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D6CF8:
         db 00h,00h,00h,00h
-dword_D6CFC:
         db 00h,00h,00h,00h
-dword_D6D00:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D6D0C:
         db 00h,00h,00h,00h
-dword_D6D10:
         db 00h,00h,00h,00h
-dword_D6D14:
         db 00h,00h,00h,00h
-dword_D6D18:
         db 00h,00h,00h,00h,00h,00h
-byte_D6D1E:
         db 00h
-byte_D6D1F:
         db 00h
-dword_D6D20:
         db 00h,00h,00h,00h
-byte_D6D24:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -235,36 +189,21 @@ byte_D6D24:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D6E24:
         db 00h
-byte_D6E25:
         db 00h,00h
-byte_D6E27:
         db 00h
-dword_D6E28:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D6E3C:
         db 00h,00h,00h,00h
-dword_D6E40:
         db 00h,00h,00h,00h
-dword_D6E44:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D6E50:
         db 00h,00h,00h,00h
-dword_D6E54:
         db 00h,00h,00h,00h
-dword_D6E58:
         db 00h,00h,00h,00h
-dword_D6E5C:
         db 00h,00h,00h,00h,00h,00h
-byte_D6E62:
         db 00h
-byte_D6E63:
         db 00h
-dword_D6E64:
         db 00h,00h,00h,00h
-byte_D6E68:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -281,36 +220,21 @@ byte_D6E68:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D6F68:
         db 00h
-byte_D6F69:
         db 00h,00h
-byte_D6F6B:
         db 00h
-dword_D6F6C:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D6F80:
         db 00h,00h,00h,00h
-dword_D6F84:
         db 00h,00h,00h,00h
-dword_D6F88:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D6F94:
         db 00h,00h,00h,00h
-dword_D6F98:
         db 00h,00h,00h,00h
-dword_D6F9C:
         db 00h,00h,00h,00h
-dword_D6FA0:
         db 00h,00h,00h,00h,00h,00h
-byte_D6FA6:
         db 00h
-byte_D6FA7:
         db 00h
-dword_D6FA8:
         db 00h,00h,00h,00h
-byte_D6FAC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -327,36 +251,21 @@ byte_D6FAC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D70AC:
         db 00h
-byte_D70AD:
         db 00h,00h
-byte_D70AF:
         db 00h
-dword_D70B0:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D70C4:
         db 00h,00h,00h,00h
-dword_D70C8:
         db 00h,00h,00h,00h
-dword_D70CC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D70D8:
         db 00h,00h,00h,00h
-dword_D70DC:
         db 00h,00h,00h,00h
-dword_D70E0:
         db 00h,00h,00h,00h
-dword_D70E4:
         db 00h,00h,00h,00h,00h,00h
-byte_D70EA:
         db 00h
-byte_D70EB:
         db 00h
-dword_D70EC:
         db 00h,00h,00h,00h
-byte_D70F0:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

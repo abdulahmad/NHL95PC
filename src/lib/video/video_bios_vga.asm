@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_B3E4A progbits alloc exec nowrite align=1
-extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, byte_D4FE8, HotkeyScanTable, HotkeyModTable
+extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, KbdRepeatDelay, HotkeyScanTable, HotkeyModTable
 extern AngleOctantTable, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, GraphicsReady, cpuinfo_d0, cpuinfo_d1
 extern ScreenWidth, ScreenHeight, DrawClipLeft, DrawClipRight, BackBufferWidth, RetraceTimeout, PrintfSavedEbx, PrintfSavedEcx
-extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, RetraceMode, dword_D4FA4, dword_D4FEB, HotkeyNesting
-extern HotkeyFuncTable, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, VgaBlitKeyedAtOwnPos
-extern mousepollfn, off_D567C, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
-extern SavedTextColumns, word_D4FE4, word_D4FE6, word_D4FE9
+extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, RetraceMode, KbdKeyTranslate, KbdRepeatTick, HotkeyNesting
+extern HotkeyFuncTable, RectFillMaxShades, CosTable, CosTableFine, CosTableEnd, dword_D7178, GetTicks, VgaBlitKeyedAtOwnPos
+extern mousepollfn, RectFillPatternPtrs, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
+extern SavedTextColumns, KbdLastKey, KbdPrevKey, KbdHeldKey
 global PrintfSaveRegs, SaveTextMode, RestoreTextMode, DetectCPU, FillMem, ZeroMem, ResetHotkeyState, KbdGetKeyQuiet
 global PollHotkeys, SetupRectFillBlend, SetupRectFill, SetupRectFill, jpt_B4253, jpt_B4253, jpt_B42B2, jpt_B42B2
 global jpt_B439E, jpt_B439E, jpt_B4488, jpt_B4488, jpt_B4488, jpt_B466E, jpt_B466E, jpt_B466E
@@ -183,9 +183,9 @@ KbdGetKeyQuiet:
         jmp short .5
 .4:
         and ebx, byte 0Fh
-        mov eax, dword [nosplit ebx*2+dword_D4FA4]
+        mov eax, dword [nosplit ebx*2+KbdKeyTranslate]
 .5:
-        cmp ax, word [word_D4FE4]
+        cmp ax, word [KbdLastKey]
         jne short .8
         LD or, ax, ax
         jne short .7
@@ -193,30 +193,30 @@ KbdGetKeyQuiet:
         LD xor, ax, ax
         ret
 .7:
-        push dword [dword_D4FEB]
+        push dword [KbdRepeatTick]
         call TicksSince
         add esp, byte 4
-        cmp ax, word [word_D4FE9]
+        cmp ax, word [KbdHeldKey]
         jl short .6
         mov ax, 0Fh
-        mov word [word_D4FE9], ax
+        mov word [KbdHeldKey], ax
         jmp short .9
 .8:
-        cmp ax, word [word_D4FE6]
+        cmp ax, word [KbdPrevKey]
         jne short .10
-        dec byte [byte_D4FE8]
+        dec byte [KbdRepeatDelay]
         jg short .6
-        mov word [word_D4FE4], ax
+        mov word [KbdLastKey], ax
         mov ax, 46h
-        mov word [word_D4FE9], ax
+        mov word [KbdHeldKey], ax
 .9:
         call GetTicks
-        mov dword [dword_D4FEB], eax
-        mov ax, word [word_D4FE4]
+        mov dword [KbdRepeatTick], eax
+        mov ax, word [KbdLastKey]
         ret
 .10:
-        mov byte [byte_D4FE8], 3
-        mov word [word_D4FE6], ax
+        mov byte [KbdRepeatDelay], 3
+        mov word [KbdPrevKey], ax
         jmp short .6
 PollHotkeys:
         call KbdGetKey
@@ -347,10 +347,10 @@ SetupRectFill:
 .15:
         db 087h,0CAh                            ; insn: xchg ecx,edx
 .16:
-        cmp ecx, dword [dword_D5678]
+        cmp ecx, dword [RectFillMaxShades]
         jge short .17
         LD mov, ebx, ecx
-        mov ebx, dword [nosplit ebx*4+off_D567C]
+        mov ebx, dword [nosplit ebx*4+RectFillPatternPtrs]
         mov ax, word [ebx+edx*2]
         shl eax, 10h
         jmp short .18
@@ -1144,16 +1144,16 @@ TableCos:
         and ah, 3
         jnp short .1
         jne short .3
-        mov eax, dword [nosplit eax*4+dword_D6178]
+        mov eax, dword [nosplit eax*4+CosTableFine]
         ret
 .1:
         dec ah
         jne short .2
         neg eax
-        mov eax, dword [nosplit eax*4+dword_D6578]
+        mov eax, dword [nosplit eax*4+CosTableEnd]
         ret
 .2:
-        mov eax, dword [nosplit eax*4+dword_D5D78]
+        mov eax, dword [nosplit eax*4+CosTable]
         neg eax
         ret
 .3:

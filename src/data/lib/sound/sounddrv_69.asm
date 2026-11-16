@@ -2,586 +2,295 @@
 bits 32
 %include "hockey.inc"
 section s_D71F0 progbits alloc noexec write align=1
-extern byte_D6CE0, byte_D6E24, byte_D6F68, byte_D70AC, str_ULTRASND
-global byte_D7618, byte_D7619, byte_D781C, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, byte_D7B18, byte_D7B58
-global byte_D7B5C, byte_D7D70, byte_D7DB0, byte_D7DB4, byte_D7FC8, byte_D8008, byte_D800C, byte_D8220
-global byte_D8260, byte_D8264, byte_D849C, byte_D84A0, GusDmaPageTable, GusDmaLatchBits, byte_D87D8, GusDramSized
-global dword_D7200, dword_D7204, dword_D7208, dword_D720C, dword_D7614, dword_D7A1E, dword_D7A22, GusOpenCount
-global dword_D7ABC, GusStreamActive, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight
-global dword_D7B0C, dword_D7B1C, dword_D7B30, dword_D7B34, dword_D7B38, dword_D7B44, dword_D7B48, dword_D7B4C
-global dword_D7B50, dword_D7B60, dword_D7D64, dword_D7D74, dword_D7D88, dword_D7D8C, dword_D7D90, dword_D7D9C
-global dword_D7DA0, dword_D7DA4, dword_D7DA8, dword_D7DB8, dword_D7FBC, dword_D7FCC, dword_D7FE0, dword_D7FE4
-global dword_D7FE8, dword_D7FF4, dword_D7FF8, dword_D7FFC, dword_D8000, dword_D8010, dword_D8214, dword_D8224
-global dword_D8238, dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8258, dword_D8268
-global GusStreamBufSize, GusStreamHalfSize, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498
-global dword_D84A8, dword_D84AC, dword_D84B0, dword_D84B4, GusStreamCardEnd, GusStreamStartLo, GusStreamEndLo, GusEnvVarName
-global dword_D84D0, dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_D8690, dword_D8696
-global dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC, dword_D86B0, BlitColumnOffsets, BlitSourcePtr, DmaDefaultMode
+extern SbStreamChannels, str_ULTRASND
+global SbDmaRunning, SbMixPaused, SbSignTable, GusIrqLatchBits, GusVolumeCurve, GusMidiReady
+global GusStreamVoiceLeft, GusStreamVoiceRight, GusDmaPageTable, GusDmaLatchBits, GusMidiInitFlag, GusDramSized
+global SbMixSrcPos, SbMixStep, SbMixSrcEnd, SbMixCount, SbMixReadPos, SbDmaHalfSize, SbDmaBuffer, GusOpenCount
+global GusPitchTable, GusStreamActive, GusStreamLeftBuf, GusStreamLeftPending, GusStreamBusyLeft, GusStreamRightBuf, GusStreamRightPending, GusStreamBusyRight
+global GusStreamChannels
+global GusStreamBufSize, GusStreamHalfSize, GusStreamQuarterSize, GusStreamBufShift, GusStreamHalfShift, GusStreamQuarterLog2, GusFillCount, GusStreamState
+global GusFillScratch, GusFillDest, GusStreamCardLeft, GusStreamCardRight, GusStreamCardEnd, GusStreamStartLo, GusStreamEndLo, GusEnvVarName
+global GusChanBendRange, GusChanBendCents, GusChanRpnMsb, GusChanRpnLsb, GusChanVolume, GusChanExpression, ExecParamBlock
+global SpawnSavedEsp, BlitColumnOffsets, BlitSourcePtr, DmaDefaultMode
 global GusIrqOldHandler, GusDmaBusy, GusMidiPending, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback, GusRecordDoneCallback, GusWaveCallback
-global GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, GusMidiXmitCallback, GusMidiRecvCallback, dword_D87DC
-global dword_D87E0, dword_D89D8, dword_D89DC, off_D71F0, off_D846C, word_D7214, word_D7216, word_D7218
-global word_D721A, word_D721C, word_D721E, word_D7220, word_D7222, word_D7224, word_D7226, word_D7228
-global word_D722A, word_D722C, word_D722E, word_D7230, word_D7232, word_D7234, word_D7236, word_D7238
-global word_D723A, word_D723C, word_D723E, word_D7240, word_D7242, word_D7244, word_D7246, word_D7248
-global word_D724A, word_D724C, word_D724E, word_D7250, word_D7252, word_D7254, word_D7256, word_D7258
-global word_D725A, word_D725C, word_D725E, word_D7260, word_D7262, word_D7264, word_D7266, word_D7268
-global word_D726A, word_D726C, word_D726E, word_D7270, word_D7272, word_D7274, word_D7276, word_D7278
-global word_D727A, word_D727C, word_D727E, word_D7280, word_D7282, word_D7284, word_D7286, word_D7288
-global word_D728A, word_D728C, word_D728E, word_D7290, word_D7292, word_D7294, word_D7296, word_D7298
-global word_D729A, word_D729C, word_D729E, word_D72A0, word_D72A2, word_D72A4, word_D72A6, word_D72A8
-global word_D72AA, word_D72AC, word_D72AE, word_D72B0, word_D72B2, word_D72B4, word_D72B6, word_D72B8
-global word_D72BA, word_D72BC, word_D72BE, word_D72C0, word_D72C2, word_D72C4, word_D72C6, word_D72C8
-global word_D72CA, word_D72CC, word_D72CE, word_D72D0, word_D72D2, word_D72D4, word_D72D6, word_D72D8
-global word_D72DA, word_D72DC, word_D72DE, word_D72E0, word_D72E2, word_D72E4, word_D72E6, word_D72E8
-global word_D72EA, word_D72EC, word_D72EE, word_D72F0, word_D72F2, word_D72F4, word_D72F6, word_D72F8
-global word_D72FA, word_D72FC, word_D72FE, word_D7300, word_D7302, word_D7304, word_D7306, word_D7308
-global word_D730A, word_D730C, word_D730E, word_D7310, word_D7312, word_D7314, word_D7316, word_D7318
-global word_D731A, word_D731C, word_D731E, word_D7320, word_D7322, word_D7324, word_D7326, word_D7328
-global word_D732A, word_D732C, word_D732E, word_D7330, word_D7332, word_D7334, word_D7336, word_D7338
-global word_D733A, word_D733C, word_D733E, word_D7340, word_D7342, word_D7344, word_D7346, word_D7348
-global word_D734A, word_D734C, word_D734E, word_D7350, word_D7352, word_D7354, word_D7356, word_D7358
-global word_D735A, word_D735C, word_D735E, word_D7360, word_D7362, word_D7364, word_D7366, word_D7368
-global word_D736A, word_D736C, word_D736E, word_D7370, word_D7372, word_D7374, word_D7376, word_D7378
-global word_D737A, word_D737C, word_D737E, word_D7380, word_D7382, word_D7384, word_D7386, word_D7388
-global word_D738A, word_D738C, word_D738E, word_D7390, word_D7392, word_D7394, word_D7396, word_D7398
-global word_D739A, word_D739C, word_D739E, word_D73A0, word_D73A2, word_D73A4, word_D73A6, word_D73A8
-global word_D73AA, word_D73AC, word_D73AE, word_D73B0, word_D73B2, word_D73B4, word_D73B6, word_D73B8
-global word_D73BA, word_D73BC, word_D73BE, word_D73C0, word_D73C2, word_D73C4, word_D73C6, word_D73C8
-global word_D73CA, word_D73CC, word_D73CE, word_D73D0, word_D73D2, word_D73D4, word_D73D6, word_D73D8
-global word_D73DA, word_D73DC, word_D73DE, word_D73E0, word_D73E2, word_D73E4, word_D73E6, word_D73E8
-global word_D73EA, word_D73EC, word_D73EE, word_D73F0, word_D73F2, word_D73F4, word_D73F6, word_D73F8
-global word_D73FA, word_D73FC, word_D73FE, word_D7400, word_D7402, word_D7404, word_D7406, word_D7408
-global word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, word_D7414, word_D7B64, word_D7DBC
-global word_D8014, word_D826C, GusStreamLoopLo, GusStreamLoopHi, GusStreamStartHi, GusStreamEndHi, word_D8694, word_D869A
-global word_D86A0, word_D86A6, word_D86B4, word_D86B6, GusIrqVectorTable, GusIrqOldSelector, GusBasePort, GusIrqStatusPort
-global word_D8764, word_D8766, GusIrqLatchPort, GusDmaLatchPort, GusMidiControlPort, GusMidiDataPort, GusVoiceSelectPort, GusRegSelectPort
+global GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, GusMidiXmitCallback, GusMidiRecvCallback, GusNoteFreqTable
+global GusNoteFreqUpper, GusFreqDivisor, GusVoiceAllocAge, SbStreamTable, GusStreamTable, SbMixBuffer
+global MixVolumeTable, GusStreamStepsChan0, GusStreamStepsChan1
+global GusStreamStepsChan2, GusStreamStepsChan3, GusStreamLoopLo, GusStreamLoopHi, GusStreamStartHi, GusStreamEndHi
+global SpawnSavedSs, SpawnSavedDs, GusIrqVectorTable, GusIrqOldSelector, GusBasePort, GusIrqStatusPort
+global GusTimer1Count, GusTimer2Count, GusIrqLatchPort, GusDmaLatchPort, GusMidiControlPort, GusMidiDataPort, GusVoiceSelectPort, GusRegSelectPort
 global GusDataLowPort, GusDataHighPort, GusDramPort, GusIrqPending
-off_D71F0:
-        dd byte_D6CE0
-        dd byte_D6E24
-        dd byte_D6F68
-        dd byte_D70AC
-dword_D7200:
+SbStreamTable:
+        dd SbStreamChannels
+        dd SbStreamChannels+0144h
+        dd SbStreamChannels+0288h
+        dd SbStreamChannels+03CCh
+SbMixSrcPos:
         db 00h,00h,00h,00h
-dword_D7204:
+SbMixStep:
         db 00h,00h,00h,00h
-dword_D7208:
+SbMixSrcEnd:
         db 00h,00h,00h,00h
-dword_D720C:
+SbMixCount:
         db 00h,00h,00h,00h,014h,00h,00h,00h
-word_D7214:
+SbMixBuffer:
         db 00h,00h
-word_D7216:
         db 00h,00h
-word_D7218:
         db 00h,00h
-word_D721A:
         db 00h,00h
-word_D721C:
         db 00h,00h
-word_D721E:
         db 00h,00h
-word_D7220:
         db 00h,00h
-word_D7222:
         db 00h,00h
-word_D7224:
         db 00h,00h
-word_D7226:
         db 00h,00h
-word_D7228:
         db 00h,00h
-word_D722A:
         db 00h,00h
-word_D722C:
         db 00h,00h
-word_D722E:
         db 00h,00h
-word_D7230:
         db 00h,00h
-word_D7232:
         db 00h,00h
-word_D7234:
         db 00h,00h
-word_D7236:
         db 00h,00h
-word_D7238:
         db 00h,00h
-word_D723A:
         db 00h,00h
-word_D723C:
         db 00h,00h
-word_D723E:
         db 00h,00h
-word_D7240:
         db 00h,00h
-word_D7242:
         db 00h,00h
-word_D7244:
         db 00h,00h
-word_D7246:
         db 00h,00h
-word_D7248:
         db 00h,00h
-word_D724A:
         db 00h,00h
-word_D724C:
         db 00h,00h
-word_D724E:
         db 00h,00h
-word_D7250:
         db 00h,00h
-word_D7252:
         db 00h,00h
-word_D7254:
         db 00h,00h
-word_D7256:
         db 00h,00h
-word_D7258:
         db 00h,00h
-word_D725A:
         db 00h,00h
-word_D725C:
         db 00h,00h
-word_D725E:
         db 00h,00h
-word_D7260:
         db 00h,00h
-word_D7262:
         db 00h,00h
-word_D7264:
         db 00h,00h
-word_D7266:
         db 00h,00h
-word_D7268:
         db 00h,00h
-word_D726A:
         db 00h,00h
-word_D726C:
         db 00h,00h
-word_D726E:
         db 00h,00h
-word_D7270:
         db 00h,00h
-word_D7272:
         db 00h,00h
-word_D7274:
         db 00h,00h
-word_D7276:
         db 00h,00h
-word_D7278:
         db 00h,00h
-word_D727A:
         db 00h,00h
-word_D727C:
         db 00h,00h
-word_D727E:
         db 00h,00h
-word_D7280:
         db 00h,00h
-word_D7282:
         db 00h,00h
-word_D7284:
         db 00h,00h
-word_D7286:
         db 00h,00h
-word_D7288:
         db 00h,00h
-word_D728A:
         db 00h,00h
-word_D728C:
         db 00h,00h
-word_D728E:
         db 00h,00h
-word_D7290:
         db 00h,00h
-word_D7292:
         db 00h,00h
-word_D7294:
         db 00h,00h
-word_D7296:
         db 00h,00h
-word_D7298:
         db 00h,00h
-word_D729A:
         db 00h,00h
-word_D729C:
         db 00h,00h
-word_D729E:
         db 00h,00h
-word_D72A0:
         db 00h,00h
-word_D72A2:
         db 00h,00h
-word_D72A4:
         db 00h,00h
-word_D72A6:
         db 00h,00h
-word_D72A8:
         db 00h,00h
-word_D72AA:
         db 00h,00h
-word_D72AC:
         db 00h,00h
-word_D72AE:
         db 00h,00h
-word_D72B0:
         db 00h,00h
-word_D72B2:
         db 00h,00h
-word_D72B4:
         db 00h,00h
-word_D72B6:
         db 00h,00h
-word_D72B8:
         db 00h,00h
-word_D72BA:
         db 00h,00h
-word_D72BC:
         db 00h,00h
-word_D72BE:
         db 00h,00h
-word_D72C0:
         db 00h,00h
-word_D72C2:
         db 00h,00h
-word_D72C4:
         db 00h,00h
-word_D72C6:
         db 00h,00h
-word_D72C8:
         db 00h,00h
-word_D72CA:
         db 00h,00h
-word_D72CC:
         db 00h,00h
-word_D72CE:
         db 00h,00h
-word_D72D0:
         db 00h,00h
-word_D72D2:
         db 00h,00h
-word_D72D4:
         db 00h,00h
-word_D72D6:
         db 00h,00h
-word_D72D8:
         db 00h,00h
-word_D72DA:
         db 00h,00h
-word_D72DC:
         db 00h,00h
-word_D72DE:
         db 00h,00h
-word_D72E0:
         db 00h,00h
-word_D72E2:
         db 00h,00h
-word_D72E4:
         db 00h,00h
-word_D72E6:
         db 00h,00h
-word_D72E8:
         db 00h,00h
-word_D72EA:
         db 00h,00h
-word_D72EC:
         db 00h,00h
-word_D72EE:
         db 00h,00h
-word_D72F0:
         db 00h,00h
-word_D72F2:
         db 00h,00h
-word_D72F4:
         db 00h,00h
-word_D72F6:
         db 00h,00h
-word_D72F8:
         db 00h,00h
-word_D72FA:
         db 00h,00h
-word_D72FC:
         db 00h,00h
-word_D72FE:
         db 00h,00h
-word_D7300:
         db 00h,00h
-word_D7302:
         db 00h,00h
-word_D7304:
         db 00h,00h
-word_D7306:
         db 00h,00h
-word_D7308:
         db 00h,00h
-word_D730A:
         db 00h,00h
-word_D730C:
         db 00h,00h
-word_D730E:
         db 00h,00h
-word_D7310:
         db 00h,00h
-word_D7312:
         db 00h,00h
-word_D7314:
         db 00h,00h
-word_D7316:
         db 00h,00h
-word_D7318:
         db 00h,00h
-word_D731A:
         db 00h,00h
-word_D731C:
         db 00h,00h
-word_D731E:
         db 00h,00h
-word_D7320:
         db 00h,00h
-word_D7322:
         db 00h,00h
-word_D7324:
         db 00h,00h
-word_D7326:
         db 00h,00h
-word_D7328:
         db 00h,00h
-word_D732A:
         db 00h,00h
-word_D732C:
         db 00h,00h
-word_D732E:
         db 00h,00h
-word_D7330:
         db 00h,00h
-word_D7332:
         db 00h,00h
-word_D7334:
         db 00h,00h
-word_D7336:
         db 00h,00h
-word_D7338:
         db 00h,00h
-word_D733A:
         db 00h,00h
-word_D733C:
         db 00h,00h
-word_D733E:
         db 00h,00h
-word_D7340:
         db 00h,00h
-word_D7342:
         db 00h,00h
-word_D7344:
         db 00h,00h
-word_D7346:
         db 00h,00h
-word_D7348:
         db 00h,00h
-word_D734A:
         db 00h,00h
-word_D734C:
         db 00h,00h
-word_D734E:
         db 00h,00h
-word_D7350:
         db 00h,00h
-word_D7352:
         db 00h,00h
-word_D7354:
         db 00h,00h
-word_D7356:
         db 00h,00h
-word_D7358:
         db 00h,00h
-word_D735A:
         db 00h,00h
-word_D735C:
         db 00h,00h
-word_D735E:
         db 00h,00h
-word_D7360:
         db 00h,00h
-word_D7362:
         db 00h,00h
-word_D7364:
         db 00h,00h
-word_D7366:
         db 00h,00h
-word_D7368:
         db 00h,00h
-word_D736A:
         db 00h,00h
-word_D736C:
         db 00h,00h
-word_D736E:
         db 00h,00h
-word_D7370:
         db 00h,00h
-word_D7372:
         db 00h,00h
-word_D7374:
         db 00h,00h
-word_D7376:
         db 00h,00h
-word_D7378:
         db 00h,00h
-word_D737A:
         db 00h,00h
-word_D737C:
         db 00h,00h
-word_D737E:
         db 00h,00h
-word_D7380:
         db 00h,00h
-word_D7382:
         db 00h,00h
-word_D7384:
         db 00h,00h
-word_D7386:
         db 00h,00h
-word_D7388:
         db 00h,00h
-word_D738A:
         db 00h,00h
-word_D738C:
         db 00h,00h
-word_D738E:
         db 00h,00h
-word_D7390:
         db 00h,00h
-word_D7392:
         db 00h,00h
-word_D7394:
         db 00h,00h
-word_D7396:
         db 00h,00h
-word_D7398:
         db 00h,00h
-word_D739A:
         db 00h,00h
-word_D739C:
         db 00h,00h
-word_D739E:
         db 00h,00h
-word_D73A0:
         db 00h,00h
-word_D73A2:
         db 00h,00h
-word_D73A4:
         db 00h,00h
-word_D73A6:
         db 00h,00h
-word_D73A8:
         db 00h,00h
-word_D73AA:
         db 00h,00h
-word_D73AC:
         db 00h,00h
-word_D73AE:
         db 00h,00h
-word_D73B0:
         db 00h,00h
-word_D73B2:
         db 00h,00h
-word_D73B4:
         db 00h,00h
-word_D73B6:
         db 00h,00h
-word_D73B8:
         db 00h,00h
-word_D73BA:
         db 00h,00h
-word_D73BC:
         db 00h,00h
-word_D73BE:
         db 00h,00h
-word_D73C0:
         db 00h,00h
-word_D73C2:
         db 00h,00h
-word_D73C4:
         db 00h,00h
-word_D73C6:
         db 00h,00h
-word_D73C8:
         db 00h,00h
-word_D73CA:
         db 00h,00h
-word_D73CC:
         db 00h,00h
-word_D73CE:
         db 00h,00h
-word_D73D0:
         db 00h,00h
-word_D73D2:
         db 00h,00h
-word_D73D4:
         db 00h,00h
-word_D73D6:
         db 00h,00h
-word_D73D8:
         db 00h,00h
-word_D73DA:
         db 00h,00h
-word_D73DC:
         db 00h,00h
-word_D73DE:
         db 00h,00h
-word_D73E0:
         db 00h,00h
-word_D73E2:
         db 00h,00h
-word_D73E4:
         db 00h,00h
-word_D73E6:
         db 00h,00h
-word_D73E8:
         db 00h,00h
-word_D73EA:
         db 00h,00h
-word_D73EC:
         db 00h,00h
-word_D73EE:
         db 00h,00h
-word_D73F0:
         db 00h,00h
-word_D73F2:
         db 00h,00h
-word_D73F4:
         db 00h,00h
-word_D73F6:
         db 00h,00h
-word_D73F8:
         db 00h,00h
-word_D73FA:
         db 00h,00h
-word_D73FC:
         db 00h,00h
-word_D73FE:
         db 00h,00h
-word_D7400:
         db 00h,00h
-word_D7402:
         db 00h,00h
-word_D7404:
         db 00h,00h
-word_D7406:
         db 00h,00h
-word_D7408:
         db 00h,00h
-word_D740A:
         db 00h,00h
-word_D740C:
         db 00h,00h
-word_D740E:
         db 00h,00h
-word_D7410:
         db 00h,00h
-word_D7412:
         db 00h,00h
-word_D7414:
+MixVolumeTable:
         db 0DEh,0DEh,0EBh,0DEh,0F3h,0DEh,0F8h,0DEh,0FBh,0DEh,0FDh,0DEh,0FEh,0DEh,0FFh,0DEh
         db 01h,0DEh,02h,0DEh,03h,0DEh,05h,0DEh,08h,0DEh,0Dh,0DEh,015h,0DEh,022h,0DEh
         db 0DEh,0EBh,0EBh,0EBh,0F3h,0EBh,0F8h,0EBh,0FBh,0EBh,0FDh,0EBh,0FEh,0EBh,0FFh,0EBh
@@ -614,11 +323,11 @@ word_D7414:
         db 01h,015h,02h,015h,03h,015h,05h,015h,08h,015h,0Dh,015h,015h,015h,022h,015h
         db 0DEh,022h,0EBh,022h,0F3h,022h,0F8h,022h,0FBh,022h,0FDh,022h,0FEh,022h,0FFh,022h
         db 01h,022h,02h,022h,03h,022h,05h,022h,08h,022h,0Dh,022h,015h,022h,022h,022h
-dword_D7614:
+SbMixReadPos:
         db 00h,00h,00h,00h
-byte_D7618:
+SbDmaRunning:
         db 00h
-byte_D7619:
+SbMixPaused:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -652,7 +361,7 @@ byte_D7619:
         db 05Dh,05Eh,05Fh,060h,061h,062h,063h,064h,065h,066h,067h,068h,069h,06Ah,06Bh,06Ch
         db 06Dh,06Eh,06Fh,070h,071h,072h,073h,074h,075h,076h,077h,078h,079h,07Ah,07Bh,07Ch
         db 07Dh,07Eh,07Fh
-byte_D781C:
+SbSignTable:
         db 080h,081h,082h,083h,084h,085h,086h,087h,088h,089h,08Ah,08Bh,08Ch,08Dh,08Eh,08Fh
         db 090h,091h,092h,093h,094h,095h,096h,097h,098h,099h,09Ah,09Bh,09Ch,09Dh,09Eh,09Fh
         db 0A0h,0A1h,0A2h,0A3h,0A4h,0A5h,0A6h,0A7h,0A8h,0A9h,0AAh,0ABh,0ACh,0ADh,0AEh,0AFh
@@ -686,15 +395,15 @@ byte_D781C:
         db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
         db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
         db 00h,00h
-dword_D7A1E:
+SbDmaHalfSize:
         db 00h,00h,00h,00h
-dword_D7A22:
+SbDmaBuffer:
         db 00h,00h,00h,00h,00h,00h
 GusOpenCount:
         db 00h,00h,00h,00h
 GusIrqLatchBits:
         db 00h,00h,01h,03h,00h,02h,00h,04h,00h,00h,00h,05h,06h,00h,00h,07h
-byte_D7A3C:
+GusVolumeCurve:
         db 00h,081h,091h,09Bh,0A1h,0A6h,0ABh,0AEh,0B1h,0B4h,0B6h,0B9h,0BBh,0BCh,0BEh,0C0h
         db 0C1h,0C3h,0C4h,0C5h,0C6h,0C7h,0C9h,0CAh,0CBh,0CBh,0CCh,0CDh,0CEh,0CFh,0D0h,0D0h
         db 0D1h,0D2h,0D3h,0D3h,0D4h,0D5h,0D5h,0D6h,0D6h,0D7h,0D7h,0D8h,0D9h,0D9h,0DAh,0DAh
@@ -703,54 +412,42 @@ byte_D7A3C:
         db 0EEh,0EEh,0EFh,0EFh,0F0h,0F1h,0F1h,0F2h,0F2h,0F3h,0F3h,0F4h,0F4h,0F4h,0F5h,0F5h
         db 0F6h,0F6h,0F7h,0F7h,0F7h,0F8h,0F8h,0F9h,0F9h,0F9h,0FAh,0FAh,0FAh,0FBh,0FBh,0FBh
         db 0FCh,0FCh,0FCh,0FDh,0FDh,0FDh,0FEh,0FEh,0FEh,0FEh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-dword_D7ABC:
+GusPitchTable:
         db 00h,04h,00h,00h,03Dh,04h,00h,00h,07Dh,04h,00h,00h,0C2h,04h,00h,00h
         db 0Ah,05h,00h,00h,057h,05h,00h,00h,0A8h,05h,00h,00h,0FEh,05h,00h,00h
         db 059h,06h,00h,00h,0BAh,06h,00h,00h,021h,07h,00h,00h,08Dh,07h,00h,00h
-byte_D7AEC:
+GusMidiReady:
         db 01h,00h,00h,00h
 GusStreamActive:
         db 00h,00h,00h,00h
-dword_D7AF4:
+GusStreamLeftBuf:
         db 00h,00h,00h,00h
-dword_D7AF8:
+GusStreamLeftPending:
         db 00h,00h,00h,00h
 GusStreamBusyLeft:
         db 00h,00h,00h,00h
-dword_D7B00:
+GusStreamRightBuf:
         db 00h,00h,00h,00h
-dword_D7B04:
+GusStreamRightPending:
         db 00h,00h,00h,00h
 GusStreamBusyRight:
         db 00h,00h,00h,00h
-dword_D7B0C:
+GusStreamChannels:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D7B18:
         db 00h,00h,00h,00h
-dword_D7B1C:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D7B30:
         db 00h,00h,00h,00h
-dword_D7B34:
         db 00h,00h,00h,00h
-dword_D7B38:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D7B44:
         db 00h,00h,00h,00h
-dword_D7B48:
         db 00h,00h,00h,00h
-dword_D7B4C:
         db 00h,00h,00h,00h
-dword_D7B50:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-byte_D7B58:
         db 00h,00h,00h,00h
-byte_D7B5C:
         db 00h,00h,00h,00h
-dword_D7B60:
         db 00h,00h,00h,00h
-word_D7B64:
+GusStreamStepsChan0:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -783,34 +480,21 @@ word_D7B64:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D7D64:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D7D70:
         db 00h,00h,00h,00h
-dword_D7D74:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D7D88:
         db 00h,00h,00h,00h
-dword_D7D8C:
         db 00h,00h,00h,00h
-dword_D7D90:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D7D9C:
         db 00h,00h,00h,00h
-dword_D7DA0:
         db 00h,00h,00h,00h
-dword_D7DA4:
         db 00h,00h,00h,00h
-dword_D7DA8:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-byte_D7DB0:
         db 00h,00h,00h,00h
-byte_D7DB4:
         db 00h,00h,00h,00h
-dword_D7DB8:
         db 00h,00h,00h,00h
-word_D7DBC:
+GusStreamStepsChan1:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -843,34 +527,21 @@ word_D7DBC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D7FBC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D7FC8:
         db 00h,00h,00h,00h
-dword_D7FCC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D7FE0:
         db 00h,00h,00h,00h
-dword_D7FE4:
         db 00h,00h,00h,00h
-dword_D7FE8:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D7FF4:
         db 00h,00h,00h,00h
-dword_D7FF8:
         db 00h,00h,00h,00h
-dword_D7FFC:
         db 00h,00h,00h,00h
-dword_D8000:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-byte_D8008:
         db 00h,00h,00h,00h
-byte_D800C:
         db 00h,00h,00h,00h
-dword_D8010:
         db 00h,00h,00h,00h
-word_D8014:
+GusStreamStepsChan2:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -903,34 +574,21 @@ word_D8014:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D8214:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D8220:
         db 00h,00h,00h,00h
-dword_D8224:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D8238:
         db 00h,00h,00h,00h
-dword_D823C:
         db 00h,00h,00h,00h
-dword_D8240:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D824C:
         db 00h,00h,00h,00h
-dword_D8250:
         db 00h,00h,00h,00h
-dword_D8254:
         db 00h,00h,00h,00h
-dword_D8258:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-byte_D8260:
         db 00h,00h,00h,00h
-byte_D8264:
         db 00h,00h,00h,00h
-dword_D8268:
         db 00h,00h,00h,00h
-word_D826C:
+GusStreamStepsChan3:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -963,38 +621,38 @@ word_D826C:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-off_D846C:
-        dd dword_D7B0C
-        dd dword_D7D64
-        dd dword_D7FBC
-        dd dword_D8214
+GusStreamTable:
+        dd GusStreamChannels
+        dd GusStreamChannels+0258h
+        dd GusStreamChannels+04B0h
+        dd GusStreamChannels+0708h
 GusStreamBufSize:
         db 00h,00h,00h,00h
 GusStreamHalfSize:
         db 00h,00h,00h,00h
-dword_D8484:
+GusStreamQuarterSize:
         db 00h,00h,00h,00h
-dword_D8488:
+GusStreamBufShift:
         db 00h,00h,00h,00h
-dword_D848C:
+GusStreamHalfShift:
         db 00h,00h,00h,00h
-dword_D8490:
+GusStreamQuarterLog2:
         db 00h,00h,00h,00h
-dword_D8494:
+GusFillCount:
         db 00h,00h,00h,00h
-dword_D8498:
+GusStreamState:
         db 00h,00h,00h,00h
-byte_D849C:
+GusStreamVoiceLeft:
         db 00h,00h,00h,00h
-byte_D84A0:
+GusStreamVoiceRight:
         db 00h,00h,00h,00h,022h,056h,00h,00h
-dword_D84A8:
+GusFillScratch:
         db 00h,00h,00h,00h
-dword_D84AC:
+GusFillDest:
         db 00h,00h,00h,00h
-dword_D84B0:
+GusStreamCardLeft:
         db 00h,00h,00h,00h
-dword_D84B4:
+GusStreamCardRight:
         db 00h,00h,00h,00h
 GusStreamCardEnd:
         db 00h,00h,00h,00h
@@ -1012,32 +670,32 @@ GusStreamEndHi:
         db 00h,00h,00h,080h,0Bh,00h
 GusEnvVarName:
         dd str_ULTRASND
-dword_D84D0:
+GusChanBendRange:
         db 02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h
         db 02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h
         db 02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h
         db 02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h
-dword_D8510:
+GusChanBendCents:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D8550:
+GusChanRpnMsb:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D8590:
+GusChanRpnLsb:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D85D0:
+GusChanVolume:
         db 064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h
         db 064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h
         db 064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h
         db 064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h,064h,00h,00h,00h
-dword_D8610:
+GusChanExpression:
         db 07Fh,00h,00h,00h,07Fh,00h,00h,00h,07Fh,00h,00h,00h,07Fh,00h,00h,00h
         db 07Fh,00h,00h,00h,07Fh,00h,00h,00h,07Fh,00h,00h,00h,07Fh,00h,00h,00h
         db 07Fh,00h,00h,00h,07Fh,00h,00h,00h,07Fh,00h,00h,00h,07Fh,00h,00h,00h
@@ -1046,31 +704,22 @@ dword_D8610:
         db 010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h
         db 010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h
         db 010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h
-dword_D8690:
+ExecParamBlock:
         db 00h,00h,00h,00h
-word_D8694:
         db 00h,00h
-dword_D8696:
         db 00h,00h,00h,00h
-word_D869A:
         db 00h,00h
-dword_D869C:
         db 00h,00h,00h,00h
-word_D86A0:
         db 00h,00h
-dword_D86A2:
         db 00h,00h,00h,00h
-word_D86A6:
         db 00h,00h
-dword_D86A8:
         db 00h,00h,00h,00h
-dword_D86AC:
         db 00h,00h,00h,00h
-dword_D86B0:
+SpawnSavedEsp:
         db 00h,00h,00h,00h
-word_D86B4:
+SpawnSavedSs:
         db 00h,00h
-word_D86B6:
+SpawnSavedDs:
         db 00h,00h
 BlitColumnOffsets:
         db 00h,00h,00h,00h
@@ -1098,9 +747,9 @@ GusBasePort:
         db 020h,02h
 GusIrqStatusPort:
         db 026h,02h
-word_D8764:
+GusTimer1Count:
         db 028h,02h
-word_D8766:
+GusTimer2Count:
         db 029h,02h
 GusIrqLatchPort:
         db 02Bh,02h
@@ -1153,11 +802,11 @@ GusMidiXmitCallback:
         db 00h,00h,00h,00h
 GusMidiRecvCallback:
         db 00h,00h,00h,00h
-byte_D87D8:
+GusMidiInitFlag:
         db 00h,00h,00h,00h
-dword_D87DC:
+GusNoteFreqTable:
         db 0EFh,01Fh,00h,00h
-dword_D87E0:
+GusNoteFreqUpper:
         db 0D5h,021h,00h,00h,0D9h,023h,00h,00h,0FAh,025h,00h,00h,03Ch,028h,00h,00h
         db 0A1h,02Ah,00h,00h,02Ah,02Dh,00h,00h,0D9h,02Fh,00h,00h,0B2h,032h,00h,00h
         db 0B6h,035h,00h,00h,0E7h,038h,00h,00h,049h,03Ch,00h,00h,0DFh,03Fh,00h,00h
@@ -1190,9 +839,9 @@ dword_D87E0:
         db 00h,06Ch,06Bh,00h,03Ch,0CFh,071h,00h,0B4h,093h,078h,00h,032h,0BFh,07Fh,00h
         db 0D4h,057h,087h,00h,018h,064h,08Fh,00h,0DFh,0EAh,097h,00h,071h,0F3h,0A0h,00h
         db 087h,085h,0AAh,00h,04Dh,0A9h,0B4h,00h
-dword_D89D8:
+GusFreqDivisor:
         db 00h,00h,00h,00h
-dword_D89DC:
+GusVoiceAllocAge:
         db 01h,00h,00h,00h
 GusDramSized:
         db 00h,00h,00h,00h

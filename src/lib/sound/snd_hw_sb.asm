@@ -2,48 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_A6BE1 progbits alloc exec nowrite align=1
-extern __set_errno_, CharClassTable, byte_D6CE0, byte_D6CE1, byte_D6CE3, byte_D6D1E, byte_D6D1F, byte_D6D24
-extern byte_D6E24, byte_D6E25, byte_D6E27, byte_D6E62, byte_D6E63, byte_D6E68, byte_D6F68, byte_D6F69
-extern byte_D6F6B, byte_D6FA6, byte_D6FA7, byte_D6FAC, byte_D70AC, byte_D70AD, byte_D70AF, byte_D70EA
-extern byte_D70EB, byte_D70F0, byte_D7618, byte_D7619, byte_D781C, dword_D6B00, dword_D6CE4, dword_D6CF8
-extern dword_D6CFC, dword_D6D00, dword_D6D0C, dword_D6D10, dword_D6D14, dword_D6D18, dword_D6D20, dword_D6E28
-extern dword_D6E3C, dword_D6E40, dword_D6E44, dword_D6E50, dword_D6E54, dword_D6E58, dword_D6E5C, dword_D6E64
-extern dword_D6F6C, dword_D6F80, dword_D6F84, dword_D6F88, dword_D6F94, dword_D6F98, dword_D6F9C, dword_D6FA0
-extern dword_D6FA8, dword_D70B0, dword_D70C4, dword_D70C8, dword_D70CC, dword_D70D8, dword_D70DC, dword_D70E0
-extern dword_D70E4, dword_D70EC, dword_D7200, dword_D7204, dword_D7208, dword_D720C, dword_D7614, dword_D7A1E
-extern dword_D7A22, off_D71F0, SbCardClose, SbCardOpen, SbDmaCount, tolower_, word_D7214, word_D7216
-extern word_D7218, word_D721A, word_D721C, word_D721E, word_D7220, word_D7222, word_D7224, word_D7226
-extern word_D7228, word_D722A, word_D722C, word_D722E, word_D7230, word_D7232, word_D7234, word_D7236
-extern word_D7238, word_D723A, word_D723C, word_D723E, word_D7240, word_D7242, word_D7244, word_D7246
-extern word_D7248, word_D724A, word_D724C, word_D724E, word_D7250, word_D7252, word_D7254, word_D7256
-extern word_D7258, word_D725A, word_D725C, word_D725E, word_D7260, word_D7262, word_D7264, word_D7266
-extern word_D7268, word_D726A, word_D726C, word_D726E, word_D7270, word_D7272, word_D7274, word_D7276
-extern word_D7278, word_D727A, word_D727C, word_D727E, word_D7280, word_D7282, word_D7284, word_D7286
-extern word_D7288, word_D728A, word_D728C, word_D728E, word_D7290, word_D7292, word_D7294, word_D7296
-extern word_D7298, word_D729A, word_D729C, word_D729E, word_D72A0, word_D72A2, word_D72A4, word_D72A6
-extern word_D72A8, word_D72AA, word_D72AC, word_D72AE, word_D72B0, word_D72B2, word_D72B4, word_D72B6
-extern word_D72B8, word_D72BA, word_D72BC, word_D72BE, word_D72C0, word_D72C2, word_D72C4, word_D72C6
-extern word_D72C8, word_D72CA, word_D72CC, word_D72CE, word_D72D0, word_D72D2, word_D72D4, word_D72D6
-extern word_D72D8, word_D72DA, word_D72DC, word_D72DE, word_D72E0, word_D72E2, word_D72E4, word_D72E6
-extern word_D72E8, word_D72EA, word_D72EC, word_D72EE, word_D72F0, word_D72F2, word_D72F4, word_D72F6
-extern word_D72F8, word_D72FA, word_D72FC, word_D72FE, word_D7300, word_D7302, word_D7304, word_D7306
-extern word_D7308, word_D730A, word_D730C, word_D730E, word_D7310, word_D7312, word_D7314, word_D7316
-extern word_D7318, word_D731A, word_D731C, word_D731E, word_D7320, word_D7322, word_D7324, word_D7326
-extern word_D7328, word_D732A, word_D732C, word_D732E, word_D7330, word_D7332, word_D7334, word_D7336
-extern word_D7338, word_D733A, word_D733C, word_D733E, word_D7340, word_D7342, word_D7344, word_D7346
-extern word_D7348, word_D734A, word_D734C, word_D734E, word_D7350, word_D7352, word_D7354, word_D7356
-extern word_D7358, word_D735A, word_D735C, word_D735E, word_D7360, word_D7362, word_D7364, word_D7366
-extern word_D7368, word_D736A, word_D736C, word_D736E, word_D7370, word_D7372, word_D7374, word_D7376
-extern word_D7378, word_D737A, word_D737C, word_D737E, word_D7380, word_D7382, word_D7384, word_D7386
-extern word_D7388, word_D738A, word_D738C, word_D738E, word_D7390, word_D7392, word_D7394, word_D7396
-extern word_D7398, word_D739A, word_D739C, word_D739E, word_D73A0, word_D73A2, word_D73A4, word_D73A6
-extern word_D73A8, word_D73AA, word_D73AC, word_D73AE, word_D73B0, word_D73B2, word_D73B4, word_D73B6
-extern word_D73B8, word_D73BA, word_D73BC, word_D73BE, word_D73C0, word_D73C2, word_D73C4, word_D73C6
-extern word_D73C8, word_D73CA, word_D73CC, word_D73CE, word_D73D0, word_D73D2, word_D73D4, word_D73D6
-extern word_D73D8, word_D73DA, word_D73DC, word_D73DE, word_D73E0, word_D73E2, word_D73E4, word_D73E6
-extern word_D73E8, word_D73EA, word_D73EC, word_D73EE, word_D73F0, word_D73F2, word_D73F4, word_D73F6
-extern word_D73F8, word_D73FA, word_D73FC, word_D73FE, word_D7400, word_D7402, word_D7404, word_D7406
-extern word_D7408, word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, word_D7414
+extern __set_errno_, CharClassTable, SbStreamChannels
+extern SbDmaRunning, SbMixPaused, SbSignTable, NotePitchTable
+extern SbMixSrcPos, SbMixStep, SbMixSrcEnd, SbMixCount, SbMixReadPos, SbDmaHalfSize
+extern SbDmaBuffer, SbStreamTable, SbCardClose, SbCardOpen, SbDmaCount, tolower_, SbMixBuffer
+extern MixVolumeTable
 global StrToLong, strtol_, strtoul_, DigitValue, SbStreamCheck, SbMixRateDiv, SbMixerOpen, SbMixerClose
 global SbStreamStopAll, SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetBend, SbStreamSetRate, SbStreamSetSample
 global SbStreamStart, SbStreamIdle, SbStreamGetVolume, SbStreamApplyBend, SbMixAdd8Vol, SbMixAdd8, SbMixChannels, SbDmaHalfReady
@@ -274,7 +237,7 @@ SbMixerOpen:
         mov al, 0FFh
         LD xor, esi, esi
 .1:
-        mov ebx, dword [nosplit esi*4+off_D71F0]
+        mov ebx, dword [nosplit esi*4+SbStreamTable]
         mov byte [byte ebx+01h], al
         inc esi
         loop .1
@@ -306,7 +269,7 @@ SbStreamStopAll:
         mov al, 0
         LD xor, esi, esi
 .1:
-        mov ebx, dword [nosplit esi*4+off_D71F0]
+        mov ebx, dword [nosplit esi*4+SbStreamTable]
         mov byte [ebx], al
         inc esi
         loop .1
@@ -320,12 +283,12 @@ SbStreamPlayNote:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb short .3
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov bl, byte [byte ebp+0Ch]
         mov byte [byte esi+02h], bl
         cmp bl, 0FFh
         je short .1
-        mov eax, dword [nosplit ebx*4+dword_D6B00]
+        mov eax, dword [nosplit ebx*4+NotePitchTable]
         mul dword [byte esi+020h]
         and eax, 0FFFF0000h
         and edx, 0FFFFh
@@ -361,7 +324,7 @@ SbStreamRelease:
         jb short .1
         cmp esi, byte 1
         jle short .1
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov eax, dword [byte esi+010h]
         mov dword [byte esi+01Ch], eax
         mov al, 0
@@ -379,7 +342,7 @@ SbStreamStop:
         jb short .1
         cmp esi, byte 1
         jle short .1
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov al, 0
         mov byte [esi], al
 .1:
@@ -394,7 +357,7 @@ SbStreamSetVolume:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb short .2
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov al, byte [byte ebp+0Ch]
         cmp al, byte [byte esi+01h]
         je short .2
@@ -430,7 +393,7 @@ SbStreamSetBend:
         movzx esi, word [byte ebp+08h]
         call SbStreamCheck
         jb short .1
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         movsx eax, word [byte ebp+0Ch]
         mov word [byte esi+03Ch], ax
 .1:
@@ -444,7 +407,7 @@ SbStreamSetRate:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb short .4
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov ecx, dword [unk_A9C8A]
         LD xor, edx, edx
         mov eax, dword [byte ebp+0Ch]
@@ -484,7 +447,7 @@ SbStreamSetSample:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb short .1
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         LD xor, eax, eax
         mov byte [byte esi+03h], al
         mov eax, dword [byte ebp+0Ch]
@@ -513,7 +476,7 @@ SbStreamStart:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb near .4
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov eax, dword [byte ebp+01Ch]
         cmp eax, byte 0
         jne short .1
@@ -556,7 +519,7 @@ SbStreamStart:
         LD xor, eax, eax
 .2:
         mov al, byte [edi]
-        mov bx, word [nosplit eax*2+word_D7414]
+        mov bx, word [nosplit eax*2+MixVolumeTable]
         inc edi
         LD add, dl, bl
         LD add, dl, bh
@@ -583,7 +546,7 @@ SbStreamIdle:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb short .1
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov al, byte [esi]
         cmp al, 0
         jne short .2
@@ -604,7 +567,7 @@ SbStreamGetVolume:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb short .1
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         movzx eax, byte [byte esi+01h]
         pop esi
         leave
@@ -623,7 +586,7 @@ SbStreamApplyBend:
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
         jb short .4
-        mov esi, dword [nosplit esi*4+off_D71F0]
+        mov esi, dword [nosplit esi*4+SbStreamTable]
         mov edi, dword [byte esi+028h]
         or edi, dword [byte esi+024h]
         ror edi, 10h
@@ -633,7 +596,7 @@ SbStreamApplyBend:
         LD xor, ebx, ebx
         mov bl, byte [byte esi+02h]
         add bl, byte [byte ebp+018h]
-        mov eax, dword [nosplit ebx*4+dword_D6B00]
+        mov eax, dword [nosplit ebx*4+NotePitchTable]
         mul dword [byte esi+020h]
         shl edx, 10h
         shr eax, 10h
@@ -672,2819 +635,2819 @@ SbMixAdd8Vol:
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7214], ax
+        add word [SbMixBuffer], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7216], ax
+        add word [SbMixBuffer+02h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7218], ax
+        add word [SbMixBuffer+04h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D721A], ax
+        add word [SbMixBuffer+06h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D721C], ax
+        add word [SbMixBuffer+08h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D721E], ax
+        add word [SbMixBuffer+0Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7220], ax
+        add word [SbMixBuffer+0Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7222], ax
+        add word [SbMixBuffer+0Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7224], ax
+        add word [SbMixBuffer+010h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7226], ax
+        add word [SbMixBuffer+012h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7228], ax
+        add word [SbMixBuffer+014h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D722A], ax
+        add word [SbMixBuffer+016h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D722C], ax
+        add word [SbMixBuffer+018h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D722E], ax
+        add word [SbMixBuffer+01Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7230], ax
+        add word [SbMixBuffer+01Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7232], ax
+        add word [SbMixBuffer+01Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7234], ax
+        add word [SbMixBuffer+020h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7236], ax
+        add word [SbMixBuffer+022h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7238], ax
+        add word [SbMixBuffer+024h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D723A], ax
+        add word [SbMixBuffer+026h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D723C], ax
+        add word [SbMixBuffer+028h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D723E], ax
+        add word [SbMixBuffer+02Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7240], ax
+        add word [SbMixBuffer+02Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7242], ax
+        add word [SbMixBuffer+02Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7244], ax
+        add word [SbMixBuffer+030h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7246], ax
+        add word [SbMixBuffer+032h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7248], ax
+        add word [SbMixBuffer+034h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D724A], ax
+        add word [SbMixBuffer+036h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D724C], ax
+        add word [SbMixBuffer+038h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D724E], ax
+        add word [SbMixBuffer+03Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7250], ax
+        add word [SbMixBuffer+03Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7252], ax
+        add word [SbMixBuffer+03Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7254], ax
+        add word [SbMixBuffer+040h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7256], ax
+        add word [SbMixBuffer+042h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7258], ax
+        add word [SbMixBuffer+044h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D725A], ax
+        add word [SbMixBuffer+046h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D725C], ax
+        add word [SbMixBuffer+048h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D725E], ax
+        add word [SbMixBuffer+04Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7260], ax
+        add word [SbMixBuffer+04Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7262], ax
+        add word [SbMixBuffer+04Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7264], ax
+        add word [SbMixBuffer+050h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7266], ax
+        add word [SbMixBuffer+052h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7268], ax
+        add word [SbMixBuffer+054h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D726A], ax
+        add word [SbMixBuffer+056h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D726C], ax
+        add word [SbMixBuffer+058h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D726E], ax
+        add word [SbMixBuffer+05Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7270], ax
+        add word [SbMixBuffer+05Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7272], ax
+        add word [SbMixBuffer+05Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7274], ax
+        add word [SbMixBuffer+060h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7276], ax
+        add word [SbMixBuffer+062h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7278], ax
+        add word [SbMixBuffer+064h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D727A], ax
+        add word [SbMixBuffer+066h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D727C], ax
+        add word [SbMixBuffer+068h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D727E], ax
+        add word [SbMixBuffer+06Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7280], ax
+        add word [SbMixBuffer+06Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7282], ax
+        add word [SbMixBuffer+06Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7284], ax
+        add word [SbMixBuffer+070h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7286], ax
+        add word [SbMixBuffer+072h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7288], ax
+        add word [SbMixBuffer+074h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D728A], ax
+        add word [SbMixBuffer+076h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D728C], ax
+        add word [SbMixBuffer+078h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D728E], ax
+        add word [SbMixBuffer+07Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7290], ax
+        add word [SbMixBuffer+07Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7292], ax
+        add word [SbMixBuffer+07Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7294], ax
+        add word [SbMixBuffer+080h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7296], ax
+        add word [SbMixBuffer+082h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7298], ax
+        add word [SbMixBuffer+084h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D729A], ax
+        add word [SbMixBuffer+086h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D729C], ax
+        add word [SbMixBuffer+088h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D729E], ax
+        add word [SbMixBuffer+08Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72A0], ax
+        add word [SbMixBuffer+08Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72A2], ax
+        add word [SbMixBuffer+08Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72A4], ax
+        add word [SbMixBuffer+090h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72A6], ax
+        add word [SbMixBuffer+092h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72A8], ax
+        add word [SbMixBuffer+094h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72AA], ax
+        add word [SbMixBuffer+096h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72AC], ax
+        add word [SbMixBuffer+098h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72AE], ax
+        add word [SbMixBuffer+09Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72B0], ax
+        add word [SbMixBuffer+09Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72B2], ax
+        add word [SbMixBuffer+09Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72B4], ax
+        add word [SbMixBuffer+0A0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72B6], ax
+        add word [SbMixBuffer+0A2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72B8], ax
+        add word [SbMixBuffer+0A4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72BA], ax
+        add word [SbMixBuffer+0A6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72BC], ax
+        add word [SbMixBuffer+0A8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72BE], ax
+        add word [SbMixBuffer+0AAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72C0], ax
+        add word [SbMixBuffer+0ACh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72C2], ax
+        add word [SbMixBuffer+0AEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72C4], ax
+        add word [SbMixBuffer+0B0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72C6], ax
+        add word [SbMixBuffer+0B2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72C8], ax
+        add word [SbMixBuffer+0B4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72CA], ax
+        add word [SbMixBuffer+0B6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72CC], ax
+        add word [SbMixBuffer+0B8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72CE], ax
+        add word [SbMixBuffer+0BAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72D0], ax
+        add word [SbMixBuffer+0BCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72D2], ax
+        add word [SbMixBuffer+0BEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72D4], ax
+        add word [SbMixBuffer+0C0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72D6], ax
+        add word [SbMixBuffer+0C2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72D8], ax
+        add word [SbMixBuffer+0C4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72DA], ax
+        add word [SbMixBuffer+0C6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72DC], ax
+        add word [SbMixBuffer+0C8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72DE], ax
+        add word [SbMixBuffer+0CAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72E0], ax
+        add word [SbMixBuffer+0CCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72E2], ax
+        add word [SbMixBuffer+0CEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72E4], ax
+        add word [SbMixBuffer+0D0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72E6], ax
+        add word [SbMixBuffer+0D2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72E8], ax
+        add word [SbMixBuffer+0D4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72EA], ax
+        add word [SbMixBuffer+0D6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72EC], ax
+        add word [SbMixBuffer+0D8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72EE], ax
+        add word [SbMixBuffer+0DAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72F0], ax
+        add word [SbMixBuffer+0DCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72F2], ax
+        add word [SbMixBuffer+0DEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72F4], ax
+        add word [SbMixBuffer+0E0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72F6], ax
+        add word [SbMixBuffer+0E2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72F8], ax
+        add word [SbMixBuffer+0E4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72FA], ax
+        add word [SbMixBuffer+0E6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72FC], ax
+        add word [SbMixBuffer+0E8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D72FE], ax
+        add word [SbMixBuffer+0EAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7300], ax
+        add word [SbMixBuffer+0ECh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7302], ax
+        add word [SbMixBuffer+0EEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7304], ax
+        add word [SbMixBuffer+0F0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7306], ax
+        add word [SbMixBuffer+0F2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7308], ax
+        add word [SbMixBuffer+0F4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D730A], ax
+        add word [SbMixBuffer+0F6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D730C], ax
+        add word [SbMixBuffer+0F8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D730E], ax
+        add word [SbMixBuffer+0FAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7310], ax
+        add word [SbMixBuffer+0FCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7312], ax
+        add word [SbMixBuffer+0FEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7314], ax
+        add word [SbMixBuffer+0100h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7316], ax
+        add word [SbMixBuffer+0102h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7318], ax
+        add word [SbMixBuffer+0104h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D731A], ax
+        add word [SbMixBuffer+0106h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D731C], ax
+        add word [SbMixBuffer+0108h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D731E], ax
+        add word [SbMixBuffer+010Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7320], ax
+        add word [SbMixBuffer+010Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7322], ax
+        add word [SbMixBuffer+010Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7324], ax
+        add word [SbMixBuffer+0110h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7326], ax
+        add word [SbMixBuffer+0112h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7328], ax
+        add word [SbMixBuffer+0114h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D732A], ax
+        add word [SbMixBuffer+0116h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D732C], ax
+        add word [SbMixBuffer+0118h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D732E], ax
+        add word [SbMixBuffer+011Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7330], ax
+        add word [SbMixBuffer+011Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7332], ax
+        add word [SbMixBuffer+011Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7334], ax
+        add word [SbMixBuffer+0120h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7336], ax
+        add word [SbMixBuffer+0122h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7338], ax
+        add word [SbMixBuffer+0124h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D733A], ax
+        add word [SbMixBuffer+0126h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D733C], ax
+        add word [SbMixBuffer+0128h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D733E], ax
+        add word [SbMixBuffer+012Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7340], ax
+        add word [SbMixBuffer+012Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7342], ax
+        add word [SbMixBuffer+012Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7344], ax
+        add word [SbMixBuffer+0130h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7346], ax
+        add word [SbMixBuffer+0132h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7348], ax
+        add word [SbMixBuffer+0134h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D734A], ax
+        add word [SbMixBuffer+0136h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D734C], ax
+        add word [SbMixBuffer+0138h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D734E], ax
+        add word [SbMixBuffer+013Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7350], ax
+        add word [SbMixBuffer+013Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7352], ax
+        add word [SbMixBuffer+013Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7354], ax
+        add word [SbMixBuffer+0140h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7356], ax
+        add word [SbMixBuffer+0142h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7358], ax
+        add word [SbMixBuffer+0144h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D735A], ax
+        add word [SbMixBuffer+0146h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D735C], ax
+        add word [SbMixBuffer+0148h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D735E], ax
+        add word [SbMixBuffer+014Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7360], ax
+        add word [SbMixBuffer+014Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7362], ax
+        add word [SbMixBuffer+014Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7364], ax
+        add word [SbMixBuffer+0150h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7366], ax
+        add word [SbMixBuffer+0152h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7368], ax
+        add word [SbMixBuffer+0154h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D736A], ax
+        add word [SbMixBuffer+0156h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D736C], ax
+        add word [SbMixBuffer+0158h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D736E], ax
+        add word [SbMixBuffer+015Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7370], ax
+        add word [SbMixBuffer+015Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7372], ax
+        add word [SbMixBuffer+015Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7374], ax
+        add word [SbMixBuffer+0160h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7376], ax
+        add word [SbMixBuffer+0162h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7378], ax
+        add word [SbMixBuffer+0164h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D737A], ax
+        add word [SbMixBuffer+0166h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D737C], ax
+        add word [SbMixBuffer+0168h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D737E], ax
+        add word [SbMixBuffer+016Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7380], ax
+        add word [SbMixBuffer+016Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7382], ax
+        add word [SbMixBuffer+016Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7384], ax
+        add word [SbMixBuffer+0170h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7386], ax
+        add word [SbMixBuffer+0172h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7388], ax
+        add word [SbMixBuffer+0174h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D738A], ax
+        add word [SbMixBuffer+0176h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D738C], ax
+        add word [SbMixBuffer+0178h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D738E], ax
+        add word [SbMixBuffer+017Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7390], ax
+        add word [SbMixBuffer+017Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7392], ax
+        add word [SbMixBuffer+017Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7394], ax
+        add word [SbMixBuffer+0180h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7396], ax
+        add word [SbMixBuffer+0182h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7398], ax
+        add word [SbMixBuffer+0184h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D739A], ax
+        add word [SbMixBuffer+0186h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D739C], ax
+        add word [SbMixBuffer+0188h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D739E], ax
+        add word [SbMixBuffer+018Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73A0], ax
+        add word [SbMixBuffer+018Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73A2], ax
+        add word [SbMixBuffer+018Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73A4], ax
+        add word [SbMixBuffer+0190h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73A6], ax
+        add word [SbMixBuffer+0192h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73A8], ax
+        add word [SbMixBuffer+0194h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73AA], ax
+        add word [SbMixBuffer+0196h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73AC], ax
+        add word [SbMixBuffer+0198h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73AE], ax
+        add word [SbMixBuffer+019Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73B0], ax
+        add word [SbMixBuffer+019Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73B2], ax
+        add word [SbMixBuffer+019Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73B4], ax
+        add word [SbMixBuffer+01A0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73B6], ax
+        add word [SbMixBuffer+01A2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73B8], ax
+        add word [SbMixBuffer+01A4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73BA], ax
+        add word [SbMixBuffer+01A6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73BC], ax
+        add word [SbMixBuffer+01A8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73BE], ax
+        add word [SbMixBuffer+01AAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73C0], ax
+        add word [SbMixBuffer+01ACh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73C2], ax
+        add word [SbMixBuffer+01AEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73C4], ax
+        add word [SbMixBuffer+01B0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73C6], ax
+        add word [SbMixBuffer+01B2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73C8], ax
+        add word [SbMixBuffer+01B4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73CA], ax
+        add word [SbMixBuffer+01B6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73CC], ax
+        add word [SbMixBuffer+01B8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73CE], ax
+        add word [SbMixBuffer+01BAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73D0], ax
+        add word [SbMixBuffer+01BCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73D2], ax
+        add word [SbMixBuffer+01BEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73D4], ax
+        add word [SbMixBuffer+01C0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73D6], ax
+        add word [SbMixBuffer+01C2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73D8], ax
+        add word [SbMixBuffer+01C4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73DA], ax
+        add word [SbMixBuffer+01C6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73DC], ax
+        add word [SbMixBuffer+01C8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73DE], ax
+        add word [SbMixBuffer+01CAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73E0], ax
+        add word [SbMixBuffer+01CCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73E2], ax
+        add word [SbMixBuffer+01CEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73E4], ax
+        add word [SbMixBuffer+01D0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73E6], ax
+        add word [SbMixBuffer+01D2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73E8], ax
+        add word [SbMixBuffer+01D4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73EA], ax
+        add word [SbMixBuffer+01D6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73EC], ax
+        add word [SbMixBuffer+01D8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73EE], ax
+        add word [SbMixBuffer+01DAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73F0], ax
+        add word [SbMixBuffer+01DCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73F2], ax
+        add word [SbMixBuffer+01DEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73F4], ax
+        add word [SbMixBuffer+01E0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73F6], ax
+        add word [SbMixBuffer+01E2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73F8], ax
+        add word [SbMixBuffer+01E4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73FA], ax
+        add word [SbMixBuffer+01E6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73FC], ax
+        add word [SbMixBuffer+01E8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D73FE], ax
+        add word [SbMixBuffer+01EAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7400], ax
+        add word [SbMixBuffer+01ECh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7402], ax
+        add word [SbMixBuffer+01EEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7404], ax
+        add word [SbMixBuffer+01F0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7406], ax
+        add word [SbMixBuffer+01F2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7408], ax
+        add word [SbMixBuffer+01F4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D740A], ax
+        add word [SbMixBuffer+01F6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D740C], ax
+        add word [SbMixBuffer+01F8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D740E], ax
+        add word [SbMixBuffer+01FAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7410], ax
+        add word [SbMixBuffer+01FCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         xlatb
         cbw
-        add word [word_D7412], ax
+        add word [SbMixBuffer+01FEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         ret
 SbMixAdd8:
         mov al, byte [esi]
         cbw
-        add word [word_D7214], ax
+        add word [SbMixBuffer], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7216], ax
+        add word [SbMixBuffer+02h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7218], ax
+        add word [SbMixBuffer+04h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D721A], ax
+        add word [SbMixBuffer+06h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D721C], ax
+        add word [SbMixBuffer+08h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D721E], ax
+        add word [SbMixBuffer+0Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7220], ax
+        add word [SbMixBuffer+0Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7222], ax
+        add word [SbMixBuffer+0Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7224], ax
+        add word [SbMixBuffer+010h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7226], ax
+        add word [SbMixBuffer+012h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7228], ax
+        add word [SbMixBuffer+014h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D722A], ax
+        add word [SbMixBuffer+016h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D722C], ax
+        add word [SbMixBuffer+018h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D722E], ax
+        add word [SbMixBuffer+01Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7230], ax
+        add word [SbMixBuffer+01Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7232], ax
+        add word [SbMixBuffer+01Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7234], ax
+        add word [SbMixBuffer+020h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7236], ax
+        add word [SbMixBuffer+022h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7238], ax
+        add word [SbMixBuffer+024h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D723A], ax
+        add word [SbMixBuffer+026h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D723C], ax
+        add word [SbMixBuffer+028h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D723E], ax
+        add word [SbMixBuffer+02Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7240], ax
+        add word [SbMixBuffer+02Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7242], ax
+        add word [SbMixBuffer+02Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7244], ax
+        add word [SbMixBuffer+030h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7246], ax
+        add word [SbMixBuffer+032h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7248], ax
+        add word [SbMixBuffer+034h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D724A], ax
+        add word [SbMixBuffer+036h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D724C], ax
+        add word [SbMixBuffer+038h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D724E], ax
+        add word [SbMixBuffer+03Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7250], ax
+        add word [SbMixBuffer+03Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7252], ax
+        add word [SbMixBuffer+03Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7254], ax
+        add word [SbMixBuffer+040h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7256], ax
+        add word [SbMixBuffer+042h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7258], ax
+        add word [SbMixBuffer+044h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D725A], ax
+        add word [SbMixBuffer+046h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D725C], ax
+        add word [SbMixBuffer+048h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D725E], ax
+        add word [SbMixBuffer+04Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7260], ax
+        add word [SbMixBuffer+04Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7262], ax
+        add word [SbMixBuffer+04Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7264], ax
+        add word [SbMixBuffer+050h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7266], ax
+        add word [SbMixBuffer+052h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7268], ax
+        add word [SbMixBuffer+054h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D726A], ax
+        add word [SbMixBuffer+056h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D726C], ax
+        add word [SbMixBuffer+058h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D726E], ax
+        add word [SbMixBuffer+05Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7270], ax
+        add word [SbMixBuffer+05Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7272], ax
+        add word [SbMixBuffer+05Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7274], ax
+        add word [SbMixBuffer+060h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7276], ax
+        add word [SbMixBuffer+062h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7278], ax
+        add word [SbMixBuffer+064h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D727A], ax
+        add word [SbMixBuffer+066h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D727C], ax
+        add word [SbMixBuffer+068h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D727E], ax
+        add word [SbMixBuffer+06Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7280], ax
+        add word [SbMixBuffer+06Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7282], ax
+        add word [SbMixBuffer+06Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7284], ax
+        add word [SbMixBuffer+070h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7286], ax
+        add word [SbMixBuffer+072h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7288], ax
+        add word [SbMixBuffer+074h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D728A], ax
+        add word [SbMixBuffer+076h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D728C], ax
+        add word [SbMixBuffer+078h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D728E], ax
+        add word [SbMixBuffer+07Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7290], ax
+        add word [SbMixBuffer+07Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7292], ax
+        add word [SbMixBuffer+07Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7294], ax
+        add word [SbMixBuffer+080h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7296], ax
+        add word [SbMixBuffer+082h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7298], ax
+        add word [SbMixBuffer+084h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D729A], ax
+        add word [SbMixBuffer+086h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D729C], ax
+        add word [SbMixBuffer+088h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D729E], ax
+        add word [SbMixBuffer+08Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72A0], ax
+        add word [SbMixBuffer+08Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72A2], ax
+        add word [SbMixBuffer+08Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72A4], ax
+        add word [SbMixBuffer+090h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72A6], ax
+        add word [SbMixBuffer+092h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72A8], ax
+        add word [SbMixBuffer+094h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72AA], ax
+        add word [SbMixBuffer+096h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72AC], ax
+        add word [SbMixBuffer+098h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72AE], ax
+        add word [SbMixBuffer+09Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72B0], ax
+        add word [SbMixBuffer+09Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72B2], ax
+        add word [SbMixBuffer+09Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72B4], ax
+        add word [SbMixBuffer+0A0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72B6], ax
+        add word [SbMixBuffer+0A2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72B8], ax
+        add word [SbMixBuffer+0A4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72BA], ax
+        add word [SbMixBuffer+0A6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72BC], ax
+        add word [SbMixBuffer+0A8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72BE], ax
+        add word [SbMixBuffer+0AAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72C0], ax
+        add word [SbMixBuffer+0ACh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72C2], ax
+        add word [SbMixBuffer+0AEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72C4], ax
+        add word [SbMixBuffer+0B0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72C6], ax
+        add word [SbMixBuffer+0B2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72C8], ax
+        add word [SbMixBuffer+0B4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72CA], ax
+        add word [SbMixBuffer+0B6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72CC], ax
+        add word [SbMixBuffer+0B8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72CE], ax
+        add word [SbMixBuffer+0BAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72D0], ax
+        add word [SbMixBuffer+0BCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72D2], ax
+        add word [SbMixBuffer+0BEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72D4], ax
+        add word [SbMixBuffer+0C0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72D6], ax
+        add word [SbMixBuffer+0C2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72D8], ax
+        add word [SbMixBuffer+0C4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72DA], ax
+        add word [SbMixBuffer+0C6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72DC], ax
+        add word [SbMixBuffer+0C8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72DE], ax
+        add word [SbMixBuffer+0CAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72E0], ax
+        add word [SbMixBuffer+0CCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72E2], ax
+        add word [SbMixBuffer+0CEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72E4], ax
+        add word [SbMixBuffer+0D0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72E6], ax
+        add word [SbMixBuffer+0D2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72E8], ax
+        add word [SbMixBuffer+0D4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72EA], ax
+        add word [SbMixBuffer+0D6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72EC], ax
+        add word [SbMixBuffer+0D8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72EE], ax
+        add word [SbMixBuffer+0DAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72F0], ax
+        add word [SbMixBuffer+0DCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72F2], ax
+        add word [SbMixBuffer+0DEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72F4], ax
+        add word [SbMixBuffer+0E0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72F6], ax
+        add word [SbMixBuffer+0E2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72F8], ax
+        add word [SbMixBuffer+0E4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72FA], ax
+        add word [SbMixBuffer+0E6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72FC], ax
+        add word [SbMixBuffer+0E8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D72FE], ax
+        add word [SbMixBuffer+0EAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7300], ax
+        add word [SbMixBuffer+0ECh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7302], ax
+        add word [SbMixBuffer+0EEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7304], ax
+        add word [SbMixBuffer+0F0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7306], ax
+        add word [SbMixBuffer+0F2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7308], ax
+        add word [SbMixBuffer+0F4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D730A], ax
+        add word [SbMixBuffer+0F6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D730C], ax
+        add word [SbMixBuffer+0F8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D730E], ax
+        add word [SbMixBuffer+0FAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7310], ax
+        add word [SbMixBuffer+0FCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7312], ax
+        add word [SbMixBuffer+0FEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7314], ax
+        add word [SbMixBuffer+0100h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7316], ax
+        add word [SbMixBuffer+0102h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7318], ax
+        add word [SbMixBuffer+0104h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D731A], ax
+        add word [SbMixBuffer+0106h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D731C], ax
+        add word [SbMixBuffer+0108h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D731E], ax
+        add word [SbMixBuffer+010Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7320], ax
+        add word [SbMixBuffer+010Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7322], ax
+        add word [SbMixBuffer+010Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7324], ax
+        add word [SbMixBuffer+0110h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7326], ax
+        add word [SbMixBuffer+0112h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7328], ax
+        add word [SbMixBuffer+0114h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D732A], ax
+        add word [SbMixBuffer+0116h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D732C], ax
+        add word [SbMixBuffer+0118h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D732E], ax
+        add word [SbMixBuffer+011Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7330], ax
+        add word [SbMixBuffer+011Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7332], ax
+        add word [SbMixBuffer+011Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7334], ax
+        add word [SbMixBuffer+0120h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7336], ax
+        add word [SbMixBuffer+0122h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7338], ax
+        add word [SbMixBuffer+0124h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D733A], ax
+        add word [SbMixBuffer+0126h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D733C], ax
+        add word [SbMixBuffer+0128h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D733E], ax
+        add word [SbMixBuffer+012Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7340], ax
+        add word [SbMixBuffer+012Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7342], ax
+        add word [SbMixBuffer+012Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7344], ax
+        add word [SbMixBuffer+0130h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7346], ax
+        add word [SbMixBuffer+0132h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7348], ax
+        add word [SbMixBuffer+0134h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D734A], ax
+        add word [SbMixBuffer+0136h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D734C], ax
+        add word [SbMixBuffer+0138h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D734E], ax
+        add word [SbMixBuffer+013Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7350], ax
+        add word [SbMixBuffer+013Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7352], ax
+        add word [SbMixBuffer+013Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7354], ax
+        add word [SbMixBuffer+0140h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7356], ax
+        add word [SbMixBuffer+0142h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7358], ax
+        add word [SbMixBuffer+0144h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D735A], ax
+        add word [SbMixBuffer+0146h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D735C], ax
+        add word [SbMixBuffer+0148h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D735E], ax
+        add word [SbMixBuffer+014Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7360], ax
+        add word [SbMixBuffer+014Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7362], ax
+        add word [SbMixBuffer+014Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7364], ax
+        add word [SbMixBuffer+0150h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7366], ax
+        add word [SbMixBuffer+0152h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7368], ax
+        add word [SbMixBuffer+0154h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D736A], ax
+        add word [SbMixBuffer+0156h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D736C], ax
+        add word [SbMixBuffer+0158h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D736E], ax
+        add word [SbMixBuffer+015Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7370], ax
+        add word [SbMixBuffer+015Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7372], ax
+        add word [SbMixBuffer+015Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7374], ax
+        add word [SbMixBuffer+0160h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7376], ax
+        add word [SbMixBuffer+0162h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7378], ax
+        add word [SbMixBuffer+0164h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D737A], ax
+        add word [SbMixBuffer+0166h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D737C], ax
+        add word [SbMixBuffer+0168h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D737E], ax
+        add word [SbMixBuffer+016Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7380], ax
+        add word [SbMixBuffer+016Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7382], ax
+        add word [SbMixBuffer+016Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7384], ax
+        add word [SbMixBuffer+0170h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7386], ax
+        add word [SbMixBuffer+0172h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7388], ax
+        add word [SbMixBuffer+0174h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D738A], ax
+        add word [SbMixBuffer+0176h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D738C], ax
+        add word [SbMixBuffer+0178h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D738E], ax
+        add word [SbMixBuffer+017Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7390], ax
+        add word [SbMixBuffer+017Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7392], ax
+        add word [SbMixBuffer+017Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7394], ax
+        add word [SbMixBuffer+0180h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7396], ax
+        add word [SbMixBuffer+0182h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7398], ax
+        add word [SbMixBuffer+0184h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D739A], ax
+        add word [SbMixBuffer+0186h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D739C], ax
+        add word [SbMixBuffer+0188h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D739E], ax
+        add word [SbMixBuffer+018Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73A0], ax
+        add word [SbMixBuffer+018Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73A2], ax
+        add word [SbMixBuffer+018Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73A4], ax
+        add word [SbMixBuffer+0190h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73A6], ax
+        add word [SbMixBuffer+0192h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73A8], ax
+        add word [SbMixBuffer+0194h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73AA], ax
+        add word [SbMixBuffer+0196h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73AC], ax
+        add word [SbMixBuffer+0198h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73AE], ax
+        add word [SbMixBuffer+019Ah], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73B0], ax
+        add word [SbMixBuffer+019Ch], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73B2], ax
+        add word [SbMixBuffer+019Eh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73B4], ax
+        add word [SbMixBuffer+01A0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73B6], ax
+        add word [SbMixBuffer+01A2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73B8], ax
+        add word [SbMixBuffer+01A4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73BA], ax
+        add word [SbMixBuffer+01A6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73BC], ax
+        add word [SbMixBuffer+01A8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73BE], ax
+        add word [SbMixBuffer+01AAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73C0], ax
+        add word [SbMixBuffer+01ACh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73C2], ax
+        add word [SbMixBuffer+01AEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73C4], ax
+        add word [SbMixBuffer+01B0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73C6], ax
+        add word [SbMixBuffer+01B2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73C8], ax
+        add word [SbMixBuffer+01B4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73CA], ax
+        add word [SbMixBuffer+01B6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73CC], ax
+        add word [SbMixBuffer+01B8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73CE], ax
+        add word [SbMixBuffer+01BAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73D0], ax
+        add word [SbMixBuffer+01BCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73D2], ax
+        add word [SbMixBuffer+01BEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73D4], ax
+        add word [SbMixBuffer+01C0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73D6], ax
+        add word [SbMixBuffer+01C2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73D8], ax
+        add word [SbMixBuffer+01C4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73DA], ax
+        add word [SbMixBuffer+01C6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73DC], ax
+        add word [SbMixBuffer+01C8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73DE], ax
+        add word [SbMixBuffer+01CAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73E0], ax
+        add word [SbMixBuffer+01CCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73E2], ax
+        add word [SbMixBuffer+01CEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73E4], ax
+        add word [SbMixBuffer+01D0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73E6], ax
+        add word [SbMixBuffer+01D2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73E8], ax
+        add word [SbMixBuffer+01D4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73EA], ax
+        add word [SbMixBuffer+01D6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73EC], ax
+        add word [SbMixBuffer+01D8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73EE], ax
+        add word [SbMixBuffer+01DAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73F0], ax
+        add word [SbMixBuffer+01DCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73F2], ax
+        add word [SbMixBuffer+01DEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73F4], ax
+        add word [SbMixBuffer+01E0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73F6], ax
+        add word [SbMixBuffer+01E2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73F8], ax
+        add word [SbMixBuffer+01E4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73FA], ax
+        add word [SbMixBuffer+01E6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73FC], ax
+        add word [SbMixBuffer+01E8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D73FE], ax
+        add word [SbMixBuffer+01EAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7400], ax
+        add word [SbMixBuffer+01ECh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7402], ax
+        add word [SbMixBuffer+01EEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7404], ax
+        add word [SbMixBuffer+01F0h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7406], ax
+        add word [SbMixBuffer+01F2h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7408], ax
+        add word [SbMixBuffer+01F4h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D740A], ax
+        add word [SbMixBuffer+01F6h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D740C], ax
+        add word [SbMixBuffer+01F8h], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D740E], ax
+        add word [SbMixBuffer+01FAh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7410], ax
+        add word [SbMixBuffer+01FCh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         mov al, byte [esi]
         cbw
-        add word [word_D7412], ax
+        add word [SbMixBuffer+01FEh], ax
         LD add, ecx, edx
         LD adc, esi, edi
         ret
@@ -3493,17 +3456,17 @@ SbMixChannels:
         push edi
         mov ecx, 80h
         LD xor, eax, eax
-        mov edi, word_D7214
+        mov edi, SbMixBuffer
 .1:
         mov dword [edi], eax
         add edi, byte 4
         loop .1
-        cmp byte [byte_D6CE0], 0
+        cmp byte [SbStreamChannels], 0
         je near .19
-        cmp byte [byte_D6CE3], 0
+        cmp byte [SbStreamChannels+03h], 0
         jne near .9
-        mov edx, dword [dword_D6D14]
-        mov eax, dword [dword_D6D18]
+        mov edx, dword [SbStreamChannels+034h]
+        mov eax, dword [SbStreamChannels+038h]
         shl eax, 1
         rcl edx, 1
         shl eax, 1
@@ -3520,180 +3483,180 @@ SbMixChannels:
         rcl edx, 1
         shl eax, 1
         rcl edx, 1
-        add eax, dword [dword_D6D10]
-        adc edx, dword [dword_D6D0C]
-        cmp edx, dword [dword_D6CFC]
+        add eax, dword [SbStreamChannels+030h]
+        adc edx, dword [SbStreamChannels+02Ch]
+        cmp edx, dword [SbStreamChannels+01Ch]
         jae short .4
-        mov eax, dword [dword_D6D0C]
+        mov eax, dword [SbStreamChannels+02Ch]
         LD mov, esi, eax
-        mov dword [dword_D7200], esi
-        mov ecx, dword [dword_D6D10]
-        mov edi, dword [dword_D6D14]
-        mov edx, dword [dword_D6D18]
-        cmp byte [byte_D6CE1], 7Fh
+        mov dword [SbMixSrcPos], esi
+        mov ecx, dword [SbStreamChannels+030h]
+        mov edi, dword [SbStreamChannels+034h]
+        mov edx, dword [SbStreamChannels+038h]
+        cmp byte [SbStreamChannels+01h], 7Fh
         jb short .2
         call SbMixAdd8
         jmp short .3
 .2:
-        mov ebx, byte_D6D24
+        mov ebx, SbStreamChannels+044h
         call SbMixAdd8Vol
 .3:
-        mov dword [dword_D6D10], ecx
-        sub esi, dword [dword_D7200]
-        add dword [dword_D6D0C], esi
+        mov dword [SbStreamChannels+030h], ecx
+        sub esi, dword [SbMixSrcPos]
+        add dword [SbStreamChannels+02Ch], esi
         jmp near .19
 .4:
         LD xor, eax, eax
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
 .5:
-        mov eax, dword [dword_D6D0C]
-        mov ebx, dword [dword_D6CFC]
+        mov eax, dword [SbStreamChannels+02Ch]
+        mov ebx, dword [SbStreamChannels+01Ch]
         LD sub, ebx, eax
-        mov dword [dword_D7204], ebx
+        mov dword [SbMixStep], ebx
         LD mov, esi, eax
-        mov dword [dword_D7200], eax
-        add eax, dword [dword_D7204]
-        mov dword [dword_D7208], eax
-        mov ecx, dword [dword_D6D10]
-        mov edi, dword [dword_D6D14]
-        mov edx, dword [dword_D6D18]
+        mov dword [SbMixSrcPos], eax
+        add eax, dword [SbMixStep]
+        mov dword [SbMixSrcEnd], eax
+        mov ecx, dword [SbStreamChannels+030h]
+        mov edi, dword [SbStreamChannels+034h]
+        mov edx, dword [SbStreamChannels+038h]
         LD xor, eax, eax
 .6:
         mov al, byte [esi]
-        mov ebx, byte_D6D24
+        mov ebx, SbStreamChannels+044h
         xlatb
         cbw
-        mov ebx, dword [dword_D720C]
-        add word [nosplit ebx*2+word_D7214], ax
-        inc dword [dword_D720C]
+        mov ebx, dword [SbMixCount]
+        add word [nosplit ebx*2+SbMixBuffer], ax
+        inc dword [SbMixCount]
         LD add, ecx, edx
         LD adc, esi, edi
-        cmp esi, dword [dword_D7208]
+        cmp esi, dword [SbMixSrcEnd]
         jae short .7
-        cmp dword [dword_D720C], 100h
+        cmp dword [SbMixCount], 100h
         jne short .6
         jmp near .3
 .7:
-        mov al, byte [byte_D6CE0]
+        mov al, byte [SbStreamChannels]
         cmp al, 1
         jne short .8
-        mov eax, dword [dword_D6CE4]
+        mov eax, dword [SbStreamChannels+04h]
         LD or, eax, eax
         je short .8
-        mov eax, dword [dword_D6CF8]
-        mov dword [dword_D6D10], ecx
-        mov dword [dword_D6D0C], eax
-        cmp dword [dword_D720C], 100h
+        mov eax, dword [SbStreamChannels+018h]
+        mov dword [SbStreamChannels+030h], ecx
+        mov dword [SbStreamChannels+02Ch], eax
+        cmp dword [SbMixCount], 100h
         jne near .5
         jmp near .19
 .8:
         mov al, 0
-        mov byte [byte_D6CE0], al
+        mov byte [SbStreamChannels], al
         jmp near .19
 .9:
-        mov esi, dword [dword_D6D0C]
-        mov ecx, dword [dword_D6CFC]
+        mov esi, dword [SbStreamChannels+02Ch]
+        mov ecx, dword [SbStreamChannels+01Ch]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D6D20]
+        cmp ecx, dword [SbStreamChannels+040h]
         jbe short .10
-        mov ecx, dword [dword_D6D20]
+        mov ecx, dword [SbStreamChannels+040h]
 .10:
         LD add, ecx, esi
-        mov dword [dword_D720C], ecx
+        mov dword [SbMixCount], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D6D1E]
+        mov dl, byte [SbStreamChannels+03Eh]
 .11:
-        mov eax, dword [dword_D6D00]
+        mov eax, dword [SbStreamChannels+020h]
         cmp eax, 10000h
         je short .13
         ja near .14
 .12:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6D24]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+044h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D6D24]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+044h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .12
         jmp short .15
 .13:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6D24]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+044h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D6D24]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+044h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .13
         jmp short .15
 .14:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6D24]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+044h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .14
 .15:
-        cmp esi, dword [dword_D6CFC]
+        cmp esi, dword [SbStreamChannels+01Ch]
         je short .16
-        mov byte [byte_D6D1E], dl
-        mov dword [dword_D6D0C], esi
+        mov byte [SbStreamChannels+03Eh], dl
+        mov dword [SbStreamChannels+02Ch], esi
         jmp short .19
 .16:
-        mov al, byte [byte_D6CE0]
+        mov al, byte [SbStreamChannels]
         cmp al, 1
         jne short .18
-        mov eax, dword [dword_D6CE4]
+        mov eax, dword [SbStreamChannels+04h]
         LD or, eax, eax
         je short .18
-        mov dl, byte [byte_D6D1F]
-        mov byte [byte_D6D1E], dl
-        mov eax, dword [dword_D6D0C]
-        add eax, dword [dword_D6D20]
+        mov dl, byte [SbStreamChannels+03Fh]
+        mov byte [SbStreamChannels+03Eh], dl
+        mov eax, dword [SbStreamChannels+02Ch]
+        add eax, dword [SbStreamChannels+040h]
         LD sub, eax, esi
         LD or, eax, eax
         je short .17
-        mov esi, dword [dword_D6CF8]
+        mov esi, dword [SbStreamChannels+018h]
         LD add, eax, esi
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
         jmp near .11
 .17:
-        mov eax, dword [dword_D6CF8]
-        mov dword [dword_D6D0C], eax
+        mov eax, dword [SbStreamChannels+018h]
+        mov dword [SbStreamChannels+02Ch], eax
         jmp short .19
 .18:
         mov al, 0
-        mov byte [byte_D6CE0], al
+        mov byte [SbStreamChannels], al
 .19:
-        cmp byte [byte_D6E24], 0
+        cmp byte [SbStreamChannels+0144h], 0
         je near .37
-        cmp byte [byte_D6E27], 0
+        cmp byte [SbStreamChannels+0147h], 0
         jne near .27
-        mov edx, dword [dword_D6E58]
-        mov eax, dword [dword_D6E5C]
+        mov edx, dword [SbStreamChannels+0178h]
+        mov eax, dword [SbStreamChannels+017Ch]
         shl eax, 1
         rcl edx, 1
         shl eax, 1
@@ -3710,180 +3673,180 @@ SbMixChannels:
         rcl edx, 1
         shl eax, 1
         rcl edx, 1
-        add eax, dword [dword_D6E54]
-        adc edx, dword [dword_D6E50]
-        cmp edx, dword [dword_D6E40]
+        add eax, dword [SbStreamChannels+0174h]
+        adc edx, dword [SbStreamChannels+0170h]
+        cmp edx, dword [SbStreamChannels+0160h]
         jae short .22
-        mov eax, dword [dword_D6E50]
+        mov eax, dword [SbStreamChannels+0170h]
         LD mov, esi, eax
-        mov dword [dword_D7200], esi
-        mov ecx, dword [dword_D6E54]
-        mov edi, dword [dword_D6E58]
-        mov edx, dword [dword_D6E5C]
-        cmp byte [byte_D6E25], 7Fh
+        mov dword [SbMixSrcPos], esi
+        mov ecx, dword [SbStreamChannels+0174h]
+        mov edi, dword [SbStreamChannels+0178h]
+        mov edx, dword [SbStreamChannels+017Ch]
+        cmp byte [SbStreamChannels+0145h], 7Fh
         jb short .20
         call SbMixAdd8
         jmp short .21
 .20:
-        mov ebx, byte_D6E68
+        mov ebx, SbStreamChannels+0188h
         call SbMixAdd8Vol
 .21:
-        mov dword [dword_D6E54], ecx
-        sub esi, dword [dword_D7200]
-        add dword [dword_D6E50], esi
+        mov dword [SbStreamChannels+0174h], ecx
+        sub esi, dword [SbMixSrcPos]
+        add dword [SbStreamChannels+0170h], esi
         jmp near .37
 .22:
         LD xor, eax, eax
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
 .23:
-        mov eax, dword [dword_D6E50]
-        mov ebx, dword [dword_D6E40]
+        mov eax, dword [SbStreamChannels+0170h]
+        mov ebx, dword [SbStreamChannels+0160h]
         LD sub, ebx, eax
-        mov dword [dword_D7204], ebx
+        mov dword [SbMixStep], ebx
         LD mov, esi, eax
-        mov dword [dword_D7200], eax
-        add eax, dword [dword_D7204]
-        mov dword [dword_D7208], eax
-        mov ecx, dword [dword_D6E54]
-        mov edi, dword [dword_D6E58]
-        mov edx, dword [dword_D6E5C]
+        mov dword [SbMixSrcPos], eax
+        add eax, dword [SbMixStep]
+        mov dword [SbMixSrcEnd], eax
+        mov ecx, dword [SbStreamChannels+0174h]
+        mov edi, dword [SbStreamChannels+0178h]
+        mov edx, dword [SbStreamChannels+017Ch]
         LD xor, eax, eax
 .24:
         mov al, byte [esi]
-        mov ebx, byte_D6E68
+        mov ebx, SbStreamChannels+0188h
         xlatb
         cbw
-        mov ebx, dword [dword_D720C]
-        add word [nosplit ebx*2+word_D7214], ax
-        inc dword [dword_D720C]
+        mov ebx, dword [SbMixCount]
+        add word [nosplit ebx*2+SbMixBuffer], ax
+        inc dword [SbMixCount]
         LD add, ecx, edx
         LD adc, esi, edi
-        cmp esi, dword [dword_D7208]
+        cmp esi, dword [SbMixSrcEnd]
         jae short .25
-        cmp dword [dword_D720C], 100h
+        cmp dword [SbMixCount], 100h
         jne short .24
         jmp near .21
 .25:
-        mov al, byte [byte_D6E24]
+        mov al, byte [SbStreamChannels+0144h]
         cmp al, 1
         jne short .26
-        mov eax, dword [dword_D6E28]
+        mov eax, dword [SbStreamChannels+0148h]
         LD or, eax, eax
         je short .26
-        mov eax, dword [dword_D6E3C]
-        mov dword [dword_D6E54], ecx
-        mov dword [dword_D6E50], eax
-        cmp dword [dword_D720C], 100h
+        mov eax, dword [SbStreamChannels+015Ch]
+        mov dword [SbStreamChannels+0174h], ecx
+        mov dword [SbStreamChannels+0170h], eax
+        cmp dword [SbMixCount], 100h
         jne near .23
         jmp near .37
 .26:
         mov al, 0
-        mov byte [byte_D6E24], al
+        mov byte [SbStreamChannels+0144h], al
         jmp near .37
 .27:
-        mov esi, dword [dword_D6E50]
-        mov ecx, dword [dword_D6E40]
+        mov esi, dword [SbStreamChannels+0170h]
+        mov ecx, dword [SbStreamChannels+0160h]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D6E64]
+        cmp ecx, dword [SbStreamChannels+0184h]
         jbe short .28
-        mov ecx, dword [dword_D6E64]
+        mov ecx, dword [SbStreamChannels+0184h]
 .28:
         LD add, ecx, esi
-        mov dword [dword_D720C], ecx
+        mov dword [SbMixCount], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D6E62]
+        mov dl, byte [SbStreamChannels+0182h]
 .29:
-        mov eax, dword [dword_D6E44]
+        mov eax, dword [SbStreamChannels+0164h]
         cmp eax, 10000h
         je short .31
         ja near .32
 .30:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6E68]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0188h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D6E68]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0188h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .30
         jmp short .33
 .31:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6E68]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0188h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D6E68]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0188h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .31
         jmp short .33
 .32:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6E68]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0188h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .32
 .33:
-        cmp esi, dword [dword_D6E40]
+        cmp esi, dword [SbStreamChannels+0160h]
         je short .34
-        mov byte [byte_D6E62], dl
-        mov dword [dword_D6E50], esi
+        mov byte [SbStreamChannels+0182h], dl
+        mov dword [SbStreamChannels+0170h], esi
         jmp short .37
 .34:
-        mov al, byte [byte_D6E24]
+        mov al, byte [SbStreamChannels+0144h]
         cmp al, 1
         jne short .36
-        mov eax, dword [dword_D6E28]
+        mov eax, dword [SbStreamChannels+0148h]
         LD or, eax, eax
         je short .36
-        mov dl, byte [byte_D6E63]
-        mov byte [byte_D6E62], dl
-        mov eax, dword [dword_D6E50]
-        add eax, dword [dword_D6E64]
+        mov dl, byte [SbStreamChannels+0183h]
+        mov byte [SbStreamChannels+0182h], dl
+        mov eax, dword [SbStreamChannels+0170h]
+        add eax, dword [SbStreamChannels+0184h]
         LD sub, eax, esi
         LD or, eax, eax
         je short .35
-        mov esi, dword [dword_D6E3C]
+        mov esi, dword [SbStreamChannels+015Ch]
         LD add, eax, esi
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
         jmp near .29
 .35:
-        mov eax, dword [dword_D6E3C]
-        mov dword [dword_D6E50], eax
+        mov eax, dword [SbStreamChannels+015Ch]
+        mov dword [SbStreamChannels+0170h], eax
         jmp short .37
 .36:
         mov al, 0
-        mov byte [byte_D6E24], al
+        mov byte [SbStreamChannels+0144h], al
 .37:
-        cmp byte [byte_D6F68], 0
+        cmp byte [SbStreamChannels+0288h], 0
         je near .55
-        cmp byte [byte_D6F6B], 0
+        cmp byte [SbStreamChannels+028Bh], 0
         jne near .45
-        mov edx, dword [dword_D6F9C]
-        mov eax, dword [dword_D6FA0]
+        mov edx, dword [SbStreamChannels+02BCh]
+        mov eax, dword [SbStreamChannels+02C0h]
         shl eax, 1
         rcl edx, 1
         shl eax, 1
@@ -3900,180 +3863,180 @@ SbMixChannels:
         rcl edx, 1
         shl eax, 1
         rcl edx, 1
-        add eax, dword [dword_D6F98]
-        adc edx, dword [dword_D6F94]
-        cmp edx, dword [dword_D6F84]
+        add eax, dword [SbStreamChannels+02B8h]
+        adc edx, dword [SbStreamChannels+02B4h]
+        cmp edx, dword [SbStreamChannels+02A4h]
         jae short .40
-        mov eax, dword [dword_D6F94]
+        mov eax, dword [SbStreamChannels+02B4h]
         LD mov, esi, eax
-        mov dword [dword_D7200], esi
-        mov ecx, dword [dword_D6F98]
-        mov edi, dword [dword_D6F9C]
-        mov edx, dword [dword_D6FA0]
-        cmp byte [byte_D6F69], 7Fh
+        mov dword [SbMixSrcPos], esi
+        mov ecx, dword [SbStreamChannels+02B8h]
+        mov edi, dword [SbStreamChannels+02BCh]
+        mov edx, dword [SbStreamChannels+02C0h]
+        cmp byte [SbStreamChannels+0289h], 7Fh
         jb short .38
         call SbMixAdd8
         jmp short .39
 .38:
-        mov ebx, byte_D6FAC
+        mov ebx, SbStreamChannels+02CCh
         call SbMixAdd8Vol
 .39:
-        mov dword [dword_D6F98], ecx
-        sub esi, dword [dword_D7200]
-        add dword [dword_D6F94], esi
+        mov dword [SbStreamChannels+02B8h], ecx
+        sub esi, dword [SbMixSrcPos]
+        add dword [SbStreamChannels+02B4h], esi
         jmp near .55
 .40:
         LD xor, eax, eax
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
 .41:
-        mov eax, dword [dword_D6F94]
-        mov ebx, dword [dword_D6F84]
+        mov eax, dword [SbStreamChannels+02B4h]
+        mov ebx, dword [SbStreamChannels+02A4h]
         LD sub, ebx, eax
-        mov dword [dword_D7204], ebx
+        mov dword [SbMixStep], ebx
         LD mov, esi, eax
-        mov dword [dword_D7200], eax
-        add eax, dword [dword_D7204]
-        mov dword [dword_D7208], eax
-        mov ecx, dword [dword_D6F98]
-        mov edi, dword [dword_D6F9C]
-        mov edx, dword [dword_D6FA0]
+        mov dword [SbMixSrcPos], eax
+        add eax, dword [SbMixStep]
+        mov dword [SbMixSrcEnd], eax
+        mov ecx, dword [SbStreamChannels+02B8h]
+        mov edi, dword [SbStreamChannels+02BCh]
+        mov edx, dword [SbStreamChannels+02C0h]
         LD xor, eax, eax
 .42:
         mov al, byte [esi]
-        mov ebx, byte_D6FAC
+        mov ebx, SbStreamChannels+02CCh
         xlatb
         cbw
-        mov ebx, dword [dword_D720C]
-        add word [nosplit ebx*2+word_D7214], ax
-        inc dword [dword_D720C]
+        mov ebx, dword [SbMixCount]
+        add word [nosplit ebx*2+SbMixBuffer], ax
+        inc dword [SbMixCount]
         LD add, ecx, edx
         LD adc, esi, edi
-        cmp esi, dword [dword_D7208]
+        cmp esi, dword [SbMixSrcEnd]
         jae short .43
-        cmp dword [dword_D720C], 100h
+        cmp dword [SbMixCount], 100h
         jne short .42
         jmp near .39
 .43:
-        mov al, byte [byte_D6F68]
+        mov al, byte [SbStreamChannels+0288h]
         cmp al, 1
         jne short .44
-        mov eax, dword [dword_D6F6C]
+        mov eax, dword [SbStreamChannels+028Ch]
         LD or, eax, eax
         je short .44
-        mov eax, dword [dword_D6F80]
-        mov dword [dword_D6F98], ecx
-        mov dword [dword_D6F94], eax
-        cmp dword [dword_D720C], 100h
+        mov eax, dword [SbStreamChannels+02A0h]
+        mov dword [SbStreamChannels+02B8h], ecx
+        mov dword [SbStreamChannels+02B4h], eax
+        cmp dword [SbMixCount], 100h
         jne near .41
         jmp near .55
 .44:
         mov al, 0
-        mov byte [byte_D6F68], al
+        mov byte [SbStreamChannels+0288h], al
         jmp near .55
 .45:
-        mov esi, dword [dword_D6F94]
-        mov ecx, dword [dword_D6F84]
+        mov esi, dword [SbStreamChannels+02B4h]
+        mov ecx, dword [SbStreamChannels+02A4h]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D6FA8]
+        cmp ecx, dword [SbStreamChannels+02C8h]
         jbe short .46
-        mov ecx, dword [dword_D6FA8]
+        mov ecx, dword [SbStreamChannels+02C8h]
 .46:
         LD add, ecx, esi
-        mov dword [dword_D720C], ecx
+        mov dword [SbMixCount], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D6FA6]
+        mov dl, byte [SbStreamChannels+02C6h]
 .47:
-        mov eax, dword [dword_D6F88]
+        mov eax, dword [SbStreamChannels+02A8h]
         cmp eax, 10000h
         je short .49
         ja near .50
 .48:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6FAC]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+02CCh]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D6FAC]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+02CCh]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .48
         jmp short .51
 .49:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6FAC]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+02CCh]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D6FAC]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+02CCh]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .49
         jmp short .51
 .50:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D6FAC]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+02CCh]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .50
 .51:
-        cmp esi, dword [dword_D6F84]
+        cmp esi, dword [SbStreamChannels+02A4h]
         je short .52
-        mov byte [byte_D6FA6], dl
-        mov dword [dword_D6F94], esi
+        mov byte [SbStreamChannels+02C6h], dl
+        mov dword [SbStreamChannels+02B4h], esi
         jmp short .55
 .52:
-        mov al, byte [byte_D6F68]
+        mov al, byte [SbStreamChannels+0288h]
         cmp al, 1
         jne short .54
-        mov eax, dword [dword_D6F6C]
+        mov eax, dword [SbStreamChannels+028Ch]
         LD or, eax, eax
         je short .54
-        mov dl, byte [byte_D6FA7]
-        mov byte [byte_D6FA6], dl
-        mov eax, dword [dword_D6F94]
-        add eax, dword [dword_D6FA8]
+        mov dl, byte [SbStreamChannels+02C7h]
+        mov byte [SbStreamChannels+02C6h], dl
+        mov eax, dword [SbStreamChannels+02B4h]
+        add eax, dword [SbStreamChannels+02C8h]
         LD sub, eax, esi
         LD or, eax, eax
         je short .53
-        mov esi, dword [dword_D6F80]
+        mov esi, dword [SbStreamChannels+02A0h]
         LD add, eax, esi
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
         jmp near .47
 .53:
-        mov eax, dword [dword_D6F80]
-        mov dword [dword_D6F94], eax
+        mov eax, dword [SbStreamChannels+02A0h]
+        mov dword [SbStreamChannels+02B4h], eax
         jmp short .55
 .54:
         mov al, 0
-        mov byte [byte_D6F68], al
+        mov byte [SbStreamChannels+0288h], al
 .55:
-        cmp byte [byte_D70AC], 0
+        cmp byte [SbStreamChannels+03CCh], 0
         je near .73
-        cmp byte [byte_D70AF], 0
+        cmp byte [SbStreamChannels+03CFh], 0
         jne near .63
-        mov edx, dword [dword_D70E0]
-        mov eax, dword [dword_D70E4]
+        mov edx, dword [SbStreamChannels+0400h]
+        mov eax, dword [SbStreamChannels+0404h]
         shl eax, 1
         rcl edx, 1
         shl eax, 1
@@ -4090,176 +4053,176 @@ SbMixChannels:
         rcl edx, 1
         shl eax, 1
         rcl edx, 1
-        add eax, dword [dword_D70DC]
-        adc edx, dword [dword_D70D8]
-        cmp edx, dword [dword_D70C8]
+        add eax, dword [SbStreamChannels+03FCh]
+        adc edx, dword [SbStreamChannels+03F8h]
+        cmp edx, dword [SbStreamChannels+03E8h]
         jae short .58
-        mov eax, dword [dword_D70D8]
+        mov eax, dword [SbStreamChannels+03F8h]
         LD mov, esi, eax
-        mov dword [dword_D7200], esi
-        mov ecx, dword [dword_D70DC]
-        mov edi, dword [dword_D70E0]
-        mov edx, dword [dword_D70E4]
-        cmp byte [byte_D70AD], 7Fh
+        mov dword [SbMixSrcPos], esi
+        mov ecx, dword [SbStreamChannels+03FCh]
+        mov edi, dword [SbStreamChannels+0400h]
+        mov edx, dword [SbStreamChannels+0404h]
+        cmp byte [SbStreamChannels+03CDh], 7Fh
         jb short .56
         call SbMixAdd8
         jmp short .57
 .56:
-        mov ebx, byte_D70F0
+        mov ebx, SbStreamChannels+0410h
         call SbMixAdd8Vol
 .57:
-        mov dword [dword_D70DC], ecx
-        sub esi, dword [dword_D7200]
-        add dword [dword_D70D8], esi
+        mov dword [SbStreamChannels+03FCh], ecx
+        sub esi, dword [SbMixSrcPos]
+        add dword [SbStreamChannels+03F8h], esi
         jmp near .73
 .58:
         LD xor, eax, eax
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
 .59:
-        mov eax, dword [dword_D70D8]
-        mov ebx, dword [dword_D70C8]
+        mov eax, dword [SbStreamChannels+03F8h]
+        mov ebx, dword [SbStreamChannels+03E8h]
         LD sub, ebx, eax
-        mov dword [dword_D7204], ebx
+        mov dword [SbMixStep], ebx
         LD mov, esi, eax
-        mov dword [dword_D7200], eax
-        add eax, dword [dword_D7204]
-        mov dword [dword_D7208], eax
-        mov ecx, dword [dword_D70DC]
-        mov edi, dword [dword_D70E0]
-        mov edx, dword [dword_D70E4]
+        mov dword [SbMixSrcPos], eax
+        add eax, dword [SbMixStep]
+        mov dword [SbMixSrcEnd], eax
+        mov ecx, dword [SbStreamChannels+03FCh]
+        mov edi, dword [SbStreamChannels+0400h]
+        mov edx, dword [SbStreamChannels+0404h]
         LD xor, eax, eax
 .60:
         mov al, byte [esi]
-        mov ebx, byte_D70F0
+        mov ebx, SbStreamChannels+0410h
         xlatb
         cbw
-        mov ebx, dword [dword_D720C]
-        add word [nosplit ebx*2+word_D7214], ax
-        inc dword [dword_D720C]
+        mov ebx, dword [SbMixCount]
+        add word [nosplit ebx*2+SbMixBuffer], ax
+        inc dword [SbMixCount]
         LD add, ecx, edx
         LD adc, esi, edi
-        cmp esi, dword [dword_D7208]
+        cmp esi, dword [SbMixSrcEnd]
         jae short .61
-        cmp dword [dword_D720C], 100h
+        cmp dword [SbMixCount], 100h
         jne short .60
         jmp near .57
 .61:
-        mov al, byte [byte_D70AC]
+        mov al, byte [SbStreamChannels+03CCh]
         cmp al, 1
         jne short .62
-        mov eax, dword [dword_D70B0]
+        mov eax, dword [SbStreamChannels+03D0h]
         LD or, eax, eax
         je short .62
-        mov eax, dword [dword_D70C4]
-        mov dword [dword_D70DC], ecx
-        mov dword [dword_D70D8], eax
-        cmp dword [dword_D720C], 100h
+        mov eax, dword [SbStreamChannels+03E4h]
+        mov dword [SbStreamChannels+03FCh], ecx
+        mov dword [SbStreamChannels+03F8h], eax
+        cmp dword [SbMixCount], 100h
         jne near .59
         jmp near .73
 .62:
         mov al, 0
-        mov byte [byte_D70AC], al
+        mov byte [SbStreamChannels+03CCh], al
         jmp near .73
 .63:
-        mov esi, dword [dword_D70D8]
-        mov ecx, dword [dword_D70C8]
+        mov esi, dword [SbStreamChannels+03F8h]
+        mov ecx, dword [SbStreamChannels+03E8h]
         LD sub, ecx, esi
-        cmp ecx, dword [dword_D70EC]
+        cmp ecx, dword [SbStreamChannels+040Ch]
         jbe short .64
-        mov ecx, dword [dword_D70EC]
+        mov ecx, dword [SbStreamChannels+040Ch]
 .64:
         LD add, ecx, esi
-        mov dword [dword_D720C], ecx
+        mov dword [SbMixCount], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
-        mov dl, byte [byte_D70EA]
+        mov dl, byte [SbStreamChannels+040Ah]
 .65:
-        mov eax, dword [dword_D70CC]
+        mov eax, dword [SbStreamChannels+03ECh]
         cmp eax, 10000h
         je short .67
         ja near .68
 .66:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D70F0]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0410h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D70F0]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0410h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
-        add word [nosplit ecx*2+word_D7214], ax
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .66
         jmp short .69
 .67:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D70F0]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0410h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
-        movsx ax, byte [dword edx+byte_D70F0]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0410h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .67
         jmp short .69
 .68:
         LD xor, ebx, ebx
         mov bl, byte [esi]
-        mov bx, word [nosplit ebx*2+word_D7414]
+        mov bx, word [nosplit ebx*2+MixVolumeTable]
         LD add, dl, bl
-        movsx ax, byte [dword edx+byte_D70F0]
-        add word [nosplit ecx*2+word_D7214], ax
+        movsx ax, byte [dword edx+SbStreamChannels+0410h]
+        add word [nosplit ecx*2+SbMixBuffer], ax
         inc ecx
         LD add, dl, bh
         inc esi
-        cmp esi, dword [dword_D720C]
+        cmp esi, dword [SbMixCount]
         jb short .68
 .69:
-        cmp esi, dword [dword_D70C8]
+        cmp esi, dword [SbStreamChannels+03E8h]
         je short .70
-        mov byte [byte_D70EA], dl
-        mov dword [dword_D70D8], esi
+        mov byte [SbStreamChannels+040Ah], dl
+        mov dword [SbStreamChannels+03F8h], esi
         jmp short .73
 .70:
-        mov al, byte [byte_D70AC]
+        mov al, byte [SbStreamChannels+03CCh]
         cmp al, 1
         jne short .72
-        mov eax, dword [dword_D70B0]
+        mov eax, dword [SbStreamChannels+03D0h]
         LD or, eax, eax
         je short .72
-        mov dl, byte [byte_D70EB]
-        mov byte [byte_D70EA], dl
-        mov eax, dword [dword_D70D8]
-        add eax, dword [dword_D70EC]
+        mov dl, byte [SbStreamChannels+040Bh]
+        mov byte [SbStreamChannels+040Ah], dl
+        mov eax, dword [SbStreamChannels+03F8h]
+        add eax, dword [SbStreamChannels+040Ch]
         LD sub, eax, esi
         LD or, eax, eax
         je short .71
-        mov esi, dword [dword_D70C4]
+        mov esi, dword [SbStreamChannels+03E4h]
         LD add, eax, esi
-        mov dword [dword_D720C], eax
+        mov dword [SbMixCount], eax
         jmp near .65
 .71:
-        mov eax, dword [dword_D70C4]
-        mov dword [dword_D70D8], eax
+        mov eax, dword [SbStreamChannels+03E4h]
+        mov dword [SbStreamChannels+03F8h], eax
         jmp short .73
 .72:
         mov al, 0
-        mov byte [byte_D70AC], al
+        mov byte [SbStreamChannels+03CCh], al
 .73:
         mov ecx, 100h
-        mov esi, word_D7214
+        mov esi, SbMixBuffer
         call SbConvertMix
         pop edi
         pop esi
@@ -4267,14 +4230,14 @@ SbMixChannels:
         db 00h,00h,00h
 SbDmaHalfReady:
         call SbDmaCount
-        cmp eax, dword [dword_D7A1E]
+        cmp eax, dword [SbDmaHalfSize]
         jge short .1
         LD xor, eax, eax
         jmp short .2
 .1:
-        mov eax, dword [dword_D7A1E]
+        mov eax, dword [SbDmaHalfSize]
 .2:
-        mov ebx, dword [dword_D7614]
+        mov ebx, dword [SbMixReadPos]
         LD cmp, eax, ebx
         je short .3
         mov eax, 1
@@ -4287,9 +4250,9 @@ SbDmaStart:
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+010h]
         shr ebx, 1
-        mov dword [dword_D7A1E], ebx
+        mov dword [SbDmaHalfSize], ebx
         mov ebx, dword [byte ebp+0Ch]
-        mov dword [dword_D7A22], ebx
+        mov dword [SbDmaBuffer], ebx
         push dword [byte ebp+010h]
         push ebx
         push dword [byte ebp+08h]
@@ -4300,13 +4263,13 @@ SbDmaStart:
         cmp eax, byte 0FFFFFFFFh
         je short .1
         mov al, 1
-        mov byte [byte_D7618], al
+        mov byte [SbDmaRunning], al
         LD xor, eax, eax
         leave
         ret
 .1:
         LD xor, eax, eax
-        mov byte [byte_D7618], al
+        mov byte [SbDmaRunning], al
         call SbCardClose
         mov eax, 0FFFFFFFFh
         leave
@@ -4314,10 +4277,10 @@ SbDmaStart:
 SbDmaStop:
         push esi
         pushfw
-        cmp byte [byte_D7618], 0
+        cmp byte [SbDmaRunning], 0
         je short .1
         LD xor, eax, eax
-        mov byte [byte_D7618], al
+        mov byte [SbDmaRunning], al
         call SbCardClose
 .1:
         popfw
@@ -4325,28 +4288,28 @@ SbDmaStop:
         ret
 SbMixPause:
         mov eax, 1
-        mov byte [byte_D7619], al
+        mov byte [SbMixPaused], al
         ret
         LD xor, eax, eax
-        mov byte [byte_D7619], al
+        mov byte [SbMixPaused], al
         ret
 SbConvertMix:
         push esi
         push edi
         cld
-        mov ecx, dword [dword_D7A1E]
-        mov eax, dword [dword_D7614]
-        mov edi, dword [dword_D7A22]
+        mov ecx, dword [SbDmaHalfSize]
+        mov eax, dword [SbMixReadPos]
+        mov edi, dword [SbDmaBuffer]
         LD add, edi, eax
 .1:
         movsx ebx, word [esi]
-        mov al, byte [dword ebx+byte_D781C]
+        mov al, byte [dword ebx+SbSignTable]
         mov byte [edi], al
         add esi, byte 2
         inc edi
         loop .1
-        mov eax, dword [dword_D7A1E]
-        xor dword [dword_D7614], eax
+        mov eax, dword [SbDmaHalfSize]
+        xor dword [SbMixReadPos], eax
         pop edi
         pop esi
         ret

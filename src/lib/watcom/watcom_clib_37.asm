@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D586 progbits alloc exec nowrite align=1
-extern __init_80x87, str_UnknownError, __8087, FpuType, delaycount, __save_8087_, off_D51E4, EmuInitHook
+extern __init_80x87, str_UnknownError, __8087, FpuType, delaycount, __save_8087_, StrErrorTable, EmuInitHook
 extern EmuFiniHook, __save_8087_, _doserrno, ErrnoVar, __no87, DefaultControlWord
 global __init_8087_, _fpreset_, __chk8087_, __delay_init_, __delay_, ErrnoPtr, __get_doserrno_ptr_, strerror_
 __init_8087_:
@@ -127,5 +127,5 @@ strerror_:
         mov eax, str_UnknownError
         ret
 .2:
-        mov eax, dword [nosplit eax*4+off_D51E4]
+        mov eax, dword [nosplit eax*4+StrErrorTable]
         ret

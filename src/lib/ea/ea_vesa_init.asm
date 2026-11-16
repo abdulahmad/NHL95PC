@@ -7,7 +7,7 @@ extern str_InitgraphicsINVALIDSCREEN, str_VESAVideoBiosDriver, byte_EDABB, vesam
 extern MemDescriptors, VesaProbed, ModeWidthTable, ModeHeightTable, GraphicsReady, ViewScreenWidth, ViewScreenHeight, ViewMarginX
 extern ViewMarginY, ViewMaxX, ViewMaxY, ScreenWidth, BackBufferWidth, ScreenBmHeight, ScreenBmClipX0, ScreenBmClipY0
 extern ScreenBmClipX1, ScreenBmClipY1, ScreenBmOffset, ScreenBmRowBytes, ScreenBmPitch, ScreenBmBanked, ScreenRowTable, PutBlockScaleSteps
-extern VesaBank, dword_D4F50, dword_EDABA, vesapresent, ScreenWidthPtr, FatalError, FreeMemBlock, spawnl_
+extern VesaBank, VesaWindowGranularity, dword_EDABA, vesapresent, ScreenWidthPtr, FatalError, FreeMemBlock, spawnl_
 extern strncmp_, MemPtrSize, OpenArtArchiveErr, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
 extern VesaSetBankArg, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
 global ProbeVesa, initgraphics
@@ -193,7 +193,7 @@ initgraphics:
         add esp, byte 4
 .14:
         xor edi, edi
-        mov dword [dword_D4F50], edi
+        mov dword [VesaWindowGranularity], edi
         mov ebx, dword [dword_EDABA]
         sar ebx, 10h
         test ebx, ebx
@@ -202,7 +202,7 @@ initgraphics:
         cmp ebx, byte 40h
         jge short .16
         add ebx, ebx
-        inc dword [dword_D4F50]
+        inc dword [VesaWindowGranularity]
         jmp short .15
 .16:
         xor eax, eax

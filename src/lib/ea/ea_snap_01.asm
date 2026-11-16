@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9D090 progbits alloc exec nowrite align=1
 extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, SnapFormat, ScreenWidth, ScreenHeight
-extern DrawRowBytes, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, AllocMemHandle, PushMemDescriptorLocked
+extern DrawRowBytes, SnapShapeSizes, SnapFileExts, SnapShapeTags, SetDrawBitmap, strncpy_, AllocMemHandle, PushMemDescriptorLocked
 extern MemDescPtr, SetPalette, DrawShapeAtOwnPos, WriteFileQuiet, FindShape, SaveDrawState, RestoreDrawState, SetScreenTarget
 global SnapScreenToShape, SelectBitmap
 SnapScreenToShape:
@@ -45,7 +45,7 @@ SnapScreenToShape:
         add esp, byte 4
         mov dword [dword esp+0B0h], eax
         shl ebp, 2
-        mov edx, dword [dword ebp+off_D518C]
+        mov edx, dword [dword ebp+SnapShapeTags]
         mov ebx, 4
         call strncpy_
         mov eax, dword [dword esp+0B8h]
@@ -86,7 +86,7 @@ SnapScreenToShape:
         push esi
         call FindShape
         add esp, byte 8
-        mov edx, dword [dword ebp+dword_D5184]
+        mov edx, dword [dword ebp+SnapShapeSizes]
         and edx, 0FFh
         mov byte [eax], 0
         mov ebx, dword [eax]
@@ -141,7 +141,7 @@ SnapScreenToShape:
 .7:
         test esi, esi
         jne short .10
-        mov esi, dword [dword ebp+off_D517C]
+        mov esi, dword [dword ebp+SnapFileExts]
         lea edi, [byte esp+060h]
         push edi
         LD sub, ecx, ecx

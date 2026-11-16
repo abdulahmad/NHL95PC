@@ -2,17 +2,16 @@
 bits 32
 %include "hockey.inc"
 section s_9FFCA progbits alloc exec nowrite align=1
-extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI, byte_F5320, byte_F5321
-extern cliprect_x0, cliprect_x1, ScreenWidth, ScreenHeight, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
-extern dword_D53AC, dword_D53B0, GusDriverStreaming, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
-extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
+extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI
+extern cliprect_x0, cliprect_x1, ScreenWidth, ScreenHeight, MidiTickCount, dword_D53A0, dword_D53A4, dword_D53A8
+extern dword_D53AC, dword_D53B0, GusDriverStreaming, dword_D5424, dword_D543C
+extern fputchar
 extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, GetPatchEntry, PrintString
 extern GusReadPatchHeader, GusLoadPatch, GusOpen, GusClose, GusSetMasterVolume, GusMidiNoteOn, GusMidiNoteOff, GusSetChannelPatch
 extern GusDramAlloc, GusDramFreeTotal, GusServiceStream, GusStartStream, GusStopStream, GusStreamStart, GusStreamIdle, GusStreamPlayNote
 extern GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetRate, GusStreamSetSample, GusStreamApplyBend, GusStreamBusy, GusStreamGetVolume
 extern GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController, SetClipWindow, SetBitmapClip, unk_D5382, unk_D5408
-extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, GusDriverBasePort, word_F5324, word_F5326
-extern word_F53B0, word_F53C2, word_F58D2, word_F58D4, word_F58D6
+extern unk_F21FC, GusPatchState, GusDriverBasePort
 global GusAllocDosBuffer, GusFreeDosBuffer, GusLoadMidiPatch, GusStartup, GusDriverClose, GusProbe, GusDetect, GusInitDigi
 global GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack, GusPlayDigi, GusProgramChange
 global GusPitchBend, GusStopVoice, GusStartVoice, GusVoiceStartSample, GusVoiceSetVolume, GusSetVoiceOwner, GusVoiceController, GusMusicMidi
@@ -41,11 +40,11 @@ GusAllocDosBuffer:
         call int386x_
         xor eax, eax
         mov ax, word [byte ebp-030h]
-        mov dword [dword_F55EC], eax
+        mov dword [GusPatchState+01ED0h], eax
         xor eax, eax
         mov ax, word [byte ebp-024h]
-        mov dword [dword_F55F0], eax
-        mov eax, dword [dword_F55EC]
+        mov dword [GusPatchState+01ED4h], eax
+        mov eax, dword [GusPatchState+01ED0h]
         shl eax, 4
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp-04h]
@@ -85,7 +84,7 @@ GusFreeDosBuffer:
         lea eax, [byte ebp-0Ch]
         call memset_
         mov word [byte ebp-028h], 101h
-        mov ax, word [dword_F55F0]
+        mov ax, word [GusPatchState+01ED4h]
         mov word [byte ebp-01Ch], ax
         lea ecx, [byte ebp-0Ch]
         lea ebx, [byte ebp-028h]
@@ -113,9 +112,9 @@ GusLoadMidiPatch:
         mov ebp, esp
         sub esp, 134h
         mov dword [byte ebp-018h], 0
-        mov eax, dword [dword_F55F4]
+        mov eax, dword [GusPatchState+01ED8h]
         mov dword [byte ebp-024h], eax
-        mov eax, dword [dword_F55F4]
+        mov eax, dword [GusPatchState+01ED8h]
         mov dword [byte ebp-020h], eax
         mov dword [byte ebp-04h], 0
 .1:
@@ -127,12 +126,12 @@ GusLoadMidiPatch:
         jmp short .1
 .3:
         imul eax, dword [byte ebp-04h], byte 1Ch
-        mov word [dword eax+word_F371C], 0
+        mov word [dword eax+GusPatchState], 0
         imul eax, dword [byte ebp-04h], byte 1Ch
-        mov dword [dword eax+dword_F371E], 0
+        mov dword [dword eax+GusPatchState+02h], 0
         jmp short .2
 .4:
-        mov cl, byte [dword_F55E4]
+        mov cl, byte [GusPatchState+01EC8h]
         mov eax, 1
         shl eax, cl
         test dword [dword_D543C], eax
@@ -170,14 +169,14 @@ GusLoadMidiPatch:
         mov dword [byte ebp-01Ch], eax
         push dword [byte ebp-018h]
         imul edx, dword [byte ebp-010h], byte 49h
-        mov eax, unk_F55F8
+        mov eax, GusPatchState+01EDCh
         add eax, edx
         push eax
         mov eax, 800h
         push eax
         lea ecx, [byte ebp-024h]
         imul ebx, dword [byte ebp-01Ch], byte 1Ch
-        mov eax, word_F371C
+        mov eax, GusPatchState
         add ebx, eax
         lea edx, [dword ebp-0134h]
         lea eax, [byte ebp-074h]
@@ -185,9 +184,9 @@ GusLoadMidiPatch:
         test eax, eax
         je short .7
         imul eax, dword [byte ebp-01Ch], byte 1Ch
-        mov word [dword eax+word_F371C], 0
+        mov word [dword eax+GusPatchState], 0
         imul eax, dword [byte ebp-01Ch], byte 1Ch
-        mov dword [dword eax+dword_F371E], 0
+        mov dword [dword eax+GusPatchState+02h], 0
         jmp short .8
 .7:
         xor eax, eax
@@ -214,14 +213,14 @@ GusLoadMidiPatch:
         mov eax, dword [dword eax+dword_D5424]
         mov dword [byte ebp-0Ch], eax
         imul eax, dword [byte ebp-08h], byte 1Ch
-        cmp word [dword eax+word_F371C], byte 0
+        cmp word [dword eax+GusPatchState], byte 0
         jne short .11
         mov ebx, 1Ch
         imul edx, dword [byte ebp-0Ch], byte 1Ch
-        mov eax, word_F371C
+        mov eax, GusPatchState
         add edx, eax
         imul eax, dword [byte ebp-08h], byte 1Ch
-        mov ecx, word_F371C
+        mov ecx, GusPatchState
         add eax, ecx
         call memcpy_
 .11:
@@ -254,42 +253,42 @@ GusStartup:
         test ax, ax
         je near .13
         call GusAllocDosBuffer
-        mov dword [dword_F55F4], eax
-        mov word [word_F531C], 1Ch
-        cmp byte [byte_F5320], 7
+        mov dword [GusPatchState+01ED8h], eax
+        mov word [GusPatchState+01C00h], 1Ch
+        cmp byte [GusPatchState+01C04h], 7
         jbe short .2
-        cmp byte [byte_F5321], 7
+        cmp byte [GusPatchState+01C05h], 7
         ja short .1
-        mov al, byte [byte_F5321]
+        mov al, byte [GusPatchState+01C05h]
         mov byte [byte ebp-04h], al
-        mov al, byte [byte_F5320]
-        mov byte [byte_F5321], al
+        mov al, byte [GusPatchState+01C04h]
+        mov byte [GusPatchState+01C05h], al
         mov al, byte [byte ebp-04h]
-        mov byte [byte_F5320], al
+        mov byte [GusPatchState+01C04h], al
         jmp short .2
 .1:
-        mov byte [byte_F5320], 5
+        mov byte [GusPatchState+01C04h], 5
 .2:
-        mov eax, word_F531C
+        mov eax, GusPatchState+01C00h
         call GusOpen
         test eax, eax
         jne near .13
         mov eax, 7Fh
         call GusSetMasterVolume
         mov dword [dword_D53A8], 1
-        mov dword [dword_F55E4], 0
+        mov dword [GusPatchState+01EC8h], 0
         call GusDramFreeTotal
         mov dword [byte ebp-08h], eax
 .3:
         cmp dword [byte ebp-08h], 40000h
         jle short .4
-        inc dword [dword_F55E4]
+        inc dword [GusPatchState+01EC8h]
         sub dword [byte ebp-08h], 40000h
         jmp short .3
 .4:
         mov eax, 801h
         call GusDramAlloc
-        mov dword [dword_F55E8], eax
+        mov dword [GusPatchState+01ECCh], eax
         mov eax, str_ULTRADIR
         call getenv_
         mov dword [byte ebp-010h], eax
@@ -304,13 +303,13 @@ GusStartup:
 .5:
         call GusLoadMidiPatch
         push dword 800h
-        push dword [dword_F55E8]
-        push dword [dword_F55F4]
+        push dword [GusPatchState+01ECCh]
+        push dword [GusPatchState+01ED8h]
         call GusStartStream
         add esp, byte 0Ch
-        mov word [word_F58D4], 0Fh
-        mov word [word_F58D6], 0
-        mov word [word_F58D2], 0
+        mov word [GusPatchState+021B8h], 0Fh
+        mov word [GusPatchState+021BAh], 0
+        mov word [GusPatchState+021B6h], 0
         mov dword [byte ebp-0Ch], 0
 .6:
         cmp dword [byte ebp-0Ch], byte 4
@@ -324,12 +323,12 @@ GusStartup:
         mov eax, 1
         shl eax, cl
         imul edx, dword [byte ebp-0Ch], byte 22h
-        mov word [dword edx+word_F5324], ax
+        mov word [dword edx+GusPatchState+01C08h], ax
         imul edx, dword [byte ebp-0Ch], byte 22h
         mov eax, dword [byte ebp-0Ch]
-        mov word [dword edx+word_F5326], ax
+        mov word [dword edx+GusPatchState+01C0Ah], ax
         imul edx, dword [byte ebp-0Ch], byte 22h
-        mov dword [dword edx+dword_F5332], unk_D5382
+        mov dword [dword edx+GusPatchState+01C16h], unk_D5382
         jmp short .7
 .9:
         mov dword [byte ebp-0Ch], 0
@@ -343,7 +342,7 @@ GusStartup:
 .12:
         imul esi, dword [byte ebp-0Ch], byte 1Eh
         mov ecx, 7
-        lea edi, [dword esi+unk_F53AC]
+        lea edi, [dword esi+GusPatchState+01C90h]
         mov esi, unk_D5382
         rep movsd
         movsw
@@ -412,7 +411,7 @@ GusProbe:
         jne short .4
         cmp dword [dword_D53A0], byte 0
         jne short .2
-        mov eax, word_F531C
+        mov eax, GusPatchState+01C00h
         call GusGetEnvConfig
         test eax, eax
         jne short .1
@@ -450,7 +449,7 @@ GusDetect:
         push ebp
         mov ebp, esp
         sub esp, 4
-        mov eax, word_F531C
+        mov eax, GusPatchState+01C00h
         call GusGetEnvConfig
         test eax, eax
         jne short .1
@@ -459,7 +458,7 @@ GusDetect:
 .1:
         mov dword [dword_D53A0], 1
         xor eax, eax
-        mov al, byte [byte_F5320]
+        mov al, byte [GusPatchState+01C04h]
         shl eax, 10h
         mov edx, eax
         xor eax, eax
@@ -576,12 +575,12 @@ GusService:
         jmp short .1
 .3:
         imul eax, dword [byte ebp-0Ch], byte 22h
-        mov edx, word_F5324
+        mov edx, GusPatchState+01C08h
         add edx, eax
         mov dword [byte ebp-08h], edx
         mov edx, dword [byte ebp-06h]
         sar edx, 10h
-        mov eax, dword [word_F58D2-2]
+        mov eax, dword [GusPatchState+021B6h-2]
         sar eax, 10h
         test edx, eax
         je short .4
@@ -615,7 +614,7 @@ GusService:
         jmp short .8
 .10:
         imul eax, dword [byte ebp-0Ch], byte 16h
-        mov edx, dword_F558C
+        mov edx, GusPatchState+01E70h
         add edx, eax
         mov dword [byte ebp-010h], edx
         mov eax, dword [byte ebp-010h]
@@ -744,7 +743,7 @@ GusSetTrack:
         sar edx, 10h
         imul edx, byte 1Eh
         mov eax, dword [byte ebp+018h]
-        mov word [dword edx+word_F53B0], ax
+        mov word [dword edx+GusPatchState+01C94h], ax
         pop ebp
         pop edi
         pop esi
@@ -797,7 +796,7 @@ GusProgramChange:
         mov eax, dword [byte ebp-0Ah]
         sar eax, 10h
         imul edx, eax, byte 1Eh
-        mov eax, unk_F53AC
+        mov eax, GusPatchState+01C90h
         add eax, edx
         mov dword [byte ebp-0Ch], eax
         xor eax, eax
@@ -862,7 +861,7 @@ GusPitchBend:
         sar edx, 10h
         imul edx, byte 1Eh
         mov eax, dword [byte ebp-04h]
-        mov word [dword edx+word_F53C2], ax
+        mov word [dword edx+GusPatchState+01CA6h], ax
         mov esp, ebp
         pop ebp
         pop edi
@@ -885,7 +884,7 @@ GusStopVoice:
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         imul eax, byte 16h
-        mov edx, dword_F558C
+        mov edx, GusPatchState+01E70h
         add edx, eax
         mov dword [byte ebp-08h], edx
         mov eax, dword [byte ebp-08h]
@@ -982,14 +981,14 @@ GusStartVoice:
         mov eax, dword [byte ebp+010h]
         mov ax, word [eax]
         not eax
-        and word [word_F58D4], ax
+        and word [GusPatchState+021B8h], ax
         mov eax, dword [byte ebp+010h]
         mov ax, word [eax]
-        or word [word_F58D6], ax
+        or word [GusPatchState+021BAh], ax
         mov eax, dword [byte ebp+010h]
         mov ax, word [eax]
         not eax
-        and word [word_F58D2], ax
+        and word [GusPatchState+021B6h], ax
         mov eax, dword [byte ebp+010h]
         mov dx, word [eax]
         mov eax, dword [byte ebp-010h]
@@ -1052,7 +1051,7 @@ GusVoiceStartSample:
         mov eax, dword [byte ebp-0Eh]
         sar eax, 10h
         imul eax, byte 16h
-        mov edx, dword_F558C
+        mov edx, GusPatchState+01E70h
         add edx, eax
         mov dword [byte ebp-018h], edx
         mov eax, dword [byte ebp-014h]
@@ -1112,7 +1111,7 @@ GusVoiceSetVolume:
         mov eax, dword [byte ebp-0Eh]
         sar eax, 10h
         imul eax, byte 16h
-        mov edx, dword_F558C
+        mov edx, GusPatchState+01E70h
         add edx, eax
         mov dword [byte ebp-014h], edx
         mov eax, dword [byte ebp-010h]
@@ -1178,7 +1177,7 @@ GusSetVoiceOwner:
         sar edx, 10h
         imul edx, byte 16h
         mov eax, dword [byte ebp-08h]
-        mov dword [dword edx+dword_F558C], eax
+        mov dword [dword edx+GusPatchState+01E70h], eax
         mov esp, ebp
         pop ebp
         pop edi
@@ -1201,7 +1200,7 @@ GusVoiceController:
         mov eax, dword [byte ebp-0Eh]
         sar eax, 10h
         imul eax, byte 16h
-        mov edx, dword_F558C
+        mov edx, GusPatchState+01E70h
         add edx, eax
         mov dword [byte ebp-010h], edx
         cmp word [byte ebp-04h], byte 7
@@ -1236,10 +1235,10 @@ GusMusicMidi:
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
         mov eax, unk_F21FC
-        mov edx, dword [dword_D4F9A]
+        mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx
-        add dword [dword_D4F9A], byte 4
+        add dword [MidiTickCount], byte 4
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
         cmp dword [dword_D53A8], byte 0
@@ -1357,7 +1356,7 @@ GusMusicMidi:
         and eax, 0FFh
         add eax, 80h
         imul esi, eax, byte 1Ch
-        mov eax, word_F371C
+        mov eax, GusPatchState
         add eax, esi
         call GusMidiNoteOn
         jmp short .14
@@ -1396,7 +1395,7 @@ GusMusicMidi:
         mov al, byte [eax]
         and eax, 0FFh
         imul ebx, eax, byte 1Ch
-        mov eax, word_F371C
+        mov eax, GusPatchState
         add eax, ebx
         call GusSetChannelPatch
 .17:
@@ -1414,7 +1413,7 @@ GusMusicMidi:
 .19:
         jmp near .2
 .20:
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
         mov esp, ebp
         pop ebp
         pop edi
@@ -1436,10 +1435,10 @@ GusDigiMidi:
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
         mov eax, unk_F21FC
-        mov edx, dword [dword_D4F9A]
+        mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx
-        add dword [dword_D4F9A], byte 4
+        add dword [MidiTickCount], byte 4
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
         cmp dword [dword_D53A8], byte 0
@@ -1598,7 +1597,7 @@ GusDigiMidi:
 .17:
         jmp near .2
 .18:
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
         mov esp, ebp
         pop ebp
         pop edi
@@ -1620,7 +1619,7 @@ GusNoteOn:
         mov eax, dword [byte ebp-026h]
         sar eax, 10h
         imul eax, byte 1Eh
-        mov edx, unk_F53AC
+        mov edx, GusPatchState+01C90h
         add edx, eax
         mov dword [byte ebp-030h], edx
         cmp word [byte ebp-024h], byte 9
@@ -1654,7 +1653,7 @@ GusNoteOn:
         jmp near .31
 .6:
         mov dword [byte ebp-08h], 7D00h
-        mov dword [byte ebp-02Ch], word_F5324
+        mov dword [byte ebp-02Ch], GusPatchState+01C08h
         mov dword [byte ebp-010h], 0
         mov dword [byte ebp-014h], 1
 .7:
@@ -1669,12 +1668,12 @@ GusNoteOn:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         imul eax, byte 22h
-        mov edx, word_F5324
+        mov edx, GusPatchState+01C08h
         add edx, eax
         mov dword [byte ebp-034h], edx
         mov edx, dword [byte ebp-016h]
         sar edx, 10h
-        mov eax, dword [word_F58D6-2]
+        mov eax, dword [GusPatchState+021BAh-2]
         sar eax, 10h
         and edx, eax
         mov eax, dword [byte ebp-030h]
@@ -1750,7 +1749,7 @@ GusNoteOn:
         mov edx, dword [byte ebp-030h]
         cmp ax, word [byte edx+08h]
         jge near .25
-        mov ax, word [word_F58D4]
+        mov ax, word [GusPatchState+021B8h]
         mov edx, dword [byte ebp-030h]
         and ax, word [byte edx+04h]
         mov dword [byte ebp-018h], eax
@@ -1776,7 +1775,7 @@ GusNoteOn:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         imul eax, byte 22h
-        mov edx, word_F5324
+        mov edx, GusPatchState+01C08h
         add edx, eax
         mov dword [byte ebp-034h], edx
         push dword [byte ebp-034h]
@@ -1790,7 +1789,7 @@ GusNoteOn:
         call GusStartVoice
         jmp near .31
 .25:
-        mov ax, word [word_F58D2]
+        mov ax, word [GusPatchState+021B6h]
         mov edx, dword [byte ebp-030h]
         and ax, word [byte edx+04h]
         mov dword [byte ebp-01Ch], eax
@@ -1816,7 +1815,7 @@ GusNoteOn:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         imul eax, byte 22h
-        mov edx, word_F5324
+        mov edx, GusPatchState+01C08h
         add edx, eax
         mov dword [byte ebp-034h], edx
         push dword [byte ebp-034h]
@@ -1862,7 +1861,7 @@ GusNoteOff:
         mov eax, dword [byte ebp-016h]
         sar eax, 10h
         imul eax, byte 1Eh
-        mov edx, unk_F53AC
+        mov edx, GusPatchState+01C90h
         add edx, eax
         mov dword [byte ebp-020h], edx
         mov eax, dword [byte ebp-020h]
@@ -1888,7 +1887,7 @@ GusNoteOff:
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         imul eax, byte 22h
-        mov edx, word_F5324
+        mov edx, GusPatchState+01C08h
         add edx, eax
         mov dword [byte ebp-01Ch], edx
         mov eax, dword [byte ebp-020h]
@@ -1911,13 +1910,13 @@ GusNoteOff:
         jmp short .7
 .6:
         mov eax, dword [byte ebp-010h]
-        or word [word_F58D2], ax
+        or word [GusPatchState+021B6h], ax
         mov eax, dword [byte ebp-01Ch]
         sar word [byte eax+06h], 1
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         imul eax, byte 16h
-        mov edx, dword_F558C
+        mov edx, GusPatchState+01E70h
         add edx, eax
         mov dword [byte ebp-018h], edx
         mov eax, dword [byte ebp-018h]
@@ -1959,15 +1958,15 @@ GusFreeVoice:
         mov word [byte eax+06h], 0
         mov eax, dword [byte ebp-04h]
         mov ax, word [eax]
-        or word [word_F58D4], ax
+        or word [GusPatchState+021B8h], ax
         mov eax, dword [byte ebp-04h]
         mov ax, word [eax]
         not eax
-        and word [word_F58D6], ax
+        and word [GusPatchState+021BAh], ax
         mov eax, dword [byte ebp-04h]
         mov ax, word [eax]
         not eax
-        and word [word_F58D2], ax
+        and word [GusPatchState+021B6h], ax
         mov eax, dword [byte ebp-04h]
         mov dx, word [eax]
         not edx
@@ -2003,7 +2002,7 @@ GusController:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         imul eax, byte 1Eh
-        mov edx, unk_F53AC
+        mov edx, GusPatchState+01C90h
         add edx, eax
         mov dword [byte ebp-01Ch], edx
         mov eax, dword [byte ebp-018h]
@@ -2077,7 +2076,7 @@ GusController:
         mov edx, dword [byte ebp-0Ah]
         sar edx, 10h
         imul edx, byte 22h
-        mov edx, dword [dword edx+dword_F532A]
+        mov edx, dword [dword edx+GusPatchState+01C0Eh]
         sar edx, 10h
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
@@ -2110,7 +2109,7 @@ GusController:
         mov eax, dword [byte ebp-0Ah]
         sar eax, 10h
         imul edx, eax, byte 22h
-        mov eax, word_F5324
+        mov eax, GusPatchState+01C08h
         add eax, edx
         call GusFreeVoice
 .17:

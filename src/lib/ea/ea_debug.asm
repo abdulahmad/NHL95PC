@@ -12,7 +12,7 @@ extern str_TIMES3, str_HexmemdspOS, str_XxMMAPTXT, str_ErrorDumpingMemoryMap, st
 extern str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked, str_Packed, str_Unpacked, str_3d3d3d3dS
 extern str_ShapeIsInvalidDraw, str_MEMSHPTXT, str_ErrorDumpingShapesList, str_ShapeFileName0, str_ShapeFileSizeLd, str_NumberOfShapesD, str_44s66ld, str_Bytes3dRows3d2
 extern str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d, asc_C46F8, str_SCREEN2, asc_C470C
-extern str_2d02d02d2, DebugRow, byte_EDE7D, DebugPrintf, StartupCs, StartupDs, MemDescriptors, GraphicsReady
+extern str_2d02d02d2, DebugRow, MemViewAttrFlags, DebugPrintf, StartupCs, StartupDs, MemDescriptors, GraphicsReady
 extern ViewScreenWidth, ViewScreenHeight, DebugMode, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
 extern MemViewRed, MemViewShowDetail, MemViewOpen, MemViewCursor, MemViewRowY, MemViewRowX, PaletteCursorColours, DebugLastKey
 extern dword_EDAB4, MemViewTop, MemViewCount, MemViewSel, MemViewTitle, MemViewRow, MemViewList, MemViewKey
@@ -615,7 +615,7 @@ MemViewerDrawRows:
         cmp esi, 4D00h
         jne short .17
 .16:
-        test byte [byte_EDE7D], 80h
+        test byte [MemViewAttrFlags], 80h
         jne short .17
         mov edx, dword [MemViewPrevSel]
         mov eax, dword [MemViewSel]
@@ -648,7 +648,7 @@ MemViewerDrawRows:
 .22:
         cmp esi, 5300h
         jne short .23
-        test byte [byte_EDE7D], 80h
+        test byte [MemViewAttrFlags], 80h
         jne short .23
         mov ebx, dword [MemViewMode]
         push ebx
@@ -657,7 +657,7 @@ MemViewerDrawRows:
 .23:
         cmp esi, 5200h
         jne short .24
-        test byte [byte_EDE7D], 80h
+        test byte [MemViewAttrFlags], 80h
         jne short .24
         mov edx, dword [MemViewCount]
         mov ebx, 0Ch

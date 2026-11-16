@@ -2,10 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_9D68E progbits alloc exec nowrite align=1
-extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, _STACKLOW
-extern dword_D4F9A, dword_F27F6, GetPatchTimbre, SbNoteOff, SbNoteOn, SbController, SbProgramChange, SbPitchBend
-extern PcSpkHwInit, PcSpkHwClose, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, unk_F21FC, unk_F24D8
-extern unk_F27D8
+extern __GETDS, abs_, byte_D5224, _STACKLOW
+extern MidiTickCount, GetPatchTimbre, SbNoteOff, SbNoteOn, SbController, SbProgramChange, SbPitchBend
+extern PcSpkHwInit, PcSpkHwClose, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, unk_F21FC, PcSpkVoices
 global CMainHook, PcSpkInit, PcSpkClose, PcSpkService, PcSpkNoteOn, PcSpkNoteOff, PcSpkProgramChange, PcSpkUpdateVoices
 global PcSpkTimbreUsable, PcSpkMidi, SbMidi
 CMainHook:
@@ -25,7 +24,7 @@ PcSpkInit:
         sub edx, ebx
         shl edx, 4
         xor bl, bl
-        mov byte [dword edx+byte_F24D9], bl
+        mov byte [dword edx+PcSpkVoices+01h], bl
         inc eax
 .2:
         cmp ax, 10h
@@ -37,8 +36,8 @@ PcSpkInit:
         movsx edx, ax
         imul edx, byte 4Eh
         xor bh, bh
-        mov byte [dword edx+byte_F27EE], bh
-        mov byte [dword edx+byte_F27EF], cl
+        mov byte [dword edx+PcSpkVoices+0316h], bh
+        mov byte [dword edx+PcSpkVoices+0317h], cl
         inc eax
 .4:
         cmp ax, 18h
@@ -65,7 +64,7 @@ PcSpkNoteOn:
         xor eax, eax
         mov al, byte [byte esp+0Ch]
         imul eax, byte 4Eh
-        mov esi, unk_F27D8
+        mov esi, PcSpkVoices+0300h
         add esi, eax
         cmp byte [byte esp+0Ch], 9
         je short .1
@@ -93,7 +92,7 @@ PcSpkNoteOn:
         shl eax, 2
         sub eax, ebx
         shl eax, 4
-        add eax, unk_F24D8
+        add eax, PcSpkVoices
         mov dword [byte eax+010h], edx
         mov bl, byte [byte esp+0Ch]
         mov byte [eax], bl
@@ -146,7 +145,7 @@ PcSpkNoteOff:
         call __GETDS
         mov bh, byte [byte esp+08h]
         mov bl, byte [byte esp+0Ch]
-        mov eax, unk_F24D8
+        mov eax, PcSpkVoices
         xor edx, edx
         jmp short .3
 .1:
@@ -168,7 +167,7 @@ PcSpkNoteOff:
         xor edx, edx
         mov dl, byte [eax]
         imul edx, byte 4Eh
-        cmp byte [dword edx+byte_F27FD], 0
+        cmp byte [dword edx+PcSpkVoices+0325h], 0
         je short .5
         mov byte [byte eax+016h], 3
         pop ds
@@ -190,7 +189,7 @@ PcSpkProgramChange:
         xor eax, eax
         mov al, byte [byte esp+08h]
         imul eax, byte 4Eh
-        mov dword [dword eax+dword_F27F6], edx
+        mov dword [dword eax+PcSpkVoices+031Eh], edx
         pop ds
         ret
 PcSpkUpdateVoices:
@@ -200,7 +199,7 @@ PcSpkUpdateVoices:
         push esi
         push edi
         sub esp, byte 4
-        mov esi, unk_F24D8
+        mov esi, PcSpkVoices
         xor edx, edx
         mov dword [esp], edx
         jmp near .17
@@ -258,7 +257,7 @@ PcSpkUpdateVoices:
         xor eax, eax
         mov al, byte [esi]
         imul eax, byte 4Eh
-        dec byte [dword eax+byte_F27EE]
+        dec byte [dword eax+PcSpkVoices+0316h]
         xor eax, eax
         mov al, byte [byte esi+02Eh]
         push eax
@@ -411,10 +410,10 @@ PcSpkMidi:
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
         mov eax, unk_F21FC
-        mov edx, dword [dword_D4F9A]
+        mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-028h], edx
-        add dword [dword_D4F9A], byte 4
+        add dword [MidiTickCount], byte 4
         mov eax, dword [byte ebp-028h]
         mov dword [byte ebp-02Ch], eax
         mov eax, dword [byte ebp+018h]
@@ -567,7 +566,7 @@ PcSpkMidi:
 .17:
         jmp near .2
 .18:
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
         mov esp, ebp
         pop ebp
         pop edi
@@ -587,10 +586,10 @@ SbMidi:
         mov byte [byte ebp-0Ch], 0
         mov dword [byte ebp-014h], 0
         mov eax, unk_F21FC
-        mov edx, dword [dword_D4F9A]
+        mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx
-        add dword [dword_D4F9A], byte 4
+        add dword [MidiTickCount], byte 4
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-018h], eax
         mov eax, dword [byte ebp+018h]
@@ -747,7 +746,7 @@ SbMidi:
 .17:
         jmp near .2
 .18:
-        sub dword [dword_D4F9A], byte 4
+        sub dword [MidiTickCount], byte 4
         mov esp, ebp
         pop ebp
         pop edi

@@ -2,12 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_9F226 progbits alloc exec nowrite align=1
-extern __GETDS, str_BLASTER, dword_D524C, SbDmaAlloc, SbDma, dword_F3462, dword_F34DC, getenv_
+extern __GETDS, str_BLASTER, dword_D524C, SbDmaAlloc, SbDma, SbVoiceSample, getenv_
 extern int386x_, memset_, outp_, GetPatchEntry, strtoul_, SbMixRateDiv, SbMixerOpen, SbMixerClose
 extern SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetRate, SbStreamSetSample, SbStreamStart, SbStreamIdle
 extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, SbSetStereo, unk_D522E, unk_D5254, SbIrq
-extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
-extern word_F3718
+extern SbChanRecords, SbMidiVoices, SbVoiceRate, SbChanVolume, SbChanTrack, SbChanBend
 global ParseBlasterEnv, ParseHexValue, SbPopArgsReturn, SbOpen, SbInit, SbClose, SbService, SbQuery
 global SbSetTrack, SbPlayDigi, SbNoteOff, SbNoteOn, SbStartVoice, SbVoiceStartSample, SbVoiceSetVolume, SbController
 global SbVoiceController, SbSetVoiceOwner, SbFreeVoice, SbStopVoice, SbProgramChange, SbPitchBend, SbAllocDosBuffer, SbFreeDosBuffer
@@ -198,10 +197,10 @@ SbInit:
         push edi
         cmp dword [SbDmaAlloc], byte 0
         je short .3
-        mov word [word_F3716], 0Fh
+        mov word [SbMidiVoices+02C2h], 0Fh
         xor ebx, ebx
-        mov word [word_F3718], bx
-        mov word [word_F3714], bx
+        mov word [SbMidiVoices+02C4h], bx
+        mov word [SbMidiVoices+02C0h], bx
         xor eax, eax
         mov ebx, unk_D522E
 .1:
@@ -212,9 +211,9 @@ SbInit:
         mov edx, eax
         shl edx, 4
         add edx, eax
-        mov word [nosplit edx*2+word_F3454], cx
-        mov word [nosplit edx*2+word_F3456], ax
-        mov dword [nosplit edx*2+dword_F3462], ebx
+        mov word [nosplit edx*2+SbMidiVoices], cx
+        mov word [nosplit edx*2+SbVoiceRate], ax
+        mov dword [nosplit edx*2+SbVoiceSample], ebx
         inc eax
         cmp eax, byte 4
         jl short .1
@@ -224,7 +223,7 @@ SbInit:
         shl edx, 4
         sub edx, eax
         mov ecx, 7
-        lea edi, [nosplit edx*2+unk_F3534]
+        lea edi, [nosplit edx*2+SbChanRecords]
         mov esi, unk_D522E
         rep movsd
         movsw
@@ -263,9 +262,9 @@ SbService:
         shl esi, 4
         add esi, edi
         add esi, esi
-        add esi, word_F3454
+        add esi, SbMidiVoices
         movsx edx, word [esp]
-        movsx eax, word [word_F3714]
+        movsx eax, word [SbMidiVoices+02C0h]
         test edx, eax
         je short .2
         push edi
@@ -297,7 +296,7 @@ SbService:
         jmp short .8
 .6:
         imul esi, edi, byte 16h
-        add esi, dword_F34DC
+        add esi, SbMidiVoices+088h
         cmp word [byte esi+0Ah], byte 0
         je short .7
         mov eax, dword [esi]
@@ -399,7 +398,7 @@ SbSetTrack:
         shl eax, 4
         sub eax, edx
         mov edx, dword [byte esp+0Ch]
-        mov word [nosplit eax*2+word_F3538], dx
+        mov word [nosplit eax*2+SbChanTrack], dx
         pop ds
         ret
 SbPlayDigi:
@@ -444,7 +443,7 @@ SbNoteOff:
         shl eax, 4
         sub eax, ecx
         add eax, eax
-        mov edi, unk_F3534
+        mov edi, SbChanRecords
         add edi, eax
         mov ax, word [edi]
         mov dword [byte esp+04h], eax
@@ -461,7 +460,7 @@ SbNoteOff:
         shl eax, 4
         add eax, esi
         add eax, eax
-        add eax, word_F3454
+        add eax, SbMidiVoices
         cmp edi, dword [byte eax+0Eh]
         jne short .3
         mov ecx, dword [esp]
@@ -472,10 +471,10 @@ SbNoteOff:
         or word [byte edi+02h], bx
         jmp short .5
 .2:
-        or word [word_F3714], bx
+        or word [SbMidiVoices+02C0h], bx
         sar word [byte eax+06h], 1
         imul eax, esi, byte 16h
-        add eax, dword_F34DC
+        add eax, SbMidiVoices+088h
         mov word [byte eax+0Ah], 1
         cmp dx, byte 1
         jle short .5
@@ -510,7 +509,7 @@ SbNoteOn:
         shl edx, 4
         sub edx, eax
         add edx, edx
-        mov ecx, unk_F3534
+        mov ecx, SbChanRecords
         add ecx, edx
         cmp si, byte 9
         jne short .1
@@ -533,7 +532,7 @@ SbNoteOn:
         cmp word [byte ecx+08h], byte 0
         je near .17
         mov edi, 7D00h
-        mov dword [byte esp+04h], word_F3454
+        mov dword [byte esp+04h], SbMidiVoices
         xor ebx, ebx
         mov eax, 1
         jmp near .6
@@ -543,10 +542,10 @@ SbNoteOn:
         shl edx, 4
         add edx, esi
         add edx, edx
-        add edx, word_F3454
+        add edx, SbMidiVoices
         movsx esi, ax
         mov dword [esp], esi
-        movsx esi, word [word_F3718]
+        movsx esi, word [SbMidiVoices+02C4h]
         and esi, dword [esp]
         movsx ebp, word [byte ecx+04h]
         test esi, ebp
@@ -593,7 +592,7 @@ SbNoteOn:
 .8:
         cmp bx, word [byte ecx+08h]
         jge short .12
-        mov ax, word [word_F3716]
+        mov ax, word [SbMidiVoices+02C2h]
         and ax, word [byte ecx+04h]
         je short .12
         mov edx, eax
@@ -613,13 +612,13 @@ SbNoteOn:
         shl edx, 4
         add edx, eax
         add edx, edx
-        add edx, word_F3454
+        add edx, SbMidiVoices
         push edx
         movsx ebx, word [byte esp+010h]
         movsx edx, word [byte esp+0Ch]
         jmp short .16
 .12:
-        mov ax, word [word_F3714]
+        mov ax, word [SbMidiVoices+02C0h]
         and ax, word [byte ecx+04h]
         je short .15
         mov edx, eax
@@ -693,12 +692,12 @@ SbStartVoice:
         mov word [byte esi+0Ah], ax
         mov ax, word [esi]
         not eax
-        and word [word_F3716], ax
+        and word [SbMidiVoices+02C2h], ax
         mov ax, word [esi]
-        or word [word_F3718], ax
+        or word [SbMidiVoices+02C4h], ax
         mov ax, word [esi]
         not eax
-        and word [word_F3714], ax
+        and word [SbMidiVoices+02C0h], ax
         mov ax, word [esi]
         or word [edi], ax
         mov ax, word [esi]
@@ -733,7 +732,7 @@ SbVoiceStartSample:
         mov edi, edx
         movsx ebp, ax
         imul esi, ebp, byte 16h
-        add esi, dword_F34DC
+        add esi, SbMidiVoices+088h
         mov dword [byte esi+04h], edx
         mov word [byte esi+012h], bx
         mov word [byte esi+010h], cx
@@ -767,7 +766,7 @@ SbVoiceSetVolume:
         mov ecx, eax
         cwde
         imul eax, byte 16h
-        add eax, dword_F34DC
+        add eax, SbMidiVoices+088h
         mov word [byte eax+0Ch], dx
         mov word [byte eax+0Eh], dx
         mov word [byte eax+0Ah], 3
@@ -801,7 +800,7 @@ SbController:
         shl eax, 4
         sub eax, edx
         add eax, eax
-        mov ebx, unk_F3534
+        mov ebx, SbChanRecords
         add ebx, eax
         mov edx, dword [byte esp+04h]
         cmp dx, byte 0Ah
@@ -852,7 +851,7 @@ SbController:
         mov eax, edx
         shl eax, 4
         add eax, edx
-        movsx edx, word [nosplit eax*2+word_F345C]
+        movsx edx, word [nosplit eax*2+SbChanVolume]
         movsx eax, word [byte esp+08h]
         call SbNoteOff
 .7:
@@ -877,7 +876,7 @@ SbController:
         shl eax, 4
         add eax, edx
         add eax, eax
-        add eax, word_F3454
+        add eax, SbMidiVoices
         call SbFreeVoice
 .11:
         add esi, esi
@@ -922,7 +921,7 @@ SbVoiceController:
 SbSetVoiceOwner:
         cwde
         imul eax, byte 16h
-        mov dword [dword eax+dword_F34DC], edx
+        mov dword [dword eax+SbMidiVoices+088h], edx
         ret
 SbFreeVoice:
         push ebx
@@ -932,13 +931,13 @@ SbFreeVoice:
         call SbStopVoice
         mov word [byte edx+06h], 0
         mov ax, word [edx]
-        or word [word_F3716], ax
+        or word [SbMidiVoices+02C2h], ax
         mov ax, word [edx]
         not eax
-        and word [word_F3718], ax
+        and word [SbMidiVoices+02C4h], ax
         mov ax, word [edx]
         not eax
-        and word [word_F3714], ax
+        and word [SbMidiVoices+02C0h], ax
         mov bx, word [edx]
         not ebx
         mov eax, dword [byte edx+0Eh]
@@ -956,7 +955,7 @@ SbStopVoice:
         push edx
         cwde
         imul edx, eax, byte 16h
-        add edx, dword_F34DC
+        add edx, SbMidiVoices+088h
         mov word [byte edx+0Ah], 0
         push eax
         call SbStreamStop
@@ -978,7 +977,7 @@ SbProgramChange:
         shl esi, 4
         sub esi, eax
         add esi, esi
-        add esi, unk_F3534
+        add esi, SbChanRecords
         xor eax, eax
         mov al, byte [esp]
         push eax
@@ -1020,7 +1019,7 @@ SbPitchBend:
         mov eax, edx
         shl eax, 4
         sub eax, edx
-        mov word [nosplit eax*2+word_F354A], bx
+        mov word [nosplit eax*2+SbChanBend], bx
         pop ebx
         ret
 SbAllocDosBuffer:

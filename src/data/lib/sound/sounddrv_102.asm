@@ -2,130 +2,83 @@
 bits 32
 %include "hockey.inc"
 section s_F24D8 nobits alloc noexec write align=1
-global byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, byte_F2F42, byte_F2F43, byte_F3196, byte_F3197
-global byte_F5320, byte_F5321, byte_F5978, byte_F5979, byte_F597A, byte_F59F8, byte_F59F9, byte_F5A00
-global byte_F5A01, byte_F5A04, byte_F5C0B, dword_F27F6, dword_F2F28, dword_F3108, dword_F3462, dword_F34DC
-global dword_F371E, dword_F532A, dword_F5332, dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0
-global dword_F55F4, dword_F58D0, CMainArgc, CMainArgv, RationalAllocLimit, dword_F59FC, dword_F6016, dword_F6116
-global GusEnvConfig, unk_F24D8, unk_F27D8, unk_F3148, unk_F3534, unk_F53AC, unk_F55F8, Hook387Save
-global unk_F5BF8, word_F2F3C, word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450
-global word_F3452, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
-global word_F3718, word_F371C, word_F531C, GusDriverBasePort, word_F5324, word_F5326, word_F53B0, word_F53C2
-global word_F58D2, word_F58D4, word_F58D6, RationalAllocFlags, word_F59FA, word_F6018, word_F6118, word_F611A
+global GusMidiVoices, GusMidiVoiceNote, GusMidiVoiceVelocity
+global GusWaveVoiceFlags, AdlibVoices, AdlibChanState, SbVoiceSample
+global CMainArgc, CMainArgv, RationalAllocLimit
+global GusEnvConfig, PcSpkVoices, SbChanRecords, Hook387Save
+global GusWaveVoices
+global SbMidiVoices, SbVoiceRate, SbChanVolume, SbChanTrack, SbChanBend
+global GusPatchState, GusDriverBasePort
+global RationalAllocFlags
 global GusDramSize
-unk_F24D8:
+PcSpkVoices:
         resb 1
-byte_F24D9:
         resb 767
-unk_F27D8:
         resb 22
-byte_F27EE:
         resb 1
-byte_F27EF:
         resb 7
-dword_F27F6:
         resb 7
-byte_F27FD:
         resb 1835
-dword_F2F28:
+AdlibVoices:
         resb 20
-word_F2F3C:
         resb 2
-word_F2F3E:
         resb 2
-word_F2F40:
         resb 2
-byte_F2F42:
         resb 1
-byte_F2F43:
         resb 1
-word_F2F44:
         resb 452
-dword_F3108:
+AdlibChanState:
         resb 64
-unk_F3148:
         resb 8
-word_F3150:
         resb 70
-byte_F3196:
         resb 1
-byte_F3197:
         resb 695
-word_F344E:
         resb 2
-word_F3450:
         resb 2
-word_F3452:
         resb 2
-word_F3454:
+SbMidiVoices:
         resb 2
-word_F3456:
+SbVoiceRate:
         resb 6
-word_F345C:
+SbChanVolume:
         resb 6
-dword_F3462:
+SbVoiceSample:
         resb 122
-dword_F34DC:
         resb 88
-unk_F3534:
+SbChanRecords:
         resb 4
-word_F3538:
+SbChanTrack:
         resb 18
-word_F354A:
+SbChanBend:
         resb 458
-word_F3714:
         resb 2
-word_F3716:
         resb 2
-word_F3718:
         resb 4
-word_F371C:
+GusPatchState:
         resb 2
-dword_F371E:
         resb 7166
-word_F531C:
         resb 2
 GusDriverBasePort:
         resb 2
-byte_F5320:
         resb 1
-byte_F5321:
         resb 3
-word_F5324:
         resb 2
-word_F5326:
         resb 4
-dword_F532A:
         resb 8
-dword_F5332:
         resb 122
-unk_F53AC:
         resb 4
-word_F53B0:
         resb 18
-word_F53C2:
         resb 458
-dword_F558C:
         resb 88
-dword_F55E4:
         resb 4
-dword_F55E8:
         resb 4
-dword_F55EC:
         resb 4
-dword_F55F0:
         resb 4
-dword_F55F4:
         resb 4
-unk_F55F8:
         resb 728
-dword_F58D0:
         resb 2
-word_F58D2:
         resb 2
-word_F58D4:
         resb 2
-word_F58D6:
         resb 2
 CMainArgc:
         resb 4
@@ -137,39 +90,27 @@ RationalAllocFlags:
         resb 2
 Hook387Save:
         resb 148
-byte_F5978:
+GusMidiVoices:
         resb 1
-byte_F5979:
+GusMidiVoiceNote:
         resb 1
-byte_F597A:
+GusMidiVoiceVelocity:
         resb 126
-byte_F59F8:
         resb 1
-byte_F59F9:
         resb 1
-word_F59FA:
         resb 2
-dword_F59FC:
         resb 4
-byte_F5A00:
         resb 1
-byte_F5A01:
         resb 3
-byte_F5A04:
         resb 500
-unk_F5BF8:
+GusWaveVoices:
         resb 19
-byte_F5C0B:
+GusWaveVoiceFlags:
         resb 1035
-dword_F6016:
         resb 2
-word_F6018:
         resb 254
-dword_F6116:
         resb 2
-word_F6118:
         resb 2
-word_F611A:
         resb 14
 GusDramSize:
         resb 4

@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_AF6D3 progbits alloc exec nowrite align=1
 extern __set_doserrno_, __set_errno_, _dosretax_, _nfree_, _nmalloc_, dword_D4D00, _Envptr, _environ
-extern ___env_mask, __amblksiz, dword_D8690, dword_D8696, dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC
-extern dword_D86B0, memset_, strcpy_, strlen_, _Envptr_w4, word_D8694, word_D869A, word_D86A0
-extern word_D86A6, word_D86B4, word_D86B6
+extern ___env_mask, __amblksiz, ExecParamBlock
+extern SpawnSavedEsp, memset_, strcpy_, strlen_, _Envptr_w4
+extern SpawnSavedSs, SpawnSavedDs
 global __setenvp_, stpcpy_, __cenvarg_, __ccmdline_, __dospawn, pcopy_, _splitpath2_
 __setenvp_:
         push ebx
@@ -291,28 +291,28 @@ __dospawn:
         mov ax, ss
         mov ds, eax
         mov eax, dword [byte ebp+014h]
-        mov dword [dword_D8690], eax
-        o16 mov word [word_D8694], ds
+        mov dword [ExecParamBlock], eax
+        o16 mov word [ExecParamBlock+04h], ds
         sub eax, eax
-        mov dword [dword_D869C], eax
-        mov dword [dword_D86A2], eax
-        mov word [word_D86A0], ax
-        mov word [word_D86A6], ax
-        mov dword [dword_D86A8], eax
-        mov dword [dword_D86AC], eax
+        mov dword [ExecParamBlock+0Ch], eax
+        mov dword [ExecParamBlock+012h], eax
+        mov word [ExecParamBlock+010h], ax
+        mov word [ExecParamBlock+016h], ax
+        mov dword [ExecParamBlock+018h], eax
+        mov dword [ExecParamBlock+01Ch], eax
         mov eax, dword [byte ebp+010h]
-        mov dword [dword_D8696], eax
-        o16 mov word [word_D869A], ds
+        mov dword [ExecParamBlock+06h], eax
+        o16 mov word [ExecParamBlock+0Ah], ds
         push ds
         pop es
         push ebp
         push es
         push ds
-        o16 mov word [word_D86B4], ss
-        mov dword [dword_D86B0], esp
-        o16 mov word [word_D86B6], ds
+        o16 mov word [SpawnSavedSs], ss
+        mov dword [SpawnSavedEsp], esp
+        o16 mov word [SpawnSavedDs], ds
         db 03Eh,0BBh                            ; insn: mov ebx,18690h
-        dd dword_D8690
+        dd ExecParamBlock
         cmp dword [byte ebp+08h], byte 1
         jne short .1
         mov al, 4
@@ -330,9 +330,9 @@ __dospawn:
         mov edx, dword [byte ebp+0Ch]
         mov ah, 4Bh
         int 21h
-        o16 mov ss, word [word_D86B4]
-        mov esp, dword [dword_D86B0]
-        o16 mov ds, word [word_D86B6]
+        o16 mov ss, word [SpawnSavedSs]
+        mov esp, dword [SpawnSavedEsp]
+        o16 mov ds, word [SpawnSavedDs]
         pop ds
         mov dword [dword_D4D00], 0
         pop es

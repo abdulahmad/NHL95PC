@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_97300 progbits alloc exec nowrite align=1
-extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, dword_EDEE0, dword_EDEE4, UnpackSrcPtr, dword_EDEEC, UnpackPairState
-extern dword_EDEF4, dword_EDEF8, FatalError, UnpackedSizeHook, UnpackHook, strncmp_, bcopy
+extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, HuffBitBuffer, HuffBitCount, UnpackSrcPtr, BytePairSrc, UnpackPairState
+extern BytePairDst, BytePairStack, FatalError, UnpackedSizeHook, UnpackHook, strncmp_, bcopy
 global SkipCopyrightHeader, UnpackReadBE, PackedTypeOf, UnpackedSize, HuffGetBits, HuffGetLength, UnpackHuffman, ExpandBytePair
 global UnpackBytePair, UnpackDelta, UnpackRunLength, UnpackRefPack, unpack, UnpackTo, UnpackQuiet
 SkipCopyrightHeader:
@@ -400,8 +400,8 @@ HuffGetBits:
         push edi
         push ebp
         sub esp, byte 4
-        mov esi, dword [dword_EDEE0]
-        mov edi, dword [dword_EDEE4]
+        mov esi, dword [HuffBitBuffer]
+        mov edi, dword [HuffBitCount]
         mov ebp, dword [UnpackPairState]
         cmp eax, byte 10h
         jle short .1
@@ -440,11 +440,11 @@ HuffGetBits:
         jg short .2
 .3:
         mov eax, dword [esp]
-        mov dword [dword_EDEE0], esi
-        mov dword [dword_EDEE4], edi
+        mov dword [HuffBitBuffer], esi
+        mov dword [HuffBitCount], edi
         mov dword [UnpackPairState], ebp
 .4:
-        mov esi, dword [dword_EDEE0]
+        mov esi, dword [HuffBitBuffer]
         add esp, byte 4
         pop ebp
         pop edi
@@ -503,8 +503,8 @@ UnpackHuffman:
 .1:
         and byte [dword esp+02CDh], 0FEh
         xor esi, esi
-        mov dword [dword_EDEE0], esi
-        mov dword [dword_EDEE4], esi
+        mov dword [HuffBitBuffer], esi
+        mov dword [HuffBitCount], esi
         xor eax, eax
         call HuffGetBits
         mov eax, 18h
@@ -581,7 +581,7 @@ UnpackHuffman:
         mov esi, 4
         mov ebp, 1
 .9:
-        mov ecx, dword [dword_EDEE4]
+        mov ecx, dword [HuffBitCount]
         shr ecx, 10h
         and ecx, 0FFFFh
         mov edx, ebp
@@ -693,14 +693,14 @@ ExpandBytePair:
 .1:
         xor edx, edx
         mov dl, al
-        mov ebx, dword [dword_EDEF8]
+        mov ebx, dword [BytePairStack]
         cmp byte [edx+ebx], 0
         je short .2
-        mov eax, dword [dword_EDEEC]
+        mov eax, dword [BytePairSrc]
         mov al, byte [edx+eax]
         and eax, 0FFh
         call ExpandBytePair
-        mov eax, dword [dword_EDEF4]
+        mov eax, dword [BytePairDst]
         mov al, byte [edx+eax]
         jmp short .1
 .2:
@@ -723,11 +723,11 @@ UnpackBytePair:
         xor edx, edx
         mov dword [dword esp+0300h], edx
         lea edx, [dword esp+0200h]
-        mov dword [dword_EDEF8], edx
+        mov dword [BytePairStack], edx
         lea edx, [dword esp+0100h]
-        mov dword [dword_EDEEC], edx
+        mov dword [BytePairSrc], edx
         mov edx, esp
-        mov dword [dword_EDEF4], edx
+        mov dword [BytePairDst], edx
         test eax, eax
         je near .8
         xor edx, edx
@@ -761,7 +761,7 @@ UnpackBytePair:
         mov dword [dword esp+0300h], edx
         xor edx, edx
 .2:
-        mov eax, dword [dword_EDEF8]
+        mov eax, dword [BytePairStack]
         mov byte [edx+eax], 0
         inc edx
         cmp edx, 100h
@@ -779,17 +779,17 @@ UnpackBytePair:
         xor edx, edx
         mov dl, byte [ebx]
         lea esi, [byte ebx+01h]
-        mov ecx, dword [dword_EDEEC]
+        mov ecx, dword [BytePairSrc]
         add ebx, byte 2
         lea edi, [ecx+edx]
         mov cl, byte [esi]
         mov byte [edi], cl
         mov esi, ebx
-        mov edi, dword [dword_EDEF4]
+        mov edi, dword [BytePairDst]
         inc ebx
         mov cl, byte [esi]
         mov byte [edx+edi], cl
-        mov ecx, dword [dword_EDEF8]
+        mov ecx, dword [BytePairStack]
         mov byte [ecx+edx], 0FFh
         inc eax
         cmp eax, ebp
@@ -800,7 +800,7 @@ UnpackBytePair:
         mov ebx, dword [UnpackPairState]
         xor edx, edx
         mov dl, byte [ebx]
-        mov eax, dword [dword_EDEF8]
+        mov eax, dword [BytePairStack]
         inc ebx
         mov al, byte [edx+eax]
         test al, al
@@ -813,11 +813,11 @@ UnpackBytePair:
 .6:
         mov dword [UnpackPairState], ebx
         jge short .7
-        mov eax, dword [dword_EDEEC]
+        mov eax, dword [BytePairSrc]
         mov al, byte [edx+eax]
         and eax, 0FFh
         call ExpandBytePair
-        mov eax, dword [dword_EDEF4]
+        mov eax, dword [BytePairDst]
         mov al, byte [edx+eax]
         and eax, 0FFh
         call ExpandBytePair
