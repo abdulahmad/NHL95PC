@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_EDCFC nobits alloc noexec write align=1
-global byte_EDE7D, byte_EDEAC, dword_EDCFC, dword_EDD00, dword_EDD04, dword_EDE34, dword_EDE5C, MemViewTop
+global byte_EDE7D, dword_EDCFC, dword_EDD00, dword_EDD04, dword_EDE34, dword_EDE5C, MemViewTop
 global MemViewCount, dword_EDE68, MemViewTitle, MemViewRow, MemViewList, dword_EDE78, dword_EDE7C, MemViewMode
-global dword_EDE84, dword_EDE8C, dword_EDE90, dword_EDE94, dword_EDE98, dword_EDE9C, dword_EDEA0, dword_EDEA4
-global dword_EDEA8, dword_EDEB0, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0, dword_EDEF4
-global dword_EDEF8, dword_EDEFC, dword_EDF00, unk_EDE88
+global dword_EDE84
+global dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0, dword_EDEF4
+global dword_EDEF8, dword_EDEFC, dword_EDF00, SndHandleTable
 dword_EDCFC:
         resb 4
 dword_EDD00:
@@ -39,27 +39,17 @@ MemViewMode:
         resb 4
 dword_EDE84:
         resb 4
-unk_EDE88:
+SndHandleTable:
         resb 4
-dword_EDE8C:
         resb 4
-dword_EDE90:
         resb 4
-dword_EDE94:
         resb 4
-dword_EDE98:
         resb 4
-dword_EDE9C:
         resb 4
-dword_EDEA0:
         resb 4
-dword_EDEA4:
         resb 4
-dword_EDEA8:
         resb 4
-byte_EDEAC:
         resb 4
-dword_EDEB0:
         resb 48
 dword_EDEE0:
         resb 4

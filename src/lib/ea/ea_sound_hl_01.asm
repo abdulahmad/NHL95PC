@@ -4,12 +4,12 @@ bits 32
 section s_8EB5B progbits alloc exec nowrite align=1
 extern __GETDS, _makepath_, _splitpath_, addtimer, str_SCN, str_03sFF03dPAT, str_03sFF03dTIM, str_KMS2
 extern str_CFG2, str_VHDR, byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
-extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, dword_D41CE, dword_D41EA
-extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00
+extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType, dword_D41CE, dword_D41EA
+extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, SndTimerHandle, dword_D4F9A, dword_EDCFC, dword_EDD00
 extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
 extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
 extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, PushMemDescriptorLocked, MemDescPtr, MemDescSize
-extern sub_97166, sub_971BE, SndDriverCall, sub_9720B, sub_97268, sub_98F11, sub_98F46, sub_99522
+extern SndDriverHandle, SndHandleClose, SndDriverCall, SndHandleSetTrack, SndHandlePlayDigi, sub_98F11, sub_98F46, sub_99522
 extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, AddExitHandler, bcopy, FillMem
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
 global SndInit, loc_8EB8D, SndShutdown, loc_8EBAB, loc_8EBB4, loc_8EBBB, SndClearTables, loc_8EBEB
@@ -71,7 +71,7 @@ SndShutdown:
 loc_8EBAB:
         xor eax, eax
         mov al, dl
-        call sub_971BE
+        call SndHandleClose
 loc_8EBB4:
         dec edx
         test edx, edx
@@ -176,7 +176,7 @@ loc_8EC9D:
         xor esi, esi
         mov dword [dword_EDE5C], esi
         mov dword [sndhandlecount], esi
-        mov dword [dword_D4F96], 0FFFFFFFFh
+        mov dword [SndTimerHandle], 0FFFFFFFFh
         jmp near loc_8F1F8
 LoadMusicBank:
         push ebx
@@ -496,7 +496,7 @@ loc_8EFDB:
         xor eax, eax
         jmp short loc_8F01C
 loc_8F008:
-        cmp byte [dword eax+byte_F243E], 3
+        cmp byte [dword eax+SndHandleType], 3
         jne short loc_8F01B
 loc_8F011:
         or al, 80h
@@ -543,7 +543,7 @@ loc_8F074:
         jmp short loc_8F0A5
 loc_8F095:
         mov cl, byte [byte ebx+0Fh]
-        cmp cl, byte [dword eax+byte_F243E]
+        cmp cl, byte [dword eax+SndHandleType]
         je near loc_8F011
         inc eax
 loc_8F0A5:
@@ -751,7 +751,7 @@ StartSongTracks:
         add ebx, eax
         mov dword [byte esp+010h], ebx
         mov eax, edx
-        call sub_97166
+        call SndDriverHandle
         mov dword [byte esp+018h], eax
         test eax, eax
         jl near loc_8F4BD
@@ -835,7 +835,7 @@ loc_8F38D:
         mov dl, byte [byte esi+050h]
         movzx ebp, al
         mov eax, ebp
-        call sub_9720B
+        call SndHandleSetTrack
         xor ebx, ebx
         mov bl, byte [byte ecx+0Ch]
         xor edx, edx
@@ -1593,7 +1593,7 @@ PlayDigiBlock:
         mov ebp, ecx
         test edi, edi
         je short loc_8FB87
-        call sub_97166
+        call SndDriverHandle
         mov dword [esp], eax
         test eax, eax
         jl short loc_8FB87
@@ -1623,7 +1623,7 @@ loc_8FB72:
         mov ebx, eax
         mov edx, esi
         mov eax, edi
-        call sub_97268
+        call SndHandlePlayDigi
 loc_8FB87:
         add esp, byte 4
         pop ebp
@@ -1641,7 +1641,7 @@ PlayDigiBlockLoop:
         mov ebp, ecx
         test edi, edi
         je short loc_8FB87
-        call sub_97166
+        call SndDriverHandle
         mov dword [esp], eax
         test eax, eax
         jl short loc_8FB87
@@ -1679,7 +1679,7 @@ PlayDigiPtr:
         mov edx, ebx
         test esi, esi
         je short loc_8FC2E
-        call sub_97166
+        call SndDriverHandle
         mov dword [esp], eax
         test eax, eax
         jl short loc_8FC2E
@@ -1700,7 +1700,7 @@ PlayDigiPtr:
         mov al, byte [byte esp+018h]
         xor ecx, ecx
         mov ebx, esi
-        call sub_97268
+        call SndHandlePlayDigi
 loc_8FC2E:
         add esp, byte 4
 loc_8FC31:
@@ -1718,7 +1718,7 @@ PlayDigiPtrLoop:
         mov edx, ecx
         test esi, esi
         je short loc_8FC31
-        call sub_97166
+        call SndDriverHandle
         mov ecx, eax
         test eax, eax
         jl short loc_8FC31
@@ -1744,7 +1744,7 @@ PlayDigiPtrLoop:
         xor ecx, ecx
         mov ebx, esi
         mov edx, edi
-        call sub_97268
+        call SndHandlePlayDigi
         jmp short loc_8FC31
 SndQuery:
         cmp eax, dword [sndhandlecount]
@@ -1762,7 +1762,7 @@ loc_8FC9C:
 StopDigiChannel:
         push ebx
         push ecx
-        call sub_97166
+        call SndDriverHandle
         mov ecx, eax
         test eax, eax
         jl short loc_8FCDC
@@ -1778,7 +1778,7 @@ StopDigiChannel:
         xor eax, eax
         mov al, cl
         xor ecx, ecx
-        call sub_97268
+        call SndHandlePlayDigi
 loc_8FCDC:
         pop ecx
         pop ebx
@@ -1797,7 +1797,7 @@ SetDigiChannelVolume:
         call StopDigiChannel
         jmp short loc_8FD5F
 loc_8FCF8:
-        call sub_97166
+        call SndDriverHandle
         mov edi, eax
         test eax, eax
         jl short loc_8FD5F
@@ -1836,7 +1836,7 @@ loc_8FD5F:
         ret
 QueryDigiChannel:
         push ebx
-        call sub_97166
+        call SndDriverHandle
         mov ebx, eax
         test eax, eax
         jl short loc_8FD82

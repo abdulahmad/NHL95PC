@@ -4264,3 +4264,7 @@ ZoneSavedBottom,EA0C4,bottom edge given to SetZoneScreen
 ZoneSavedRight,EA0C8,right edge given to SetZoneScreen
 ZoneSavedLeft,EA0CC,left edge given to SetZoneScreen
 ZoneSavedTop,EA0D0,top edge given to SetZoneScreen
+SndDriverTable,D4BA0,"entry points, driver type and open handle of the seven sound drivers (none, PC speaker, AdLib, Sound Blaster, MT-32/MPU-401, GUS music, GUS digital)"
+SndHandleTable,EDE88,copies of the driver table entries for the open sound handles
+SndHandleType,F243E,"driver type per open sound handle (1 music, 3 MIDI port, 4 digital, 5 speaker)"
+SndTimerHandle,D4F96,"open sound handle that is serviced first on each timer tick, or -1"

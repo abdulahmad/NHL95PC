@@ -2,20 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_96A60 progbits alloc exec nowrite align=1
-extern __GETDS, _os_handle_3, byte_EDEAC, byte_F243E, dword_D4BC8, sndhandlecount, dword_D4F96, dword_EDE8C
-extern dword_EDE90, dword_EDE94, dword_EDE98, dword_EDE9C, dword_EDEA0, dword_EDEA4, dword_EDEA8, dword_EDEB0
-extern off_D4BA0, MemDescPtr, sub_96A10, bcopy, DosReadFile, unk_EDE88
+extern __GETDS, _os_handle_3, SndHandleType, sndhandlecount, SndTimerHandle
+extern SndDriverTable, MemDescPtr, sub_96A10, bcopy, DosReadFile, SndHandleTable
 global sub_96A60, sub_96A78, sub_96A80, sub_96A94, loc_96AA4, loc_96AB2, loc_96AC0, sub_96AC4
 global loc_96B15, loc_96B38, loc_96B73, loc_96BA1, loc_96BC5, loc_96C15, loc_96C2B, loc_96C43
 global sub_96C4C, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E, loc_96D27, loc_96D5E
 global loc_96D8B, loc_96DA9, loc_96DC4, loc_96DF4, loc_96E09, loc_96E2D, loc_96E34, loc_96E47
 global loc_96E5B, loc_96E73, sub_96E7C, loc_96EFF, loc_96F3D, loc_96F77, loc_96F90, loc_96FC7
-global loc_9702F, loc_97059, loc_97066, loc_9706F, sub_97079, loc_9708D, loc_97097, loc_9709B
-global loc_970AB, loc_970C2, loc_970CC, loc_970D1, loc_97153, loc_9715C, sub_97166, loc_97175
-global sub_9717F, sub_97194, loc_971A5, sub_971AB, sub_971BE, loc_971D7, sub_971DB, loc_971F4
-global SndDriverCall, sub_9720B, loc_9722C, sub_9722E, loc_9724A, loc_9724E, loc_97266, sub_97268
-global loc_972A5, sub_972AB, sub_972B1, sub_972B8, sub_972BE, sub_972C0, sub_972C6, sub_972C8
-global sub_972CE, sub_972D5, sub_972DB, sub_972DD, sub_972E3, sub_972E5, sub_972EB
+global loc_9702F, loc_97059, loc_97066, loc_9706F, SndOpenDriver, loc_9708D, loc_97097, loc_9709B
+global loc_970AB, loc_970C2, loc_970CC, loc_970D1, loc_97153, loc_9715C, SndDriverHandle, loc_97175
+global SndHandleDetect, SndHandleOpen, loc_971A5, SndHandleInit, SndHandleClose, loc_971D7, SndHandleService, loc_971F4
+global SndDriverCall, SndHandleSetTrack, loc_9722C, SndHandleMidi, loc_9724A, loc_9724E, loc_97266, SndHandlePlayDigi
+global loc_972A5, NullDriverOpen, sub_972B1, NullDriverInit, sub_972BE, NullDriverReturn, sub_972C6, NullDriverQuery
+global sub_972CE, NullDriverSetTrack, sub_972DB, NullDriverMidi, sub_972E3, NullDriverPlayDigi, sub_972EB
 sub_96A60:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+0Ch]
@@ -612,7 +611,7 @@ loc_9706F:
         pop edi
         pop esi
         ret
-sub_97079:
+SndOpenDriver:
         push ebx
         push ecx
         push edx
@@ -633,7 +632,7 @@ loc_97097:
         jmp short loc_970AB
 loc_9709B:
         imul edx, eax, byte 2Ch
-        cmp ebx, dword [dword edx+dword_EDEB0]
+        cmp ebx, dword [dword edx+SndHandleTable+028h]
         je near loc_9715C
         inc eax
 loc_970AB:
@@ -647,7 +646,7 @@ loc_970AB:
         jmp short loc_970CC
 loc_970C2:
         imul edx, eax, byte 2Ch
-        mov dword [dword edx+dword_D4BC8], edi
+        mov dword [dword edx+SndDriverTable+028h], edi
         inc eax
 loc_970CC:
         cmp eax, byte 7
@@ -656,30 +655,30 @@ loc_970D1:
         mov eax, dword [sndhandlecount]
         mov dword [esp], eax
         imul esi, ebx, byte 2Ch
-        mov dword [dword esi+dword_D4BC8], eax
+        mov dword [dword esi+SndDriverTable+028h], eax
         imul ebp, eax, byte 2Ch
         mov ecx, 0Bh
-        lea edi, [dword ebp+unk_EDE88]
-        lea esi, [dword esi+off_D4BA0]
+        lea edi, [dword ebp+SndHandleTable]
+        lea esi, [dword esi+SndDriverTable]
         rep movsd
-        mov dword [dword ebp+dword_EDEB0], ebx
+        mov dword [dword ebp+SndHandleTable+028h], ebx
         xor ebx, ebx
         mov bl, byte [esp]
         mov eax, ebx
-        call sub_9717F
+        call SndHandleDetect
         mov ecx, eax
         mov edx, eax
         mov eax, ebx
-        call sub_97194
+        call SndHandleOpen
         cwde
         test eax, eax
         je near loc_9708D
         mov edx, ecx
         mov eax, ebx
-        call sub_971AB
-        mov al, byte [dword ebp+byte_EDEAC]
+        call SndHandleInit
+        mov al, byte [dword ebp+SndHandleTable+024h]
         mov edx, dword [esp]
-        mov byte [dword edx+byte_F243E], al
+        mov byte [dword edx+SndHandleType], al
         mov edx, 7
         mov eax, ebx
         call SndDriverCall
@@ -688,7 +687,7 @@ loc_970D1:
         cmp eax, byte 64h
         jge short loc_97153
         mov eax, dword [esp]
-        mov dword [dword_D4F96], eax
+        mov dword [SndTimerHandle], eax
 loc_97153:
         mov eax, dword [esp]
         inc dword [sndhandlecount]
@@ -701,47 +700,47 @@ loc_9715C:
         pop ecx
         pop ebx
         ret
-sub_97166:
+SndDriverHandle:
         cmp dword [sndhandlecount], byte 0
         jg short loc_97175
         mov eax, 0FFFFFFFFh
         ret
 loc_97175:
         imul eax, byte 2Ch
-        mov eax, dword [dword eax+dword_D4BC8]
+        mov eax, dword [dword eax+SndDriverTable+028h]
         ret
-sub_9717F:
+SndHandleDetect:
         push ebx
         push ecx
         push edx
         and eax, 0FFh
         imul eax, byte 2Ch
-        call dword [dword eax+unk_EDE88]
+        call dword [dword eax+SndHandleTable]
         pop edx
         pop ecx
         pop ebx
         ret
-sub_97194:
+SndHandleOpen:
         push ebx
         push ecx
         and eax, 0FFh
         imul eax, byte 2Ch
         push edx
-        call dword [dword eax+dword_EDE8C]
+        call dword [dword eax+SndHandleTable+04h]
 loc_971A5:
         add esp, byte 4
         pop ecx
         pop ebx
         ret
-sub_971AB:
+SndHandleInit:
         push ebx
         push ecx
         and eax, 0FFh
         imul eax, byte 2Ch
         push edx
-        call dword [dword eax+dword_EDE90]
+        call dword [dword eax+SndHandleTable+08h]
         jmp short loc_971A5
-sub_971BE:
+SndHandleClose:
         push ebx
         push ecx
         push edx
@@ -749,13 +748,13 @@ sub_971BE:
         cmp eax, dword [sndhandlecount]
         jge short loc_971D7
         imul eax, byte 2Ch
-        call dword [dword eax+dword_EDE94]
+        call dword [dword eax+SndHandleTable+0Ch]
 loc_971D7:
         pop edx
         pop ecx
         pop ebx
         ret
-sub_971DB:
+SndHandleService:
         push ebx
         push ecx
         push edx
@@ -763,7 +762,7 @@ sub_971DB:
         cmp eax, dword [sndhandlecount]
         jge short loc_971F4
         imul eax, byte 2Ch
-        call dword [dword eax+dword_EDE98]
+        call dword [dword eax+SndHandleTable+010h]
 loc_971F4:
         pop edx
         pop ecx
@@ -775,9 +774,9 @@ SndDriverCall:
         and eax, 0FFh
         imul eax, byte 2Ch
         push edx
-        call dword [dword eax+dword_EDE9C]
+        call dword [dword eax+SndHandleTable+014h]
         jmp short loc_971A5
-sub_9720B:
+SndHandleSetTrack:
         push ecx
         and eax, 0FFh
         cmp eax, dword [sndhandlecount]
@@ -787,12 +786,12 @@ sub_9720B:
         xor ebx, ebx
         mov bx, dx
         push ebx
-        call dword [dword eax+dword_EDEA0]
+        call dword [dword eax+SndHandleTable+018h]
         add esp, byte 8
 loc_9722C:
         pop ecx
         ret
-sub_9722E:
+SndHandleMidi:
         push ecx
         xor ecx, ecx
         mov cl, al
@@ -813,12 +812,12 @@ loc_9724E:
         xor ebx, ebx
         mov bx, dx
         push ebx
-        call dword [dword eax+dword_EDEA4]
+        call dword [dword eax+SndHandleTable+01Ch]
         add esp, byte 8
 loc_97266:
         pop ecx
         ret
-sub_97268:
+SndHandlePlayDigi:
         push esi
         push edi
         push ebp
@@ -841,52 +840,52 @@ sub_97268:
         push ecx
         push ebx
         push edx
-        call dword [dword eax+dword_EDEA8]
+        call dword [dword eax+SndHandleTable+020h]
         add esp, byte 24h
 loc_972A5:
         pop ebp
         pop edi
         pop esi
         ret 18h
-sub_972AB:
+NullDriverOpen:
         push ds
         call __GETDS
 sub_972B1:
         mov eax, 1
         pop ds
         ret
-sub_972B8:
+NullDriverInit:
         push ds
         call __GETDS
 sub_972BE:
         pop ds
         ret
-sub_972C0:
+NullDriverReturn:
         push ds
         call __GETDS
 sub_972C6:
         pop ds
         ret
-sub_972C8:
+NullDriverQuery:
         push ds
         call __GETDS
 sub_972CE:
         mov eax, 0FFFFFFFFh
         pop ds
         ret
-sub_972D5:
+NullDriverSetTrack:
         push ds
         call __GETDS
 sub_972DB:
         pop ds
         ret
-sub_972DD:
+NullDriverMidi:
         push ds
         call __GETDS
 sub_972E3:
         pop ds
         ret
-sub_972E5:
+NullDriverPlayDigi:
         push ds
         call __GETDS
 sub_972EB:

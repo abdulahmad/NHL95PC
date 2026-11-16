@@ -8,25 +8,24 @@ extern sub_A6E10, sub_A6E7B, sub_A6EA2, sub_A6EC3, sub_A6F3C, sub_A6FA2, sub_A6F
 extern sub_A70BC, sub_A70DD, sub_A905E, sub_A9BA4, sub_AA1D9, unk_D522E, unk_D5254, unk_D5258
 extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
 extern word_F3718
-global ParseBlasterEnv, sub_9F22C, loc_9F25C, loc_9F293, loc_9F29D, loc_9F2AE, loc_9F2B7, loc_9F2C1
+global ParseBlasterEnv, loc_9F25C, loc_9F293, loc_9F29D, loc_9F2AE, loc_9F2B7, loc_9F2C1
 global loc_9F2C5, loc_9F2D1, loc_9F2F0, loc_9F311, loc_9F31D, loc_9F324, loc_9F333, ParseHexValue
-global loc_9F358, loc_9F36C, sub_9F380, sub_9F387, sub_9F38D, loc_9F3CA, loc_9F40B, loc_9F413
-global sub_9F418, sub_9F41E, loc_9F449, loc_9F47A, loc_9F49C, sub_9F4A0, sub_9F4A6, loc_9F4C6
-global sub_9F4C8, sub_9F4CE, loc_9F4DE, loc_9F511, loc_9F523, loc_9F52A, loc_9F533, loc_9F53C
-global loc_9F565, loc_9F566, sub_9F577, sub_9F57D, loc_9F5A1, loc_9F5AC, loc_9F5B9, loc_9F5C1
-global loc_9F5C8, loc_9F5D8, loc_9F5E5, loc_9F5ED, loc_9F60B, loc_9F615, sub_9F622, sub_9F628
-global sub_9F642, sub_9F648, sub_9F685, loc_9F6B3, loc_9F6EA, loc_9F714, loc_9F717, loc_9F71D
-global sub_9F725, loc_9F77A, loc_9F782, loc_9F7B1, loc_9F7EA, loc_9F81B, loc_9F81E, loc_9F829
+global loc_9F358, loc_9F36C, SbPopArgsReturn, SbOpen, loc_9F3CA, loc_9F40B, loc_9F413
+global SbInit, loc_9F449, loc_9F47A, loc_9F49C, SbClose, loc_9F4C6
+global SbService, loc_9F4DE, loc_9F511, loc_9F523, loc_9F52A, loc_9F533, loc_9F53C
+global loc_9F565, loc_9F566, SbQuery, loc_9F5A1, loc_9F5AC, loc_9F5B9, loc_9F5C1
+global loc_9F5C8, loc_9F5D8, loc_9F5E5, loc_9F5ED, loc_9F60B, loc_9F615, SbSetTrack
+global SbPlayDigi, SbNoteOff, loc_9F6B3, loc_9F6EA, loc_9F714, loc_9F717, loc_9F71D
+global SbNoteOn, loc_9F77A, loc_9F782, loc_9F7B1, loc_9F7EA, loc_9F81B, loc_9F81E, loc_9F829
 global loc_9F839, loc_9F858, loc_9F85C, loc_9F861, loc_9F880, loc_9F899, loc_9F89D, loc_9F8A4
-global loc_9F8B3, loc_9F8BD, sub_9F8C5, sub_9F9C4, sub_9FA1A, loc_9FA48, sub_9FA5D, loc_9FA9D
+global loc_9F8B3, loc_9F8BD, SbStartVoice, SbVoiceStartSample, SbVoiceSetVolume, loc_9FA48, SbController, loc_9FA9D
 global loc_9FAB4, loc_9FABF, loc_9FACA, loc_9FAD5, loc_9FAF8, loc_9FB1E, loc_9FB21, loc_9FB29
-global loc_9FB35, loc_9FB55, loc_9FB58, loc_9FB5E, loc_9FB6A, loc_9FB85, loc_9FB88, sub_9FB93
-global loc_9FBA8, sub_9FBAA, sub_9FBB5, sub_9FC04, sub_9FC24, loc_9FC70, loc_9FC76, loc_9FC8C
-global sub_9FC94, sub_9FCAB, sub_9FD01, __rterrmsg_
+global loc_9FB35, loc_9FB55, loc_9FB58, loc_9FB5E, loc_9FB6A, loc_9FB85, loc_9FB88, SbVoiceController
+global loc_9FBA8, SbSetVoiceOwner, SbFreeVoice, SbStopVoice, SbProgramChange, loc_9FC70, loc_9FC76, loc_9FC8C
+global SbPitchBend, SbAllocDosBuffer, SbFreeDosBuffer, SbSetMixerVolumes
 ParseBlasterEnv:
         push ds
         call __GETDS
-sub_9F22C:
         sub esp, byte 10h
         xor edx, edx
         mov dword [byte esp+0Ch], edx
@@ -90,7 +89,7 @@ loc_9F2D1:
         add ecx, eax
         mov edx, dword [esp]
         mov eax, dword [byte esp+0Ch]
-        call __rterrmsg_
+        call SbSetMixerVolumes
         jmp short loc_9F324
 loc_9F2F0:
         cmp byte [byte ecx+01h], 45h
@@ -151,23 +150,22 @@ loc_9F36C:
         call strtoul_
         mov dword [edi], eax
         mov eax, ecx
-sub_9F380:
+SbPopArgsReturn:
         add esp, byte 0Ch
         pop edi
         pop esi
         pop ecx
         ret
-sub_9F387:
+SbOpen:
         push ds
         call __GETDS
-sub_9F38D:
         push esi
         cmp dword [byte esp+0Ch], byte 0
         je near loc_9F413
         mov ebx, dword_D525C
         mov edx, unk_D5258
         mov eax, 40h
-        call sub_9FCAB
+        call SbAllocDosBuffer
         mov esi, eax
         mov edx, eax
         and edx, 0FFFFh
@@ -204,10 +202,9 @@ loc_9F413:
         pop esi
         pop ds
         ret
-sub_9F418:
+SbInit:
         push ds
         call __GETDS
-sub_9F41E:
         push esi
         push edi
         cmp dword [dword_D5250], byte 0
@@ -250,24 +247,22 @@ loc_9F49C:
         pop esi
         pop ds
         ret
-sub_9F4A0:
+SbClose:
         push ds
         call __GETDS
-sub_9F4A6:
         cmp dword [dword_D5250], byte 0
         je short loc_9F4C6
         call sub_A6DED
         mov eax, dword [dword_D525C]
-        call sub_9FD01
+        call SbFreeDosBuffer
         xor ebx, ebx
         mov dword [dword_D5250], ebx
 loc_9F4C6:
         pop ds
         ret
-sub_9F4C8:
+SbService:
         push ds
         call __GETDS
-sub_9F4CE:
         push esi
         push edi
         sub esp, byte 4
@@ -290,7 +285,7 @@ loc_9F4DE:
         test ax, ax
         je short loc_9F511
         mov eax, esi
-        call sub_9FBB5
+        call SbFreeVoice
 loc_9F511:
         mov bx, word [byte esi+06h]
         cmp bx, byte 1
@@ -337,10 +332,9 @@ loc_9F566:
         pop esi
         pop ds
         ret
-sub_9F577:
+SbQuery:
         push ds
         call __GETDS
-sub_9F57D:
         push esi
         mov edx, dword [byte esp+0Ch]
         cmp dx, byte 9
@@ -408,10 +402,9 @@ loc_9F615:
         push eax
         call sub_AA1D9
         jmp short loc_9F5E5
-sub_9F622:
+SbSetTrack:
         push ds
         call __GETDS
-sub_9F628:
         movsx edx, word [byte esp+08h]
         mov eax, edx
         shl eax, 4
@@ -420,10 +413,9 @@ sub_9F628:
         mov word [nosplit eax*2+word_F3538], dx
         pop ds
         ret
-sub_9F642:
+SbPlayDigi:
         push ds
         call __GETDS
-sub_9F648:
         push esi
         push edi
         push ebp
@@ -451,7 +443,7 @@ sub_9F648:
         pop esi
         pop ds
         ret
-sub_9F685:
+SbNoteOff:
         push ebx
         push ecx
         push esi
@@ -515,7 +507,7 @@ loc_9F71D:
         pop ecx
         pop ebx
         ret
-sub_9F725:
+SbNoteOn:
         push ecx
         push esi
         push edi
@@ -540,7 +532,7 @@ sub_9F725:
         jge near loc_9F8BD
         add edx, byte 5Ch
         movsx edx, dx
-        call sub_9FC24
+        call SbProgramChange
         mov dword [byte esp+010h], 3Ch
         jmp short loc_9F782
 loc_9F77A:
@@ -660,7 +652,7 @@ loc_9F8A4:
         movsx edx, word [byte esp+0Ch]
 loc_9F8B3:
         movsx eax, word [byte esp+014h]
-        call sub_9F8C5
+        call SbStartVoice
 loc_9F8BD:
         add esp, byte 14h
         pop ebp
@@ -668,7 +660,7 @@ loc_9F8BD:
         pop esi
         pop ecx
         ret
-sub_9F8C5:
+SbStartVoice:
         push esi
         push edi
         push eax
@@ -677,7 +669,7 @@ sub_9F8C5:
         mov edi, ecx
         mov esi, dword [byte esp+018h]
         movsx eax, word [byte esi+02h]
-        call sub_9FC04
+        call SbStopVoice
         mov dx, word [esi]
         not edx
         mov eax, dword [byte esi+0Eh]
@@ -700,7 +692,7 @@ sub_9F8C5:
         movsx ebx, byte [byte eax+08h]
         mov edx, dword [byte esi+012h]
         movsx eax, word [byte esi+02h]
-        call sub_9F9C4
+        call SbVoiceStartSample
         mov eax, dword [byte esi+016h]
         mov al, byte [byte eax+0Ch]
         xor ah, ah
@@ -725,27 +717,27 @@ sub_9F8C5:
         and word [byte edi+02h], ax
         lea edx, [byte edi+012h]
         movsx eax, word [byte esi+02h]
-        call sub_9FBAA
+        call SbSetVoiceOwner
         movsx ebx, word [esp]
         mov eax, dword [byte edi+0Eh]
         movsx ax, byte [byte eax+07h]
         add eax, dword [byte esp+08h]
         movsx edx, ax
         movsx eax, word [byte esi+02h]
-        call sub_9FA1A
+        call SbVoiceSetVolume
         movsx ebx, byte [byte edi+015h]
         movsx eax, word [byte esi+02h]
         mov edx, 1
-        call sub_9FB93
+        call SbVoiceController
         movsx ebx, byte [byte edi+012h]
         movsx eax, word [byte esi+02h]
         mov edx, 7
-        call sub_9FB93
+        call SbVoiceController
         add esp, byte 0Ch
         pop edi
         pop esi
         ret 4
-sub_9F9C4:
+SbVoiceStartSample:
         push esi
         push edi
         push ebp
@@ -780,7 +772,7 @@ sub_9F9C4:
         pop edi
         pop esi
         ret 4
-sub_9FA1A:
+SbVoiceSetVolume:
         push ecx
         push esi
         mov ecx, eax
@@ -808,7 +800,7 @@ loc_9FA48:
         pop esi
         pop ecx
         ret
-sub_9FA5D:
+SbController:
         push ecx
         push esi
         push edi
@@ -873,7 +865,7 @@ loc_9FAF8:
         add eax, edx
         movsx edx, word [nosplit eax*2+word_F345C]
         movsx eax, word [byte esp+08h]
-        call sub_9F685
+        call SbNoteOff
 loc_9FB1E:
         add esi, esi
         inc ecx
@@ -897,7 +889,7 @@ loc_9FB35:
         add eax, edx
         add eax, eax
         add eax, word_F3454
-        call sub_9FBB5
+        call SbFreeVoice
 loc_9FB55:
         add esi, esi
         inc ecx
@@ -917,15 +909,15 @@ loc_9FB6A:
         movsx ebx, word [esp]
         movsx edx, word [byte esp+04h]
         movsx eax, cx
-        call sub_9FB93
+        call SbVoiceController
 loc_9FB85:
         add esi, esi
         inc ecx
 loc_9FB88:
         cmp cx, byte 4
         jl short loc_9FB6A
-        jmp near sub_9F380
-sub_9FB93:
+        jmp near SbPopArgsReturn
+SbVoiceController:
         push ecx
         cmp dx, byte 7
         jne short loc_9FBA8
@@ -938,17 +930,17 @@ sub_9FB93:
 loc_9FBA8:
         pop ecx
         ret
-sub_9FBAA:
+SbSetVoiceOwner:
         cwde
         imul eax, byte 16h
         mov dword [dword eax+dword_F34DC], edx
         ret
-sub_9FBB5:
+SbFreeVoice:
         push ebx
         push edx
         mov edx, eax
         movsx eax, word [byte eax+02h]
-        call sub_9FC04
+        call SbStopVoice
         mov word [byte edx+06h], 0
         mov ax, word [edx]
         or word [word_F3716], ax
@@ -969,7 +961,7 @@ sub_9FBB5:
         pop edx
         pop ebx
         ret
-sub_9FC04:
+SbStopVoice:
         push ebx
         push ecx
         push edx
@@ -984,7 +976,7 @@ sub_9FC04:
         pop ecx
         pop ebx
         ret
-sub_9FC24:
+SbProgramChange:
         push ebx
         push ecx
         push esi
@@ -1032,7 +1024,7 @@ loc_9FC8C:
         pop ecx
         pop ebx
         ret
-sub_9FC94:
+SbPitchBend:
         push ebx
         mov ebx, edx
         movsx edx, ax
@@ -1042,7 +1034,7 @@ sub_9FC94:
         mov word [nosplit eax*2+word_F354A], bx
         pop ebx
         ret
-sub_9FCAB:
+SbAllocDosBuffer:
         push ecx
         push esi
         push edi
@@ -1074,7 +1066,7 @@ sub_9FCAB:
         pop esi
         pop ecx
         ret
-sub_9FD01:
+SbFreeDosBuffer:
         push ebx
         push ecx
         push edx
@@ -1096,7 +1088,7 @@ sub_9FD01:
         pop ecx
         pop ebx
         ret
-__rterrmsg_:
+SbSetMixerVolumes:
         push ebx
         push ecx
         push esi

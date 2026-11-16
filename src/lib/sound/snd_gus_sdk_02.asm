@@ -13,11 +13,11 @@ extern dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8
 extern dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498, dword_D84A8
 extern dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC, dword_D84D0
 extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_F612C, getenv_, inp_
-extern nullsub_4, off_D846C, outp_, strtoul_, sub_AB658, sub_AB6D0, sub_AB80C, sub_ACC3C
-extern sub_AD2A8, sub_AD344, sub_AD7CC, sub_ADC96, GusDownload, sub_B14E4, sub_B1CBC, GusPoke
+extern nullsub_4, off_D846C, outp_, strtoul_, GusSetChannelVolume, GusSetChannelBend, GusSetChannelModulation, GusSetSustain
+extern GusSetChannelPan, GusChannelNotesOff, GusMixAdd8, GusClearMixBuffer, GusDownload, sub_B14E4, sub_B1CBC, GusPoke
 extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
 extern word_D84C6, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
-global sub_ADEE9, loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002
+global GusFillStreamBuffer, loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002
 global loc_AE02F, loc_AE061, loc_AE096, loc_AE0A5, loc_AE0C1, loc_AE0D6, loc_AE0E2, loc_AE11D
 global loc_AE14C, loc_AE162, loc_AE1A1, loc_AE1AD, loc_AE1B7, loc_AE22F, loc_AE243, loc_AE24A
 global loc_AE277, loc_AE2A9, loc_AE2DE, loc_AE2ED, loc_AE309, loc_AE31E, loc_AE32A, loc_AE365
@@ -26,18 +26,18 @@ global loc_AE4BF, loc_AE4F1, loc_AE526, loc_AE535, loc_AE551, loc_AE566, loc_AE5
 global loc_AE5DC, loc_AE5F2, loc_AE631, loc_AE63D, loc_AE647, loc_AE6BF, loc_AE6D3, loc_AE6DA
 global loc_AE707, loc_AE739, loc_AE76E, loc_AE77D, loc_AE799, loc_AE7AE, loc_AE7BA, loc_AE7F5
 global loc_AE824, loc_AE83A, loc_AE879, loc_AE885, loc_AE88F, loc_AE8DD, loc_AE8E3, loc_AE8FE
-global sub_AE903, loc_AE96B, loc_AE9E2, loc_AE9E8, GusServiceStream, loc_AEA05, loc_AEA22, GusStartStream
-global loc_AEA32, loc_AEA68, loc_AEB45, sub_AEDBC, loc_AEE52, sub_AEE54, loc_AEE86, loc_AEEDD
-global loc_AEEF5, loc_AEF08, sub_AEF0E, loc_AEF26, loc_AEF2E, sub_AEF33, loc_AEF77, loc_AEF89
-global loc_AEF9F, sub_AEFA2, loc_AEFC6, sub_AEFC9, loc_AEFE7, sub_AEFEA, loc_AF039, loc_AF054
-global sub_AF058, loc_AF073, sub_AF076, loc_AF0C8, loc_AF0CF, loc_AF0D2, sub_AF0D5, loc_AF10F
-global sub_AF112, loc_AF16A, loc_AF178, loc_AF186, loc_AF194, GusStreamBusy, sub_AF1A4, loc_AF1BE
+global GusStreamVoiceIrq, loc_AE96B, loc_AE9E2, loc_AE9E8, GusServiceStream, loc_AEA05, loc_AEA22, GusStartStream
+global loc_AEA32, loc_AEA68, loc_AEB45, GusStopStream, loc_AEE52, GusStreamStart, loc_AEE86, loc_AEEDD
+global loc_AEEF5, loc_AEF08, GusStreamIdle, loc_AEF26, loc_AEF2E, GusStreamPlayNote, loc_AEF77, loc_AEF89
+global loc_AEF9F, GusStreamRelease, loc_AEFC6, GusStreamStop, loc_AEFE7, GusStreamSetVolume, loc_AF039, loc_AF054
+global GusStreamSetBend, loc_AF073, GusStreamSetRate, loc_AF0C8, loc_AF0CF, loc_AF0D2, GusStreamSetSample, loc_AF10F
+global GusStreamApplyBend, loc_AF16A, loc_AF178, loc_AF186, loc_AF194, GusStreamBusy, GusStreamGetVolume, loc_AF1BE
 global GusGetEnvConfig, loc_AF214, loc_AF23B, loc_AF262, loc_AF289, loc_AF2C8, loc_AF2CA, GusProbePort
-global loc_AF335, loc_AF337, sub_AF340, loc_AF37E, loc_AF412, loc_AF417, sub_AF428, loc_AF47E
+global loc_AF335, loc_AF337, GusMidiPitchBend, loc_AF37E, loc_AF412, loc_AF417, GusMidiController, loc_AF47E
 global loc_AF48C, loc_AF4A8, loc_AF4B9, loc_AF4E0, loc_AF4F1, loc_AF509, loc_AF523, loc_AF549
 global loc_AF558, loc_AF583, loc_AF5AB, loc_AF5D3, loc_AF601, loc_AF610, loc_AF63E, loc_AF657
 global loc_AF665, loc_AF673, loc_AF6C4, loc_AF6CB
-sub_ADEE9:
+GusFillStreamBuffer:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF0h
@@ -72,7 +72,7 @@ loc_ADF49:
 loc_ADF5E:
         mov ebx, dword [dword_D8494]
         mov ecx, dword [dword_D8484]
-        call sub_ADC96
+        call GusClearMixBuffer
         cmp byte [dword_D7B0C], 0
         je near loc_AE1B7
         cmp byte [byte_D7B18], 0
@@ -95,7 +95,7 @@ loc_ADF5E:
         mov ebx, word_D7B64
         mov eax, dword [dword_D8484]
         push dword [dword_D8494]
-        call sub_AD7CC
+        call GusMixAdd8
         add esp, byte 4
 loc_ADFE7:
         mov dword [dword_D7B48], ecx
@@ -250,7 +250,7 @@ loc_AE1B7:
         mov ebx, word_D7DBC
         mov eax, dword [dword_D8484]
         push dword [dword_D8494]
-        call sub_AD7CC
+        call GusMixAdd8
         add esp, byte 4
 loc_AE22F:
         mov dword [dword_D7DA0], ecx
@@ -405,7 +405,7 @@ loc_AE3FF:
         mov ebx, word_D8014
         mov eax, dword [dword_D8484]
         push dword [dword_D8494]
-        call sub_AD7CC
+        call GusMixAdd8
         add esp, byte 4
 loc_AE477:
         mov dword [dword_D7FF8], ecx
@@ -560,7 +560,7 @@ loc_AE647:
         mov ebx, word_D826C
         mov eax, dword [dword_D8484]
         push dword [dword_D8494]
-        call sub_AD7CC
+        call GusMixAdd8
         add esp, byte 4
 loc_AE6BF:
         mov dword [dword_D8250], ecx
@@ -726,7 +726,7 @@ loc_AE8FE:
         pop esi
         leave
         ret
-sub_AE903:
+GusStreamVoiceIrq:
         cmp dword [dword_D7AF0], byte 0
         je near loc_AE9E8
         cmp eax, dword [byte_D849C]
@@ -809,13 +809,13 @@ GusServiceStream:
         cmp dword [GusStreamBusyLeft], byte 0
         je short loc_AEA05
         LD xor, eax, eax
-        call sub_ADEE9
+        call GusFillStreamBuffer
         mov dword [GusStreamBusyLeft], 0
 loc_AEA05:
         cmp dword [GusStreamBusyRight], byte 0
         je short loc_AEA22
         mov eax, 1
-        call sub_ADEE9
+        call GusFillStreamBuffer
         mov dword [GusStreamBusyRight], 0
 loc_AEA22:
         ret
@@ -913,7 +913,7 @@ loc_AEB45:
         LD xor, edx, edx
         LD mov, eax, esi
         call GusPoke
-        mov eax, sub_AE903
+        mov eax, GusStreamVoiceIrq
         call sub_B14E4
         LD xor, eax, eax
         LD xor, edx, edx
@@ -1083,7 +1083,7 @@ loc_AEB45:
         pop ebx
         leave
         ret
-sub_AEDBC:
+GusStopStream:
         pushf
         cli
         cmp dword [dword_D7AF0], byte 0
@@ -1140,7 +1140,7 @@ sub_AEDBC:
 loc_AEE52:
         popf
         ret
-sub_AEE54:
+GusStreamStart:
         push ebp
         LD mov, ebp, esp
         push ebx
@@ -1156,7 +1156,7 @@ sub_AEE54:
         cmp eax, byte 0
         jne short loc_AEE86
         push dword [byte ebp+08h]
-        call sub_AEFA2
+        call GusStreamRelease
         pop eax
         popf
         pop edi
@@ -1167,18 +1167,18 @@ sub_AEE54:
 loc_AEE86:
         push dword [byte ebp+01Ch]
         push dword [byte ebp+08h]
-        call sub_AF076
+        call GusStreamSetRate
         add sp, byte 8
         push dword [byte ebp+020h]
         push dword [byte ebp+08h]
-        call sub_AEFEA
+        call GusStreamSetVolume
         add sp, byte 8
         push dword [byte ebp+018h]
         push dword [byte ebp+014h]
         push dword [byte ebp+010h]
         push dword [byte ebp+0Ch]
         push dword [byte ebp+08h]
-        call sub_AF0D5
+        call GusStreamSetSample
         add sp, byte 14h
         LD xor, eax, eax
         mov byte [byte esi+04Ch], al
@@ -1207,7 +1207,7 @@ loc_AEEF5:
         push byte 7Fh
         push dword 0FFh
         push dword [byte ebp+08h]
-        call sub_AEF33
+        call GusStreamPlayNote
         add sp, byte 0Ch
 loc_AEF08:
         popf
@@ -1216,7 +1216,7 @@ loc_AEF08:
         pop ebx
         leave
         ret
-sub_AEF0E:
+GusStreamIdle:
         push ebp
         LD mov, ebp, esp
         push ecx
@@ -1236,7 +1236,7 @@ loc_AEF2E:
         pop ecx
         leave
         ret
-sub_AEF33:
+GusStreamPlayNote:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1275,7 +1275,7 @@ loc_AEF9F:
         pop esi
         leave
         ret
-sub_AEFA2:
+GusStreamRelease:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1292,7 +1292,7 @@ loc_AEFC6:
         pop esi
         leave
         ret
-sub_AEFC9:
+GusStreamStop:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1307,7 +1307,7 @@ loc_AEFE7:
         pop esi
         leave
         ret
-sub_AEFEA:
+GusStreamSetVolume:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1352,7 +1352,7 @@ loc_AF054:
         pop esi
         leave
         ret
-sub_AF058:
+GusStreamSetBend:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1366,7 +1366,7 @@ loc_AF073:
         pop esi
         leave
         ret
-sub_AF076:
+GusStreamSetRate:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1404,7 +1404,7 @@ loc_AF0D2:
         pop esi
         leave
         ret
-sub_AF0D5:
+GusStreamSetSample:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1430,7 +1430,7 @@ loc_AF10F:
         pop esi
         leave
         ret
-sub_AF112:
+GusStreamApplyBend:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFFCh
@@ -1491,7 +1491,7 @@ GusStreamBusy:
         mov eax, dword [GusStreamBusyLeft]
         or eax, dword [GusStreamBusyRight]
         ret
-sub_AF1A4:
+GusStreamGetVolume:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -1631,7 +1631,7 @@ loc_AF337:
         pop ebp
         ret
         db 00h
-sub_AF340:
+GusMidiPitchBend:
         push ebp
         mov ebp, esp
         push ecx
@@ -1711,14 +1711,14 @@ loc_AF412:
 loc_AF417:
         mov eax, esi
         mov edx, ebx
-        call sub_AB6D0
+        call GusSetChannelBend
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
         pop ecx
         pop ebp
         ret
-sub_AF428:
+GusMidiController:
         push ebp
         mov ebp, esp
         push ecx
@@ -1809,7 +1809,7 @@ loc_AF509:
         jne near loc_AF6CB
         mov edx, ebx
         mov eax, ecx
-        call sub_AB80C
+        call GusSetChannelModulation
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1878,7 +1878,7 @@ loc_AF5D3:
         idiv ebx
         mov edx, eax
         mov eax, ecx
-        call sub_AB658
+        call GusSetChannelVolume
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1887,7 +1887,7 @@ loc_AF5D3:
         ret
 loc_AF601:
         mov edx, ecx
-        call sub_AD2A8
+        call GusSetChannelPan
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1904,7 +1904,7 @@ loc_AF610:
         idiv ebx
         mov edx, eax
         mov eax, ecx
-        call sub_AB658
+        call GusSetChannelVolume
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1917,7 +1917,7 @@ loc_AF63E:
         xor edx, edx
         mov dl, al
         mov eax, ecx
-        call sub_ACC3C
+        call GusSetSustain
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1943,23 +1943,23 @@ loc_AF665:
 loc_AF673:
         mov eax, ecx
         xor edx, edx
-        call sub_ACC3C
+        call GusSetSustain
         mov eax, ecx
         xor edx, edx
         mov esi, 64h
-        call sub_AB80C
+        call GusSetChannelModulation
         mov edx, 400h
         mov eax, ecx
         mov edi, 7Fh
-        call sub_AB6D0
+        call GusSetChannelBend
         mov eax, ecx
         mov edx, esi
         mov dword [dword ebx+dword_D85D0], esi
         mov dword [dword ebx+dword_D8610], edi
-        call sub_AB658
+        call GusSetChannelVolume
         mov edx, 0FFFFFFFFh
         mov eax, ecx
-        call sub_AD2A8
+        call GusSetChannelPan
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -1968,7 +1968,7 @@ loc_AF673:
         ret
 loc_AF6C4:
         mov eax, ecx
-        call sub_AD344
+        call GusChannelNotesOff
 loc_AF6CB:
         lea esp, [byte ebp-0Ch]
         pop edi

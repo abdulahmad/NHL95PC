@@ -29,7 +29,7 @@ extern str_ULTRASOUND, str_VisBck, str_VisitingTeam, str_VisNameBck, str_Vs, str
 extern PushMemDescriptorLocked, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SndInit, SndShutdown
 extern LoadMusicBank, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, PlayDigiPtr, PlayDigiPtrLoop, SndQuery
 extern SetDigiChannelVolume, SetPalette, PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, DrawArt
-extern GrabBlock, PrintString, sub_91FE0, sub_97079, MouseRead, FindShape, VgaSetPalette, SetScreenTarget
+extern GrabBlock, PrintString, sub_91FE0, SndOpenDriver, MouseRead, FindShape, VgaSetPalette, SetScreenTarget
 extern SetColorRemap, FillRectColor, PlotPixel, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
 extern sndselbox2, msg_NoSoundCard, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
 global MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts, SoundCardDlgLoop, SoundCardDlgLoop_poll, SoundCardDlgLoop_next
@@ -934,7 +934,7 @@ SetSoundDevice:
         test ebx, ebx
         jl short .15
         mov eax, ebx
-        call sub_97079
+        call SndOpenDriver
         mov ebp, eax
         cmp eax, byte 0FFFFFFFFh
         je short .15
@@ -942,7 +942,7 @@ SetSoundDevice:
         test ecx, ecx
         jl short .14
         mov eax, ecx
-        call sub_97079
+        call SndOpenDriver
         mov dword [byte esp+03Ch], eax
         cmp eax, byte 0FFFFFFFFh
         je short .15

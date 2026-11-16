@@ -3,14 +3,14 @@
 #define SetSoundDevice SetSoundDevice_decl
 #define LoadDigiFile sub_8F98F_decl
 #define PlayDigiBlockLoop sub_8FB8E_decl
-#define sub_97079 sub_97079_decl
+#define SndOpenDriver sub_97079_decl
 #define SndInit sub_8EB5B_decl
 #define SndShutdown sub_8EB93_decl
 #define LoadMusicBank sub_8ECC0_decl
 #define LoadSample sub_8F13B_decl
 #define FreeSample sub_8F1FE_decl
 #include "nhl95.h"
-#undef sub_97079
+#undef SndOpenDriver
 #undef SndInit
 #undef SndShutdown
 #undef LoadMusicBank
@@ -26,7 +26,7 @@ int LoadDigiFile(char *path);  /* sound library: load a song */
 void PlayDigiBlockLoop(int song, int handle, int a, int b);  /* sound library: start a song */
 
 int fprintf(void *fp, const char *fmt, ...);  /* Watcom CRT fprintf_ */
-int sub_97079(int dev);                       /* sound library: open a driver, -1 on failure */
+int SndOpenDriver(int dev);                       /* sound library: open a driver, -1 on failure */
 void SndInit(void);
 void SndShutdown(void);
 void LoadMusicBank(char *drv, char *port);        /* sound library: driver and port names */
@@ -159,7 +159,7 @@ int SoundCardDlgLoop(void)
 
 /* SetSoundDevice (82D7A, PC only): switch the sound to device dev (setbits bits: 1 PC speaker, 2 Sound Blaster,
    4 AdLib, 8 MT-32, 20h Ultrasound, 10h none). Shut the current one down first (speech and its copy buffer for
-   2 / 20h, the AdLib sample for 4). Then open dev's music and digital drivers (sub_97079 of dword_D2427 /
+   2 / 20h, the AdLib sample for 4). Then open dev's music and digital drivers (SndOpenDriver of dword_D2427 /
    digidriver); on success name them to the sound library, load the AdLib SLAPSHOT sample, play the MT32HOCK
    sample once for the MT-32 (with a message), make dev sounddev and setbits, set the slots, write its index in
    sounddevids to NHL.CFG and turn music on for 2 / 20h. When a device fails, say so (its name in sndcardname)
@@ -242,9 +242,9 @@ int SetSoundDevice(int dev)
             break;
         }
         SndInit();
-        if (dword_D2427 >= 0 && (h1 = sub_97079(dword_D2427)) != -1) {
+        if (dword_D2427 >= 0 && (h1 = SndOpenDriver(dword_D2427)) != -1) {
             if (digidriver < 0) dword_D2423 = -1;
-            else if ((s.h2 = sub_97079(digidriver)) != -1) dword_D2423 = -1;
+            else if ((s.h2 = SndOpenDriver(digidriver)) != -1) dword_D2423 = -1;
         }
         if (dword_D2423) {
             LoadMusicBank(s.drv, s.port);

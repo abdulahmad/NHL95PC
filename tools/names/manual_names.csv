@@ -1234,7 +1234,24 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00095F84,sub_95F84,MemViewerShowArt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.912),ea_debug,match96
 00096030,sub_96030,FormatDateTime,PC-new,,,,medium,same routine as the matched 96 PC routine (neighbour 0.915),ea_debug,match96
 000960AC,sub_960AC,NextFreeFileName,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_debug,match96
+00097079,sub_97079,SndOpenDriver,PC-new,,,,medium,"opens sound driver 0-6 (detect, open, init) and returns its handle, or the handle it already has",eacsndf_core,manual-trace
+00097166,sub_97166,SndDriverHandle,PC-new,,,,medium,"returns the open handle of a sound driver, or -1",eacsndf_core,manual-trace
+0009717F,sub_9717F,SndHandleDetect,PC-new,,,,medium,calls the detect entry of an open driver handle,eacsndf_core,manual-trace
+00097194,sub_97194,SndHandleOpen,PC-new,,,,medium,calls the open entry of an open driver handle with the detected port,eacsndf_core,manual-trace
+000971AB,sub_971AB,SndHandleInit,PC-new,,,,medium,calls the init entry of an open driver handle,eacsndf_core,manual-trace
+000971BE,sub_971BE,SndHandleClose,PC-new,,,,medium,calls the close entry of an open driver handle,eacsndf_core,manual-trace
+000971DB,sub_971DB,SndHandleService,PC-new,,,,medium,calls the timer service entry of an open driver handle,eacsndf_core,manual-trace
 000971F8,sub_971F8,SndDriverCall,PC-new,,,,medium,"EACSNDF core entry the handle calls jump to (handle in al, command word in edx)",eacsndf_core,manual-trace
+0009720B,sub_9720B,SndHandleSetTrack,PC-new,,,,low,calls the track setup entry of an open driver handle (channel and track data),eacsndf_core,manual-trace
+0009722E,sub_9722E,SndHandleMidi,PC-new,,,,low,"sends a MIDI message to an open driver handle, raising note on and note off two octaves",eacsndf_core,manual-trace
+00097268,sub_97268,SndHandlePlayDigi,PC-new,,,,low,calls the digital playback entry of an open driver handle,eacsndf_core,manual-trace
+000972AB,sub_972AB,NullDriverOpen,PC-new,,,,medium,null sound driver detect and open entries: return 1,eacsndf_core,manual-trace
+000972B8,sub_972B8,NullDriverInit,PC-new,,,,medium,null sound driver init entry: does nothing,eacsndf_core,manual-trace
+000972C0,sub_972C0,NullDriverReturn,PC-new,,,,medium,null sound driver close and service entries: do nothing,eacsndf_core,manual-trace
+000972C8,sub_972C8,NullDriverQuery,PC-new,,,,medium,null sound driver query entry: returns -1,eacsndf_core,manual-trace
+000972D5,sub_972D5,NullDriverSetTrack,PC-new,,,,medium,null sound driver track setup entry: does nothing,eacsndf_core,manual-trace
+000972DD,sub_972DD,NullDriverMidi,PC-new,,,,medium,null sound driver MIDI entry: does nothing,eacsndf_core,manual-trace
+000972E5,sub_972E5,NullDriverPlayDigi,PC-new,,,,medium,null sound driver digital playback entry: does nothing,eacsndf_core,manual-trace
 00097300,sub_97300,SkipCopyrightHeader,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.964),ea_unpack,match96
 00097350,sub_97350,PackedTypeOf,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.954),ea_unpack,match96
 000979F8,sub_979F8,ExpandBytePair,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.93),ea_unpack,match96+97
@@ -1288,8 +1305,59 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009D68E,sub_9D68E,CMainHook,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_pcspeaker,match96+97
 0009F226,sub_9F226,ParseBlasterEnv,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_soundblaster,match96+97
 0009F34C,sub_9F34C,ParseHexValue,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_soundblaster,match96+97
-0009FD3D,sub_9FD3D,__rterrmsg_,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.877),snd_soundblaster,match97
+0009F380,sub_9F380,SbPopArgsReturn,PC-new,,,,low,shared exit that drops three stacked arguments and returns,snd_soundblaster,manual-trace
+0009F387,sub_9F387,SbOpen,PC-new,,,,medium,Sound Blaster driver open entry: allocates the DOS DMA buffer and opens the card,snd_soundblaster,manual-trace
+0009F418,sub_9F418,SbInit,PC-new,,,,medium,Sound Blaster driver init entry: resets the four voices and sixteen MIDI channels,snd_soundblaster,manual-trace
+0009F4A0,sub_9F4A0,SbClose,PC-new,,,,medium,Sound Blaster driver close entry: closes the card and frees the DOS buffer,snd_soundblaster,manual-trace
+0009F4C8,sub_9F4C8,SbService,PC-new,,,,low,Sound Blaster driver timer service entry: frees finished voices,snd_soundblaster,manual-trace
+0009F577,sub_9F577,SbQuery,PC-new,,,,low,Sound Blaster driver query entry,snd_soundblaster,manual-trace
+0009F622,sub_9F622,SbSetTrack,PC-new,,,,low,Sound Blaster driver track setup entry,snd_soundblaster,manual-trace
+0009F642,sub_9F642,SbPlayDigi,PC-new,,,,low,Sound Blaster driver playback entry,snd_soundblaster,manual-trace
+0009F685,sub_9F685,SbNoteOff,PC-new,,,,low,MIDI note off: releases the voice playing the note,snd_soundblaster,manual-trace
+0009F725,sub_9F725,SbNoteOn,PC-new,,,,low,MIDI note on: channel 10 drums use their own patches; picks a voice and starts it,snd_soundblaster,manual-trace
+0009F8C5,sub_9F8C5,SbStartVoice,PC-new,,,,low,starts a note's sample on a voice,snd_soundblaster,manual-trace
+0009F9C4,sub_9F9C4,SbVoiceStartSample,PC-new,,,,low,sets up a voice's sample and starts it,snd_soundblaster,manual-trace
+0009FA1A,sub_9FA1A,SbVoiceSetVolume,PC-new,,,,low,sets a voice's volume (at most 127),snd_soundblaster,manual-trace
+0009FA5D,sub_9FA5D,SbController,PC-new,,,,low,"MIDI control change: modulation, volume, pan, sustain, all notes off",snd_soundblaster,manual-trace
+0009FB93,sub_9FB93,SbVoiceController,PC-new,,,,low,controller on a voice: controller 7 sets its volume,snd_soundblaster,manual-trace
+0009FBAA,sub_9FBAA,SbSetVoiceOwner,PC-new,,,,low,stores the owner of a voice,snd_soundblaster,manual-trace
+0009FBB5,sub_9FBB5,SbFreeVoice,PC-new,,,,low,stops a voice and returns it to the free voice mask,snd_soundblaster,manual-trace
+0009FC04,sub_9FC04,SbStopVoice,PC-new,,,,low,stops one voice,snd_soundblaster,manual-trace
+0009FC24,sub_9FC24,SbProgramChange,PC-new,,,,medium,MIDI program change: sets the patch of a channel,snd_soundblaster,manual-trace
+0009FC94,sub_9FC94,SbPitchBend,PC-new,,,,medium,MIDI pitch bend: stores the bend of a channel,snd_soundblaster,manual-trace
+0009FCAB,sub_9FCAB,SbAllocDosBuffer,PC-new,,,,medium,allocates DOS memory through DPMI,snd_soundblaster,manual-trace
+0009FD01,sub_9FD01,SbFreeDosBuffer,PC-new,,,,medium,frees DOS memory through DPMI,snd_soundblaster,manual-trace
+0009FD3D,sub_9FD3D,SbSetMixerVolumes,PC-new,,,,medium,"sets the Sound Blaster voice, master and FM mixer volumes",snd_soundblaster,fixes a wrong library match (it writes mixer volume registers)
+0009FFCA,sub_9FFCA,GusAllocDosBuffer,PC-new,,,,medium,allocates a DOS memory buffer through DPMI and returns its 64K-aligned address,snd_gus,manual-trace
+000A0064,sub_A0064,GusFreeDosBuffer,PC-new,,,,medium,frees the DOS memory buffer through DPMI,snd_gus,manual-trace
+000A00C1,sub_A00C1,GusLoadMidiPatch,PC-new,,,,medium,loads one ULTRASND MIDI .PAT patch file into GUS memory,snd_gus,manual-trace
+000A0288,sub_A0288,GusStartup,PC-new,,,,low,"shared GUS start-up for the music and digital drivers: probes the card, opens it, reads ULTRADIR",snd_gus,manual-trace
 000A044D,sub_A044D,GusDriverClose,PC-new,,,,medium,same routine as the matched 97 PC routine (sem 0.838),snd_gus,match97
+000A04B9,sub_A04B9,GusProbe,PC-new,,,,medium,GUS driver open entry: reads the ULTRASND settings and probes the port,snd_gus,manual-trace
+000A053C,sub_A053C,GusDetect,PC-new,,,,medium,GUS driver detect entry: returns the port from the ULTRASND settings,snd_gus,manual-trace
+000A059B,sub_A059B,GusInitDigi,PC-new,,,,medium,GUS digital driver init entry: starts the card once,snd_gus,manual-trace
+000A05D3,sub_A05D3,GusInitMusic,PC-new,,,,medium,GUS music driver init entry: starts the card once,snd_gus,manual-trace
+000A060B,sub_A060B,GusCloseDigi,PC-new,,,,medium,GUS digital driver close entry,snd_gus,manual-trace
+000A0643,sub_A0643,GusCloseMusic,PC-new,,,,medium,GUS music driver close entry,snd_gus,manual-trace
+000A067B,sub_A067B,GusService,PC-new,,,,low,GUS digital driver timer service entry: frees finished voices and services the stream,snd_gus,manual-trace
+000A076E,sub_A076E,GusQuery,PC-new,,,,low,GUS digital driver query entry,snd_gus,manual-trace
+000A0853,sub_A0853,GusSetTrack,PC-new,,,,low,GUS digital driver track setup entry,snd_gus,manual-trace
+000A0886,sub_A0886,GusPlayDigi,PC-new,,,,low,GUS digital driver playback entry: starts a sample on a voice,snd_gus,manual-trace
+000A08D7,sub_A08D7,GusProgramChange,PC-new,,,,medium,MIDI program change: sets the patch of a channel,snd_gus,manual-trace
+000A0981,sub_A0981,GusPitchBend,PC-new,,,,medium,MIDI pitch bend: stores the bend of a channel,snd_gus,manual-trace
+000A09B9,sub_A09B9,GusStopVoice,PC-new,,,,low,stops one hardware voice,snd_gus,manual-trace
+000A0A08,sub_A0A08,GusStartVoice,PC-new,,,,low,starts a note on a hardware voice,snd_gus,manual-trace
+000A0BAC,sub_A0BAC,GusVoiceStartSample,PC-new,,,,low,sets a voice's sample position and frequency,snd_gus,manual-trace
+000A0C5B,sub_A0C5B,GusVoiceSetVolume,PC-new,,,,low,sets a voice's volume,snd_gus,manual-trace
+000A0D0C,sub_A0D0C,GusSetVoiceOwner,PC-new,,,,low,stores the owner word of a voice,snd_gus,manual-trace
+000A0D43,sub_A0D43,GusVoiceController,PC-new,,,,low,MIDI controller on a voice: controller 7 sets its volume,snd_gus,manual-trace
+000A0D99,sub_A0D99,GusMusicMidi,PC-new,,,,low,GUS music driver MIDI entry: plays a run of MIDI messages,snd_gus,manual-trace
+000A0FEA,sub_A0FEA,GusDigiMidi,PC-new,,,,low,GUS digital driver MIDI entry: plays a run of MIDI messages,snd_gus,manual-trace
+000A11FE,sub_A11FE,GusNoteOn,PC-new,,,,medium,MIDI note on: finds a voice and starts the note,snd_gus,manual-trace
+000A14AF,sub_A14AF,GusNoteOff,PC-new,,,,medium,MIDI note off: releases the voice playing the note,snd_gus,manual-trace
+000A15AA,sub_A15AA,GusFreeVoice,PC-new,,,,low,stops a voice and returns it to the free voice mask,snd_gus,manual-trace
+000A1632,sub_A1632,GusController,PC-new,,,,medium,MIDI control change on a channel,snd_gus,manual-trace
+000A1800,sub_A1800,PrintStringCentered,PC-new,,,,medium,prints a string centred across the clip window,snd_gus,manual-trace
 000A1840,sub_A1840,ResetClipRect,PC-new,,,,high,"same library routine as the 96 PC ResetClipRect (similarity 1.0, dp)",snd_gus,match96
 000A185C,sub_A185C,ResetClipWindow,PC-new,,,,medium,"same library routine as the 96 PC ResetClipWindow (similarity 0.947, dp)",snd_gus,match96
 000A18D6,sub_A18D6,IntrLoadSegRegs,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_clib_39,match96+97
@@ -1464,6 +1532,10 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A6BE1,sub_A6BE1,StrToLong,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_hw_sb,match96+97
 000A6D24,sub_A6D24,strtoul_,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_hw_sb,match96+97
 000A6D2C,sub_A6D2C,DigitValue,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),snd_hw_sb,match96
+000AA210,sub_AA210,GusReadPatchHeader,PC-new,,,,medium,opens a .PAT patch file and checks its GF1PATCH110 header,snd_gus_sdk_01,manual-trace
+000AA300,sub_AA300,GusLoadPatch,PC-new,,,,medium,loads the layers and waves of a .PAT patch into GUS memory,snd_gus_sdk_01,manual-trace
+000AA758,sub_AA758,GusUnloadPatch,PC-new,,,,medium,stops a patch's voices and frees its waves from GUS memory,snd_gus_sdk_01,manual-trace
+000AA7CC,sub_AA7CC,GusSetPatchFlags,PC-new,,,,low,stores the flags word of a loaded patch,snd_gus_sdk_01,manual-trace
 000AA7E0,sub_AA7E0,GusStopDmaAndTimers,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.983),snd_gus_sdk_01,match96+97
 000AA8C0,sub_AA8C0,GusUnhookIrqs,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_01,match96+97
 000AA8E0,sub_AA8E0,GusHookIrqs,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_01,match96+97
@@ -1473,14 +1545,62 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000AAC48,sub_AAC48,GusClose,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.969),snd_gus_sdk_01,match96+97
 000AACAC,sub_AACAC,GusSetIrqDmaLatches,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.991),snd_gus_sdk_01,match96+97
 000AAE40,sub_AAE40,GusResetVoices,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.993),snd_gus_sdk_01,match96+97
+000AB180,sub_AB180,GusMidiInit,PC-new,,,,low,resets the 32 voice and 32 channel records and hooks the volume interrupt,snd_gus_sdk_01,manual-trace
+000AB244,sub_AB244,GusVoiceUpdateVolume,PC-new,,,,low,"sets a voice's volume from its note, channel and master volume",snd_gus_sdk_01,manual-trace
+000AB658,sub_AB658,GusSetChannelVolume,PC-new,,,,medium,MIDI channel volume (1-127): updates every voice of the channel,snd_gus_sdk_01,manual-trace
+000AB6D0,sub_AB6D0,GusSetChannelBend,PC-new,,,,low,applies a channel's pitch bend to the frequency of its voices,snd_gus_sdk_01,manual-trace
+000AB79C,sub_AB79C,GusSetMasterVolume,PC-new,,,,medium,sets the master volume (1-127) and updates every voice,snd_gus_sdk_01,manual-trace
+000AB80C,sub_AB80C,GusSetChannelModulation,PC-new,,,,low,MIDI modulation: sets the vibrato depth of a channel's voices,snd_gus_sdk_01,manual-trace
+000AB974,sub_AB974,GusVibratoTick,PC-new,,,,low,timer callback that moves the frequency of every vibrato voice,snd_gus_sdk_01,manual-trace
+000ABAB0,sub_ABAB0,GusStartVibratoTimer,PC-new,,,,low,hooks the vibrato timer callback,snd_gus_sdk_01,manual-trace
+000ABACC,sub_ABACC,GusStopVibratoTimer,PC-new,,,,low,unhooks the vibrato timer callback,snd_gus_sdk_01,manual-trace
+000ABAD8,sub_ABAD8,GusVoiceSetVibrato,PC-new,,,,low,sets a voice's vibrato rate and depth from its patch or channel,snd_gus_sdk_01,manual-trace
+000ABC38,sub_ABC38,GusVoiceSetEnvelope,PC-new,,,,low,works out a voice's next volume envelope ramp,snd_gus_sdk_01,manual-trace
+000ABD60,sub_ABD60,GusScaleRatio,PC-new,,,,low,scales one ratio by another (frequency maths),snd_gus_sdk_01,manual-trace
+000ABDA0,sub_ABDA0,GusNoteFrequency,PC-new,,,,low,"returns the frequency of a note from the note table, with scale tuning",snd_gus_sdk_01,manual-trace
+000ABE18,sub_ABE18,GusVoiceStopRamp,PC-new,,,,medium,stops a voice's volume ramp (register 0Dh),snd_gus_sdk_01,manual-trace
+000ABF5C,sub_ABF5C,GusVoiceStopWave,PC-new,,,,medium,stops a voice's wave (register 00h),snd_gus_sdk_01,manual-trace
+000AC050,sub_AC050,GusStopNoteVoices,PC-new,,,,low,stops the up to four voices of a sound slot,snd_gus_sdk_01,manual-trace
+000AC0CC,sub_AC0CC,GusMidiNoteOn,PC-new,,,,low,MIDI note on: picks the patch layer and starts voices,snd_gus_sdk_01,manual-trace
+000AC6E8,sub_AC6E8,GusMidiNoteOff,PC-new,,,,low,"MIDI note off: releases the note's voices, or marks it held while sustain is on",snd_gus_sdk_01,manual-trace
+000ACC3C,sub_ACC3C,GusSetSustain,PC-new,,,,medium,"MIDI sustain pedal: on holds notes, off releases the held notes",snd_gus_sdk_01,manual-trace
+000ACCC0,sub_ACCC0,GusVoiceWaveEnd,PC-new,,,,low,wave end interrupt for one voice,snd_gus_sdk_01,manual-trace
+000ACD58,sub_ACD58,GusVoiceRampEnd,PC-new,,,,low,volume ramp end interrupt for one voice: moves to the next envelope stage,snd_gus_sdk_01,manual-trace
+000AD160,sub_AD160,GusStopPatchVoices,PC-new,,,,low,stops every voice playing a given patch,snd_gus_sdk_01,manual-trace
+000AD260,sub_AD260,GusForgetPatch,PC-new,,,,low,clears a patch from every channel that uses it,snd_gus_sdk_01,manual-trace
+000AD298,sub_AD298,GusSetChannelPatch,PC-new,,,,low,stores the patch pointer of a channel,snd_gus_sdk_01,manual-trace
+000AD2A8,sub_AD2A8,GusSetChannelPan,PC-new,,,,medium,MIDI pan: sets the balance (register 0Ch) of a channel's voices,snd_gus_sdk_01,manual-trace
+000AD344,sub_AD344,GusChannelNotesOff,PC-new,,,,medium,stops every voice of a channel,snd_gus_sdk_01,manual-trace
 000AD3C0,sub_AD3C0,GusPokeBlock,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.967),snd_gus_sdk_01,match96+97
 000AD3FC,sub_AD3FC,GusPeekBlock,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.963),snd_gus_sdk_01,match96+97
 000AD434,sub_AD434,GusSizeDram,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.982),snd_gus_sdk_01,match96+97
+000AD4DC,sub_AD4DC,GusDramAlloc,PC-new,,,,medium,allocates a block of GUS memory,snd_gus_sdk_01,manual-trace
+000AD610,sub_AD610,GusDramFree,PC-new,,,,medium,frees a block of GUS memory and merges it with free neighbours,snd_gus_sdk_01,manual-trace
+000AD6F4,sub_AD6F4,GusDramFreeTotal,PC-new,,,,medium,returns the total free GUS memory,snd_gus_sdk_01,manual-trace
+000AD758,sub_AD758,GusDramLargestFree,PC-new,,,,medium,returns the largest free block of GUS memory,snd_gus_sdk_01,manual-trace
+000AD7CC,sub_AD7CC,GusMixAdd8,PC-new,,,,low,adds 8-bit samples through a volume table into the mix buffer,snd_gus_sdk_01,manual-trace
+000ADC96,sub_ADC96,GusClearMixBuffer,PC-new,,,,medium,clears the mix buffer,snd_gus_sdk_01,manual-trace
+000ADEE9,sub_ADEE9,GusFillStreamBuffer,PC-new,,,,low,mixes the software stream channels into one half of the GUS stream buffer,snd_gus_sdk_02,manual-trace
+000AE903,sub_AE903,GusStreamVoiceIrq,PC-new,,,,low,voice interrupt callback for the stream voices: loops them back to the buffer start,snd_gus_sdk_02,manual-trace
 000AE9EB,sub_AE9EB,GusServiceStream,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_02,match96+97
 000AEA23,sub_AEA23,GusStartStream,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.47),snd_gus_sdk_02,match96+97
+000AEDBC,sub_AEDBC,GusStopStream,PC-new,,,,low,stops the two GUS stream voices,snd_gus_sdk_02,manual-trace
+000AEE54,sub_AEE54,GusStreamStart,PC-new,,,,low,"starts a sample on a software stream channel (rate, volume, sample, note)",snd_gus_sdk_02,manual-trace
+000AEF0E,sub_AEF0E,GusStreamIdle,PC-new,,,,medium,returns 1 when a software stream channel is not playing,snd_gus_sdk_02,manual-trace
+000AEF33,sub_AEF33,GusStreamPlayNote,PC-new,,,,low,"sets the note of a stream channel, works out its step and starts it",snd_gus_sdk_02,manual-trace
+000AEFA2,sub_AEFA2,GusStreamRelease,PC-new,,,,low,lets a stream channel play out to its end,snd_gus_sdk_02,manual-trace
+000AEFC9,sub_AEFC9,GusStreamStop,PC-new,,,,medium,stops a software stream channel,snd_gus_sdk_02,manual-trace
+000AEFEA,sub_AEFEA,GusStreamSetVolume,PC-new,,,,low,sets the volume of a stream channel and rebuilds its volume tables,snd_gus_sdk_02,manual-trace
+000AF058,sub_AF058,GusStreamSetBend,PC-new,,,,low,stores the pitch bend of a stream channel,snd_gus_sdk_02,manual-trace
+000AF076,sub_AF076,GusStreamSetRate,PC-new,,,,low,sets the sample rate of a stream channel (step against 22050 Hz),snd_gus_sdk_02,manual-trace
+000AF0D5,sub_AF0D5,GusStreamSetSample,PC-new,,,,low,"sets the start, loop start and loop length of a stream channel's sample",snd_gus_sdk_02,manual-trace
+000AF112,sub_AF112,GusStreamApplyBend,PC-new,,,,low,applies a pitch bend to a stream channel's step,snd_gus_sdk_02,manual-trace
 000AF198,sub_AF198,GusStreamBusy,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_02,match96+97
+000AF1A4,sub_AF1A4,GusStreamGetVolume,PC-new,,,,medium,returns the volume of a stream channel,snd_gus_sdk_02,manual-trace
 000AF1D0,sub_AF1D0,GusGetEnvConfig,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.95),snd_gus_sdk_02,match96+97
 000AF2E0,sub_AF2E0,GusProbePort,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_02,match96+97
+000AF340,sub_AF340,GusMidiPitchBend,PC-new,,,,low,works out a MIDI channel's frequency after a pitch bend,snd_gus_sdk_02,manual-trace
+000AF428,sub_AF428,GusMidiController,PC-new,,,,low,"MIDI control change: modulation, data entry, volume, pan, expression, sustain, RPN, all notes off",snd_gus_sdk_02,manual-trace
 000B07D0,sub_B07D0,GusSetupDmaChannel,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_05,match96+97
 000B085C,sub_B085C,GusProgramDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
 000B097C,sub_B097C,GusMaskDma,PC-new,,,,high,same library code as the 96 PC GusMaskDma at the same offset from the shared routines,snd_gus_sdk_05,match96

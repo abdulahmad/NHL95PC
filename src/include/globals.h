@@ -3869,7 +3869,7 @@ extern unsigned char unk_D45F8[]; /* D45F8 */
 extern unsigned char unk_D47B4[]; /* D47B4 */
 extern unsigned char __8087; /* D4B9C */
 extern unsigned char FpuType; /* D4B9D */
-extern unsigned char off_D4BA0[]; /* D4BA0 */
+extern unsigned char SndDriverTable[]; /* D4BA0 */
 extern int dword_D4BC8[]; /* D4BC8 */
 extern int _dynend; /* D4CD4 */
 extern int _curbrk; /* D4CD8 */
@@ -3921,7 +3921,7 @@ extern short word_D4F88; /* D4F88 */
 extern int dword_D4F8A; /* D4F8A */
 extern int dword_D4F8E; /* D4F8E */
 extern int dword_D4F92; /* D4F92 */
-extern int dword_D4F96; /* D4F96 */
+extern int SndTimerHandle; /* D4F96 */
 extern int dword_D4F9A; /* D4F9A */
 extern int dword_D4FA0; /* D4FA0 */
 extern int dword_D4FA4[]; /* D4FA4 */
@@ -5291,7 +5291,7 @@ extern int dword_EDE7C; /* EDE7C */
 extern unsigned char byte_EDE7D; /* EDE7D */
 extern int MemViewMode; /* EDE80 */
 extern int dword_EDE84; /* EDE84 */
-extern int unk_EDE88[]; /* EDE88 */
+extern int SndHandleTable[]; /* EDE88 */
 extern int dword_EDE8C[]; /* EDE8C */
 extern int dword_EDE90[]; /* EDE90 */
 extern int dword_EDE94[]; /* EDE94 */
@@ -5345,7 +5345,7 @@ extern int dword_F23EA; /* F23EA */
 extern int dword_F23EE[]; /* F23EE */
 extern int dword_F2416[]; /* F2416 */
 extern int dword_F243C[]; /* F243C */
-extern unsigned char byte_F243E[]; /* F243E */
+extern unsigned char SndHandleType[]; /* F243E */
 extern int AtexitTable[]; /* F2440 */
 extern int SpeechBankCount; /* F24C0 */
 extern unsigned char byte_F24C4; /* F24C4 */

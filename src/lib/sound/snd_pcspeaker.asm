@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9D68E progbits alloc exec nowrite align=1
 extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, _STACKLOW
-extern dword_D4F9A, dword_F27F6, GetPatchTimbre, sub_9F685, sub_9F725, sub_9FA5D, sub_9FC24, sub_9FC94
+extern dword_D4F9A, dword_F27F6, GetPatchTimbre, SbNoteOff, SbNoteOn, SbController, SbProgramChange, SbPitchBend
 extern sub_A65E8, sub_A6612, sub_A6635, sub_A6672, sub_A6684, sub_A677B, unk_F21FC, unk_F24D8
 extern unk_F27D8
 global CMainHook, sub_9D698, sub_9D69E, loc_9D6A2, loc_9D6B8, loc_9D6C4, loc_9D6D9, sub_9D6E6
@@ -693,7 +693,7 @@ loc_9DDD5:
         xor eax, eax
         mov al, byte [byte ebp-0Ch]
         cwde
-        call sub_9F685
+        call SbNoteOff
         jmp near loc_9DE89
 loc_9DDEF:
         mov eax, dword [byte ebp-020h]
@@ -706,7 +706,7 @@ loc_9DDEF:
         xor eax, eax
         mov al, byte [byte ebp-0Ch]
         cwde
-        call sub_9F685
+        call SbNoteOff
         jmp short loc_9DE2F
 loc_9DE0F:
         mov eax, dword [byte ebp-020h]
@@ -720,7 +720,7 @@ loc_9DE0F:
         xor eax, eax
         mov al, byte [byte ebp-0Ch]
         cwde
-        call sub_9F725
+        call SbNoteOn
 loc_9DE2F:
         jmp short loc_9DE89
 loc_9DE31:
@@ -735,7 +735,7 @@ loc_9DE31:
         xor eax, eax
         mov al, byte [byte ebp-0Ch]
         cwde
-        call sub_9FA5D
+        call SbController
         jmp short loc_9DE89
 loc_9DE53:
         mov eax, dword [byte ebp-020h]
@@ -745,7 +745,7 @@ loc_9DE53:
         xor eax, eax
         mov al, byte [byte ebp-0Ch]
         cwde
-        call sub_9FC24
+        call SbProgramChange
         jmp short loc_9DE89
 loc_9DE6A:
         mov eax, dword [byte ebp-020h]
@@ -757,7 +757,7 @@ loc_9DE6A:
         xor eax, eax
         mov al, byte [byte ebp-0Ch]
         cwde
-        call sub_9FC94
+        call SbPitchBend
 loc_9DE89:
         jmp near loc_9DCF2
 loc_9DE8E:

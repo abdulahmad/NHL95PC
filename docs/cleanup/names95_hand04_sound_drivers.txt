@@ -1,0 +1,155 @@
+sub_97079 SndOpenDriver {source_game=PC-new,confidence=medium} opens sound driver 0-6 (detect, open, init) and returns its handle, or the handle it already has
+sub_97166 SndDriverHandle {source_game=PC-new,confidence=medium} returns the open handle of a sound driver, or -1
+sub_9717F SndHandleDetect {source_game=PC-new,confidence=medium} calls the detect entry of an open driver handle
+sub_97194 SndHandleOpen {source_game=PC-new,confidence=medium} calls the open entry of an open driver handle with the detected port
+sub_971AB SndHandleInit {source_game=PC-new,confidence=medium} calls the init entry of an open driver handle
+sub_971BE SndHandleClose {source_game=PC-new,confidence=medium} calls the close entry of an open driver handle
+sub_971DB SndHandleService {source_game=PC-new,confidence=medium} calls the timer service entry of an open driver handle
+sub_9720B SndHandleSetTrack {source_game=PC-new,confidence=low} calls the track setup entry of an open driver handle (channel and track data)
+sub_9722E SndHandleMidi {source_game=PC-new,confidence=low} sends a MIDI message to an open driver handle, raising note on and note off two octaves
+sub_97268 SndHandlePlayDigi {source_game=PC-new,confidence=low} calls the digital playback entry of an open driver handle
+sub_972AB NullDriverOpen {source_game=PC-new,confidence=medium} null sound driver detect and open entries: return 1
+sub_972B8 NullDriverInit {source_game=PC-new,confidence=medium} null sound driver init entry: does nothing
+sub_972C0 NullDriverReturn {source_game=PC-new,confidence=medium} null sound driver close and service entries: do nothing
+sub_972C8 NullDriverQuery {source_game=PC-new,confidence=medium} null sound driver query entry: returns -1
+sub_972D5 NullDriverSetTrack {source_game=PC-new,confidence=medium} null sound driver track setup entry: does nothing
+sub_972DD NullDriverMidi {source_game=PC-new,confidence=medium} null sound driver MIDI entry: does nothing
+sub_972E5 NullDriverPlayDigi {source_game=PC-new,confidence=medium} null sound driver digital playback entry: does nothing
+off_D4BA0 SndDriverTable {source_game=PC-new,confidence=medium} entry points, driver type and open handle of the seven sound drivers (none, PC speaker, AdLib, Sound Blaster, MT-32/MPU-401, GUS music, GUS digital)
+unk_EDE88 SndHandleTable {source_game=PC-new,confidence=medium} copies of the driver table entries for the open sound handles
+byte_F243E SndHandleType {source_game=PC-new,confidence=low} driver type per open sound handle (1 music, 3 MIDI port, 4 digital, 5 speaker)
+dword_D4F96 SndTimerHandle {source_game=PC-new,confidence=low} open sound handle that is serviced first on each timer tick, or -1
+dword_D4BC8 SndDriverTable+028h {no_record}
+dword_EDE8C SndHandleTable+04h {no_record}
+dword_EDE90 SndHandleTable+08h {no_record}
+dword_EDE94 SndHandleTable+0Ch {no_record}
+dword_EDE98 SndHandleTable+010h {no_record}
+dword_EDE9C SndHandleTable+014h {no_record}
+dword_EDEA0 SndHandleTable+018h {no_record}
+dword_EDEA4 SndHandleTable+01Ch {no_record}
+dword_EDEA8 SndHandleTable+020h {no_record}
+byte_EDEAC SndHandleTable+024h {no_record}
+dword_EDEB0 SndHandleTable+028h {no_record}
+sub_9FFCA GusAllocDosBuffer {source_game=PC-new,confidence=medium} allocates a DOS memory buffer through DPMI and returns its 64K-aligned address
+sub_A0064 GusFreeDosBuffer {source_game=PC-new,confidence=medium} frees the DOS memory buffer through DPMI
+sub_A00C1 GusLoadMidiPatch {source_game=PC-new,confidence=medium} loads one ULTRASND MIDI .PAT patch file into GUS memory
+sub_A0288 GusStartup {source_game=PC-new,confidence=low} shared GUS start-up for the music and digital drivers: probes the card, opens it, reads ULTRADIR
+sub_A04B9 GusProbe {source_game=PC-new,confidence=medium} GUS driver open entry: reads the ULTRASND settings and probes the port
+sub_A053C GusDetect {source_game=PC-new,confidence=medium} GUS driver detect entry: returns the port from the ULTRASND settings
+sub_A054C GusDetect+010h {no_record}
+sub_A059B GusInitDigi {source_game=PC-new,confidence=medium} GUS digital driver init entry: starts the card once
+sub_A05AB GusInitDigi+010h {no_record}
+sub_A05D3 GusInitMusic {source_game=PC-new,confidence=medium} GUS music driver init entry: starts the card once
+sub_A05E3 GusInitMusic+010h {no_record}
+sub_A060B GusCloseDigi {source_game=PC-new,confidence=medium} GUS digital driver close entry
+sub_A061B GusCloseDigi+010h {no_record}
+sub_A0643 GusCloseMusic {source_game=PC-new,confidence=medium} GUS music driver close entry
+sub_A0653 GusCloseMusic+010h {no_record}
+sub_A067B GusService {source_game=PC-new,confidence=low} GUS digital driver timer service entry: frees finished voices and services the stream
+sub_A068B GusService+010h {no_record}
+sub_A076E GusQuery {source_game=PC-new,confidence=low} GUS digital driver query entry
+sub_A077E GusQuery+010h {no_record}
+sub_A0853 GusSetTrack {source_game=PC-new,confidence=low} GUS digital driver track setup entry
+sub_A0863 GusSetTrack+010h {no_record}
+sub_A0886 GusPlayDigi {source_game=PC-new,confidence=low} GUS digital driver playback entry: starts a sample on a voice
+sub_A0896 GusPlayDigi+010h {no_record}
+sub_A08D7 GusProgramChange {source_game=PC-new,confidence=medium} MIDI program change: sets the patch of a channel
+sub_A0981 GusPitchBend {source_game=PC-new,confidence=medium} MIDI pitch bend: stores the bend of a channel
+sub_A09B9 GusStopVoice {source_game=PC-new,confidence=low} stops one hardware voice
+sub_A0A08 GusStartVoice {source_game=PC-new,confidence=low} starts a note on a hardware voice
+sub_A0BAC GusVoiceStartSample {source_game=PC-new,confidence=low} sets a voice's sample position and frequency
+sub_A0C5B GusVoiceSetVolume {source_game=PC-new,confidence=low} sets a voice's volume
+sub_A0D0C GusSetVoiceOwner {source_game=PC-new,confidence=low} stores the owner word of a voice
+sub_A0D43 GusVoiceController {source_game=PC-new,confidence=low} MIDI controller on a voice: controller 7 sets its volume
+sub_A0D99 GusMusicMidi {source_game=PC-new,confidence=low} GUS music driver MIDI entry: plays a run of MIDI messages
+sub_A0DA9 GusMusicMidi+010h {no_record}
+sub_A0FEA GusDigiMidi {source_game=PC-new,confidence=low} GUS digital driver MIDI entry: plays a run of MIDI messages
+sub_A0FFA GusDigiMidi+010h {no_record}
+sub_A11FE GusNoteOn {source_game=PC-new,confidence=medium} MIDI note on: finds a voice and starts the note
+sub_A14AF GusNoteOff {source_game=PC-new,confidence=medium} MIDI note off: releases the voice playing the note
+sub_A15AA GusFreeVoice {source_game=PC-new,confidence=low} stops a voice and returns it to the free voice mask
+sub_A1632 GusController {source_game=PC-new,confidence=medium} MIDI control change on a channel
+sub_A1800 PrintStringCentered {source_game=PC-new,confidence=medium} prints a string centred across the clip window
+sub_ADEE9 GusFillStreamBuffer {source_game=PC-new,confidence=low} mixes the software stream channels into one half of the GUS stream buffer
+sub_AE903 GusStreamVoiceIrq {source_game=PC-new,confidence=low} voice interrupt callback for the stream voices: loops them back to the buffer start
+sub_AEDBC GusStopStream {source_game=PC-new,confidence=low} stops the two GUS stream voices
+sub_AEE54 GusStreamStart {source_game=PC-new,confidence=low} starts a sample on a software stream channel (rate, volume, sample, note)
+sub_AEF0E GusStreamIdle {source_game=PC-new,confidence=medium} returns 1 when a software stream channel is not playing
+sub_AEF33 GusStreamPlayNote {source_game=PC-new,confidence=low} sets the note of a stream channel, works out its step and starts it
+sub_AEFA2 GusStreamRelease {source_game=PC-new,confidence=low} lets a stream channel play out to its end
+sub_AEFC9 GusStreamStop {source_game=PC-new,confidence=medium} stops a software stream channel
+sub_AEFEA GusStreamSetVolume {source_game=PC-new,confidence=low} sets the volume of a stream channel and rebuilds its volume tables
+sub_AF058 GusStreamSetBend {source_game=PC-new,confidence=low} stores the pitch bend of a stream channel
+sub_AF076 GusStreamSetRate {source_game=PC-new,confidence=low} sets the sample rate of a stream channel (step against 22050 Hz)
+sub_AF0D5 GusStreamSetSample {source_game=PC-new,confidence=low} sets the start, loop start and loop length of a stream channel's sample
+sub_AF112 GusStreamApplyBend {source_game=PC-new,confidence=low} applies a pitch bend to a stream channel's step
+sub_AF1A4 GusStreamGetVolume {source_game=PC-new,confidence=medium} returns the volume of a stream channel
+sub_AF340 GusMidiPitchBend {source_game=PC-new,confidence=low} works out a MIDI channel's frequency after a pitch bend
+sub_AF428 GusMidiController {source_game=PC-new,confidence=low} MIDI control change: modulation, data entry, volume, pan, expression, sustain, RPN, all notes off
+sub_AA210 GusReadPatchHeader {source_game=PC-new,confidence=medium} opens a .PAT patch file and checks its GF1PATCH110 header
+sub_AA300 GusLoadPatch {source_game=PC-new,confidence=medium} loads the layers and waves of a .PAT patch into GUS memory
+sub_AA758 GusUnloadPatch {source_game=PC-new,confidence=medium} stops a patch's voices and frees its waves from GUS memory
+sub_AA7CC GusSetPatchFlags {source_game=PC-new,confidence=low} stores the flags word of a loaded patch
+sub_AB180 GusMidiInit {source_game=PC-new,confidence=low} resets the 32 voice and 32 channel records and hooks the volume interrupt
+sub_AB244 GusVoiceUpdateVolume {source_game=PC-new,confidence=low} sets a voice's volume from its note, channel and master volume
+sub_AB658 GusSetChannelVolume {source_game=PC-new,confidence=medium} MIDI channel volume (1-127): updates every voice of the channel
+sub_AB6D0 GusSetChannelBend {source_game=PC-new,confidence=low} applies a channel's pitch bend to the frequency of its voices
+sub_AB79C GusSetMasterVolume {source_game=PC-new,confidence=medium} sets the master volume (1-127) and updates every voice
+sub_AB80C GusSetChannelModulation {source_game=PC-new,confidence=low} MIDI modulation: sets the vibrato depth of a channel's voices
+sub_AB974 GusVibratoTick {source_game=PC-new,confidence=low} timer callback that moves the frequency of every vibrato voice
+sub_ABAB0 GusStartVibratoTimer {source_game=PC-new,confidence=low} hooks the vibrato timer callback
+sub_ABACC GusStopVibratoTimer {source_game=PC-new,confidence=low} unhooks the vibrato timer callback
+sub_ABAD8 GusVoiceSetVibrato {source_game=PC-new,confidence=low} sets a voice's vibrato rate and depth from its patch or channel
+sub_ABC38 GusVoiceSetEnvelope {source_game=PC-new,confidence=low} works out a voice's next volume envelope ramp
+sub_ABD60 GusScaleRatio {source_game=PC-new,confidence=low} scales one ratio by another (frequency maths)
+sub_ABDA0 GusNoteFrequency {source_game=PC-new,confidence=low} returns the frequency of a note from the note table, with scale tuning
+sub_ABE18 GusVoiceStopRamp {source_game=PC-new,confidence=medium} stops a voice's volume ramp (register 0Dh)
+sub_ABF5C GusVoiceStopWave {source_game=PC-new,confidence=medium} stops a voice's wave (register 00h)
+sub_AC050 GusStopNoteVoices {source_game=PC-new,confidence=low} stops the up to four voices of a sound slot
+sub_AC0CC GusMidiNoteOn {source_game=PC-new,confidence=low} MIDI note on: picks the patch layer and starts voices
+sub_AC6E8 GusMidiNoteOff {source_game=PC-new,confidence=low} MIDI note off: releases the note's voices, or marks it held while sustain is on
+sub_ACC3C GusSetSustain {source_game=PC-new,confidence=medium} MIDI sustain pedal: on holds notes, off releases the held notes
+sub_ACCC0 GusVoiceWaveEnd {source_game=PC-new,confidence=low} wave end interrupt for one voice
+sub_ACD58 GusVoiceRampEnd {source_game=PC-new,confidence=low} volume ramp end interrupt for one voice: moves to the next envelope stage
+sub_AD160 GusStopPatchVoices {source_game=PC-new,confidence=low} stops every voice playing a given patch
+sub_AD260 GusForgetPatch {source_game=PC-new,confidence=low} clears a patch from every channel that uses it
+sub_AD298 GusSetChannelPatch {source_game=PC-new,confidence=low} stores the patch pointer of a channel
+sub_AD2A8 GusSetChannelPan {source_game=PC-new,confidence=medium} MIDI pan: sets the balance (register 0Ch) of a channel's voices
+sub_AD344 GusChannelNotesOff {source_game=PC-new,confidence=medium} stops every voice of a channel
+sub_AD4DC GusDramAlloc {source_game=PC-new,confidence=medium} allocates a block of GUS memory
+sub_AD610 GusDramFree {source_game=PC-new,confidence=medium} frees a block of GUS memory and merges it with free neighbours
+sub_AD6F4 GusDramFreeTotal {source_game=PC-new,confidence=medium} returns the total free GUS memory
+sub_AD758 GusDramLargestFree {source_game=PC-new,confidence=medium} returns the largest free block of GUS memory
+sub_AD7CC GusMixAdd8 {source_game=PC-new,confidence=low} adds 8-bit samples through a volume table into the mix buffer
+sub_ADC96 GusClearMixBuffer {source_game=PC-new,confidence=medium} clears the mix buffer
+sub_9F22C ParseBlasterEnv+06h {no_record}
+sub_9F380 SbPopArgsReturn {source_game=PC-new,confidence=low} shared exit that drops three stacked arguments and returns
+sub_9F387 SbOpen {source_game=PC-new,confidence=medium} Sound Blaster driver open entry: allocates the DOS DMA buffer and opens the card
+sub_9F38D SbOpen+06h {no_record}
+sub_9F418 SbInit {source_game=PC-new,confidence=medium} Sound Blaster driver init entry: resets the four voices and sixteen MIDI channels
+sub_9F41E SbInit+06h {no_record}
+sub_9F4A0 SbClose {source_game=PC-new,confidence=medium} Sound Blaster driver close entry: closes the card and frees the DOS buffer
+sub_9F4A6 SbClose+06h {no_record}
+sub_9F4C8 SbService {source_game=PC-new,confidence=low} Sound Blaster driver timer service entry: frees finished voices
+sub_9F4CE SbService+06h {no_record}
+sub_9F577 SbQuery {source_game=PC-new,confidence=low} Sound Blaster driver query entry
+sub_9F57D SbQuery+06h {no_record}
+sub_9F622 SbSetTrack {source_game=PC-new,confidence=low} Sound Blaster driver track setup entry
+sub_9F628 SbSetTrack+06h {no_record}
+sub_9F642 SbPlayDigi {source_game=PC-new,confidence=low} Sound Blaster driver playback entry
+sub_9F648 SbPlayDigi+06h {no_record}
+sub_9F685 SbNoteOff {source_game=PC-new,confidence=low} MIDI note off: releases the voice playing the note
+sub_9F725 SbNoteOn {source_game=PC-new,confidence=low} MIDI note on: channel 10 drums use their own patches; picks a voice and starts it
+sub_9F8C5 SbStartVoice {source_game=PC-new,confidence=low} starts a note's sample on a voice
+sub_9F9C4 SbVoiceStartSample {source_game=PC-new,confidence=low} sets up a voice's sample and starts it
+sub_9FA1A SbVoiceSetVolume {source_game=PC-new,confidence=low} sets a voice's volume (at most 127)
+sub_9FA5D SbController {source_game=PC-new,confidence=low} MIDI control change: modulation, volume, pan, sustain, all notes off
+sub_9FB93 SbVoiceController {source_game=PC-new,confidence=low} controller on a voice: controller 7 sets its volume
+sub_9FBAA SbSetVoiceOwner {source_game=PC-new,confidence=low} stores the owner of a voice
+sub_9FBB5 SbFreeVoice {source_game=PC-new,confidence=low} stops a voice and returns it to the free voice mask
+sub_9FC04 SbStopVoice {source_game=PC-new,confidence=low} stops one voice
+sub_9FC24 SbProgramChange {source_game=PC-new,confidence=medium} MIDI program change: sets the patch of a channel
+sub_9FC94 SbPitchBend {source_game=PC-new,confidence=medium} MIDI pitch bend: stores the bend of a channel
+sub_9FCAB SbAllocDosBuffer {source_game=PC-new,confidence=medium} allocates DOS memory through DPMI
+sub_9FD01 SbFreeDosBuffer {source_game=PC-new,confidence=medium} frees DOS memory through DPMI
+__rterrmsg_ SbSetMixerVolumes {source_game=PC-new,confidence=medium,method=fixes a wrong library match (it writes mixer volume registers)} sets the Sound Blaster voice, master and FM mixer volumes

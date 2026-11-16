@@ -5,7 +5,7 @@ section s_981AD progbits alloc exec nowrite align=1
 extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, BackBufferWidth, joycalactive, joycalposthook, joycalprehook, mousepollfn
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
 extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, FindNearestColor
-extern sub_A1800, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
+extern PrintStringCentered, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
 extern sub_B6F84, DefaultFont
 global sub_981AD, sub_981B0, sub_981D4, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
 global AskExitToDos, loc_984CF, ShowMessageBox, sub_9862C, DosGetVector, DosSetVector, sub_9867E
@@ -160,7 +160,7 @@ ShowPromptBox:
         push eax
         mov edi, dword [dword esp+0A8h]
         push edi
-        call sub_A1800
+        call PrintStringCentered
         add esp, byte 8
         call dword [off_D3074]
         push BackBufferWidth
@@ -312,7 +312,7 @@ ShowMessageBox:
         push dword 0BFh
         mov ebx, dword [dword esp+0B0h]
         push ebx
-        call sub_A1800
+        call PrintStringCentered
         add esp, byte 8
         call dword [off_D3074]
         mov ecx, dword [dword esp+0B0h]

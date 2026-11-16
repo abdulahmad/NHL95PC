@@ -4,9 +4,9 @@ bits 32
 section s_98B30 progbits alloc exec nowrite align=1
 extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, byte_D4F5C, byte_D4F5D, byte_D4F5E
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
-extern byte_F234E, dword_D2F60, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
+extern byte_F234E, dword_D2F60, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, SndTimerHandle, dword_D4F9A
 extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, AllocMemBlockEx
-extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, sub_971DB, SndDriverCall, sub_9722E, sub_A2000
+extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, SndHandleService, SndDriverCall, SndHandleMidi, sub_A2000
 extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
 extern word_D4F88
 global sub_98B30, sub_98BEC, FillRowTable, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
@@ -471,26 +471,26 @@ loc_98FA7:
         inc ecx
         cmp ecx, byte 4
         jl short loc_98F54
-        cmp dword [dword_D4F96], byte 0
+        cmp dword [SndTimerHandle], byte 0
         jl short loc_98FD7
         xor eax, eax
-        mov al, byte [dword_D4F96]
+        mov al, byte [SndTimerHandle]
         mov edx, 8
         call SndDriverCall
         test eax, eax
         je short loc_98FD7
         xor eax, eax
-        mov al, byte [dword_D4F96]
-        call sub_971DB
+        mov al, byte [SndTimerHandle]
+        call SndHandleService
 loc_98FD7:
         xor ecx, ecx
         jmp short loc_98FED
 loc_98FDB:
-        cmp ecx, dword [dword_D4F96]
+        cmp ecx, dword [SndTimerHandle]
         je short loc_98FEC
         xor eax, eax
         mov al, cl
-        call sub_971DB
+        call SndHandleService
 loc_98FEC:
         inc ecx
 loc_98FED:
@@ -557,17 +557,17 @@ loc_99091:
         cmp ecx, byte 20h
         jl short loc_9907B
 loc_9909A:
-        cmp dword [dword_D4F96], byte 0
+        cmp dword [SndTimerHandle], byte 0
         jl short loc_990C4
         xor eax, eax
-        mov al, byte [dword_D4F96]
+        mov al, byte [SndTimerHandle]
         mov edx, 8
         call SndDriverCall
         test eax, eax
         je short loc_990C4
         xor eax, eax
-        mov al, byte [dword_D4F96]
-        call sub_971DB
+        mov al, byte [SndTimerHandle]
+        call SndHandleService
 loc_990C4:
         pop ebp
         pop edi
@@ -831,7 +831,7 @@ loc_993AC:
         mov al, byte [byte esi+051h]
         mov ebx, byte_F1784
 loc_993C5:
-        call sub_9722E
+        call SndHandleMidi
         jmp near loc_994DF
 loc_993CF:
         test byte [byte esi+01h], 8
@@ -1034,7 +1034,7 @@ loc_99600:
         mov al, byte [byte ecx+051h]
         mov ebx, esi
         mov edx, 3
-        call sub_9722E
+        call SndHandleMidi
         sub dword [dword_D4F9A], byte 4
         pop ebp
         pop edi
@@ -1061,7 +1061,7 @@ sub_99620:
         xor eax, eax
         mov al, byte [byte ecx+07h]
         mov edx, 3
-        call sub_9722E
+        call SndHandleMidi
         mov dword [ecx], 0
         sub dword [dword_D4F9A], byte 4
         pop esi
@@ -1123,7 +1123,7 @@ sub_996B0:
         mov al, byte [byte eax+051h]
         and eax, 0FFh
         mov edx, 3
-        call sub_9722E
+        call SndHandleMidi
         sub dword [dword_D4F9A], byte 4
         pop esi
         pop ecx
@@ -1172,7 +1172,7 @@ loc_9975B:
         xor eax, eax
         mov al, byte [byte esp+014h]
         mov edx, 3
-        call sub_9722E
+        call SndHandleMidi
         jmp short loc_997A6
 loc_99786:
         xor eax, eax
@@ -1258,7 +1258,7 @@ loc_9985E:
         mov dx, si
         mov al, byte [dword eax+byte_F1704]
         and eax, 0FFh
-        call sub_9722E
+        call SndHandleMidi
         inc esi
         add ecx, esi
         movsx eax, cx
@@ -1287,7 +1287,7 @@ sub_998A0:
         mov byte [byte ebx+01h], ah
         and eax, 0FFh
         mov edx, 2
-        call sub_9722E
+        call SndHandleMidi
         sub dword [dword_D4F9A], byte 4
         pop esi
         pop ecx

@@ -13,53 +13,53 @@ extern GusRunInitTable, sub_B1A04, sub_B1BF8, sub_B1CBC, sub_B1E2C, sub_B1E64, G
 extern GusTestDramBank, unk_F5BF8, GusBasePort, GusIrqStatusPort, word_D8768, word_D876A, GusVoiceSelectPort, GusRegSelectPort
 extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, word_F6128, word_F799C
 extern GusIrqFlags, GusActiveVoices
-global sub_AA210, loc_AA23E, loc_AA250, loc_AA274, loc_AA29D, loc_AA2C2, loc_AA2EE, loc_AA2F7
-global sub_AA300, loc_AA322, loc_AA337, loc_AA34B, loc_AA38B, loc_AA39E, loc_AA3C5, loc_AA3D0
+global GusReadPatchHeader, loc_AA23E, loc_AA250, loc_AA274, loc_AA29D, loc_AA2C2, loc_AA2EE, loc_AA2F7
+global GusLoadPatch, loc_AA322, loc_AA337, loc_AA34B, loc_AA38B, loc_AA39E, loc_AA3C5, loc_AA3D0
 global loc_AA406, loc_AA449, loc_AA45D, loc_AA496, loc_AA4AB, loc_AA553, loc_AA56A, loc_AA587
 global loc_AA58A, loc_AA5B6, loc_AA5B9, loc_AA5D0, loc_AA617, loc_AA62C, loc_AA644, loc_AA654
 global loc_AA671, loc_AA679, loc_AA69C, loc_AA6B6, loc_AA6CC, loc_AA6F7, loc_AA70F, loc_AA720
-global loc_AA72E, loc_AA74C, sub_AA758, loc_AA775, loc_AA77D, loc_AA792, loc_AA796, loc_AA7A2
-global sub_AA7CC, GusStopDmaAndTimers, loc_AA8A6, GusUnhookIrqs, loc_AA8D1, GusHookIrqs, loc_AA906, GusOpenCard
+global loc_AA72E, loc_AA74C, GusUnloadPatch, loc_AA775, loc_AA77D, loc_AA792, loc_AA796, loc_AA7A2
+global GusSetPatchFlags, GusStopDmaAndTimers, loc_AA8A6, GusUnhookIrqs, loc_AA8D1, GusHookIrqs, loc_AA906, GusOpenCard
 global loc_AA93A, loc_AA961, loc_AA982, loc_AA9B5, GusStopAllVoices, loc_AA9DF, loc_AAAC4, loc_AAAD6
 global loc_AAAE8, loc_AAB44, GusOpen, loc_AAB7F, loc_AABAA, loc_AABFD, loc_AAC3E, GusClose
 global loc_AAC60, loc_AACA1, loc_AACA3, GusSetIrqDmaLatches, loc_AACD1, loc_AACE3, loc_AACFF, loc_AAD0E
-global GusResetVoices, loc_AAE52, loc_AAE5C, loc_AAEFC, loc_AB0F7, sub_AB180, loc_AB19C, loc_AB1BE
-global loc_AB1CC, loc_AB200, loc_AB236, loc_AB23B, sub_AB244, loc_AB299, loc_AB2B8, loc_AB2E4
+global GusResetVoices, loc_AAE52, loc_AAE5C, loc_AAEFC, loc_AB0F7, GusMidiInit, loc_AB19C, loc_AB1BE
+global loc_AB1CC, loc_AB200, loc_AB236, loc_AB23B, GusVoiceUpdateVolume, loc_AB299, loc_AB2B8, loc_AB2E4
 global loc_AB2F0, loc_AB392, loc_AB3C4, loc_AB3C6, loc_AB3CD, loc_AB3DD, loc_AB407, loc_AB430
 global loc_AB461, loc_AB485, loc_AB4B0, loc_AB4BC, loc_AB4BF, loc_AB4C9, loc_AB4D6, loc_AB50D
-global loc_AB519, loc_AB56C, loc_AB578, loc_AB5B9, loc_AB5C4, loc_AB5F9, sub_AB658, loc_AB672
-global loc_AB67C, loc_AB699, loc_AB6B0, loc_AB6B4, sub_AB6D0, loc_AB6F3, loc_AB722, loc_AB731
-global loc_AB767, loc_AB76B, sub_AB79C, loc_AB7AE, loc_AB7B8, loc_AB7CF, loc_AB7EC, loc_AB7F0
-global sub_AB80C, loc_AB822, loc_AB845, loc_AB87A, loc_AB89E, loc_AB8A5, loc_AB8A7, loc_AB8B7
+global loc_AB519, loc_AB56C, loc_AB578, loc_AB5B9, loc_AB5C4, loc_AB5F9, GusSetChannelVolume, loc_AB672
+global loc_AB67C, loc_AB699, loc_AB6B0, loc_AB6B4, GusSetChannelBend, loc_AB6F3, loc_AB722, loc_AB731
+global loc_AB767, loc_AB76B, GusSetMasterVolume, loc_AB7AE, loc_AB7B8, loc_AB7CF, loc_AB7EC, loc_AB7F0
+global GusSetChannelModulation, loc_AB822, loc_AB845, loc_AB87A, loc_AB89E, loc_AB8A5, loc_AB8A7, loc_AB8B7
 global loc_AB8BE, loc_AB8C0, loc_AB8FF, loc_AB91A, loc_AB928, loc_AB93E, loc_AB942, jpt_AB964
-global sub_AB974, loc_AB988, loc_AB9AF, loc_AB9DC, loc_AB9E8, loc_AB9EC, loc_AB9F7, loc_ABA2F
-global loc_ABA8F, loc_ABA93, sub_ABAB0, sub_ABACC, sub_ABAD8, loc_ABB16, loc_ABB24, loc_ABB75
-global loc_ABC2F, sub_ABC38, loc_ABC6B, loc_ABC74, loc_ABCAA, loc_ABCCC, loc_ABD1C, loc_ABD24
-global loc_ABD29, loc_ABD33, loc_ABD48, sub_ABD60, sub_ABDA0, loc_ABDCC, loc_ABDDB, loc_ABE05
-global loc_ABE0F, sub_ABE18, loc_ABF4D, sub_ABF5C, loc_ABF95, loc_AC028, loc_AC03F, sub_AC050
-global loc_AC063, loc_AC07E, loc_AC086, loc_AC0B4, sub_AC0CC, loc_AC0F2, loc_AC109, loc_AC13E
+global GusVibratoTick, loc_AB988, loc_AB9AF, loc_AB9DC, loc_AB9E8, loc_AB9EC, loc_AB9F7, loc_ABA2F
+global loc_ABA8F, loc_ABA93, GusStartVibratoTimer, GusStopVibratoTimer, GusVoiceSetVibrato, loc_ABB16, loc_ABB24, loc_ABB75
+global loc_ABC2F, GusVoiceSetEnvelope, loc_ABC6B, loc_ABC74, loc_ABCAA, loc_ABCCC, loc_ABD1C, loc_ABD24
+global loc_ABD29, loc_ABD33, loc_ABD48, GusScaleRatio, GusNoteFrequency, loc_ABDCC, loc_ABDDB, loc_ABE05
+global loc_ABE0F, GusVoiceStopRamp, loc_ABF4D, GusVoiceStopWave, loc_ABF95, loc_AC028, loc_AC03F, GusStopNoteVoices
+global loc_AC063, loc_AC07E, loc_AC086, loc_AC0B4, GusMidiNoteOn, loc_AC0F2, loc_AC109, loc_AC13E
 global loc_AC163, loc_AC16D, loc_AC197, loc_AC1B1, loc_AC1B8, loc_AC1C9, loc_AC1EA, loc_AC1ED
 global loc_AC1F2, loc_AC25F, loc_AC26B, loc_AC2BE, loc_AC2EA, loc_AC322, loc_AC337, loc_AC39C
 global loc_AC3A9, loc_AC3C0, loc_AC3CA, loc_AC3D4, loc_AC42A, loc_AC46F, loc_AC589, loc_AC5B4
 global loc_AC5DE, loc_AC5ED, loc_AC5F8, loc_AC673, loc_AC686, loc_AC691, loc_AC6AA, loc_AC6B1
-global loc_AC6CA, loc_AC6CF, loc_AC6D0, loc_AC6DC, sub_AC6E8, loc_AC70D, loc_AC72E, loc_AC739
+global loc_AC6CA, loc_AC6CF, loc_AC6D0, loc_AC6DC, GusMidiNoteOff, loc_AC70D, loc_AC72E, loc_AC739
 global loc_AC73B, loc_AC755, loc_AC75B, loc_AC766, loc_AC853, loc_AC89B, loc_AC8EB, loc_AC8FE
 global loc_AC9A0, loc_AC9F2, loc_ACA4F, loc_ACADB, loc_ACB57, loc_ACB68, loc_ACBAC, loc_ACBDA
-global loc_ACBE0, loc_ACC20, loc_ACC2A, sub_ACC3C, loc_ACC5D, loc_ACC70, loc_ACCA5, loc_ACCA6
-global loc_ACCB2, sub_ACCC0, loc_ACD45, loc_ACD4C, loc_ACD4E, sub_ACD58, loc_ACE0F, loc_ACE1A
+global loc_ACBE0, loc_ACC20, loc_ACC2A, GusSetSustain, loc_ACC5D, loc_ACC70, loc_ACCA5, loc_ACCA6
+global loc_ACCB2, GusVoiceWaveEnd, loc_ACD45, loc_ACD4C, loc_ACD4E, GusVoiceRampEnd, loc_ACE0F, loc_ACE1A
 global loc_ACE34, loc_ACEA2, loc_ACEE5, loc_ACF30, loc_ACF65, loc_ACF8A, loc_ACFC5, loc_ACFC9
 global loc_AD03E, loc_AD07F, loc_AD0B2, loc_AD0B8, loc_AD0DD, loc_AD0F3, loc_AD105, loc_AD10A
-global loc_AD153, sub_AD160, loc_AD181, loc_AD197, loc_AD1A2, loc_AD1B9, loc_AD1BE, loc_AD1C3
+global loc_AD153, GusStopPatchVoices, loc_AD181, loc_AD197, loc_AD1A2, loc_AD1B9, loc_AD1BE, loc_AD1C3
 global loc_AD1CF, loc_AD1D9, loc_AD1EE, loc_AD201, loc_AD20F, loc_AD225, loc_AD22C, loc_AD231
-global loc_AD23D, loc_AD241, sub_AD260, loc_AD27A, loc_AD286, sub_AD298, sub_AD2A8, loc_AD2CC
-global loc_AD2E6, loc_AD324, loc_AD328, loc_AD33B, sub_AD344, loc_AD35D, loc_AD36F, loc_AD373
+global loc_AD23D, loc_AD241, GusForgetPatch, loc_AD27A, loc_AD286, GusSetChannelPatch, GusSetChannelPan, loc_AD2CC
+global loc_AD2E6, loc_AD324, loc_AD328, loc_AD33B, GusChannelNotesOff, loc_AD35D, loc_AD36F, loc_AD373
 global loc_AD388, loc_AD39A, loc_AD39E, GusPokeBlock, loc_AD3D6, loc_AD3E5, GusPeekBlock, loc_AD411
-global loc_AD41E, GusSizeDram, loc_AD450, loc_AD4A1, loc_AD4B8, loc_AD4D2, sub_AD4DC, loc_AD502
-global loc_AD523, loc_AD577, loc_AD5CE, loc_AD5E2, loc_AD5EA, loc_AD603, sub_AD610, loc_AD678
-global loc_AD68C, loc_AD6D0, sub_AD6F4, loc_AD70A, loc_AD725, loc_AD73B, loc_AD740, sub_AD758
-global loc_AD76E, loc_AD789, loc_AD7A5, loc_AD7AA, loc_AD7C1, loc_AD7C3, sub_AD7CC, loc_AD7E5
-global loc_ADC73, loc_ADC90, sub_ADC96, loc_ADCAE, loc_ADEC0, loc_ADEDE, loc_ADEE0, loc_ADEE5
-sub_AA210:
+global loc_AD41E, GusSizeDram, loc_AD450, loc_AD4A1, loc_AD4B8, loc_AD4D2, GusDramAlloc, loc_AD502
+global loc_AD523, loc_AD577, loc_AD5CE, loc_AD5E2, loc_AD5EA, loc_AD603, GusDramFree, loc_AD678
+global loc_AD68C, loc_AD6D0, GusDramFreeTotal, loc_AD70A, loc_AD725, loc_AD73B, loc_AD740, GusDramLargestFree
+global loc_AD76E, loc_AD789, loc_AD7A5, loc_AD7AA, loc_AD7C1, loc_AD7C3, GusMixAdd8, loc_AD7E5
+global loc_ADC73, loc_ADC90, GusClearMixBuffer, loc_ADCAE, loc_ADEC0, loc_ADEDE, loc_ADEE0, loc_ADEE5
+GusReadPatchHeader:
         push ebp
         mov ebp, esp
         push ebx
@@ -159,7 +159,7 @@ loc_AA2F7:
         pop ebp
         ret
         db 090h
-sub_AA300:
+GusLoadPatch:
         push ebp
         mov ebp, esp
         push esi
@@ -247,7 +247,7 @@ loc_AA3D0:
         mov eax, edi
         call sub_B0A40
         mov eax, dword [byte ebp-024h]
-        call sub_AA758
+        call GusUnloadPatch
         mov eax, 0Eh
         lea esp, [byte ebp-08h]
         pop edi
@@ -296,7 +296,7 @@ loc_AA45D:
         mov eax, edi
         call sub_B0A40
         mov eax, dword [byte ebp-024h]
-        call sub_AA758
+        call GusUnloadPatch
         mov eax, 0Eh
         lea esp, [byte ebp-08h]
         pop edi
@@ -371,7 +371,7 @@ loc_AA56A:
 loc_AA587:
         mov eax, dword [byte ebp-028h]
 loc_AA58A:
-        call sub_AD4DC
+        call GusDramAlloc
         mov dword [byte ebp-02Ch], eax
         mov ebx, dword [byte ebp-02Ch]
         test ebx, ebx
@@ -379,7 +379,7 @@ loc_AA58A:
         mov eax, edi
         call sub_B0A40
         mov eax, dword [byte ebp-024h]
-        call sub_AA758
+        call GusUnloadPatch
         mov eax, 6
         lea esp, [byte ebp-08h]
         pop edi
@@ -416,7 +416,7 @@ loc_AA5D0:
         mov eax, edi
         call sub_B0A40
         mov eax, dword [byte ebp-024h]
-        call sub_AA758
+        call GusUnloadPatch
         mov eax, 0Eh
         lea esp, [byte ebp-08h]
         pop edi
@@ -483,7 +483,7 @@ loc_AA69C:
         mov eax, edi
         call sub_B0A40
         mov eax, dword [byte ebp-024h]
-        call sub_AA758
+        call GusUnloadPatch
         mov eax, edx
         lea esp, [byte ebp-08h]
         pop edi
@@ -555,7 +555,7 @@ loc_AA74C:
         pop ebp
         ret 0Ch
         db 08Dh,040h,00h
-sub_AA758:
+GusUnloadPatch:
         push ebp
         mov ebp, esp
         push ebx
@@ -568,7 +568,7 @@ sub_AA758:
         cli
         call GusEnterCritical
         mov eax, edx
-        call sub_AD160
+        call GusStopPatchVoices
         xor ecx, ecx
         jmp short loc_AA7A2
 loc_AA775:
@@ -580,7 +580,7 @@ loc_AA77D:
         test edi, edi
         je short loc_AA792
         mov eax, edi
-        call sub_AD610
+        call GusDramFree
         mov dword [byte ebx+014h], 0
 loc_AA792:
         inc esi
@@ -598,7 +598,7 @@ loc_AA7A2:
         jl short loc_AA775
         mov eax, edx
         mov word [edx], 0
-        call sub_AD260
+        call GusForgetPatch
         call GusLeaveCritical
         popfw
         lea esp, [byte ebp-014h]
@@ -610,7 +610,7 @@ loc_AA7A2:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_AA7CC:
+GusSetPatchFlags:
         push ebp
         mov ebp, esp
         mov word [byte eax+01Ah], dx
@@ -1360,7 +1360,7 @@ loc_AB0F7:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h
-sub_AB180:
+GusMidiInit:
         push ebp
         mov ebp, esp
         push ebx
@@ -1406,13 +1406,13 @@ loc_AB200:
         jl short loc_AB1CC
         mov ebx, 7Fh
         xor edx, edx
-        mov eax, sub_ACD58
+        mov eax, GusVoiceRampEnd
         mov word [word_F611A], dx
         mov word [word_F6118], bx
         call sub_B151C
         test eax, eax
         jne short loc_AB236
-        mov eax, sub_ACCC0
+        mov eax, GusVoiceWaveEnd
         call sub_B14E4
         test eax, eax
         je short loc_AB23B
@@ -1425,7 +1425,7 @@ loc_AB23B:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_AB244:
+GusVoiceUpdateVolume:
         push ebp
         mov ebp, esp
         push ebx
@@ -1483,7 +1483,7 @@ loc_AB2E4:
         xor edx, edx
         mov eax, ecx
         mov dl, byte [byte ebx+01Dh]
-        call sub_ABC38
+        call GusVoiceSetEnvelope
 loc_AB2F0:
         xor eax, eax
         mov edx, ecx
@@ -1771,7 +1771,7 @@ loc_AB5F9:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_AB658:
+GusSetChannelVolume:
         push ebp
         mov ebp, esp
         push ebx
@@ -1806,7 +1806,7 @@ loc_AB699:
         jne short loc_AB6B0
         mov eax, ecx
         mov edx, ebx
-        call sub_AB244
+        call GusVoiceUpdateVolume
 loc_AB6B0:
         inc ecx
         add esi, byte 21h
@@ -1824,7 +1824,7 @@ loc_AB6B4:
         pop ebp
         ret
         db 090h
-sub_AB6D0:
+GusSetChannelBend:
         push ebp
         mov ebp, esp
         push ebx
@@ -1860,7 +1860,7 @@ loc_AB722:
         mov edx, 1
         mov ebx, dword [byte ebp-014h]
         mov eax, esi
-        call sub_ABAD8
+        call GusVoiceSetVibrato
 loc_AB731:
         xor eax, eax
         mov edx, esi
@@ -1897,7 +1897,7 @@ loc_AB76B:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_AB79C:
+GusSetMasterVolume:
         push ebp
         mov ebp, esp
         push ebx
@@ -1928,7 +1928,7 @@ loc_AB7CF:
         xor edx, edx
         mov dl, byte [dword eax+byte_F59F9]
         mov eax, ebx
-        call sub_AB244
+        call GusVoiceUpdateVolume
 loc_AB7EC:
         inc ebx
         add ecx, byte 21h
@@ -1946,7 +1946,7 @@ loc_AB7F0:
         pop ebp
         ret
         db 090h
-sub_AB80C:
+GusSetChannelModulation:
         push ebp
         mov ebp, esp
         push ebx
@@ -2036,7 +2036,7 @@ loc_AB8C0:
         mov word [word_F611A], bx
         test dx, dx
         jne short loc_AB8FF
-        call sub_ABAB0
+        call GusStartVibratoTimer
         jmp short loc_AB91A
 loc_AB8FF:
         test eax, eax
@@ -2045,7 +2045,7 @@ loc_AB8FF:
         dec dx
         mov word [word_F611A], dx
         jne short loc_AB91A
-        call sub_ABACC
+        call GusStopVibratoTimer
 loc_AB91A:
         mov eax, dword [ecx]
         cmp byte [byte eax+047h], 0
@@ -2060,7 +2060,7 @@ loc_AB928:
         xor edx, edx
         mov dl, al
         mov eax, edi
-        call sub_ABAD8
+        call GusVoiceSetVibrato
 loc_AB93E:
         inc edi
         add ecx, byte 21h
@@ -2084,7 +2084,7 @@ jpt_AB964:
         dd loc_AB9DC
         dd loc_AB9E8
         dd loc_AB9EC
-sub_AB974:
+GusVibratoTick:
         push ebp
         mov ebp, esp
         push ebx
@@ -2208,11 +2208,11 @@ loc_ABA93:
         pop ebp
         ret
         db 090h
-sub_ABAB0:
+GusStartVibratoTimer:
         push ebp
         mov ebp, esp
         push edx
-        mov eax, sub_AB974
+        mov eax, GusVibratoTick
         mov edx, 0BBh
         call sub_B1A04
         lea esp, [byte ebp-04h]
@@ -2220,14 +2220,14 @@ sub_ABAB0:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_ABACC:
+GusStopVibratoTimer:
         push ebp
         mov ebp, esp
         call sub_B1BF8
         mov esp, ebp
         pop ebp
         ret
-sub_ABAD8:
+GusVoiceSetVibrato:
         push ebp
         mov ebp, esp
         push ecx
@@ -2356,7 +2356,7 @@ loc_ABC2F:
         pop ebp
         ret
         db 090h
-sub_ABC38:
+GusVoiceSetEnvelope:
         push ebp
         mov ebp, esp
         push ebx
@@ -2478,7 +2478,7 @@ loc_ABD48:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_ABD60:
+GusScaleRatio:
         push ebp
         mov ebp, esp
         push ecx
@@ -2511,7 +2511,7 @@ sub_ABD60:
         pop ebp
         ret
         db 090h
-sub_ABDA0:
+GusNoteFrequency:
         push ebp
         mov ebp, esp
         push ebx
@@ -2562,7 +2562,7 @@ loc_ABE0F:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_ABE18:
+GusVoiceStopRamp:
         push ebp
         mov ebp, esp
         push ebx
@@ -2653,7 +2653,7 @@ loc_ABF4D:
         pop ebx
         pop ebp
         ret
-sub_ABF5C:
+GusVoiceStopWave:
         push ebp
         mov ebp, esp
         push ebx
@@ -2718,7 +2718,7 @@ loc_AC028:
         dec dx
         mov word [word_F611A], dx
         jne short loc_AC03F
-        call sub_ABACC
+        call GusStopVibratoTimer
 loc_AC03F:
         call GusLeaveCritical
         popfw
@@ -2729,7 +2729,7 @@ loc_AC03F:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_AC050:
+GusStopNoteVoices:
         push ebp
         mov ebp, esp
         push ebx
@@ -2747,7 +2747,7 @@ loc_AC063:
         sar eax, 10h
         cmp eax, byte 0FFFFFFFFh
         je short loc_AC07E
-        call sub_ABE18
+        call GusVoiceStopRamp
 loc_AC07E:
         inc edx
         cmp edx, byte 4
@@ -2765,7 +2765,7 @@ loc_AC086:
         test byte [dword esi+eax+byte_F5C0B], 1
         je short loc_AC0B4
         mov eax, ebx
-        call sub_ABF5C
+        call GusVoiceStopWave
 loc_AC0B4:
         inc edx
         cmp edx, byte 4
@@ -2780,7 +2780,7 @@ loc_AC0B4:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_AC0CC:
+GusMidiNoteOn:
         push ebp
         mov ebp, esp
         push esi
@@ -2794,7 +2794,7 @@ sub_AC0CC:
         jne short loc_AC0F2
         mov edx, dword [byte ebp+08h]
         mov eax, ebx
-        call sub_AC6E8
+        call GusMidiNoteOff
         jmp near loc_AC6DC
 loc_AC0F2:
         mov eax, dword [byte ebp+08h]
@@ -2831,7 +2831,7 @@ loc_AC13E:
         je short loc_AC163
         mov edx, dword [byte ebp-01Ch]
         mov eax, esi
-        call sub_ABDA0
+        call GusNoteFrequency
         mov ebx, eax
         jmp short loc_AC16D
 loc_AC163:
@@ -2895,7 +2895,7 @@ loc_AC1F2:
         cmp edx, dword [byte ebp-024h]
         je near loc_AC673
         mov eax, dword [byte ebp-02Ch]
-        mov edx, sub_AC050
+        mov edx, GusStopNoteVoices
         call sub_B1CBC
         mov edx, eax
         mov dword [byte ebp-028h], eax
@@ -2974,7 +2974,7 @@ loc_AC2EA:
         mov dword [ecx], esi
         mov ax, word [byte esi+02Eh]
         mov edx, dword [byte esi+010h]
-        call sub_ABD60
+        call GusScaleRatio
         mov word [byte ecx+08h], ax
         mov eax, dword [byte ebp-010h]
         cmp word [byte eax+02h], 400h
@@ -3168,14 +3168,14 @@ loc_AC5B4:
         mov eax, dword [byte ebp-028h]
         mov edx, 1
         mov ebx, dword [byte ebp+08h]
-        call sub_ABAD8
+        call GusVoiceSetVibrato
         mov ax, word [word_F611A]
         mov edx, eax
         inc edx
         mov word [word_F611A], dx
         test ax, ax
         jne short loc_AC5DE
-        call sub_ABAB0
+        call GusStartVibratoTimer
 loc_AC5DE:
         cmp byte [byte esi+044h], 0
         jne short loc_AC5ED
@@ -3185,7 +3185,7 @@ loc_AC5DE:
 loc_AC5ED:
         mov eax, dword [byte ebp-028h]
         mov edx, dword [byte ebp+08h]
-        call sub_ABC38
+        call GusVoiceSetEnvelope
 loc_AC5F8:
         mov edx, 0Dh
         xor eax, eax
@@ -3264,7 +3264,7 @@ loc_AC6DC:
         pop ebp
         ret 4
         db 08Dh,040h,00h
-sub_AC6E8:
+GusMidiNoteOff:
         push ebp
         mov ebp, esp
         push ebx
@@ -3666,7 +3666,7 @@ loc_ACC2A:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_ACC3C:
+GusSetSustain:
         push ebp
         mov ebp, esp
         push ebx
@@ -3699,7 +3699,7 @@ loc_ACC70:
         mov al, byte [dword eax+byte_F5979]
         mov dl, cl
         and eax, 0FFh
-        call sub_AC6E8
+        call GusMidiNoteOff
 loc_ACCA5:
         inc ebx
 loc_ACCA6:
@@ -3715,7 +3715,7 @@ loc_ACCB2:
         pop ebx
         pop ebp
         ret
-sub_ACCC0:
+GusVoiceWaveEnd:
         push ebp
         mov ebp, esp
         push ebx
@@ -3755,9 +3755,9 @@ sub_ACCC0:
         cmp byte [byte ecx+01Bh], 0
         je short loc_ACD45
         mov eax, ebx
-        call sub_ABE18
+        call GusVoiceStopRamp
         mov eax, ebx
-        call sub_ABF5C
+        call GusVoiceStopWave
 loc_ACD45:
         mov eax, 1
         jmp short loc_ACD4E
@@ -3771,7 +3771,7 @@ loc_ACD4E:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_ACD58:
+GusVoiceRampEnd:
         push ebp
         mov ebp, esp
         push ebx
@@ -4088,7 +4088,7 @@ loc_AD153:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_AD160:
+GusStopPatchVoices:
         push ebp
         mov ebp, esp
         push ebx
@@ -4140,7 +4140,7 @@ loc_AD1C3:
         cmp eax, dword [byte ebp-028h]
         je short loc_AD1CF
         mov eax, ebx
-        call sub_ABE18
+        call GusVoiceStopRamp
 loc_AD1CF:
         mov esi, dword [byte ebp-01Ch]
         add esi, byte 21h
@@ -4188,7 +4188,7 @@ loc_AD231:
         cmp eax, dword [byte ebp-024h]
         je short loc_AD23D
         mov eax, ebx
-        call sub_ABF5C
+        call GusVoiceStopWave
 loc_AD23D:
         inc ebx
         add ecx, byte 21h
@@ -4208,7 +4208,7 @@ loc_AD241:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_AD260:
+GusForgetPatch:
         push ebp
         mov ebp, esp
         push ebx
@@ -4238,7 +4238,7 @@ loc_AD286:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_AD298:
+GusSetChannelPatch:
         push ebp
         mov ebp, esp
         shl edx, 4
@@ -4246,7 +4246,7 @@ sub_AD298:
         mov esp, ebp
         pop ebp
         ret
-sub_AD2A8:
+GusSetChannelPan:
         push ebp
         mov ebp, esp
         push ebx
@@ -4306,7 +4306,7 @@ loc_AD33B:
         pop ebp
         ret
         db 090h
-sub_AD344:
+GusChannelNotesOff:
         push ebp
         mov ebp, esp
         push ebx
@@ -4325,7 +4325,7 @@ loc_AD35D:
         cmp cl, byte [byte ebx+01Dh]
         jne short loc_AD36F
         mov eax, edx
-        call sub_ABE18
+        call GusVoiceStopRamp
 loc_AD36F:
         inc edx
         add ebx, byte 21h
@@ -4343,7 +4343,7 @@ loc_AD388:
         cmp cl, byte [byte ebx+01Dh]
         jne short loc_AD39A
         mov eax, edx
-        call sub_ABF5C
+        call GusVoiceStopWave
 loc_AD39A:
         inc edx
         add ebx, byte 21h
@@ -4486,7 +4486,7 @@ loc_AD4D2:
         pop ebp
         ret
         db 090h
-sub_AD4DC:
+GusDramAlloc:
         push ebp
         mov ebp, esp
         push ebx
@@ -4603,7 +4603,7 @@ loc_AD603:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_AD610:
+GusDramFree:
         push ebp
         mov ebp, esp
         push ebx
@@ -4689,7 +4689,7 @@ loc_AD6D0:
         pop ebp
         ret
         db 090h
-sub_AD6F4:
+GusDramFreeTotal:
         push ebp
         mov ebp, esp
         push ebx
@@ -4737,7 +4737,7 @@ loc_AD740:
         pop ebx
         pop ebp
         ret
-sub_AD758:
+GusDramLargestFree:
         push ebp
         mov ebp, esp
         push ebx
@@ -4794,7 +4794,7 @@ loc_AD7C3:
         pop ebx
         pop ebp
         ret
-sub_AD7CC:
+GusMixAdd8:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
@@ -5208,7 +5208,7 @@ loc_ADC90:
         pop ebx
         leave
         ret
-sub_ADC96:
+GusClearMixBuffer:
         cmp ecx, 100h
         jb near loc_ADEC0
         LD xor, eax, eax

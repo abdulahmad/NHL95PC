@@ -2,87 +2,86 @@
 bits 32
 %include "hockey.inc"
 section s_D4BA0 progbits alloc noexec write align=1
-extern sub_972AB, sub_972B8, sub_972C0, sub_972C8, sub_972D5, sub_972DD, sub_972E5, sub_9D698
+extern NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery, NullDriverSetTrack, NullDriverMidi, NullDriverPlayDigi, sub_9D698
 extern sub_9D6E6, sub_9D6F3, sub_9DAAC, sub_9DC9F, sub_9DE9C, sub_9DEA9, sub_9DEBE, sub_9DF73
-extern sub_9DF80, sub_9E676, ParseBlasterEnv, sub_9F387, sub_9F418, sub_9F4A0, sub_9F4C8, sub_9F577
-extern sub_9F622, sub_9F642, sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, sub_9FFA0, sub_A04B9
-extern sub_A053C, sub_A059B, sub_A05D3, sub_A060B, sub_A0643, sub_A067B, sub_A076E, sub_A0853
-extern sub_A0886, sub_A0D99, sub_A0FEA
-global _Extender, _ExtenderSubtype, Is8087, dword_D4BC8, _dynend, _curbrk, _LpCmdLine, _LpPgmName
-global _STACKLOW, _STACKTOP, dword_D4CF0, dword_D4CF4, UngetChar, dword_D4D00, _Envptr, off_D4BA0
+extern sub_9DF80, sub_9E676, ParseBlasterEnv, SbOpen, SbInit, SbClose, SbService, SbQuery
+extern SbSetTrack, SbPlayDigi, sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, sub_9FFA0, GusProbe
+extern GusDetect, GusInitDigi, GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack
+extern GusPlayDigi, GusMusicMidi, GusDigiMidi
+global _Extender, _ExtenderSubtype, Is8087, _dynend, _curbrk, _LpCmdLine, _LpPgmName
+global _STACKLOW, _STACKTOP, dword_D4CF0, dword_D4CF4, UngetChar, dword_D4D00, _Envptr, SndDriverTable
 global _psp, __no87, _Envptr_w4
-off_D4BA0:
-        dd sub_972AB
-        dd sub_972AB
-        dd sub_972B8
-        dd sub_972C0
-        dd sub_972C0
-        dd sub_972C8
-        dd sub_972D5
-        dd sub_972DD
-        dd sub_972E5
+SndDriverTable:
+        dd NullDriverOpen
+        dd NullDriverOpen
+        dd NullDriverInit
+        dd NullDriverReturn
+        dd NullDriverReturn
+        dd NullDriverQuery
+        dd NullDriverSetTrack
+        dd NullDriverMidi
+        dd NullDriverPlayDigi
         db 00h,00h,00h,00h
-dword_D4BC8:
         db 0FFh,0FFh,0FFh,0FFh
-        dd sub_972AB
-        dd sub_972AB
+        dd NullDriverOpen
+        dd NullDriverOpen
         dd sub_9D698
         dd sub_9D6E6
         dd sub_9D6F3
-        dd sub_972C8
-        dd sub_972D5
+        dd NullDriverQuery
+        dd NullDriverSetTrack
         dd sub_9DAAC
-        dd sub_972E5
+        dd NullDriverPlayDigi
         db 05h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
         dd sub_9DE9C
         dd sub_9DEA9
         dd sub_9DEBE
         dd sub_9DF73
         dd sub_9DF80
-        dd sub_972C8
-        dd sub_972D5
+        dd NullDriverQuery
+        dd NullDriverSetTrack
         dd sub_9E676
-        dd sub_972E5
+        dd NullDriverPlayDigi
         db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
         dd ParseBlasterEnv
-        dd sub_9F387
-        dd sub_9F418
-        dd sub_9F4A0
-        dd sub_9F4C8
-        dd sub_9F577
-        dd sub_9F622
+        dd SbOpen
+        dd SbInit
+        dd SbClose
+        dd SbService
+        dd SbQuery
+        dd SbSetTrack
         dd sub_9DC9F
-        dd sub_9F642
+        dd SbPlayDigi
         db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
         dd sub_9FD94
         dd sub_9FD9A
         dd sub_9FDEA
         dd sub_9FE3B
-        dd sub_972C0
-        dd sub_972C8
-        dd sub_972D5
+        dd NullDriverReturn
+        dd NullDriverQuery
+        dd NullDriverSetTrack
         dd sub_9FFA0
-        dd sub_972E5
+        dd NullDriverPlayDigi
         db 03h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-        dd sub_A053C
-        dd sub_A04B9
-        dd sub_A05D3
-        dd sub_A0643
-        dd sub_972C0
-        dd sub_972C8
-        dd sub_972D5
-        dd sub_A0D99
-        dd sub_972E5
+        dd GusDetect
+        dd GusProbe
+        dd GusInitMusic
+        dd GusCloseMusic
+        dd NullDriverReturn
+        dd NullDriverQuery
+        dd NullDriverSetTrack
+        dd GusMusicMidi
+        dd NullDriverPlayDigi
         db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-        dd sub_A053C
-        dd sub_A04B9
-        dd sub_A059B
-        dd sub_A060B
-        dd sub_A067B
-        dd sub_A076E
-        dd sub_A0853
-        dd sub_A0FEA
-        dd sub_A0886
+        dd GusDetect
+        dd GusProbe
+        dd GusInitDigi
+        dd GusCloseDigi
+        dd GusService
+        dd GusQuery
+        dd GusSetTrack
+        dd GusDigiMidi
+        dd GusPlayDigi
         db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 _dynend:
         db 00h,00h,00h,00h
