@@ -31,7 +31,7 @@ global loc_B6C43, loc_B6C70, loc_B6C9E, loc_B6CC1, loc_B6CC7, loc_B6CFA, loc_B6C
 global loc_B6D12, loc_B6D1C, sub_B6D24, sub_B6D47, loc_B6D79, loc_B6DAC, loc_B6DAF, loc_B6DBF
 global loc_B6DC2, sub_B6DD0, BlitShapeClipped, loc_B6E31, loc_B6E53, loc_B6E57, loc_B6E84, loc_B6EB2
 global loc_B6ED5, loc_B6EDB, loc_B6F1E, loc_B6F2E, loc_B6F39, loc_B6F46, loc_B6F4B, loc_B6F57
-global loc_B6F68, loc_B6F78, sub_B6F84, loc_B6FB7, sub_B6FFC, sub_B7005, sub_B700E, loc_B7027
+global loc_B6F68, loc_B6F78, sub_B6F84, loc_B6FB7, ShapeWidth, ShapeHeight, sub_B700E, loc_B7027
 global loc_B702C, loc_B7037, loc_B7045, FillRectSpansCore, jpt_B708F, loc_B70B7, loc_B70CF, loc_B70FC
 global loc_B710B, loc_B7111, loc_B712E, loc_B7139, loc_B7142, loc_B7146, loc_B714F, loc_B7158
 global loc_B7179, loc_B7185, loc_B71A8, loc_B71B4, loc_B71D2, loc_B71DB, loc_B71DF, loc_B71E5
@@ -2144,11 +2144,11 @@ loc_B6FB7:
         leave
         ret
         db 00h,00h
-sub_B6FFC:
+ShapeWidth:
         mov ebx, dword [byte esp+04h]
         movsx eax, word [byte ebx+04h]
         ret
-sub_B7005:
+ShapeHeight:
         mov ebx, dword [byte esp+04h]
         movsx eax, word [byte ebx+06h]
         ret

@@ -8,9 +8,9 @@ extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType
 extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, SndTimerHandle, dword_D4F9A, dword_EDCFC, dword_EDD00
 extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
 extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
-extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, PushMemDescriptorLocked, MemDescPtr, MemDescSize
-extern SndDriverHandle, SndHandleClose, SndDriverCall, SndHandleSetTrack, SndHandlePlayDigi, sub_98F11, sub_98F46, sub_99522
-extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, AddExitHandler, bcopy, FillMem
+extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, ResizeMemHandleUnlocked, PushMemDescriptorLocked, MemDescPtr, MemDescSize
+extern SndDriverHandle, SndHandleClose, SndDriverCall, SndHandleSetTrack, SndHandlePlayDigi, SeqService, SeqUpdate, SeqSendController
+extern SeqNoteOffSlot, SeqSendPitchBend, SeqNoteOn, SeqQueueCommand, SeqSendProgram, AddExitHandler, bcopy, FillMem
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
 global SndInit, loc_8EB8D, SndShutdown, loc_8EBAB, loc_8EBB4, loc_8EBBB, SndClearTables, loc_8EBEB
 global loc_8EC08, loc_8EC12, loc_8EC26, loc_8EC30, loc_8EC3D, loc_8EC47, loc_8EC53, loc_8EC5D
@@ -44,7 +44,7 @@ SndInit:
         push ecx
         push edx
         call SndShutdown
-        push sub_98F11
+        push SeqService
         call addtimer
         add esp, byte 4
         cmp byte [byte_D41CC], 0
@@ -63,7 +63,7 @@ SndShutdown:
         push ebx
         push ecx
         push edx
-        push sub_98F11
+        push SeqService
         call RemoveTimerCallback
         add esp, byte 4
         mov edx, dword [sndhandlecount]
@@ -841,24 +841,24 @@ loc_8F38D:
         xor edx, edx
         mov dl, byte [byte esi+050h]
         mov eax, ebp
-        call sub_998A0
+        call SeqSendProgram
         xor ebx, ebx
         mov edx, 1
         mov eax, esi
-        call sub_99522
+        call SeqSendController
         xor ebx, ebx
         mov bl, byte [byte ecx+06h]
         mov edx, 7
         mov eax, esi
-        call sub_99522
+        call SeqSendController
         xor ebx, ebx
         mov bl, byte [byte ecx+07h]
         mov edx, 0Ah
         mov eax, esi
-        call sub_99522
+        call SeqSendController
         mov edx, 4000h
         mov eax, esi
-        call sub_996B0
+        call SeqSendPitchBend
 loc_8F3F3:
         mov byte [byte edi+01h], 1
         cmp dword [esp], byte 0
@@ -1017,7 +1017,7 @@ loc_8F52B:
         mov ebx, ecx
         mov edx, 3
         mov eax, edi
-        call sub_997B7
+        call SeqQueueCommand
         push dword 0FFh
         push dword 0FFh
         push edi
@@ -1044,7 +1044,7 @@ loc_8F592:
         mov ebx, ecx
         mov edx, 2
         mov eax, edi
-        call sub_997B7
+        call SeqQueueCommand
         mov al, byte [byte esp+04h]
         or al, 0B0h
         mov byte [ecx], al
@@ -1054,7 +1054,7 @@ loc_8F592:
         mov ebx, ecx
         mov edx, 3
         mov eax, edi
-        call sub_997B7
+        call SeqQueueCommand
         push dword 0FFh
         push dword 0FFh
         push edi
@@ -1064,7 +1064,7 @@ loc_8F592:
         mov edx, 7Fh
         mov eax, 24h
 loc_8F609:
-        call sub_99700
+        call SeqNoteOn
         cwde
         sub dword [dword_D4F9A], byte 4
 loc_8F616:
@@ -1152,7 +1152,7 @@ loc_8F6E2:
         cmp ebp, dword [ecx]
         jne short loc_8F6ED
         mov eax, ecx
-        call sub_99620
+        call SeqNoteOffSlot
 loc_8F6ED:
         add ecx, byte 0Ch
         inc edi
@@ -1177,7 +1177,7 @@ loc_8F70D:
         and eax, 0FFh
         mov ebx, ecx
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
         mov al, byte [byte esi+050h]
         or al, 0B0h
         mov byte [ecx], al
@@ -1188,7 +1188,7 @@ loc_8F70D:
         and eax, 0FFh
         mov ebx, ecx
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
         mov byte [byte esi+01h], 0
         mov dword [byte esi+02h], 0
 loc_8F767:
@@ -1205,8 +1205,8 @@ loc_8F76B:
         and eax, 0FFh
         mov ebx, ecx
         mov edx, 3
-        call sub_997B7
-        call sub_98F46
+        call SeqQueueCommand
+        call SeqUpdate
         xor eax, eax
         sub dword [dword_D4F9A], byte 4
 loc_8F7A2:
@@ -1368,7 +1368,7 @@ loc_8F8E6:
         mov ebx, ecx
         mov edx, 3
         xor eax, eax
-        call sub_997B7
+        call SeqQueueCommand
 loc_8F909:
         inc edi
 loc_8F90A:
@@ -1395,7 +1395,7 @@ loc_8F929:
         mov bl, byte [dword eax+byte_F234D]
         mov edx, 7
         mov eax, ecx
-        call sub_99522
+        call SeqSendController
 loc_8F94F:
         inc esi
 loc_8F950:
@@ -1527,7 +1527,7 @@ loc_8FA83:
         push eax
         mov edx, dword [byte esp+058h]
         push edx
-        call sub_8D144
+        call ResizeMemHandleUnlocked
         add esp, byte 8
         lea esi, [byte esp+044h]
         movsd
@@ -1860,7 +1860,7 @@ MidiProgramChange:
         and eax, 0FFh
         mov ebx, esp
         mov edx, 2
-        call sub_997B7
+        call SeqQueueCommand
 loc_8FDAE:
         add esp, byte 4
         ret
@@ -1877,7 +1877,7 @@ MidiSetVolume:
         and eax, 0FFh
         mov ebx, esp
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
 loc_8FDE1:
         add esp, byte 4
         ret
@@ -1896,7 +1896,7 @@ MidiPitchBend:
         and eax, 0FFh
         mov ebx, esp
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
 loc_8FE18:
         add esp, byte 4
         ret
@@ -1913,7 +1913,7 @@ MidiNoteOn:
         and eax, 0FFh
         mov ebx, esp
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
 loc_8FE4B:
         add esp, byte 4
         ret
@@ -1931,7 +1931,7 @@ MidiNoteOff:
         and eax, 0FFh
         mov ebx, esp
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
 loc_8FE7F:
         add esp, byte 4
         ret

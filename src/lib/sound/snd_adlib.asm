@@ -3,52 +3,49 @@ bits 32
 %include "hockey.inc"
 section s_9DE9C progbits alloc exec nowrite align=1
 extern __GETDS, byte_F2F42, byte_F2F43, byte_F3196, byte_F3197, dword_D4F9A, dword_F2F28, dword_F3108
-extern memcpy_, GetPatchEntry, sub_91FA4, sub_A68C9, sub_A699D, sub_A69E8, sub_A69FB, sub_A6A01
-extern sub_A6A09, sub_A6B32, sub_A6B5D, sub_A6B73, sub_B4A60, unk_F21FC, unk_F3148, word_F2F3C
+extern memcpy_, GetPatchEntry, sub_91FA4, OplFlush, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
+extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, sub_B4A60, unk_F21FC, unk_F3148, word_F2F3C
 extern word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450, word_F3452
-global sub_9DE9C, sub_9DEA2, sub_9DEA9, sub_9DEAF, sub_9DEBE, sub_9DEC4, loc_9DEE3, loc_9DF3A
-global loc_9DF46, loc_9DF5C, sub_9DF73, sub_9DF79, sub_9DF80, sub_9DF86, loc_9DF94, loc_9DFEF
-global loc_9DFFD, loc_9E001, loc_9E010, loc_9E013, sub_9E026, loc_9E082, sub_9E087, loc_9E0A8
-global loc_9E0D6, loc_9E0EE, loc_9E0F1, loc_9E0F7, sub_9E0FF, loc_9E13B, loc_9E149, loc_9E15A
+global AdlibDetect, AdlibOpen, AdlibInit, loc_9DEE3, loc_9DF3A
+global loc_9DF46, loc_9DF5C, AdlibClose, AdlibService, loc_9DF94, loc_9DFEF
+global loc_9DFFD, loc_9E001, loc_9E010, loc_9E013, AdlibLoadTimbre, loc_9E082, AdlibNoteOff, loc_9E0A8
+global loc_9E0D6, loc_9E0EE, loc_9E0F1, loc_9E0F7, AdlibController, loc_9E13B, loc_9E149, loc_9E15A
 global loc_9E178, loc_9E180, loc_9E196, loc_9E1AB, loc_9E1BC, loc_9E1E7, loc_9E20D, loc_9E210
-global loc_9E218, loc_9E21D, loc_9E222, loc_9E232, loc_9E27B, loc_9E27E, loc_9E284, sub_9E28B
-global sub_9E29B, sub_9E2B1, loc_9E2F7, loc_9E309, loc_9E31B, sub_9E378, loc_9E383, sub_9E390
-global loc_9E39C, loc_9E3BB, loc_9E3C6, loc_9E40F, jpt_9E414, sub_9E428, loc_9E448, loc_9E463
-global loc_9E484, loc_9E4A5, loc_9E4B8, loc_9E4C9, loc_9E4D2, sub_9E4D7, loc_9E506, sub_9E511
-global loc_9E516, loc_9E52B, loc_9E53F, loc_9E55D, loc_9E58D, loc_9E596, loc_9E599, sub_9E59D
-global sub_9E5C9, loc_9E5E4, loc_9E5F7, loc_9E5FD, loc_9E601, loc_9E641, loc_9E653, loc_9E666
-global loc_9E66A, loc_9E66D, sub_9E676, sub_9E67C, loc_9E6BD, loc_9E6C9, loc_9E6D1, loc_9E701
+global loc_9E218, loc_9E21D, loc_9E222, loc_9E232, loc_9E27B, loc_9E27E, loc_9E284, AdlibProgramChange
+global AdlibPitchBend, AdlibVoiceSetup, loc_9E2F7, loc_9E309, loc_9E31B, AdlibVoiceRelease, loc_9E383, AdlibVoiceResetEnvelopes
+global loc_9E39C, loc_9E3BB, loc_9E3C6, loc_9E40F, jpt_9E414, AdlibEnvelopeStep, loc_9E448, loc_9E463
+global loc_9E484, loc_9E4A5, loc_9E4B8, loc_9E4C9, loc_9E4D2, AdlibStartLfo, loc_9E506, AdlibStepLfo
+global loc_9E516, loc_9E52B, loc_9E53F, loc_9E55D, loc_9E58D, loc_9E596, loc_9E599, AdlibStartPitchEnv
+global AdlibStepPitchEnv, loc_9E5E4, loc_9E5F7, loc_9E5FD, loc_9E601, loc_9E641, loc_9E653, loc_9E666
+global loc_9E66A, loc_9E66D, AdlibMidi, loc_9E6BD, loc_9E6C9, loc_9E6D1, loc_9E701
 global loc_9E708, loc_9E720, loc_9E783, loc_9E788, loc_9E79F, loc_9E7A4, loc_9E7BA, loc_9E7D6
-global loc_9E7EF, loc_9E7F1, loc_9E80C, loc_9E81F, loc_9E848, loc_9E84D, sub_9E85B, unk_9E876
+global loc_9E7EF, loc_9E7F1, loc_9E80C, loc_9E81F, loc_9E848, loc_9E84D, AdlibApplyModulation, AdlibModulationJumps
 global loc_9E89A, loc_9E8C5, loc_9E8F9, loc_9E908, loc_9E91A, loc_9E921, loc_9E94E, loc_9E97A
-global loc_9E9A2, loc_9E9CD, loc_9EA0F, loc_9EA37, loc_9EA7A, loc_9EAA0, sub_9EAA6, loc_9EB14
-global loc_9EB61, loc_9EB97, sub_9EBD5, loc_9EC4D, loc_9ECE0, sub_9ECE8, loc_9ED20, loc_9ED25
+global loc_9E9A2, loc_9E9CD, loc_9EA0F, loc_9EA37, loc_9EA7A, loc_9EAA0, AdlibUpdateVoice, loc_9EB14
+global loc_9EB61, loc_9EB97, AdlibWriteVoice, loc_9EC4D, loc_9ECE0, AdlibNoteOn, loc_9ED20, loc_9ED25
 global loc_9ED36, loc_9ED3C, loc_9ED5B, loc_9ED67, loc_9ED6F, loc_9ED9E, loc_9EDA0, loc_9EDB6
 global loc_9EDDB, loc_9EDE0, loc_9EE64, loc_9EE69, loc_9EE7A, loc_9EE91, loc_9EED2, loc_9EEDA
 global loc_9EEE3, loc_9EEE5, loc_9EF91, loc_9EFBA, loc_9EFC2, loc_9EFCB, loc_9EFCD, loc_9F08F
 global loc_9F12B, loc_9F13D, loc_9F155, loc_9F179, loc_9F182, loc_9F18B, loc_9F1BA, loc_9F1BC
 global loc_9F1D2, loc_9F1D4, loc_9F21F
-sub_9DE9C:
+AdlibDetect:
         push ds
         call __GETDS
-sub_9DEA2:
-        call sub_A6A01
+        call OplDetect
         pop ds
         ret
-sub_9DEA9:
+AdlibOpen:
         push ds
         call __GETDS
-sub_9DEAF:
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_A6A09
+        call OplOpen
         add esp, byte 4
         pop ds
         ret
-sub_9DEBE:
+AdlibInit:
         push ds
         call __GETDS
-sub_9DEC4:
         push esi
         push edi
         mov word [word_F3452], 1FFh
@@ -96,23 +93,21 @@ loc_9DF5C:
         jb short loc_9DF46
         mov ecx, dword [byte esp+010h]
         push ecx
-        call sub_A69E8
+        call OplHwInit
         add esp, byte 4
         pop edi
         pop esi
         pop ds
         ret
-sub_9DF73:
+AdlibClose:
         push ds
         call __GETDS
-sub_9DF79:
-        call sub_A69FB
+        call OplHwClose
         pop ds
         ret
-sub_9DF80:
+AdlibService:
         push ds
         call __GETDS
-sub_9DF86:
         push esi
         push edi
         xor edi, edi
@@ -133,7 +128,7 @@ loc_9DF94:
         lea edx, [byte ecx+08h]
         mov eax, dword [byte ecx+04h]
         mov ebx, 1
-        call sub_9E390
+        call AdlibVoiceResetEnvelopes
         mov eax, esi
         not eax
         and word [word_F3450], ax
@@ -157,19 +152,19 @@ loc_9E001:
         mov word [byte ecx+054h], ax
         lea edx, [byte ecx+08h]
         mov eax, dword [byte ecx+04h]
-        call sub_9EBD5
+        call AdlibWriteVoice
 loc_9E010:
         add esi, esi
         inc edi
 loc_9E013:
         cmp di, byte 9
         jb near loc_9DF94
-        call sub_A68C9
+        call OplFlush
         pop edi
         pop esi
         pop ds
         ret
-sub_9E026:
+AdlibLoadTimbre:
         push ebx
         push ecx
         push esi
@@ -210,7 +205,7 @@ loc_9E082:
         pop ecx
         pop ebx
         ret
-sub_9E087:
+AdlibNoteOff:
         push ebx
         push ecx
         push esi
@@ -245,7 +240,7 @@ loc_9E0D6:
         sar word [byte eax+054h], 1
         lea edx, [byte eax+08h]
         mov eax, dword [byte eax+04h]
-        call sub_9E378
+        call AdlibVoiceRelease
         jmp short loc_9E0F7
 loc_9E0EE:
         add ebx, ebx
@@ -260,7 +255,7 @@ loc_9E0F7:
         pop ecx
         pop ebx
         ret
-sub_9E0FF:
+AdlibController:
         push ecx
         push esi
         push edi
@@ -306,7 +301,7 @@ loc_9E180:
         xor eax, eax
         mov al, bl
         push eax
-        call sub_A6B73
+        call OplVelocityLevel
         add esp, byte 4
         mov word [byte esi+02h], ax
         jmp near loc_9E284
@@ -348,7 +343,7 @@ loc_9E1E7:
         mov dl, byte [dword eax+byte_F3197]
         xor eax, eax
         mov al, byte [byte esp+04h]
-        call sub_9E087
+        call AdlibNoteOff
 loc_9E20D:
         add edi, edi
         inc esi
@@ -380,7 +375,7 @@ loc_9E232:
         lea edx, [byte eax+08h]
         mov eax, dword [byte eax+04h]
         mov ebx, 1
-        call sub_9E390
+        call AdlibVoiceResetEnvelopes
         mov eax, edi
         not eax
         and word [word_F3450], ax
@@ -400,19 +395,19 @@ loc_9E284:
         pop esi
         pop ecx
         ret
-sub_9E28B:
+AdlibProgramChange:
         and eax, 0FFh
         mov eax, dword [nosplit eax*4+dword_F3108]
         mov byte [byte eax+01Bh], dl
         ret
-sub_9E29B:
+AdlibPitchBend:
         and eax, 0FFh
         mov eax, dword [nosplit eax*4+dword_F3108]
         add eax, byte 4
         add edx, edx
         mov word [byte eax+08h], dx
         ret
-sub_9E2B1:
+AdlibVoiceSetup:
         push esi
         push edi
         sub esp, byte 8
@@ -440,13 +435,13 @@ loc_9E2F7:
         je short loc_9E309
         lea edx, [byte esi+028h]
         lea eax, [byte edi+024h]
-        call sub_9E59D
+        call AdlibStartPitchEnv
 loc_9E309:
         cmp word [byte edi+032h], byte 0
         je short loc_9E31B
         lea edx, [byte esi+036h]
         lea eax, [byte edi+034h]
-        call sub_9E4D7
+        call AdlibStartLfo
 loc_9E31B:
         mov word [byte esi+01Ch], 0
         mov ax, word [byte esi+01Ch]
@@ -462,14 +457,14 @@ loc_9E31B:
         xor eax, eax
         mov al, dl
         push eax
-        call sub_A6B32
+        call OplNoteFNum
         add esp, byte 8
         add eax, edi
         mov word [byte esi+014h], ax
         xor eax, eax
         mov al, byte [byte esp+04h]
         push eax
-        call sub_A6B5D
+        call OplVolumeLevel
         add esp, byte 4
         mov word [byte esi+010h], ax
         mov byte [byte esi+01Eh], 1
@@ -478,7 +473,7 @@ loc_9E31B:
         pop edi
         pop esi
         ret
-sub_9E378:
+AdlibVoiceRelease:
         cmp word [byte eax+010h], byte 0
         je short loc_9E383
         mov byte [byte edx+026h], 5
@@ -487,7 +482,7 @@ loc_9E383:
         mov ax, word [byte eax+04Ah]
         mov word [byte edx+020h], ax
         ret
-sub_9E390:
+AdlibVoiceResetEnvelopes:
         push ecx
         cmp word [byte eax+010h], byte 0
         je short loc_9E39C
@@ -525,9 +520,9 @@ loc_9E3C6:
         push eax
         movsx eax, word [edx]
         push eax
-        call sub_A699D
+        call OplLoadVoice
         add esp, byte 8
-        call sub_A68C9
+        call OplFlush
 loc_9E40F:
         pop ecx
         ret
@@ -538,7 +533,7 @@ jpt_9E414:
         dd loc_9E484
         dd loc_9E4A5
         dd loc_9E4B8
-sub_9E428:
+AdlibEnvelopeStep:
         push ebx
         push ecx
         push esi
@@ -615,7 +610,7 @@ loc_9E4D2:
         pop ecx
         pop ebx
         ret
-sub_9E4D7:
+AdlibStartLfo:
         push ebx
         mov word [edx], 0
         mov bx, word [byte eax+04h]
@@ -633,10 +628,10 @@ sub_9E4D7:
         ret
 loc_9E506:
         mov byte [byte edx+02h], 2
-        call sub_9E511
+        call AdlibStepLfo
         pop ebx
         ret
-sub_9E511:
+AdlibStepLfo:
         push ebx
         push ecx
         push edi
@@ -697,7 +692,7 @@ loc_9E599:
         pop ecx
         pop ebx
         ret
-sub_9E59D:
+AdlibStartPitchEnv:
         push ebx
         mov word [byte edx+0Ch], 0
         mov bx, word [byte edx+0Ch]
@@ -711,7 +706,7 @@ sub_9E59D:
         mov byte [byte edx+04h], 1
         pop ebx
         ret
-sub_9E5C9:
+AdlibStepPitchEnv:
         push ebx
         push ecx
         push esi
@@ -785,10 +780,9 @@ loc_9E66D:
         pop ecx
         pop ebx
         ret
-sub_9E676:
+AdlibMidi:
         push ds
         call __GETDS
-sub_9E67C:
         push esi
         push edi
         push ebp
@@ -888,7 +882,7 @@ loc_9E7A4:
         mov dl, byte [eax]
         xor eax, eax
         mov al, byte [byte ebp-04h]
-        call sub_9E087
+        call AdlibNoteOff
         jmp near loc_9E848
 loc_9E7BA:
         mov eax, dword [byte ebp-020h]
@@ -899,7 +893,7 @@ loc_9E7BA:
         mov dl, byte [eax]
         xor eax, eax
         mov al, byte [byte ebp-04h]
-        call sub_9E087
+        call AdlibNoteOff
         jmp short loc_9E7EF
 loc_9E7D6:
         mov eax, dword [byte ebp-020h]
@@ -910,7 +904,7 @@ loc_9E7D6:
         mov dl, byte [eax]
         xor eax, eax
         mov al, byte [byte ebp-04h]
-        call sub_9ECE8
+        call AdlibNoteOn
 loc_9E7EF:
         jmp short loc_9E848
 loc_9E7F1:
@@ -922,7 +916,7 @@ loc_9E7F1:
         mov dl, byte [eax]
         xor eax, eax
         mov al, byte [byte ebp-04h]
-        call sub_9E0FF
+        call AdlibController
         jmp short loc_9E848
 loc_9E80C:
         mov eax, dword [byte ebp-020h]
@@ -930,7 +924,7 @@ loc_9E80C:
         mov dl, byte [eax]
         xor eax, eax
         mov al, byte [byte ebp-04h]
-        call sub_9E28B
+        call AdlibProgramChange
         jmp short loc_9E848
 loc_9E81F:
         mov eax, dword [byte ebp-020h]
@@ -946,7 +940,7 @@ loc_9E81F:
         movsx edx, ax
         xor eax, eax
         mov al, byte [byte ebp-04h]
-        call sub_9E29B
+        call AdlibPitchBend
 loc_9E848:
         jmp near loc_9E6C9
 loc_9E84D:
@@ -957,7 +951,7 @@ loc_9E84D:
         pop esi
         pop ds
         ret
-sub_9E85B:
+AdlibApplyModulation:
         push esi
         push edi
         push ebp
@@ -969,7 +963,7 @@ sub_9E85B:
         mov dword [byte ebp-0Ch], ecx
         jmp short loc_9E89A
         db 08Bh,0C0h
-unk_9E876:
+AdlibModulationJumps:
         dd loc_9E8C5
         dd loc_9E8F9
         dd loc_9E908
@@ -992,7 +986,7 @@ loc_9E89A:
         mov ax, word [byte ebp-01Ch]
         shl eax, 2
         db 02Eh,0FFh,0A0h                       ; insn: jmp dword [cs:eax+8E876h]
-        dd unk_9E876
+        dd AdlibModulationJumps
 loc_9E8C5:
         mov eax, dword [byte ebp-010h]
         mov al, byte [byte eax+08h]
@@ -1006,7 +1000,7 @@ loc_9E8C5:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         push eax
-        call sub_A6B32
+        call OplNoteFNum
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-010h]
@@ -1100,7 +1094,7 @@ loc_9E9CD:
         mov al, byte [byte eax+09h]
         and eax, 0FFh
         push eax
-        call sub_A6B32
+        call OplNoteFNum
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-010h]
@@ -1138,7 +1132,7 @@ loc_9EA37:
         xor eax, eax
         mov al, byte [byte edx+09h]
         push eax
-        call sub_A6B32
+        call OplNoteFNum
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-010h]
@@ -1165,7 +1159,7 @@ loc_9EAA0:
         pop edi
         pop esi
         ret
-sub_9EAA6:
+AdlibUpdateVoice:
         push ebx
         push ecx
         push esi
@@ -1193,7 +1187,7 @@ sub_9EAA6:
         add edx, byte 36h
         mov eax, dword [byte ebp-0Ch]
         add eax, byte 34h
-        call sub_9E511
+        call AdlibStepLfo
         mov eax, dword [byte ebp-08h]
         movsx ecx, word [byte eax+036h]
         mov eax, dword [byte ebp-0Ch]
@@ -1201,14 +1195,14 @@ sub_9EAA6:
         mov bx, word [byte eax+032h]
         mov edx, dword [byte ebp-08h]
         mov eax, dword [byte ebp-0Ch]
-        call sub_9E85B
+        call AdlibApplyModulation
 loc_9EB14:
         mov eax, dword [byte ebp-04h]
         movsx ecx, word [byte eax+08h]
         mov ebx, 7
         mov edx, dword [byte ebp-08h]
         mov eax, dword [byte ebp-0Ch]
-        call sub_9E85B
+        call AdlibApplyModulation
         mov eax, dword [byte ebp-0Ch]
         cmp word [byte eax+010h], byte 0
         je short loc_9EB61
@@ -1216,7 +1210,7 @@ loc_9EB14:
         add edx, byte 22h
         mov eax, dword [byte ebp-0Ch]
         add eax, byte 12h
-        call sub_9E428
+        call AdlibEnvelopeStep
         mov eax, dword [byte ebp-08h]
         movsx ecx, word [byte eax+022h]
         mov eax, dword [byte ebp-0Ch]
@@ -1224,7 +1218,7 @@ loc_9EB14:
         mov bx, word [byte eax+010h]
         mov edx, dword [byte ebp-08h]
         mov eax, dword [byte ebp-0Ch]
-        call sub_9E85B
+        call AdlibApplyModulation
 loc_9EB61:
         mov eax, dword [byte ebp-0Ch]
         cmp word [byte eax+022h], byte 0
@@ -1233,7 +1227,7 @@ loc_9EB61:
         add edx, byte 28h
         mov eax, dword [byte ebp-0Ch]
         add eax, byte 24h
-        call sub_9E5C9
+        call AdlibStepPitchEnv
         mov eax, dword [byte ebp-08h]
         movsx ecx, word [byte eax+028h]
         mov eax, dword [byte ebp-0Ch]
@@ -1241,7 +1235,7 @@ loc_9EB61:
         mov bx, word [byte eax+022h]
         mov edx, dword [byte ebp-08h]
         mov eax, dword [byte ebp-0Ch]
-        call sub_9E85B
+        call AdlibApplyModulation
 loc_9EB97:
         mov eax, dword [byte ebp-08h]
         mov eax, dword [byte eax+042h]
@@ -1251,13 +1245,13 @@ loc_9EB97:
         mov ebx, 5
         mov edx, dword [byte ebp-08h]
         mov eax, dword [byte ebp-0Ch]
-        call sub_9E85B
+        call AdlibApplyModulation
         mov eax, dword [byte ebp-04h]
         movsx ecx, word [byte eax+02h]
         mov ebx, 3
         mov edx, dword [byte ebp-08h]
         mov eax, dword [byte ebp-0Ch]
-        call sub_9E85B
+        call AdlibApplyModulation
         mov esp, ebp
         pop ebp
         pop edi
@@ -1265,7 +1259,7 @@ loc_9EB97:
         pop ecx
         pop ebx
         ret
-sub_9EBD5:
+AdlibWriteVoice:
         push ebx
         push ecx
         push esi
@@ -1280,7 +1274,7 @@ sub_9EBD5:
         mov dword [byte ebp-0Ch], eax
         mov edx, dword [byte ebp-010h]
         mov eax, dword [byte ebp-014h]
-        call sub_9EAA6
+        call AdlibUpdateVoice
         mov eax, dword [byte ebp-0Ch]
         mov al, byte [byte eax+0Ah]
         and al, 1
@@ -1353,7 +1347,7 @@ loc_9EC4D:
         mov eax, dword [byte ebp-010h]
         movsx eax, word [eax]
         push eax
-        call sub_A699D
+        call OplLoadVoice
         add esp, byte 8
         mov eax, dword [byte ebp-010h]
         cmp word [byte eax+020h], byte 0
@@ -1368,7 +1362,7 @@ loc_9ECE0:
         pop ecx
         pop ebx
         ret
-sub_9ECE8:
+AdlibNoteOn:
         push ecx
         push esi
         push edi
@@ -1462,7 +1456,7 @@ loc_9EDE0:
         add edx, byte 8
         mov eax, dword [byte ebp-03Ch]
         mov eax, dword [byte eax+04h]
-        call sub_9E390
+        call AdlibVoiceResetEnvelopes
         mov eax, dword [byte ebp-024h]
         or word [word_F3450], ax
         mov eax, dword [byte ebp-024h]
@@ -1480,7 +1474,7 @@ loc_9EDE0:
         or word [byte edx+014h], ax
         mov edx, dword [byte ebp-03Ch]
         mov eax, dword [byte ebp-038h]
-        call sub_9E026
+        call AdlibLoadTimbre
         xor ecx, ecx
         mov cl, byte [byte ebp-08h]
         mov eax, dword [byte ebp-03Ch]
@@ -1493,7 +1487,7 @@ loc_9EDE0:
         add edx, byte 8
         mov eax, dword [byte ebp-03Ch]
         mov eax, dword [byte eax+04h]
-        call sub_9E2B1
+        call AdlibVoiceSetup
         jmp near loc_9F21F
 loc_9EE64:
         jmp near loc_9ED67
@@ -1577,7 +1571,7 @@ loc_9EEE5:
         mov dword [byte edx+04Ah], eax
         mov edx, dword [byte ebp-03Ch]
         mov eax, dword [byte ebp-038h]
-        call sub_9E026
+        call AdlibLoadTimbre
         xor ecx, ecx
         mov cl, byte [byte ebp-08h]
         mov eax, dword [byte ebp-03Ch]
@@ -1590,7 +1584,7 @@ loc_9EEE5:
         add edx, byte 8
         mov eax, dword [byte ebp-03Ch]
         mov eax, dword [byte eax+04h]
-        call sub_9E2B1
+        call AdlibVoiceSetup
         jmp near loc_9F12B
 loc_9EF91:
         mov ax, word [word_F344E]
@@ -1624,7 +1618,7 @@ loc_9EFCD:
         add edx, byte 8
         mov eax, dword [byte ebp-03Ch]
         mov eax, dword [byte eax+04h]
-        call sub_9E390
+        call AdlibVoiceResetEnvelopes
         mov eax, dword [byte ebp-030h]
         neg eax
         mov edx, dword [byte ebp-030h]
@@ -1657,7 +1651,7 @@ loc_9EFCD:
         mov dword [byte edx+04Ah], eax
         mov edx, dword [byte ebp-03Ch]
         mov eax, dword [byte ebp-038h]
-        call sub_9E026
+        call AdlibLoadTimbre
         xor ecx, ecx
         mov cl, byte [byte ebp-08h]
         mov eax, dword [byte ebp-03Ch]
@@ -1670,7 +1664,7 @@ loc_9EFCD:
         add edx, byte 8
         mov eax, dword [byte ebp-03Ch]
         mov eax, dword [byte eax+04h]
-        call sub_9E2B1
+        call AdlibVoiceSetup
         jmp near loc_9F12B
 loc_9F08F:
         mov ebx, 1
@@ -1678,7 +1672,7 @@ loc_9F08F:
         add edx, byte 8
         mov eax, dword [byte ebp-034h]
         mov eax, dword [byte eax+04h]
-        call sub_9E390
+        call AdlibVoiceResetEnvelopes
         mov eax, dword [byte ebp-018h]
         not eax
         and word [word_F3452], ax
@@ -1706,7 +1700,7 @@ loc_9F08F:
         mov dword [byte edx+04Ah], eax
         mov edx, dword [byte ebp-034h]
         mov eax, dword [byte ebp-038h]
-        call sub_9E026
+        call AdlibLoadTimbre
         xor ecx, ecx
         mov cl, byte [byte ebp-08h]
         mov eax, dword [byte ebp-034h]
@@ -1719,7 +1713,7 @@ loc_9F08F:
         add edx, byte 8
         mov eax, dword [byte ebp-034h]
         mov eax, dword [byte eax+04h]
-        call sub_9E2B1
+        call AdlibVoiceSetup
 loc_9F12B:
         mov dword [byte ebp-02Ch], 0
         mov eax, dword [byte ebp-038h]
@@ -1784,7 +1778,7 @@ loc_9F1D4:
         add edx, byte 8
         mov eax, dword [byte ebp-034h]
         mov eax, dword [byte eax+04h]
-        call sub_9E390
+        call AdlibVoiceResetEnvelopes
         mov eax, dword [byte ebp-018h]
         not eax
         and word [word_F3452], ax

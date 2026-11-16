@@ -1192,19 +1192,55 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008C94C,__CHK,__CHK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_01,flirt
 0008C95C,__GRO,__GRO,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 3 bytes),watcom_clib_01,flirt
 0008C95F,__STK,__STK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_01,flirt
+0008C990,sub_8C990,InitMemList,PC-new,,,,low,"sets up one memory list type: alignment, base and size",ea_memman_01,manual-trace
+0008CA6C,sub_8CA6C,AddMemListRegion,PC-new,,,,low,adds a region of memory to one memory list type,ea_memman_01,manual-trace
+0008CAF4,sub_8CAF4,AddHighMemList,PC-new,,,,low,adds the HIGHMEM region to one memory list type,ea_memman_01,manual-trace
+0008CBA4,sub_8CBA4,FindMemListBlock,PC-new,,,,low,looks for a block in one memory list type,ea_memman_01,manual-trace
+0008CC5C,sub_8CC5C,SetMemErrorHooks,PC-new,,,,low,stores the two memory manager error hooks,ea_memman_01,manual-trace
+0008CC70,sub_8CC70,AllocMemHandleLocked,PC-new,,,,low,allocates a locked block and returns its descriptor,ea_memman_01,manual-trace
+0008CC8C,sub_8CC8C,AllocMemHandle,PC-new,,,,low,allocates an unlocked block and returns its descriptor,ea_memman_01,manual-trace
 0008CCA8,sub_8CCA8,AllocMemBlock,PC-new,,,,medium,"memory manager: allocate a named block (name, size, flags), e.g. the 320 KB 'TEMP' buffer of MenuSoundSettings; freed with FreeMemBlock",ea_memman_01,manual-trace
+0008CCC4,sub_8CCC4,AllocMemBlockUnlocked,PC-new,,,,low,allocates an unlocked block and returns its address,ea_memman_01,manual-trace
+0008CCE0,sub_8CCE0,AllocMemBlockFlags,PC-new,,,,low,allocates a block with the given lock flag and returns its address,ea_memman_01,manual-trace
 0008CD04,sub_8CD04,AllocMemBlockEx,PC-new,,,,medium,"EA memory manager: the allocator under AllocMemBlock (name, size, flags, one), returns the block descriptor",ea_memman_01,manual-trace
 0008CD4C,sub_8CD4C,reservemem,PC-new,,,,high,"prints its own name: ""reservemem - INVALID SIZE REQUESTED"", ""reservemem - OUT OF MEMORY""",ea_memman_01,manual-trace
+0008D0C8,sub_8D0C8,ResizeMemPtr,PC-new,,,,low,"resizes the block at an address, with the given lock flag",ea_memman_01,manual-trace
+0008D0EC,sub_8D0EC,ResizeMemPtrLocked,PC-new,,,,low,"resizes the block at an address, locked",ea_memman_01,manual-trace
+0008D10C,sub_8D10C,ResizeMemPtrUnlocked,PC-new,,,,low,"resizes the block at an address, unlocked",ea_memman_01,manual-trace
+0008D12C,sub_8D12C,ResizeMemHandleLocked,PC-new,,,,low,"resizes a block by descriptor, locked",ea_memman_01,manual-trace
+0008D144,sub_8D144,ResizeMemHandleUnlocked,PC-new,,,,low,"resizes a block by descriptor, unlocked",ea_memman_01,manual-trace
 0008D15C,sub_8D15C,ResizeMemBlock,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.91),ea_memman_01,match96
 0008D2A0,sub_8D2A0,findmemblock,PC-new,,,,high,EA memory manager name from its own FatalError string asc_C3D38 'findmemblock - BLOCK NOT FOUND (%p)': walks the block list from dword_D2F58 (+20h links) for the descriptor whose address field equals the stack argument and whose flags+19h bit 7 is clear,ea_memman_01,manual-trace
 0008D2D8,jctime,FreeMemBlock,PC-new,watcom_clib,,,high,"was a FLIRT misidentification (Watcom 'jctime', 23-byte collapsed body, name_map_94 method flirt): it is cdecl free(p) of the EA memory manager, findmemblock(p) then sub_8D2F0 (lock, unlink the descriptor unless flags+19h bit 7, return it to the free descriptor list, unlock); every caller passes a buffer it then drops (FreeDeskBuffers, ShutdownSpeech, LoadCrestsPalette); it sits between ea_memman_01 and ea_memman_02",watcom_clib_02,manual-trace
 0008D2F0,sub_8D2F0,PushMemDescriptorLocked,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_memman_02,match96
+0008D31C,sub_8D31C,UnlinkMemBlockLocked,PC-new,,,,medium,unlinks a block from its list and returns its descriptor to the free list,ea_memman_02,manual-trace
+0008D344,sub_8D344,FreeMemBlocksAfter,PC-new,,,,low,"frees every block after the block at an address, up to the next marker block",ea_memman_02,manual-trace
+0008D35C,sub_8D35C,FreeBlocksAfter,PC-new,,,,low,"frees every block after a descriptor, up to the next marker block",ea_memman_02,manual-trace
+0008D3A0,sub_8D3A0,MergeFreeSpaceLocked,PC-new,,,,medium,MergeFreeSpace under the memory lock,ea_memman_02,manual-trace
 0008D3D4,sub_8D3D4,MergeFreeSpace,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.703),ea_memman_02,match96
+0008D468,sub_8D468,MarkBlockPurgeable,PC-new,,,,medium,marks the block at an address purgeable,ea_memman_02,manual-trace
+0008D484,sub_8D484,MarkDescPurgeable,PC-new,,,,medium,marks a block purgeable by descriptor,ea_memman_02,manual-trace
+0008D494,sub_8D494,SetMemBlockPurgeLevel,PC-new,,,,low,sets the purge level of the block at an address,ea_memman_02,manual-trace
+0008D4B0,sub_8D4B0,SetMemBlockPurge,PC-new,,,,medium,sets the purge flags of a block under the memory lock,ea_memman_02,manual-trace
+0008D4E8,sub_8D4E8,FindNamedBlock,PC-new,,,,low,looks up a named block in its memory list type,ea_memman_02,manual-trace
+0008D548,sub_8D548,FindMemBlockNamed,PC-new,,,,low,looks up a named block (first match),ea_memman_02,manual-trace
+0008D558,sub_8D558,FindNamedBlockNext,PC-new,,,,low,"looks up a named block in its memory list type, from the other end",ea_memman_02,manual-trace
+0008D5C0,sub_8D5C0,FindMemBlockNamedNext,PC-new,,,,low,looks up a named block from the other end (first match),ea_memman_02,manual-trace
+0008D5D0,sub_8D5D0,FindFreeSpaceLocked,PC-new,,,,medium,FindFreeSpace under the memory lock,ea_memman_02,manual-trace
 0008D604,sub_8D604,FindFreeSpace,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.894),ea_memman_02,match96+97
 0008D714,sub_8D714,FindCachedFileData,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_memman_02,match96+97
 0008D728,sub_8D728,FindCachedFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),ea_memman_02,match96+97
 0008D80C,sub_8D80C,CompactDownLocked,PC-new,,,,medium,"same library routine as the 96 PC CompactDownLocked (similarity 0.947, dp)",ea_memman_02,match96
+0008D844,sub_8D844,CompactMemListDown,PC-new,,,,medium,moves the unlocked blocks of a list down to close the gaps,ea_memman_02,manual-trace
 0008D958,sub_8D958,CompactUpLocked,PC-new,,,,medium,"same library routine as the 96 PC CompactUpLocked (similarity 0.947, dp)",ea_memman_02,match96
+0008D990,sub_8D990,CompactMemListUp,PC-new,,,,medium,moves the unlocked blocks of a list up to close the gaps,ea_memman_02,manual-trace
+0008DA98,sub_8DA98,MemTrackLargestFree,PC-new,,,,low,records the smallest largest-free-block seen so far,ea_memman_02,manual-trace
+0008DAB8,sub_8DAB8,MemLargestFree,PC-new,,,,medium,"returns the largest free block, under the memory lock",ea_memman_02,manual-trace
+0008DAE4,sub_8DAE4,MemLargestFreeOfList,PC-new,,,,medium,compacts the block list and returns its largest free block,ea_memman_02,manual-trace
+0008DB20,sub_8DB20,MemLargestFreeParas,PC-new,,,,low,returns the largest free block in 16-byte paragraphs,ea_memman_02,manual-trace
+0008DB2C,sub_8DB2C,MemFreeSize,PC-new,,,,medium,returns the total size of the free blocks,ea_memman_02,manual-trace
+0008DB4C,sub_8DB4C,InitMemDescriptors,PC-new,,,,medium,builds the free list of block descriptors,ea_memman_02,manual-trace
+0008DB78,sub_8DB78,PushMemDescriptor,PC-new,,,,medium,returns a block descriptor to the free list,ea_memman_02,manual-trace
 0008DB8C,sub_8DB8C,getmemblock,PC-new,,,,high,"prints its own name: ""getmemblock - NO MEMORY BLOCKS LEFT""",ea_memman_02,manual-trace
 0008DBC0,sub_8DBC0,MemPtrSize,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_memman_02,match96
 0008DBD4,sub_8DBD4,MemDescPtr,PC-new,,,,high,"same library routine as the 96 PC MemDescPtr (similarity 1.0, dp)",ea_memman_02,match96
@@ -1475,7 +1511,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00098664,sub_98664,DosSetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.952),ea_kbd_exit_01,match96+97
 00098683,__fatal_runtime_error_,__fatal_runtime_error_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_25,flirt
 000986A0,nullsub_7,nullsub_7,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_25,flirt
-000986C0,unknown_libname_22,unknown_libname_22,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 11 bytes),watcom_clib_25,flirt
+000986C0,unknown_libname_22,MemLock,PC-new,watcom_clib,,,medium,sets a lock word to 1 (MemUnlock clears it),watcom_clib_25,manual-trace
 000986E4,sub_986E4,MemUnlock,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_kbd_exit_02,match96
 000986EF,file_putc_,file_putc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 17 bytes),watcom_clib_26,flirt
 00098700,__fprtf_,__fprtf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 133 bytes),watcom_clib_26,flirt
@@ -1493,9 +1529,25 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00098A9F,strncmp_,strncmp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 41 bytes),watcom_clib_28,flirt
 00098AC8,_dos_setvect_,_dos_setvect_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 43 bytes),dos4gw_dpmi_glue_03,flirt
 00098AF3,_dos_getvect_,_dos_getvect_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 52 bytes),dos4gw_dpmi_glue_03,flirt
+00098B30,sub_98B30,DrawShapeStretched,PC-new,,,,low,"draws a shape stretched to fill a box, as two warped halves",ea_shapes,manual-trace
+00098BEC,sub_98BEC,DrawShapeStretchedAt,PC-new,,,,low,"draws a shape stretched to fill a box at a position, as two warped halves",ea_shapes,manual-trace
 00098D20,sub_98D20,FillRowTable,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.893),ea_shapes,match96+97
 00098DD8,sub_98DD8,removewindow,PC-new,,,,high,"prints its own name: ""removewindow - ROW SPACE CORRUPTED""",ea_shapes,manual-trace
 00098E50,sub_98E50,LoadFileCached,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.873),ea_shapes,match96
+00098F11,sub_98F11,SeqService,PC-new,,,,low,music sequencer timer entry: runs SeqUpdate unless it is already running or no driver is open,ea_shapes,manual-trace
+00098F46,sub_98F46,SeqUpdate,PC-new,,,,low,services the sound drivers and steps every playing track,ea_shapes,manual-trace
+000990CB,sub_990CB,SeqStepTrack,PC-new,,,,low,plays the events of one track that are due,ea_shapes,manual-trace
+00099522,sub_99522,SeqSendController,PC-new,,,,low,"sends a MIDI control change, scaling volume and pan",ea_shapes,manual-trace
+00099620,sub_99620,SeqNoteOffSlot,PC-new,,,,low,sends note off for one playing note and frees its slot,ea_shapes,manual-trace
+0009966E,sub_9966E,SeqChannelNotesOff,PC-new,,,,low,sends note off for every playing note on a channel,ea_shapes,manual-trace
+000996B0,sub_996B0,SeqSendPitchBend,PC-new,,,,low,sends a MIDI pitch bend,ea_shapes,manual-trace
+00099700,sub_99700,SeqNoteOn,PC-new,,,,low,takes a note slot and sends MIDI note on,ea_shapes,manual-trace
+000997B7,sub_997B7,SeqQueueCommand,PC-new,,,,low,adds a command to the sequencer queue (at most 128),ea_shapes,manual-trace
+00099822,sub_99822,SeqFlushQueue,PC-new,,,,low,runs the queued sequencer commands,ea_shapes,manual-trace
+000998A0,sub_998A0,SeqSendProgram,PC-new,,,,low,sends a MIDI program change,ea_shapes,manual-trace
+00099925,sub_99925,SeqReadEvent,PC-new,,,,low,"reads one event of a track: variable-length delta time, status and EA meta events",ea_shapes,manual-trace
+00099A0B,sub_99A0B,PeekDword,PC-new,,,,medium,returns the dword at an address,ea_shapes,manual-trace
+00099A0E,sub_99A0E,PeekWord,PC-new,,,,medium,returns the word at an address,ea_shapes,manual-trace
 00099A12,copypart_,copypart_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 51 bytes),watcom_clib_30,flirt
 00099A45,_splitpath_,_splitpath_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 157 bytes),watcom_clib_30,flirt
 00099AE2,pickup_,pickup_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 18 bytes),watcom_clib_30,flirt
@@ -1594,17 +1646,39 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009D671,sub_9D671,__get_doserrno_ptr_,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_37,match96+97
 0009D677,strerror_,strerror_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 23 bytes),watcom_clib_37,flirt
 0009D68E,sub_9D68E,CMainHook,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_pcspeaker,match96+97
-0009D698,sub_9D698,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
-0009D6E6,sub_9D6E6,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
-0009D6F3,sub_9D6F3,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
-0009DAAC,sub_9DAAC,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
-0009DC9F,sub_9DC9F,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
-0009DE9C,sub_9DE9C,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
-0009DEA9,sub_9DEA9,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
-0009DEBE,sub_9DEBE,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
-0009DF73,sub_9DF73,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
-0009DF80,sub_9DF80,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
-0009E676,sub_9E676,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
+0009D698,sub_9D698,PcSpkInit,PC-new,,,,medium,PC speaker driver init entry: clears the voices and channels and starts the timer,snd_pcspeaker,manual-trace
+0009D6E6,sub_9D6E6,PcSpkClose,PC-new,,,,medium,PC speaker driver close entry,snd_pcspeaker,manual-trace
+0009D6F3,sub_9D6F3,PcSpkService,PC-new,,,,medium,PC speaker driver timer service entry: steps the voices,snd_pcspeaker,manual-trace
+0009D700,sub_9D700,PcSpkNoteOn,PC-new,,,,low,MIDI note on for the PC speaker; channel 10 drums use their own patches,snd_pcspeaker,manual-trace
+0009D805,sub_9D805,PcSpkNoteOff,PC-new,,,,low,MIDI note off for the PC speaker: releases the note's voice,snd_pcspeaker,manual-trace
+0009D858,sub_9D858,PcSpkProgramChange,PC-new,,,,medium,MIDI program change for the PC speaker: sets the timbre of a channel,snd_pcspeaker,manual-trace
+0009D880,sub_9D880,PcSpkUpdateVoices,PC-new,,,,low,steps the envelope and pitch of every PC speaker voice and plays the loudest,snd_pcspeaker,manual-trace
+0009DA99,sub_9DA99,PcSpkTimbreUsable,PC-new,,,,low,"returns 1 when a timbre has PC speaker data, otherwise -1",snd_pcspeaker,manual-trace
+0009DAAC,sub_9DAAC,PcSpkMidi,PC-new,,,,medium,PC speaker driver MIDI entry: plays a run of MIDI messages,snd_pcspeaker,manual-trace
+0009DC9F,sub_9DC9F,SbMidi,PC-new,,,,medium,Sound Blaster driver MIDI entry: plays a run of MIDI messages on the sampled voices,snd_pcspeaker,manual-trace
+0009DE9C,sub_9DE9C,AdlibDetect,PC-new,,,,medium,AdLib driver detect entry,snd_adlib,manual-trace
+0009DEA9,sub_9DEA9,AdlibOpen,PC-new,,,,medium,AdLib driver open entry,snd_adlib,manual-trace
+0009DEBE,sub_9DEBE,AdlibInit,PC-new,,,,medium,AdLib driver init entry: resets the nine voices and sixteen channels,snd_adlib,manual-trace
+0009DF73,sub_9DF73,AdlibClose,PC-new,,,,medium,AdLib driver close entry,snd_adlib,manual-trace
+0009DF80,sub_9DF80,AdlibService,PC-new,,,,medium,AdLib driver timer service entry: frees finished voices and updates the rest,snd_adlib,manual-trace
+0009E026,sub_9E026,AdlibLoadTimbre,PC-new,,,,low,loads a channel's patch into a voice,snd_adlib,manual-trace
+0009E087,sub_9E087,AdlibNoteOff,PC-new,,,,medium,"MIDI note off: releases the voice playing the note, or holds it while sustain is on",snd_adlib,manual-trace
+0009E0FF,sub_9E0FF,AdlibController,PC-new,,,,medium,"MIDI control change: modulation, volume, pan, sustain, effects, all notes off",snd_adlib,manual-trace
+0009E28B,sub_9E28B,AdlibProgramChange,PC-new,,,,medium,MIDI program change: sets the patch of a channel,snd_adlib,manual-trace
+0009E29B,sub_9E29B,AdlibPitchBend,PC-new,,,,medium,MIDI pitch bend: stores the bend of a channel,snd_adlib,manual-trace
+0009E2B1,sub_9E2B1,AdlibVoiceSetup,PC-new,,,,low,copies a timbre's OPL settings into a voice and starts its envelopes,snd_adlib,manual-trace
+0009E378,sub_9E378,AdlibVoiceRelease,PC-new,,,,low,moves a voice's envelope to its release stage,snd_adlib,manual-trace
+0009E390,sub_9E390,AdlibVoiceResetEnvelopes,PC-new,,,,low,resets the envelopes of a voice,snd_adlib,manual-trace
+0009E428,sub_9E428,AdlibEnvelopeStep,PC-new,,,,low,steps one five-stage volume envelope,snd_adlib,manual-trace
+0009E4D7,sub_9E4D7,AdlibStartLfo,PC-new,,,,low,starts a voice's delayed modulation (LFO),snd_adlib,manual-trace
+0009E511,sub_9E511,AdlibStepLfo,PC-new,,,,low,steps a voice's modulation (LFO),snd_adlib,manual-trace
+0009E59D,sub_9E59D,AdlibStartPitchEnv,PC-new,,,,low,starts a voice's pitch envelope,snd_adlib,manual-trace
+0009E5C9,sub_9E5C9,AdlibStepPitchEnv,PC-new,,,,low,steps a voice's pitch envelope,snd_adlib,manual-trace
+0009E676,sub_9E676,AdlibMidi,PC-new,,,,medium,AdLib driver MIDI entry: plays a run of MIDI messages,snd_adlib,manual-trace
+0009E85B,sub_9E85B,AdlibApplyModulation,PC-new,,,,low,applies a voice's modulation sources to its OPL settings,snd_adlib,manual-trace
+0009EAA6,sub_9EAA6,AdlibUpdateVoice,PC-new,,,,low,updates one voice's envelopes and modulation for this tick,snd_adlib,manual-trace
+0009EBD5,sub_9EBD5,AdlibWriteVoice,PC-new,,,,low,writes one voice's settings to the OPL registers,snd_adlib,manual-trace
+0009ECE8,sub_9ECE8,AdlibNoteOn,PC-new,,,,medium,MIDI note on: channel 10 drums use their own patches; picks a voice and starts it,snd_adlib,manual-trace
 0009F226,sub_9F226,ParseBlasterEnv,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_soundblaster,match96+97
 0009F34C,sub_9F34C,ParseHexValue,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_soundblaster,match96+97
 0009F380,sub_9F380,SbPopArgsReturn,PC-new,,,,low,shared exit that drops three stacked arguments and returns,snd_soundblaster,manual-trace
@@ -1630,11 +1704,16 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009FCAB,sub_9FCAB,SbAllocDosBuffer,PC-new,,,,medium,allocates DOS memory through DPMI,snd_soundblaster,manual-trace
 0009FD01,sub_9FD01,SbFreeDosBuffer,PC-new,,,,medium,frees DOS memory through DPMI,snd_soundblaster,manual-trace
 0009FD3D,sub_9FD3D,SbSetMixerVolumes,PC-new,,,,medium,"sets the Sound Blaster voice, master and FM mixer volumes",snd_soundblaster,fixes a wrong library match (it writes mixer volume registers)
-0009FD94,sub_9FD94,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
-0009FD9A,sub_9FD9A,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
-0009FDEA,sub_9FDEA,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
-0009FE3B,sub_9FE3B,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
-0009FFA0,sub_9FFA0,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
+0009FD94,sub_9FD94,Mpu401Detect,PC-new,,,,medium,"MPU-401 driver detect entry: returns port 330h, IRQ 7",snd_mt32_mpu401,manual-trace
+0009FD9A,sub_9FD9A,Mpu401Open,PC-new,,,,medium,MPU-401 driver open entry: resets the port and enters UART mode,snd_mt32_mpu401,manual-trace
+0009FDEA,sub_9FDEA,Mpu401Init,PC-new,,,,medium,MPU-401 driver init entry,snd_mt32_mpu401,manual-trace
+0009FE3B,sub_9FE3B,Mpu401Close,PC-new,,,,medium,MPU-401 driver close entry: turns every channel's notes off and resets the port,snd_mt32_mpu401,manual-trace
+0009FE94,sub_9FE94,Mpu401Reset,PC-new,,,,medium,resets the MPU-401 and puts it back in UART mode,snd_mt32_mpu401,manual-trace
+0009FEB0,sub_9FEB0,Mpu401Command,PC-new,,,,medium,sends a command to the MPU-401 and waits for its acknowledge,snd_mt32_mpu401,manual-trace
+0009FF04,sub_9FF04,Mpu401Delay,PC-new,,,,low,waits a number of PIT channel 2 cycles,snd_mt32_mpu401,manual-trace
+0009FF55,sub_9FF55,Mpu401ReadData,PC-new,,,,medium,reads a byte from the MPU-401 data port,snd_mt32_mpu401,manual-trace
+0009FF78,sub_9FF78,Mpu401WriteData,PC-new,,,,medium,writes a byte to the MPU-401 data port,snd_mt32_mpu401,manual-trace
+0009FFA0,sub_9FFA0,Mpu401Midi,PC-new,,,,medium,MPU-401 driver MIDI entry: sends a run of MIDI bytes,snd_mt32_mpu401,manual-trace
 0009FFCA,sub_9FFCA,GusAllocDosBuffer,PC-new,,,,medium,allocates a DOS memory buffer through DPMI and returns its 64K-aligned address,snd_gus,manual-trace
 000A0064,sub_A0064,GusFreeDosBuffer,PC-new,,,,medium,frees the DOS memory buffer through DPMI,snd_gus,manual-trace
 000A00C1,sub_A00C1,GusLoadMidiPatch,PC-new,,,,medium,loads one ULTRASND MIDI .PAT patch file into GUS memory,snd_gus,manual-trace
@@ -1673,8 +1752,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A18FB,_DoINTR_,_DoINTR_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 77 bytes),dos4gw_dpmi_glue_07,flirt
 000A1948,sub_A1948,IntrLoadRegs,PC-new,,,,high,"same library routine as the 96 PC IntrLoadRegs (similarity 1.0, dp)",dos4gw_intr,match96
 000A1C7C,__Slash_C_,__Slash_C_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 38 bytes),dos4gw_intr,flirt
+000A2000,sub_A2000,DrawShapeQuad,PC-new,,,,low,draws a shape warped into a four-point outline,ea_shpi,manual-trace
 000A2610,sub_A2610,SplitFileExt,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_shpi,match96
 000A26B0,sub_A26B0,ReadFileRange,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_shpi,match96+97
+000A2744,sub_A2744,LoadPackedAlloc,PC-new,,,,medium,"loads a file into a new memory block and returns its data, stopping on an error",ea_shpi,manual-trace
+000A275C,sub_A275C,LoadPackedAllocQuiet,PC-new,,,,medium,"loads a file into a new memory block and returns its data, or 0 on an error",ea_shpi,manual-trace
+000A2774,sub_A2774,LoadPackedAllocFlag,PC-new,,,,medium,loads a file into a new memory block and returns its data; the flag picks whether errors stop,ea_shpi,manual-trace
+000A2794,sub_A2794,LoadPackedHandle,PC-new,,,,medium,"loads a file into a new memory block and returns its descriptor, stopping on an error",ea_shpi,manual-trace
+000A27AC,sub_A27AC,LoadPackedHandleQuiet,PC-new,,,,medium,"loads a file into a new memory block and returns its descriptor, or 0 on an error",ea_shpi,manual-trace
 000A27C4,sub_A27C4,LoadPackedCore,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.882),ea_shpi,match96
 000A28F0,sub_A28F0,ConvertShapeBank,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),ea_shpi,match96
 000A2AB8,sub_A2AB8,ConvertShapeBankInPlace,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_shpi,match96
@@ -1861,10 +1946,57 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A6564,__unhook387,__unhook387,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 89 bytes),watcom_emu387,flirt
 000A65BD,nullsub_3,nullsub_3,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_emu387,flirt
 000A65BE,__init_80x87,__init_80x87,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 39 bytes),watcom_emu387,flirt
+000A65E8,sub_A65E8,PcSpkHwInit,PC-new,,,,medium,"sets PIT channel 2 to square wave mode, silences the speaker and sets the voice volumes",snd_hw_pcspk_opl,manual-trace
+000A6612,sub_A6612,PcSpkHwClose,PC-new,,,,medium,silences the speaker,snd_hw_pcspk_opl,manual-trace
+000A6618,sub_A6618,PcSpkSilence,PC-new,,,,medium,turns the speaker off and clears the four voice levels,snd_hw_pcspk_opl,manual-trace
+000A6635,sub_A6635,PcSpkVoiceNote,PC-new,,,,low,sets the note and PIT divisor of a speaker voice,snd_hw_pcspk_opl,manual-trace
+000A6672,sub_A6672,PcSpkVoiceOff,PC-new,,,,low,clears the level of a speaker voice,snd_hw_pcspk_opl,manual-trace
+000A6684,sub_A6684,PcSpkVoiceUpdate,PC-new,,,,low,works out a speaker voice's pitch and level for this tick,snd_hw_pcspk_opl,manual-trace
+000A677B,sub_A677B,PcSpkOutput,PC-new,,,,low,plays the loudest speaker voice through PIT channel 2,snd_hw_pcspk_opl,manual-trace
+000A6858,sub_A6858,OplWrite,PC-new,,,,medium,"writes a value to an OPL register, with the read delays the chip needs",snd_hw_pcspk_opl,manual-trace
+000A687D,sub_A687D,OplReset,PC-new,,,,medium,clears every OPL register and both shadow copies,snd_hw_pcspk_opl,manual-trace
+000A68C9,sub_A68C9,OplFlush,PC-new,,,,medium,writes the OPL shadow registers that changed since the last flush,snd_hw_pcspk_opl,manual-trace
+000A6957,sub_A6957,OplSetReg,PC-new,,,,medium,sets an OPL register in the shadow copy (or writes it directly when outside 20h-F5h),snd_hw_pcspk_opl,manual-trace
+000A6983,sub_A6983,OplGetReg,PC-new,,,,medium,returns an OPL register from the shadow copy,snd_hw_pcspk_opl,manual-trace
+000A699D,sub_A699D,OplLoadVoice,PC-new,,,,medium,writes the ten operator settings of one OPL voice,snd_hw_pcspk_opl,manual-trace
+000A69E8,sub_A69E8,OplHwInit,PC-new,,,,medium,stores the OPL port and resets the chip,snd_hw_pcspk_opl,manual-trace
+000A69FB,sub_A69FB,OplHwClose,PC-new,,,,medium,resets the OPL chip,snd_hw_pcspk_opl,manual-trace
+000A6A01,sub_A6A01,OplDetect,PC-new,,,,medium,"returns the OPL port, 388h",snd_hw_pcspk_opl,manual-trace
+000A6A09,sub_A6A09,OplOpen,PC-new,,,,medium,"stores the OPL port and the write delays, probes the chip and calibrates",snd_hw_pcspk_opl,manual-trace
+000A6A42,sub_A6A42,OplProbe,PC-new,,,,medium,checks for an OPL chip with its timer test,snd_hw_pcspk_opl,manual-trace
+000A6AC2,sub_A6AC2,OplCalibrate,PC-new,,,,low,times OPL status reads against PIT channel 2,snd_hw_pcspk_opl,manual-trace
+000A6B32,sub_A6B32,OplNoteFNum,PC-new,,,,medium,returns the OPL F-number and block of a note,snd_hw_pcspk_opl,manual-trace
+000A6B5D,sub_A6B5D,OplVolumeLevel,PC-new,,,,low,looks up the OPL attenuation of a volume,snd_hw_pcspk_opl,manual-trace
+000A6B73,sub_A6B73,OplVelocityLevel,PC-new,,,,low,looks up the OPL attenuation of a note velocity,snd_hw_pcspk_opl,manual-trace
 000A6B87,getenv_,getenv_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 90 bytes),watcom_clib_43,flirt
 000A6BE1,sub_A6BE1,StrToLong,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_hw_sb,match96+97
+000A6D1A,sub_A6D1A,strtol_,PC-new,,,,medium,C library strtol: signed form of the shared string to number routine,snd_hw_sb,manual-trace
 000A6D24,sub_A6D24,strtoul_,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_hw_sb,match96+97
 000A6D2C,sub_A6D2C,DigitValue,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),snd_hw_sb,match96
+000A6D84,sub_A6D84,SbStreamCheck,PC-new,,,,medium,sets carry when a software stream channel number is 4 or more,snd_hw_sb,manual-trace
+000A6D8D,sub_A6D8D,SbMixRateDiv,PC-new,,,,low,returns the mix rate divided by 256,snd_hw_sb,manual-trace
+000A6DA0,sub_A6DA0,SbMixerOpen,PC-new,,,,low,stops the four stream channels and starts Sound Blaster DMA output,snd_hw_sb,manual-trace
+000A6DED,sub_A6DED,SbMixerClose,PC-new,,,,low,stops the stream channels and the DMA output,snd_hw_sb,manual-trace
+000A6DF8,sub_A6DF8,SbStreamStopAll,PC-new,,,,medium,stops all four software stream channels,snd_hw_sb,manual-trace
+000A6E10,sub_A6E10,SbStreamPlayNote,PC-new,,,,low,"sets the note of a stream channel, works out its step and starts it",snd_hw_sb,manual-trace
+000A6E7B,sub_A6E7B,SbStreamRelease,PC-new,,,,low,lets a stream channel play out to its end,snd_hw_sb,manual-trace
+000A6EA2,sub_A6EA2,SbStreamStop,PC-new,,,,medium,stops a software stream channel,snd_hw_sb,manual-trace
+000A6EC3,sub_A6EC3,SbStreamSetVolume,PC-new,,,,low,sets the volume of a stream channel and rebuilds its volume table,snd_hw_sb,manual-trace
+000A6F1B,sub_A6F1B,SbStreamSetBend,PC-new,,,,low,stores the pitch bend of a stream channel,snd_hw_sb,manual-trace
+000A6F3C,sub_A6F3C,SbStreamSetRate,PC-new,,,,low,sets the sample rate of a stream channel (step against the mix rate),snd_hw_sb,manual-trace
+000A6FA2,sub_A6FA2,SbStreamSetSample,PC-new,,,,low,"sets the start, loop start and loop length of a stream channel's sample",snd_hw_sb,manual-trace
+000A6FE1,sub_A6FE1,SbStreamStart,PC-new,,,,low,"starts a sample on a software stream channel (rate, volume, sample, note)",snd_hw_sb,manual-trace
+000A7094,sub_A7094,SbStreamIdle,PC-new,,,,medium,returns 1 when a software stream channel is not playing,snd_hw_sb,manual-trace
+000A70BC,sub_A70BC,SbStreamGetVolume,PC-new,,,,medium,returns the volume of a stream channel,snd_hw_sb,manual-trace
+000A70DD,sub_A70DD,SbStreamApplyBend,PC-new,,,,low,applies a pitch bend to a stream channel's step,snd_hw_sb,manual-trace
+000A715C,sub_A715C,SbMixAdd8Vol,PC-new,,,,low,adds 8-bit samples through a volume table into the mix buffer,snd_hw_sb,manual-trace
+000A815D,sub_A815D,SbMixAdd8,PC-new,,,,low,adds 8-bit samples at full volume into the mix buffer,snd_hw_sb,manual-trace
+000A905E,sub_A905E,SbMixChannels,PC-new,,,,low,clears the mix buffer and mixes every playing stream channel into it,snd_hw_sb,manual-trace
+000A9BA4,sub_A9BA4,SbDmaHalfReady,PC-new,,,,low,returns 1 when the DMA has moved on to the other half of the buffer,snd_hw_sb,manual-trace
+000A9BD0,sub_A9BD0,SbDmaStart,PC-new,,,,low,stores the DMA buffer and starts auto-init DMA output,snd_hw_sb,manual-trace
+000A9C1B,sub_A9C1B,SbDmaStop,PC-new,,,,low,stops the DMA output,snd_hw_sb,manual-trace
+000A9C37,sub_A9C37,SbMixPause,PC-new,,,,low,sets the mix pause flag (the code after it clears it),snd_hw_sb,manual-trace
+000A9C4A,sub_A9C4A,SbConvertMix,PC-new,,,,low,clips the 16-bit mix into 8-bit samples in the free half of the DMA buffer,snd_hw_sb,manual-trace
 000AA200,outp_,outp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_44,flirt
 000AA210,sub_AA210,GusReadPatchHeader,PC-new,,,,medium,opens a .PAT patch file and checks its GF1PATCH110 header,snd_gus_sdk_01,manual-trace
 000AA300,sub_AA300,GusLoadPatch,PC-new,,,,medium,loads the layers and waves of a .PAT patch into GUS memory,snd_gus_sdk_01,manual-trace
@@ -2102,8 +2234,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B6D47,sub_B6D47,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B6DF7,sub_B6DF7,BlitShapeClipped,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.997),vesa_banked_blit,match96
 000B6F84,sub_B6F84,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B6FFC,sub_B6FFC,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B7005,sub_B7005,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B6FFC,sub_B6FFC,ShapeWidth,PC-new,,,,medium,returns a shape's width,vesa_banked_blit,manual-trace
+000B7005,sub_B7005,ShapeHeight,PC-new,,,,medium,returns a shape's height,vesa_banked_blit,manual-trace
 000B704C,sub_B704C,FillRectSpansCore,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.928),vesa_banked_blit,match96
 000B7218,sub_B7218,UnpackArtRle,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.882),vesa_banked_blit,match96
 000B72D4,sub_B72D4,SetBlitSource,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),vesa_banked_blit,match96

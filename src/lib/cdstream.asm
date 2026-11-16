@@ -6,7 +6,7 @@ extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECC
 extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
-extern sub_8DAB8, TextSetFont, sub_91FA4, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
+extern MemLargestFree, TextSetFont, sub_91FA4, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
 global sub_1B0F3, sub_1B18B, loc_1B1B7, sub_1B1C2, sub_1B1DF, sub_1B201, loc_1B218, loc_1B225
 global jpt_1B283, sub_1B2A7, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
 global loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D, loc_1B4BC, loc_1B534
@@ -883,7 +883,7 @@ sub_1BAF3:
         push edi
         push ebp
         mov ebp, eax
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, ebp
         jl short loc_1BB18
 loc_1BB0E:
@@ -899,11 +899,11 @@ loc_1BB18:
         xor ecx, ecx
         mov dword [rinkbm], ecx
 loc_1BB33:
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, ebp
         jge short loc_1BB0E
         call FreeRinkGfx
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, ebp
         jge short loc_1BB0E
         mov eax, dword [ovlseq-2]
@@ -919,14 +919,14 @@ loc_1BB33:
         xor eax, eax
         mov dword [ovlartbank], eax
 loc_1BB71:
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, ebp
         jge short loc_1BB0E
         call sub_1BA85
         mov edi, 16h
         jmp short loc_1BBB4
 loc_1BB86:
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, ebp
         jge near loc_1BB0E
         mov esi, edi
@@ -944,7 +944,7 @@ loc_1BBB3:
 loc_1BBB4:
         test edi, edi
         jge short loc_1BB86
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, ebp
         jge near loc_1BB0E
         xor eax, eax

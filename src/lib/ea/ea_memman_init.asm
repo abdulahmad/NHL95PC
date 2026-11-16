@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_8DCF8 progbits alloc exec nowrite align=1
 extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, MemLockHandle
-extern dword_EDAB4, FatalError, int386_, sub_8C990, sub_8CAF4, sub_8DAB8, sub_8DB4C, GrabLargestBlock
-extern sub_986B0, MemUnlock, DetectCPU, unk_EDF04, unknown_libname_22
+extern dword_EDAB4, FatalError, int386_, InitMemList, AddHighMemList, MemLargestFree, InitMemDescriptors, GrabLargestBlock
+extern sub_986B0, MemUnlock, DetectCPU, unk_EDF04, MemLock
 global initmemman, loc_8DD2F, loc_8DD58, loc_8DD71, loc_8DDF4, loc_8DEAD, loc_8DED0, loc_8DF06
 global sub_8DF28, sub_8DF3C, sub_8DF54
 initmemman:
@@ -17,7 +17,7 @@ initmemman:
         call sub_986B0
         mov dword [MemLockHandle], eax
         push eax
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         call DetectCPU
         call GrabLargestBlock
@@ -61,7 +61,7 @@ loc_8DD71:
         push edx
         mov edx, dword [dword_D2F80]
         push edx
-        call sub_8DB4C
+        call InitMemDescriptors
         add esp, byte 8
         push byte 0
         push byte 8
@@ -72,7 +72,7 @@ loc_8DD71:
         add eax, dword [byte esp+04Ch]
         push eax
         push byte 0
-        call sub_8C990
+        call InitMemList
         add esp, byte 18h
         test esi, esi
         jne near loc_8DF06
@@ -138,7 +138,7 @@ loc_8DEAD:
         push edx
         push eax
         push byte 0
-        call sub_8CAF4
+        call AddHighMemList
         add esp, byte 0Ch
         jmp short loc_8DEAD
 loc_8DED0:
@@ -148,7 +148,7 @@ loc_8DED0:
         push esi
         push ebp
         push byte 0
-        call sub_8CAF4
+        call AddHighMemList
         add esp, byte 0Ch
         test edi, edi
         je short loc_8DF06
@@ -164,7 +164,7 @@ loc_8DF06:
         push esi
         call MemUnlock
         add esp, byte 4
-        call sub_8DAB8
+        call MemLargestFree
         mov dword [dword_EDAB4], eax
         add esp, byte 40h
         pop ebp

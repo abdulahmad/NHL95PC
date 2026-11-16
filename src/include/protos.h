@@ -227,7 +227,7 @@ void WriteTeamRec(int fh, void *rec, int n);  /* 3A2B8 */
 int FileExists(char *name);  /* 142E7 */
 int FileOpenRead(char *name, int *h);  /* 14525: 0 = ok */
 void FreeCalendarIfLowMem(void);  /* 212C6 */
-int __cdecl sub_8DAB8(void);  /* memory library: free memory */
+int __cdecl MemLargestFree(void);  /* memory library: free memory */
 void __cdecl FreeMemBlock(int p);  /* library: free a block */
 void StopDigiSample(void);  /* 59981 */
 void StopSongId(int h);  /* sound library: stop sample */
@@ -519,7 +519,7 @@ void SortPlayersByPos(short side, signed char *out, short *keys, char pos);  /* 
 void LoadCupFinalSeries(void);  /* 15B76 */
 int LoadScheduleDB(int *db);  /* 891B2 */
 void InitSpeechSlots(int size);  /* 83459 */
-int __cdecl sub_8CC70(char *name, int size, int flags);  /* memory library: allocate */
+int __cdecl AllocMemHandleLocked(char *name, int size, int flags);  /* memory library: allocate */
 int __cdecl MemDescPtr(int buf);  /* memory library */
 void InitSpeech(unsigned char id, int size, int copybuf, int copylen);  /* 8357A */
 int __cdecl addtimer(void (*fn)(void));  /* timer library: add tick handler */

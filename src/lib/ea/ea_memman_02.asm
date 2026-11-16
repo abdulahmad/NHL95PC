@@ -3,34 +3,34 @@ bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
 extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, dword_EDAAC, MemLockHandle, dword_EDAB4, FatalError, findmemblock
-extern memlist1, reservemem, sub_8E3F8, sub_8E44C, MemUnlock, bcopy, unknown_libname_22
-global PushMemDescriptorLocked, sub_8D31C, loc_8D340, sub_8D344, sub_8D35C, loc_8D379, loc_8D38E, sub_8D3A0
-global MergeFreeSpace, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, sub_8D468, sub_8D484
-global sub_8D494, sub_8D4B0, sub_8D4E8, loc_8D521, loc_8D53A, loc_8D542, sub_8D548, sub_8D558
-global loc_8D591, loc_8D5B0, loc_8D5B8, sub_8D5C0, sub_8D5D0, FindFreeSpace, loc_8D640, loc_8D653
+extern memlist1, reservemem, sub_8E3F8, sub_8E44C, MemUnlock, bcopy, MemLock
+global PushMemDescriptorLocked, UnlinkMemBlockLocked, loc_8D340, FreeMemBlocksAfter, FreeBlocksAfter, loc_8D379, loc_8D38E, MergeFreeSpaceLocked
+global MergeFreeSpace, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, MarkBlockPurgeable, MarkDescPurgeable
+global SetMemBlockPurgeLevel, SetMemBlockPurge, FindNamedBlock, loc_8D521, loc_8D53A, loc_8D542, FindMemBlockNamed, FindNamedBlockNext
+global loc_8D591, loc_8D5B0, loc_8D5B8, FindMemBlockNamedNext, FindFreeSpaceLocked, FindFreeSpace, loc_8D640, loc_8D653
 global loc_8D670, loc_8D683, loc_8D697, loc_8D6AA, loc_8D6D8, loc_8D708, loc_8D70A, FindCachedFileData
-global loc_8D727, FindCachedFile, loc_8D78F, loc_8D79E, loc_8D7EA, loc_8D803, CompactDownLocked, sub_8D844
+global loc_8D727, FindCachedFile, loc_8D78F, loc_8D79E, loc_8D7EA, loc_8D803, CompactDownLocked, CompactMemListDown
 global loc_8D85F, loc_8D861, loc_8D874, loc_8D87F, loc_8D88C, loc_8D898, loc_8D8AB, loc_8D8EC
-global loc_8D93F, loc_8D946, loc_8D94E, CompactUpLocked, sub_8D990, loc_8D9A6, loc_8D9AC, loc_8D9C0
-global loc_8D9CA, loc_8D9D6, loc_8D9E6, loc_8DA16, loc_8DA6E, loc_8DA8F, sub_8DA98, loc_8DAAD
-global sub_8DAB8, sub_8DAE4, loc_8DB05, loc_8DB12, sub_8DB20, sub_8DB2C, loc_8DB39, loc_8DB42
-global loc_8DB49, sub_8DB4C, loc_8DB60, loc_8DB6D, sub_8DB78, getmemblock, loc_8DBB1, MemPtrSize
+global loc_8D93F, loc_8D946, loc_8D94E, CompactUpLocked, CompactMemListUp, loc_8D9A6, loc_8D9AC, loc_8D9C0
+global loc_8D9CA, loc_8D9D6, loc_8D9E6, loc_8DA16, loc_8DA6E, loc_8DA8F, MemTrackLargestFree, loc_8DAAD
+global MemLargestFree, MemLargestFreeOfList, loc_8DB05, loc_8DB12, MemLargestFreeParas, MemFreeSize, loc_8DB39, loc_8DB42
+global loc_8DB49, InitMemDescriptors, loc_8DB60, loc_8DB6D, PushMemDescriptor, getmemblock, loc_8DBB1, MemPtrSize
 global MemDescPtr, MemDescSize
 PushMemDescriptorLocked:
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         mov ebx, dword [byte esp+04h]
         push ebx
-        call sub_8D31C
+        call UnlinkMemBlockLocked
         add esp, byte 4
         mov ecx, dword [MemLockHandle]
         push ecx
         call MemUnlock
         add esp, byte 4
         ret
-sub_8D31C:
+UnlinkMemBlockLocked:
         mov eax, dword [byte esp+04h]
         test byte [byte eax+019h], 80h
         jne short loc_8D340
@@ -41,26 +41,26 @@ sub_8D31C:
         mov edx, dword [byte eax+024h]
         mov dword [byte ebx+024h], edx
         push eax
-        call sub_8DB78
+        call PushMemDescriptor
         add esp, byte 4
 loc_8D340:
         ret
         db 08Dh,040h,00h
-sub_8D344:
+FreeMemBlocksAfter:
         mov edx, dword [byte esp+04h]
         push edx
         call findmemblock
         add esp, byte 4
         push eax
-        call sub_8D35C
+        call FreeBlocksAfter
         add esp, byte 4
         ret
         db 090h
-sub_8D35C:
+FreeBlocksAfter:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         mov esi, dword [byte esp+08h]
         mov esi, dword [byte esi+020h]
@@ -70,7 +70,7 @@ loc_8D379:
         mov esi, dword [byte esi+020h]
         mov ebx, dword [byte esi+024h]
         push ebx
-        call sub_8D31C
+        call UnlinkMemBlockLocked
         add esp, byte 4
         test byte [byte esi+018h], 20h
         je short loc_8D379
@@ -82,11 +82,11 @@ loc_8D38E:
         pop esi
         ret
         db 090h
-sub_8D3A0:
+MergeFreeSpaceLocked:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         mov ebx, dword [byte esp+08h]
         push ebx
@@ -149,7 +149,7 @@ loc_8D438:
         test edi, edi
         je short loc_8D45C
         push edi
-        call sub_8D31C
+        call UnlinkMemBlockLocked
         add esp, byte 4
         mov eax, 1
         jmp short loc_8D45E
@@ -161,25 +161,25 @@ loc_8D45E:
         pop edi
         pop esi
         ret
-sub_8D468:
+MarkBlockPurgeable:
         push byte 1
         mov edx, dword [byte esp+08h]
         push edx
         call findmemblock
         add esp, byte 4
         push eax
-        call sub_8D4B0
+        call SetMemBlockPurge
         add esp, byte 8
         ret
         db 08Dh,040h,00h
-sub_8D484:
+MarkDescPurgeable:
         push byte 1
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_8D4B0
+        call SetMemBlockPurge
         add esp, byte 8
         ret
-sub_8D494:
+SetMemBlockPurgeLevel:
         mov edx, dword [byte esp+08h]
         push edx
         mov ebx, dword [byte esp+08h]
@@ -187,15 +187,15 @@ sub_8D494:
         call findmemblock
         add esp, byte 4
         push eax
-        call sub_8D4B0
+        call SetMemBlockPurge
         add esp, byte 8
         ret
-sub_8D4B0:
+SetMemBlockPurge:
         push esi
         mov esi, dword [byte esp+08h]
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         mov eax, dword [byte esi+018h]
         and al, 0F0h
@@ -211,7 +211,7 @@ sub_8D4B0:
         pop esi
         ret
         db 090h
-sub_8D4E8:
+FindNamedBlock:
         push esi
         push edi
         push ebp
@@ -255,14 +255,14 @@ loc_8D542:
         pop edi
         pop esi
         ret
-sub_8D548:
+FindMemBlockNamed:
         push byte 0
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_8D4E8
+        call FindNamedBlock
         add esp, byte 8
         ret
-sub_8D558:
+FindNamedBlockNext:
         push esi
         push edi
         push ebp
@@ -309,18 +309,18 @@ loc_8D5B8:
         pop esi
         ret
         db 08Bh,0C0h
-sub_8D5C0:
+FindMemBlockNamedNext:
         push byte 0
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_8D558
+        call FindNamedBlockNext
         add esp, byte 8
         ret
-sub_8D5D0:
+FindFreeSpaceLocked:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         mov ebx, dword [byte esp+08h]
         push ebx
@@ -432,7 +432,7 @@ loc_8D6D8:
         call bcopy
         add esp, byte 0Ch
         push ebp
-        call sub_8D31C
+        call UnlinkMemBlockLocked
         add esp, byte 4
         mov eax, 1
         add esp, byte 14h
@@ -466,7 +466,7 @@ FindCachedFile:
         sub esp, byte 4
         mov ebp, dword [byte esp+014h]
         push ebp
-        call sub_8D5C0
+        call FindMemBlockNamedNext
         mov edi, eax
         add esp, byte 4
         test eax, eax
@@ -508,7 +508,7 @@ loc_8D78F:
 loc_8D79E:
         push esi
         push ebp
-        call sub_8D558
+        call FindNamedBlockNext
         mov edi, eax
         add esp, byte 8
         test eax, eax
@@ -559,14 +559,14 @@ CompactDownLocked:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         mov eax, dword [memblocklist]
         mov ebx, dword [eax]
         push ebx
         mov ecx, dword [byte eax+04h]
         push ecx
-        call sub_8D844
+        call CompactMemListDown
         add esp, byte 8
         mov esi, dword [MemLockHandle]
         push esi
@@ -575,7 +575,7 @@ CompactDownLocked:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_8D844:
+CompactMemListDown:
         push esi
         push edi
         push ebp
@@ -693,14 +693,14 @@ CompactUpLocked:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
         mov eax, dword [memblocklist]
         mov ebx, dword [byte eax+04h]
         push ebx
         mov ecx, dword [eax]
         push ecx
-        call sub_8D990
+        call CompactMemListUp
         add esp, byte 8
         mov esi, dword [MemLockHandle]
         push esi
@@ -709,7 +709,7 @@ CompactUpLocked:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_8D990:
+CompactMemListUp:
         push esi
         push edi
         push ebp
@@ -834,11 +834,11 @@ loc_8DA8F:
         mov edi, dword [byte edi+020h]
         jmp near loc_8D9CA
         db 090h
-sub_8DA98:
+MemTrackLargestFree:
         push ebx
         push ecx
         push edx
-        call sub_8DAE4
+        call MemLargestFreeOfList
         cmp eax, dword [dword_EDAB4]
         jge short loc_8DAAD
         mov dword [dword_EDAB4], eax
@@ -849,13 +849,13 @@ loc_8DAAD:
         pop ebx
         ret
         db 08Bh,0C0h
-sub_8DAB8:
+MemLargestFree:
         push esi
         mov edx, dword [MemLockHandle]
         push edx
-        call unknown_libname_22
+        call MemLock
         add esp, byte 4
-        call sub_8DAE4
+        call MemLargestFreeOfList
         mov esi, eax
         mov ebx, dword [MemLockHandle]
         push ebx
@@ -865,13 +865,13 @@ sub_8DAB8:
         pop esi
         ret
         db 08Bh,0C0h
-sub_8DAE4:
+MemLargestFreeOfList:
         mov eax, dword [memblocklist]
         mov edx, dword [eax]
         push edx
         mov ebx, dword [byte eax+04h]
         push ebx
-        call sub_8D844
+        call CompactMemListDown
         add esp, byte 8
         mov ebx, dword [memblocklist]
         mov ebx, dword [ebx]
@@ -892,12 +892,12 @@ loc_8DB12:
         mov eax, ecx
         ret
         db 08Bh,0C0h
-sub_8DB20:
-        call sub_8DAB8
+MemLargestFreeParas:
+        call MemLargestFree
         sar eax, 4
         ret
         db 08Dh,040h,00h
-sub_8DB2C:
+MemFreeSize:
         mov eax, dword [memblocklist]
         mov eax, dword [eax]
         xor edx, edx
@@ -914,7 +914,7 @@ loc_8DB42:
 loc_8DB49:
         mov eax, edx
         ret
-sub_8DB4C:
+InitMemDescriptors:
         mov eax, dword [byte esp+04h]
         mov dword [dword_EDAAC], eax
         xor edx, edx
@@ -933,7 +933,7 @@ loc_8DB6D:
         mov dword [byte eax+020h], 0
         ret
         db 08Dh,040h,00h
-sub_8DB78:
+PushMemDescriptor:
         mov edx, dword [byte esp+04h]
         mov eax, dword [dword_EDAAC]
         mov dword [byte edx+020h], eax

@@ -7,19 +7,19 @@ extern byte_D6787, byte_D6788, byte_D6789, byte_D678C, byte_D678D, byte_D678E, b
 extern byte_D679A, byte_D67A8, dword_D67A0, dword_D67A4, unk_D67B4, unk_D68FC, unk_D691C, unk_D699C
 extern unk_D69B9, unk_D69FF, unk_D6A1F, unk_D6A9F, unk_D6ABC, word_D6608, word_D677B, word_D677D
 extern word_D677F, word_D6781, word_D6783, word_D679C, word_D67F4, word_D683C, word_D687C
-global sub_A65E8, sub_A6612, sub_A6618, sub_A6635, loc_A6664, loc_A6670, sub_A6672, sub_A6684
+global PcSpkHwInit, PcSpkHwClose, PcSpkSilence, PcSpkVoiceNote, loc_A6664, loc_A6670, PcSpkVoiceOff, PcSpkVoiceUpdate
 global loc_A6692, loc_A66BA, loc_A66C9, loc_A66E0, loc_A6715, loc_A6745, loc_A6754, loc_A6763
-global sub_A677B, loc_A678D, loc_A67A6, loc_A67AF, loc_A67FD, loc_A680A, loc_A6812, loc_A6830
-global loc_A6836, loc_A6844, loc_A684A, sub_A6858, loc_A6861, loc_A6877, sub_A687D, loc_A6888
-global loc_A68A9, loc_A68B8, sub_A68C9, loc_A68DD, loc_A68EA, loc_A6900, loc_A690D, loc_A6923
-global loc_A6935, loc_A694D, sub_A6957, loc_A697D, loc_A6982, sub_A6983, loc_A699B, sub_A699D
-global loc_A69B0, loc_A69C0, loc_A69D5, sub_A69E8, sub_A69FB, sub_A6A01, sub_A6A09, loc_A6A40
-global sub_A6A42, loc_A6A89, loc_A6A92, loc_A6ABB, sub_A6AC2, loc_A6AEC, loc_A6B14, loc_A6B29
-global sub_A6B32, sub_A6B5D, sub_A6B73
-sub_A65E8:
+global PcSpkOutput, loc_A678D, loc_A67A6, loc_A67AF, loc_A67FD, loc_A680A, loc_A6812, loc_A6830
+global loc_A6836, loc_A6844, loc_A684A, OplWrite, loc_A6861, loc_A6877, OplReset, loc_A6888
+global loc_A68A9, loc_A68B8, OplFlush, loc_A68DD, loc_A68EA, loc_A6900, loc_A690D, loc_A6923
+global loc_A6935, loc_A694D, OplSetReg, loc_A697D, loc_A6982, OplGetReg, loc_A699B, OplLoadVoice
+global loc_A69B0, loc_A69C0, loc_A69D5, OplHwInit, OplHwClose, OplDetect, OplOpen, loc_A6A40
+global OplProbe, loc_A6A89, loc_A6A92, loc_A6ABB, OplCalibrate, loc_A6AEC, loc_A6B14, loc_A6B29
+global OplNoteFNum, OplVolumeLevel, OplVelocityLevel
+PcSpkHwInit:
         mov al, 0B6h
         out 43h, al
-        call sub_A6618
+        call PcSpkSilence
         mov al, 7Fh
         mov byte [byte_D6785], al
         mov byte [byte_D6786], al
@@ -28,10 +28,10 @@ sub_A65E8:
         mov byte [byte_D6789], al
         mov eax, 5
         ret
-sub_A6612:
-        call sub_A6618
+PcSpkHwClose:
+        call PcSpkSilence
         ret
-sub_A6618:
+PcSpkSilence:
         in al, 61h
         and al, 0FCh
         out 61h, al
@@ -41,7 +41,7 @@ sub_A6618:
         mov byte [byte_D6777], al
         mov byte [byte_D6778], al
         ret
-sub_A6635:
+PcSpkVoiceNote:
         push ebp
         LD mov, ebp, esp
         cmp dword [byte ebp+08h], byte 0
@@ -67,7 +67,7 @@ loc_A6664:
 loc_A6670:
         leave
         ret
-sub_A6672:
+PcSpkVoiceOff:
         db 055h                                 ; insn: push ebp
         LD mov, ebp, esp
         push esi
@@ -77,7 +77,7 @@ sub_A6672:
         pop esi
         leave
         ret
-sub_A6684:
+PcSpkVoiceUpdate:
         push ebp
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+0Ch]
@@ -175,7 +175,7 @@ loc_A6763:
         pop esi
         leave
         ret
-sub_A677B:
+PcSpkOutput:
         mov al, byte [byte_D6774]
         mov byte [byte_D678C], al
         push esi
@@ -251,7 +251,7 @@ loc_A684A:
         mov byte [byte_D679A], al
         ret
         db 00h
-sub_A6858:
+OplWrite:
         out dx, al
         push eax
         push ecx
@@ -275,18 +275,18 @@ loc_A6877:
         pop ecx
         pop eax
         ret
-sub_A687D:
+OplReset:
         LD xor, eax, eax
         mov al, 1
         mov dx, word [word_D679C]
 loc_A6888:
-        call sub_A6858
+        call OplWrite
         inc al
         cmp al, 0F6h
         jne short loc_A6888
         mov al, 1
         mov ah, 20h
-        call sub_A6858
+        call OplWrite
         push esi
         LD xor, eax, eax
         mov ebx, unk_D68FC
@@ -302,13 +302,13 @@ loc_A68A9:
         mov al, 80h
         mov ah, 0Eh
 loc_A68B8:
-        call sub_A6957
+        call OplSetReg
         inc al
         cmp al, 95h
         jle short loc_A68B8
-        call sub_A68C9
+        call OplFlush
         ret
-sub_A68C9:
+OplFlush:
         mov dx, word [word_D679C]
         push esi
         mov al, 20h
@@ -319,7 +319,7 @@ loc_A68DD:
         mov cl, byte [esi]
         LD cmp, ah, cl
         je short loc_A68EA
-        call sub_A6858
+        call OplWrite
 loc_A68EA:
         mov byte [esi], ah
         inc ebx
@@ -335,7 +335,7 @@ loc_A6900:
         mov cl, byte [esi]
         LD cmp, ah, cl
         je short loc_A690D
-        call sub_A6858
+        call OplWrite
 loc_A690D:
         mov byte [esi], ah
         inc ebx
@@ -358,11 +358,11 @@ loc_A6923:
 loc_A6935:
         add al, 10h
         mov ah, byte [byte ebx+010h]
-        call sub_A6858
+        call OplWrite
         mov byte [byte esi+010h], ah
         sub al, 10h
         mov ah, byte [ebx]
-        call sub_A6858
+        call OplWrite
         mov byte [esi], ah
 loc_A694D:
         inc ebx
@@ -372,7 +372,7 @@ loc_A694D:
         jne short loc_A6923
         pop esi
         ret
-sub_A6957:
+OplSetReg:
         mov dx, word [word_D679C]
         cmp al, 20h
         jb short loc_A697D
@@ -392,10 +392,10 @@ sub_A6957:
         pop eax
         jmp short loc_A6982
 loc_A697D:
-        call sub_A6858
+        call OplWrite
 loc_A6982:
         ret
-sub_A6983:
+OplGetReg:
         push ecx
         cmp al, 20h
         jb short loc_A699B
@@ -410,7 +410,7 @@ sub_A6983:
 loc_A699B:
         pop ecx
         ret
-sub_A699D:
+OplLoadVoice:
         push ebp
         LD mov, ebp, esp
         push si
@@ -431,7 +431,7 @@ loc_A69C0:
         inc ebx
         lodsb
         LD add, al, cl
-        call sub_A6957
+        call OplSetReg
         dec ch
         jne short loc_A69C0
         movzx ecx, word [byte ebp+08h]
@@ -441,28 +441,28 @@ loc_A69D5:
         inc ebx
         lodsb
         LD add, al, cl
-        call sub_A6957
+        call OplSetReg
         dec ch
         jne short loc_A69D5
         pop si
         leave
         ret
-sub_A69E8:
+OplHwInit:
         push ebp
         LD mov, ebp, esp
         mov eax, dword [byte ebp+08h]
         mov word [word_D679C], ax
-        call sub_A687D
+        call OplReset
         leave
         ret
-sub_A69FB:
-        call sub_A687D
+OplHwClose:
+        call OplReset
         ret
-sub_A6A01:
+OplDetect:
         mov eax, 388h
         LD xor, edx, edx
         ret
-sub_A6A09:
+OplOpen:
         push ebp
         LD mov, ebp, esp
         mov eax, dword [byte ebp+08h]
@@ -471,32 +471,32 @@ sub_A6A09:
         mov dword [dword_D67A0], eax
         mov eax, 8Ch
         mov dword [dword_D67A4], eax
-        call sub_A6A42
+        call OplProbe
         mov eax, 0
         jb short loc_A6A40
-        call sub_A6AC2
+        call OplCalibrate
         mov eax, 1
         clc
 loc_A6A40:
         leave
         ret
-sub_A6A42:
+OplProbe:
         push ax
         push cx
         push dx
         mov dx, word [word_D679C]
         mov eax, 1
-        call sub_A6858
+        call OplWrite
         mov eax, 6004h
-        call sub_A6858
+        call OplWrite
         mov eax, 8004h
-        call sub_A6858
+        call OplWrite
         in al, dx
         LD mov, ebx, eax
         mov eax, 0FF02h
-        call sub_A6858
+        call OplWrite
         mov eax, 2104h
-        call sub_A6858
+        call OplWrite
         mov ecx, 0C350h
 loc_A6A89:
         in al, dx
@@ -507,9 +507,9 @@ loc_A6A89:
 loc_A6A92:
         LD mov, ecx, eax
         mov eax, 6004h
-        call sub_A6858
+        call OplWrite
         mov eax, 8004h
-        call sub_A6858
+        call OplWrite
         and bl, 0E0h
         cmp bl, 0
         stc
@@ -524,7 +524,7 @@ loc_A6ABB:
         pop cx
         pop ax
         ret
-sub_A6AC2:
+OplCalibrate:
         push ax
         push cx
         push dx
@@ -574,7 +574,7 @@ loc_A6B29:
         pop cx
         pop ax
         ret
-sub_A6B32:
+OplNoteFNum:
         push ebp
         LD mov, ebp, esp
         LD xor, eax, eax
@@ -594,7 +594,7 @@ sub_A6B32:
         LD or, eax, edx
         leave
         ret
-sub_A6B5D:
+OplVolumeLevel:
         push ebp
         LD mov, ebp, esp
         LD xor, ebx, ebx
@@ -604,7 +604,7 @@ sub_A6B5D:
         movzx eax, word [dword ebx+word_D683C]
         leave
         ret
-sub_A6B73:
+OplVelocityLevel:
         push ebp
         LD mov, ebp, esp
         LD xor, ebx, ebx

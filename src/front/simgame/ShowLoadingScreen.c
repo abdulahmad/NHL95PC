@@ -23,7 +23,7 @@ void ShowLoadingScreen(void)
     FadePalStep(1, loadpals, 8);
     SetScreenTarget();
     ClearScreen(0);
-    if (sub_8DAB8() <= 0x222E0) return;
+    if (MemLargestFree() <= 0x222E0) return;
     memset(loadpals, 0, 0x900);
     MakePath(path, fileoncd[0x222] == 1 ? (char *)cddriveptr : 0, (char *)str_LoadPic, 0);
     bank = LoadBank(path, 0);

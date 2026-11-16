@@ -4,15 +4,15 @@ bits 32
 section s_9FD94 progbits alloc exec nowrite align=1
 extern __GETDS, byte_D5279, byte_D527A, dword_D5260, dword_D5264, dword_D5268, dword_D526C, dword_D5270
 extern dword_D5274
-global sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, loc_9FE46, sub_9FE94, sub_9FEB0, loc_9FEBE
-global loc_9FECC, loc_9FED3, loc_9FEDE, loc_9FEEC, loc_9FF00, loc_9FF02, sub_9FF04, loc_9FF11
+global Mpu401Detect, Mpu401Open, Mpu401Init, Mpu401Close, loc_9FE46, Mpu401Reset, Mpu401Command, loc_9FEBE
+global loc_9FECC, loc_9FED3, loc_9FEDE, loc_9FEEC, loc_9FF00, loc_9FF02, Mpu401Delay, loc_9FF11
 global loc_9FF17, loc_9FF1D, loc_9FF23, loc_9FF27, loc_9FF2B, loc_9FF31, loc_9FF35, loc_9FF3B
-global loc_9FF3F, loc_9FF4B, loc_9FF51, sub_9FF55, loc_9FF60, loc_9FF6E, loc_9FF77, sub_9FF78
-global loc_9FF86, loc_9FF94, loc_9FF9E, sub_9FFA0, sub_9FFA6, loc_9FFB2, loc_9FFC1
-sub_9FD94:
+global loc_9FF3F, loc_9FF4B, loc_9FF51, Mpu401ReadData, loc_9FF60, loc_9FF6E, loc_9FF77, Mpu401WriteData
+global loc_9FF86, loc_9FF94, loc_9FF9E, Mpu401Midi, loc_9FFB2, loc_9FFC1
+Mpu401Detect:
         mov eax, 70330h
         ret
-sub_9FD9A:
+Mpu401Open:
         push ebp
         LD mov, ebp, esp
         movzx eax, word [byte ebp+08h]
@@ -26,19 +26,19 @@ sub_9FD9A:
         shl al, cl
         mov byte [byte_D527A], al
         push dword 0FFh
-        call sub_9FEB0
+        call Mpu401Command
         push byte 24h
-        call sub_9FF04
+        call Mpu401Delay
         add esp, byte 8
-        call sub_9FF55
+        call Mpu401ReadData
         mov eax, 3Fh
         push eax
-        call sub_9FEB0
+        call Mpu401Command
         add esp, byte 4
         inc eax
         leave
         ret
-sub_9FDEA:
+Mpu401Init:
         push ebp
         LD mov, ebp, esp
         movzx eax, word [byte ebp+08h]
@@ -59,49 +59,49 @@ sub_9FDEA:
         mov dword [dword_D526C], eax
         mov eax, dword [dword_D5270]
         or eax, dword [dword_D5274]
-        call sub_9FE94
+        call Mpu401Reset
         popfw
         leave
         ret
-sub_9FE3B:
+Mpu401Close:
         pusha
         mov ebx, 0B0h
         mov ecx, 10h
 loc_9FE46:
         db 051h                                 ; insn: push ecx
         db 053h                                 ; insn: push ebx
-        call sub_9FF78
+        call Mpu401WriteData
         push byte 7Bh
-        call sub_9FF78
+        call Mpu401WriteData
         push byte 0
-        call sub_9FF78
+        call Mpu401WriteData
         add esp, byte 0Ch
         pop ecx
         inc ebx
         loop loc_9FE46
         push dword 0FFh
-        call sub_9FEB0
+        call Mpu401Command
         push byte 9
-        call sub_9FF04
+        call Mpu401Delay
         push dword 0FFh
-        call sub_9FEB0
+        call Mpu401Command
         push byte 9
-        call sub_9FF04
+        call Mpu401Delay
         add esp, byte 10h
         mov eax, dword [dword_D5270]
         or eax, dword [dword_D5274]
         popa
         ret
-sub_9FE94:
+Mpu401Reset:
         push dword 0FFh
-        call sub_9FEB0
+        call Mpu401Command
         push byte 9
-        call sub_9FF04
+        call Mpu401Delay
         push byte 3Fh
-        call sub_9FEB0
+        call Mpu401Command
         add esp, byte 0Ch
         ret
-sub_9FEB0:
+Mpu401Command:
         push ebp
         LD mov, ebp, esp
         mov edx, dword [dword_D5264]
@@ -141,7 +141,7 @@ loc_9FF00:
 loc_9FF02:
         leave
         ret
-sub_9FF04:
+Mpu401Delay:
         push ebp
         LD mov, ebp, esp
         mov ecx, dword [byte ebp+08h]
@@ -196,7 +196,7 @@ loc_9FF51:
         popfw
         leave
         ret
-sub_9FF55:
+Mpu401ReadData:
         mov edx, dword [dword_D5264]
         mov ecx, 0FFh
 loc_9FF60:
@@ -212,7 +212,7 @@ loc_9FF6E:
         in al, dx
 loc_9FF77:
         ret
-sub_9FF78:
+Mpu401WriteData:
         push ebp
         LD mov, ebp, esp
         mov edx, dword [dword_D5264]
@@ -231,10 +231,9 @@ loc_9FF94:
 loc_9FF9E:
         leave
         ret
-sub_9FFA0:
+Mpu401Midi:
         push ds
         call __GETDS
-sub_9FFA6:
         push esi
         push edi
         mov edi, dword [byte esp+010h]
@@ -244,7 +243,7 @@ loc_9FFB2:
         xor eax, eax
         mov al, byte [esi]
         push eax
-        call sub_9FF78
+        call Mpu401WriteData
         add esp, byte 4
         dec edi
         inc esi

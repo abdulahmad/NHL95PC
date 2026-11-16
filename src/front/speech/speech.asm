@@ -6,7 +6,7 @@ extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _
 extern addtimer, AllocMemBlock, byte_D27B6, cursndbank, FreeClip_ret, FreeMemBlock, lseek_, musichandle
 extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RemoveTimerCallback, samplereq, SayNhlIntro
 extern speechbank, speechchannel, speechcopybuf, speechcopylen, speechinit, speechq, str_SampleMemMan, str_Sentence
-extern str_SpeechBank, str_Speechbuf, strncpy_, sub_8CC70, PushMemDescriptorLocked, MemDescPtr, PlayDigiPtr, PlayDigiPtrLoop
+extern str_SpeechBank, str_Speechbuf, strncpy_, AllocMemHandleLocked, PushMemDescriptorLocked, MemDescPtr, PlayDigiPtr, PlayDigiPtrLoop
 extern StopDigiChannel, UnpackTo
 global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue, InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, ShutdownSpeech_ret6
 global ShutdownSpeech_ret5, SpeechIsInit, SpeechBusy, SpeechIdle, MusicChanReset2, SpeechStopQueue, MusicChanCmd3, MusicChanReset
@@ -192,7 +192,7 @@ InitSpeechSlots:
         push edx
         push ecx
         push str_Speechbuf
-        call sub_8CC70
+        call AllocMemHandleLocked
         add esp, byte 0Ch
         mov edx, dword [speechbank]
         mov dword [dword edx+03B60h], eax

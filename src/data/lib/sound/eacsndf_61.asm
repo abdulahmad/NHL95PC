@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_D4BA0 progbits alloc noexec write align=1
-extern NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery, NullDriverSetTrack, NullDriverMidi, NullDriverPlayDigi, sub_9D698
-extern sub_9D6E6, sub_9D6F3, sub_9DAAC, sub_9DC9F, sub_9DE9C, sub_9DEA9, sub_9DEBE, sub_9DF73
-extern sub_9DF80, sub_9E676, ParseBlasterEnv, SbOpen, SbInit, SbClose, SbService, SbQuery
-extern SbSetTrack, SbPlayDigi, sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, sub_9FFA0, GusProbe
+extern NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery, NullDriverSetTrack, NullDriverMidi, NullDriverPlayDigi, PcSpkInit
+extern PcSpkClose, PcSpkService, PcSpkMidi, SbMidi, AdlibDetect, AdlibOpen, AdlibInit, AdlibClose
+extern AdlibService, AdlibMidi, ParseBlasterEnv, SbOpen, SbInit, SbClose, SbService, SbQuery
+extern SbSetTrack, SbPlayDigi, Mpu401Detect, Mpu401Open, Mpu401Init, Mpu401Close, Mpu401Midi, GusProbe
 extern GusDetect, GusInitDigi, GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack
 extern GusPlayDigi, GusMusicMidi, GusDigiMidi
 global _Extender, _ExtenderSubtype, Is8087, _dynend, _curbrk, _LpCmdLine, _LpPgmName
@@ -25,22 +25,22 @@ SndDriverTable:
         db 0FFh,0FFh,0FFh,0FFh
         dd NullDriverOpen
         dd NullDriverOpen
-        dd sub_9D698
-        dd sub_9D6E6
-        dd sub_9D6F3
+        dd PcSpkInit
+        dd PcSpkClose
+        dd PcSpkService
         dd NullDriverQuery
         dd NullDriverSetTrack
-        dd sub_9DAAC
+        dd PcSpkMidi
         dd NullDriverPlayDigi
         db 05h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-        dd sub_9DE9C
-        dd sub_9DEA9
-        dd sub_9DEBE
-        dd sub_9DF73
-        dd sub_9DF80
+        dd AdlibDetect
+        dd AdlibOpen
+        dd AdlibInit
+        dd AdlibClose
+        dd AdlibService
         dd NullDriverQuery
         dd NullDriverSetTrack
-        dd sub_9E676
+        dd AdlibMidi
         dd NullDriverPlayDigi
         db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
         dd ParseBlasterEnv
@@ -50,17 +50,17 @@ SndDriverTable:
         dd SbService
         dd SbQuery
         dd SbSetTrack
-        dd sub_9DC9F
+        dd SbMidi
         dd SbPlayDigi
         db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-        dd sub_9FD94
-        dd sub_9FD9A
-        dd sub_9FDEA
-        dd sub_9FE3B
+        dd Mpu401Detect
+        dd Mpu401Open
+        dd Mpu401Init
+        dd Mpu401Close
         dd NullDriverReturn
         dd NullDriverQuery
         dd NullDriverSetTrack
-        dd sub_9FFA0
+        dd Mpu401Midi
         dd NullDriverPlayDigi
         db 03h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
         dd GusDetect

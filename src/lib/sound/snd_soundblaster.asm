@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_9F226 progbits alloc exec nowrite align=1
 extern __GETDS, str_BLASTER, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_
-extern int386x_, memset_, outp_, GetPatchEntry, strtoul_, sub_A6D8D, sub_A6DA0, sub_A6DED
-extern sub_A6E10, sub_A6E7B, sub_A6EA2, sub_A6EC3, sub_A6F3C, sub_A6FA2, sub_A6FE1, sub_A7094
-extern sub_A70BC, sub_A70DD, sub_A905E, sub_A9BA4, sub_AA1D9, unk_D522E, unk_D5254, unk_D5258
+extern int386x_, memset_, outp_, GetPatchEntry, strtoul_, SbMixRateDiv, SbMixerOpen, SbMixerClose
+extern SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetRate, SbStreamSetSample, SbStreamStart, SbStreamIdle
+extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, sub_AA1D9, unk_D522E, unk_D5254, unk_D5258
 extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
 extern word_F3718
 global ParseBlasterEnv, loc_9F25C, loc_9F293, loc_9F29D, loc_9F2AE, loc_9F2B7, loc_9F2C1
@@ -184,7 +184,7 @@ loc_9F3CA:
         push ebx
         mov ecx, dword [byte esp+018h]
         push ecx
-        call sub_A6DA0
+        call SbMixerOpen
         add esp, byte 10h
         movsx eax, al
         cmp eax, byte 0FFFFFFFFh
@@ -252,7 +252,7 @@ SbClose:
         call __GETDS
         cmp dword [dword_D5250], byte 0
         je short loc_9F4C6
-        call sub_A6DED
+        call SbMixerClose
         mov eax, dword [dword_D525C]
         call SbFreeDosBuffer
         xor ebx, ebx
@@ -280,7 +280,7 @@ loc_9F4DE:
         test edx, eax
         je short loc_9F511
         push edi
-        call sub_A7094
+        call SbStreamIdle
         add esp, byte 4
         test ax, ax
         je short loc_9F511
@@ -319,14 +319,14 @@ loc_9F53C:
         push byte 0
         push byte 0
         push edi
-        call sub_A70DD
+        call SbStreamApplyBend
         add esp, byte 14h
 loc_9F565:
         inc edi
 loc_9F566:
         cmp edi, byte 4
         jl short loc_9F53C
-        call sub_A905E
+        call SbMixChannels
         add esp, byte 4
         pop edi
         pop esi
@@ -354,7 +354,7 @@ loc_9F5AC:
         cmp dx, byte 7
         jb short loc_9F60B
         ja short loc_9F5C1
-        call sub_A6D8D
+        call SbMixRateDiv
 loc_9F5B9:
         movsx esi, ax
         mov eax, esi
@@ -362,18 +362,18 @@ loc_9F5B9:
         pop ds
         ret
 loc_9F5C1:
-        call sub_A9BA4
+        call SbDmaHalfReady
         jmp short loc_9F5B9
 loc_9F5C8:
         movsx esi, word [byte esp+0Eh]
         push esi
-        call sub_A7094
+        call SbStreamIdle
         add esp, byte 4
         jmp short loc_9F5B9
 loc_9F5D8:
         movsx eax, word [byte esp+0Eh]
         push eax
-        call sub_A70BC
+        call SbStreamGetVolume
         mov esi, eax
 loc_9F5E5:
         add esp, byte 4
@@ -389,7 +389,7 @@ loc_9F5ED:
         mov esi, dword [byte esp+010h]
         sar esi, 18h
         push esi
-        call sub_A6EC3
+        call SbStreamSetVolume
         add esp, byte 8
 loc_9F60B:
         mov esi, 0FFFFFFFFh
@@ -436,7 +436,7 @@ SbPlayDigi:
         push eax
         movsx eax, word [byte esp+030h]
         push eax
-        call sub_A6FE1
+        call SbStreamStart
         add esp, byte 20h
         pop ebp
         pop edi
@@ -491,7 +491,7 @@ loc_9F6EA:
         cmp dx, byte 1
         jle short loc_9F71D
         push esi
-        call sub_A6E7B
+        call SbStreamRelease
         add esp, byte 4
         jmp short loc_9F71D
 loc_9F714:
@@ -755,7 +755,7 @@ SbVoiceStartSample:
         mov ax, word [byte esi+02h]
         push eax
         push ebp
-        call sub_A6F3C
+        call SbStreamSetRate
         add esp, byte 8
         mov edx, dword [byte esi+0Ch]
         push edx
@@ -766,7 +766,7 @@ SbVoiceStartSample:
         mov esi, dword [byte edi+0Ch]
         push esi
         push ebp
-        call sub_A6FA2
+        call SbStreamSetSample
         add esp, byte 14h
         pop ebp
         pop edi
@@ -795,7 +795,7 @@ loc_9FA48:
         push eax
         movsx eax, cx
         push eax
-        call sub_A6E10
+        call SbStreamPlayNote
         add esp, byte 0Ch
         pop esi
         pop ecx
@@ -925,7 +925,7 @@ SbVoiceController:
         push edx
         cwde
         push eax
-        call sub_A6EC3
+        call SbStreamSetVolume
         add esp, byte 8
 loc_9FBA8:
         pop ecx
@@ -970,7 +970,7 @@ SbStopVoice:
         add edx, dword_F34DC
         mov word [byte edx+0Ah], 0
         push eax
-        call sub_A6EA2
+        call SbStreamStop
         add esp, byte 4
         pop edx
         pop ecx

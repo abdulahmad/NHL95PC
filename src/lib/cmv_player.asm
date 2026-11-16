@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_1AC25 progbits alloc exec nowrite align=1
-extern __CHK, str_CmvMemBlock, str_CmvPalette, FreeMemBlock, AllocMemBlock, sub_8CCC4, FreeBitmap, bcopy
+extern __CHK, str_CmvMemBlock, str_CmvPalette, FreeMemBlock, AllocMemBlock, AllocMemBlockUnlocked, FreeBitmap, bcopy
 extern CreateBitmap
 global sub_1AC25, loc_1AC96, sub_1AC9A, loc_1ACBB, loc_1ACCB, loc_1ACDB, loc_1ACEB, sub_1ACF1
 global loc_1AD12, sub_1AD16, loc_1ADE0, loc_1ADF0, loc_1AE3B, loc_1AE65, sub_1AE6B, loc_1AEE2
@@ -18,7 +18,7 @@ sub_1AC25:
         push byte 0
         push dword 42Ch
         push str_CmvMemBlock
-        call sub_8CCC4
+        call AllocMemBlockUnlocked
         add esp, byte 0Ch
         test eax, eax
         je short loc_1AC96

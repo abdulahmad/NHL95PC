@@ -47,14 +47,14 @@ extern word_D7408, word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, w
 global StrToLong, loc_A6BF7, loc_A6BF9, loc_A6C0E, loc_A6C1C, loc_A6C1D, loc_A6C31, loc_A6C38
 global loc_A6C44, loc_A6C49, loc_A6C53, loc_A6C64, loc_A6C7B, loc_A6C7E, loc_A6C89, loc_A6CA6
 global loc_A6CA9, loc_A6CB0, loc_A6CB6, loc_A6CCE, loc_A6CD3, loc_A6CF3, loc_A6D01, loc_A6D08
-global loc_A6D11, loc_A6D13, sub_A6D1A, loc_A6D1D, strtoul_, DigitValue, loc_A6D40, loc_A6D5D
-global loc_A6D67, loc_A6D70, loc_A6D7A, sub_A6D84, loc_A6D8B, sub_A6D8D, sub_A6DA0, loc_A6DB2
-global loc_A6DE5, sub_A6DED, sub_A6DF8, loc_A6E02, sub_A6E10, loc_A6E54, loc_A6E66, loc_A6E78
-global sub_A6E7B, loc_A6E9F, sub_A6EA2, loc_A6EC0, sub_A6EC3, loc_A6F08, loc_A6F17, sub_A6F1B
-global loc_A6F39, sub_A6F3C, loc_A6F90, loc_A6F97, loc_A6F9C, loc_A6F9F, sub_A6FA2, loc_A6FDE
-global sub_A6FE1, loc_A7013, loc_A7065, loc_A707D, loc_A708F, sub_A7094, loc_A70AF, loc_A70B7
-global sub_A70BC, loc_A70D8, sub_A70DD, loc_A712E, loc_A713C, loc_A714A, loc_A7158, sub_A715C
-global sub_A815D, sub_A905E, loc_A906C, loc_A90FB, loc_A9105, loc_A911C, loc_A9123, loc_A915C
+global loc_A6D11, loc_A6D13, strtol_, loc_A6D1D, strtoul_, DigitValue, loc_A6D40, loc_A6D5D
+global loc_A6D67, loc_A6D70, loc_A6D7A, SbStreamCheck, loc_A6D8B, SbMixRateDiv, SbMixerOpen, loc_A6DB2
+global loc_A6DE5, SbMixerClose, SbStreamStopAll, loc_A6E02, SbStreamPlayNote, loc_A6E54, loc_A6E66, loc_A6E78
+global SbStreamRelease, loc_A6E9F, SbStreamStop, loc_A6EC0, SbStreamSetVolume, loc_A6F08, loc_A6F17, SbStreamSetBend
+global loc_A6F39, SbStreamSetRate, loc_A6F90, loc_A6F97, loc_A6F9C, loc_A6F9F, SbStreamSetSample, loc_A6FDE
+global SbStreamStart, loc_A7013, loc_A7065, loc_A707D, loc_A708F, SbStreamIdle, loc_A70AF, loc_A70B7
+global SbStreamGetVolume, loc_A70D8, SbStreamApplyBend, loc_A712E, loc_A713C, loc_A714A, loc_A7158, SbMixAdd8Vol
+global SbMixAdd8, SbMixChannels, loc_A906C, loc_A90FB, loc_A9105, loc_A911C, loc_A9123, loc_A915C
 global loc_A9197, loc_A91CE, loc_A91DA, loc_A91F6, loc_A9208, loc_A921A, loc_A9269, loc_A92A6
 global loc_A92D0, loc_A92E6, loc_A9327, loc_A9333, loc_A933A, loc_A93C2, loc_A93CC, loc_A93E3
 global loc_A93EA, loc_A9423, loc_A945E, loc_A9495, loc_A94A1, loc_A94BD, loc_A94CF, loc_A94E1
@@ -63,8 +63,8 @@ global loc_A9693, loc_A96AA, loc_A96B1, loc_A96EA, loc_A9725, loc_A975C, loc_A97
 global loc_A9796, loc_A97A8, loc_A97F7, loc_A9834, loc_A985E, loc_A9874, loc_A98B5, loc_A98C1
 global loc_A98C8, loc_A9950, loc_A995A, loc_A9971, loc_A9978, loc_A99B1, loc_A99EC, loc_A9A23
 global loc_A9A2F, loc_A9A4B, loc_A9A5D, loc_A9A6F, loc_A9ABE, loc_A9AFB, loc_A9B25, loc_A9B3B
-global loc_A9B7C, loc_A9B88, loc_A9B8F, sub_A9BA4, loc_A9BB5, loc_A9BBA, loc_A9BCA, sub_A9BD0
-global loc_A9C08, sub_A9C1B, loc_A9C33, sub_A9C37, sub_A9C4A, loc_A9C60, unk_A9C80, unk_A9C81
+global loc_A9B7C, loc_A9B88, loc_A9B8F, SbDmaHalfReady, loc_A9BB5, loc_A9BBA, loc_A9BCA, SbDmaStart
+global loc_A9C08, SbDmaStop, loc_A9C33, SbMixPause, SbConvertMix, loc_A9C60, unk_A9C80, unk_A9C81
 global unk_A9C83, unk_A9C85, unk_A9C86, unk_A9C88, unk_A9C89, unk_A9C8A, unk_A9C8E, unk_A9C8F
 global unk_A9C90, unk_A9C91, unk_A9C92, unk_A9C96, unk_A9C98
 StrToLong:
@@ -208,7 +208,7 @@ loc_A6D13:
         pop edi
         pop esi
         ret
-sub_A6D1A:
+strtol_:
         push ecx
         xor ecx, ecx
 loc_A6D1D:
@@ -265,7 +265,7 @@ loc_A6D7A:
         pop edx
         ret
         db 00h,00h,00h
-sub_A6D84:
+SbStreamCheck:
         cmp esi, byte 4
         jb short loc_A6D8B
         stc
@@ -273,7 +273,7 @@ sub_A6D84:
 loc_A6D8B:
         clc
         ret
-sub_A6D8D:
+SbMixRateDiv:
         push edx
         push ecx
         mov eax, dword [unk_A9C8A]
@@ -283,11 +283,11 @@ sub_A6D8D:
         pop ecx
         pop edx
         ret
-sub_A6DA0:
+SbMixerOpen:
         push ebp
         LD mov, ebp, esp
         push esi
-        call sub_A6DF8
+        call SbStreamStopAll
         mov ecx, 4
         mov al, 0FFh
         LD xor, esi, esi
@@ -301,7 +301,7 @@ loc_A6DB2:
         push dword [byte ebp+0Ch]
         movzx eax, word [byte ebp+08h]
         movzx edx, word [byte ebp+0Ah]
-        call sub_A9BD0
+        call SbDmaStart
         add esp, byte 0Ch
         cmp eax, byte 0FFFFFFFFh
         je short loc_A6DE5
@@ -314,11 +314,11 @@ loc_A6DE5:
         pop esi
         leave
         ret
-sub_A6DED:
-        call sub_A6DF8
-        call sub_A9C1B
+SbMixerClose:
+        call SbStreamStopAll
+        call SbDmaStop
         ret
-sub_A6DF8:
+SbStreamStopAll:
         push esi
         mov ecx, 4
         mov al, 0
@@ -330,13 +330,13 @@ loc_A6E02:
         loop loc_A6E02
         pop esi
         ret
-sub_A6E10:
+SbStreamPlayNote:
         push ebp
         LD mov, ebp, esp
         push esi
         mov eax, dword [byte ebp+010h]
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A6E78
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov bl, byte [byte ebp+0Ch]
@@ -370,12 +370,12 @@ loc_A6E78:
         pop esi
         leave
         ret
-sub_A6E7B:
+SbStreamRelease:
         push ebp
         LD mov, ebp, esp
         push esi
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A6E9F
         cmp esi, byte 1
         jle short loc_A6E9F
@@ -388,12 +388,12 @@ loc_A6E9F:
         pop esi
         leave
         ret
-sub_A6EA2:
+SbStreamStop:
         push ebp
         LD mov, ebp, esp
         push esi
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A6EC0
         cmp esi, byte 1
         jle short loc_A6EC0
@@ -404,13 +404,13 @@ loc_A6EC0:
         pop esi
         leave
         ret
-sub_A6EC3:
+SbStreamSetVolume:
         push ebp
         LD mov, ebp, esp
         push esi
         push edi
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A6F17
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov al, byte [byte ebp+0Ch]
@@ -441,12 +441,12 @@ loc_A6F17:
         pop esi
         leave
         ret
-sub_A6F1B:
+SbStreamSetBend:
         push ebp
         LD mov, ebp, esp
         push esi
         movzx esi, word [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A6F39
         mov esi, dword [nosplit esi*4+off_D71F0]
         movsx eax, word [byte ebp+0Ch]
@@ -455,12 +455,12 @@ loc_A6F39:
         pop esi
         leave
         ret
-sub_A6F3C:
+SbStreamSetRate:
         push ebp
         LD mov, ebp, esp
         push esi
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A6F9F
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov ecx, dword [unk_A9C8A]
@@ -495,12 +495,12 @@ loc_A6F9F:
         pop esi
         leave
         ret
-sub_A6FA2:
+SbStreamSetSample:
         push ebp
         LD mov, ebp, esp
         push esi
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A6FDE
         mov esi, dword [nosplit esi*4+off_D71F0]
         LD xor, eax, eax
@@ -521,7 +521,7 @@ loc_A6FDE:
         pop esi
         leave
         ret
-sub_A6FE1:
+SbStreamStart:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -529,14 +529,14 @@ sub_A6FE1:
         pushf
         cli
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb near loc_A708F
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov eax, dword [byte ebp+01Ch]
         cmp eax, byte 0
         jne short loc_A7013
         push dword [byte ebp+08h]
-        call sub_A6E7B
+        call SbStreamRelease
         pop eax
         popf
         pop edi
@@ -546,18 +546,18 @@ sub_A6FE1:
 loc_A7013:
         push eax
         push dword [byte ebp+08h]
-        call sub_A6F3C
+        call SbStreamSetRate
         add esp, byte 8
         push dword [byte ebp+020h]
         push dword [byte ebp+08h]
-        call sub_A6EC3
+        call SbStreamSetVolume
         add esp, byte 8
         push dword [byte ebp+018h]
         push dword [byte ebp+014h]
         push dword [byte ebp+010h]
         push dword [byte ebp+0Ch]
         push dword [byte ebp+08h]
-        call sub_A6FA2
+        call SbStreamSetSample
         add esp, byte 14h
         LD xor, eax, eax
         mov byte [byte esi+03Eh], al
@@ -586,7 +586,7 @@ loc_A707D:
         push byte 7Fh
         push dword 0FFh
         push dword [byte ebp+08h]
-        call sub_A6E10
+        call SbStreamPlayNote
         add esp, byte 0Ch
 loc_A708F:
         popf
@@ -594,12 +594,12 @@ loc_A708F:
         pop esi
         leave
         ret
-sub_A7094:
+SbStreamIdle:
         push ebp
         LD mov, ebp, esp
         push esi
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A70AF
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov al, byte [esi]
@@ -615,12 +615,12 @@ loc_A70B7:
         pop esi
         leave
         ret
-sub_A70BC:
+SbStreamGetVolume:
         push ebp
         LD mov, ebp, esp
         push esi
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A70D8
         mov esi, dword [nosplit esi*4+off_D71F0]
         movzx eax, byte [byte esi+01h]
@@ -632,14 +632,14 @@ loc_A70D8:
         pop esi
         leave
         ret
-sub_A70DD:
+SbStreamApplyBend:
         push ebp
         LD mov, ebp, esp
         push esi
         push edi
         mov eax, dword [byte ebp+0Ch]
         mov esi, dword [byte ebp+08h]
-        call sub_A6D84
+        call SbStreamCheck
         jb short loc_A7158
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov edi, dword [byte esi+028h]
@@ -686,7 +686,7 @@ loc_A7158:
         pop esi
         leave
         ret
-sub_A715C:
+SbMixAdd8Vol:
         mov al, byte [esi]
         xlatb
         cbw
@@ -2224,7 +2224,7 @@ sub_A715C:
         LD add, ecx, edx
         LD adc, esi, edi
         ret
-sub_A815D:
+SbMixAdd8:
         mov al, byte [esi]
         cbw
         add word [word_D7214], ax
@@ -3506,7 +3506,7 @@ sub_A815D:
         LD add, ecx, edx
         LD adc, esi, edi
         ret
-sub_A905E:
+SbMixChannels:
         push esi
         push edi
         mov ecx, 80h
@@ -3550,11 +3550,11 @@ loc_A906C:
         mov edx, dword [dword_D6D18]
         cmp byte [byte_D6CE1], 7Fh
         jb short loc_A90FB
-        call sub_A815D
+        call SbMixAdd8
         jmp short loc_A9105
 loc_A90FB:
         mov ebx, byte_D6D24
-        call sub_A715C
+        call SbMixAdd8Vol
 loc_A9105:
         mov dword [dword_D6D10], ecx
         sub esi, dword [dword_D7200]
@@ -3740,11 +3740,11 @@ loc_A933A:
         mov edx, dword [dword_D6E5C]
         cmp byte [byte_D6E25], 7Fh
         jb short loc_A93C2
-        call sub_A815D
+        call SbMixAdd8
         jmp short loc_A93CC
 loc_A93C2:
         mov ebx, byte_D6E68
-        call sub_A715C
+        call SbMixAdd8Vol
 loc_A93CC:
         mov dword [dword_D6E54], ecx
         sub esi, dword [dword_D7200]
@@ -3930,11 +3930,11 @@ loc_A9601:
         mov edx, dword [dword_D6FA0]
         cmp byte [byte_D6F69], 7Fh
         jb short loc_A9689
-        call sub_A815D
+        call SbMixAdd8
         jmp short loc_A9693
 loc_A9689:
         mov ebx, byte_D6FAC
-        call sub_A715C
+        call SbMixAdd8Vol
 loc_A9693:
         mov dword [dword_D6F98], ecx
         sub esi, dword [dword_D7200]
@@ -4120,11 +4120,11 @@ loc_A98C8:
         mov edx, dword [dword_D70E4]
         cmp byte [byte_D70AD], 7Fh
         jb short loc_A9950
-        call sub_A815D
+        call SbMixAdd8
         jmp short loc_A995A
 loc_A9950:
         mov ebx, byte_D70F0
-        call sub_A715C
+        call SbMixAdd8Vol
 loc_A995A:
         mov dword [dword_D70DC], ecx
         sub esi, dword [dword_D7200]
@@ -4278,12 +4278,12 @@ loc_A9B88:
 loc_A9B8F:
         mov ecx, 100h
         mov esi, word_D7214
-        call sub_A9C4A
+        call SbConvertMix
         pop edi
         pop esi
         ret
         db 00h,00h,00h
-sub_A9BA4:
+SbDmaHalfReady:
         call sub_AA1B2
         cmp eax, dword [dword_D7A1E]
         jge short loc_A9BB5
@@ -4300,7 +4300,7 @@ loc_A9BBA:
 loc_A9BCA:
         mov eax, 0
         ret
-sub_A9BD0:
+SbDmaStart:
         push ebp
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+010h]
@@ -4329,7 +4329,7 @@ loc_A9C08:
         mov eax, 0FFFFFFFFh
         leave
         ret
-sub_A9C1B:
+SbDmaStop:
         push esi
         pushfw
         cmp byte [byte_D7618], 0
@@ -4341,14 +4341,14 @@ loc_A9C33:
         popfw
         pop esi
         ret
-sub_A9C37:
+SbMixPause:
         mov eax, 1
         mov byte [byte_D7619], al
         ret
         LD xor, eax, eax
         mov byte [byte_D7619], al
         ret
-sub_A9C4A:
+SbConvertMix:
         push esi
         push edi
         cld

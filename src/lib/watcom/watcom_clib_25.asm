@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_98683 progbits alloc exec nowrite align=1
 extern __EnterWVIDEO_, dword_EDEFC, WriteConsoleMessage
-global __fatal_runtime_error_, loc_9869D, nullsub_7, sub_986B0, unknown_libname_22
+global __fatal_runtime_error_, loc_9869D, nullsub_7, sub_986B0, MemLock
 __fatal_runtime_error_:
         push ebx
         push ecx
@@ -29,7 +29,7 @@ sub_986B0:
         mov eax, dword_EDEFC
         ret
         db 08Bh,0C0h
-unknown_libname_22:
+MemLock:	;IDA: unknown_libname_22
         mov eax, dword [byte esp+04h]
         mov dword [eax], 1
         ret

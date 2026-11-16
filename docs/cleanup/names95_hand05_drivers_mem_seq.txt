@@ -1,0 +1,165 @@
+sub_9D698 PcSpkInit {source_game=PC-new,confidence=medium} PC speaker driver init entry: clears the voices and channels and starts the timer
+sub_9D69E PcSpkInit+06h {no_record}
+sub_9D6E6 PcSpkClose {source_game=PC-new,confidence=medium} PC speaker driver close entry
+sub_9D6EC PcSpkClose+06h {no_record}
+sub_9D6F3 PcSpkService {source_game=PC-new,confidence=medium} PC speaker driver timer service entry: steps the voices
+sub_9D6F9 PcSpkService+06h {no_record}
+sub_9D700 PcSpkNoteOn {source_game=PC-new,confidence=low} MIDI note on for the PC speaker; channel 10 drums use their own patches
+sub_9D805 PcSpkNoteOff {source_game=PC-new,confidence=low} MIDI note off for the PC speaker: releases the note's voice
+sub_9D858 PcSpkProgramChange {source_game=PC-new,confidence=medium} MIDI program change for the PC speaker: sets the timbre of a channel
+sub_9D880 PcSpkUpdateVoices {source_game=PC-new,confidence=low} steps the envelope and pitch of every PC speaker voice and plays the loudest
+sub_9DA99 PcSpkTimbreUsable {source_game=PC-new,confidence=low} returns 1 when a timbre has PC speaker data, otherwise -1
+sub_9DAAC PcSpkMidi {source_game=PC-new,confidence=medium} PC speaker driver MIDI entry: plays a run of MIDI messages
+sub_9DAB2 PcSpkMidi+06h {no_record}
+sub_9DC9F SbMidi {source_game=PC-new,confidence=medium} Sound Blaster driver MIDI entry: plays a run of MIDI messages on the sampled voices
+sub_9DCA5 SbMidi+06h {no_record}
+sub_9DE9C AdlibDetect {source_game=PC-new,confidence=medium} AdLib driver detect entry
+sub_9DEA2 AdlibDetect+06h {no_record}
+sub_9DEA9 AdlibOpen {source_game=PC-new,confidence=medium} AdLib driver open entry
+sub_9DEAF AdlibOpen+06h {no_record}
+sub_9DEBE AdlibInit {source_game=PC-new,confidence=medium} AdLib driver init entry: resets the nine voices and sixteen channels
+sub_9DEC4 AdlibInit+06h {no_record}
+sub_9DF73 AdlibClose {source_game=PC-new,confidence=medium} AdLib driver close entry
+sub_9DF79 AdlibClose+06h {no_record}
+sub_9DF80 AdlibService {source_game=PC-new,confidence=medium} AdLib driver timer service entry: frees finished voices and updates the rest
+sub_9DF86 AdlibService+06h {no_record}
+sub_9E026 AdlibLoadTimbre {source_game=PC-new,confidence=low} loads a channel's patch into a voice
+sub_9E087 AdlibNoteOff {source_game=PC-new,confidence=medium} MIDI note off: releases the voice playing the note, or holds it while sustain is on
+sub_9E0FF AdlibController {source_game=PC-new,confidence=medium} MIDI control change: modulation, volume, pan, sustain, effects, all notes off
+sub_9E28B AdlibProgramChange {source_game=PC-new,confidence=medium} MIDI program change: sets the patch of a channel
+sub_9E29B AdlibPitchBend {source_game=PC-new,confidence=medium} MIDI pitch bend: stores the bend of a channel
+sub_9E2B1 AdlibVoiceSetup {source_game=PC-new,confidence=low} copies a timbre's OPL settings into a voice and starts its envelopes
+sub_9E378 AdlibVoiceRelease {source_game=PC-new,confidence=low} moves a voice's envelope to its release stage
+sub_9E390 AdlibVoiceResetEnvelopes {source_game=PC-new,confidence=low} resets the envelopes of a voice
+sub_9E428 AdlibEnvelopeStep {source_game=PC-new,confidence=low} steps one five-stage volume envelope
+sub_9E4D7 AdlibStartLfo {source_game=PC-new,confidence=low} starts a voice's delayed modulation (LFO)
+sub_9E511 AdlibStepLfo {source_game=PC-new,confidence=low} steps a voice's modulation (LFO)
+sub_9E59D AdlibStartPitchEnv {source_game=PC-new,confidence=low} starts a voice's pitch envelope
+sub_9E5C9 AdlibStepPitchEnv {source_game=PC-new,confidence=low} steps a voice's pitch envelope
+sub_9E676 AdlibMidi {source_game=PC-new,confidence=medium} AdLib driver MIDI entry: plays a run of MIDI messages
+sub_9E67C AdlibMidi+06h {no_record}
+sub_9E85B AdlibApplyModulation {source_game=PC-new,confidence=low} applies a voice's modulation sources to its OPL settings
+unk_9E876 AdlibModulationJumps {source_game=PC-new,confidence=low} jump table of the modulation source handlers
+sub_9EAA6 AdlibUpdateVoice {source_game=PC-new,confidence=low} updates one voice's envelopes and modulation for this tick
+sub_9EBD5 AdlibWriteVoice {source_game=PC-new,confidence=low} writes one voice's settings to the OPL registers
+sub_9ECE8 AdlibNoteOn {source_game=PC-new,confidence=medium} MIDI note on: channel 10 drums use their own patches; picks a voice and starts it
+sub_9FD94 Mpu401Detect {source_game=PC-new,confidence=medium} MPU-401 driver detect entry: returns port 330h, IRQ 7
+sub_9FD9A Mpu401Open {source_game=PC-new,confidence=medium} MPU-401 driver open entry: resets the port and enters UART mode
+sub_9FDEA Mpu401Init {source_game=PC-new,confidence=medium} MPU-401 driver init entry
+sub_9FE3B Mpu401Close {source_game=PC-new,confidence=medium} MPU-401 driver close entry: turns every channel's notes off and resets the port
+sub_9FE94 Mpu401Reset {source_game=PC-new,confidence=medium} resets the MPU-401 and puts it back in UART mode
+sub_9FEB0 Mpu401Command {source_game=PC-new,confidence=medium} sends a command to the MPU-401 and waits for its acknowledge
+sub_9FF04 Mpu401Delay {source_game=PC-new,confidence=low} waits a number of PIT channel 2 cycles
+sub_9FF55 Mpu401ReadData {source_game=PC-new,confidence=medium} reads a byte from the MPU-401 data port
+sub_9FF78 Mpu401WriteData {source_game=PC-new,confidence=medium} writes a byte to the MPU-401 data port
+sub_9FFA0 Mpu401Midi {source_game=PC-new,confidence=medium} MPU-401 driver MIDI entry: sends a run of MIDI bytes
+sub_9FFA6 Mpu401Midi+06h {no_record}
+sub_A65E8 PcSpkHwInit {source_game=PC-new,confidence=medium} sets PIT channel 2 to square wave mode, silences the speaker and sets the voice volumes
+sub_A6612 PcSpkHwClose {source_game=PC-new,confidence=medium} silences the speaker
+sub_A6618 PcSpkSilence {source_game=PC-new,confidence=medium} turns the speaker off and clears the four voice levels
+sub_A6635 PcSpkVoiceNote {source_game=PC-new,confidence=low} sets the note and PIT divisor of a speaker voice
+sub_A6672 PcSpkVoiceOff {source_game=PC-new,confidence=low} clears the level of a speaker voice
+sub_A6684 PcSpkVoiceUpdate {source_game=PC-new,confidence=low} works out a speaker voice's pitch and level for this tick
+sub_A677B PcSpkOutput {source_game=PC-new,confidence=low} plays the loudest speaker voice through PIT channel 2
+sub_A6858 OplWrite {source_game=PC-new,confidence=medium} writes a value to an OPL register, with the read delays the chip needs
+sub_A687D OplReset {source_game=PC-new,confidence=medium} clears every OPL register and both shadow copies
+sub_A68C9 OplFlush {source_game=PC-new,confidence=medium} writes the OPL shadow registers that changed since the last flush
+sub_A6957 OplSetReg {source_game=PC-new,confidence=medium} sets an OPL register in the shadow copy (or writes it directly when outside 20h-F5h)
+sub_A6983 OplGetReg {source_game=PC-new,confidence=medium} returns an OPL register from the shadow copy
+sub_A699D OplLoadVoice {source_game=PC-new,confidence=medium} writes the ten operator settings of one OPL voice
+sub_A69E8 OplHwInit {source_game=PC-new,confidence=medium} stores the OPL port and resets the chip
+sub_A69FB OplHwClose {source_game=PC-new,confidence=medium} resets the OPL chip
+sub_A6A01 OplDetect {source_game=PC-new,confidence=medium} returns the OPL port, 388h
+sub_A6A09 OplOpen {source_game=PC-new,confidence=medium} stores the OPL port and the write delays, probes the chip and calibrates
+sub_A6A42 OplProbe {source_game=PC-new,confidence=medium} checks for an OPL chip with its timer test
+sub_A6AC2 OplCalibrate {source_game=PC-new,confidence=low} times OPL status reads against PIT channel 2
+sub_A6B32 OplNoteFNum {source_game=PC-new,confidence=medium} returns the OPL F-number and block of a note
+sub_A6B5D OplVolumeLevel {source_game=PC-new,confidence=low} looks up the OPL attenuation of a volume
+sub_A6B73 OplVelocityLevel {source_game=PC-new,confidence=low} looks up the OPL attenuation of a note velocity
+sub_A6D1A strtol_ {source_game=PC-new,confidence=medium} C library strtol: signed form of the shared string to number routine
+sub_A6D84 SbStreamCheck {source_game=PC-new,confidence=medium} sets carry when a software stream channel number is 4 or more
+sub_A6D8D SbMixRateDiv {source_game=PC-new,confidence=low} returns the mix rate divided by 256
+sub_A6DA0 SbMixerOpen {source_game=PC-new,confidence=low} stops the four stream channels and starts Sound Blaster DMA output
+sub_A6DED SbMixerClose {source_game=PC-new,confidence=low} stops the stream channels and the DMA output
+sub_A6DF8 SbStreamStopAll {source_game=PC-new,confidence=medium} stops all four software stream channels
+sub_A6E10 SbStreamPlayNote {source_game=PC-new,confidence=low} sets the note of a stream channel, works out its step and starts it
+sub_A6E7B SbStreamRelease {source_game=PC-new,confidence=low} lets a stream channel play out to its end
+sub_A6EA2 SbStreamStop {source_game=PC-new,confidence=medium} stops a software stream channel
+sub_A6EC3 SbStreamSetVolume {source_game=PC-new,confidence=low} sets the volume of a stream channel and rebuilds its volume table
+sub_A6F1B SbStreamSetBend {source_game=PC-new,confidence=low} stores the pitch bend of a stream channel
+sub_A6F3C SbStreamSetRate {source_game=PC-new,confidence=low} sets the sample rate of a stream channel (step against the mix rate)
+sub_A6FA2 SbStreamSetSample {source_game=PC-new,confidence=low} sets the start, loop start and loop length of a stream channel's sample
+sub_A6FE1 SbStreamStart {source_game=PC-new,confidence=low} starts a sample on a software stream channel (rate, volume, sample, note)
+sub_A7094 SbStreamIdle {source_game=PC-new,confidence=medium} returns 1 when a software stream channel is not playing
+sub_A70BC SbStreamGetVolume {source_game=PC-new,confidence=medium} returns the volume of a stream channel
+sub_A70DD SbStreamApplyBend {source_game=PC-new,confidence=low} applies a pitch bend to a stream channel's step
+sub_A715C SbMixAdd8Vol {source_game=PC-new,confidence=low} adds 8-bit samples through a volume table into the mix buffer
+sub_A815D SbMixAdd8 {source_game=PC-new,confidence=low} adds 8-bit samples at full volume into the mix buffer
+sub_A905E SbMixChannels {source_game=PC-new,confidence=low} clears the mix buffer and mixes every playing stream channel into it
+sub_A9BA4 SbDmaHalfReady {source_game=PC-new,confidence=low} returns 1 when the DMA has moved on to the other half of the buffer
+sub_A9BD0 SbDmaStart {source_game=PC-new,confidence=low} stores the DMA buffer and starts auto-init DMA output
+sub_A9C1B SbDmaStop {source_game=PC-new,confidence=low} stops the DMA output
+sub_A9C37 SbMixPause {source_game=PC-new,confidence=low} sets the mix pause flag (the code after it clears it)
+sub_A9C4A SbConvertMix {source_game=PC-new,confidence=low} clips the 16-bit mix into 8-bit samples in the free half of the DMA buffer
+unknown_libname_22 MemLock {source_game=PC-new,confidence=medium} sets a lock word to 1 (MemUnlock clears it)
+sub_8C990 InitMemList {source_game=PC-new,confidence=low} sets up one memory list type: alignment, base and size
+sub_8CA6C AddMemListRegion {source_game=PC-new,confidence=low} adds a region of memory to one memory list type
+sub_8CAF4 AddHighMemList {source_game=PC-new,confidence=low} adds the HIGHMEM region to one memory list type
+sub_8CBA4 FindMemListBlock {source_game=PC-new,confidence=low} looks for a block in one memory list type
+sub_8CC5C SetMemErrorHooks {source_game=PC-new,confidence=low} stores the two memory manager error hooks
+sub_8CC70 AllocMemHandleLocked {source_game=PC-new,confidence=low} allocates a locked block and returns its descriptor
+sub_8CC8C AllocMemHandle {source_game=PC-new,confidence=low} allocates an unlocked block and returns its descriptor
+sub_8CCC4 AllocMemBlockUnlocked {source_game=PC-new,confidence=low} allocates an unlocked block and returns its address
+sub_8CCE0 AllocMemBlockFlags {source_game=PC-new,confidence=low} allocates a block with the given lock flag and returns its address
+sub_8D0C8 ResizeMemPtr {source_game=PC-new,confidence=low} resizes the block at an address, with the given lock flag
+sub_8D0EC ResizeMemPtrLocked {source_game=PC-new,confidence=low} resizes the block at an address, locked
+sub_8D10C ResizeMemPtrUnlocked {source_game=PC-new,confidence=low} resizes the block at an address, unlocked
+sub_8D12C ResizeMemHandleLocked {source_game=PC-new,confidence=low} resizes a block by descriptor, locked
+sub_8D144 ResizeMemHandleUnlocked {source_game=PC-new,confidence=low} resizes a block by descriptor, unlocked
+sub_8D2D2 findmemblock+032h {no_record}
+sub_8D31C UnlinkMemBlockLocked {source_game=PC-new,confidence=medium} unlinks a block from its list and returns its descriptor to the free list
+sub_8D344 FreeMemBlocksAfter {source_game=PC-new,confidence=low} frees every block after the block at an address, up to the next marker block
+sub_8D35C FreeBlocksAfter {source_game=PC-new,confidence=low} frees every block after a descriptor, up to the next marker block
+sub_8D3A0 MergeFreeSpaceLocked {source_game=PC-new,confidence=medium} MergeFreeSpace under the memory lock
+sub_8D468 MarkBlockPurgeable {source_game=PC-new,confidence=medium} marks the block at an address purgeable
+sub_8D484 MarkDescPurgeable {source_game=PC-new,confidence=medium} marks a block purgeable by descriptor
+sub_8D494 SetMemBlockPurgeLevel {source_game=PC-new,confidence=low} sets the purge level of the block at an address
+sub_8D4B0 SetMemBlockPurge {source_game=PC-new,confidence=medium} sets the purge flags of a block under the memory lock
+sub_8D4E8 FindNamedBlock {source_game=PC-new,confidence=low} looks up a named block in its memory list type
+sub_8D548 FindMemBlockNamed {source_game=PC-new,confidence=low} looks up a named block (first match)
+sub_8D558 FindNamedBlockNext {source_game=PC-new,confidence=low} looks up a named block in its memory list type, from the other end
+sub_8D5C0 FindMemBlockNamedNext {source_game=PC-new,confidence=low} looks up a named block from the other end (first match)
+sub_8D5D0 FindFreeSpaceLocked {source_game=PC-new,confidence=medium} FindFreeSpace under the memory lock
+sub_8D844 CompactMemListDown {source_game=PC-new,confidence=medium} moves the unlocked blocks of a list down to close the gaps
+sub_8D990 CompactMemListUp {source_game=PC-new,confidence=medium} moves the unlocked blocks of a list up to close the gaps
+sub_8DA98 MemTrackLargestFree {source_game=PC-new,confidence=low} records the smallest largest-free-block seen so far
+sub_8DAB8 MemLargestFree {source_game=PC-new,confidence=medium} returns the largest free block, under the memory lock
+sub_8DAE4 MemLargestFreeOfList {source_game=PC-new,confidence=medium} compacts the block list and returns its largest free block
+sub_8DB20 MemLargestFreeParas {source_game=PC-new,confidence=low} returns the largest free block in 16-byte paragraphs
+sub_8DB2C MemFreeSize {source_game=PC-new,confidence=medium} returns the total size of the free blocks
+sub_8DB4C InitMemDescriptors {source_game=PC-new,confidence=medium} builds the free list of block descriptors
+sub_8DB78 PushMemDescriptor {source_game=PC-new,confidence=medium} returns a block descriptor to the free list
+sub_A2000 DrawShapeQuad {source_game=PC-new,confidence=low} draws a shape warped into a four-point outline
+sub_98B30 DrawShapeStretched {source_game=PC-new,confidence=low} draws a shape stretched to fill a box, as two warped halves
+sub_98BEC DrawShapeStretchedAt {source_game=PC-new,confidence=low} draws a shape stretched to fill a box at a position, as two warped halves
+sub_B6FFC ShapeWidth {source_game=PC-new,confidence=medium} returns a shape's width
+sub_B7005 ShapeHeight {source_game=PC-new,confidence=medium} returns a shape's height
+sub_A2744 LoadPackedAlloc {source_game=PC-new,confidence=medium} loads a file into a new memory block and returns its data, stopping on an error
+sub_A275C LoadPackedAllocQuiet {source_game=PC-new,confidence=medium} loads a file into a new memory block and returns its data, or 0 on an error
+sub_A2774 LoadPackedAllocFlag {source_game=PC-new,confidence=medium} loads a file into a new memory block and returns its data; the flag picks whether errors stop
+sub_A2794 LoadPackedHandle {source_game=PC-new,confidence=medium} loads a file into a new memory block and returns its descriptor, stopping on an error
+sub_A27AC LoadPackedHandleQuiet {source_game=PC-new,confidence=medium} loads a file into a new memory block and returns its descriptor, or 0 on an error
+sub_98F11 SeqService {source_game=PC-new,confidence=low} music sequencer timer entry: runs SeqUpdate unless it is already running or no driver is open
+sub_98F46 SeqUpdate {source_game=PC-new,confidence=low} services the sound drivers and steps every playing track
+sub_990CB SeqStepTrack {source_game=PC-new,confidence=low} plays the events of one track that are due
+sub_99522 SeqSendController {source_game=PC-new,confidence=low} sends a MIDI control change, scaling volume and pan
+sub_99620 SeqNoteOffSlot {source_game=PC-new,confidence=low} sends note off for one playing note and frees its slot
+sub_9966E SeqChannelNotesOff {source_game=PC-new,confidence=low} sends note off for every playing note on a channel
+sub_996B0 SeqSendPitchBend {source_game=PC-new,confidence=low} sends a MIDI pitch bend
+sub_99700 SeqNoteOn {source_game=PC-new,confidence=low} takes a note slot and sends MIDI note on
+sub_997B7 SeqQueueCommand {source_game=PC-new,confidence=low} adds a command to the sequencer queue (at most 128)
+sub_99822 SeqFlushQueue {source_game=PC-new,confidence=low} runs the queued sequencer commands
+sub_998A0 SeqSendProgram {source_game=PC-new,confidence=low} sends a MIDI program change
+sub_99925 SeqReadEvent {source_game=PC-new,confidence=low} reads one event of a track: variable-length delta time, status and EA meta events
+sub_99A0B PeekDword {source_game=PC-new,confidence=medium} returns the dword at an address
+sub_99A0E PeekWord {source_game=PC-new,confidence=medium} returns the word at an address

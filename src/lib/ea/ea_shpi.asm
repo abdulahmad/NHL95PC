@@ -6,15 +6,15 @@ extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect
 extern dword_F6138, strncpy_, strrchr_, AllocMemBlockEx, ResizeMemBlock, FindCachedFile, sub_9762C, unpack
 extern DosFileInfo, sub_B0100, sub_B0148, bcopy, DosOpenFile, DosCloseFile, DosReadFile, DosSeekFile
 extern SetBlitSource, sub_B72E9
-global sub_A2000, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
+global DrawShapeQuad, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
 global loc_A220B, loc_A22A7, loc_A22DC, loc_A22E5, loc_A2338, loc_A2358, loc_A237C, loc_A23A6
 global loc_A23C4, loc_A23C6, loc_A2404, loc_A242C, loc_A249C, loc_A253F, loc_A254A, loc_A257E
 global loc_A2598, loc_A259A, loc_A25D8, loc_A25FB, SplitFileExt, loc_A261E, loc_A2636, loc_A2666
 global loc_A2679, loc_A2682, loc_A26A5, loc_A26A8, loc_A26AA, ReadFileRange, loc_A26E9, loc_A26FF
-global loc_A2704, loc_A2727, sub_A2744, sub_A275C, sub_A2774, loc_A2791, sub_A2794, sub_A27AC
+global loc_A2704, loc_A2727, LoadPackedAlloc, LoadPackedAllocQuiet, LoadPackedAllocFlag, loc_A2791, LoadPackedHandle, LoadPackedHandleQuiet
 global LoadPackedCore, loc_A280B, loc_A283C, loc_A2846, loc_A287A, loc_A28DF, ConvertShapeBank, loc_A29C6
 global loc_A2AAA, ConvertShapeBankInPlace
-sub_A2000:
+DrawShapeQuad:
         push esi
         push edi
         push ebp
@@ -645,27 +645,27 @@ loc_A2727:
         pop edi
         pop esi
         ret
-sub_A2744:
+LoadPackedAlloc:
         push byte 1
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_A2774
+        call LoadPackedAllocFlag
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_A275C:
+LoadPackedAllocQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_A2774
+        call LoadPackedAllocFlag
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_A2774:
+LoadPackedAllocFlag:
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+0Ch]
@@ -680,7 +680,7 @@ sub_A2774:
 loc_A2791:
         ret
         db 08Bh,0C0h
-sub_A2794:
+LoadPackedHandle:
         push byte 1
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -690,7 +690,7 @@ sub_A2794:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_A27AC:
+LoadPackedHandleQuiet:
         push byte 0
         mov edx, dword [byte esp+0Ch]
         push edx

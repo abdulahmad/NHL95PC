@@ -10,7 +10,7 @@ extern statsbgnames, statsbgshapes, statscategory, statsgoaliebuf, statspal, sta
 extern statsplayerbuf, statsplayoffs, statsredrawcb, statsskaterbuf, statsteambuf, statsteamorder, statsteamsel, str_calendar
 extern str_easndesk2, str_EASNvfn, str_embpal, str_embpal2, str_embpal3, str_gstat, str_gstat2, str_gstat3
 extern str_keys, str_keys2, str_keys3, str_Pal6, str_Pal7, str_Pal8, str_pstat, str_pstat2
-extern str_pstat3, str_tstat, str_tstat2, str_tstat3, AllocMemBlock, sub_8DAB8, LoadBank, sub_8E8A0
+extern str_pstat3, str_tstat, str_tstat2, str_tstat3, AllocMemBlock, MemLargestFree, LoadBank, sub_8E8A0
 extern SetPalette, sub_91FE0, FindShape, ClearScreen, VgaSetPalette, SetScreenTarget, SetColorRemap, TeamRosterScreen
 extern TeamStatsScreen, standingsmenubar, rostermenubar, playercardmenubar, teamstatsmenubar, skaterstatsmenubar, goaliestatsmenubar
 global GameTeamStatsScreen, GameTeamStatsScreen_common, GameSkaterStatsScreen, GameSkaterStatsScreen_x, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu_jt, GameStandingsMenu
@@ -1393,7 +1393,7 @@ FreeCalendarIfLowMem:
         push ebx
         push ecx
         push edx
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, 4B708h
         jg short .x
         mov edx, dword [calendarshapes]

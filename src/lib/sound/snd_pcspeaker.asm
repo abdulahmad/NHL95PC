@@ -4,17 +4,17 @@ bits 32
 section s_9D68E progbits alloc exec nowrite align=1
 extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, _STACKLOW
 extern dword_D4F9A, dword_F27F6, GetPatchTimbre, SbNoteOff, SbNoteOn, SbController, SbProgramChange, SbPitchBend
-extern sub_A65E8, sub_A6612, sub_A6635, sub_A6672, sub_A6684, sub_A677B, unk_F21FC, unk_F24D8
+extern PcSpkHwInit, PcSpkHwClose, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, unk_F21FC, unk_F24D8
 extern unk_F27D8
-global CMainHook, sub_9D698, sub_9D69E, loc_9D6A2, loc_9D6B8, loc_9D6C4, loc_9D6D9, sub_9D6E6
-global sub_9D6EC, sub_9D6F3, sub_9D6F9, sub_9D700, loc_9D723, loc_9D73E, loc_9D802, sub_9D805
-global loc_9D81C, loc_9D82B, loc_9D82C, loc_9D832, loc_9D852, loc_9D856, sub_9D858, sub_9D880
+global CMainHook, PcSpkInit, loc_9D6A2, loc_9D6B8, loc_9D6C4, loc_9D6D9, PcSpkClose
+global PcSpkService, PcSpkNoteOn, loc_9D723, loc_9D73E, loc_9D802, PcSpkNoteOff
+global loc_9D81C, loc_9D82B, loc_9D82C, loc_9D832, loc_9D852, loc_9D856, PcSpkProgramChange, PcSpkUpdateVoices
 global loc_9D897, loc_9D8D4, loc_9D8D8, loc_9D8FE, loc_9D90F, loc_9D951, loc_9D970, loc_9D98A
 global loc_9D9C8, loc_9D9D0, loc_9D9FC, loc_9DA03, loc_9DA1B, loc_9DA3B, loc_9DA59, loc_9DA70
-global loc_9DA76, sub_9DA99, loc_9DAA6, sub_9DAAC, sub_9DAB2, loc_9DAF3, loc_9DAFE, loc_9DB06
+global loc_9DA76, PcSpkTimbreUsable, loc_9DAA6, PcSpkMidi, loc_9DAF3, loc_9DAFE, loc_9DB06
 global loc_9DB36, loc_9DB3D, loc_9DB55, loc_9DBB8, loc_9DBBD, loc_9DBD4, loc_9DBD9, loc_9DBF7
-global loc_9DC1B, loc_9DC40, loc_9DC42, loc_9DC44, loc_9DC5F, loc_9DC8C, loc_9DC91, sub_9DC9F
-global sub_9DCA5, loc_9DCE6, loc_9DCF2, loc_9DCFA, loc_9DD32, loc_9DD39, loc_9DD51, loc_9DDB4
+global loc_9DC1B, loc_9DC40, loc_9DC42, loc_9DC44, loc_9DC5F, loc_9DC8C, loc_9DC91, SbMidi
+global loc_9DCE6, loc_9DCF2, loc_9DCFA, loc_9DD32, loc_9DD39, loc_9DD51, loc_9DDB4
 global loc_9DDB9, loc_9DDD0, loc_9DDD5, loc_9DDEF, loc_9DE0F, loc_9DE2F, loc_9DE31, loc_9DE53
 global loc_9DE6A, loc_9DE89, loc_9DE8E
 CMainHook:
@@ -22,10 +22,9 @@ CMainHook:
         sub eax, dword [_STACKLOW]
         ret
         db 00h
-sub_9D698:
+PcSpkInit:
         push ds
         call __GETDS
-sub_9D69E:
         xor eax, eax
         jmp short loc_9D6B8
 loc_9D6A2:
@@ -53,24 +52,22 @@ loc_9D6C4:
 loc_9D6D9:
         cmp ax, 18h
         jl short loc_9D6C4
-        call sub_A65E8
+        call PcSpkHwInit
         pop ds
         ret
-sub_9D6E6:
+PcSpkClose:
         push ds
         call __GETDS
-sub_9D6EC:
-        call sub_A6612
+        call PcSpkHwClose
         pop ds
         ret
-sub_9D6F3:
+PcSpkService:
         push ds
         call __GETDS
-sub_9D6F9:
-        call sub_9D880
+        call PcSpkUpdateVoices
         pop ds
         ret
-sub_9D700:
+PcSpkNoteOn:
         push ds
         call __GETDS
         push esi
@@ -96,7 +93,7 @@ loc_9D73E:
         test edx, edx
         je near loc_9D802
         mov eax, edx
-        call sub_9DA99
+        call PcSpkTimbreUsable
         mov ecx, eax
         cwde
         cmp eax, byte 0FFFFFFFFh
@@ -147,13 +144,13 @@ loc_9D73E:
         mov al, cl
         and eax, 0FFh
         push eax
-        call sub_A6635
+        call PcSpkVoiceNote
         add esp, byte 0Ch
 loc_9D802:
         pop esi
         pop ds
         ret
-sub_9D805:
+PcSpkNoteOff:
         push ds
         call __GETDS
         mov bh, byte [byte esp+08h]
@@ -190,7 +187,7 @@ loc_9D852:
 loc_9D856:
         pop ds
         ret
-sub_9D858:
+PcSpkProgramChange:
         push ds
         call __GETDS
         xor eax, eax
@@ -205,7 +202,7 @@ sub_9D858:
         mov dword [dword eax+dword_F27F6], edx
         pop ds
         ret
-sub_9D880:
+PcSpkUpdateVoices:
         push ebx
         push ecx
         push edx
@@ -274,7 +271,7 @@ loc_9D90F:
         xor eax, eax
         mov al, byte [byte esi+02Eh]
         push eax
-        call sub_A6672
+        call PcSpkVoiceOff
         add esp, byte 4
 loc_9D951:
         cmp byte [byte edi+028h], 0
@@ -382,7 +379,7 @@ loc_9DA59:
         xor eax, eax
         mov al, byte [byte esi+02Eh]
         push eax
-        call sub_A6684
+        call PcSpkVoiceUpdate
         add esp, byte 10h
 loc_9DA70:
         add esi, byte 30h
@@ -394,7 +391,7 @@ loc_9DA76:
         mov al, byte [byte_D5224]
         cmp edx, eax
         jl near loc_9D897
-        call sub_A677B
+        call PcSpkOutput
         add esp, byte 4
         pop edi
         pop esi
@@ -402,7 +399,7 @@ loc_9DA76:
         pop ecx
         pop ebx
         ret
-sub_9DA99:
+PcSpkTimbreUsable:
         cmp word [byte eax+0Ch], byte 0
         jne short loc_9DAA6
         mov eax, 0FFFFFFFFh
@@ -410,10 +407,9 @@ sub_9DA99:
 loc_9DAA6:
         mov eax, 1
         ret
-sub_9DAAC:
+PcSpkMidi:
         push ds
         call __GETDS
-sub_9DAB2:
         push esi
         push edi
         push ebp
@@ -515,7 +511,7 @@ loc_9DBD9:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         push eax
-        call sub_9D805
+        call PcSpkNoteOff
         add esp, byte 8
         jmp near loc_9DC8C
 loc_9DBF7:
@@ -529,7 +525,7 @@ loc_9DBF7:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         push eax
-        call sub_9D805
+        call PcSpkNoteOff
         add esp, byte 8
         jmp short loc_9DC40
 loc_9DC1B:
@@ -544,7 +540,7 @@ loc_9DC1B:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         push eax
-        call sub_9D700
+        call PcSpkNoteOn
         add esp, byte 0Ch
 loc_9DC40:
         jmp short loc_9DC8C
@@ -558,7 +554,7 @@ loc_9DC44:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         push eax
-        call sub_9D858
+        call PcSpkProgramChange
         add esp, byte 8
         jmp short loc_9DC8C
 loc_9DC5F:
@@ -587,10 +583,9 @@ loc_9DC91:
         pop esi
         pop ds
         ret
-sub_9DC9F:
+SbMidi:
         push ds
         call __GETDS
-sub_9DCA5:
         push esi
         push edi
         push ebp

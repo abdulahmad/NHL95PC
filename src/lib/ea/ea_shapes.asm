@@ -6,26 +6,26 @@ extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, byte_
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
 extern byte_F234E, dword_D2F60, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, SndTimerHandle, dword_D4F9A
 extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, AllocMemBlockEx
-extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, SndHandleService, SndDriverCall, SndHandleMidi, sub_A2000
-extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
+extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, SndHandleService, SndDriverCall, SndHandleMidi, DrawShapeQuad
+extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, ShapeWidth, ShapeHeight, unk_F1884, unk_F21FC
 extern word_D4F88
-global sub_98B30, sub_98BEC, FillRowTable, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
+global DrawShapeStretched, DrawShapeStretchedAt, FillRowTable, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
 global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, removewindow, loc_98DF6, loc_98E06
-global loc_98E17, loc_98E36, loc_98E47, LoadFileCached, loc_98EAA, loc_98EFB, loc_98F0A, sub_98F11
-global loc_98F44, sub_98F46, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7, loc_98FDB, loc_98FEC
+global loc_98E17, loc_98E36, loc_98E47, LoadFileCached, loc_98EAA, loc_98EFB, loc_98F0A, SeqService
+global loc_98F44, SeqUpdate, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7, loc_98FDB, loc_98FEC
 global loc_98FED, loc_9900E, loc_99064, loc_9906B, loc_9907B, loc_99091, loc_9909A, loc_990C4
-global sub_990CB, loc_99116, loc_9912B, loc_9912F, loc_99165, loc_99185, loc_991C1, loc_991C7
+global SeqStepTrack, loc_99116, loc_9912B, loc_9912F, loc_99165, loc_99185, loc_991C1, loc_991C7
 global loc_991E8, loc_991FF, loc_99203, loc_9921B, loc_99225, loc_9928F, loc_9929C, loc_992A9
 global loc_992C8, loc_992D6, loc_992DE, loc_992F8, loc_9930E, loc_99329, loc_99331, loc_9933E
 global loc_99351, loc_9936D, loc_993A4, loc_993AC, loc_993C5, loc_993CF, loc_993F3, loc_99424
 global loc_99428, loc_99436, loc_99449, loc_99455, loc_9947A, loc_994B0, loc_994DF, loc_99503
-global loc_99506, loc_99513, loc_9951A, sub_99522, loc_9955D, loc_99594, loc_995DB, loc_99600
-global sub_99620, sub_9966E, loc_99687, loc_9969C, loc_996A0, sub_996B0, sub_99700, loc_99729
-global loc_99754, loc_9975B, loc_99786, loc_99798, loc_997A6, sub_997B7, loc_997F1, loc_99812
-global loc_9981F, sub_99822, loc_99845, loc_9985E, loc_9989B, sub_998A0, jpt_998DD, sub_99925
+global loc_99506, loc_99513, loc_9951A, SeqSendController, loc_9955D, loc_99594, loc_995DB, loc_99600
+global SeqNoteOffSlot, SeqChannelNotesOff, loc_99687, loc_9969C, loc_996A0, SeqSendPitchBend, SeqNoteOn, loc_99729
+global loc_99754, loc_9975B, loc_99786, loc_99798, loc_997A6, SeqQueueCommand, loc_997F1, loc_99812
+global loc_9981F, SeqFlushQueue, loc_99845, loc_9985E, loc_9989B, SeqSendProgram, jpt_998DD, SeqReadEvent
 global loc_99936, loc_99972, loc_99976, loc_99981, loc_99988, loc_9998E, loc_99991, loc_999A5
-global loc_999AC, loc_999BD, loc_999CF, loc_999E1, loc_999FC, sub_99A0B, sub_99A0E
-sub_98B30:
+global loc_999AC, loc_999BD, loc_999CF, loc_999E1, loc_999FC, PeekDword, PeekWord
+DrawShapeStretched:
         push esi
         push edi
         push ebp
@@ -33,11 +33,11 @@ sub_98B30:
         mov ebp, dword [byte esp+044h]
         mov esi, dword [byte esp+048h]
         push ebp
-        call sub_B6FFC
+        call ShapeWidth
         mov edi, eax
         add esp, byte 4
         push ebp
-        call sub_B7005
+        call ShapeHeight
         add esp, byte 4
         mov ebx, 1
         mov dword [byte esp+018h], ebx
@@ -53,7 +53,7 @@ sub_98B30:
         lea eax, [byte esp+01Ch]
         push eax
         push ebp
-        call sub_A2000
+        call DrawShapeQuad
         add esp, byte 0Ch
         mov eax, dword [byte esp+030h]
         mov dword [byte esp+018h], eax
@@ -80,7 +80,7 @@ sub_98B30:
         lea eax, [byte esp+01Ch]
         push eax
         push ebp
-        call sub_A2000
+        call DrawShapeQuad
         add esp, byte 0Ch
         add esp, byte 34h
         pop ebp
@@ -88,7 +88,7 @@ sub_98B30:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_98BEC:
+DrawShapeStretchedAt:
         push esi
         push edi
         push ebp
@@ -97,12 +97,12 @@ sub_98BEC:
         mov esi, dword [byte esp+04Ch]
         mov edx, dword [byte esp+044h]
         push edx
-        call sub_B6FFC
+        call ShapeWidth
         mov dword [byte esp+034h], eax
         add esp, byte 4
         mov ebx, dword [byte esp+044h]
         push ebx
-        call sub_B7005
+        call ShapeHeight
         mov ebp, eax
         add esp, byte 4
         mov ecx, 1
@@ -140,7 +140,7 @@ sub_98BEC:
         push eax
         mov ebx, dword [byte esp+04Ch]
         push ebx
-        call sub_A2000
+        call DrawShapeQuad
         add esp, byte 0Ch
         mov eax, dword [byte esp+030h]
         mov dword [esp], eax
@@ -174,7 +174,7 @@ sub_98BEC:
         push eax
         mov edx, dword [byte esp+04Ch]
         push edx
-        call sub_A2000
+        call DrawShapeQuad
         add esp, byte 0Ch
         add esp, byte 34h
         pop ebp
@@ -408,7 +408,7 @@ loc_98F0A:
         pop edi
         pop esi
         ret
-sub_98F11:
+SeqService:
         push edx
         mov ah, byte [byte_D4F5E]
         test ah, ah
@@ -420,12 +420,12 @@ sub_98F11:
         mov dl, ah
         inc dl
         mov byte [byte_D4F5E], dl
-        call sub_98F46
+        call SeqUpdate
         dec byte [byte_D4F5E]
 loc_98F44:
         pop edx
         ret
-sub_98F46:
+SeqUpdate:
         push ebx
         push ecx
         push edx
@@ -496,7 +496,7 @@ loc_98FEC:
 loc_98FED:
         cmp ecx, dword [sndhandlecount]
         jl short loc_98FDB
-        call sub_99822
+        call SeqFlushQueue
         cmp dword [dword_D4F8A], byte 0
         jne near loc_9909A
         mov ebx, byte_F1A1C
@@ -534,7 +534,7 @@ loc_9900E:
         mov byte [byte esi+011h], al
 loc_99064:
         mov eax, ebx
-        call sub_990CB
+        call SeqStepTrack
 loc_9906B:
         add ebx, byte 54h
         inc ecx
@@ -550,7 +550,7 @@ loc_9907B:
         mov dword [byte ebx+08h], esi
         jne short loc_99091
         mov eax, ebx
-        call sub_99620
+        call SeqNoteOffSlot
 loc_99091:
         add ebx, byte 0Ch
         inc ecx
@@ -576,7 +576,7 @@ loc_990C4:
         pop ecx
         pop ebx
         ret
-sub_990CB:
+SeqStepTrack:
         push ebx
         push ecx
         push edx
@@ -609,7 +609,7 @@ loc_99116:
         cmp al, byte [esi]
         jne short loc_9912B
         mov eax, edx
-        call sub_99620
+        call SeqNoteOffSlot
 loc_9912B:
         add edx, byte 0Ch
         inc ebx
@@ -625,7 +625,7 @@ loc_9912F:
         mov al, byte [byte esi+051h]
         mov ebx, edi
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
         mov dword [byte esi+0Ah], 0
         mov byte [byte esi+01h], 0
         jmp near loc_99513
@@ -659,7 +659,7 @@ loc_99185:
         mov bl, byte [dword eax+byte_F234D]
         mov edx, 7
         mov eax, esi
-        call sub_99522
+        call SeqSendController
 loc_991C1:
         add word [byte esi+04Ah], 80h
 loc_991C7:
@@ -680,7 +680,7 @@ loc_991E8:
         mov dword [byte edx+08h], ebp
         jne short loc_991FF
         mov eax, edx
-        call sub_99620
+        call SeqNoteOffSlot
 loc_991FF:
         add edx, byte 0Ch
         inc ebx
@@ -704,7 +704,7 @@ loc_99225:
         je near loc_99503
         mov edx, ebx
         mov eax, unk_F1884
-        call sub_99925
+        call SeqReadEvent
         xor eax, eax
         mov al, byte [byte_F188E]
         mov ebp, dword [byte esi+0Ah]
@@ -788,7 +788,7 @@ loc_99331:
 loc_9933E:
         and edx, 0FFh
         mov eax, dword [byte esi+02h]
-        call sub_9966E
+        call SeqChannelNotesOff
         jmp near loc_994DF
 loc_99351:
         xor eax, eax
@@ -840,7 +840,7 @@ loc_993CF:
         mov bl, byte [dword_F1888]
         and edx, 0FFh
         mov eax, esi
-        call sub_99522
+        call SeqSendController
         jmp near loc_994DF
 loc_993F3:
         mov byte [byte esi+04Fh], dl
@@ -874,7 +874,7 @@ loc_99428:
 loc_99436:
         movsx edx, word [dword_F1888]
         mov eax, esi
-        call sub_996B0
+        call SeqSendPitchBend
         jmp near loc_994DF
 loc_99449:
         cmp al, 80h
@@ -926,14 +926,14 @@ loc_994B0:
         mov dl, byte [byte_F188D]
         xor eax, eax
         mov al, byte [byte_F188C]
-        call sub_99700
+        call SeqNoteOn
 loc_994DF:
         mov ebx, dword [byte esi+0Ah]
         test ebx, ebx
         je near loc_99225
         mov edx, ebx
         mov eax, dword_F1890
-        call sub_99925
+        call SeqReadEvent
         mov eax, dword [dword_F1890]
         mov dword [byte esi+0Eh], eax
         jmp near loc_99225
@@ -948,7 +948,7 @@ loc_99513:
 loc_9951A:
         add esp, byte 4
         jmp near loc_990C4
-sub_99522:
+SeqSendController:
         push ecx
         push esi
         push edi
@@ -1041,7 +1041,7 @@ loc_99600:
         pop esi
         pop ecx
         ret
-sub_99620:
+SeqNoteOffSlot:
         push ebx
         push ecx
         push edx
@@ -1069,7 +1069,7 @@ sub_99620:
         pop ecx
         pop ebx
         ret
-sub_9966E:
+SeqChannelNotesOff:
         push ebx
         push ecx
         push esi
@@ -1102,7 +1102,7 @@ loc_996A0:
         pop ecx
         pop ebx
         ret
-sub_996B0:
+SeqSendPitchBend:
         push ebx
         push ecx
         push esi
@@ -1129,7 +1129,7 @@ sub_996B0:
         pop ecx
         pop ebx
         ret
-sub_99700:
+SeqNoteOn:
         push esi
         push edi
         sub esp, byte 8
@@ -1178,7 +1178,7 @@ loc_99786:
         xor eax, eax
         mov al, byte [byte esp+014h]
         mov edx, 3
-        call sub_997B7
+        call SeqQueueCommand
         jmp short loc_997A6
 loc_99798:
         add eax, byte 0Ch
@@ -1193,7 +1193,7 @@ loc_997A6:
         pop edi
         pop esi
         ret 0Ch
-sub_997B7:
+SeqQueueCommand:
         push ecx
         push esi
         mov cl, al
@@ -1228,7 +1228,7 @@ loc_9981F:
         pop esi
         pop ecx
         ret
-sub_99822:
+SeqFlushQueue:
         push ebx
         push ecx
         push edx
@@ -1273,7 +1273,7 @@ loc_9989B:
         pop ecx
         pop ebx
         ret
-sub_998A0:
+SeqSendProgram:
         push ecx
         push esi
         mov ah, bl
@@ -1312,7 +1312,7 @@ jpt_998DD:
         dd loc_99972
         dd loc_999A5
         dd loc_999A5
-sub_99925:
+SeqReadEvent:
         push ebx
         push ecx
         push esi
@@ -1364,7 +1364,7 @@ loc_99991:
         mov al, byte [edx]
         mov byte [byte ebx+09h], al
         mov eax, esi
-        call sub_99A0B
+        call PeekDword
         mov dword [byte ebx+04h], eax
         lea edx, [byte esi+04h]
         jmp short loc_999CF
@@ -1382,7 +1382,7 @@ loc_999AC:
         jmp short loc_999CF
 loc_999BD:
         mov eax, edx
-        call sub_99A0E
+        call PeekWord
         and eax, 0FFFFh
         mov dword [byte ebx+04h], eax
         add edx, byte 2
@@ -1414,9 +1414,9 @@ loc_999FC:
         pop ecx
         pop ebx
         ret
-sub_99A0B:
+PeekDword:
         mov eax, dword [eax]
         ret
-sub_99A0E:
+PeekWord:
         mov ax, word [eax]
         ret

@@ -17,7 +17,7 @@ extern dword_D3044, dword_D3048, DebugMode, DebugLogOn, MemViewBlack, MemViewWhi
 extern MemViewRed, MemViewShowDetail, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
 extern dword_EDAB4, MemViewTop, MemViewCount, dword_EDE68, MemViewTitle, MemViewRow, MemViewList, dword_EDE78
 extern dword_EDE7C, MemViewMode, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
-extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, sub_8D484, TextSetColors
+extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, MarkDescPurgeable, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId, PutBlock
 extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, sub_93000, PrintBoxedText, DebugSetLine, sub_936C0
 extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered
@@ -702,7 +702,7 @@ loc_9401B:
         mov byte [dword esp+0ACh], ch
         mov ecx, dword [MemViewMode]
         push ecx
-        call sub_8D484
+        call MarkDescPurgeable
         add esp, byte 4
 loc_9405B:
         mov esi, dword [dword esp+0B4h]

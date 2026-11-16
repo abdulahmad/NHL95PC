@@ -22,7 +22,7 @@ extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern MarkZoneRect, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, ShapeBankCount, FillRect
+extern MarkZoneRect, MemLargestFree, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, ShapeBankCount, FillRect
 extern sub_90EC0, PrintString, SortIndices, FindShape, JoyButtonMap, SetClipWindow, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
@@ -623,7 +623,7 @@ checkwindow_popx:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadTeamPPV                                     66497  95 PC, low confidence
-; Team: when sub_8DAB8() >= ovlmemneed[team], opens the team's .PPV (name
+; Team: when MemLargestFree() >= ovlmemneed[team], opens the team's .PPV (name
 ; ovlartnames[team], CD flag via ovlartfiles into fileoncd) with sub_8E8A0;
 ; joysampling held off while loading
 ;-----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ LoadTeamPPV:
         mov edi, eax
         movsx esi, ax
         shl esi, 2
-        call sub_8DAB8
+        call MemLargestFree
         cmp eax, dword [dword esi+ovlmemneed]
         jl near .5
         mov ax, word [joysampling]
