@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_981AD progbits alloc exec nowrite align=1
-extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, dword_D30D4, joycalactive, joycalposthook, joycalprehook, mousepollfn
+extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, BackBufferWidth, joycalactive, joycalposthook, joycalprehook, mousepollfn
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
 extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, sub_9C5B0
 extern sub_A1800, sub_A1840, KbdGetKey, SaveDrawState, RestoreDrawState, sub_B3D74, SetScreenTarget, CreateBitmap
-extern sub_B6F84, unk_D45D8
+extern sub_B6F84, DefaultFont
 global sub_981AD, sub_981B0, sub_981D4, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
 global sub_984A8, loc_984CF, ShowMessageBox, sub_9862C, DosGetVector, DosSetVector, sub_9867E
 sub_981AD:
@@ -91,7 +91,7 @@ ShowPromptBox:
         push eax
         call TextSaveState
         add esp, byte 4
-        push unk_D45D8
+        push DefaultFont
         call TextSetFont
         add esp, byte 4
         mov edi, dword [dword esp+0B8h]
@@ -106,7 +106,7 @@ ShowPromptBox:
         push eax
         mov eax, dword [dword esp+0C0h]
         push eax
-        push dword_D30D4
+        push BackBufferWidth
         call sub_B6F84
         add esp, byte 14h
         call dword [off_D3070]
@@ -163,7 +163,7 @@ ShowPromptBox:
         call sub_A1800
         add esp, byte 8
         call dword [off_D3074]
-        push dword_D30D4
+        push BackBufferWidth
         call sub_A1840
         add esp, byte 4
 loc_983B1:
@@ -199,7 +199,7 @@ loc_983F1:
         push eax
         mov ebx, dword [dword esp+0C0h]
         push ebx
-        push dword_D30D4
+        push BackBufferWidth
         call sub_B6F84
         add esp, byte 14h
         call dword [off_D306C]
@@ -273,7 +273,7 @@ ShowMessageBox:
         push eax
         call TextSaveState
         add esp, byte 4
-        push unk_D45D8
+        push DefaultFont
         call TextSetFont
         add esp, byte 4
         push esi
@@ -283,7 +283,7 @@ ShowMessageBox:
         push dword 0BEh
         push dword 140h
         push byte 0
-        push dword_D30D4
+        push BackBufferWidth
         call sub_B6F84
         add esp, byte 14h
         call dword [off_D3070]

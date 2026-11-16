@@ -1,7 +1,7 @@
 /* Scoring penalties: new penalty check. */
 #include "nhl95.h"
 
-/* checkfornewpen: unless sflags bit 7 or word_CBC44, go over the penalty buffer
+/* checkfornewpen: unless sflags bit 7 or SortPending, go over the penalty buffer
  (PenBuf: penalty, player pairs up to a 0). Outside gmode bit 2: a penalty with a minimum (penmintab) is delayed
  while the puck is loose or held by the other team (player < 6 is the home side) - gmode bit 3, ref arm up
  (SetPA 1Ch) - else the ref signals (refsignal 28h, banner timer 50h with a banner up); then stop play for it
@@ -16,8 +16,8 @@ void checkfornewpen(void)
     signed char pl;
     short t;
 
-    if (sflags & 0x80 || word_CBC44) return;
-    for (i = word_CBC44; PenBuf[i * 2] != 0; i++) {
+    if (sflags & 0x80 || SortPending) return;
+    for (i = SortPending; PenBuf[i * 2] != 0; i++) {
         pen = PenBuf[i * 2];
         pl = PenBuf_pl[i * 2];
         if (!(gmode & 4)) {

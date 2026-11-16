@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2000 progbits alloc exec nowrite align=1
-extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30CC
+extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, DrawDestBuffer
 extern dword_F6138, strncpy_, strrchr_, AllocMemBlockEx, ResizeMemBlock, FindCachedFile, sub_9762C, unpack
 extern DosFileInfo, sub_B0100, sub_B0148, bcopy, DosOpenFile, DosCloseFile, DosReadFile, DosSeekFile
 extern SetBlitSource, sub_B72E9
@@ -346,7 +346,7 @@ loc_A23C6:
         add eax, ecx
         add eax, dword [nosplit edx*4+dword_F6138]
         push eax
-        mov eax, dword [dword_D30CC]
+        mov eax, dword [DrawDestBuffer]
         add eax, dword [byte esp+060h]
         add ebx, dword [eax]
         push ebx
@@ -495,7 +495,7 @@ loc_A259A:
         add eax, ecx
         add eax, dword [nosplit ebx*4+dword_F6138]
         push eax
-        mov eax, dword [dword_D30CC]
+        mov eax, dword [DrawDestBuffer]
         add eax, dword [byte esp+058h]
         add edx, dword [eax]
         push edx

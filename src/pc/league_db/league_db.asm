@@ -26,7 +26,7 @@ extern TextRestoreState, TextSetFont, SndQuery, sub_8FCDF, SetPalette, FillRect,
 extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, WriteFile
 extern RemoveKeyboardHandler, KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E
 extern sub_B387E, ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, CreateBitmap, FillRectColor
-extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, btn_RosterList, fascrollbar, unk_D45D8
+extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, btn_RosterList, fascrollbar, DefaultFont
 extern unknown_libname_1
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
 global SaveDbsToDir, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr, TeamRecPtr, KeyDbPtr, SeasonDbPtr, SeasonDbPtr_common

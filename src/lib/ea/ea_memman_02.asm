@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
-extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, dword_D2F64, dword_EDAAC, dword_EDAB0, dword_EDAB4, FatalError, findmemblock
+extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, dword_EDAAC, MemLockHandle, dword_EDAB4, FatalError, findmemblock
 extern memlist1, reservemem, sub_8E3F8, sub_8E44C, MemUnlock, bcopy, unknown_libname_22
 global PushMemDescriptorLocked, sub_8D31C, loc_8D340, sub_8D344, sub_8D35C, loc_8D379, loc_8D38E, sub_8D3A0
 global MergeFreeSpace, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, sub_8D468, sub_8D484
@@ -17,7 +17,7 @@ global sub_8DAB8, sub_8DAE4, loc_8DB05, loc_8DB12, sub_8DB20, sub_8DB2C, loc_8DB
 global loc_8DB49, sub_8DB4C, loc_8DB60, loc_8DB6D, sub_8DB78, getmemblock, loc_8DBB1, MemPtrSize
 global sub_8DBD4, MemDescSize
 PushMemDescriptorLocked:
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -25,7 +25,7 @@ PushMemDescriptorLocked:
         push ebx
         call sub_8D31C
         add esp, byte 4
-        mov ecx, dword [dword_EDAB0]
+        mov ecx, dword [MemLockHandle]
         push ecx
         call MemUnlock
         add esp, byte 4
@@ -58,7 +58,7 @@ sub_8D344:
         db 090h
 sub_8D35C:
         push esi
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -75,7 +75,7 @@ loc_8D379:
         test byte [byte esi+018h], 20h
         je short loc_8D379
 loc_8D38E:
-        mov ecx, dword [dword_EDAB0]
+        mov ecx, dword [MemLockHandle]
         push ecx
         call MemUnlock
         add esp, byte 4
@@ -84,7 +84,7 @@ loc_8D38E:
         db 090h
 sub_8D3A0:
         push esi
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -93,7 +93,7 @@ sub_8D3A0:
         call MergeFreeSpace
         mov esi, eax
         add esp, byte 4
-        mov ecx, dword [dword_EDAB0]
+        mov ecx, dword [MemLockHandle]
         push ecx
         call MemUnlock
         add esp, byte 4
@@ -105,7 +105,7 @@ MergeFreeSpace:
         push esi
         push edi
         push ebp
-        mov esi, dword [dword_D2F64]
+        mov esi, dword [FreeSpaceList]
         mov ebx, dword [byte esp+010h]
         mov edx, ebx
         and edx, 700h
@@ -145,7 +145,7 @@ loc_8D438:
         mov edx, dword [byte ebp+04h]
         cmp eax, edx
         jne short loc_8D40C
-        mov dword [dword_D2F64], esi
+        mov dword [FreeSpaceList], esi
         test edi, edi
         je short loc_8D45C
         push edi
@@ -156,7 +156,7 @@ loc_8D438:
 loc_8D45C:
         xor eax, edx
 loc_8D45E:
-        mov esi, dword [dword_D2F64]
+        mov esi, dword [FreeSpaceList]
         pop ebp
         pop edi
         pop esi
@@ -193,7 +193,7 @@ sub_8D494:
 sub_8D4B0:
         push esi
         mov esi, dword [byte esp+08h]
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -203,7 +203,7 @@ sub_8D4B0:
         mov edx, dword [byte esp+0Ch]
         or edx, eax
         mov dword [byte esi+018h], edx
-        mov ebx, dword [dword_EDAB0]
+        mov ebx, dword [MemLockHandle]
         push ebx
         call MemUnlock
         add esp, byte 4
@@ -318,7 +318,7 @@ sub_8D5C0:
         ret
 sub_8D5D0:
         push esi
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -327,7 +327,7 @@ sub_8D5D0:
         call FindFreeSpace
         mov esi, eax
         add esp, byte 4
-        mov ecx, dword [dword_EDAB0]
+        mov ecx, dword [MemLockHandle]
         push ecx
         call MemUnlock
         add esp, byte 4
@@ -371,7 +371,7 @@ loc_8D653:
         cmp eax, edi
         ja short loc_8D670
         jne short loc_8D683
-        mov eax, dword [dword_D2F64]
+        mov eax, dword [FreeSpaceList]
         sub eax, dword [byte esi+01Ch]
         cmp eax, edx
         jl short loc_8D683
@@ -379,7 +379,7 @@ loc_8D670:
         mov ebp, esi
         mov edi, dword [byte esi+018h]
         and edi, ecx
-        mov eax, dword [dword_D2F64]
+        mov eax, dword [FreeSpaceList]
         mov edx, dword [byte esi+01Ch]
         sub eax, edx
         mov edx, eax
@@ -557,7 +557,7 @@ loc_8D803:
         ret
 sub_8D80C:
         push esi
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -568,7 +568,7 @@ sub_8D80C:
         push ecx
         call sub_8D844
         add esp, byte 8
-        mov esi, dword [dword_EDAB0]
+        mov esi, dword [MemLockHandle]
         push esi
         call MemUnlock
         add esp, byte 4
@@ -691,7 +691,7 @@ loc_8D94E:
         db 08Dh,040h,00h
 sub_8D958:
         push esi
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -702,7 +702,7 @@ sub_8D958:
         push ecx
         call sub_8D990
         add esp, byte 8
-        mov esi, dword [dword_EDAB0]
+        mov esi, dword [MemLockHandle]
         push esi
         call MemUnlock
         add esp, byte 4
@@ -851,13 +851,13 @@ loc_8DAAD:
         db 08Bh,0C0h
 sub_8DAB8:
         push esi
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
         call sub_8DAE4
         mov esi, eax
-        mov ebx, dword [dword_EDAB0]
+        mov ebx, dword [MemLockHandle]
         push ebx
         call MemUnlock
         add esp, byte 4
@@ -943,7 +943,7 @@ sub_8DB78:
 getmemblock:
         cmp dword [dword_EDAAC], byte 0
         jne short loc_8DBB1
-        mov ebx, dword [dword_EDAB0]
+        mov ebx, dword [MemLockHandle]
         push ebx
         call MemUnlock
         add esp, byte 4

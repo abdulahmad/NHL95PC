@@ -2,28 +2,28 @@
 bits 32
 %include "hockey.inc"
 section s_F7978 nobits alloc noexec write align=1
-global byte_F79A4, byte_F79A5, byte_F79A6, byte_F79A7, byte_F79A8, byte_F79C8, byte_F79D8, byte_F79E8
-global dword_F79BC, dword_F79C0, dword_F79C4, dword_F79F8, dword_F79FC, dword_F7A00, dword_F7B78, unk_F7978
-global word_F799C, word_F799E, word_F79A0, word_F79A2, word_F79B8, word_F79BA, word_F79C9
-unk_F7978:
+global GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, byte_F79C8, GusVoiceIrqBits, byte_F79E8
+global dword_F79BC, dword_F79C0, dword_F79C4, dword_F79F8, dword_F79FC, dword_F7A00, dword_F7B78, GusDmaChannels
+global word_F799C, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA, word_F79C9
+GusDmaChannels:
         resb 36
 word_F799C:
         resb 2
-word_F799E:
+GusIrqFlags:
         resb 2
-word_F79A0:
+GusActiveVoices:
         resb 2
-word_F79A2:
+GusCriticalDepth:
         resb 2
-byte_F79A4:
+GusPlayDmaChannel:
         resb 1
-byte_F79A5:
+GusIrqLatch:
         resb 1
-byte_F79A6:
+GusRecordDmaChannel:
         resb 1
-byte_F79A7:
+GusMidiIrq:
         resb 1
-byte_F79A8:
+GusWaveIrq:
         resb 16
 word_F79B8:
         resb 2
@@ -39,7 +39,7 @@ byte_F79C8:
         resb 1
 word_F79C9:
         resb 15
-byte_F79D8:
+GusVoiceIrqBits:
         resb 16
 byte_F79E8:
         resb 16

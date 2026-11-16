@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_B3B00 progbits alloc exec nowrite align=1
-extern str_OpenhandleSFILEERROR, byte_D4410, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
-extern dword_D4F2C, dword_D4F30, dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, FatalError, slowtickcount
+extern str_OpenhandleSFILEERROR, ResourceArchiveName, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, dword_D4530
+extern PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, FatalError, slowtickcount
 extern sprintf_, AngleFromDelta, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
 global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, loc_B3B6E, loc_B3BB9, loc_B3BEE
 global loc_B3C2B, loc_B3C53, DosCloseFile, loc_B3C6E, sub_B3C70, DosReadFile, loc_B3C76, loc_B3C85
@@ -82,9 +82,9 @@ loc_B3B6E:
         leave
         ret
 loc_B3BB9:
-        cmp byte [byte_D4410], 0
+        cmp byte [ResourceArchiveName], 0
         je short loc_B3C2B
-        mov edx, byte_D4410
+        mov edx, ResourceArchiveName
         mov eax, dword [byte ebp-08h]
         LD xor, ecx, ecx
         int 21h
@@ -92,23 +92,23 @@ loc_B3BB9:
         mov ebx, dword [byte ebp+0Ch]
         mov dword [ebx], eax
         LD mov, ebx, eax
-        mov edx, dword [dword_D4438]
+        mov edx, dword [ArchiveHandle]
         cmp byte [edx], 0
         jne short loc_B3BEE
-        mov ecx, dword [dword_D4444]
+        mov ecx, dword [ResourceArchive]
         mov ah, 3Fh
         int 21h
         jb short loc_B3C2B
 loc_B3BEE:
         push dword [byte ebp+08h]
-        push dword [dword_D4438]
-        call dword [dword_D443C]
+        push dword [ArchiveHandle]
+        call dword [ArchiveOpenFn]
         add esp, byte 8
         LD or, eax, eax
         je short loc_B3C2B
         mov ebx, dword [byte ebp+010h]
         mov dword [ebx], eax
-        mov ebx, dword [dword_D4440]
+        mov ebx, dword [ArchiveCount]
         mov ecx, dword [ebx]
         mov ebx, dword [byte ebp+014h]
         mov dword [ebx], ecx
@@ -330,17 +330,17 @@ loc_B3DF1:
         ret
         db 00h,00h
 sub_B3DFC:
-        mov dword [dword_D4F2C], ebx
-        mov dword [dword_D4F30], ecx
-        mov dword [dword_D4F34], edx
-        mov dword [dword_D4F38], esi
-        mov dword [dword_D4F3C], edi
-        pop dword [dword_D4F40]
+        mov dword [PrintfSavedEbx], ebx
+        mov dword [PrintfSavedEcx], ecx
+        mov dword [PrintfSavedEdx], edx
+        mov dword [PrintfSavedEsi], esi
+        mov dword [PrintfSavedEdi], edi
+        pop dword [PrintfSavedReturn]
         call sprintf_
-        push dword [dword_D4F40]
-        mov ebx, dword [dword_D4F2C]
-        mov ecx, dword [dword_D4F30]
-        mov edx, dword [dword_D4F34]
-        mov esi, dword [dword_D4F38]
-        mov edi, dword [dword_D4F3C]
+        push dword [PrintfSavedReturn]
+        mov ebx, dword [PrintfSavedEbx]
+        mov ecx, dword [PrintfSavedEcx]
+        mov edx, dword [PrintfSavedEdx]
+        mov esi, dword [PrintfSavedEsi]
+        mov edi, dword [PrintfSavedEdi]
         ret

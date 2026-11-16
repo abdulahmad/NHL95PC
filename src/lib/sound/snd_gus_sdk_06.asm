@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_B12A0 progbits alloc exec nowrite align=1
-extern __GETDS, byte_F79A7, byte_F79A8, byte_F79D8, dword_D87A0, dword_D87A8, dword_D87AC, dword_D87B0
-extern dword_D87B4, dword_D87B8, dword_D87BC, dword_D87C0, dword_D87C4, dword_D87C8, dword_D87CC, dword_D87D0
-extern dword_D87D4, inp_, outp_, GusSendEoi, word_D8760, word_D8762, word_D876C, word_D876E
-extern word_D8772, word_D8776, word_D8778, word_F799E, word_F79A2
+extern __GETDS, GusMidiIrq, GusWaveIrq, GusVoiceIrqBits, dword_D87A0, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback
+extern GusRecordDoneCallback, GusWaveCallback, GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, dword_D87D0
+extern dword_D87D4, inp_, outp_, GusSendEoi, GusBasePort, GusIrqStatusPort, word_D876C, word_D876E
+extern GusRegSelectPort, GusDataHighPort, GusDramPort, GusIrqFlags, GusCriticalDepth
 global sub_B12A0, loc_B12DD, loc_B12EC, loc_B1311, sub_B131C, loc_B1358, loc_B1365, loc_B1392
 global GusDelay, loc_B13AF, GusSetBasePort, loc_B13E7, loc_B13EF, loc_B13F6, loc_B13FB, GusClearCallbacks
 global GusClaimCallback, loc_B146B, loc_B1476, loc_B147B, GusClaimVoiceCallback, loc_B1493, loc_B149E, loc_B14A3
@@ -25,27 +25,27 @@ sub_B12A0:
         cld
         call __GETDS
         xor ah, ah
-        mov al, byte [byte_F79A8]
+        mov al, byte [GusWaveIrq]
         and eax, 0FFFFh
         call GusSendEoi
-        cmp word [word_F79A2], byte 0
+        cmp word [GusCriticalDepth], byte 0
         je short loc_B12DD
-        mov bx, word [word_F799E]
+        mov bx, word [GusIrqFlags]
         or bl, 2
-        mov word [word_F799E], bx
+        mov word [GusIrqFlags], bx
         jmp short loc_B1311
 loc_B12DD:
-        mov ax, word [word_F79A2]
-        inc word [word_F79A2]
+        mov ax, word [GusCriticalDepth]
+        inc word [GusCriticalDepth]
         push ds
         pop es
 loc_B12EC:
-        and word [word_F799E], byte 0FFFDh
+        and word [GusIrqFlags], byte 0FFFDh
         call GusServiceIrq
-        test word [word_F799E], 2
+        test word [GusIrqFlags], 2
         jne short loc_B12EC
-        mov ax, word [word_F79A2]
-        dec word [word_F79A2]
+        mov ax, word [GusCriticalDepth]
+        dec word [GusCriticalDepth]
 loc_B1311:
         pop gs
         pop fs
@@ -64,14 +64,14 @@ sub_B131C:
         cld
         call __GETDS
         xor ah, ah
-        mov al, byte [byte_F79A7]
+        mov al, byte [GusMidiIrq]
         and eax, 0FFFFh
         call GusSendEoi
         cmp dword [dword_D87A0], byte 0
         je short loc_B1358
-        mov dx, word [word_F799E]
+        mov dx, word [GusIrqFlags]
         or dl, 8
-        mov word [word_F799E], dx
+        mov word [GusIrqFlags], dx
         jmp short loc_B1392
 loc_B1358:
         mov eax, dword [dword_D87A0]
@@ -79,11 +79,11 @@ loc_B1358:
         push ds
         pop es
 loc_B1365:
-        mov bx, word [word_F799E]
+        mov bx, word [GusIrqFlags]
         and bl, 0F7h
-        mov word [word_F799E], bx
+        mov word [GusIrqFlags], bx
         call GusMidiIrqService
-        mov cx, word [word_F799E]
+        mov cx, word [GusIrqFlags]
         test cl, 8
         jne short loc_B1365
         mov eax, dword [dword_D87A0]
@@ -100,7 +100,7 @@ GusDelay:
         push ecx
         push edx
         mov ecx, 0Ah
-        mov dx, word [word_D8778]
+        mov dx, word [GusDramPort]
 loc_B13AF:
         in al, dx
         loopne loc_B13AF
@@ -123,14 +123,14 @@ GusSetBasePort:
         nop
         nop
         nop
-        movzx ebx, word [word_D8760]
+        movzx ebx, word [GusBasePort]
         LD sub, eax, ebx
         je short loc_B13EF
         nop
         nop
         nop
         nop
-        mov esi, word_D8760
+        mov esi, GusBasePort
         mov ecx, 0Dh
 loc_B13E7:
         add word [esi], ax
@@ -153,19 +153,19 @@ GusClearCallbacks:
         mov ebp, esp
         push edx
         xor edx, edx
-        mov dword [dword_D87AC], edx
-        mov dword [dword_D87B0], edx
-        mov dword [dword_D87B4], edx
-        mov dword [dword_D87B8], edx
-        mov dword [dword_D87BC], edx
-        mov dword [dword_D87C0], edx
-        mov dword [dword_D87C4], edx
-        mov dword [dword_D87C8], edx
-        mov dword [dword_D87CC], edx
+        mov dword [GusTimerCallback], edx
+        mov dword [GusDmaDoneCallback], edx
+        mov dword [GusRecordDoneCallback], edx
+        mov dword [GusWaveCallback], edx
+        mov dword [GusVolumeCallback], edx
+        mov dword [GusTimer1Callback], edx
+        mov dword [GusTimer2Callback], edx
+        mov dword [GusWaveIrqCallback], edx
+        mov dword [GusVolumeIrqCallback], edx
         mov dword [dword_D87D0], edx
         mov dword [dword_D87D4], edx
-        mov dword [byte_F79D8], edx
-        mov dword [dword_D87A8], edx
+        mov dword [GusVoiceIrqBits], edx
+        mov dword [GusMidiIrqCount], edx
         lea esp, [byte ebp-04h]
         pop edx
         pop ebp
@@ -225,12 +225,12 @@ GusSetDmaCallbacks:
         push ebx
         push edx
         mov ebx, eax
-        mov eax, dword_D87B0
+        mov eax, GusDmaDoneCallback
         mov edx, ebx
         call GusClaimCallback
         test eax, eax
         je short loc_B14DA
-        mov eax, dword_D87B4
+        mov eax, GusRecordDoneCallback
         mov edx, ebx
         call GusClaimCallback
         test eax, eax
@@ -252,12 +252,12 @@ sub_B14E4:
         push ebx
         push edx
         mov ebx, eax
-        mov eax, dword_D87B8
+        mov eax, GusWaveCallback
         mov edx, ebx
         call GusClaimCallback
         test eax, eax
         je short loc_B1512
-        mov eax, dword_D87BC
+        mov eax, GusVolumeCallback
         mov edx, ebx
         call GusClaimCallback
         test eax, eax
@@ -279,12 +279,12 @@ sub_B151C:
         push ebx
         push edx
         mov ebx, eax
-        mov eax, dword_D87C0
+        mov eax, GusTimer1Callback
         mov edx, ebx
         call GusClaimCallback
         test eax, eax
         je short loc_B154A
-        mov eax, dword_D87C4
+        mov eax, GusTimer2Callback
         mov edx, ebx
         call GusClaimCallback
         test eax, eax
@@ -305,7 +305,7 @@ GusSetVoiceCallbacks:
         mov ebp, esp
         cmp eax, byte 1
         jne short loc_B1573
-        mov eax, dword_D87C8
+        mov eax, GusWaveIrqCallback
         call GusClaimVoiceCallback
         test eax, eax
         je short loc_B1594
@@ -316,7 +316,7 @@ GusSetVoiceCallbacks:
 loc_B1573:
         cmp eax, byte 2
         jne short loc_B158F
-        mov eax, dword_D87CC
+        mov eax, GusVolumeIrqCallback
         call GusClaimVoiceCallback
         test eax, eax
         je short loc_B1594
@@ -367,7 +367,7 @@ sub_B15D8:
         mov ebp, esp
         push edx
         mov edx, eax
-        mov eax, dword_D87AC
+        mov eax, GusTimerCallback
         call GusClaimVoiceCallback
         test eax, eax
         je short loc_B15F1
@@ -388,9 +388,9 @@ GusMidiIrqService:
         sub esp, byte 4
         pushfw
         cli
-        inc dword [dword_D87A8]
+        inc dword [GusMidiIrqCount]
         xor eax, eax
-        mov ax, word [word_D8762]
+        mov ax, word [GusIrqStatusPort]
         call inp_
         mov edx, eax
         mov dword [byte ebp-014h], eax
@@ -419,7 +419,7 @@ loc_B1646:
         mov eax, ecx
         call dword [dword_D87D4]
 loc_B166D:
-        dec dword [dword_D87A8]
+        dec dword [GusMidiIrqCount]
         popfw
         lea esp, [byte ebp-010h]
         pop edi
@@ -436,12 +436,12 @@ GusReadIrqSource:
         push edx
         xor eax, eax
         cli
-        mov ax, word [word_D8762]
+        mov ax, word [GusIrqStatusPort]
         call inp_
         mov ebx, eax
         mov edx, eax
-        mov al, byte [byte_F79A7]
-        cmp al, byte [byte_F79A8]
+        mov al, byte [GusMidiIrq]
+        cmp al, byte [GusWaveIrq]
         je short loc_B16A9
         and bl, 0FCh
         mov edx, ebx
@@ -466,8 +466,8 @@ GusServiceIrq:
         push edi
         pushfw
         cli
-        mov ax, word [word_F79A2]
-        inc word [word_F79A2]
+        mov ax, word [GusCriticalDepth]
+        inc word [GusCriticalDepth]
         xor edi, edi
         xor esi, esi
 loc_B16D8:
@@ -475,107 +475,107 @@ loc_B16D8:
         mov ebx, eax
         test eax, eax
         jne short loc_B16F3
-        mov cx, word [word_F799E]
+        mov cx, word [GusIrqFlags]
         test cl, 4
         je near loc_B1938
 loc_B16F3:
         test bl, 80h
         jne short loc_B1706
-        mov ax, word [word_F799E]
+        mov ax, word [GusIrqFlags]
         test al, 4
         je near loc_B17B9
 loc_B1706:
         xor eax, eax
         mov edx, 41h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call inp_
         test al, 40h
         jne short loc_B1735
-        mov dx, word [word_F799E]
+        mov dx, word [GusIrqFlags]
         test dl, 4
         je short loc_B1772
 loc_B1735:
-        mov cx, word [word_F799E]
+        mov cx, word [GusIrqFlags]
         and cl, 0FBh
-        mov word [word_F799E], cx
-        cmp dword [dword_D87B0], byte 0
+        mov word [GusIrqFlags], cx
+        cmp dword [GusDmaDoneCallback], byte 0
         je short loc_B1772
         mov eax, 1
-        call dword [dword_D87B0]
+        call dword [GusDmaDoneCallback]
         test eax, eax
         jne short loc_B1772
-        cmp dword [dword_D87B4], byte 0
+        cmp dword [GusRecordDoneCallback], byte 0
         je short loc_B1772
         mov eax, 1
-        call dword [dword_D87B4]
+        call dword [GusRecordDoneCallback]
 loc_B1772:
         xor eax, eax
         mov edx, 49h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call inp_
         test al, 40h
         je short loc_B17B9
-        cmp dword [dword_D87B0], byte 0
+        cmp dword [GusDmaDoneCallback], byte 0
         je short loc_B17B9
         xor eax, eax
-        call dword [dword_D87B0]
+        call dword [GusDmaDoneCallback]
         test eax, eax
         jne short loc_B17B9
-        cmp dword [dword_D87B4], byte 0
+        cmp dword [GusRecordDoneCallback], byte 0
         je short loc_B17B9
-        call dword [dword_D87B4]
+        call dword [GusRecordDoneCallback]
 loc_B17B9:
         test bl, 4
         je short loc_B1813
         xor eax, eax
         mov edx, 45h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov edx, dword [byte_F79D8]
-        mov ax, word [word_D8776]
+        mov edx, dword [GusVoiceIrqBits]
+        mov ax, word [GusDataHighPort]
         and dl, 0FBh
         call outp_
         xor eax, eax
-        mov edx, dword [byte_F79D8]
-        mov ax, word [word_D8776]
+        mov edx, dword [GusVoiceIrqBits]
+        mov ax, word [GusDataHighPort]
         call outp_
-        cmp dword [dword_D87C8], byte 0
+        cmp dword [GusWaveIrqCallback], byte 0
         je short loc_B1813
-        call dword [dword_D87C8]
+        call dword [GusWaveIrqCallback]
         test eax, eax
         je short loc_B1813
         xor eax, eax
-        mov dword [dword_D87C8], eax
+        mov dword [GusWaveIrqCallback], eax
 loc_B1813:
         test bl, 8
         je short loc_B186E
         xor eax, eax
         mov edx, 45h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov edx, dword [byte_F79D8]
-        mov ax, word [word_D8776]
+        mov edx, dword [GusVoiceIrqBits]
+        mov ax, word [GusDataHighPort]
         and dl, 0F7h
         call outp_
         xor eax, eax
-        mov edx, dword [byte_F79D8]
-        mov ax, word [word_D8776]
+        mov edx, dword [GusVoiceIrqBits]
+        mov ax, word [GusDataHighPort]
         call outp_
-        cmp dword [dword_D87CC], byte 0
+        cmp dword [GusVolumeIrqCallback], byte 0
         je short loc_B186E
-        call dword [dword_D87CC]
+        call dword [GusVolumeIrqCallback]
         test eax, eax
         je short loc_B186E
         xor ecx, ecx
-        mov dword [dword_D87CC], ecx
+        mov dword [GusVolumeIrqCallback], ecx
 loc_B186E:
         test bl, 60h
         je near loc_B16D8
@@ -583,10 +583,10 @@ loc_B1877:
         cli
         xor eax, eax
         mov edx, 8Fh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call inp_
         mov ch, al
         mov al, ch
@@ -609,17 +609,17 @@ loc_B1877:
         and edi, eax
         jmp short loc_B18F3
 loc_B18C7:
-        cmp dword [dword_D87B8], byte 0
+        cmp dword [GusWaveCallback], byte 0
         je short loc_B18DC
         mov eax, edx
-        call dword [dword_D87B8]
+        call dword [GusWaveCallback]
         test eax, eax
         jne short loc_B18F1
 loc_B18DC:
-        cmp dword [dword_D87BC], byte 0
+        cmp dword [GusVolumeCallback], byte 0
         je short loc_B18F3
         mov eax, edx
-        call dword [dword_D87BC]
+        call dword [GusVolumeCallback]
         test eax, eax
         je short loc_B18F3
 loc_B18F1:
@@ -633,17 +633,17 @@ loc_B18F3:
         and esi, ebx
         jmp short loc_B192E
 loc_B1902:
-        cmp dword [dword_D87C0], byte 0
+        cmp dword [GusTimer1Callback], byte 0
         je short loc_B1917
         mov eax, edx
-        call dword [dword_D87C0]
+        call dword [GusTimer1Callback]
         test eax, eax
         jne short loc_B192C
 loc_B1917:
-        cmp dword [dword_D87C4], byte 0
+        cmp dword [GusTimer2Callback], byte 0
         je short loc_B192E
         mov eax, edx
-        call dword [dword_D87C4]
+        call dword [GusTimer2Callback]
         test eax, eax
         je short loc_B192E
 loc_B192C:
@@ -652,8 +652,8 @@ loc_B192E:
         call GusReadIrqSource
         jmp near loc_B1877
 loc_B1938:
-        mov ax, word [word_F79A2]
-        dec word [word_F79A2]
+        mov ax, word [GusCriticalDepth]
+        dec word [GusCriticalDepth]
         popfw
         lea esp, [byte ebp-014h]
         pop edi

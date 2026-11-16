@@ -381,7 +381,7 @@ void StartThreeStars(void)
     fadeinpending = 1;
     PickThreeStars();
     curevent = 0xFF;
-    word_CBC44 = 0;
+    SortPending = 0;
     RefPen = 0;
     refsignal = 0;
     Penaltytimer = 0;

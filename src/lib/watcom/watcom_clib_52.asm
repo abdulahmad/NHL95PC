@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_B2220 progbits alloc exec nowrite align=1
-extern __Bin2String, __CmpBigInt, __Rnd2Int, str_Inf, str_Nan, dword_C4C90, dword_C4C94, dword_C4C98
-extern dword_C4C9C, frexp_, modf_, qword_C4B64, qword_C4C80, qword_C4C88, qword_C4CAA, unk_C4CA8
+extern __Bin2String, __CmpBigInt, __Rnd2Int, str_Inf, str_Nan, DblMaxLow, DblMaxHigh, DblMinusMaxLow
+extern DblMinusMaxHigh, frexp_, modf_, F64_neg1_floor_, F64_Scale10Max, F64_Scale10Min, Pow10Table, Scale10Count
 global __Nan_Inf_, loc_B2258, loc_B228B, loc_B2291, loc_B229A, loc_B229C, floor_, loc_B22D3
 global _Scale_, loc_B2306, _Scale10V_, loc_B234C, loc_B2369, loc_B236D, loc_B2394, loc_B23AE
 global loc_B23B2, loc_B23C0, loc_B23D2, loc_B23E1, loc_B23EE, loc_B23F5, __cvt_, loc_B2444
@@ -81,7 +81,7 @@ floor_:
         sahf
         jbe short loc_B22D3
         fld qword [byte ebp-014h]
-        fadd qword [qword_C4B64]
+        fadd qword [F64_neg1_floor_]
         fstp qword [byte ebp-014h]
 loc_B22D3:
         fld qword [byte ebp-014h]
@@ -133,27 +133,27 @@ _Scale10V_:
         sub esp, byte 8
         mov ecx, dword [byte esp+028h]
         fld qword [byte esp+020h]
-        fcomp qword [qword_C4C80]
+        fcomp qword [F64_Scale10Max]
         fnstsw ax
         sahf
         jne short loc_B234C
-        mov eax, dword [dword_C4C90]
+        mov eax, dword [DblMaxLow]
         mov dword [byte esp+020h], eax
-        mov eax, dword [dword_C4C94]
+        mov eax, dword [DblMaxHigh]
         jmp short loc_B2369
 loc_B234C:
         fld qword [byte esp+020h]
-        fcomp qword [qword_C4C88]
+        fcomp qword [F64_Scale10Min]
         fnstsw ax
         sahf
         jne short loc_B236D
-        mov eax, dword [dword_C4C98]
+        mov eax, dword [DblMinusMaxLow]
         mov dword [byte esp+020h], eax
-        mov eax, dword [dword_C4C9C]
+        mov eax, dword [DblMinusMaxHigh]
 loc_B2369:
         mov dword [byte esp+024h], eax
 loc_B236D:
-        mov eax, unk_C4CA8
+        mov eax, Scale10Count
         test ecx, ecx
         jge short loc_B2394
         mov edx, ecx
@@ -161,7 +161,7 @@ loc_B236D:
         cmp edx, 134h
         jle short loc_B23B2
         fld qword [byte esp+020h]
-        fdiv qword [qword_C4CAA]
+        fdiv qword [Pow10Table]
         sub edx, 0D8h
         jmp short loc_B23AE
 loc_B2394:
@@ -169,7 +169,7 @@ loc_B2394:
         cmp ecx, 134h
         jle short loc_B23B2
         fld qword [byte esp+020h]
-        fmul qword [qword_C4CAA]
+        fmul qword [Pow10Table]
         lea edx, [dword ecx-0D8h]
 loc_B23AE:
         fstp qword [byte esp+020h]

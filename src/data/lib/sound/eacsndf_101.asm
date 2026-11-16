@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_F23BC nobits alloc noexec write align=1
 global byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, byte_F24C4, byte_F24C5
-global dword_F23EA, dword_F23EE, dword_F2416, dword_F243C, dword_F2440, dword_F24C0, dword_F24C8, delaycount
+global dword_F23EA, dword_F23EE, dword_F2416, dword_F243C, AtexitTable, SpeechBankCount, dword_F24C8, delaycount
 global unk_F24D0, unk_F24D4
 byte_F23BC:
         resb 16
@@ -25,9 +25,9 @@ dword_F243C:
         resb 2
 byte_F243E:
         resb 2
-dword_F2440:
+AtexitTable:
         resb 128
-dword_F24C0:
+SpeechBankCount:
         resb 4
 byte_F24C4:
         resb 1

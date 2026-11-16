@@ -16,7 +16,7 @@ extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, Text
 extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, RemoveKeyboardHandler
 extern KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E, sub_B387E
 extern ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, FillRectColor, TeamRecPtr, teamsdb
-extern teamsdb_size, unk_C27F5, unk_D45D8
+extern teamsdb_size, unk_C27F5, DefaultFont
 global JoystickCalScreen, CalLeftJoystick, CalLeftJoystick_common, CalRightJoystick, GetInputEvent, ClearInputQueue, InputInstall, InputRemove
 global EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuDropdown_ret, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextGrey_common
 global PrintMenuTextGrey_ret, PrintMenuTextAlt, DrawMenuItemSel, DrawMenuItemSel_common, DrawMenuItemSel_ret, DrawMenuItemNorm, MenuHitTest, InputPollTick
@@ -60,7 +60,7 @@ JoystickCalScreen:
         push eax
         call TextSaveState
         add esp, byte 4
-        push unk_D45D8
+        push DefaultFont
         call TextSetFont
         add esp, byte 4
         call SetScreenTarget

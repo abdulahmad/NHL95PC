@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_B3E4A progbits alloc exec nowrite align=1
-extern cpuinfo_b0, cpuinfo_b1, byte_D4F44, byte_D4F45, byte_D4F48, byte_D4FE8, byte_D545C, byte_D54DC
-extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D3024, cpuinfo_d0, cpuinfo_d1
-extern dword_D30A4, dword_D30A8, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
-extern dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
+extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, byte_D4FE8, byte_D545C, byte_D54DC
+extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, GraphicsReady, cpuinfo_d0, cpuinfo_d1
+extern ScreenWidth, dword_D30A8, dword_D30BC, dword_D30C0, BackBufferWidth, dword_D429C, PrintfSavedEbx, PrintfSavedEcx
+extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
 extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, loc_B4D0C
 extern mousepollfn, off_D567C, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
-extern word_D4F46, word_D4FE4, word_D4FE6, word_D4FE9
+extern SavedTextColumns, word_D4FE4, word_D4FE6, word_D4FE9
 global PrintfSaveRegs, SaveTextMode, loc_B3ED7, RestoreTextMode, loc_B3F23, loc_B3F3D, loc_B3F4B, DetectCPU
 global loc_B3FAC, FillMem, ZeroMem, loc_B3FC8, sub_B3FE0, sub_B3FEC, loc_B401F, loc_B402B
 global loc_B4030, loc_B403F, loc_B4049, loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0
@@ -35,32 +35,32 @@ global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, WaitRetrace, loc_B
 global loc_B4C56, sub_B4C61, loc_B4C6B, loc_B4C72, sub_B4C84, loc_B4C8E, loc_B4C95, sub_B4CA7
 global sub_B4CB4
 PrintfSaveRegs:
-        mov dword [dword_D4F2C], ebx
-        mov dword [dword_D4F30], ecx
-        mov dword [dword_D4F34], edx
-        mov dword [dword_D4F38], esi
-        mov dword [dword_D4F3C], edi
-        pop dword [dword_D4F40]
+        mov dword [PrintfSavedEbx], ebx
+        mov dword [PrintfSavedEcx], ecx
+        mov dword [PrintfSavedEdx], edx
+        mov dword [PrintfSavedEsi], esi
+        mov dword [PrintfSavedEdi], edi
+        pop dword [PrintfSavedReturn]
         call printf_
-        push dword [dword_D4F40]
-        mov ebx, dword [dword_D4F2C]
-        mov ecx, dword [dword_D4F30]
-        mov edx, dword [dword_D4F34]
-        mov esi, dword [dword_D4F38]
-        mov edi, dword [dword_D4F3C]
+        push dword [PrintfSavedReturn]
+        mov ebx, dword [PrintfSavedEbx]
+        mov ecx, dword [PrintfSavedEcx]
+        mov edx, dword [PrintfSavedEdx]
+        mov esi, dword [PrintfSavedEsi]
+        mov edi, dword [PrintfSavedEdi]
         ret
 SaveTextMode:
-        cmp byte [byte_D4F44], 0
+        cmp byte [SavedTextMode], 0
         jne short loc_B3ED7
         mov ah, 0Fh
         int 10h
-        mov byte [byte_D4F44], al
+        mov byte [SavedTextMode], al
         mov al, byte [0410h]
-        mov byte [byte_D4F45], al
+        mov byte [SavedTextPage], al
         mov ax, word [044Ah]
-        mov word [word_D4F46], ax
+        mov word [SavedTextColumns], ax
         mov al, byte [0484h]
-        mov byte [byte_D4F48], al
+        mov byte [SavedTextRows], al
         push RestoreTextMode
         call AddExitHandler
         add esp, byte 4
@@ -68,26 +68,26 @@ loc_B3ED7:
         ret
 RestoreTextMode:
         pusha
-        cmp byte [byte_D4F44], 0
+        cmp byte [SavedTextMode], 0
         je short loc_B3F4B
-        mov al, byte [byte_D4F45]
+        mov al, byte [SavedTextPage]
         mov byte [0410h], al
         LD xor, ah, ah
-        mov al, byte [byte_D4F44]
+        mov al, byte [SavedTextMode]
         int 10h
-        cmp byte [byte_D4F44], 3
+        cmp byte [SavedTextMode], 3
         jne short loc_B3F23
-        cmp word [word_D4F46], byte 50h
+        cmp word [SavedTextColumns], byte 50h
         jne short loc_B3F23
-        cmp byte [byte_D4F48], 2Ah
+        cmp byte [SavedTextRows], 2Ah
         jb short loc_B3F23
-        cmp byte [byte_D4F48], 32h
+        cmp byte [SavedTextRows], 32h
         ja short loc_B3F23
         mov ax, 1112h
         LD xor, bx, bx
         int 10h
 loc_B3F23:
-        mov al, byte [byte_D4F45]
+        mov al, byte [SavedTextPage]
         mov byte [0410h], al
         and al, 30h
         cmp al, 30h
@@ -99,7 +99,7 @@ loc_B3F3D:
         mov ah, 0Bh
         LD xor, bx, bx
         int 10h
-        mov byte [byte_D4F44], 0
+        mov byte [SavedTextMode], 0
 loc_B3F4B:
         popa
         ret
@@ -1285,7 +1285,7 @@ SetTextMode:
         mov ah, 0Bh
         LD xor, ebx, ebx
         int 10h
-        mov dword [dword_D3024], 0
+        mov dword [GraphicsReady], 0
         ret
 VgaSetPalette:
         push ebp
@@ -1310,8 +1310,8 @@ loc_B4BA0:
 SetScreenTarget:
         LD mov, edx, edi
         LD mov, eax, esi
-        mov esi, dword_D30D4
-        mov edi, dword_D30A4
+        mov esi, BackBufferWidth
+        mov edi, ScreenWidth
         mov ecx, 0Ch
         rep movsd
         LD mov, edi, edx
@@ -1331,9 +1331,9 @@ loc_B4BDE:
         jge short loc_B4BE8
         mov ecx, 0
 loc_B4BE8:
-        cmp edx, dword [dword_D30A4]
+        cmp edx, dword [ScreenWidth]
         jle short loc_B4BF6
-        mov edx, dword [dword_D30A4]
+        mov edx, dword [ScreenWidth]
 loc_B4BF6:
         cmp ebx, dword [dword_D30A8]
         jle short loc_B4C04

@@ -114,7 +114,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     RefPen = 0;
     penaltysc = -1;
     ovltimer = -1;
-    word_CBC44 = 0;
+    SortPending = 0;
     bannermsg = -1;
     ovlstep = -1;
     ovlseq = -1;

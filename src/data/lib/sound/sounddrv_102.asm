@@ -6,12 +6,12 @@ global byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, byte_F2F42, byte_F2F43, b
 global byte_F5320, byte_F5321, byte_F5978, byte_F5979, byte_F597A, byte_F59F8, byte_F59F9, byte_F5A00
 global byte_F5A01, byte_F5A04, byte_F5C0B, dword_F27F6, dword_F2F28, dword_F3108, dword_F3462, dword_F34DC
 global dword_F371E, dword_F532A, dword_F5332, dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0
-global dword_F55F4, dword_F58D0, dword_F58D8, dword_F58DC, dword_F58E0, dword_F59FC, dword_F6016, dword_F6116
-global dword_F612C, unk_F24D8, unk_F27D8, unk_F3148, unk_F3534, unk_F53AC, unk_F55F8, unk_F58E4
+global dword_F55F4, dword_F58D0, dword_F58D8, dword_F58DC, RationalAllocLimit, dword_F59FC, dword_F6016, dword_F6116
+global dword_F612C, unk_F24D8, unk_F27D8, unk_F3148, unk_F3534, unk_F53AC, unk_F55F8, Hook387Save
 global unk_F5BF8, word_F2F3C, word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450
 global word_F3452, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
 global word_F3718, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326, word_F53B0, word_F53C2
-global word_F58D2, word_F58D4, word_F58D6, word_F58E2, word_F59FA, word_F6018, word_F6118, word_F611A
+global word_F58D2, word_F58D4, word_F58D6, RationalAllocFlags, word_F59FA, word_F6018, word_F6118, word_F611A
 global word_F6128
 unk_F24D8:
         resb 1
@@ -131,11 +131,11 @@ dword_F58D8:
         resb 4
 dword_F58DC:
         resb 4
-dword_F58E0:
+RationalAllocLimit:
         resb 2
-word_F58E2:
+RationalAllocFlags:
         resb 2
-unk_F58E4:
+Hook387Save:
         resb 148
 byte_F5978:
         resb 1

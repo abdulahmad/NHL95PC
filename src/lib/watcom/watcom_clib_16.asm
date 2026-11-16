@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_92068 progbits alloc exec nowrite align=1
-extern __close_, __IOMode_, __set_errno_, __set_errno_dos_, __SetIOMode_, dword_D4F21, dword_D5008, isatty_
+extern __close_, __IOMode_, __set_errno_, __set_errno_dos_, __SetIOMode_, dword_D4F21, SopenMask, isatty_
 extern lseek_
 global open_, sopen_, loc_92098, loc_920A0, loc_920D3, loc_92115, loc_9213C, loc_9214D
 global loc_92178, loc_92189, loc_921DB, loc_921F4, loc_92201, loc_9220A, loc_92213, loc_9221D
@@ -123,7 +123,7 @@ loc_9214D:
         jne short loc_92178
         mov eax, 180h
 loc_92178:
-        xor eax, dword [dword_D5008]
+        xor eax, dword [SopenMask]
         xor ecx, ecx
         test al, 80h
         jne short loc_92189

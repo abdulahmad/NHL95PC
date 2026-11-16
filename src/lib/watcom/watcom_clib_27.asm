@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_98801 progbits alloc exec nowrite align=1
-extern __ExpandDGROUP_, _nfree_, _Extender, _ExtenderSubtype, byte_F24C4, dword_D43E8
+extern __ExpandDGROUP_, _nfree_, _Extender, _ExtenderSubtype, byte_F24C4, HeapList
 global _nexpand_, loc_98811, __HeapManager_expand_, loc_98850, loc_9885A, loc_98876, loc_98889, loc_988B8
 global loc_988C0, loc_988C3, loc_988CA, loc_988D7, loc_988E6, loc_9891A, loc_98955, loc_98960
 global loc_98967, loc_9899C, loc_989A4, loc_989A7, loc_989AE, loc_989BD, loc_989BF, loc_989C8
@@ -17,7 +17,7 @@ _nexpand_:
         mov edi, edx
         and byte [byte esp+04h], 0FEh
 loc_98811:
-        mov eax, dword_D43E8
+        mov eax, HeapList
         mov edx, ds
         mov ecx, esp
         xor eax, eax
@@ -71,10 +71,10 @@ loc_98889:
         mov eax, dword [byte ebx+04h]
         mov edx, ds
         mov dword [byte esp+0Ch], eax
-        mov eax, dword_D43E8
+        mov eax, HeapList
         cmp dx, word [esp]
         jne short loc_988CA
-        mov esi, dword [dword_D43E8]
+        mov esi, dword [HeapList]
         jmp short loc_988C3
 loc_988B8:
         cmp esi, edi
@@ -157,14 +157,14 @@ loc_98967:
         or dl, 1
         mov dword [ecx], ebx
         lea ebx, [ecx+eax]
-        mov eax, dword_D43E8
+        mov eax, HeapList
         mov dword [byte esp+04h], ebx
         mov dword [ebx], edx
         mov edx, ds
         mov ebx, dword [esp]
         cmp dx, bx
         jne short loc_989AE
-        mov esi, dword [dword_D43E8]
+        mov esi, dword [HeapList]
         jmp short loc_989A7
 loc_9899C:
         cmp esi, edi

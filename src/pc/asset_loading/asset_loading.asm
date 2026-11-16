@@ -25,7 +25,7 @@ extern str_VFN, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, Tex
 extern TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette
 extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
-extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
+extern penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
 extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
 extern rinkobjused
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
@@ -799,7 +799,7 @@ ResetGameVars:
         mov word [passdir], ax
         mov word [lastplayer], ax
         mov word [shotplayer], ax
-        mov word [word_CBC44], ax
+        mov word [SortPending], ax
         mov word [RefPen], ax
         mov word [refsignal], ax
         mov word [Penaltytimer], ax

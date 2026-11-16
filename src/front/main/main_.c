@@ -126,7 +126,7 @@ void main_(void)
     sub_B3036(CritErrHandler);
     InitFileLocations();
     SetScreenSize(0x140, 0xC8);
-    screenbm = subwindowdefadr(&dword_D30D4, 0, 0xA8, 0x140, 0x20);
+    screenbm = subwindowdefadr(&BackBufferWidth, 0, 0xA8, 0x140, 0x20);
     SetScreenSize(0x280, 0x1E0);
     InitZoneManager(0x64);
     MakePath(s.path, fileoncd[0x13A] == 1 ? (char *)cddriveptr : 0, (char *)str_Pointer3, 0);

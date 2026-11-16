@@ -6,9 +6,9 @@ extern PutBlock, sub_90698, DrawArt, sub_A2F40, str_Fsh, str_3sh, str_SHPI, str_
 extern str_Error0, str_NoSuchFileOr, str_ArgumentListTooBig, str_ExecFormatError, str_BadFileNumber, str_NotEnoughMemory, str_PermissionDenied, str_FileExists
 extern str_CrossDeviceLink, str_InvalidArgument, str_FileTableOverflow, str_TooManyOpenFiles, str_NoSpaceLeftOn, str_ArgumentTooLarge, str_ResultTooLarge, str_ResourceDeadlockWouldOccur
 global byte_D4FE8, byte_D506C, __real87, dword_D4F96, dword_D4F9A, dword_D4FA0, dword_D4FA4, dword_D4FEB
-global dword_D4FF1, dword_D5008, dword_D500C, dword_D5060, dword_D5064, dword_D5068, dword_D5184, dword_D5194
-global dword_D51D4, off_D516C, off_D517C, off_D518C, off_D51E4, unk_D5010, word_D4FE4, word_D4FE6
-global word_D4FE9, word_D51D8, word_D51DA
+global dword_D4FF1, SopenMask, dword_D500C, dword_D5060, dword_D5064, dword_D5068, dword_D5184, FpuSystemFlags
+global OldFpuVectorOffset, off_D516C, off_D517C, off_D518C, off_D51E4, unk_D5010, word_D4FE4, word_D4FE6
+global word_D4FE9, OldFpuVectorSelector, FpuCr0Bits
 dword_D4F96:
         db 0FFh,0FFh,0FFh,0FFh
 dword_D4F9A:
@@ -33,7 +33,7 @@ dword_D4FEB:
 dword_D4FF1:
         db 00h,00h,00h,00h,09h,01h,01h,0Bh,06h,04h,05h,05h,05h,02h,03h,0FFh
         db 0FFh,07h,08h,06h,08h,01h,0FFh
-dword_D5008:
+SopenMask:
         db 00h,00h,00h,00h
 dword_D500C:
         db 014h,00h,00h,00h
@@ -79,16 +79,16 @@ dword_D5184:
 off_D518C:
         dd str_SHPI
         dd str_SHPM
-dword_D5194:
+FpuSystemFlags:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D51D4:
+OldFpuVectorOffset:
         db 00h,00h,00h,00h
-word_D51D8:
+OldFpuVectorSelector:
         db 00h,00h
-word_D51DA:
+FpuCr0Bits:
         db 00h,00h
 __real87:
         db 00h,00h,00h,00h,0Fh,00h,00h,00h

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8DCF8 progbits alloc exec nowrite align=1
-extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, dword_EDAB0
+extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, MemLockHandle
 extern dword_EDAB4, FatalError, int386_, sub_8C990, sub_8CAF4, sub_8DAB8, sub_8DB4C, GrabLargestBlock
 extern sub_986B0, MemUnlock, DetectCPU, unk_EDF04, unknown_libname_22
 global initmemman, loc_8DD2F, loc_8DD58, loc_8DD71, loc_8DDF4, loc_8DEAD, loc_8DED0, loc_8DF06
@@ -15,7 +15,7 @@ initmemman:
         mov esi, dword [byte esp+054h]
         mov edi, dword [byte esp+058h]
         call sub_986B0
-        mov dword [dword_EDAB0], eax
+        mov dword [MemLockHandle], eax
         push eax
         call unknown_libname_22
         add esp, byte 4
@@ -160,7 +160,7 @@ loc_8DED0:
         mov eax, 31h
         call int386_
 loc_8DF06:
-        mov esi, dword [dword_EDAB0]
+        mov esi, dword [MemLockHandle]
         push esi
         call MemUnlock
         add esp, byte 4

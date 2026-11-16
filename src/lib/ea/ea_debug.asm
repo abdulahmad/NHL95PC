@@ -4,19 +4,19 @@ bits 32
 section s_93938 progbits alloc exec nowrite align=1
 extern _dos_getdate_, _dos_gettime_, _os_handle, _os_handle_0, _os_handle_1, str_DBUGTXT, str_FILES, str_DATES
 extern str_TIMES, str_CLOSED, str_TIMES2, asc_C4080, str_2d02d02d, str_CS44xDS, str_CS44xDS2, str_Used66xFree
-extern str_Used7uFree7u, str_NAMESIZEADREND, str_IDXNAMESIZEADR, asc_C41F4, asc_C4200, asc_C4204, str_SPACE9x8s8s, str_SPACE9d8s8s
+extern str_Used7uFree7u, str_NAMESIZEADREND, str_IDXNAMESIZEADR, str_80s, asc_C4200, str_S_MemViewerDrawList, str_SPACE9x8s8s, str_SPACE9d8s8s
 extern str_SPACE66x6, str_SPACE7d66s, asc_C428C, str_1212s9d8s8s, str_33d1212s66x66s66s44x, asc_C42E4, str_MEMMANAGER, str_044X00000000
 extern str_SYSTEM, str_SPACE3, str_HIGHMemoryBlock, str_LOWMemoryBlock, str_ConventionalMemory, str_RelocatableBlock, str_NonRelocatableBlock, str_ALIGNFlagIsSet
 extern str_PRIORITY1d, str_SequenceD, str_BlockIsPURGABLE, str_04x2, str_02x, asc_C441C, str_FILES2, str_DATES2
 extern str_TIMES3, str_HexmemdspOS, str_XxMMAPTXT, str_ErrorDumpingMemoryMap, str_ShapeFileIsInvalid, str_NumDPackedD, str_ThereAreNoShapes, str_44s05x
-extern str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked, str_Packed, str_Unpacked, asc_C45BC
+extern str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked, str_Packed, str_Unpacked, str_3d3d3d3dS
 extern str_ShapeIsInvalidDraw, str_MEMSHPTXT, str_ErrorDumpingShapesList, str_ShapeFileName0, str_ShapeFileSizeLd, str_NumberOfShapesD, str_44s66ld, str_Bytes3dRows3d2
 extern str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d, asc_C46F8, str_SCREEN2, asc_C470C
-extern str_2d02d02d2, byte_D4544, byte_EDE7D, DebugPrintf, dword_D2F78, dword_D2F7A, dword_D2F80, dword_D3024
-extern dword_D3044, dword_D3048, dword_D4534, dword_D4548, dword_D457C, dword_D4580, dword_D4584, dword_D4588
-extern dword_D458C, dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
-extern dword_EDAB4, dword_EDE60, dword_EDE64, dword_EDE68, dword_EDE6C, dword_EDE70, dword_EDE74, dword_EDE78
-extern dword_EDE7C, dword_EDE80, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
+extern str_2d02d02d2, DebugRow, byte_EDE7D, DebugPrintf, dword_D2F78, dword_D2F7A, dword_D2F80, GraphicsReady
+extern dword_D3044, dword_D3048, DebugMode, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
+extern MemViewRed, MemViewShowDetail, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
+extern dword_EDAB4, MemViewTop, MemViewCount, dword_EDE68, MemViewTitle, MemViewRow, MemViewList, dword_EDE78
+extern dword_EDE7C, MemViewMode, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, sub_8D484, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, sub_90373, PutBlock
 extern DrawBitmap, FillRect, sub_92CD0, sub_92F50, sub_93000, sub_93170, DebugSetLine, sub_936C0
@@ -25,8 +25,8 @@ extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, sub_9D090, sub_9D2E0, FindSha
 extern SaveDrawState, RestoreDrawState, FindFirstFile, sub_B40BF, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
 extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3
 extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
-extern unk_C41FC, unk_C4318, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, unk_C4474
-extern str_Un, unk_C46C0, unk_D45D8, vsprintf_, WaitTickDeadline
+extern MemViewStrings, str_X_DebugSprintf, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, str_W_DumpMemoryMap
+extern str_Un, unk_C46C0, DefaultFont, vsprintf_, WaitTickDeadline
 global sub_93938, loc_93955, loc_9396D, loc_9399A, loc_939AA, loc_939C2, loc_93A2E, loc_93A33
 global sub_93A40, loc_93A9B, DebugLog, loc_93AD3, sub_93AD8, loc_93B26, loc_93B2D, FindWildcardDigits
 global loc_93B49, loc_93B55, loc_93B66, loc_93B6A, loc_93B6C, loc_93BA5, loc_93BC5, loc_93BCA
@@ -73,7 +73,7 @@ sub_93938:
         push esi
         push edi
         sub esp, 0B0h
-        cmp dword [dword_D4548], byte 0
+        cmp dword [DebugLogOn], byte 0
         jne near loc_93A33
         mov esi, eax
         mov edi, esp
@@ -136,7 +136,7 @@ loc_939C2:
         mov edx, str_Wt2
         mov eax, esp
         call fopen_
-        mov dword [dword_D4548], eax
+        mov dword [DebugLogOn], eax
         test eax, eax
         je short loc_93A2E
         lea edx, [dword esp+09Ch]
@@ -174,7 +174,7 @@ sub_93A40:
         push ecx
         push edx
         sub esp, byte 28h
-        cmp dword [dword_D4548], byte 0
+        cmp dword [DebugLogOn], byte 0
         je short loc_93A9B
         mov edx, esp
         lea eax, [byte esp+014h]
@@ -192,10 +192,10 @@ sub_93A40:
         push str_TIMES2
         call DebugLog
         add esp, byte 8
-        mov eax, dword [dword_D4548]
+        mov eax, dword [DebugLogOn]
         call fclose_
         xor ebx, ebx
-        mov dword [dword_D4548], ebx
+        mov dword [DebugLogOn], ebx
 loc_93A9B:
         add esp, byte 28h
         pop edx
@@ -205,9 +205,9 @@ loc_93A9B:
         db 08Bh,0C0h
 DebugLog:
         sub esp, byte 4
-        cmp dword [dword_D4534], byte 2
+        cmp dword [DebugMode], byte 2
         jl short loc_93AD3
-        mov ebx, dword [dword_D4548]
+        mov ebx, dword [DebugLogOn]
         test ebx, ebx
         je short loc_93AD3
         lea eax, [byte esp+0Ch]
@@ -224,7 +224,7 @@ loc_93AD3:
         db 090h
 sub_93AD8:
         sub esp, 104h
-        cmp dword [dword_D4534], byte 2
+        cmp dword [DebugMode], byte 2
         jl short loc_93B2D
         lea eax, [dword esp+010Ch]
         mov dword [dword esp+0100h], eax
@@ -234,7 +234,7 @@ sub_93AD8:
         call vsprintf_
         xor ebx, ebx
         mov dword [dword esp+0100h], ebx
-        mov ecx, dword [dword_D4548]
+        mov ecx, dword [DebugLogOn]
         test ecx, ecx
         je short loc_93B26
         mov edx, ecx
@@ -348,7 +348,7 @@ FormatDateStamp:
         push edx
         xor eax, eax
         mov al, byte [byte esp+05h]
-        mov edx, dword [nosplit eax*4+dword_D4548]
+        mov edx, dword [nosplit eax*4+DebugLogOn]
         push edx
         xor eax, eax
         mov al, byte [byte esp+08h]
@@ -438,38 +438,38 @@ sub_93CC0:
         push eax
         call TextSaveState
         add esp, byte 4
-        push unk_D45D8
+        push DefaultFont
         call TextSetFont
         add esp, byte 4
-        mov al, byte [byte_D4544]
+        mov al, byte [DebugRow]
         mov byte [dword esp+0C0h], al
         push byte 0
         call DebugSetRow
         add esp, byte 4
-        cmp dword [dword_D3024], byte 0
+        cmp dword [GraphicsReady], byte 0
         jne short loc_93D22
         mov dword [dword esp+0B8h], 1
 loc_93D22:
         push byte 0
         call sub_9C5B0
         add esp, byte 4
-        mov dword [dword_D457C], eax
+        mov dword [MemViewBlack], eax
         push dword 0FCFCFCh
         call sub_9C5B0
         add esp, byte 4
-        mov dword [dword_D4580], eax
+        mov dword [MemViewWhite], eax
         push dword 0FCFC54h
         call sub_9C5B0
         add esp, byte 4
-        mov dword [dword_D4584], eax
+        mov dword [MemViewYellow], eax
         push dword 80A8h
         call sub_9C5B0
         add esp, byte 4
-        mov dword [dword_D4588], eax
+        mov dword [MemViewGreen], eax
         push dword 0A80000h
         call sub_9C5B0
         add esp, byte 4
-        mov dword [dword_D458C], eax
+        mov dword [MemViewRed], eax
         mov ebp, dword [dword_D459C]
         mov edi, dword [dword_D45A0]
         cmp dword [dword esp+0B8h], byte 0
@@ -609,7 +609,7 @@ loc_93F0D:
         cmp esi, byte 43h
         jne short loc_93F21
         call SetScreenTarget
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
 loc_93F21:
         cmp esi, byte 46h
@@ -619,7 +619,7 @@ loc_93F21:
 loc_93F2E:
         cmp esi, byte 44h
         jne short loc_93F3A
-        xor byte [dword_D4590], 1
+        xor byte [MemViewShowDetail], 1
 loc_93F3A:
         cmp esi, byte 42h
         jne short loc_93F56
@@ -685,7 +685,7 @@ loc_93FFB:
         jne short loc_9401B
         test byte [byte_EDE7D], 80h
         jne short loc_9401B
-        mov ebx, dword [dword_EDE80]
+        mov ebx, dword [MemViewMode]
         push ebx
         call PushMemDescriptorLocked
         add esp, byte 4
@@ -694,13 +694,13 @@ loc_9401B:
         jne short loc_9405B
         test byte [byte_EDE7D], 80h
         jne short loc_9405B
-        mov edx, dword [dword_EDE64]
+        mov edx, dword [MemViewCount]
         mov ebx, 0Ch
         lea eax, [dword esp+0A0h]
         call strncpy_
         xor ch, ch
         mov byte [dword esp+0ACh], ch
-        mov ecx, dword [dword_EDE80]
+        mov ecx, dword [MemViewMode]
         push ecx
         call sub_8D484
         add esp, byte 4
@@ -730,7 +730,7 @@ loc_94082:
         cmp dword [dword esp+0B0h], byte 0
         je short loc_940BA
         call SetScreenTarget
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
 loc_940BA:
         xor eax, eax
@@ -786,9 +786,9 @@ loc_94124:
 loc_9412C:
         cmp eax, ecx
         jne short loc_9416D
-        mov eax, dword [dword_D4580]
-        mov dword [dword_EDE70], eax
-        mov dword [dword_EDE60], 70h
+        mov eax, dword [MemViewWhite]
+        mov dword [MemViewRow], eax
+        mov dword [MemViewTop], 70h
         mov eax, dword [byte esp+04h]
         mov dword [dword_EDE68], eax
         mov eax, dword [byte esp+08h]
@@ -800,9 +800,9 @@ loc_9412C:
         xor eax, eax
         ret 10h
 loc_9416D:
-        mov eax, dword [dword_D457C]
-        mov dword [dword_EDE70], eax
-        mov dword [dword_EDE60], 7
+        mov eax, dword [MemViewBlack]
+        mov dword [MemViewRow], eax
+        mov dword [MemViewTop], 7
 loc_94181:
         xor eax, eax
         ret 10h
@@ -831,7 +831,7 @@ MemViewerDrawList:
         push ecx
         mov esi, dword [dword_D2F78]
         push esi
-        cmp dword [dword_D4590], byte 0
+        cmp dword [MemViewShowDetail], byte 0
         je short loc_941DF
         mov eax, str_CS44xDS
         jmp short loc_941E4
@@ -849,7 +849,7 @@ loc_941E4:
         push edx
         mov ebx, dword [byte ebp+066h]
         push ebx
-        cmp dword [dword_D4590], byte 0
+        cmp dword [MemViewShowDetail], byte 0
         je short loc_9420D
         mov eax, str_Used66xFree
         jmp short loc_94212
@@ -868,13 +868,13 @@ loc_94212:
         mov esi, str_NAMESIZEADREND
         rep movsd
         call SetScreenTarget
-        mov esi, dword [dword_D457C]
+        mov esi, dword [MemViewBlack]
         push esi
-        mov edi, dword [dword_D4584]
+        mov edi, dword [MemViewYellow]
         push edi
         call TextSetColors
         add esp, byte 8
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         push eax
         push byte 0
         mov edx, dword [dword_D3044]
@@ -890,7 +890,7 @@ loc_94212:
         call sub_92CD0
         add esp, byte 0Ch
         call ReturnFalse
-        mov ebx, dword [dword_D457C]
+        mov ebx, dword [MemViewBlack]
         push ebx
         push byte 1
         mov ecx, dword [dword_D3044]
@@ -906,7 +906,7 @@ loc_94212:
         call sub_92CD0
         add esp, byte 0Ch
         call ReturnFalse
-        mov esi, dword [dword_D457C]
+        mov esi, dword [MemViewBlack]
         push esi
         push byte 1
         mov edi, dword [dword_D3044]
@@ -922,7 +922,7 @@ loc_94212:
         call sub_92CD0
         add esp, byte 0Ch
         call ReturnFalse
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         push eax
         push byte 2
         mov edx, dword [dword_D3044]
@@ -947,27 +947,27 @@ loc_94316:
         add esp, byte 8
         lea eax, [byte ebp-02Eh]
         push eax
-        push asc_C41F4
+        push str_80s
         push byte 0
         push byte 0
         call DebugSetLine
         add esp, byte 10h
         lea eax, [dword ebp-082h]
         push eax
-        push asc_C41F4
+        push str_80s
         push edi
         push byte 0
         call DebugSetLine
         add esp, byte 10h
         lea eax, [dword ebp-0D6h]
         push eax
-        push asc_C41F4
+        push str_80s
         push byte 2
         push byte 0
         call DebugSetLine
         add esp, byte 10h
-        push unk_C41FC
-        push asc_C41F4
+        push MemViewStrings
+        push str_80s
         push byte 3
         push byte 0
         call DebugSetLine
@@ -979,21 +979,21 @@ loc_9439B:
         lea eax, [byte ebp-02Eh]
         push eax
         push asc_C4200
-        mov edx, dword [dword_EDE74]
+        mov edx, dword [MemViewList]
         push edx
         call fprintf_
         add esp, byte 0Ch
         lea eax, [dword ebp-082h]
         push eax
         push asc_C4200
-        mov ebx, dword [dword_EDE74]
+        mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
         add esp, byte 0Ch
         lea eax, [dword ebp-0D6h]
         push eax
-        push asc_C4204
-        mov ecx, dword [dword_EDE74]
+        push str_S_MemViewerDrawList
+        mov ecx, dword [MemViewList]
         push ecx
         call fprintf_
         add esp, byte 0Ch
@@ -1047,7 +1047,7 @@ loc_943FC:
         lea edx, [byte ebp+032h]
         push edx
         push eax
-        cmp dword [dword_D4590], byte 0
+        cmp dword [MemViewShowDetail], byte 0
         je short loc_94488
         mov eax, str_SPACE9x8s8s
         jmp short loc_9448D
@@ -1059,9 +1059,9 @@ loc_9448D:
         push eax
         call sprintf_
         add esp, byte 14h
-        mov edx, dword [dword_D458C]
+        mov edx, dword [MemViewRed]
         push edx
-        mov ebx, dword [dword_EDE70]
+        mov ebx, dword [MemViewRow]
         push ebx
         call TextSetColors
         add esp, byte 8
@@ -1083,7 +1083,7 @@ loc_944D4:
         lea edx, [byte ebp+032h]
         push edx
         push eax
-        cmp dword [dword_D4590], byte 0
+        cmp dword [MemViewShowDetail], byte 0
         je short loc_944ED
         mov eax, str_SPACE66x6
         jmp short loc_944F2
@@ -1098,13 +1098,13 @@ loc_944F2:
         mov ecx, dword [byte ebp+07Eh]
         cmp ecx, byte 1
         jne short loc_94534
-        mov ebx, dword [dword_EDE60]
+        mov ebx, dword [MemViewTop]
         push ebx
         call DebugSetAttr
         add esp, byte 4
         lea eax, [byte ebp-02Eh]
         push eax
-        push asc_C41F4
+        push str_80s
         mov eax, esi
         sub eax, dword [byte ebp+07Ah]
         add eax, byte 4
@@ -1119,7 +1119,7 @@ loc_94534:
         lea eax, [byte ebp-02Eh]
         push eax
         push asc_C4200
-        mov edx, dword [dword_EDE74]
+        mov edx, dword [MemViewList]
         push edx
         call fprintf_
         add esp, byte 0Ch
@@ -1143,11 +1143,11 @@ loc_94552:
         jne near loc_946C0
         cmp esi, dword [byte ebp+076h]
         jne short loc_94594
-        mov eax, dword [dword_EDE6C]
+        mov eax, dword [MemViewTitle]
         mov eax, dword [byte eax+024h]
-        mov dword [dword_EDE80], eax
+        mov dword [MemViewMode], eax
         add eax, byte 4
-        mov dword [dword_EDE64], eax
+        mov dword [MemViewCount], eax
 loc_94594:
         lea edx, [byte ebp+032h]
         mov eax, dword [byte ebp+03Eh]
@@ -1166,7 +1166,7 @@ loc_94594:
         push eax
         mov edx, dword [byte ebp+052h]
         push edx
-        cmp dword [dword_D4590], byte 0
+        cmp dword [MemViewShowDetail], byte 0
         je short loc_945D3
         mov eax, asc_C428C
         jmp short loc_945D8
@@ -1178,9 +1178,9 @@ loc_945D8:
         push eax
         call sprintf_
         add esp, byte 18h
-        mov ecx, dword [dword_EDE70]
+        mov ecx, dword [MemViewRow]
         push ecx
-        mov eax, dword [dword_D4588]
+        mov eax, dword [MemViewGreen]
         push eax
         call TextSetColors
         add esp, byte 8
@@ -1208,7 +1208,7 @@ loc_94624:
         mov edx, dword [byte ebp+052h]
         push edx
         push edi
-        cmp dword [dword_D4590], byte 0
+        cmp dword [MemViewShowDetail], byte 0
         je short loc_94649
         mov eax, str_33d1212s66x66s66s44x
         jmp short loc_9464E
@@ -1223,13 +1223,13 @@ loc_9464E:
         mov ecx, dword [byte ebp+07Eh]
         cmp ecx, byte 1
         jne short loc_946A0
-        mov ebx, dword [dword_EDE60]
+        mov ebx, dword [MemViewTop]
         push ebx
         call DebugSetAttr
         add esp, byte 4
         lea eax, [dword ebp-082h]
         push eax
-        push asc_C41F4
+        push str_80s
         mov eax, esi
         sub eax, dword [byte ebp+07Ah]
         add eax, byte 4
@@ -1247,7 +1247,7 @@ loc_946A0:
         lea eax, [dword ebp-082h]
         push eax
         push asc_C4200
-        mov edx, dword [dword_EDE74]
+        mov edx, dword [MemViewList]
         push edx
         call fprintf_
         add esp, byte 0Ch
@@ -1286,7 +1286,7 @@ loc_946FB:
 loc_94710:
         call SetClipWindow
         add esp, byte 10h
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
         call SetScreenTarget
         jmp short loc_9476E
@@ -1308,8 +1308,8 @@ loc_94729:
         cmp eax, edx
         jge short loc_9476E
 loc_94753:
-        push unk_C41FC
-        push asc_C41F4
+        push MemViewStrings
+        push str_80s
         push edi
         push byte 0
         call DebugSetLine
@@ -1413,7 +1413,7 @@ MemViewerDrawTitle:
         mov eax, dword [nosplit eax*4+memlist1]
         jmp short loc_948C7
 loc_9485F:
-        mov edx, dword [dword_EDE6C]
+        mov edx, dword [MemViewTitle]
         lea ebx, [byte edx+04h]
         mov dword [eax], ebx
         mov ebx, dword [edx]
@@ -1421,7 +1421,7 @@ loc_9485F:
         call _os_handle_0
         add esp, byte 4
         mov dword [esi], eax
-        mov eax, dword [dword_EDE6C]
+        mov eax, dword [MemViewTitle]
         mov edx, dword [byte eax+010h]
         mov dword [edi], edx
         mov edx, dword [byte eax+014h]
@@ -1447,10 +1447,10 @@ loc_948B7:
 loc_948B9:
         mov edx, dword [byte esp+01Ch]
         mov dword [edx], eax
-        mov eax, dword [dword_EDE6C]
+        mov eax, dword [MemViewTitle]
         mov eax, dword [byte eax+020h]
 loc_948C7:
-        mov dword [dword_EDE6C], eax
+        mov dword [MemViewTitle], eax
         pop ebp
         pop edi
         pop esi
@@ -1458,7 +1458,7 @@ loc_948C7:
         db 08Bh,0C0h
 DebugSprintf:
         push eax
-        push unk_C4318
+        push str_X_DebugSprintf
         push edx
         call sprintf_
         add esp, byte 0Ch
@@ -1473,7 +1473,7 @@ MemViewerBlockInfo:
         mov dword [byte esp+04h], edx
         mov dword [esp], ebx
         call SetScreenTarget
-        mov edx, dword [dword_D4580]
+        mov edx, dword [MemViewWhite]
         push edx
         push dword 0A4h
         push dword 111h
@@ -1481,7 +1481,7 @@ MemViewerBlockInfo:
         push byte 2Eh
         call sub_93000
         add esp, byte 14h
-        mov ebx, dword [dword_D458C]
+        mov ebx, dword [MemViewRed]
         push ebx
         push dword 0A3h
         push dword 110h
@@ -1489,7 +1489,7 @@ MemViewerBlockInfo:
         push byte 2Fh
         call sub_93000
         add esp, byte 14h
-        mov ecx, dword [dword_D457C]
+        mov ecx, dword [MemViewBlack]
         push ecx
         push byte 6Ah
         push dword 0E0h
@@ -1497,9 +1497,9 @@ MemViewerBlockInfo:
         push byte 30h
         call FillRect
         add esp, byte 14h
-        mov esi, dword [dword_D457C]
+        mov esi, dword [MemViewBlack]
         push esi
-        mov edi, dword [dword_D4584]
+        mov edi, dword [MemViewYellow]
         push edi
         call TextSetColors
         add esp, byte 8
@@ -1537,9 +1537,9 @@ loc_949BF:
         inc esi
         cmp esi, byte 10h
         jl short loc_94987
-        mov eax, dword [dword_D458C]
+        mov eax, dword [MemViewRed]
         push eax
-        mov edx, dword [dword_D457C]
+        mov edx, dword [MemViewBlack]
         push edx
         call TextSetColors
         add esp, byte 8
@@ -1547,7 +1547,7 @@ loc_949BF:
         mov esi, 4Dh
         test byte [byte esp+09h], 80h
         je short loc_94A1D
-        mov ebx, dword [dword_D458C]
+        mov ebx, dword [MemViewRed]
         push ebx
         push byte 4Ch
         push dword 8Fh
@@ -1565,7 +1565,7 @@ loc_949BF:
 loc_94A1D:
         test byte [byte esp+09h], 20h
         je short loc_94A54
-        mov ecx, dword [dword_D458C]
+        mov ecx, dword [MemViewRed]
         push ecx
         lea edx, [byte esi-01h]
         push edx
@@ -1587,9 +1587,9 @@ loc_94A54:
         je short loc_94A5E
         add esi, byte 8
 loc_94A5E:
-        mov ebp, dword [dword_D457C]
+        mov ebp, dword [MemViewBlack]
         push ebp
-        mov eax, dword [dword_D4580]
+        mov eax, dword [MemViewWhite]
         push eax
         call TextSetColors
         add esp, byte 8
@@ -2043,16 +2043,16 @@ loc_94F16:
         mov al, byte [esi]
         and al, 7Fh
         mov byte [byte esp+0Ch], al
-        mov dword [dword_EDE60], 7
+        mov dword [MemViewTop], 7
         cmp al, 20h
         jae short loc_94F31
         mov byte [byte esp+0Ch], 2Eh
 loc_94F31:
         test byte [esi], 80h
         je short loc_94F40
-        mov dword [dword_EDE60], 70h
+        mov dword [MemViewTop], 70h
 loc_94F40:
-        mov ecx, dword [dword_EDE60]
+        mov ecx, dword [MemViewTop]
         push ecx
         call DebugSetAttr
         add esp, byte 4
@@ -2081,8 +2081,8 @@ loc_94F91:
         cmp ebp, byte 19h
         jge short loc_94FB0
 loc_94F98:
-        push unk_C41FC
-        push asc_C41F4
+        push MemViewStrings
+        push str_80s
         call DebugPrintf
         add esp, byte 8
         inc edi
@@ -2104,46 +2104,46 @@ WriteMemMap:
         xor eax, eax
         test edx, edx
         je near loc_950A3
-        mov dword [dword_EDE74], edx
+        mov dword [MemViewList], edx
         mov edx, esp
         lea eax, [byte esp+014h]
         call FormatDateTime
         mov edx, dword [unk_93C50]
         push edx
         push asc_C4200
-        mov ebx, dword [dword_EDE74]
+        mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
         add esp, byte 0Ch
         mov ecx, dword [byte esp+03Ch]
         push ecx
         push str_FILES2
-        mov esi, dword [dword_EDE74]
+        mov esi, dword [MemViewList]
         push esi
         call fprintf_
         add esp, byte 0Ch
         lea eax, [byte esp+014h]
         push eax
         push str_DATES2
-        mov edi, dword [dword_EDE74]
+        mov edi, dword [MemViewList]
         push edi
         call fprintf_
         add esp, byte 0Ch
         mov eax, esp
         push eax
         push str_TIMES3
-        mov ebp, dword [dword_EDE74]
+        mov ebp, dword [MemViewList]
         push ebp
         call fprintf_
         add esp, byte 0Ch
         mov eax, dword [unk_93C50]
         push eax
         push asc_C4200
-        mov edx, dword [dword_EDE74]
+        mov edx, dword [MemViewList]
         push edx
         call fprintf_
         add esp, byte 0Ch
-        cmp dword [dword_D4590], byte 0
+        cmp dword [MemViewShowDetail], byte 0
         je short loc_9506F
         mov eax, unk_C4448
         jmp short loc_95074
@@ -2152,7 +2152,7 @@ loc_9506F:
 loc_95074:
         push eax
         push str_HexmemdspOS
-        mov ecx, dword [dword_EDE74]
+        mov ecx, dword [MemViewList]
         push ecx
         call fprintf_
         add esp, byte 0Ch
@@ -2188,7 +2188,7 @@ DumpMemoryMap:
         mov eax, esp
         call NextFreeFileName
         mov esi, dword [dword_EDAB4]
-        cmp dword [dword_D3024], byte 0
+        cmp dword [GraphicsReady], byte 0
         je short loc_950ED
         push byte 14h
         lea eax, [byte esp+04h]
@@ -2196,13 +2196,13 @@ DumpMemoryMap:
         call ShowMessageBox
         add esp, byte 8
 loc_950ED:
-        mov edx, unk_C4474
+        mov edx, str_W_DumpMemoryMap
         mov eax, esp
         call fopen_
-        mov dword [dword_EDE74], eax
+        mov dword [MemViewList], eax
         test eax, eax
         jne short loc_95122
-        cmp dword [dword_D3024], byte 0
+        cmp dword [GraphicsReady], byte 0
         je short loc_9511A
         push byte 14h
         push str_ErrorDumpingMemoryMap
@@ -2218,7 +2218,7 @@ loc_95122:
         push eax
         call WriteMemMap
         add esp, byte 8
-        mov eax, dword [dword_EDE74]
+        mov eax, dword [MemViewList]
         call fclose_
 loc_9513E:
         add esp, byte 40h
@@ -2273,11 +2273,11 @@ ShapeViewer:
         jge short loc_951FD
 loc_951B1:
         call SetScreenTarget
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
-        mov esi, dword [dword_D457C]
+        mov esi, dword [MemViewBlack]
         push esi
-        mov edi, dword [dword_D4584]
+        mov edi, dword [MemViewYellow]
         push edi
         call TextSetColors
         add esp, byte 8
@@ -2385,9 +2385,9 @@ loc_952B4:
         push str_44s05x
         call DebugPrintf
         add esp, byte 0Ch
-        mov ebx, dword [dword_D457C]
+        mov ebx, dword [MemViewBlack]
         push ebx
-        mov ecx, dword [dword_D4584]
+        mov ecx, dword [MemViewYellow]
         push ecx
         call TextSetColors
         add esp, byte 8
@@ -2453,7 +2453,7 @@ loc_953B3:
         push str_Bad
         call DebugPrintf
         add esp, byte 4
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
         jmp short loc_95427
 loc_953CC:
@@ -2529,7 +2529,7 @@ loc_9547F:
         cmp ebp, byte 43h
         jne short loc_95493
         call SetScreenTarget
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
 loc_95493:
         cmp ebp, byte 4Dh
@@ -2640,7 +2640,7 @@ ShapeInfo:
         sar eax, 18h
         test al, 80h
         je short loc_9559A
-        mov eax, unk_C41FC
+        mov eax, MemViewStrings
         jmp short loc_9559F
 loc_9559A:
         mov eax, str_Un
@@ -2672,7 +2672,7 @@ loc_955C5:
         mov eax, dword [byte esi+02h]
         sar eax, 10h
         push eax
-        push asc_C45BC
+        push str_3d3d3d3dS
         push dword 0C0h
         push byte 70h
         call sub_93170
@@ -2711,11 +2711,11 @@ loc_955C5:
         jle short loc_956B3
 loc_95665:
         call SetScreenTarget
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
-        mov esi, dword [dword_D457C]
+        mov esi, dword [MemViewBlack]
         push esi
-        mov edi, dword [dword_D4580]
+        mov edi, dword [MemViewWhite]
         push edi
         call TextSetColors
         add esp, byte 8
@@ -2781,10 +2781,10 @@ DumpShapesList:
         call ShowMessageBox
         add esp, byte 8
         call ReturnFalse
-        mov edx, unk_C4474
+        mov edx, str_W_DumpMemoryMap
         mov eax, esp
         call fopen_
-        mov dword [dword_EDE74], eax
+        mov dword [MemViewList], eax
         test eax, eax
         jne short loc_9576B
         push byte 14h
@@ -2802,42 +2802,42 @@ loc_9576B:
         mov edx, dword [unk_93C50]
         push edx
         push asc_C4200
-        mov ebx, dword [dword_EDE74]
+        mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
         add esp, byte 0Ch
         mov eax, esp
         push eax
         push str_FILES2
-        mov ecx, dword [dword_EDE74]
+        mov ecx, dword [MemViewList]
         push ecx
         call fprintf_
         add esp, byte 0Ch
         lea eax, [byte esp+054h]
         push eax
         push str_DATES2
-        mov esi, dword [dword_EDE74]
+        mov esi, dword [MemViewList]
         push esi
         call fprintf_
         add esp, byte 0Ch
         lea eax, [byte esp+040h]
         push eax
         push str_TIMES3
-        mov edi, dword [dword_EDE74]
+        mov edi, dword [MemViewList]
         push edi
         call fprintf_
         add esp, byte 0Ch
         mov ebp, dword [unk_93C50]
         push ebp
         push asc_C4200
-        mov eax, dword [dword_EDE74]
+        mov eax, dword [MemViewList]
         push eax
         call fprintf_
         add esp, byte 0Ch
-        mov edx, dword [dword_EDE64]
+        mov edx, dword [MemViewCount]
         push edx
         push str_ShapeFileName0
-        mov ebx, dword [dword_EDE74]
+        mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
         add esp, byte 0Ch
@@ -2845,14 +2845,14 @@ loc_9576B:
         mov ecx, dword [eax]
         push ecx
         push str_ShapeFileSizeLd
-        mov esi, dword [dword_EDE74]
+        mov esi, dword [MemViewList]
         push esi
         call fprintf_
         add esp, byte 0Ch
         mov edi, dword [dword esp+088h]
         push edi
         push str_NumberOfShapesD
-        mov ebp, dword [dword_EDE74]
+        mov ebp, dword [MemViewList]
         push ebp
         call fprintf_
         add esp, byte 0Ch
@@ -2880,7 +2880,7 @@ loc_9585D:
         lea eax, [byte esp+06Ch]
         push eax
         push str_44s66ld
-        mov ebx, dword [dword_EDE74]
+        mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
         add esp, byte 10h
@@ -2891,7 +2891,7 @@ loc_9585D:
         sar eax, 10h
         push eax
         push str_Bytes3dRows3d2
-        mov ecx, dword [dword_EDE74]
+        mov ecx, dword [MemViewList]
         push ecx
         call fprintf_
         add esp, byte 10h
@@ -2908,7 +2908,7 @@ loc_9585D:
         sar eax, 10h
         push eax
         push str_XY3d3d
-        mov ebp, dword [dword_EDE74]
+        mov ebp, dword [MemViewList]
         push ebp
         call fprintf_
         add esp, byte 18h
@@ -2917,14 +2917,14 @@ loc_9585D:
         sar eax, 18h
         test al, 80h
         je short loc_9590C
-        mov eax, unk_C41FC
+        mov eax, MemViewStrings
         jmp short loc_95911
 loc_9590C:
         mov eax, str_Un
 loc_95911:
         push eax
         push str_Spacked
-        mov edx, dword [dword_EDE74]
+        mov edx, dword [MemViewList]
         push edx
         call fprintf_
         add esp, byte 0Ch
@@ -2936,12 +2936,12 @@ loc_95937:
         cmp dword [dword esp+088h], byte 0
         je short loc_95955
         push unk_C46C0
-        mov esi, dword [dword_EDE74]
+        mov esi, dword [MemViewList]
         push esi
         call fprintf_
         add esp, byte 8
 loc_95955:
-        mov eax, dword [dword_EDE74]
+        mov eax, dword [MemViewList]
         call fclose_
 loc_9595F:
         add esp, 8Ch
@@ -2967,7 +2967,7 @@ PaletteViewer:
         call SetPalette
         add esp, byte 0Ch
         call SetScreenTarget
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
         xor eax, eax
         call PaletteViewerLabel
@@ -3287,9 +3287,9 @@ loc_95D5D:
         mov al, byte [byte esp+eax+02h]
         and eax, 0FFh
         mov dword [dword esp+0324h], eax
-        mov edx, dword [dword_D457C]
+        mov edx, dword [MemViewBlack]
         push edx
-        mov ebx, dword [dword_D4584]
+        mov ebx, dword [MemViewYellow]
         push ebx
         call TextSetColors
         add esp, byte 8
@@ -3302,7 +3302,7 @@ loc_95D5D:
         call sub_93170
         add esp, byte 14h
         call ReturnFalse
-        mov edx, dword [dword_D457C]
+        mov edx, dword [MemViewBlack]
         push edx
         push byte 4
         call TextSetColors
@@ -3315,7 +3315,7 @@ loc_95D5D:
         call sub_93170
         add esp, byte 10h
         call ReturnFalse
-        mov ecx, dword [dword_D457C]
+        mov ecx, dword [MemViewBlack]
         push ecx
         push byte 2
         call TextSetColors
@@ -3328,7 +3328,7 @@ loc_95D5D:
         call sub_93170
         add esp, byte 10h
         call ReturnFalse
-        mov edx, dword [dword_D457C]
+        mov edx, dword [MemViewBlack]
         push edx
         push byte 1
         call TextSetColors
@@ -3361,9 +3361,9 @@ PaletteViewerLabel:
         push edi
         push ebp
         mov edi, eax
-        mov edx, dword [dword_D457C]
+        mov edx, dword [MemViewBlack]
         push edx
-        mov ebx, dword [dword_D4584]
+        mov ebx, dword [MemViewYellow]
         push ebx
         call TextSetColors
         add esp, byte 8
@@ -3435,9 +3435,9 @@ MemViewerShowArt:
         push esi
         call DebugClearScreen
         call SetScreenTarget
-        mov eax, dword [dword_D457C]
+        mov eax, dword [MemViewBlack]
         call DebugGetKey
-        mov edx, dword [dword_EDE80]
+        mov edx, dword [MemViewMode]
         push edx
         call sub_9D2E0
         add esp, byte 4

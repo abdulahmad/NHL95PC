@@ -7,7 +7,7 @@ extern dopass_ret6, doplayeracc, EndPenaltyShot, GetHot, gmode, gmode2, Goal, la
 extern lasttouch, ltack, lty, nethit, onetimerflag, OOlist, OOlistpos, passplayer
 extern puckc, puckflip, pucky, randomd0, regd0, regd1, regd1_b1, regd2
 extern regd3, regd3_m2, regd4, regd5, SetSPA, sflags, sfx, shotongoal
-extern SortCords, vecdist, vtoa, wcradiusx, wcradiusy, word_E03A0, Ylist
+extern SortCords, vecdist, vtoa, wcradiusx, wcradiusy, LastShooterTeam, Ylist
 global newcheck, checkcoll, checkwallcoll, checkgoal, wallcoll, wallcollb, checkplcoll, checkcx
 ;-----------------------------------------------------------------------------
 ; newcheck                       58084  93G hockey93_03.asm, medium confidence
@@ -1211,7 +1211,7 @@ checkcx:
         add eax, 8Ch
         mov word [regd1], ax
         xor eax, eax
-        mov word [word_E03A0], ax
+        mov word [LastShooterTeam], ax
         mov ax, word [regd0]
         add word [regd1], ax
         mov eax, dword [regd4-2]

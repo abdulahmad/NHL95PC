@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A3274 progbits alloc exec nowrite align=1
-extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, byte_D65F8, byte_D65F9, dword_D4D11, unk_D657C, unk_F58E4
+extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, Hook387Flag, Hook387Saved, dword_D4D11, unk_D657C, Hook387Save
 global unk_A3274, unk_A3278, unk_A327C, unk_A327E, unk_A3280, unk_A3282, unk_A32CE, unk_A32D0
 global unk_A32D4, unk_A32D6, unk_A331E, unk_A3322, unk_A332C, unk_A338C, jpt_A33EC, jpt_A34EC
 global sub_A35EC, sub_A3610, sub_A365C, EmuTrapExit, loc_A369A, loc_A3706, loc_A370C, loc_A3732
@@ -4328,12 +4328,12 @@ __hook387:
         mov al, 1Eh
         xor ecx, ecx
         xor ebx, ebx
-        mov byte [byte_D65F9], dh
+        mov byte [Hook387Saved], dh
         xor edx, edx
         mov ah, 0FAh
         int 2Fh
         mov eax, cs
-        mov ebx, unk_F58E4
+        mov ebx, Hook387Save
         mov edx, eax
         mov ecx, ebx
         mov al, 20h
@@ -4372,7 +4372,7 @@ loc_A650C:
         mov cr0, eax
         mov ah, 30h
         int 21h
-        mov byte [byte_D65F8], dl
+        mov byte [Hook387Flag], dl
 loc_A6558:
         xor al, al
 loc_A655A:
@@ -4389,7 +4389,7 @@ __unhook387:
         push ecx
         push es
         mov es, edx
-        mov dl, byte [byte_D65F9]
+        mov dl, byte [Hook387Saved]
         test dl, dl
         je short loc_A6593
         mov eax, cs
@@ -4411,7 +4411,7 @@ __unhook387:
         pop ebx
         ret
 loc_A6593:
-        cmp byte [byte_D65F8], 0
+        cmp byte [Hook387Flag], 0
         je short loc_A65B7
         mov bl, byte [byte es:eax+040h]
         mov byte [byte es:eax+03Eh], dl

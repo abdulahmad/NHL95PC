@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_D71F0 progbits alloc noexec write align=1
 extern byte_D6CE0, byte_D6E24, byte_D6F68, byte_D70AC, str_ULTRASND
-global byte_D7618, byte_D7619, byte_D781C, byte_D7A2C, byte_D7A3C, byte_D7AEC, byte_D7B18, byte_D7B58
+global byte_D7618, byte_D7619, byte_D781C, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, byte_D7B18, byte_D7B58
 global byte_D7B5C, byte_D7D70, byte_D7DB0, byte_D7DB4, byte_D7FC8, byte_D8008, byte_D800C, byte_D8220
-global byte_D8260, byte_D8264, byte_D849C, byte_D84A0, byte_D86C8, byte_D877A, byte_D87D8, byte_D89E0
-global dword_D7200, dword_D7204, dword_D7208, dword_D720C, dword_D7614, dword_D7A1E, dword_D7A22, dword_D7A28
-global dword_D7ABC, dword_D7AF0, dword_D7AF4, dword_D7AF8, dword_D7AFC, dword_D7B00, dword_D7B04, dword_D7B08
+global byte_D8260, byte_D8264, byte_D849C, byte_D84A0, byte_D86C8, GusDmaLatchBits, byte_D87D8, byte_D89E0
+global dword_D7200, dword_D7204, dword_D7208, dword_D720C, dword_D7614, dword_D7A1E, dword_D7A22, GusOpenCount
+global dword_D7ABC, dword_D7AF0, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight
 global dword_D7B0C, dword_D7B1C, dword_D7B30, dword_D7B34, dword_D7B38, dword_D7B44, dword_D7B48, dword_D7B4C
 global dword_D7B50, dword_D7B60, dword_D7D64, dword_D7D74, dword_D7D88, dword_D7D8C, dword_D7D90, dword_D7D9C
 global dword_D7DA0, dword_D7DA4, dword_D7DA8, dword_D7DB8, dword_D7FBC, dword_D7FCC, dword_D7FE0, dword_D7FE4
@@ -16,9 +16,9 @@ global dword_D8238, dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8
 global dword_D847C, dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498
 global dword_D84A8, dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC
 global dword_D84D0, dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_D8690, dword_D8696
-global dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC, dword_D86B0, dword_D86B8, dword_D86BC, dword_D86C0
-global dword_D86DC, dword_D8784, dword_D87A0, dword_D87A8, dword_D87AC, dword_D87B0, dword_D87B4, dword_D87B8
-global dword_D87BC, dword_D87C0, dword_D87C4, dword_D87C8, dword_D87CC, dword_D87D0, dword_D87D4, dword_D87DC
+global dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC, dword_D86B0, BlitColumnOffsets, BlitSourcePtr, dword_D86C0
+global dword_D86DC, GusDmaBusy, dword_D87A0, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback, GusRecordDoneCallback, GusWaveCallback
+global GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, dword_D87D0, dword_D87D4, dword_D87DC
 global dword_D87E0, dword_D89D8, dword_D89DC, off_D71F0, off_D846C, word_D7214, word_D7216, word_D7218
 global word_D721A, word_D721C, word_D721E, word_D7220, word_D7222, word_D7224, word_D7226, word_D7228
 global word_D722A, word_D722C, word_D722E, word_D7230, word_D7232, word_D7234, word_D7236, word_D7238
@@ -53,9 +53,9 @@ global word_D73EA, word_D73EC, word_D73EE, word_D73F0, word_D73F2, word_D73F4, w
 global word_D73FA, word_D73FC, word_D73FE, word_D7400, word_D7402, word_D7404, word_D7406, word_D7408
 global word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, word_D7414, word_D7B64, word_D7DBC
 global word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2, word_D84C6, word_D8694, word_D869A
-global word_D86A0, word_D86A6, word_D86B4, word_D86B6, word_D86DA, word_D86E0, word_D8760, word_D8762
-global word_D8764, word_D8766, word_D8768, word_D876A, word_D876C, word_D876E, word_D8770, word_D8772
-global word_D8774, word_D8776, word_D8778, word_D8788
+global word_D86A0, word_D86A6, word_D86B4, word_D86B6, word_D86DA, word_D86E0, GusBasePort, GusIrqStatusPort
+global word_D8764, word_D8766, word_D8768, word_D876A, word_D876C, word_D876E, GusVoiceSelectPort, GusRegSelectPort
+global GusDataLowPort, GusDataHighPort, GusDramPort, GusIrqPending
 off_D71F0:
         dd byte_D6CE0
         dd byte_D6E24
@@ -690,9 +690,9 @@ dword_D7A1E:
         db 00h,00h,00h,00h
 dword_D7A22:
         db 00h,00h,00h,00h,00h,00h
-dword_D7A28:
+GusOpenCount:
         db 00h,00h,00h,00h
-byte_D7A2C:
+GusIrqLatchBits:
         db 00h,00h,01h,03h,00h,02h,00h,04h,00h,00h,00h,05h,06h,00h,00h,07h
 byte_D7A3C:
         db 00h,081h,091h,09Bh,0A1h,0A6h,0ABh,0AEh,0B1h,0B4h,0B6h,0B9h,0BBh,0BCh,0BEh,0C0h
@@ -715,13 +715,13 @@ dword_D7AF4:
         db 00h,00h,00h,00h
 dword_D7AF8:
         db 00h,00h,00h,00h
-dword_D7AFC:
+GusStreamBusyLeft:
         db 00h,00h,00h,00h
 dword_D7B00:
         db 00h,00h,00h,00h
 dword_D7B04:
         db 00h,00h,00h,00h
-dword_D7B08:
+GusStreamBusyRight:
         db 00h,00h,00h,00h
 dword_D7B0C:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -1072,9 +1072,9 @@ word_D86B4:
         db 00h,00h
 word_D86B6:
         db 00h,00h
-dword_D86B8:
+BlitColumnOffsets:
         db 00h,00h,00h,00h
-dword_D86BC:
+BlitSourcePtr:
         db 00h,00h,00h,00h
 dword_D86C0:
         db 011h,00h,00h,00h,00h,00h,00h,00h
@@ -1094,9 +1094,9 @@ word_D86E0:
         db 00h,00h,073h,00h,00h,00h,00h,00h,00h,00h,074h,00h,00h,00h,00h,00h
         db 00h,00h,075h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,00h,00h
         db 00h,00h,077h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-word_D8760:
+GusBasePort:
         db 020h,02h
-word_D8762:
+GusIrqStatusPort:
         db 026h,02h
 word_D8764:
         db 028h,02h
@@ -1110,44 +1110,44 @@ word_D876C:
         db 020h,03h
 word_D876E:
         db 021h,03h
-word_D8770:
+GusVoiceSelectPort:
         db 022h,03h
-word_D8772:
+GusRegSelectPort:
         db 023h,03h
-word_D8774:
+GusDataLowPort:
         db 024h,03h
-word_D8776:
+GusDataHighPort:
         db 025h,03h
-word_D8778:
+GusDramPort:
         db 027h,03h
-byte_D877A:
+GusDmaLatchBits:
         db 00h,01h,00h,02h,00h,03h,04h,05h,00h,00h
-dword_D8784:
+GusDmaBusy:
         db 01h,00h,00h,00h
-word_D8788:
+GusIrqPending:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h
 dword_D87A0:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_D87A8:
+GusMidiIrqCount:
         db 00h,00h,00h,00h
-dword_D87AC:
+GusTimerCallback:
         db 00h,00h,00h,00h
-dword_D87B0:
+GusDmaDoneCallback:
         db 00h,00h,00h,00h
-dword_D87B4:
+GusRecordDoneCallback:
         db 00h,00h,00h,00h
-dword_D87B8:
+GusWaveCallback:
         db 00h,00h,00h,00h
-dword_D87BC:
+GusVolumeCallback:
         db 00h,00h,00h,00h
-dword_D87C0:
+GusTimer1Callback:
         db 00h,00h,00h,00h
-dword_D87C4:
+GusTimer2Callback:
         db 00h,00h,00h,00h
-dword_D87C8:
+GusWaveIrqCallback:
         db 00h,00h,00h,00h
-dword_D87CC:
+GusVolumeIrqCallback:
         db 00h,00h,00h,00h
 dword_D87D0:
         db 00h,00h,00h,00h

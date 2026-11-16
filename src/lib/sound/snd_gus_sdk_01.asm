@@ -2,17 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_AA210 progbits alloc exec nowrite align=1
-extern str_GF1PATCH110, str_110, byte_D7A2C, byte_D7A3C, byte_D7AEC, byte_D877A, byte_D87D8, byte_D89E0
+extern str_GF1PATCH110, str_110, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, GusDmaLatchBits, byte_D87D8, byte_D89E0
 extern byte_F5978, byte_F5979, byte_F597A, byte_F59F8, byte_F59F9, byte_F5A00, byte_F5A01, byte_F5A04
-extern byte_F5C0B, byte_F79A4, byte_F79A5, byte_F79A6, byte_F79A7, byte_F79A8, dword_D7A28, dword_D7ABC
+extern byte_F5C0B, GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, GusOpenCount, dword_D7ABC
 extern dword_D87DC, dword_D87E0, dword_D89D8, dword_F59FC, dword_F6016, dword_F6116, inp_, inpw_
 extern outp_, outpw_, strcmp_, strncmp_, GusProbePort, sub_B0A14, sub_B0A40, sub_B0A5C
 extern sub_B0A78, GusHookIrq, GusUnhookIrq, GusDownload, GusDramDmaDone, sub_B10D0, GusClearIrqState, GusEnterCritical
 extern GusLeaveCritical, sub_B12A0, sub_B131C, GusDelay, GusSetBasePort, GusClearCallbacks, sub_B14E4, sub_B151C
 extern GusRunInitTable, sub_B1A04, sub_B1BF8, sub_B1CBC, sub_B1E2C, sub_B1E64, sub_B1EA0, sub_B1F1C
-extern GusTestDramBank, unk_F5BF8, word_D8760, word_D8762, word_D8768, word_D876A, word_D8770, word_D8772
-extern word_D8774, word_D8776, word_F59FA, word_F6018, word_F6118, word_F611A, word_F6128, word_F799C
-extern word_F799E, word_F79A0
+extern GusTestDramBank, unk_F5BF8, GusBasePort, GusIrqStatusPort, word_D8768, word_D876A, GusVoiceSelectPort, GusRegSelectPort
+extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, word_F6128, word_F799C
+extern GusIrqFlags, GusActiveVoices
 global sub_AA210, loc_AA23E, loc_AA250, loc_AA274, loc_AA29D, loc_AA2C2, loc_AA2EE, loc_AA2F7
 global sub_AA300, loc_AA322, loc_AA337, loc_AA34B, loc_AA38B, loc_AA39E, loc_AA3C5, loc_AA3D0
 global loc_AA406, loc_AA449, loc_AA45D, loc_AA496, loc_AA4AB, loc_AA553, loc_AA56A, loc_AA587
@@ -624,53 +624,53 @@ GusStopDmaAndTimers:
         push edx
         xor eax, eax
         mov edx, 41h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 45h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 49h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8762]
+        mov ax, word [GusIrqStatusPort]
         call inp_
         xor eax, eax
         mov edx, 41h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call inp_
         xor eax, eax
         mov edx, 49h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call inp_
         xor eax, eax
         mov edx, 8Fh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
 loc_AA8A6:
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         inc edx
         call inp_
         cmp edx, byte 20h
@@ -745,7 +745,7 @@ loc_AA93A:
         call GusClearCallbacks
         xor eax, eax
         mov al, byte [byte ebp-08h]
-        cmp byte [dword eax+byte_D7A2C], 0
+        cmp byte [dword eax+GusIrqLatchBits], 0
         jne short loc_AA961
         popfw
         mov eax, 2
@@ -754,10 +754,10 @@ loc_AA93A:
         pop ebp
         ret 8
 loc_AA961:
-        mov byte [byte_F79A8], al
+        mov byte [GusWaveIrq], al
         xor eax, eax
         mov al, bl
-        cmp byte [dword eax+byte_D7A2C], 0
+        cmp byte [dword eax+GusIrqLatchBits], 0
         jne short loc_AA982
         popfw
         mov eax, 2
@@ -766,16 +766,16 @@ loc_AA961:
         pop ebp
         ret 8
 loc_AA982:
-        mov byte [byte_F79A7], bl
+        mov byte [GusMidiIrq], bl
         mov al, byte [byte ebp+08h]
-        mov byte [byte_F79A4], bh
-        mov byte [byte_F79A6], al
+        mov byte [GusPlayDmaChannel], bh
+        mov byte [GusRecordDmaChannel], al
         mov eax, ecx
         xor edx, edx
         call GusResetVoices
-        mov dl, byte [byte_F79A7]
+        mov dl, byte [GusMidiIrq]
         xor eax, eax
-        mov al, byte [byte_F79A8]
+        mov al, byte [GusWaveIrq]
         call GusHookIrqs
         popfw
         xor eax, eax
@@ -794,102 +794,102 @@ GusStopAllVoices:
         cli
         call GusEnterCritical
         xor ebx, ebx
-        cmp bx, word [word_F79A0]
+        cmp bx, word [GusActiveVoices]
         jb short loc_AA9DF
         xor ebx, ebx
         jmp near loc_AAB44
 loc_AA9DF:
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         mov dx, bx
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 89h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call inpw_
         shr eax, 8
         cmp eax, byte 5
         jbe short loc_AAAC4
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 6
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 1
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 40h
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
 loc_AAAC4:
         inc ebx
-        cmp bx, word [word_F79A0]
+        cmp bx, word [GusActiveVoices]
         jb near loc_AA9DF
         xor ebx, ebx
         jmp short loc_AAB44
 loc_AAAD6:
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         mov dx, bx
         call outp_
 loc_AAAE8:
         xor eax, eax
         mov edx, 8Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call inp_
         test al, 3
         je short loc_AAAE8
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         inc ebx
         call outp_
 loc_AAB44:
-        cmp bx, word [word_F79A0]
+        cmp bx, word [GusActiveVoices]
         jb short loc_AAAD6
         call GusLeaveCritical
         popfw
@@ -907,16 +907,16 @@ GusOpen:
         push edx
         push esi
         mov esi, eax
-        mov edx, dword [dword_D7A28]
+        mov edx, dword [GusOpenCount]
         test edx, edx
         je short loc_AAB7F
         lea ebx, [byte edx+01h]
         xor eax, eax
-        mov dword [dword_D7A28], ebx
+        mov dword [GusOpenCount], ebx
         jmp near loc_AAC3E
 loc_AAB7F:
         xor edx, edx
-        mov word [word_F799E], dx
+        mov word [GusIrqFlags], dx
         pushfw
         cli
         xor eax, eax
@@ -934,9 +934,9 @@ loc_AAB7F:
         pop ebp
         ret
 loc_AABAA:
-        mov byte [byte_F79A5], 3
+        mov byte [GusIrqLatch], 3
         xor edx, edx
-        mov dl, byte [byte_F79A5]
+        mov dl, byte [GusIrqLatch]
         xor eax, eax
         mov ax, word [byte esi+02h]
         xor ecx, ecx
@@ -969,17 +969,17 @@ loc_AABAA:
         ret
 loc_AABFD:
         call GusSetIrqDmaLatches
-        mov bx, word [word_F799E]
+        mov bx, word [GusIrqFlags]
         or bl, 1
-        mov word [word_F799E], bx
-        inc dword [dword_D7A28]
+        mov word [GusIrqFlags], bx
+        inc dword [GusOpenCount]
         popfw
         call GusRunInitTable
         test eax, eax
         jne short loc_AAC3E
-        and byte [byte_F79A5], 0FDh
+        and byte [GusIrqLatch], 0FDh
         xor edx, edx
-        mov dl, byte [byte_F79A5]
+        mov dl, byte [GusIrqLatch]
         mov ax, word [byte esi+02h]
         call outp_
         xor eax, eax
@@ -997,28 +997,28 @@ GusClose:
         mov ebp, esp
         push ebx
         push edx
-        mov dx, word [word_F799E]
+        mov dx, word [GusIrqFlags]
         test dl, 1
         jne short loc_AAC60
         mov eax, 5
         jmp short loc_AACA3
 loc_AAC60:
-        mov edx, dword [dword_D7A28]
+        mov edx, dword [GusOpenCount]
         dec edx
-        mov dword [dword_D7A28], edx
+        mov dword [GusOpenCount], edx
         jne short loc_AACA1
         pushfw
         cli
         call GusStopAllVoices
         call GusStopDmaAndTimers
-        mov dl, byte [byte_F79A7]
+        mov dl, byte [GusMidiIrq]
         xor eax, eax
-        mov al, byte [byte_F79A8]
+        mov al, byte [GusWaveIrq]
         call GusUnhookIrqs
         popfw
-        mov bx, word [word_F799E]
+        mov bx, word [GusIrqFlags]
         and bl, 0FEh
-        mov word [word_F799E], bx
+        mov word [GusIrqFlags], bx
 loc_AACA1:
         xor eax, eax
 loc_AACA3:
@@ -1035,24 +1035,24 @@ GusSetIrqDmaLatches:
         push ecx
         push edx
         xor eax, eax
-        mov al, byte [byte_F79A8]
-        mov bl, byte [dword eax+byte_D7A2C]
-        mov al, byte [byte_F79A8]
-        cmp al, byte [byte_F79A7]
+        mov al, byte [GusWaveIrq]
+        mov bl, byte [dword eax+GusIrqLatchBits]
+        mov al, byte [GusWaveIrq]
+        cmp al, byte [GusMidiIrq]
         jne short loc_AACD1
         or bl, 40h
         jmp short loc_AACE3
 loc_AACD1:
         xor eax, eax
-        mov al, byte [byte_F79A7]
-        mov al, byte [dword eax+byte_D7A2C]
+        mov al, byte [GusMidiIrq]
+        mov al, byte [dword eax+GusIrqLatchBits]
         shl al, 3
         or bl, al
 loc_AACE3:
         xor eax, eax
-        mov al, byte [byte_F79A4]
-        mov dl, byte [byte_F79A6]
-        mov cl, byte [dword eax+byte_D877A]
+        mov al, byte [GusPlayDmaChannel]
+        mov dl, byte [GusRecordDmaChannel]
+        mov cl, byte [dword eax+GusDmaLatchBits]
         cmp al, dl
         jne short loc_AACFF
         or cl, 40h
@@ -1060,7 +1060,7 @@ loc_AACE3:
 loc_AACFF:
         xor eax, eax
         mov al, dl
-        mov al, byte [dword eax+byte_D877A]
+        mov al, byte [dword eax+GusDmaLatchBits]
         shl al, 3
         or cl, al
 loc_AAD0E:
@@ -1071,9 +1071,9 @@ loc_AAD0E:
         mov ax, word [word_D876A]
         call outp_
         xor edx, edx
-        mov dl, byte [byte_F79A5]
+        mov dl, byte [GusIrqLatch]
         xor eax, eax
-        mov ax, word [word_D8760]
+        mov ax, word [GusBasePort]
         call outp_
         xor eax, eax
         xor edx, edx
@@ -1084,9 +1084,9 @@ loc_AAD0E:
         mov ax, word [word_D876A]
         call outp_
         xor edx, edx
-        mov dl, byte [byte_F79A5]
+        mov dl, byte [GusIrqLatch]
         xor eax, eax
-        mov ax, word [word_D8760]
+        mov ax, word [GusBasePort]
         call outp_
         mov al, cl
         xor edx, edx
@@ -1095,12 +1095,12 @@ loc_AAD0E:
         xor eax, eax
         mov ax, word [word_D8768]
         call outp_
-        mov al, byte [byte_F79A5]
+        mov al, byte [GusIrqLatch]
         or al, 40h
         xor edx, edx
         mov dl, al
         xor eax, eax
-        mov ax, word [word_D8760]
+        mov ax, word [GusBasePort]
         call outp_
         xor eax, eax
         and ebx, 0FFh
@@ -1108,21 +1108,21 @@ loc_AAD0E:
         mov edx, ebx
         call outp_
         xor edx, edx
-        mov dl, byte [byte_F79A5]
+        mov dl, byte [GusIrqLatch]
         xor eax, eax
-        mov ax, word [word_D8760]
+        mov ax, word [GusBasePort]
         call outp_
         xor eax, eax
         xor edx, edx
         mov ax, word [word_D8768]
         mov dl, cl
         call outp_
-        mov al, byte [byte_F79A5]
+        mov al, byte [GusIrqLatch]
         or al, 40h
         xor edx, edx
         mov dl, al
         xor eax, eax
-        mov ax, word [word_D8760]
+        mov ax, word [GusBasePort]
         call outp_
         xor eax, eax
         mov edx, ebx
@@ -1132,11 +1132,11 @@ loc_AAD0E:
         xor edx, edx
         mov ax, word [word_D876A]
         call outp_
-        or byte [byte_F79A5], 8
+        or byte [GusIrqLatch], 8
         xor edx, edx
-        mov dl, byte [byte_F79A5]
+        mov dl, byte [GusIrqLatch]
         xor eax, eax
-        mov ax, word [word_D8760]
+        mov ax, word [GusBasePort]
         call outp_
         xor eax, eax
         xor edx, edx
@@ -1168,38 +1168,38 @@ loc_AAE5C:
         mov edx, 20h
         pushfw
         cli
-        mov word [word_F79A0], dx
+        mov word [GusActiveVoices], dx
         xor eax, eax
         mov edx, 4Ch
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         call GusDelay
         xor eax, eax
         mov edx, 4Ch
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 1
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         call GusDelay
         xor eax, eax
         mov edx, 0Eh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
-        mov al, byte [word_F79A0]
+        mov al, byte [GusActiveVoices]
         dec al
         xor edx, edx
         or al, 0C0h
         mov dl, al
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         xor ecx, ecx
         call outp_
         call GusStopDmaAndTimers
@@ -1207,148 +1207,148 @@ loc_AAE5C:
 loc_AAEFC:
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         mov dx, cx
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 2
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 4
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 6
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3Fh
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 8
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 0FBh
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 9
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 500h
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 0Ah
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 0Bh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 6000h
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         inc ecx
         call outpw_
 loc_AB0F7:
-        cmp cx, word [word_F79A0]
+        cmp cx, word [GusActiveVoices]
         jb near loc_AAEFC
         call GusStopDmaAndTimers
-        mov word [word_F79A0], bx
+        mov word [GusActiveVoices], bx
         xor eax, eax
         mov edx, 0Eh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
-        mov al, byte [word_F79A0]
+        mov al, byte [GusActiveVoices]
         dec al
         xor edx, edx
         or al, 0C0h
         mov dl, al
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusStopDmaAndTimers
         xor eax, eax
         mov edx, 4Ch
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         call GusDelay
@@ -1487,30 +1487,30 @@ loc_AB2E4:
 loc_AB2F0:
         xor eax, eax
         mov edx, ecx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
         mov edx, 0Dh
         mov cl, byte [byte ebx+015h]
         xor eax, eax
         and cl, 47h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], cl
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 89h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call inpw_
         sar eax, 4
         movzx esi, byte [byte ebx+01Bh]
@@ -1682,16 +1682,16 @@ loc_AB519:
         or byte [byte ebx+015h], 40h
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
         mov dl, byte [byte ebp-018h]
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 8
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
@@ -1707,22 +1707,22 @@ loc_AB578:
         and byte [byte ebx+015h], 0BFh
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
         mov dl, byte [byte ebp-01Ch]
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 8
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
         mov dl, byte [byte ebp-018h]
 loc_AB5B9:
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
 loc_AB5C4:
         mov eax, dword [byte ebp-018h]
@@ -1732,12 +1732,12 @@ loc_AB5C4:
         mov byte [byte ebx+020h], al
         xor eax, eax
         mov edx, 6
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+01Fh], cl
         call outp_
         xor eax, eax
         mov edx, 43h
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
 loc_AB5F9:
         mov al, byte [byte ebx+01Bh]
@@ -1748,17 +1748,17 @@ loc_AB5F9:
         mov byte [byte ebx+015h], dl
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
         call GusLeaveCritical
@@ -1812,7 +1812,7 @@ loc_AB6B0:
         add esi, byte 21h
 loc_AB6B4:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp ecx, eax
         jb short loc_AB699
         call GusLeaveCritical
@@ -1864,16 +1864,16 @@ loc_AB722:
 loc_AB731:
         xor eax, eax
         mov edx, esi
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
         xor eax, eax
         mov edx, 1
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
         mov dx, word [byte ecx+0Ah]
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         add edx, edx
         call outpw_
 loc_AB767:
@@ -1881,7 +1881,7 @@ loc_AB767:
         add ecx, byte 21h
 loc_AB76B:
         xor edx, edx
-        mov dx, word [word_F79A0]
+        mov dx, word [GusActiveVoices]
         mov eax, dword [byte ebp-014h]
         shl eax, 4
         cmp esi, edx
@@ -1934,7 +1934,7 @@ loc_AB7EC:
         add ecx, byte 21h
 loc_AB7F0:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp ebx, eax
         jb short loc_AB7CF
         call GusLeaveCritical
@@ -2066,7 +2066,7 @@ loc_AB93E:
         add ecx, byte 21h
 loc_AB942:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp edi, eax
         jb near loc_AB87A
         call GusLeaveCritical
@@ -2162,17 +2162,17 @@ loc_AB9F7:
 loc_ABA2F:
         xor eax, eax
         mov edx, esi
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
         xor eax, eax
         mov edx, 1
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         mov dx, word [byte ebx+0Ah]
         xor eax, eax
         add edx, ecx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         add edx, edx
         call outpw_
         mov dh, byte [byte ebx+017h]
@@ -2195,7 +2195,7 @@ loc_ABA8F:
         add ebx, byte 21h
 loc_ABA93:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp esi, eax
         jb near loc_AB988
         xor eax, eax
@@ -2431,7 +2431,7 @@ loc_ABCCC:
         sub edx, eax
         xor esi, esi
         shl edx, 4
-        mov si, word [word_F79A0]
+        mov si, word [GusActiveVoices]
         imul edi, dword 91Eh
         shl esi, 4
         imul esi, edx
@@ -2586,62 +2586,62 @@ sub_ABE18:
         mov ch, cl
         mov byte [byte ebx+013h], cl
         or ch, 0Ch
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         mov byte [byte ebx+013h], ch
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 89h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call inpw_
         shr eax, 8
         cmp eax, byte 5
         jbe near loc_ABF4D
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], 40h
         call outp_
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 6
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3Fh
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
 loc_ABF4D:
@@ -2673,30 +2673,30 @@ sub_ABF5C:
         je near loc_AC03F
         xor eax, eax
         mov edx, ebx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
 loc_ABF95:
         xor eax, eax
         mov edx, 8Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call inp_
         test al, 3
         je short loc_ABF95
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         mov byte [byte ecx+013h], 0
         mov eax, ebx
@@ -2993,21 +2993,21 @@ loc_AC337:
         mov word [byte ecx+0Ah], ax
         xor eax, eax
         mov edx, dword [byte ebp-028h]
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
         xor eax, eax
         mov edx, 1
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
         mov dx, word [byte ecx+0Ah]
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         add edx, edx
         call outpw_
         xor eax, eax
         mov edx, 0Ch
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov eax, dword [byte ebp-010h]
         cmp byte [byte eax+08h], 10h
@@ -3015,12 +3015,12 @@ loc_AC337:
         xor edx, edx
         mov dl, byte [byte eax+08h]
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         jmp short loc_AC3A9
 loc_AC39C:
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte esi+035h]
 loc_AC3A9:
         call outp_
@@ -3044,100 +3044,100 @@ loc_AC3D4:
         mov bh, byte [byte ecx+014h]
         xor eax, eax
         or bh, 40h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ecx+014h], bh
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+02Ah]
         call outpw_
         xor eax, eax
         mov edx, 0Ah
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+02Ch]
         jmp short loc_AC46F
 loc_AC42A:
         xor eax, eax
         mov edx, 0Bh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+01Eh]
         call outpw_
         xor eax, eax
         mov edx, 0Ah
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+020h]
 loc_AC46F:
         call outpw_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+022h]
         call outpw_
         xor eax, eax
         mov edx, 2
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+024h]
         call outpw_
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+026h]
         call outpw_
         xor eax, eax
         mov edx, 4
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         mov dx, word [byte esi+028h]
         call outpw_
         xor eax, eax
         mov edx, 6
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ecx+01Bh], 0
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte esi+036h]
         call outp_
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 8
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
@@ -3155,7 +3155,7 @@ loc_AC589:
         mov byte [byte ecx+01Eh], 0
         xor eax, eax
         mov byte [byte ecx+020h], 0
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov byte [byte ecx+01Fh], dl
         call outp_
         or byte [byte ecx+015h], 20h
@@ -3190,33 +3190,33 @@ loc_AC5F8:
         mov edx, 0Dh
         xor eax, eax
         mov byte [byte ecx+013h], 1
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ecx+016h], 0
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ecx+015h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ecx+015h]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ecx+014h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ecx+014h]
         call outp_
 loc_AC673:
@@ -3345,7 +3345,7 @@ loc_AC766:
         jne near loc_AC8EB
         xor eax, eax
         mov edx, ecx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
         mov dh, byte [byte ebx+014h]
         and dh, 0D7h
@@ -3358,7 +3358,7 @@ loc_AC766:
         je short loc_AC853
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov eax, dword [ebx]
         mov ax, word [byte eax+01Eh]
@@ -3366,11 +3366,11 @@ loc_AC766:
         mov dword [byte ebp-018h], eax
         xor eax, eax
         mov edx, dword [byte ebp-018h]
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 2
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov eax, dword [ebx]
         mov ax, word [byte eax+020h]
@@ -3378,7 +3378,7 @@ loc_AC766:
 loc_AC853:
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov eax, dword [ebx]
         mov ax, word [byte eax+02Ah]
@@ -3386,11 +3386,11 @@ loc_AC853:
         mov dword [byte ebp-018h], eax
         xor eax, eax
         mov edx, dword [byte ebp-018h]
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 4
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov eax, dword [ebx]
         mov ax, word [byte eax+02Ch]
@@ -3399,21 +3399,21 @@ loc_AC89B:
         mov dword [byte ebp-018h], eax
         xor eax, eax
         mov edx, dword [byte ebp-018h]
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+014h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+014h]
         call outp_
 loc_AC8EB:
@@ -3426,22 +3426,22 @@ loc_AC8EB:
 loc_AC8FE:
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         mov dh, byte [byte ebx+015h]
         mov byte [byte ebx+01Bh], 5
         xor eax, eax
         or dh, 60h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov cl, dh
         mov byte [byte ebx+015h], dh
         and cl, 0E7h
@@ -3449,7 +3449,7 @@ loc_AC8FE:
         mov byte [byte ebx+015h], cl
         call outp_
         xor eax, eax
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call inpw_
         and eax, 0FFFFh
         sar eax, 8
@@ -3474,18 +3474,18 @@ loc_AC9A0:
         mov byte [byte ebx+020h], al
         xor eax, eax
         mov edx, 6
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+01Fh], 5
         call outp_
         mov edx, dword [ebx]
         mov dl, byte [byte edx+03Bh]
         xor eax, eax
         and edx, 0FFh
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 5
@@ -3495,20 +3495,20 @@ loc_AC9F2:
         je near loc_ACC20
         xor eax, eax
         mov edx, ecx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         cmp byte [byte ebx+01Bh], 3
         jae short loc_ACA4F
@@ -3521,21 +3521,21 @@ loc_ACA4F:
         mov ch, cl
         mov byte [byte ebx+015h], cl
         and ch, 0E7h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], ch
         call outp_
         mov edx, dword [ebx]
         mov dl, byte [byte edx+039h]
         xor eax, eax
         and edx, 0FFh
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 89h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call inpw_
         mov word [byte ebp-014h], ax
         shr ax, 8
@@ -3564,18 +3564,18 @@ loc_ACADB:
         mov dl, byte [byte ebx+015h]
         xor eax, eax
         and dl, 0BFh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], dl
         mov edx, 7
         call outp_
         xor edx, edx
         xor eax, eax
         mov dx, word [byte ebp-014h]
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 8
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov eax, dword [ebx]
         mov al, byte [byte eax+03Fh]
@@ -3593,7 +3593,7 @@ loc_ACADB:
 loc_ACB57:
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, cl
         mov byte [byte ebx+01Fh], cl
         jmp short loc_ACBE0
@@ -3601,7 +3601,7 @@ loc_ACB68:
         mov dh, byte [byte ebx+015h]
         xor eax, eax
         or dh, 40h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], dh
         mov edx, 7
         call outp_
@@ -3621,34 +3621,34 @@ loc_ACB68:
 loc_ACBAC:
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, cl
         mov byte [byte ebx+01Fh], cl
         call outp_
         xor eax, eax
         mov edx, 8
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
         xor eax, eax
         mov dx, word [byte ebp-014h]
 loc_ACBDA:
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
 loc_ACBE0:
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
 loc_ACC20:
@@ -3704,7 +3704,7 @@ loc_ACCA5:
         inc ebx
 loc_ACCA6:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp ebx, eax
         jb short loc_ACC70
 loc_ACCB2:
@@ -3731,23 +3731,23 @@ sub_ACCC0:
         mov dl, byte [byte ecx+014h]
         xor eax, eax
         and dl, 5Fh
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         mov byte [byte ecx+014h], dl
         mov edx, ebx
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ecx+014h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ecx+014h]
         call outp_
         test byte [byte ecx+013h], 8
@@ -3789,28 +3789,28 @@ sub_ACD58:
         mov cl, byte [byte ebx+015h]
         xor eax, eax
         and cl, 5Fh
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         mov byte [byte ebx+015h], cl
         call outp_
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         xor eax, eax
         mov edx, 89h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call inpw_
         and eax, 0FFFFh
         sar eax, 8
@@ -3857,17 +3857,17 @@ loc_ACE34:
         je short loc_ACEA2
         xor eax, eax
         mov edx, 3
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov edx, dword [ebx]
         mov dx, word [byte edx+01Eh]
         xor eax, eax
         and edx, 0FFFFh
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 2
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov edx, dword [ebx]
         mov dx, word [byte edx+020h]
@@ -3875,38 +3875,38 @@ loc_ACE34:
 loc_ACEA2:
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov edx, dword [ebx]
         mov dx, word [byte edx+02Ah]
         xor eax, eax
         and edx, 0FFFFh
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         mov edx, 4
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         mov edx, dword [ebx]
         mov dx, word [byte edx+02Ch]
 loc_ACEE5:
         xor eax, eax
         and edx, 0FFFFh
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call outpw_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+014h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+014h]
         jmp near loc_AD105
 loc_ACF30:
@@ -3941,10 +3941,10 @@ loc_ACF65:
 loc_ACF8A:
         xor eax, eax
         mov edx, 89h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
-        mov ax, word [word_D8774]
+        mov ax, word [GusDataLowPort]
         call inpw_
         and eax, 0FFFFh
         xor edx, edx
@@ -3960,29 +3960,29 @@ loc_ACFC5:
 loc_ACFC9:
         xor eax, eax
         mov edx, 6
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+010h]
         call outp_
         xor eax, eax
         mov edx, 7
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+0Eh]
         call outp_
         xor eax, eax
         mov edx, 8
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+0Fh]
         call outp_
         or byte [byte ebx+015h], 18h
@@ -3991,7 +3991,7 @@ loc_AD03E:
         mov dl, byte [byte ebx+015h]
         xor eax, eax
         or dl, 20h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], dl
         mov edx, 6
         call outp_
@@ -3999,7 +3999,7 @@ loc_AD03E:
         xor edx, edx
         mov dl, byte [byte ecx+eax+036h]
         xor eax, eax
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
         cmp byte [byte ebp-014h], 0
         je short loc_AD07F
@@ -4036,7 +4036,7 @@ loc_AD0B8:
         mov cl, byte [byte ebx+015h]
         xor eax, eax
         or cl, 40h
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], cl
         jmp short loc_AD0F3
 loc_AD0DD:
@@ -4044,30 +4044,30 @@ loc_AD0DD:
         mov ch, byte [byte ebx+015h]
         xor eax, eax
         and ch, 0BFh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         mov byte [byte ebx+015h], ch
 loc_AD0F3:
         call outp_
         xor edx, edx
         xor eax, eax
         mov dl, byte [byte ebp-01Ch]
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
 loc_AD105:
         call outp_
 loc_AD10A:
         xor eax, eax
         mov edx, 0Dh
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
         call GusDelay
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         mov dl, byte [byte ebx+015h]
         call outp_
         mov eax, 1
@@ -4148,7 +4148,7 @@ loc_AD1CF:
         mov dword [byte ebp-01Ch], esi
 loc_AD1D9:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp ebx, eax
         jb short loc_AD181
         mov ecx, unk_F5BF8
@@ -4194,7 +4194,7 @@ loc_AD23D:
         add ecx, byte 21h
 loc_AD241:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp ebx, eax
         jb short loc_AD1EE
         call GusLeaveCritical
@@ -4278,22 +4278,22 @@ loc_AD2E6:
         jne short loc_AD324
         xor eax, eax
         mov edx, ecx
-        mov ax, word [word_D8770]
+        mov ax, word [GusVoiceSelectPort]
         call outp_
         xor eax, eax
         mov edx, 0Ch
-        mov ax, word [word_D8772]
+        mov ax, word [GusRegSelectPort]
         call outp_
         xor eax, eax
         mov edx, ebx
-        mov ax, word [word_D8776]
+        mov ax, word [GusDataHighPort]
         call outp_
 loc_AD324:
         inc ecx
         add esi, byte 21h
 loc_AD328:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp ecx, eax
         jb short loc_AD2E6
         call GusLeaveCritical
@@ -4331,7 +4331,7 @@ loc_AD36F:
         add ebx, byte 21h
 loc_AD373:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp edx, eax
         jb short loc_AD35D
         mov ebx, unk_F5BF8
@@ -4349,7 +4349,7 @@ loc_AD39A:
         add ebx, byte 21h
 loc_AD39E:
         xor eax, eax
-        mov ax, word [word_F79A0]
+        mov ax, word [GusActiveVoices]
         cmp edx, eax
         jb short loc_AD388
         call GusLeaveCritical

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9A874 progbits alloc exec nowrite align=1
-extern dword_D43E8, dword_D43EC
+extern HeapList, HeapRover
 global __MemAllocator, loc_9A8A7, loc_9A8C3, loc_9A8C7, loc_9A8F5, loc_9A90A, loc_9A912, loc_9A917
 global __MemFree, loc_9A947, loc_9A95E, loc_9A975, loc_9A984, loc_9A9A1, loc_9A9A5, loc_9A9B9
 global loc_9A9C3, loc_9A9DA, loc_9A9F5, loc_9A9F9, loc_9AA0A, loc_9AA1A, loc_9AA22, __unlink_
@@ -226,17 +226,17 @@ loc_9AA22:
 __unlink_:
         push ebx
         push edx
-        mov edx, dword [dword_D43EC]
+        mov edx, dword [HeapRover]
         cmp eax, edx
         jne short loc_9AA3C
         mov edx, dword [byte edx+08h]
-        mov dword [dword_D43EC], edx
+        mov dword [HeapRover], edx
 loc_9AA3C:
-        mov ebx, dword [dword_D43E8]
+        mov ebx, dword [HeapList]
         cmp eax, ebx
         jne short loc_9AA4F
         mov edx, dword [byte ebx+08h]
-        mov dword [dword_D43E8], edx
+        mov dword [HeapList], edx
 loc_9AA4F:
         mov edx, dword [byte eax+04h]
         mov eax, dword [byte eax+08h]

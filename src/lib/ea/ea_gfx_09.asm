@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_92890 progbits alloc exec nowrite align=1
-extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, dword_D30A4
+extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, ScreenWidth
 extern dword_D30A8, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8, dword_D42CC, dword_D42D0
 extern dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, fontcolor, off_D42A4, sub_8E9D4, PutBlock
 extern sub_90EC0, SetClipWindow, sub_B5D80
@@ -139,7 +139,7 @@ loc_929BB:
         mov esi, dword [dword_D30A8]
         push esi
         push byte 0
-        mov edi, dword [dword_D30A4]
+        mov edi, dword [ScreenWidth]
         push edi
         push byte 0
         call SetClipWindow

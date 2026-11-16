@@ -19,7 +19,7 @@ void periodicevents(void)
         freezewindow();
         clockcont_0();
     }
-    if (word_CBC44) return;
+    if (SortPending) return;
     if ((signed char)--lldisp >= 0) return;
     i = lldisp;                                 /* i reused (bl) */
     lldisp = i + 0x18;

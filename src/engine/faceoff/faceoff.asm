@@ -19,7 +19,7 @@ extern refsignal, RefStep, regd0, regd1, regd2, regd4, ResetBench, resetplstuff
 extern restorepl, ReturnGoalies, SetExitGame, setpersonel, Setplass, setplayer, SetSPA, SetupPenaltyShot
 extern sflags, sflags3, sfx, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15
 extern SprSort, SprSortVert, StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3
-extern textline4, textline5, threat, updateanim, vtoa, penaltysc, word_CBC44, puckfaceoff2_ptab
+extern textline4, textline5, threat, updateanim, vtoa, penaltysc, SortPending, puckfaceoff2_ptab
 extern puckfaceoff2_ptab_y, injurystop, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, penevteam
 extern xc1, yc1, yleader
 global TakePlayerFromBox, TakePlayerFromBox_ret6, TakePlayerFromBox_ret5, PenShotStart, ForceStartLineup, PenShotAssign, AllInPlace, assleavebox
@@ -789,12 +789,12 @@ puckfaceoff:
         sar edx, 10h
         or eax, edx
         je short .24
-        cmp word [word_CBC44], byte 0
+        cmp word [SortPending], byte 0
         je short .24
         or byte [sflags], 40h
         call SprSortVert
         xor eax, eax
-        mov word [word_CBC44], ax
+        mov word [SortPending], ax
 .24:
         mov ax, word [c1playernum]
         mov word [regd0], ax
@@ -1073,7 +1073,7 @@ puckfaceoff2:
         mov word [passplayer], 0FFFFh
         call SprSortVert
         xor dh, dh
-        mov word [word_CBC44], dx
+        mov word [SortPending], dx
         xor ebx, ebx
         mov word [camy], bx
         xor ecx, ecx

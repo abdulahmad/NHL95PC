@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D307 progbits alloc exec nowrite align=1
-extern __cnvs2d_, loc_A313F, off_D5668, off_D566C, InitFpuFlags, word_D65FC
+extern __cnvs2d_, loc_A313F, off_D5668, off_D566C, InitFpuFlags, DefaultControlWord
 global __setEFGfmt_, __sys_init_387_emulator, loc_9D333, loc_9D33C
 __setEFGfmt_:
         push ebx
@@ -33,7 +33,7 @@ loc_9D333:
 loc_9D33C:
         wait
         fninit
-        fldcw word [word_D65FC]
+        fldcw word [DefaultControlWord]
         fldz
         fldz
         fldz

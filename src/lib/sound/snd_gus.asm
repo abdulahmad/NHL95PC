@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9FFCA progbits alloc exec nowrite align=1
 extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI, byte_F5320, byte_F5321
-extern cliprect_x0, cliprect_x1, dword_D30A4, dword_D30A8, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
+extern cliprect_x0, cliprect_x1, ScreenWidth, dword_D30A8, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
 extern dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
 extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
 extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, PrintString
@@ -2229,7 +2229,7 @@ sub_A185C:
         mov edx, dword [dword_D30A8]
         push edx
         push byte 0
-        mov ebx, dword [dword_D30A4]
+        mov ebx, dword [ScreenWidth]
         push ebx
         push byte 0
         call SetClipWindow

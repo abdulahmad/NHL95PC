@@ -29,7 +29,7 @@ extern str_B7, str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str
 extern str_FmtParenD, str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD
 extern str_SHTag, str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue
-extern UpdateTextOverlay, vecdist, VisTeam, gsumcount, penaltysc, word_CBC44, injurystop, Pencntdwn2
+extern UpdateTextOverlay, vecdist, VisTeam, gsumcount, penaltysc, SortPending, injurystop, Pencntdwn2
 extern rinkobjdefs, penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
 global GetPeriodTimeRemaining, AddPenalty, AddPenalty2, SetPA, InProgress, InProgress_popebp, InProgress_popx, chkprogress_go
 global chkprogress_x, Stop4Pen, checkfornewpen, releasepl, chkatop, updatepentime_ut_chk, updatepentime_ut, updatePPTeamTime
@@ -111,7 +111,7 @@ AddPenalty:
 ;-----------------------------------------------------------------------------
 ; AddPenalty2                      62D80  94G penalty94.asm, medium confidence
 ; Call penalty pen on player p (not in a replay, sflags bit 7, or with
-; word_CBC44): outside a penalty shot raise the banner (penbannertab[pen],
+; SortPending): outside a penalty shot raise the banner (penbannertab[pen],
 ; timer 50h unless none 6); major penalties (pen >= 7) raise the crowd (+400
 ; up to 800; flag 40h side: CwdExciteLvl +20 and sound 7Dh, else A0h). Then
 ; the penalty goes into the first free PenBuf slot (pen, SCnum); a penalty
@@ -131,7 +131,7 @@ AddPenalty2:
         mov ecx, edx
         test byte [sflags], 80h
         jne near .x
-        cmp word [word_CBC44], byte 0
+        cmp word [SortPending], byte 0
         jne near .x
         cmp dword [penshotstart], byte 0
         jne short .1
@@ -497,7 +497,7 @@ InProgress:
         mov byte [dword eax+PenBuf], dl
         test byte [sflags], 80h
         jne short .17
-        cmp word [word_CBC44], byte 0
+        cmp word [SortPending], byte 0
         je near .32
 .17:
         cmp word [byte ebp-08h], byte 7
@@ -731,7 +731,7 @@ chkprogress_go:
         or byte [gmode2], 4
         mov edi, 0FFFFFFFFh
         mov word [Pencntdwn2], di
-        mov word [word_CBC44], 1
+        mov word [SortPending], 1
         mov edx, dword [puckc]
         mov byte [edx], 0FFh
         mov edx, 1Ah
@@ -953,7 +953,7 @@ checkfornewpen:
         push edx
         test byte [sflags], 80h
         jne near .x
-        mov dx, word [word_CBC44]
+        mov dx, word [SortPending]
         test dx, dx
         jne near .x
         jmp near .11

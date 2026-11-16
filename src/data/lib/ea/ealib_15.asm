@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_C4B6C progbits alloc noexec write align=1
-global byte_C4B6C, byte_C4C70, byte_C4C78, dword_C4C90, dword_C4C94, dword_C4C98, dword_C4C9C, dword_C4CA0
+global byte_C4B6C, byte_C4C70, ScanBitMasks, DblMaxLow, DblMaxHigh, DblMinusMaxLow, DblMinusMaxHigh, dword_C4CA0
 global dword_C4CA4, dword_C4CFC, joypresent, inputticks, joysampling, joyqhead, joyqcount
-global qword_C4C80, qword_C4C88, qword_C4CAA, unk_C4CA8
+global F64_Scale10Max, F64_Scale10Min, Pow10Table, Scale10Count
 byte_C4B6C:
         db 00h,01h,01h,01h,01h,01h,01h,01h,01h,01h,03h,03h,03h,03h,03h,01h
         db 01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h
@@ -25,27 +25,27 @@ byte_C4B6C:
         db 00h,00h,00h,00h
 byte_C4C70:
         db 01h,02h,04h,08h,010h,020h,040h,080h
-byte_C4C78:
+ScanBitMasks:
         db 01h,02h,04h,08h,010h,020h,040h,080h
-qword_C4C80:
+F64_Scale10Max:
         db 00h,00h,00h,00h,00h,00h,0F0h,07Fh
-qword_C4C88:
+F64_Scale10Min:
         db 00h,00h,00h,00h,00h,00h,0F0h,0FFh
-dword_C4C90:
+DblMaxLow:
         db 0FFh,0FFh,0FFh,0FFh
-dword_C4C94:
+DblMaxHigh:
         db 0FFh,0FFh,0EFh,07Fh
-dword_C4C98:
+DblMinusMaxLow:
         db 0FFh,0FFh,0FFh,0FFh
-dword_C4C9C:
+DblMinusMaxHigh:
         db 0FFh,0FFh,0EFh,0FFh
 dword_C4CA0:
         db 00h,00h,00h,00h
 dword_C4CA4:
         db 00h,00h,0F0h,07Fh
-unk_C4CA8:
+Scale10Count:
         db 0D8h,00h
-qword_C4CAA:
+Pow10Table:
         db 0C6h,0F9h,0C6h,040h,0E9h,034h,0C7h,06Ch,06Ch,00h,012h,04Eh,083h,0CCh,03Dh,040h
         db 05Bh,056h,036h,00h,0CEh,0C9h,014h,088h,087h,0E1h,024h,04Bh,01Bh,00h,02h,084h
         db 0FEh,0E4h,071h,0D9h,089h,045h,0Eh,00h,00h,00h,090h,01Eh,0C4h,0BCh,0D6h,042h

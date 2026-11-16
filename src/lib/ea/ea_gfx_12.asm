@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_93170 progbits alloc exec nowrite align=1
-extern byte_D42E4, dword_D30C8, dword_D43E4, DrawArtOpaque, sub_92CD0, bcopy, sub_B6D47, vsprintf_
+extern byte_D42E4, KeyedDraw, RowCopyFunc, DrawArtOpaque, sub_92CD0, bcopy, sub_B6D47, vsprintf_
 global sub_93170, sub_931D0, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, sub_93240
 sub_93170:
         sub esp, 104h
@@ -51,7 +51,7 @@ DrawArtMasked:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_9321D
         push eax
         push ebx
@@ -60,13 +60,13 @@ DrawArtMasked:
         add esp, byte 0Ch
         ret
 loc_9321D:
-        mov dword [dword_D43E4], sub_931D0
+        mov dword [RowCopyFunc], sub_931D0
         push eax
         push ebx
         push edx
         call DrawArtOpaque
         add esp, byte 0Ch
-        mov dword [dword_D43E4], bcopy
+        mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
 sub_93240:

@@ -303,7 +303,7 @@ void defaultsprites_0(void)
 }
 
 /* SetPlList (5BBFA, 93G SetPlList; ends in findpc_ret6): build PlList, the roster indexes (pnum) of the
-   players team t wants on the ice now, -1 for none, with their positions at PlList+6 (byte_E038A). The tmap
+   players team t wants on the ice now, -1 for none, with their positions at PlList+6 (LinePlayersAway). The tmap
    positions come from priolist_m1, past the goalie when he is pulled (tmgoalie < 0; not while the other team takes
    a penalty shot). Each player comes from the team's line table through the sublist of that position: the
    goalie by tmgoalie, the defence by tmlcnt while the line is below 4, the rest by the line; the extra attacker
@@ -337,7 +337,7 @@ void SetPlList(Team *t)
     i = t->tmap;
     while (--i >= 0) {
         pos = priolist_m1[i + g + 1];
-        byte_E038A[i] = priolist_m1[i + g + 1];
+        LinePlayersAway[i] = priolist_m1[i + g + 1];
         if (pos == 0)
             PlList[i] = lines[((signed char *)sublist_defl)[sublist[pos] + t->tmgoalie]];
         else if (pos == 6)
@@ -350,7 +350,7 @@ void SetPlList(Team *t)
     for (i = 5; i >= 0; i--) {
         k = PlList[i];
         if (k < 0) continue;
-        pos = byte_E038A[i];
+        pos = LinePlayersAway[i];
         if (t->tmpdst[k] <= -3 || t->tmpdst[k] > 0 || i >= t->tmap - 2 && !TryAddPlayerToList(t, k, i)) {
             p = (signed char *)sublist_defl + sublist[pos];
             do {
@@ -389,7 +389,7 @@ next:
 
 /* setpersonel: set the personnel of team t: clear newpos /
  newpnum of the team's 6 sort objects, build PlList (SetPlList: pnum per wanted player, -1 none, the new
- positions at PlList+6 = byte_E038A). Pass 1: a wanted player already on the ice keeps his sort object (newpos
+ positions at PlList+6 = LinePlayersAway). Pass 1: a wanted player already on the ice keeps his sort object (newpos
  from the list, newpnum = pnum). Pass 2: each remaining wanted player takes the last free sort object (newpnum
  < 0), stopping at the first one with a position; a sort object without a position (off the ice) first gets
  assignment assbenchwait and position 5. Used entries of PlList are set to -1. */
@@ -417,7 +417,7 @@ void setpersonel(Team *t)
             for (k = 0, p--; k < 6; k++) {
                 p++;
                 if (p->pnum == pn) {            /* find player pn */
-                    p->newpos = byte_E038A[i];
+                    p->newpos = LinePlayersAway[i];
                     p->newpnum = pn;
                     PlList[i] = -1;
                     break;
@@ -441,7 +441,7 @@ void setpersonel(Team *t)
                 assreplace(q, ASSbenchwait);
                 q->position = 5;
             }
-            q->newpos = byte_E038A[i];
+            q->newpos = LinePlayersAway[i];
             q->newpnum = pn;
             PlList[i] = -1;
         }
@@ -596,7 +596,7 @@ void updateplayers(void)
                 }
             }
         }
-        word_E03A0 = p->SCnum;
+        LastShooterTeam = p->SCnum;
         if (p->SCnum == c1playernum[0]) {
             ReadJoy1();
             doinput(p, 0);

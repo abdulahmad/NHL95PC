@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_EA034 nobits alloc noexec write align=1
-global byte_EA058, dword_EA034, dword_EA038, dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C
+global InputRecordCount, dword_EA034, dword_EA038, dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C
 global dword_EA050, dword_EA054, dword_EA05C, dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070
 global dword_EA074, dword_EA078, dword_EA07C, dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090
 global dword_EA094, dword_EA098, dword_EA09C, dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4
@@ -25,7 +25,7 @@ dword_EA050:
         resb 4
 dword_EA054:
         resb 4
-byte_EA058:
+InputRecordCount:
         resb 4
 dword_EA05C:
         resb 4

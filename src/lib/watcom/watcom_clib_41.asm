@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_A2D16 progbits alloc exec nowrite align=1
 extern __fatal_runtime_error_, __flush_, __IOMode_, __set_errno_, __set_errno_dos_, __shutdown_stream_, _nmalloc_, str_NotEnoughMemoryTo
-extern byte_D4D59, dword_D4CF8, dword_EDF00, dword_F24C8, loc_9B09F, lseek_, unk_D4D18, unk_D4D9A
+extern byte_D4D59, UngetChar, dword_EDF00, dword_F24C8, loc_9B09F, lseek_, unk_D4D18, unk_D4D9A
 global tell_, __InitFiles_, loc_A2D4B, loc_A2D7A, loc_A2D8E, __full_io_exit_, sub_A2DAB, docloseall_
 global loc_A2DD2, loc_A2DEF, loc_A2DF5, loc_A2DF7, __qwrite_, loc_A2E3F, loc_A2E46, loc_A2E66
 global loc_A2E74, loc_A2E76, sub_A2E80, __flushall_, loc_A2E94, loc_A2EA8, loc_A2EAA, getche_
@@ -198,8 +198,8 @@ loc_A2EAA:
 getche_:
         push edx
         xor edx, edx
-        mov eax, dword [dword_D4CF8]
-        mov dword [dword_D4CF8], edx
+        mov eax, dword [UngetChar]
+        mov dword [UngetChar], edx
         test eax, eax
         jne short loc_A2ECF
         mov ah, 1

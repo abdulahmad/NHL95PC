@@ -20,7 +20,7 @@ extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, r
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
 extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, SetPalette
-extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, word_CBC44
+extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, SortPending
 extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, puckcross2, puckcross6, refYpos2, refXvel
 extern refYvel, xc1, yc1, yleader
 global StartHL2
@@ -257,7 +257,7 @@ StartHL2:
         mov ecx, esi
         mov word [penaltysc], si
         mov word [ovltimer], si
-        mov word [word_CBC44], di
+        mov word [SortPending], di
         mov word [bannermsg], si
         mov word [ovlstep], si
         mov ebx, esi

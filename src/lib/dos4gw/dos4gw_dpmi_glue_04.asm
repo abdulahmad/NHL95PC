@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_9AA66 progbits alloc exec nowrite align=1
-extern __brk_, __unlink_, _nfree_, _Extender, _ExtenderSubtype, byte_D4D08, dword_D43E8, _curbrk
-extern dword_D5670, dword_D5674, dword_F58E0, word_F58E2
+extern __brk_, __unlink_, _nfree_, _Extender, _ExtenderSubtype, Is8087, HeapList, _curbrk
+extern dword_D5670, dword_D5674, RationalAllocLimit, RationalAllocFlags
 global __FreeDPMIBlocks_, loc_9AA71, loc_9AAAF, loc_9AABF, __ReAllocDPMIBlock_, loc_9AADD, loc_9AB45, loc_9AB97
 global loc_9AB9B, loc_9AB9E, loc_9ABA6, loc_9ABA8, __LinkUpNewMHeap_, loc_9ABBB, loc_9ABC4, loc_9ABC8
 global loc_9ABD7, loc_9ABDD, loc_9ABE4, __LastFree_, loc_9AC5E, loc_9AC6B, RationalAlloc_, loc_9ACA1
@@ -18,7 +18,7 @@ __FreeDPMIBlocks_:
         push edx
         push esi
         push edi
-        mov edx, dword [dword_D43E8]
+        mov edx, dword [HeapList]
 loc_9AA71:
         test edx, edx
         je near loc_9AD3D
@@ -66,7 +66,7 @@ __ReAllocDPMIBlock_:
         mov ebx, eax
         mov ebp, edx
         call __FreeDPMIBlocks_
-        mov edx, dword [dword_D43E8]
+        mov edx, dword [HeapList]
         jmp near loc_9AB9E
 loc_9AADD:
         cmp edx, ebx
@@ -153,7 +153,7 @@ __LinkUpNewMHeap_:
         push ebx
         push edx
         mov edx, eax
-        mov eax, dword [dword_D43E8]
+        mov eax, dword [HeapList]
         xor ebx, ebx
         jmp short loc_9ABC4
 loc_9ABBB:
@@ -172,7 +172,7 @@ loc_9ABC8:
         mov dword [byte ebx+08h], edx
         jmp short loc_9ABDD
 loc_9ABD7:
-        mov dword [dword_D43E8], edx
+        mov dword [HeapList], edx
 loc_9ABDD:
         test eax, eax
         je short loc_9ABE4
@@ -198,7 +198,7 @@ loc_9ABE4:
 __LastFree_:
         push ebx
         push edx
-        mov edx, dword [dword_D43E8]
+        mov edx, dword [HeapList]
         test edx, edx
         je short loc_9AC6B
         mov edx, dword [byte edx+024h]
@@ -210,7 +210,7 @@ __LastFree_:
         jb short loc_9AC5E
         cmp ah, 8
         ja short loc_9AC5E
-        cmp byte [byte_D4D08], 0
+        cmp byte [Is8087], 0
         jne short loc_9AC5E
         xor eax, eax
         mov eax, ds
@@ -263,13 +263,13 @@ loc_9ACA1:
         mov eax, edx
         jmp near loc_9AD3A
 loc_9ACBE:
-        test word [word_F58E2], 0FFF0h
+        test word [RationalAllocFlags], 0FFF0h
         je short loc_9ACD3
-        mov dword [dword_F58E0], 0FFFFFh
+        mov dword [RationalAllocLimit], 0FFFFFh
 loc_9ACD3:
         cmp dword [esp], 10000h
         ja short loc_9AD38
-        mov ebx, dword [dword_F58E0]
+        mov ebx, dword [RationalAllocLimit]
         shr ebx, 4
         or bl, 1
         mov ah, 48h
@@ -424,7 +424,7 @@ loc_9AE30:
         jb short loc_9AE6E
         cmp bl, 8
         ja short loc_9AE6E
-        cmp byte [byte_D4D08], 0
+        cmp byte [Is8087], 0
         jne short loc_9AE6E
         xor eax, eax
         mov eax, ds
@@ -453,7 +453,7 @@ loc_9AE82:
         mov dword [esp], edx
         cmp eax, edx
         ja short loc_9AE29
-        mov edx, dword [dword_D43E8]
+        mov edx, dword [HeapList]
         mov dword [esp], eax
         jmp short loc_9AEC2
 loc_9AEB0:

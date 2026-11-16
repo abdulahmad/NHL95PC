@@ -106,10 +106,10 @@ void puckfaceoff(Player *p)
             hmtmflags[0] &= 0xFD;
             awtmflags &= 0xFD;
             for (o = SortCords, k = 0; k < 0xC; k++, o++) o->pflags2 &= 0xF7;
-            if ((cont1team | cont2team) && word_CBC44) {
+            if ((cont1team | cont2team) && SortPending) {
                 sflags |= 0x40;
                 SprSortVert();
-                word_CBC44 = 0;
+                SortPending = 0;
             }
             if ((regd0.w = c1playernum[0]) >= 0) StartFaceoffLineChange(p, &SortCords[regd0.w]);
             if ((regd0.w = c2playernum[0]) >= 0 && cont2team != cont1team) StartFaceoffLineChange(p, &SortCords[regd0.w]);
@@ -218,7 +218,7 @@ void puckfaceoff2(Player *p)
         gmode2 |= 5;
         passplayer = -1;
         SprSortVert();
-        word_CBC44 = 0;
+        SortPending = 0;
         camx = camy = 0;
         xc1 = fox;
         yc1 = foy;

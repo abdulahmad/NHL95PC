@@ -8,8 +8,8 @@ extern sub_9DF80, sub_9E676, ParseBlasterEnv, sub_9F387, sub_9F418, sub_9F4A0, s
 extern sub_9F622, sub_9F642, sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, sub_9FFA0, sub_A04B9
 extern sub_A053C, sub_A059B, sub_A05D3, sub_A060B, sub_A0643, sub_A067B, sub_A076E, sub_A0853
 extern sub_A0886, sub_A0D99, sub_A0FEA
-global _Extender, _ExtenderSubtype, byte_D4D08, dword_D4BC8, _dynend, _curbrk, _LpCmdLine, _LpPgmName
-global _STACKLOW, _STACKTOP, dword_D4CF0, dword_D4CF4, dword_D4CF8, dword_D4D00, _Envptr, off_D4BA0
+global _Extender, _ExtenderSubtype, Is8087, dword_D4BC8, _dynend, _curbrk, _LpCmdLine, _LpPgmName
+global _STACKLOW, _STACKTOP, dword_D4CF0, dword_D4CF4, UngetChar, dword_D4D00, _Envptr, off_D4BA0
 global _psp, __no87, _Envptr_w4
 off_D4BA0:
         dd sub_972AB
@@ -102,7 +102,7 @@ dword_D4CF0:
         db 00h,00h,00h,00h
 dword_D4CF4:
         db 00h,00h,00h,00h
-dword_D4CF8:
+UngetChar:
         db 00h,00h,00h,00h,00h,00h,00h,00h
 dword_D4D00:
         db 00h,00h,00h,00h
@@ -112,7 +112,7 @@ _Extender:
         db 00h
 _ExtenderSubtype:
         db 00h
-byte_D4D08:
+Is8087:
         db 00h
 _Envptr:
         db 00h,00h,00h,00h

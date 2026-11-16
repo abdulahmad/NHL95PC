@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_B29F0 progbits alloc exec nowrite align=1
-extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12
-extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, dword_D2C84
-extern dword_D2C8C, dword_D2CCC, dword_D2CD0, dword_D2CD8, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74
-extern dword_D3024, sub_93170, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
+extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12
+extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, BiosKeyFunc
+extern KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74
+extern GraphicsReady, sub_93170, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
 extern WaitKey, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
 global RemoveKeyboardHandler, loc_B2A9A, sub_B2A9B, loc_B2B09, sub_B2B0A, loc_B2B3A, loc_B2B81, loc_B2B85
 global loc_B2BA5, loc_B2BA9, loc_B2BC0, loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5
@@ -45,7 +45,7 @@ RemoveKeyboardHandler:
         pop eax
         out 21h, al
         mov ebx, Int16Service
-        mov dword [dword_D2C84], ebx
+        mov dword [BiosKeyFunc], ebx
         push sub_B2A9B
         call AddExitHandler
         add esp, byte 4
@@ -75,7 +75,7 @@ sub_B2A9B:
         pop eax
         out 21h, al
         mov ebx, sub_B2CCD
-        mov dword [dword_D2C84], ebx
+        mov dword [BiosKeyFunc], ebx
         popa
 loc_B2B09:
         ret
@@ -104,7 +104,7 @@ sub_B2B0A:
         pop eax
         iret
 loc_B2B3A:
-        mov byte [dword ebx+byte_D2CDC], 1
+        mov byte [dword ebx+KeyStateTable], 1
         mov al, 20h
         out 20h, al
         cmp ebx, byte 3Ah
@@ -126,11 +126,11 @@ loc_B2B81:
 loc_B2B85:
         LD or, eax, eax
         je short loc_B2BA5
-        mov ebx, dword [dword_D2CCC]
-        mov dword [nosplit ebx*4+dword_D2C8C], eax
+        mov ebx, dword [KeyBufferHead]
+        mov dword [nosplit ebx*4+KeyBuffer], eax
         add ebx, byte 1
-        and ebx, dword [dword_D2CD8]
-        mov dword [dword_D2CCC], ebx
+        and ebx, dword [KeyBufferMask]
+        mov dword [KeyBufferHead], ebx
 loc_B2BA5:
         pop ds
         pop ebx
@@ -236,20 +236,20 @@ loc_B2C68:
         LD or, eax, eax
         ret
 loc_B2C6D:
-        mov ebx, dword [dword_D2CD0]
-        cmp ebx, dword [dword_D2CCC]
+        mov ebx, dword [KeyBufferTail]
+        cmp ebx, dword [KeyBufferHead]
         je short loc_B2C68
-        mov eax, dword [nosplit ebx*4+dword_D2C8C]
+        mov eax, dword [nosplit ebx*4+KeyBuffer]
         LD or, eax, eax
         ret
 loc_B2C85:
-        mov ebx, dword [dword_D2CD0]
-        cmp ebx, dword [dword_D2CCC]
+        mov ebx, dword [KeyBufferTail]
+        cmp ebx, dword [KeyBufferHead]
         je short loc_B2C85
-        mov eax, dword [nosplit ebx*4+dword_D2C8C]
+        mov eax, dword [nosplit ebx*4+KeyBuffer]
         add ebx, byte 1
-        and ebx, dword [dword_D2CD8]
-        mov dword [dword_D2CD0], ebx
+        and ebx, dword [KeyBufferMask]
+        mov dword [KeyBufferTail], ebx
         LD or, eax, eax
         ret
 loc_B2CAC:
@@ -263,7 +263,7 @@ KeyDown:
         push ebp
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+08h]
-        movzx eax, byte [dword ebx+byte_D2CDC]
+        movzx eax, byte [dword ebx+KeyStateTable]
         leave
         ret
 sub_B2CCD:
@@ -276,7 +276,7 @@ FatalError:
         pop eax
         cmp dword [dword_D2F74], byte 0
         jne short loc_B2D11
-        cmp dword [dword_D3024], byte 0
+        cmp dword [GraphicsReady], byte 0
         je short loc_B2D01
         call SetScreenTarget
         push byte 0

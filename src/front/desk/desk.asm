@@ -21,7 +21,7 @@ extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_Re
 extern LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF
 extern SetPalette, PutBlock, DrawBitmap, DrawArt, GrabBlock, MouseRead, SetViewRect, FindShape
 extern ClearScreen, SetTextMode, SetScreenTarget, FillRectColor, teamconf, TextInputDialog, TicksSinceLastCall, deskmenubar
-extern deskmenubar_lg, desklinesmenubar, deskbankname, UpdateOtherScores, VisTeam, WaitClickTimeout, word_CBC44, WriteGSumHeader
+extern deskmenubar_lg, desklinesmenubar, deskbankname, UpdateOtherScores, VisTeam, WaitClickTimeout, SortPending, WriteGSumHeader
 extern WriteScreenTextFile
 global OutputCurrentData, DrawDeskFrames, MenuCallbackTrue, MenuCallbackTrue2, PlayRandomHighlight, IntermissionDesk, PostGameDesk, SportsDesk
 global DeskReloadGame, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, DeskGoToReplay, DeskHomeLines, DeskLines_common

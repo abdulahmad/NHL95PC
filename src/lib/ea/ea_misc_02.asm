@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9BA18 progbits alloc exec nowrite align=1
-extern __FDFS, byte_C4B6C, byte_C4C78, memset_, off_D566C, tolower_
+extern __FDFS, byte_C4B6C, ScanBitMasks, memset_, off_D566C, tolower_
 global ScanFormat, loc_9BA37, loc_9BA6E, loc_9BA7B, loc_9BA8F, loc_9BA95, loc_9BAB1, loc_9BAE3
 global loc_9BAF1, loc_9BB01, loc_9BB0B, loc_9BB23, loc_9BB31, loc_9BB42, loc_9BB50, loc_9BB55
 global loc_9BB5E, loc_9BB65, loc_9BB72, loc_9BB79, loc_9BB86, loc_9BB8D, loc_9BB98, loc_9BBA3
@@ -607,7 +607,7 @@ loc_9BF38:
         mov edx, eax
         and eax, byte 7
         sar edx, 3
-        mov al, byte [dword eax+byte_C4C78]
+        mov al, byte [dword eax+ScanBitMasks]
         or byte [edx+esi], al
         xor eax, eax
         mov al, byte [ecx]
@@ -687,7 +687,7 @@ loc_9BFD4:
         mov edi, eax
         and edx, byte 7
         sar edi, 3
-        mov dl, byte [dword edx+byte_C4C78]
+        mov dl, byte [dword edx+ScanBitMasks]
         movzx edi, byte [esp+edi]
         and edx, 0FFh
         test edi, edx

@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_91370 progbits alloc exec nowrite align=1
-extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, dword_D30A4
-extern dword_D30A8, dword_D30C8, dword_D30D0, dword_D3104, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8
-extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4, fontcolor
+extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, ScreenWidth
+extern dword_D30A8, KeyedDraw, DrawVideoBase, ScreenRowTable, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8
+extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, RowCopyFunc, fontcolor
 extern loc_91260, off_D42A4, sub_8E9D4, PutBlock, bcopy, SetClipWindow, sub_B5D80, sub_B5E00
 extern sub_B69E4, BlitShapeFast
 global DrawArt, loc_91391, DrawShape, sub_913D0, GrabBlock, loc_9142B, loc_9148A, loc_914E6
@@ -19,7 +19,7 @@ DrawArt:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_91391
         push eax
         push ebx
@@ -28,13 +28,13 @@ DrawArt:
         add esp, byte 0Ch
         ret
 loc_91391:
-        mov dword [dword_D43E4], loc_91260
+        mov dword [RowCopyFunc], loc_91260
         push eax
         push ebx
         push edx
         call PutBlock
         add esp, byte 0Ch
-        mov dword [dword_D43E4], bcopy
+        mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
 DrawShape:
@@ -74,7 +74,7 @@ GrabBlock:
         mov eax, dword [byte esp+028h]
         mov edx, dword [byte esp+02Ch]
         mov esi, dword [byte esp+030h]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_9142B
         push esi
         push edx
@@ -91,11 +91,11 @@ loc_9142B:
         mov eax, dword [byte eax+02h]
         sar eax, 10h
         mov dword [byte esp+0Ch], eax
-        mov eax, dword [dword_D30D0]
+        mov eax, dword [DrawVideoBase]
         mov dword [byte esp+04h], eax
-        mov esi, dword [nosplit esi*4+dword_D3104]
+        mov esi, dword [nosplit esi*4+ScreenRowTable]
         add esi, edx
-        mov eax, dword [dword_D30A4]
+        mov eax, dword [ScreenWidth]
         mov ecx, dword [byte esp+0Ch]
         sub eax, ecx
         mov dword [esp], eax
@@ -329,7 +329,7 @@ loc_916A1:
         mov ebx, dword [dword_D30A8]
         push ebx
         push byte 0
-        mov ecx, dword [dword_D30A4]
+        mov ecx, dword [ScreenWidth]
         push ecx
         push byte 0
         call SetClipWindow

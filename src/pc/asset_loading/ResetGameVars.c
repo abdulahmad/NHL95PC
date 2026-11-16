@@ -52,7 +52,7 @@ void ResetGameVars(void)
     passdir = 0;
     lastplayer = 0;
     shotplayer = 0;
-    word_CBC44 = 0;
+    SortPending = 0;
     RefPen = 0;
     refsignal = 0;
     Penaltytimer = 0;

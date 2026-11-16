@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_91984 progbits alloc exec nowrite align=1
 extern __allocfp_, __chktty_, __doclose_, __ExpandDGROUP_, __freefp_, __MemAllocator, __MemFree, __set_errno_
-extern byte_F24C5, dword_D43E8, dword_D43EC, dword_D43F0, dword_D4F21, dword_EDF00, dword_F24C8, fseek_
+extern byte_F24C5, HeapList, HeapRover, HeapLargestFree, dword_D4F21, dword_EDF00, dword_F24C8, fseek_
 extern sopen_, McgaNoWindow, tolower_
 global _nmalloc_, loc_9199D, loc_919A4, loc_919B7, loc_919C3, loc_919D5, loc_919E3, loc_919E7
 global loc_91A18, loc_91A1B, loc_91A30, loc_91A45, loc_91A4E, loc_91A58, _nfree_, loc_91A75
@@ -33,7 +33,7 @@ loc_9199D:
         xor eax, eax
         jmp near loc_91A58
 loc_919A4:
-        mov ebp, dword_D43E8
+        mov ebp, HeapList
         lea edi, [byte esi+03h]
         xor ah, ah
         xor ebx, ebx
@@ -45,14 +45,14 @@ loc_919B7:
         jae short loc_919C3
         mov eax, 0Ch
 loc_919C3:
-        cmp eax, dword [dword_D43F0]
+        cmp eax, dword [HeapLargestFree]
         jbe short loc_919E3
-        mov ecx, dword [dword_D43EC]
+        mov ecx, dword [HeapRover]
         test ecx, ecx
         jne short loc_91A1B
 loc_919D5:
-        mov dword [dword_D43F0], ecx
-        mov ecx, dword [dword_D43E8]
+        mov dword [HeapLargestFree], ecx
+        mov ecx, dword [HeapList]
         jmp short loc_91A1B
 loc_919E3:
         xor ecx, ecx
@@ -60,7 +60,7 @@ loc_919E3:
 loc_919E7:
         mov edx, ds
         mov eax, ebp
-        mov dword [dword_D43EC], ecx
+        mov dword [HeapRover], ecx
         and edx, 0FFFFh
         mov eax, esi
         mov ebx, ecx
@@ -68,11 +68,11 @@ loc_919E7:
         mov ebx, eax
         test eax, eax
         jne short loc_91A4E
-        mov eax, dword [dword_D43F0]
+        mov eax, dword [HeapLargestFree]
         mov edx, dword [byte ecx+014h]
         cmp edx, eax
         jbe short loc_91A18
-        mov dword [dword_D43F0], edx
+        mov dword [HeapLargestFree], edx
 loc_91A18:
         mov ecx, dword [byte ecx+08h]
 loc_91A1B:
@@ -117,7 +117,7 @@ _nfree_:
         push edx
         push ebp
         mov ebx, eax
-        mov ecx, dword [dword_D43E8]
+        mov ecx, dword [HeapList]
         jmp short loc_91A80
 loc_91A75:
         cmp ecx, ebx
@@ -131,19 +131,19 @@ loc_91A80:
         test edx, edx
         jne short loc_91A75
 loc_91A87:
-        mov eax, dword_D43E8
+        mov eax, HeapList
         mov edx, ds
         and edx, 0FFFFh
         mov eax, ebx
         mov ebx, ecx
         call __MemFree
-        cmp ecx, dword [dword_D43EC]
+        cmp ecx, dword [HeapRover]
         je short loc_91AB8
-        mov ebp, dword [dword_D43F0]
+        mov ebp, dword [HeapLargestFree]
         mov edx, dword [byte ecx+014h]
         cmp edx, ebp
         jbe short loc_91AB8
-        mov dword [dword_D43F0], edx
+        mov dword [HeapLargestFree], edx
 loc_91AB8:
         xor ah, ah
         mov byte [byte_F24C5], ah

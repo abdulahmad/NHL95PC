@@ -23,7 +23,7 @@ extern resetplstuff, restorepl, ReturnGoalies, SetExitGame, SetLCmode, setpassmo
 extern setplayer, SetShotMode, SetSPA, SetupPenaltyShot, sflags, sflags3, sfx, ShotMode
 extern shotplayer, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15, SprSort, SprSortVert
 extern StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3, textline4, textline5
-extern threat, updateanim, vecdist, vtoa, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab
+extern threat, updateanim, vecdist, vtoa, penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab
 extern puckfaceoff2_ptab_y, injurystop, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, penevteam
 extern xc1, yc1, yleader
 global joyq_pop, joyq_flush, joyq_peek, lineinput, faceoffinput, Acheck, CanBlockShot, CanBlockShot_ret6

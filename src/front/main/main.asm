@@ -9,7 +9,7 @@ extern byte_D9299, camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, 
 extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoiseOff, CrowdNoiseReset, ctl1dev
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
 extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
-extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
+extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, BackBufferWidth, dword_D4158, dword_D415C, dword_D4160
 extern dword_D4164, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, dword_E9A9E, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
 extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
@@ -41,7 +41,7 @@ extern SetViewRect, InitMouse, sub_B3036, FindShape, sub_B30F4, JoyResetCentres,
 extern KbdFlush, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetrace, sub_B4C84, teamabbrevs
 extern TicksSinceLastCall, treeteamnames, blackpal, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
 extern awardwinners_e06, awardwinners_e08, awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly
-extern VisTeam, vtoa, WaitTickDeadline, word_CBC44
+extern VisTeam, vtoa, WaitTickDeadline, SortPending
 global GetMemListHead, GetMemStats, main_, main_x, DiskFreeBytes, SetupControllers, ReadKeyboardPad, ReadJoyPad
 global ReadMousePad, ReadControllerPad, ReadHotKeys, ReadSkipKeys, SampleInputTick, SetScreenSize, IntermissionPC, DrawSpriteNumber
 global DrawFrameSprite, DrawRinkEndArt, WaitKeyRelease, HandleHotKey, HandleHotKey_ret, ResetInputSampling, RunGameFrames, SetFullPalette
@@ -285,7 +285,7 @@ main_:
         push dword 140h
         push dword 0A8h
         push byte 0
-        push dword_D30D4
+        push BackBufferWidth
         call subwindowdefadr
         add esp, byte 14h
         mov dword [screenbm], eax
@@ -1479,7 +1479,7 @@ SetScreenSize:
 ; IntermissionPC                                  10F6D  95 PC, low confidence
 ; Called from the period-end path after Intermission when gsp > 0: fades out
 ; (FadePalette), restores 640x480, stops crowd/music/digital sound and runs
-; sub_1BAF3(222E0h) when word_CBC44 is set, then IntermissionDesk and counts
+; sub_1BAF3(222E0h) when SortPending is set, then IntermissionDesk and counts
 ; curperiod
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/IntermissionPC.c

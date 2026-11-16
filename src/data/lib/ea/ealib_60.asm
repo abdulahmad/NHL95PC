@@ -5,55 +5,55 @@ section s_D2C84 progbits alloc noexec write align=1
 extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, bcopy, sub_B40BF, str_Jan
 extern str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul, str_Aug, str_Sep
 extern str_Oct, str_Nov, str_Dec
-global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
+global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
 global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, joyenablemask, cpuinfo_b0
 global cpuinfo_b1, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, joyedgedir, byte_D41CC
 global byte_D41CD, byte_D4244, byte_D4245, byte_D4246, byte_D4280, byte_D42C0, byte_D42C1, byte_D42C2
-global byte_D42C3, byte_D42C4, byte_D42C5, byte_D42C6, byte_D42E4, byte_D4410, byte_D4544, byte_D4545
-global byte_D4546, __8087, byte_D4B9D, dword_D2C84, dword_D2C8C, dword_D2CCC, dword_D2CD0, dword_D2CD8
-global dword_D2D5C, dword_D2D62, dword_D2D68, memblocklist, dword_D2F5C, dword_D2F60, dword_D2F64, dword_D2F74
+global byte_D42C3, byte_D42C4, byte_D42C5, byte_D42C6, byte_D42E4, ResourceArchiveName, DebugRow, byte_D4545
+global byte_D4546, __8087, FpuType, BiosKeyFunc, KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask
+global dword_D2D5C, dword_D2D62, dword_D2D68, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, dword_D2F74
 global dword_D2F78, dword_D2F7A, dword_D2F7C, dword_D2F80, dword_D2F84, dword_D2F88, dword_D2F8C, dword_D2F90
 global joycalactive, tickcount, slowtickcount, oldint8off, mouseminx, mouseminy, mousemaxx, mousemaxy
-global dword_D2FFC, dword_D3000, dword_D301C, dword_D3024, dword_D3028, mousex, mousey, mousebtns
+global dword_D2FFC, MouseButtonState, dword_D301C, GraphicsReady, MousePresent, mousex, mousey, mousebtns
 global dword_D3038, dword_D303C, dword_D3044, dword_D3048, dword_D304C, dword_D3050, dword_D3054, dword_D3058
-global cpuinfo_d0, cpuinfo_d1, dword_D3090, dword_D3096, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
-global cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0
-global dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0, dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0
-global dword_D30F4, dword_D30F8, dword_D3104, dword_D4108, dword_D4158, dword_D415C, dword_D4160, dword_D4164
-global dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187, dword_D418B
-global dword_D418F, dword_D4193, dword_D4197, dword_D419B, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
-global dword_D41AF, dword_D41B3, dword_D41CE, dword_D41EA, bailout_vec, dword_D41F4, dword_D41FC, dword_D4200
+global cpuinfo_d0, cpuinfo_d1, dword_D3090, dword_D3096, ScreenWidth, dword_D30A8, cliprect_x0, cliprect_y0
+global cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase
+global BackBufferWidth, dword_D30D8, dword_D30DC, dword_D30E0, dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0
+global dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108, dword_D4158, dword_D415C, dword_D4160, dword_D4164
+global JoyAxisY2, JoyAxisMask, JoyX1Threshold, dword_D417B, JoyX1Center, dword_D4183, dword_D4187, dword_D418B
+global dword_D418F, JoyY1Threshold, dword_D4197, JoyY1Center, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
+global JoyXScale, JoyYScale, dword_D41CE, dword_D41EA, bailout_vec, FpuFlags, dword_D41FC, dword_D4200
 global dword_D4204, dword_D4208, dword_D420C, dword_D4210, dword_D4214, dword_D4218, dword_D421C, dword_D4220
 global dword_D4224, dword_D4228, dword_D422C, dword_D4230, dword_D4234, dword_D4238, dword_D423C, dword_D4240
 global dword_D4248, dword_D424C, dword_D4250, dword_D4254, dword_D4258, dword_D425C, dword_D4260, dword_D4264
 global dword_D4268, dword_D426C, dword_D4270, dword_D4274, dword_D4278, dword_D427C, tickdeadline, ticklast
 global dword_D429C, fontcolor, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8
-global dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4, dword_D43E8
-global dword_D43EC, dword_D43F0, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
-global dword_D4534, dword_D453C, dword_D4540, dword_D4548, dword_D457C, dword_D4580, dword_D4584, dword_D4588
-global dword_D458C, dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
-global off_D2F68, off_D2F6C, off_D2F70, off_D306C, off_D3070, off_D3074, mousepollfn, off_D3088
-global off_D308C, off_D42A0, off_D42A4, joycalprehook, joycalposthook, randseed, unk_D41D2, unk_D4448
-global unk_D44B0, unk_D44CE, unk_D45D8, unk_D45F8, unk_D47B4, word_D2D60, word_D2D66, word_D2D6C
+global dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, RowCopyFunc, HeapList
+global HeapRover, HeapLargestFree, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, dword_D4530
+global DebugMode, DebugScreenBase, DebugLineWidth, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
+global MemViewRed, MemViewShowDetail, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
+global ExitHook, Int23Hook, off_D2F70, off_D306C, off_D3070, off_D3074, mousepollfn, off_D3088
+global off_D308C, KbdIdleHook, off_D42A4, joycalprehook, joycalposthook, randseed, unk_D41D2, unk_D4448
+global unk_D44B0, unk_D44CE, DefaultFont, unk_D45F8, unk_D47B4, word_D2D60, word_D2D66, word_D2D6C
 global word_D2D6E, saved_ss, oldint8sel, word_D3004, word_D3006, word_D3008, word_D3094, word_D309A
-global word_D41F8, word_D41FA
-dword_D2C84:
+global EmuHookFlags, word_D41FA
+BiosKeyFunc:
         dd sub_B2CCD
         db 00h,00h,00h,00h
-dword_D2C8C:
+KeyBuffer:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D2CCC:
+KeyBufferHead:
         db 00h,00h,00h,00h
-dword_D2CD0:
+KeyBufferTail:
         db 00h,00h,00h,00h
 byte_D2CD4:
         db 00h,00h,00h,00h
-dword_D2CD8:
+KeyBufferMask:
         db 01h,00h,00h,00h
-byte_D2CDC:
+KeyStateTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 byte_D2CF9:
@@ -129,11 +129,11 @@ dword_D2F5C:
         db 00h,0Eh,00h,00h
 dword_D2F60:
         db 00h,00h,00h,00h
-dword_D2F64:
+FreeSpaceList:
         db 00h,00h,00h,00h
-off_D2F68:
+ExitHook:
         dd __null_int23_exit_
-off_D2F6C:
+Int23Hook:
         dd __null_int23_exit_
 off_D2F70:
         dd __null_int23_exit_
@@ -179,7 +179,7 @@ mousemaxy:
         db 0C8h,00h,00h,00h
 dword_D2FFC:
         db 00h,00h,00h,00h
-dword_D3000:
+MouseButtonState:
         db 01h,00h,00h,00h
 word_D3004:
         db 00h,00h
@@ -190,9 +190,9 @@ word_D3008:
         db 00h,00h,00h,00h
 dword_D301C:
         db 00h,00h,00h,00h,01h,00h,00h,00h
-dword_D3024:
+GraphicsReady:
         db 00h,00h,00h,00h
-dword_D3028:
+MousePresent:
         db 00h,00h,00h,00h
 mousex:
         db 00h,00h,00h,00h
@@ -249,7 +249,7 @@ dword_D3096:
         db 00h,00h,00h,00h
 word_D309A:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D30A4:
+ScreenWidth:
         db 080h,02h,00h,00h
 dword_D30A8:
         db 0E0h,01h,00h,00h
@@ -265,15 +265,15 @@ dword_D30BC:
         db 00h,00h,00h,00h
 dword_D30C0:
         db 080h,02h,00h,00h
-dword_D30C4:
+DrawRowBytes:
         db 080h,02h,00h,00h
-dword_D30C8:
+KeyedDraw:
         db 00h,00h,00h,00h
-dword_D30CC:
-        dd dword_D3104
-dword_D30D0:
+DrawDestBuffer:
+        dd ScreenRowTable
+DrawVideoBase:
         db 00h,00h,0Ah,00h
-dword_D30D4:
+BackBufferWidth:
         db 080h,02h,00h,00h
 dword_D30D8:
         db 0E0h,01h,00h,00h
@@ -293,9 +293,9 @@ dword_D30F4:
         db 080h,02h,00h,00h
 dword_D30F8:
         db 00h,00h,00h,00h
-        dd dword_D3104
+        dd ScreenRowTable
         db 00h,00h,0Ah,00h
-dword_D3104:
+ScreenRowTable:
         db 00h,00h,00h,00h,080h,02h,00h,00h,00h,05h,00h,00h,080h,07h,00h,00h
         db 00h,0Ah,00h,00h,080h,0Ch,00h,00h,00h,0Fh,00h,00h,080h,011h,00h,00h
         db 00h,014h,00h,00h,080h,016h,00h,00h,00h,019h,00h,00h,080h,01Bh,00h,00h
@@ -571,9 +571,9 @@ byte_D4168:
         db 00h,00h
 byte_D416A:
         db 0Fh,00h
-dword_D416C:
+JoyAxisY2:
         db 00h,00h,00h,00h
-dword_D4170:
+JoyAxisMask:
         db 00h,00h,00h,00h
 byte_D4174:
         db 00h
@@ -581,11 +581,11 @@ byte_D4175:
         db 00h
 byte_D4176:
         db 00h
-dword_D4177:
+JoyX1Threshold:
         db 050h,00h,00h,00h
 dword_D417B:
         db 00h,00h,00h,00h
-dword_D417F:
+JoyX1Center:
         db 00h,00h,00h,00h
 dword_D4183:
         db 00h,00h,00h,00h
@@ -595,11 +595,11 @@ dword_D418B:
         db 00h,00h,00h,00h
 dword_D418F:
         db 00h,00h,00h,00h
-dword_D4193:
+JoyY1Threshold:
         db 050h,00h,00h,00h
 dword_D4197:
         db 00h,00h,00h,00h
-dword_D419B:
+JoyY1Center:
         db 00h,00h,00h,00h
 dword_D419F:
         db 00h,00h,00h,00h
@@ -609,9 +609,9 @@ dword_D41A7:
         db 00h,00h,00h,00h
 dword_D41AB:
         db 00h,00h,00h,00h
-dword_D41AF:
+JoyXScale:
         db 00h,00h,00h,00h
-dword_D41B3:
+JoyYScale:
         db 00h,00h,00h,00h
 joyedgedir:
         db 00h,01h,05h,00h,03h,02h,04h,03h,07h,08h,06h,07h,00h,01h,05h,00h
@@ -631,9 +631,9 @@ dword_D41EA:
         db 00h,00h,00h,00h,00h,00h
 bailout_vec:
         dd sub_B345D
-dword_D41F4:
+FpuFlags:
         db 00h,00h,00h,00h
-word_D41F8:
+EmuHookFlags:
         db 020h,00h
 word_D41FA:
         db 00h,00h
@@ -716,10 +716,10 @@ ticklast:
         db 00h,00h,00h,00h
 dword_D429C:
         db 0A0h,086h,01h,00h
-off_D42A0:
+KbdIdleHook:
         dd sub_B40BF
 off_D42A4:
-        dd unk_D45D8
+        dd DefaultFont
 fontcolor:
         db 0Fh,00h,00h,00h
 dword_D42AC:
@@ -777,28 +777,28 @@ byte_D42E4:
         db 0D0h,0D1h,0D2h,0D3h,0D4h,0D5h,0D6h,0D7h,0D8h,0D9h,0DAh,0DBh,0DCh,0DDh,0DEh,0DFh
         db 0E0h,0E1h,0E2h,0E3h,0E4h,0E5h,0E6h,0E7h,0E8h,0E9h,0EAh,0EBh,0ECh,0EDh,0EEh,0EFh
         db 0F0h,0F1h,0F2h,0F3h,0F4h,0F5h,0F6h,0F7h,0F8h,0F9h,0FAh,0FBh,0FCh,0FDh,0FEh,0FFh
-dword_D43E4:
+RowCopyFunc:
         dd bcopy
-dword_D43E8:
+HeapList:
         db 00h,00h,00h,00h
-dword_D43EC:
+HeapRover:
         db 00h,00h,00h,00h
-dword_D43F0:
+HeapLargestFree:
         db 00h,00h,00h,00h
 str_OpenhandleSFILEERROR:
         db 06Fh,070h,065h,06Eh,068h,061h,06Eh,064h,06Ch,065h,020h,02Dh,020h,025h,073h,020h
         db 046h,049h,04Ch,045h,020h,045h,052h,052h,04Fh,052h,0Dh,00h
-byte_D4410:
+ResourceArchiveName:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_D4438:
+ArchiveHandle:
         db 00h,00h,00h,00h
-dword_D443C:
+ArchiveOpenFn:
         db 00h,00h,00h,00h
-dword_D4440:
+ArchiveCount:
         db 00h,00h,00h,00h
-dword_D4444:
+ResourceArchive:
         db 00h,00h,00h,00h
 unk_D4448:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -823,19 +823,19 @@ unk_D44CE:
         db 00h,00h
 dword_D4530:
         db 00h,00h,00h,00h
-dword_D4534:
+DebugMode:
         db 02h,00h,00h,00h,00h,00h,00h,00h
-dword_D453C:
+DebugScreenBase:
         db 00h,00h,0Bh,00h
-dword_D4540:
+DebugLineWidth:
         db 080h,07h,00h,00h
-byte_D4544:
+DebugRow:
         db 00h
 byte_D4545:
         db 07h
 byte_D4546:
         db 08h,02Fh
-dword_D4548:
+DebugLogOn:
         db 00h,00h,00h,00h
         dd str_Jan
         dd str_Feb2
@@ -849,17 +849,17 @@ dword_D4548:
         dd str_Oct
         dd str_Nov
         dd str_Dec
-dword_D457C:
+MemViewBlack:
         db 00h,00h,00h,00h
-dword_D4580:
+MemViewWhite:
         db 03h,00h,00h,00h
-dword_D4584:
+MemViewYellow:
         db 03h,00h,00h,00h
-dword_D4588:
+MemViewGreen:
         db 01h,00h,00h,00h
-dword_D458C:
+MemViewRed:
         db 02h,00h,00h,00h
-dword_D4590:
+MemViewShowDetail:
         db 00h,00h,00h,00h
 dword_D4594:
         db 00h,00h,00h,00h
@@ -884,7 +884,7 @@ joycalposthook:
         dd sub_B300C
         dd sub_B300C
         db 00h,00h,00h,00h
-unk_D45D8:
+DefaultFont:
         db 046h,050h,043h,031h,020h,08Eh,08h,08h,00h,08h,06h,01h,00h,00h,00h,0FFh
         db 00h,00h,0DCh,01h,00h,00h,00h,00h,00h,00h,00h,00h,053h,048h,041h,057h
 unk_D45F8:
@@ -982,5 +982,5 @@ unk_D47B4:
         db 048h,048h,0FCh,0FCh,0FCh,0FCh,00h,00h
 __8087:
         db 00h
-byte_D4B9D:
+FpuType:
         db 00h,00h,00h

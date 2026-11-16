@@ -77,7 +77,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&gameclock);
     *p++ = *(short *)(&clockticks);
     *p++ = *(short *)(&shownumbers);
-    *p++ = *(short *)(&word_CBC44);
+    *p++ = *(short *)(&SortPending);
     *p++ = *(short *)(&exitgame);
     *p++ = *(short *)(&gameover);
     *p++ = *(short *)(&ovltimer);
@@ -318,7 +318,7 @@ int LoadGameState(int fh)
     gameclock = *p++;
     clockticks[0] = *p++;
     shownumbers = *p++;
-    word_CBC44 = *p++;
+    SortPending = *p++;
     exitgame = *p++;
     gameover = *p++;
     ovltimer = *p++;

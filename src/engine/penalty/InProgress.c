@@ -1,11 +1,11 @@
 /* Scoring / penalty text: calling the penalties at a stoppage. */
-#define word_CBC44 word_CBC44_decl
+#define SortPending word_CBC44_decl
 #include "nhl95.h"
-#undef word_CBC44
-/* InProgress compares word_CBC44 in memory on every pass of its loop; as a plain short Watcom loads it
-   into cx once before the loop (also as a for loop, or read as word_CBC44[0]). Declared volatile in this module,
+#undef SortPending
+/* InProgress compares SortPending in memory on every pass of its loop; as a plain short Watcom loads it
+   into cx once before the loop (also as a for loop, or read as SortPending[0]). Declared volatile in this module,
    it is read in place: an ESCALATE shape (docs/ESCALATIONS.md), so InProgress is not marked while it is here. */
-extern volatile short word_CBC44;
+extern volatile short SortPending;
 
 void PostPenaltyEvent(int away, int pl, int type, int tag, int min, int sec, int n);
 
@@ -22,7 +22,7 @@ void PostPenaltyEvent(int away, int pl, int type, int tag, int min, int sec, int
    running, update both teams' strength (tmap 6, less one per player in the box down to 4, the box flag bit 13
    cleared) and send the puck to its stoppage assignment (1Bh). Else take the last queued penalty: one already
    called waits for its player to reach the box; a penalty shot (1Ah) starts it; a non-penalty (no minutes)
-   only sets the referee's signal (with sflags bit 7 or word_CBC44 set, one other than 7 goes straight on to the
+   only sets the referee's signal (with sflags bit 7 or SortPending set, one other than 7 goes straight on to the
    next queued penalty); a minus-minute entry (a coincidental minor) and a real penalty put the player
    in the box (tmpdst minutes * 60, bits 13 / 14), count it in the team and player stats, add it to the panel
    and the play-by-play (PostPenaltyEvent, the time left in the period), and send him off (assignment 0Ch); a
@@ -96,7 +96,7 @@ void InProgress(void)
             } else {
                 penaltysc = PenBuf_pl[i * 2];
                 PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
-                if ((sflags & 0x80) || word_CBC44) {
+                if ((sflags & 0x80) || SortPending) {
                     if (pen != 7) continue;
                 }
             }
@@ -172,7 +172,7 @@ void chkprogress(void)
     }
     gmode2 |= 4;
     Pencntdwn2[0] = -1;
-    word_CBC44 = 1;
+    SortPending = 1;
     *(unsigned char *)puckc = 0xFF;
     assinsert((Player *)puckstruct, 0x1A);
     pucktemp1 = 0x1C20;

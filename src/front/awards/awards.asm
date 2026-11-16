@@ -45,7 +45,7 @@ extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, Set
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
 extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
-extern WaitClickTimeout, WaitDigiSample, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount
+extern WaitClickTimeout, WaitDigiSample, penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount
 extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
 extern word_E9AAA, penevteam, rinkobjused
 global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary, AwardsCeremony

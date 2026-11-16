@@ -4,7 +4,7 @@ bits 32
 section s_ADEE9 progbits alloc exec nowrite align=1
 extern byte_D7B18, byte_D7B58, byte_D7B5C, byte_D7D70, byte_D7DB0, byte_D7DB4, byte_D7FC8, byte_D8008
 extern byte_D800C, byte_D8220, byte_D8260, byte_D8264, byte_D849C, byte_D84A0, dword_D6B00, dword_D7ABC
-extern dword_D7AF0, dword_D7AF4, dword_D7AF8, dword_D7AFC, dword_D7B00, dword_D7B04, dword_D7B08, dword_D7B0C
+extern dword_D7AF0, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight, dword_D7B0C
 extern dword_D7B1C, dword_D7B30, dword_D7B34, dword_D7B38, dword_D7B44, dword_D7B48, dword_D7B4C, dword_D7B50
 extern dword_D7B60, dword_D7D64, dword_D7D74, dword_D7D88, dword_D7D8C, dword_D7D90, dword_D7D9C, dword_D7DA0
 extern dword_D7DA4, dword_D7DA8, dword_D7DB8, dword_D7FBC, dword_D7FCC, dword_D7FE0, dword_D7FE4, dword_D7FE8
@@ -16,7 +16,7 @@ extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_F6
 extern nullsub_4, off_D846C, outp_, strtoul_, sub_AB658, sub_AB6D0, sub_AB80C, sub_ACC3C
 extern sub_AD2A8, sub_AD344, sub_AD7CC, sub_ADC96, GusDownload, sub_B14E4, sub_B1CBC, sub_B1F1C
 extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
-extern word_D84C6, word_D8770, word_D8772, word_D8774, word_D8776, word_D8778
+extern word_D84C6, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
 global sub_ADEE9, loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002
 global loc_AE02F, loc_AE061, loc_AE096, loc_AE0A5, loc_AE0C1, loc_AE0D6, loc_AE0E2, loc_AE11D
 global loc_AE14C, loc_AE162, loc_AE1A1, loc_AE1AD, loc_AE1B7, loc_AE22F, loc_AE243, loc_AE24A
@@ -735,18 +735,18 @@ sub_AE903:
         jne near loc_AE9E8
         pushf
         cli
-        mov dx, word [word_D8770]
+        mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D84A0]
         out dx, al
         mov al, 0
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov al, 3
-        mov dx, word [word_D8776]
+        mov dx, word [GusDataHighPort]
         out dx, al
         push ax
         push dx
-        mov dx, word [word_D8778]
+        mov dx, word [GusDramPort]
         in al, dx
         in al, dx
         in al, dx
@@ -758,35 +758,35 @@ sub_AE903:
         pop ax
         out dx, al
         popf
-        mov dword [dword_D7AFC], 1
+        mov dword [GusStreamBusyLeft], 1
         jmp short loc_AE9E2
 loc_AE96B:
         pushf
         cli
-        mov dx, word [word_D8770]
+        mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D84A0]
         out dx, al
         mov al, 0Bh
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BC]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Ah
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BE]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov al, 24h
-        mov dx, word [word_D8776]
+        mov dx, word [GusDataHighPort]
         out dx, al
         push ax
         push dx
-        mov dx, word [word_D8778]
+        mov dx, word [GusDramPort]
         in al, dx
         in al, dx
         in al, dx
@@ -798,7 +798,7 @@ loc_AE96B:
         pop ax
         out dx, al
         popf
-        mov dword [dword_D7B08], 1
+        mov dword [GusStreamBusyRight], 1
 loc_AE9E2:
         mov eax, 1
         ret
@@ -806,17 +806,17 @@ loc_AE9E8:
         LD xor, eax, eax
         ret
 GusServiceStream:
-        cmp dword [dword_D7AFC], byte 0
+        cmp dword [GusStreamBusyLeft], byte 0
         je short loc_AEA05
         LD xor, eax, eax
         call sub_ADEE9
-        mov dword [dword_D7AFC], 0
+        mov dword [GusStreamBusyLeft], 0
 loc_AEA05:
-        cmp dword [dword_D7B08], byte 0
+        cmp dword [GusStreamBusyRight], byte 0
         je short loc_AEA22
         mov eax, 1
         call sub_ADEE9
-        mov dword [dword_D7B08], 0
+        mov dword [GusStreamBusyRight], 0
 loc_AEA22:
         ret
 GusStartStream:
@@ -923,60 +923,60 @@ loc_AEB45:
         LD xor, edx, edx
         call sub_B1CBC
         mov dword [byte_D84A0], eax
-        mov dx, word [word_D8770]
+        mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D849C]
         out dx, al
         mov al, 1
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, 400h
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 3
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BC]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 2
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BE]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Bh
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BC]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Ah
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BE]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 5
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [dword_D84C4]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 4
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84C6]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov al, 2Ch
-        mov dx, word [word_D8776]
+        mov dx, word [GusDataHighPort]
         out dx, al
         push ax
         push dx
-        mov dx, word [word_D8778]
+        mov dx, word [GusDramPort]
         in al, dx
         in al, dx
         in al, dx
@@ -988,82 +988,82 @@ loc_AEB45:
         pop ax
         out dx, al
         mov al, 9
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, 0FFFFh
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         mov al, 0Ch
         out dx, al
-        mov dx, word [word_D8776]
+        mov dx, word [GusDataHighPort]
         mov al, 7
         out dx, al
-        mov dx, word [word_D8770]
+        mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D84A0]
         out dx, al
         mov al, 1
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, 400h
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 9
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, 0
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 3
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BC]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 2
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BE]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 5
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [dword_D84C0]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 4
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84C2]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         pushf
         cli
-        mov dx, word [word_D8770]
+        mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D84A0]
         out dx, al
         mov al, 0Bh
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BC]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Ah
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov ax, word [word_D84BE]
-        mov dx, word [word_D8774]
+        mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov al, 24h
-        mov dx, word [word_D8776]
+        mov dx, word [GusDataHighPort]
         out dx, al
         push ax
         push dx
-        mov dx, word [word_D8778]
+        mov dx, word [GusDramPort]
         in al, dx
         in al, dx
         in al, dx
@@ -1091,18 +1091,18 @@ sub_AEDBC:
         mov dword [dword_D8498], 0
         pushf
         cli
-        mov dx, word [word_D8770]
+        mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D84A0]
         out dx, al
         mov al, 0
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov al, 3
-        mov dx, word [word_D8776]
+        mov dx, word [GusDataHighPort]
         out dx, al
         push ax
         push dx
-        mov dx, word [word_D8778]
+        mov dx, word [GusDramPort]
         in al, dx
         in al, dx
         in al, dx
@@ -1114,18 +1114,18 @@ sub_AEDBC:
         pop ax
         out dx, al
         popf
-        mov dx, word [word_D8770]
+        mov dx, word [GusVoiceSelectPort]
         mov al, byte [byte_D849C]
         out dx, al
         mov al, 0
-        mov dx, word [word_D8772]
+        mov dx, word [GusRegSelectPort]
         out dx, al
         mov al, 3
-        mov dx, word [word_D8776]
+        mov dx, word [GusDataHighPort]
         out dx, al
         push ax
         push dx
-        mov dx, word [word_D8778]
+        mov dx, word [GusDramPort]
         in al, dx
         in al, dx
         in al, dx
@@ -1488,8 +1488,8 @@ loc_AF194:
         leave
         ret
 GusStreamBusy:
-        mov eax, dword [dword_D7AFC]
-        or eax, dword [dword_D7B08]
+        mov eax, dword [GusStreamBusyLeft]
+        or eax, dword [GusStreamBusyRight]
         ret
 sub_AF1A4:
         push ebp

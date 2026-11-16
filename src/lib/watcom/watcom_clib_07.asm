@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_8FFD4 progbits alloc exec nowrite align=1
-extern __CMain, __FiniRtns, __InitRtns, _Extender, _ExtenderSubtype, _osmajor, _osminor, dword_D41F4
+extern __CMain, __FiniRtns, __InitRtns, _Extender, _ExtenderSubtype, _osmajor, _osminor, FpuFlags
 extern _dynend, _curbrk, _LpCmdLine, _LpPgmName, _STACKLOW, _STACKTOP, _Envptr, kaufmfont
-extern ___begtext, stackarea, word_D41F8, _psp, __no87, _Envptr_w4
+extern ___begtext, stackarea, EmuHookFlags, _psp, __no87, _Envptr_w4
 global start, __saved_DS, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082, loc_90090
 global loc_900A1, loc_900B4, loc_900D0, loc_90108, loc_9010A, loc_90127, loc_9013B, loc_9014C
 global loc_90163, loc_901B8, loc_901CA, loc_901DF, loc_901ED, loc_9022E, loc_90265, WriteConsoleMessage
@@ -115,7 +115,7 @@ loc_900B4:
 loc_900D0:
         cmp ax, 4243h
         jne short loc_9010A
-        mov dword [dword_D41F4], edx
+        mov dword [FpuFlags], edx
         mov esi, edx
         mov edx, dword [byte esi+01Ch]
         mov ebx, esp
@@ -143,7 +143,7 @@ loc_9010A:
         mov ax, gs
         cmp ax, byte 0
         je short loc_90127
-        mov word [word_D41F8], ax
+        mov word [EmuHookFlags], ax
 loc_90127:
         mov ax, 6
         mov bx, ds

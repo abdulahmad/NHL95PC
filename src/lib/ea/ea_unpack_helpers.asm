@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2F40 progbits alloc exec nowrite align=1
-extern _FtoS_, byte_D42E4, dword_D30C8, dword_D43E4, forcedecpt_, ShapeBankCount, ShapeBankEntry, sub_90373
+extern _FtoS_, byte_D42E4, KeyedDraw, RowCopyFunc, forcedecpt_, ShapeBankCount, ShapeBankEntry, sub_90373
 extern PutBlock, sub_B01B0, sub_B026C, bcopy, sub_B763B
 global sub_A2F40, loc_A2F61, sub_A2F84, sub_A2FD0, loc_A3006, loc_A3015, loc_A3024, loc_A302C
 global sub_A3050, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, _EFG_Format_, sub_A30F8, loc_A3105
@@ -12,7 +12,7 @@ sub_A2F40:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_A2F61
         push eax
         push ebx
@@ -21,13 +21,13 @@ sub_A2F40:
         add esp, byte 0Ch
         ret
 loc_A2F61:
-        mov dword [dword_D43E4], sub_B01B0
+        mov dword [RowCopyFunc], sub_B01B0
         push eax
         push ebx
         push edx
         call PutBlock
         add esp, byte 0Ch
-        mov dword [dword_D43E4], bcopy
+        mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
 sub_A2F84:

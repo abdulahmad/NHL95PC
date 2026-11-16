@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_6A033 progbits alloc exec nowrite align=1
-extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, byte_D42C3, byte_EA058, dword_EA034, dword_EA038
+extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, byte_D42C3, InputRecordCount, dword_EA034, dword_EA038
 extern dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C, dword_EA050, dword_EA054, dword_EA05C
 extern dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070, dword_EA074, dword_EA078, dword_EA07C
 extern dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090, dword_EA094, dword_EA098, dword_EA09C
@@ -34,23 +34,23 @@ global loc_6B05F
 sub_6A033:
         push dword 4
         call __CHK
-        or dword [byte_EA058], eax
+        or dword [InputRecordCount], eax
         ret
 sub_6A044:
         push dword 4
         call __CHK
         not eax
-        and dword [byte_EA058], eax
+        and dword [InputRecordCount], eax
         ret
 sub_6A057:
         push dword 4
         call __CHK
-        xor dword [byte_EA058], eax
+        xor dword [InputRecordCount], eax
         ret
 InputRecordAvail:
         push dword 4
         call __CHK
-        mov eax, dword [byte_EA058]
+        mov eax, dword [InputRecordCount]
         ret
 sub_6A078:
         push dword 8
@@ -1360,7 +1360,7 @@ sub_6AD4F:
         push edx
         cmp dword [dword_EA07C], byte 0
         je short loc_6AD6D
-        test byte [byte_EA058], 41h
+        test byte [InputRecordCount], 41h
         je short loc_6AD7A
 loc_6AD6D:
         mov eax, dword_EA034
@@ -1394,11 +1394,11 @@ sub_6ADA7:
         call sub_6A2BC
         cmp dword [dword_EA0B4], byte 0
         je short loc_6ADDB
-        test byte [byte_EA058], 42h
+        test byte [InputRecordCount], 42h
         je short loc_6ADE9
 loc_6ADDB:
         call sub_6A234
-        and byte [byte_EA058], 0FDh
+        and byte [InputRecordCount], 0FDh
         jmp short loc_6AE44
 loc_6ADE9:
         cmp dword [dword_EA05C], byte 0
@@ -1556,7 +1556,7 @@ sub_6AFAD:
 sub_6AFBE:
         push dword 4
         call __CHK
-        test byte [byte_EA058], 20h
+        test byte [InputRecordCount], 20h
         je short loc_6AFDA
         cmp dword [dword_EA05C], byte 0
         jne short loc_6B001
@@ -1595,7 +1595,7 @@ sub_6B008:
         call SetDrawBitmap
         add esp, byte 4
         call sub_6A3C0
-        test byte [byte_EA058], 1
+        test byte [InputRecordCount], 1
         je short loc_6B03F
         xor ecx, ecx
         mov dword [dword_EA05C], ecx
@@ -1609,7 +1609,7 @@ loc_6B03F:
         call sub_6A990
 loc_6B05F:
         call sub_6AD4F
-        and byte [byte_EA058], 0FEh
+        and byte [InputRecordCount], 0FEh
         mov esi, dword [dword_EA040]
         push esi
         mov edi, dword [dword_EA03C]

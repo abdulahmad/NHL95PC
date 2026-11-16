@@ -4,9 +4,9 @@ bits 32
 section s_8DF70 progbits alloc exec nowrite align=1
 extern __STOSB, str_EavesaCom, str_CUtilEavesaCom, str_InitgraphicsEAVESACOM, str_CEavesaDat, str_InitgraphicsNEWVERSIONOF, str_VESA, str_InitgraphicsINITMEMMAN
 extern str_InitgraphicsINVALIDSCREEN, str_VESAVideoBiosDriver, byte_EDABB, vesamodeok, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7
-extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, dword_D3024, dword_D3044, dword_D3048, dword_D304C
-extern dword_D3050, dword_D3054, dword_D3058, dword_D30A4, dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0
-extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, dword_D3104, dword_D4108
+extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, GraphicsReady, dword_D3044, dword_D3048, dword_D304C
+extern dword_D3050, dword_D3054, dword_D3058, ScreenWidth, BackBufferWidth, dword_D30D8, dword_D30DC, dword_D30E0
+extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108
 extern dword_D4F4C, dword_D4F50, dword_EDABA, vesapresent, dword_EDCBC, FatalError, FreeMemBlock, spawnl_
 extern strncmp_, MemPtrSize, sub_8E8A0, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
 extern sub_B5E00, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
@@ -114,7 +114,7 @@ initgraphics:
         call FatalError
         add esp, byte 4
 loc_8E0A0:
-        cmp dword [dword_D3024], byte 0
+        cmp dword [GraphicsReady], byte 0
         jne short loc_8E0AE
         call SaveTextMode
 loc_8E0AE:
@@ -233,7 +233,7 @@ loc_8E237:
         xor edi, edi
         cmp byte [esp+esi], 0
         je short loc_8E25F
-        cmp dword [dword_D3024], byte 0
+        cmp dword [GraphicsReady], byte 0
         je short loc_8E24F
         mov eax, esi
         or ah, 81h
@@ -283,7 +283,7 @@ loc_8E29F:
         cmp di, byte 4Fh
         je short loc_8E2E0
 loc_8E2A9:
-        cmp dword [dword_D3024], byte 8
+        cmp dword [GraphicsReady], byte 8
         jne short loc_8E2BC
         push byte 0
         call sub_B5E00
@@ -295,12 +295,12 @@ loc_8E2BC:
         add esp, byte 4
         mov ecx, 140h
         mov eax, 0C8h
-        mov dword [dword_D3024], 5
+        mov dword [GraphicsReady], 5
         jmp short loc_8E2F8
 loc_8E2E0:
         mov ecx, dword [nosplit esi*8+dword_D2F8C]
         mov eax, dword [nosplit esi*8+dword_D2F90]
-        mov dword [dword_D3024], 8
+        mov dword [GraphicsReady], 8
 loc_8E2F8:
         mov dword [dword_D3044], ecx
         mov dword [dword_D3048], eax
@@ -312,7 +312,7 @@ loc_8E2F8:
         mov ebp, eax
         sub ebp, ebx
         mov dword [dword_D3058], ebp
-        mov dword [dword_D30D4], ecx
+        mov dword [BackBufferWidth], ecx
         mov dword [dword_D30D8], eax
         xor ebx, ebx
         mov dword [dword_D30DC], ebx
@@ -332,7 +332,7 @@ loc_8E2F8:
         xor esi, esi
         shl eax, 2
 loc_8E376:
-        mov dword [dword esi+dword_D3104], ebx
+        mov dword [dword esi+ScreenRowTable], ebx
         add ebx, ecx
         add esi, byte 4
         cmp esi, eax
@@ -351,7 +351,7 @@ loc_8E38C:
         cmp ebx, byte 50h
         jne short loc_8E38C
         call SetScreenTarget
-        mov dword [dword_EDCBC], dword_D30A4
+        mov dword [dword_EDCBC], ScreenWidth
         add esp, byte 8
         pop ebp
         pop edi

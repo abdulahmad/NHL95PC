@@ -17,7 +17,7 @@ extern str_dbgPenShot, str_dbgPosVel, str_dbgPuckc, str_dbgRef, str_dbgS, str_db
 extern str_debError, str_dumpAway, str_dumpGlHdrA, str_dumpGlHdrH, str_dumpGlLine, str_dumpHex, str_dumpHome, str_dumpPlHdrA
 extern str_dumpPlHdrH, str_dumpPlLineA, str_dumpPlLineH, str_dumpPool, str_dumpRule, str_dumpSortcords, str_dumpSortLine, str_dumpTeamHdrA
 extern str_dumpTeamHdrH, str_dumpTmstructs, str_ErrDumpStats, str_fmode_at, str_newline, str_pen, str_statslog, sub_93E38
-extern threat, VisTeam, WaitKey, word_CBC44, xc1, yc1
+extern threat, VisTeam, WaitKey, SortPending, xc1, yc1
 global DebugMonitor, DebugMonitor_pop, DumpStatsLog
 ;-----------------------------------------------------------------------------
 ; DebugMonitor                                 688A4  95 PC, medium confidence

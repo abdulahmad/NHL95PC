@@ -46,7 +46,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
     buttons = ReadJoyRaw() >> shift;
     if ((buttons & 0x30) == 0) {
         TextSaveState(state);
-        TextSetFont((int)unk_D45D8);
+        TextSetFont((int)DefaultFont);
         SetScreenTarget();
         ClearScreen(0);
         memset(pal, 0, 0x300);

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B4CD8 progbits alloc exec nowrite align=1
-extern byte_D42E4, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30BC, dword_D30C0, dword_D30CC, dword_D30D0
+extern byte_D42E4, cliprect_y0, cliprect_y1, ScreenWidth, dword_D30BC, dword_D30C0, DrawDestBuffer, DrawVideoBase
 extern sub_9A7A0, FillRectSpans, SetupRectFill
 global sub_B4CD8, sub_B4CF2, loc_B4D0C, loc_B4D1A, loc_B4D3C, loc_B4D49, loc_B4D53, loc_B4D5B
 global loc_B4D7A, loc_B4D80, loc_B4D9E, loc_B4DA5, loc_B4DAD, SetColorRemap, sub_B4DEC, loc_B4E17
@@ -67,11 +67,11 @@ loc_B4D0C:
 loc_B4D1A:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         db 089h,05Dh,0E0h                       ; insn: mov [ebp-20h],ebx
         db 08Bh,03Bh                            ; insn: mov edi,[ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-0Ch]
         LD xor, eax, eax
@@ -105,7 +105,7 @@ loc_B4D5B:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         jmp short loc_B4D53
@@ -120,7 +120,7 @@ loc_B4D80:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         add edi, dword [byte ebp-0Ch]
         LD sub, edi, edx
         jmp short loc_B4D3C
@@ -141,7 +141,7 @@ loc_B4DAD:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         LD or, ecx, ecx
@@ -244,11 +244,11 @@ loc_B4E84:
 loc_B4E92:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         mov dword [byte ebp-020h], ebx
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-0Ch]
         LD xor, eax, eax
@@ -284,7 +284,7 @@ loc_B4EDC:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         jmp short loc_B4ED4
@@ -299,7 +299,7 @@ loc_B4F01:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         add edi, dword [byte ebp-0Ch]
         LD sub, edi, edx
         jmp short loc_B4EB4
@@ -330,7 +330,7 @@ loc_B4F40:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         LD or, ecx, ecx
@@ -341,7 +341,7 @@ SetDrawBitmap:
         LD mov, edx, edi
         LD mov, eax, esi
         mov esi, dword [byte esp+04h]
-        mov edi, dword_D30A4
+        mov edi, ScreenWidth
         mov ecx, 0Ch
         rep movsd
         LD mov, edi, edx
@@ -515,11 +515,11 @@ loc_B50F2:
 loc_B5104:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         mov dword [byte ebp-020h], ebx
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-014h]
         LD or, edx, edx
@@ -596,7 +596,7 @@ loc_B519B:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B51BD:
@@ -624,7 +624,7 @@ loc_B51E1:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         add edi, dword [byte ebp-0Ch]
         LD sub, edi, edx
         jmp near loc_B5178
@@ -632,7 +632,7 @@ loc_B51FE:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         jmp short loc_B525A
 loc_B520E:
         neg al
@@ -653,7 +653,7 @@ loc_B5220:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B5242:
@@ -829,11 +829,11 @@ loc_B539A:
 loc_B53AC:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         mov dword [byte ebp-020h], ebx
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-014h]
         LD or, edx, edx
@@ -912,7 +912,7 @@ loc_B544A:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B546C:
@@ -940,7 +940,7 @@ loc_B5490:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         add edi, dword [byte ebp-0Ch]
         LD sub, edi, edx
         jmp near loc_B541E
@@ -948,7 +948,7 @@ loc_B54AD:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         jmp short loc_B551F
 loc_B54BD:
         neg al
@@ -979,7 +979,7 @@ loc_B54DE:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B5507:
@@ -1082,11 +1082,11 @@ loc_B55C9:
         std
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         mov dword [byte ebp-020h], ebx
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-0Ch]
         LD xor, eax, eax
@@ -1123,7 +1123,7 @@ loc_B5610:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         jmp short loc_B5608
@@ -1138,7 +1138,7 @@ loc_B5635:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         sub edi, dword [byte ebp-0Ch]
         LD add, edi, edx
         jmp short loc_B55EC
@@ -1167,7 +1167,7 @@ loc_B566A:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         LD or, ecx, ecx
@@ -1304,11 +1304,11 @@ loc_B57B2:
         std
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         mov dword [byte ebp-020h], ebx
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-014h]
         LD or, edx, edx
@@ -1391,7 +1391,7 @@ loc_B584E:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B5870:
@@ -1419,7 +1419,7 @@ loc_B5894:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         sub edi, dword [byte ebp-0Ch]
         LD add, edi, edx
         jmp near loc_B582A
@@ -1440,7 +1440,7 @@ loc_B58C7:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         jmp short loc_B5915
 loc_B58D7:
         LD add, ecx, edx
@@ -1456,7 +1456,7 @@ loc_B58DB:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B58FD:
@@ -1558,11 +1558,11 @@ loc_B59B9:
         std
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         mov dword [byte ebp-020h], ebx
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-0Ch]
         LD xor, eax, eax
@@ -1601,7 +1601,7 @@ loc_B5A09:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         jmp short loc_B5A01
@@ -1616,7 +1616,7 @@ loc_B5A2E:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         sub edi, dword [byte ebp-0Ch]
         LD add, edi, edx
         jmp short loc_B59DC
@@ -1649,7 +1649,7 @@ loc_B5A6F:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-0Ch]
         LD or, ecx, ecx
@@ -1787,11 +1787,11 @@ loc_B5BC2:
         std
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
-        add ebx, dword [dword_D30CC]
+        add ebx, dword [DrawDestBuffer]
         mov dword [byte ebp-020h], ebx
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         mov esi, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-014h]
         LD or, edx, edx
@@ -1876,7 +1876,7 @@ loc_B5C69:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B5C8B:
@@ -1904,7 +1904,7 @@ loc_B5CAF:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         sub edi, dword [byte ebp-0Ch]
         LD add, edi, edx
         jmp near loc_B5C38
@@ -1927,7 +1927,7 @@ loc_B5CEB:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         jmp short loc_B5D42
 loc_B5CFB:
         LD add, ecx, edx
@@ -1945,7 +1945,7 @@ loc_B5CFF:
         mov ebx, dword [byte ebp-020h]
         mov edi, dword [ebx]
         add edi, dword [byte ebp-04h]
-        add edi, dword [dword_D30D0]
+        add edi, dword [DrawVideoBase]
         LD mov, ecx, edx
         mov edx, dword [byte ebp-018h]
 loc_B5D2A:

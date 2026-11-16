@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_903F0 progbits alloc exec nowrite align=1
-extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104
-extern dword_D4108, dword_D43E4, bcopy, sub_B5E00, BlitBlock, sub_B608B, sub_B6217, AndPixel
+extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable
+extern dword_D4108, RowCopyFunc, bcopy, sub_B5E00, BlitBlock, sub_B608B, sub_B6217, AndPixel
 extern sub_B6423, OrPixel
 global PutBlock, loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512
 global loc_9051E, loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, DrawBitmap
@@ -18,7 +18,7 @@ PutBlock:
         sub esp, byte 24h
         mov eax, dword [byte esp+034h]
         mov esi, dword [byte esp+038h]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_9041B
         mov ebx, dword [byte esp+03Ch]
         push ebx
@@ -34,7 +34,7 @@ loc_9041B:
         mov dword [byte esp+020h], edx
         mov ebp, dword [byte eax+04h]
         sar ebp, 10h
-        mov eax, dword [dword_D30D0]
+        mov eax, dword [DrawVideoBase]
         mov dword [byte esp+01Ch], eax
         xor ebx, ebx
         mov dword [byte esp+04h], ebx
@@ -74,8 +74,8 @@ loc_90483:
         sub dword [byte esp+020h], eax
 loc_9049B:
         mov eax, dword [byte esp+03Ch]
-        add esi, dword [nosplit eax*4+dword_D3104]
-        mov eax, dword [dword_D30A4]
+        add esi, dword [nosplit eax*4+ScreenRowTable]
+        mov eax, dword [ScreenWidth]
         mov ecx, dword [byte esp+020h]
         sub eax, ecx
         mov dword [esp], eax
@@ -118,7 +118,7 @@ loc_9051E:
         add eax, esi
         push eax
         push edi
-        call dword [dword_D43E4]
+        call dword [RowCopyFunc]
         add esp, byte 0Ch
         add esi, dword [byte esp+014h]
         add edi, dword [byte esp+018h]
@@ -150,7 +150,7 @@ loc_90566:
         push ebp
         push eax
         push edi
-        call dword [dword_D43E4]
+        call dword [RowCopyFunc]
         add esp, byte 0Ch
         add edi, ebp
         mov ebp, dword [byte esp+08h]
@@ -165,7 +165,7 @@ loc_90566:
         mov edx, dword [byte esp+020h]
         push edx
         push edi
-        call dword [dword_D43E4]
+        call dword [RowCopyFunc]
         add esp, byte 0Ch
         mov esi, ebp
         add edi, ebp
@@ -175,7 +175,7 @@ loc_905C8:
         push ebx
         push eax
         push edi
-        call dword [dword_D43E4]
+        call dword [RowCopyFunc]
         add esp, byte 0Ch
         mov esi, dword [byte esp+08h]
         add edi, dword [byte esp+020h]
@@ -262,7 +262,7 @@ sub_90698:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_906B9
         push eax
         push ebx
@@ -271,13 +271,13 @@ sub_90698:
         add esp, byte 0Ch
         ret
 loc_906B9:
-        mov dword [dword_D43E4], loc_90660
+        mov dword [RowCopyFunc], loc_90660
         push eax
         push ebx
         push edx
         call PutBlock
         add esp, byte 0Ch
-        mov dword [dword_D43E4], bcopy
+        mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
 sub_906DC:
@@ -314,7 +314,7 @@ DrawArtAnd:
         sub esp, byte 10h
         mov eax, dword [byte esp+020h]
         mov edi, dword [byte esp+024h]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_9074B
         mov esi, dword [byte esp+028h]
         push esi
@@ -450,7 +450,7 @@ sub_9087C:
         sub esp, byte 10h
         mov eax, dword [byte esp+020h]
         mov edi, dword [byte esp+024h]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_908A9
         mov esi, dword [byte esp+028h]
         push esi

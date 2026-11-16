@@ -27,7 +27,7 @@ extern refsignal, RefStep, ReplayRecordReset, replaystart, savedmousex, savedmou
 extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopathend, sopathpoint
 extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, gsumheader
 extern gsumtail, hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats
-extern VisTeam, penaltysc, word_CBC44, lcsel_aw, word_CBD64, word_CBD66, refhitcount, injurystop
+extern VisTeam, penaltysc, SortPending, lcsel_aw, word_CBD64, word_CBD66, refhitcount, injurystop
 extern Pencntdwn2, word_CC10C, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, milestonesaid_b2
 extern word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam, word_E9AB0, rinkobjused
 extern xc1, yc1, yleader
@@ -258,7 +258,7 @@ SaveGameState:
         mov dx, word [shownumbers]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_CBC44]
+        mov dx, word [SortPending]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [exitgame]
@@ -1043,7 +1043,7 @@ LoadGameState:
         mov dword [shownumbers], eax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [word_CBC44], ax
+        mov word [SortPending], ax
         add ebx, byte 2
         mov ax, word [ebx]
         mov word [exitgame], ax

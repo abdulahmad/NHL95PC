@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_5B9D1 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, assinsert, assreplace, asstab, awscore, awtmgoaliesc, awtmnear
-extern awtmnearpl, awtmstruct, bannermsg, bannertimer, byte_E038A, c1playernum, c2playernum, camx
+extern awtmnearpl, awtmstruct, bannermsg, bannertimer, LinePlayersAway, c1playernum, c2playernum, camx
 extern camy, changeplayer_ret5, checkcoll, checkwindow, ChkGoalies, ClearPenaltyBuffer, clearteams, cliprect_y0
 extern cliprect_y1, clockticks, collflag, cont1team, cont2team, crowdlevel, cupceremony, curperiod
 extern CwdExciteLvl, DecayCrowdLevel, defsort_d, defsort_fwd, doinput, DrawCallBanner, DrawFrameSprite, DrawRinkEndArt
@@ -24,7 +24,7 @@ extern rinkscrolly, SetBoxDoorObject, SetClipWindow, SetPenaltyStrength, Setplas
 extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, SortIndices
 extern sortobj15, SPAtab, SprSort_loop, SprSort_test, JoyButtonMap, sublist, sublist_defl, sublist_defl_m3
 extern sublist_m2, SumCwdExciteLvl, threat, UpdateCoachModes, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa
-extern word_CBC44, word_E03A0, xc1, yc1, yleader, Ylist
+extern SortPending, LastShooterTeam, xc1, yc1, yleader, Ylist
 global GetPeriodTime, ResetClock, ClearSortCords, defaultsprites_0, TryAddPlayerToList, SetPlList, setpersonel, StartPer
 global DoGameFrame, RestoreBenchEnergy, updatecrowdf, periodicevents, updateplayers, updateanim, freezewindow, cleargamevars
 global DrawRinkOverlays, setupice, clockcont_0, ClockTick, SprSortVert, SprSort, GameOver, SetExitGame
@@ -320,7 +320,7 @@ SetPlList:
         movsx ax, byte [dword edx+ebx+priolist]
         mov word [byte esp+08h], ax
         mov al, byte [dword edx+ebx+priolist]
-        mov byte [dword edx+byte_E038A], al
+        mov byte [dword edx+LinePlayersAway], al
         mov eax, dword [byte esp+08h]
         test ax, ax
         jne short .10
@@ -373,7 +373,7 @@ SetPlList:
         movsx cx, byte [dword ebx+PlList]
         test cx, cx
         jl near .29
-        movsx ax, byte [dword ebx+byte_E038A]
+        movsx ax, byte [dword ebx+LinePlayersAway]
         mov word [byte esp+08h], ax
         movsx ecx, cx
         lea edx, [ecx+ecx]
@@ -524,7 +524,7 @@ SetPlList:
 ; setpersonel                      5BEF4  94G collide94.asm, medium confidence
 ; Set the personnel of team t: clear newpos / newpnum of the team's 6 sort
 ; objects, build PlList (SetPlList: pnum per wanted player, -1 none, the new
-; positions at PlList+6 = byte_E038A). Pass 1: a wanted player already on the
+; positions at PlList+6 = LinePlayersAway). Pass 1: a wanted player already on the
 ; ice keeps his sort object (newpos from the list, newpnum = pnum). Pass 2:
 ; each remaining wanted player takes the last free sort object (newpnum < 0),
 ; stopping at the first one with a position; a sort object without a position
@@ -572,7 +572,7 @@ setpersonel:
         cmp cx, word [esp]
         jne short .4
         movsx edx, si
-        mov cl, byte [dword edx+byte_E038A]
+        mov cl, byte [dword edx+LinePlayersAway]
         mov byte [byte eax+newpos], cl
         mov cl, byte [esp]
         mov byte [byte eax+newpnum], cl
@@ -619,7 +619,7 @@ setpersonel:
         mov word [byte ebx+position], 5
 .12:
         movsx eax, si
-        mov dl, byte [dword eax+byte_E038A]
+        mov dl, byte [dword eax+LinePlayersAway]
         mov byte [byte ebx+newpos], dl
         mov dl, byte [esp]
         mov byte [byte ebx+newpnum], dl
@@ -901,7 +901,7 @@ periodicevents:
         call freezewindow
         call clockcont_0
 .1:
-        cmp word [word_CBC44], byte 0
+        cmp word [SortPending], byte 0
         jne near .x
         mov dl, byte [lldisp]
         dec dl
@@ -1329,7 +1329,7 @@ updateplayers:
         call sfx
 .35:
         mov ax, word [byte esi+SCnum]
-        mov word [word_E03A0], ax
+        mov word [LastShooterTeam], ax
         cmp ax, word [c1playernum]
         jne short .36
         call ReadJoy1
@@ -1727,7 +1727,7 @@ cleargamevars:
         push edx
         xor edx, edx
         mov dword [dword_E03A8], edx
-        mov dword [word_E03A0], edx
+        mov dword [LastShooterTeam], edx
         mov dword [regd5], edx
         mov dword [regd4], edx
         mov dword [regd3], edx

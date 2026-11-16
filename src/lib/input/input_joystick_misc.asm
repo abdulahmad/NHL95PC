@@ -4,14 +4,14 @@ bits 32
 section s_B300C progbits alloc exec nowrite align=1
 extern __GETDS, atexit_, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, joyedgedir
 extern byte_D4244, byte_D4245, byte_D4246, byte_D4280, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1
-extern dword_D2C84, dword_D3090, dword_D3096, dword_D30A4, dword_D4158, dword_D415C, dword_D4160, dword_D4164
-extern dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187, dword_D418B
-extern dword_D418F, dword_D4193, dword_D4197, dword_D419B, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
-extern dword_D41AF, dword_D41B3, dword_D41FC, dword_D4200, dword_D4204, dword_D4208, dword_D420C, dword_D4210
+extern BiosKeyFunc, dword_D3090, dword_D3096, ScreenWidth, dword_D4158, dword_D415C, dword_D4160, dword_D4164
+extern JoyAxisY2, JoyAxisMask, JoyX1Threshold, dword_D417B, JoyX1Center, dword_D4183, dword_D4187, dword_D418B
+extern dword_D418F, JoyY1Threshold, dword_D4197, JoyY1Center, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
+extern JoyXScale, JoyYScale, dword_D41FC, dword_D4200, dword_D4204, dword_D4208, dword_D420C, dword_D4210
 extern dword_D4214, dword_D4218, dword_D421C, dword_D4220, dword_D4224, dword_D4228, dword_D422C, dword_D4230
 extern dword_D4234, dword_D4238, dword_D423C, dword_D4240, dword_D4248, dword_D424C, dword_D4250, dword_D4254
 extern dword_D4258, dword_D425C, dword_D4260, dword_D4264, dword_D4268, dword_D426C, dword_D4270, dword_D4274
-extern dword_D4278, dword_D427C, exit_, FatalError, joyenablemask, off_D42A0, FillRect, DosGetVector
+extern dword_D4278, dword_D427C, exit_, FatalError, joyenablemask, KbdIdleHook, FillRect, DosGetVector
 extern DosSetVector, tickcount, tickdeadline, ticklast, unk_8E870, word_D3094, word_D309A
 global sub_B300C, sub_B3010, sub_B3036, loc_B3089, sub_B308B, loc_B30B0, FindShape, FindShapeQuiet
 global loc_B30BD, loc_B30D1, loc_B30E3, loc_B30F1, sub_B30F4, loc_B3115, loc_B3129, loc_B3132
@@ -183,8 +183,8 @@ ReadJoystickPorts:
         and al, 30h
         mov byte [byte_D4175], al
         mov bl, 3
-        mov dword [dword_D416C], 50h
-        mov dword [dword_D4170], 50h
+        mov dword [JoyAxisY2], 50h
+        mov dword [JoyAxisMask], 50h
         cli
         out dx, al
         mov ecx, 14h
@@ -206,18 +206,18 @@ loc_B31BB:
 loc_B31BF:
         test al, 2
         je short loc_B31A9
-        mov dword [dword_D4170], ecx
+        mov dword [JoyAxisMask], ecx
         and bl, 1
         jne short loc_B31A9
         jmp short loc_B31DB
 loc_B31D0:
-        mov dword [dword_D416C], ecx
+        mov dword [JoyAxisY2], ecx
         and bl, 2
         jne short loc_B31BF
 loc_B31DB:
         sti
-        mov eax, dword [dword_D416C]
-        cmp eax, dword [dword_D4177]
+        mov eax, dword [JoyAxisY2]
+        cmp eax, dword [JoyX1Threshold]
         jge short loc_B3258
         dec dword [dword_D4187]
         jle short loc_B3207
@@ -227,31 +227,31 @@ loc_B31DB:
         jmp near loc_B32A3
 loc_B3207:
         mov ebx, dword [dword_D417B]
-        mov dword [dword_D4177], ebx
-        mov ebx, dword [dword_D417F]
+        mov dword [JoyX1Threshold], ebx
+        mov ebx, dword [JoyX1Center]
 loc_B3219:
-        sub ebx, dword [dword_D4177]
+        sub ebx, dword [JoyX1Threshold]
         jle short loc_B322F
         LD xor, edx, edx
         mov eax, 4000h
         div ebx
-        mov dword [dword_D41AF], eax
+        mov dword [JoyXScale], eax
 loc_B322F:
         LD mov, eax, ebx
         mov dx, 201h
         shr eax, 1
         LD mov, ebx, eax
         shr ebx, 1
-        add eax, dword [dword_D4177]
+        add eax, dword [JoyX1Threshold]
         LD add, eax, ebx
         mov dword [dword_D418F], eax
         LD sub, eax, ebx
         LD sub, eax, ebx
         mov dword [dword_D418B], eax
-        mov eax, dword [dword_D416C]
+        mov eax, dword [JoyAxisY2]
         jmp short loc_B3285
 loc_B3258:
-        cmp eax, dword [dword_D417F]
+        cmp eax, dword [JoyX1Center]
         jle short loc_B3285
         dec dword [dword_D4187]
         jle short loc_B3277
@@ -261,7 +261,7 @@ loc_B3258:
         jmp short loc_B32A3
 loc_B3277:
         mov ebx, dword [dword_D4183]
-        mov dword [dword_D417F], ebx
+        mov dword [JoyX1Center], ebx
         jmp short loc_B3219
 loc_B3285:
         mov dword [dword_D4187], 14h
@@ -274,8 +274,8 @@ loc_B32A3:
         jl short loc_B32BE
         or byte [byte_D4176], 4
 loc_B32BE:
-        mov eax, dword [dword_D4170]
-        cmp eax, dword [dword_D4193]
+        mov eax, dword [JoyAxisMask]
+        cmp eax, dword [JoyY1Threshold]
         jae short loc_B3346
         dec dword [dword_D41A3]
         jle short loc_B32E9
@@ -285,34 +285,34 @@ loc_B32BE:
         jmp near loc_B3391
 loc_B32E9:
         mov ebx, dword [dword_D4197]
-        mov dword [dword_D4193], ebx
-        mov ebx, dword [dword_D419B]
+        mov dword [JoyY1Threshold], ebx
+        mov ebx, dword [JoyY1Center]
 loc_B32FB:
-        sub ebx, dword [dword_D4193]
+        sub ebx, dword [JoyY1Threshold]
         jle short loc_B3311
         LD xor, edx, edx
         mov eax, 4000h
         div ebx
-        mov dword [dword_D41B3], eax
+        mov dword [JoyYScale], eax
 loc_B3311:
         LD mov, eax, ebx
         mov dx, 201h
         shr eax, 1
         LD mov, ebx, eax
         shr ebx, 1
-        add eax, dword [dword_D4193]
+        add eax, dword [JoyY1Threshold]
         LD add, eax, ebx
         mov dword [dword_D41AB], eax
         LD sub, eax, ebx
         LD sub, eax, ebx
         mov dword [dword_D41A7], eax
-        mov eax, dword [dword_D4170]
+        mov eax, dword [JoyAxisMask]
         jmp short loc_B3373
 loc_B333A:
         or byte [byte_D4176], 8
         jmp near loc_B32BE
 loc_B3346:
-        cmp eax, dword [dword_D419B]
+        cmp eax, dword [JoyY1Center]
         jle short loc_B3373
         dec dword [dword_D41A3]
         je short loc_B3365
@@ -322,7 +322,7 @@ loc_B3346:
         jmp short loc_B3391
 loc_B3365:
         mov ebx, dword [dword_D419F]
-        mov dword [dword_D419B], ebx
+        mov dword [JoyY1Center], ebx
         jmp short loc_B32FB
 loc_B3373:
         mov dword [dword_D41A3], 14h
@@ -356,10 +356,10 @@ loc_B33D2:
         jmp short loc_B33A8
 JoyResetCentres:
         mov byte [joyenablemask], 1
-        mov dword [dword_D4177], 50h
-        mov dword [dword_D417F], 0
-        mov dword [dword_D4193], 50h
-        mov dword [dword_D419B], 0
+        mov dword [JoyX1Threshold], 50h
+        mov dword [JoyX1Center], 0
+        mov dword [JoyY1Threshold], 50h
+        mov dword [JoyY1Center], 0
         ret
 JoyButtonMap:
         push ebp
@@ -372,20 +372,20 @@ JoyButtonMap:
         leave
         ret
 sub_B3421:
-        mov eax, dword [dword_D416C]
-        sub eax, dword [dword_D4177]
+        mov eax, dword [JoyAxisY2]
+        sub eax, dword [JoyX1Threshold]
         jge short loc_B3430
         LD xor, eax, eax
 loc_B3430:
-        mul dword [dword_D41AF]
+        mul dword [JoyXScale]
         sub eax, byte 1Fh
         ret
-        mov eax, dword [dword_D4170]
-        sub eax, dword [dword_D4193]
+        mov eax, dword [JoyAxisMask]
+        sub eax, dword [JoyY1Threshold]
         jge short loc_B3449
         LD xor, eax, eax
 loc_B3449:
-        mul dword [dword_D41B3]
+        mul dword [JoyYScale]
         sub eax, byte 1Fh
         ret
         db 00h
@@ -819,23 +819,23 @@ loc_B39C3:
         db 00h,00h
 KbdGetKey:
         mov ah, 1
-        call dword [dword_D2C84]
+        call dword [BiosKeyFunc]
         jne short loc_B39DE
         LD xor, ax, ax
         ret
 loc_B39DE:
         LD xor, ah, ah
-        call dword [dword_D2C84]
+        call dword [BiosKeyFunc]
         LD or, al, al
         je short loc_B39EC
         LD xor, ah, ah
 loc_B39EC:
         ret
 PollKey:
-        jmp dword [off_D42A0]
+        jmp dword [KbdIdleHook]
 sub_B39F3:
         mov ah, 1
-        call dword [dword_D2C84]
+        call dword [BiosKeyFunc]
         jne short loc_B3A01
         LD xor, ax, ax
         ret
@@ -846,12 +846,12 @@ loc_B3A01:
 loc_B3A07:
         ret
         mov eax, dword [byte esp+04h]
-        mov dword [off_D42A0], eax
+        mov dword [KbdIdleHook], eax
         ret
-        mov eax, dword [off_D42A0]
+        mov eax, dword [KbdIdleHook]
         ret
 WaitKey:
-        call dword [off_D42A0]
+        call dword [KbdIdleHook]
         LD or, ax, ax
         je short WaitKey
         ret
@@ -861,7 +861,7 @@ KbdFlush:
         jne short KbdFlush
         ret
 sub_B3A2F:
-        call dword [off_D42A0]
+        call dword [KbdIdleHook]
         LD or, ax, ax
         jne short loc_B3A47
         call TickDeadlinePassed
@@ -913,7 +913,7 @@ SaveDrawState:
         LD mov, ebp, esp
         push esi
         push edi
-        mov esi, dword_D30A4
+        mov esi, ScreenWidth
         mov edi, dword [byte ebp+08h]
         mov ecx, 18h
         cld
@@ -928,7 +928,7 @@ RestoreDrawState:
         push esi
         push edi
         mov esi, dword [byte ebp+08h]
-        mov edi, dword_D30A4
+        mov edi, ScreenWidth
         mov ecx, 18h
         cld
         rep movsd

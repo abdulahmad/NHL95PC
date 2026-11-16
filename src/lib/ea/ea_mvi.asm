@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_96440 progbits alloc exec nowrite align=1
 extern _os_handle_3, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal, str_DATABUFFER, cliprect_x0, cliprect_x1
-extern cliprect_y0, cliprect_y1, DebugPrintf, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104, FreeMemBlock
+extern cliprect_y0, cliprect_y1, DebugPrintf, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable, FreeMemBlock
 extern sub_8CC70, AllocMemBlock, sub_8CCC4, PushMemDescriptorLocked, sub_8DBD4, sub_8E8F0, FreeBitmap, SaveDrawState
 extern RestoreDrawState, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile, SetScreenTarget, SetClipWindow
 extern CreateBitmap, sub_B5E00, BlitShapeClipped
@@ -19,7 +19,7 @@ sub_96440:
         mov edx, dword [byte esp+02Ch]
         mov edi, dword [byte esp+030h]
         mov eax, dword [byte esp+034h]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_9646B
         push eax
         push edi
@@ -36,7 +36,7 @@ loc_9646B:
         mov dword [byte esp+010h], ebx
         mov ebp, dword [byte edx+04h]
         sar ebp, 10h
-        mov edx, dword [dword_D30D0]
+        mov edx, dword [DrawVideoBase]
         mov dword [byte esp+08h], edx
         xor ecx, ecx
         mov dword [byte esp+04h], ecx
@@ -72,8 +72,8 @@ loc_964D2:
         add dword [byte esp+04h], edx
         sub dword [byte esp+010h], edx
 loc_964EA:
-        add edi, dword [nosplit eax*4+dword_D3104]
-        mov eax, dword [dword_D30A4]
+        add edi, dword [nosplit eax*4+ScreenRowTable]
+        mov eax, dword [ScreenWidth]
         mov ebx, dword [byte esp+010h]
         sub eax, ebx
         mov dword [esp], eax
@@ -190,7 +190,7 @@ sub_965DC:
         push eax
         call SaveDrawState
         add esp, byte 4
-        mov esi, dword [dword_D30D0]
+        mov esi, dword [DrawVideoBase]
         call SetScreenTarget
         mov eax, dword [dword esp+084h]
         add eax, edi

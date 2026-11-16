@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_99A12 progbits alloc exec nowrite align=1
-extern __set_doserrno_, __set_errno_, _osmajor, dword_D4CF0, dword_D4CF4, dword_D4FF1, dword_F243C, dword_F2440
-extern dword_F24C0, dword_F58D8, dword_F58DC, exit_, itoa_, ltoa_, main_, off_D2F68
-extern off_D5668, CMainHook, __CommonInit_, toupper_, ultoa_, unk_D8B14, unk_D8B3E, unk_D8B4A
+extern __set_doserrno_, __set_errno_, _osmajor, dword_D4CF0, dword_D4CF4, dword_D4FF1, dword_F243C, AtexitTable
+extern SpeechBankCount, dword_F58D8, dword_F58DC, exit_, itoa_, ltoa_, main_, ExitHook
+extern off_D5668, CMainHook, __CommonInit_, toupper_, ultoa_, InitRtnsEntry, FiniRtnsEntry, GusInitTable
 global copypart_, loc_99A21, loc_99A41, _splitpath_, loc_99A6C, loc_99A71, loc_99A78, loc_99A7C
 global loc_99A7E, loc_99A8D, loc_99A96, loc_99A9A, loc_99AB2, pickup_, loc_99AEA, loc_99AF1
 global loc_99AF3, _makepath_, loc_99B15, loc_99B21, loc_99B40, loc_99B4B, loc_99B4D, loc_99B57
@@ -262,8 +262,8 @@ _Full_at_exit_rtn_:
         push edx
         sub esp, byte 4
         mov edx, 20h
-        mov ebx, dword [dword_F24C0]
-        mov dword [dword_F24C0], edx
+        mov ebx, dword [SpeechBankCount]
+        mov dword [SpeechBankCount], edx
         mov edx, ebx
         shl edx, 2
 loc_99BDA:
@@ -286,14 +286,14 @@ atexit_:
         push edx
         mov ebx, eax
         mov edx, _Full_at_exit_rtn_
-        mov ecx, dword [dword_F24C0]
-        mov dword [off_D2F68], edx
+        mov ecx, dword [SpeechBankCount]
+        mov dword [ExitHook], edx
         cmp ecx, byte 20h
         jge short loc_99C29
         mov eax, ecx
         lea edx, [byte ecx+01h]
-        mov dword [nosplit ecx*4+dword_F2440], ebx
-        mov dword [dword_F24C0], edx
+        mov dword [nosplit ecx*4+AtexitTable], ebx
+        mov dword [SpeechBankCount], edx
         xor eax, ecx
         pop edx
         pop ecx
@@ -341,9 +341,9 @@ __InitRtns:
         mov edx, eax
 loc_99C89:
         db 03Eh,0BEh                            ; insn: mov esi,18B14h
-        dd unk_D8B14
+        dd InitRtnsEntry
         db 03Eh,0BFh                            ; insn: mov edi,18B3Eh
-        dd unk_D8B3E
+        dd FiniRtnsEntry
         mov ebx, edi
         mov al, dl
 loc_99C99:
@@ -388,9 +388,9 @@ __FiniRtns:
         mov dl, al
 loc_99CD5:
         db 03Eh,0BEh                            ; insn: mov esi,18B3Eh
-        dd unk_D8B3E
+        dd FiniRtnsEntry
         db 03Eh,0BFh                            ; insn: mov edi,18B4Ah
-        dd unk_D8B4A
+        dd GusInitTable
         mov ebx, edi
         mov al, dl
 loc_99CE5:

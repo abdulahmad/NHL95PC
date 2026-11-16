@@ -39,7 +39,7 @@ extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_6ADA7, 
 extern sub_6B008, sub_8F633, SetPalette, teamabbrevs, textline1, textline2, textline3, textline4
 extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, hmglstats, sortobj11, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, penaltysc
-extern word_CBC44, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+extern SortPending, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 extern hmplstats_w2, hmglstats_w2, hmglstats_w4, hmglstats_w8, hmglstats_w14, hmtmtouch1, puckcross2, puckcross6
 extern refYpos2, refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, reftemp5
@@ -1696,7 +1696,7 @@ StartThreeStars:
         call PickThreeStars
         mov byte [curevent], 0FFh
         xor ebx, ebx
-        mov word [word_CBC44], bx
+        mov word [SortPending], bx
         mov word [RefPen], bx
         mov word [refsignal], bx
         mov word [Penaltytimer], bx

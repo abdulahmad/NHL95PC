@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8C990 progbits alloc exec nowrite align=1
 extern str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_ReservememINVALIDSIZE, str_ReservememOUTOFMEMORY, str_ReservememOUTOFMEMORY2, str_ReservememINVALIDTYPEFLAGS
-extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, memblocklist, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
+extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, MemLockHandle
 extern FatalError, memlist1, FindFreeSpace, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
 extern getmemblock, sub_8E3E4, sub_8E424, MemUnlock, unknown_libname_22
 global sub_8C990, sub_8CA6C, loc_8CAC8, loc_8CAE8, sub_8CAF4, sub_8CBA4, loc_8CBD2, loc_8CBE3
@@ -345,7 +345,7 @@ AllocMemBlockEx:
         push esi
         push edi
         push ebp
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -360,7 +360,7 @@ AllocMemBlockEx:
         call reservemem
         mov esi, eax
         add esp, byte 10h
-        mov ebp, dword [dword_EDAB0]
+        mov ebp, dword [MemLockHandle]
         push ebp
         call MemUnlock
         add esp, byte 4
@@ -379,7 +379,7 @@ reservemem:
         jge short loc_8CD90
         cmp dword [byte esp+020h], byte 0
         je near loc_8D0BF
-        mov edi, dword [dword_EDAB0]
+        mov edi, dword [MemLockHandle]
         push edi
         call MemUnlock
         add esp, byte 4
@@ -481,7 +481,7 @@ loc_8CE68:
         mov esi, eax
         mov eax, dword [byte esp+01Ch]
         mov dword [byte esi+018h], eax
-        mov eax, dword [dword_D2F64]
+        mov eax, dword [FreeSpaceList]
         mov dword [byte esi+01Ch], eax
         mov edx, dword [byte esp+018h]
         mov dword [byte esi+014h], edx
@@ -491,7 +491,7 @@ loc_8CE68:
         mov ebx, dword [byte esp+018h]
         push ebx
         inc eax
-        mov dword [dword_D2F64], eax
+        mov dword [FreeSpaceList], eax
         lea eax, [byte esi+04h]
         push eax
         call sub_8E3E4
@@ -543,7 +543,7 @@ loc_8CEFA:
         jne near loc_8CE17
         cmp dword [byte esp+020h], byte 0
         je near loc_8D097
-        mov eax, dword [dword_EDAB0]
+        mov eax, dword [MemLockHandle]
         push eax
         call MemUnlock
         add esp, byte 4
@@ -609,7 +609,7 @@ loc_8CFBD:
         mov esi, eax
         mov eax, dword [byte esp+01Ch]
         mov dword [byte esi+018h], eax
-        mov eax, dword [dword_D2F64]
+        mov eax, dword [FreeSpaceList]
         mov dword [byte esi+01Ch], eax
         mov edx, dword [byte esp+018h]
         mov dword [byte esi+014h], edx
@@ -619,7 +619,7 @@ loc_8CFBD:
         mov ecx, dword [byte esp+018h]
         push ecx
         inc eax
-        mov dword [dword_D2F64], eax
+        mov dword [FreeSpaceList], eax
         lea eax, [byte esi+04h]
         push eax
         call sub_8E3E4
@@ -668,7 +668,7 @@ loc_8D03D:
         jne near loc_8CF66
         cmp dword [byte esp+020h], byte 0
         je short loc_8D097
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call MemUnlock
         add esp, byte 4
@@ -683,7 +683,7 @@ loc_8D08F:
 loc_8D097:
         cmp dword [byte esp+020h], byte 0
         je short loc_8D0BF
-        mov esi, dword [dword_EDAB0]
+        mov esi, dword [MemLockHandle]
         push esi
         call MemUnlock
         add esp, byte 4
@@ -773,7 +773,7 @@ ResizeMemBlock:
         shl eax, 2
         mov edi, memlist1
         add edi, eax
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call unknown_libname_22
         add esp, byte 4
@@ -788,7 +788,7 @@ ResizeMemBlock:
         and eax, edx
         cmp dword [byte esp+014h], byte 0
         jge short loc_8D202
-        mov ebx, dword [dword_EDAB0]
+        mov ebx, dword [MemLockHandle]
         push ebx
         call MemUnlock
         add esp, byte 4
@@ -802,7 +802,7 @@ ResizeMemBlock:
 loc_8D1CB:
         cmp dword [byte esp+018h], byte 0
         je near loc_8D29A
-        mov edi, dword [dword_EDAB0]
+        mov edi, dword [MemLockHandle]
         push edi
         call MemUnlock
         add esp, byte 4
@@ -820,7 +820,7 @@ loc_8D202:
         mov edx, dword [byte esp+014h]
         mov dword [byte esi+014h], edx
         mov dword [byte esi+010h], eax
-        mov edx, dword [dword_EDAB0]
+        mov edx, dword [MemLockHandle]
         push edx
         call MemUnlock
         add esp, byte 4
@@ -863,7 +863,7 @@ loc_8D257:
         and eax, edx
         jmp short loc_8D202
 loc_8D271:
-        mov ebx, dword [dword_EDAB0]
+        mov ebx, dword [MemLockHandle]
         push ebx
         call MemUnlock
         add esp, byte 4

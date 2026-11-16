@@ -258,7 +258,7 @@ static void script_poll(void)
  * Otherwise it shows. It may leave the picture and the window, except in play with the mouse as a control device (the game is running:
  * curperiod is not -1, and playsuspended, set while it is paused or replaying, is 0), where it is kept on the picture, and in fullscreen,
  * where it is always kept on the picture. */
-extern int32_t mousex, mousey, mouseminx, mouseminy, mousemaxx, mousemaxy, dword_D3028, inputinstalled, curperiod, playsuspended;
+extern int32_t mousex, mousey, mouseminx, mouseminy, mousemaxx, mousemaxy, MousePresent, inputinstalled, curperiod, playsuspended;
 extern uint8_t pad1dev, pad2dev;                /* 1 is the mouse */
 extern uint32_t ctl1dev, ctl2dev, ctl1side, ctl2side;        /* the game's controllers: the device (2 Joystick One, 4 Joystick Two, 8 keyboard, 1 mouse) and the side (0 home) */
 static volatile int win_x, win_y, win_moved;

@@ -63,7 +63,7 @@ void checkcx(Player *p, short x, short d, short pl)
     regd5 = regd0.l >> 4;
     regd0.w = p->weight + 0x8C;
     regd1.w = o->weight + 0x8C;
-    word_E03A0 = 0;
+    LastShooterTeam = 0;
     regd1.w += regd0.w;
     regd0.l = regd4.w * regd0.w / regd1.w;
     regd1.l = regd0.l;

@@ -19,7 +19,7 @@ global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, shotplay
 global passdir, passspeed, passplayer, xc1, yc1, fox, foy, fodir1
 global fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal
 global RefStep, RefPen, penaltysc, gsp, gameclock, clockticks, dirtab_y
-global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
+global debugstep, SortPending, exitgame, gameover, PerTimeTab, energywarn, lcblink
 global lcblinktime, lcsel, lcsel_aw, lcline, lctimer
 global lcboxon, word_CBD64, word_CBD66, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
 global refhitcount, fadeinpending, injurystop, bannermsg, ovlseq, ovlstep
@@ -870,7 +870,7 @@ shownumbers:
         db 00h,00h,00h,00h
 debugstep:
         db 00h,00h
-word_CBC44:
+SortPending:
         db 00h,00h
 exitgame:
         db 01h,00h

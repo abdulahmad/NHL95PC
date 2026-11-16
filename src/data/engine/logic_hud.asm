@@ -5,7 +5,7 @@ section s_DF7CA nobits alloc noexec write align=1
 global awtmpbox, awtmcoach_d2, awtmcoach_d3, awtmcoachflags, awtmcoachmode, scpflags2
 global byte_DF87F, puckasslist, puckpflags2, doorZpos2, doorpflags, byte_DFFE2, refasslist, refweight
 global reflegstr, reflegspd, milestonesaid, milestonesaid_b1, milestonesaid_b3, textline1, textline2, textline3
-global textline4, textline5, PlList, byte_E038A, fofdata2_b3, fofdata2_b7, regd1_b1, awtmcoachenergy
+global textline4, textline5, PlList, LinePlayersAway, fofdata2_b3, fofdata2_b7, regd1_b1, awtmcoachenergy
 global awtmlines, awtmplattr, awtmglattr, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
 global puckcross_m2, sctemp4, puckstruct
 global sortobj15, SumCwdExciteLvl, photoptrsf, dword_E0220, dword_E0230
@@ -17,7 +17,7 @@ global pucktemp1, pucknopuck
 global doortemp1, refYpos2, refXvel, refYvel, refframe
 global refposition, reftemp1, reftemp3, reftemp4, reftemp5, milestonesaid_b2, lcrequest
 global lcreqchoice, fofdata2, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata
-global fofdata_w2, word_E03A0, regd2, regd3, regd5, regd0, regd1
+global fofdata_w2, LastShooterTeam, regd2, regd3, regd5, regd0, regd1
 awtmpbox:
         resb 28
 awtmcoach_d2:
@@ -190,7 +190,7 @@ lcreqchoice:
         resb 2
 PlList:
         resb 6
-byte_E038A:
+LinePlayersAway:
         resb 4
 fofdata2_m2:
         resb 2
@@ -212,7 +212,7 @@ fofdata_w2:
         resb 2
 recbpr:
         resb 4
-word_E03A0:
+LastShooterTeam:
         resb 4
 replayplay:
         resb 4

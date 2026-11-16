@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B0100 progbits alloc exec nowrite align=1
-extern byte_D89E4, dword_D30C8, dword_D43E4, dword_D86C0, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
+extern byte_D89E4, KeyedDraw, RowCopyFunc, dword_D86C0, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
 global sub_B0100, loc_B010E, loc_B0123, sub_B0128, loc_B0132, loc_B0144, sub_B0148, loc_B015B
 global loc_B016A, sub_B0170, loc_B018F, loc_B01A3, sub_B01B0, loc_B01BD, loc_B01CE, loc_B01DC
 global loc_B01E1, sub_B01E4, loc_B0205, sub_B0228, sub_B026C, loc_B027D, loc_B0285, sub_B0288
@@ -124,7 +124,7 @@ sub_B01E4:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
-        cmp dword [dword_D30C8], byte 0
+        cmp dword [KeyedDraw], byte 0
         jne short loc_B0205
         push eax
         push ebx
@@ -133,13 +133,13 @@ sub_B01E4:
         add esp, byte 0Ch
         ret
 loc_B0205:
-        mov dword [dword_D43E4], sub_B01B0
+        mov dword [RowCopyFunc], sub_B01B0
         push eax
         push ebx
         push edx
         call DrawArtOpaque
         add esp, byte 0Ch
-        mov dword [dword_D43E4], bcopy
+        mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
 sub_B0228:

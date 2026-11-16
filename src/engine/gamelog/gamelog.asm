@@ -29,7 +29,7 @@ extern str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumI
 extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD, str_SHTag
 extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1, textline2
 extern textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue, UpdateTextOverlay
-extern vecdist, VisTeam, gsumcount, penaltysc, word_CBC44, injurystop, Pencntdwn2, rinkobjdefs
+extern vecdist, VisTeam, gsumcount, penaltysc, SortPending, injurystop, Pencntdwn2, rinkobjdefs
 extern penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
 global AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, fileio_tail_a, fileio_tail_b, fileio_tail_c, ReadGSumTail, WriteGSumHeader
