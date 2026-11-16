@@ -262,7 +262,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         MusicChanReset2();
         while (SpeechBusy());
     } else
-        sub_8F633();
+        ReleaseAllVoices();
     StopDigiSample();
     exitgame = -1;
     SetScreenSize(0x280, 0x1E0);

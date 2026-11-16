@@ -9,8 +9,8 @@ extern LoadSettingsShapes, MakePath, MouseRead, musichandle, musicon, musicslot,
 extern na05spr, pg01spr, pg03spr, pg05spr, pg07spr, pl05spr, pl10spr, pl20spr
 extern pointerspr, postate, PrintString, ptrupdatefn, PutBlock, SaveModeState, seriesgameno, setbits
 extern SetColorRemap, settingsfile, SndQuery, songdata, sounddev, str_BKGD, str_Dbox2, str_DigitizedSpeech
-extern str_Music, str_Pointer15, str_Setting3, str_Setting5, str_Sound, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, sub_8FB8E, sub_8FCDF, sub_91284, sub_91FE0, sub_96440, SetScreenTarget, TextSetColors
+extern str_Music, str_Pointer15, str_Setting3, str_Setting5, str_Sound, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
+extern DisableMidiMusic, PlayDigiBlockLoop, SetDigiChannelVolume, sub_91284, sub_91FE0, sub_96440, SetScreenTarget, TextSetColors
 extern VgaSetPalette, WriteCurModeState, WriteModeState
 global LeagueSettingsDlg, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings, MenuPlayoffSettings_edit, SettingsDlgClose, EditPlayoffSettings
 global MenuLeagueSettingsEdit, MenuShowLeagueSettings, MenuShowLeagueSettings2, DrawLeagueSetDlgSel, SetLeagueSetImage, DrawLeagueSetDlg, LeagueOptsToBits_jt, LeagueOptsToBits
@@ -1592,9 +1592,9 @@ LeagueSetEditLoop:
         mov eax, dword [songdata]
         mov ecx, 7Fh
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .25:
-        call sub_8F979
+        call EnableMidiMusic
         jmp short .28
 .26:
         cmp byte [musicon], 0
@@ -1610,16 +1610,16 @@ LeagueSetEditLoop:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .27:
-        call sub_8F984
+        call DisableMidiMusic
 .28:
         test byte [gameopts], 80h
         je short .29
-        call sub_8F963
+        call EnableMidiSfx
         jmp short .30
 .29:
-        call sub_8F96E
+        call DisableMidiSfx
 .30:
         call WriteCurModeState
         jmp short .33

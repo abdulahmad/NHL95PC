@@ -1,15 +1,15 @@
 /* Engine sound interface: crowd volume. */
-#define sub_8FD84 sub_8FD84_decl
-#define sub_8FDE5 sub_8FDE5_decl
-#define sub_8FE1C sub_8FE1C_decl
+#define MidiProgramChange sub_8FD84_decl
+#define MidiPitchBend sub_8FDE5_decl
+#define MidiNoteOn sub_8FE1C_decl
 #include "nhl95.h"
-#undef sub_8FD84
-#undef sub_8FDE5
-#undef sub_8FE1C
+#undef MidiProgramChange
+#undef MidiPitchBend
+#undef MidiNoteOn
 
-void sub_8FD84(int card, int voice, int vol);
-void sub_8FE1C(int card, int voice, int what);
-void sub_8FDE5(int card, int voice, int what);
+void MidiProgramChange(int card, int voice, int vol);
+void MidiNoteOn(int card, int voice, int what);
+void MidiPitchBend(int card, int voice, int what);
 
 /* Crowd_Noise: with sound effects and a crowd device (sounddev & 2Ah), ease crowdsmooth toward
  crowdlevel by at most n*30, map that to voice 8 and voice 7, and start or silence those voices.
@@ -52,24 +52,24 @@ void Crowd_Noise(int n)
     if (step > 0x7F) step = 0x7F;
     if (step < 0x0A) step = 0x0A;
     if (crowdvol8 > 0 && v == 0) {
-        sub_8FDB2(crowddriver, 8, 0);
-        sub_8FE4F(crowddriver, 8, 0x24);
+        MidiSetVolume(crowddriver, 8, 0);
+        MidiNoteOff(crowddriver, 8, 0x24);
     } else if (crowdvol8 == 0 && v > 0) {
-        sub_8FD84(crowddriver, 8, 0x7D);
-        sub_8FE1C(crowddriver, 8, 0x24);
-        sub_8FDE5(crowddriver, 8, 0x40);
+        MidiProgramChange(crowddriver, 8, 0x7D);
+        MidiNoteOn(crowddriver, 8, 0x24);
+        MidiPitchBend(crowddriver, 8, 0x40);
     }
     if (v > 0) {
-        sub_8FDB2(crowddriver, 8, v);
+        MidiSetVolume(crowddriver, 8, v);
         if (v >= 0x7F || crowdvol8 >= 0x7F)
-            sub_8FDE5(crowddriver, 8, 0x40 - (v >= 0x7F ? (short)randomd0(6) : 0));
+            MidiPitchBend(crowddriver, 8, 0x40 - (v >= 0x7F ? (short)randomd0(6) : 0));
     }
     crowdvol8 = v;
     if (crowdvol7 == 0 && step > 0) {
-        sub_8FD84(crowddriver, 7, 0x7E);
-        sub_8FE1C(crowddriver, 7, 0x24);
+        MidiProgramChange(crowddriver, 7, 0x7E);
+        MidiNoteOn(crowddriver, 7, 0x24);
     }
-    sub_8FDB2(crowddriver, 7, step);
+    MidiSetVolume(crowddriver, 7, step);
     pan = step / 3 + 0x20;
     if (sounddev & 8)
         lim = 0x32;
@@ -78,6 +78,6 @@ void Crowd_Noise(int n)
     lim += 0x0A;
     if (step == lim)
         pan += (short)randomd0(6);
-    sub_8FDE5(crowddriver, 7, pan);
+    MidiPitchBend(crowddriver, 7, pan);
     crowdvol7 = step;
 }

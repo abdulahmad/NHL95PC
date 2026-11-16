@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9F226 progbits alloc exec nowrite align=1
 extern __GETDS, str_BLASTER, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_
-extern int386x_, memset_, outp_, sub_8F0D7, strtoul_, sub_A6D8D, sub_A6DA0, sub_A6DED
+extern int386x_, memset_, outp_, GetPatchEntry, strtoul_, sub_A6D8D, sub_A6DA0, sub_A6DED
 extern sub_A6E10, sub_A6E7B, sub_A6EA2, sub_A6EC3, sub_A6F3C, sub_A6FA2, sub_A6FE1, sub_A7094
 extern sub_A70BC, sub_A70DD, sub_A905E, sub_A9BA4, sub_AA1D9, unk_D522E, unk_D5254, unk_D5258
 extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
@@ -1001,7 +1001,7 @@ sub_9FC24:
         xor eax, eax
         mov al, byte [esp]
         push eax
-        call sub_8F0D7
+        call GetPatchEntry
         add esp, byte 4
         mov dword [byte esi+0Eh], eax
         test eax, eax

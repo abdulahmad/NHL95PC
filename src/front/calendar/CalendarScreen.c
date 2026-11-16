@@ -2,14 +2,14 @@
 #define CalendarScreen CalendarScreen_decl
 #define DrawCalendarDay DrawCalendarDay_decl
 #define MenuHitTest MenuHitTest_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #include "nhl95.h"
 #undef CalendarScreen
 #undef DrawCalendarDay
 #undef MenuHitTest
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 
 typedef struct MenuItem {
     int x1, y1, x2, y2;
@@ -23,8 +23,8 @@ typedef struct Hdr17 { char c[17]; } Hdr17;
 void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, int ngames, int team, int font,
                      int bank);
 int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin, int *hitMenu, int *hitItem);
-int sub_8F98F(char *path);  /* music library: load a song */
-void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
+int LoadDigiFile(char *path);  /* music library: load a song */
+void PlayDigiBlockLoop(int song, int handle, int chan, int vol);  /* music library: play a song */
 
 /* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 6,009 of 6,040 bytes, 220
    differing under 10.0 GA. Every call is in place and the prologue matches (dir pushed, ext in edi, team in
@@ -110,7 +110,7 @@ int CalendarScreen(char *dir, char *ext, int team)
     c3 = 0x67;
     SetScreenTarget();
     ClearScreen(0);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
     SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     if (musicon && songdata) {
@@ -196,8 +196,8 @@ int CalendarScreen(char *dir, char *ext, int team)
         DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
         if (musicon && !songdata) {
             MakePath(path, fileoncd[0x1E2] == 1 ? (char *)cddriveptr : 0, (char *)str_Calendar, (char *)str_Iff9);
-            songdata = sub_8F98F(path);
-            if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+            songdata = LoadDigiFile(path);
+            if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
         }
         ApplyShapePalette(calendarshapes);
         size = ((((short *)pointerspr)[2] << 2) + 4) * (((short *)pointerspr)[3] + 1) + 0x11;
@@ -245,7 +245,7 @@ int CalendarScreen(char *dir, char *ext, int team)
                         nitems[1] = sel[1] = bg[1] = bg[0] = 0;
                         if (r == 1) {
                             FreeMemBlock(ptr);
-                            if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+                            if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
                             return 0;
                         }
                         MouseSetPos(oldmx, oldmy);
@@ -434,6 +434,6 @@ int CalendarScreen(char *dir, char *ext, int team)
     goaliestatscb = (int)GameGoalieStatsScreen;
     standingscb = (int)GameStandingsScreen;
     standingsmenucb = (int)GameStandingsMenu;
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
     return calsel;
 }

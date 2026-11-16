@@ -6,7 +6,7 @@ extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, byte_
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
 extern byte_F234E, dword_D2F60, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
 extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, AllocMemBlockEx
-extern PushMemDescriptorLocked, FindCachedFile, sub_8F0D7, sub_8FCAC, sub_971DB, SndDriverCall, sub_9722E, sub_A2000
+extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, sub_971DB, SndDriverCall, sub_9722E, sub_A2000
 extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
 extern word_D4F88
 global sub_98B30, sub_98BEC, FillRowTable, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
@@ -463,7 +463,7 @@ loc_98F54:
         jg short loc_98FA5
         mov eax, dword [byte ebx+0Ch]
         mov edx, ecx
-        call sub_8FCAC
+        call StopDigiChannel
         xor esi, esi
 loc_98FA5:
         mov dword [ebx], esi
@@ -851,7 +851,7 @@ loc_993F3:
         xor eax, eax
         mov al, dl
         push eax
-        call sub_8F0D7
+        call GetPatchEntry
         add esp, byte 4
         mov edx, eax
         test eax, eax
@@ -903,7 +903,7 @@ loc_9947A:
         add al, 5Ch
         and eax, 0FFh
         push eax
-        call sub_8F0D7
+        call GetPatchEntry
         add esp, byte 4
         test eax, eax
         je short loc_994B0

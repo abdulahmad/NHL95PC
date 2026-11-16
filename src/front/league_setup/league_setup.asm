@@ -12,8 +12,8 @@ extern savedname, SaveGridCellBg, SetDialogColors, SetTextColors, songdata, str_
 extern str_EnterMasterPassword, str_EnterPasswordFor, str_extDB, str_Iff10, str_Leaguetm2, str_Menubuff6, str_MightyDucksOfAnaheim3, str_Pal19
 extern str_Pal20, str_PLST, str_Pointer9, str_PTLS, str_TPI, str_Tspal, str_VerifyMasterControllerPasswo, str_VerifyPasswordFor
 extern str_WhoWillControlThe, str_WhoWillPlayThe, strcat_, strcmp_, strcpy_, stricmp_, strlen_, AllocMemBlock
-extern PushMemDescriptorLocked, LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
-extern sub_8FCDF, SetPalette, PutBlock, DrawArt, GrabBlock, MouseRead, FindShape, ClearScreen
+extern PushMemDescriptorLocked, LoadBank, TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery
+extern SetDigiChannelVolume, SetPalette, PutBlock, DrawArt, GrabBlock, MouseRead, FindShape, ClearScreen
 extern SetScreenTarget, SetColorRemap, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, str_qmark
 extern msg_NameTaken, msg_WrongPassword, yesnobtns
 global ChooseLeagueController, AskExportToFloppy, BuildStandingsGrid, TeamSelDone, TeamSelCancel, LeagueTeamSelect, WriteSeasonRec, WriteSeasonRec_common
@@ -885,7 +885,7 @@ LeagueTeamSelect:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
         push byte 20h
         push dword 300h
         push str_Pal19
@@ -1069,7 +1069,7 @@ LeagueTeamSelect:
         lea eax, [dword esp+0194h]
         call MakePath
         lea eax, [dword esp+0194h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .20
@@ -1078,7 +1078,7 @@ LeagueTeamSelect:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .20:
         xor ecx, ecx
         mov ebx, str_Tspal
@@ -1277,7 +1277,7 @@ LeagueTeamSelect:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .32:
         push esi
         push dword 100h

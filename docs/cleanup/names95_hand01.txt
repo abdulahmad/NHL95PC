@@ -1,0 +1,53 @@
+sub_8EB5B SndInit {source_game=PC-new,confidence=medium} sound library start: shuts down first, adds the sound timer callback and the exit handler once
+sub_8EB93 SndShutdown {source_game=PC-new,confidence=medium} removes the sound timer, closes every driver handle, frees the songs and the music bank, clears the tables
+sub_8EBE2 SndClearTables {source_game=PC-new,confidence=medium} clears the track, voice, timbre bank, MIDI channel, song and digital channel tables
+sub_8ECC0 LoadMusicBank {source_game=PC-new,confidence=low} loads a .SCN music bank: its header, the PAT patch file and the TIM timbre files
+sub_8EDD2 FreeMusicBank {source_game=PC-new,confidence=low} frees the timbre files and the patch file of the loaded music bank
+sub_8EE2F LoadPatchFile {source_game=PC-new,confidence=low} loads the patch file of a music bank
+sub_8EE43 FreeSoundBlock {source_game=PC-new,confidence=low} frees the memory block whose handle is passed by value
+sub_8EE4F LoadTimbreFile {source_game=PC-new,confidence=low} loads a timbre file and its digital sample data, and links each timbre to its sample
+sub_8EF50 AddTimbreBank {source_game=PC-new,confidence=low} puts a timbre file in the first free slot of the 10-entry bank list
+sub_8EF76 FreeTimbreFile {source_game=PC-new,confidence=low} removes a timbre file from the bank list and frees it and its samples
+sub_8EF91 RemoveTimbreBank {source_game=PC-new,confidence=low} clears the bank list slot that holds a timbre file
+sub_8EFBB LinkPatchTimbres {source_game=PC-new,confidence=low} finds the timbre of each of the 256 patches in the loaded banks
+sub_8F0D7 GetPatchEntry {source_game=PC-new,confidence=low} (patch): the patch file entry of a patch number, 0 when none
+sub_8F114 GetPatchTimbre {source_game=PC-new,confidence=low} (patch): the timbre a patch uses
+sub_8F247 FindSongSlot {source_game=PC-new,confidence=low} the song table slot (0-12) that holds a song id, -1 when none
+sub_8F270 PlaySong {source_game=PC-new,confidence=low} starts a loaded song once
+sub_8F27A StartSongTracks {source_game=PC-new,confidence=low} body of StartSong: gives each track of the song a free track slot and MIDI channel and starts it
+sub_8F433 FindFreeTrack {source_game=PC-new,confidence=low} the first unused track slot of the 24, 0 when none
+sub_8F451 FindFreeMidiChannel {source_game=PC-new,confidence=low} the first free MIDI channel of the 16 that a mask allows, -1 when none
+sub_8F48F LoadAndPlaySong {source_game=PC-new,confidence=low} loads a song and starts it
+sub_8F4A7 StartSong {source_game=PC-new,confidence=low} (song, loops): starts a loaded song through StartSongTracks
+sub_8F4C4 PlayPatch {source_game=PC-new,confidence=low} plays a patch as a sound effect note on the MIDI driver
+sub_8F61D PlayPatchFull {source_game=PC-new,confidence=low} plays a patch at full volume
+sub_8F633 ReleaseAllVoices {source_game=PC-new,confidence=low} marks every playing patch voice for release
+sub_8F67D StopSongId {source_game=PC-new,confidence=low} stops a patch voice or every track of a song, all notes off
+sub_8F7AE ReleaseSong {source_game=PC-new,confidence=low} (song, fade): sets the release count of a song's tracks
+sub_8F80E SongFinished {source_game=PC-new,confidence=low} 1 when no track of the song is playing
+sub_8F846 SongReleased {source_game=PC-new,confidence=low} 1 when no track of the song is in its release
+sub_8F963 EnableMidiSfx {source_game=PC-new,confidence=low} lets patches play as sound effects
+sub_8F96E DisableMidiSfx {source_game=PC-new,confidence=low} stops patches playing as sound effects
+sub_8F979 EnableMidiMusic {source_game=PC-new,confidence=low} lets the song tracks play notes
+sub_8F984 DisableMidiMusic {source_game=PC-new,confidence=low} stops the song tracks playing notes
+sub_8F98F LoadDigiFile {source_game=PC-new,confidence=low} loads a digital sound file, reads its header (RIFF or EA) and decodes the samples
+sub_8FAF2 FindSubstring {source_game=PC-new,confidence=low} the position just after the first match of a string inside another
+sub_8FB24 PlayDigiBlock {source_game=PC-new,confidence=low} plays a loaded digital sample on a driver channel
+sub_8FB8E PlayDigiBlockLoop {source_game=PC-new,confidence=low} plays a loaded digital sample on a driver channel, looping
+sub_8FBE5 PlayDigiPtr {source_game=PC-new,confidence=low} plays digital sample data at a pointer on a driver channel
+sub_8FC37 PlayDigiPtrLoop {source_game=PC-new,confidence=low} plays digital sample data at a pointer on a driver channel, looping
+sub_8FCAC StopDigiChannel {source_game=PC-new,confidence=low} stops a digital channel of a driver
+sub_8FCDF SetDigiChannelVolume {source_game=PC-new,confidence=low} (handle, channel, volume): sets the volume of a digital channel, stops it at 0
+sub_8FD67 QueryDigiChannel {source_game=PC-new,confidence=low} driver function 33h for a channel
+sub_8FD84 MidiProgramChange {source_game=PC-new,confidence=medium} sends a MIDI program change
+sub_8FDB2 MidiSetVolume {source_game=PC-new,confidence=medium} sends a MIDI channel volume controller
+sub_8FDE5 MidiPitchBend {source_game=PC-new,confidence=medium} sends a MIDI pitch bend
+sub_8FE1C MidiNoteOn {source_game=PC-new,confidence=medium} sends a MIDI note on at full velocity
+sub_8FE4F MidiNoteOff {source_game=PC-new,confidence=medium} sends a MIDI note off
+sub_8FE83 SetSoundByteOrder {source_game=PC-new,confidence=low} sets the byte order flag of the sound files
+sub_8FE89 FindSoundChunk {source_game=PC-new,confidence=low} finds a chunk by id in a sound bank's directory
+sub_8FED2 ReplaceFileExt {source_game=PC-new,confidence=medium} builds a file name with another extension (splitpath and makepath)
+sub_8FF1E FreeMemPtr {source_game=PC-new,confidence=medium} frees the memory block a pointer variable holds and clears it
+sub_8FF3E ReleaseMemPtr {source_game=PC-new,confidence=low} releases the memory descriptor a pointer variable holds and clears it
+sub_8FF5E SwapBytes16 {source_game=PC-new,confidence=medium} swaps the two bytes of a word
+sub_8FF7C SwapBytes32 {source_game=PC-new,confidence=medium} reverses the four bytes of a dword

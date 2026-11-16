@@ -2,20 +2,20 @@
 #define sub_913D0 sub_913D0_decl
 #define LoadSample sub_8F13B_decl
 #define FreeSample sub_8F1FE_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #include "nhl95.h"
 #undef sub_913D0
 #undef LoadSample
 #undef FreeSample
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 
 void __cdecl sub_913D0(int shape, int x, int y);
 void *LoadSample(char *path);
 void FreeSample(void *smp);
-int sub_8F98F(char *path);
-void sub_8FB8E(int song, int handle, int a, int b);
+int LoadDigiFile(char *path);
+void PlayDigiBlockLoop(int song, int handle, int a, int b);
 
 #define TS(off) (*(short *)((char *)&hmtmstruct + t + (off)))
 
@@ -158,7 +158,7 @@ void GameStatsScreen(void)
     }
     if (musicon) {
         if (songdata) {
-            sub_8FCDF(musichandle, 3, 0x28);
+            SetDigiChannelVolume(musichandle, 3, 0x28);
             SetTickDeadline(0x28);
             WaitTickDeadline();
             PushMemDescriptorLocked(songdata);
@@ -166,8 +166,8 @@ void GameStatsScreen(void)
         }
         MusicChanCmd3();
         MakePath(s.buf, fileoncd[0x1E0] == 1 ? (char *)cddriveptr : 0, (char *)str_Leaguetm, (char *)str_Iff7);
-        songdata = sub_8F98F(s.buf);
-        if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x7F);
+        songdata = LoadDigiFile(s.buf);
+        if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
     } else {
         if (sounddev == 8)
             MakePath(s.buf, fileoncd[0x102] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtsum2, 0);
@@ -180,7 +180,7 @@ void GameStatsScreen(void)
     }
     FadePalStep(0, s.pal, 0x10);
     WaitClickTimeout(2000);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, s.pal, 0x10);
     if (musicon) {
         if (songdata) {

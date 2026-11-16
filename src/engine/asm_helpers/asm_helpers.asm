@@ -7,7 +7,7 @@ extern __CHK, AnyInputPressed, bgscrollx, bgscrolly8, ClearInputQueue, GetTicks,
 extern musicslot, ReadBE32, rinkbm, saved_ss, screenbm, scrollx, scrolly, scrpitch
 extern seed, SetDrawBitmap, SetTickDeadline, songdata, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
 extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_8FB8E, SndQuery, sub_8FCDF, FillRect, DrawArtOpaque
+extern sub_1B2A7, sub_1B8AC, sub_1B92E, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, FillRect, DrawArtOpaque
 extern VgaSetPalette, SetScreenTarget, TickDeadlinePassed, vgapage, vtoa_dt, WaitClickTimeout
 global PlayMVI, stub_8C1B7, SelectScreenBM, SelectScreenBM_set, SelectRinkBM, stub_8C1F7, stub_8C202, stub_8C20D
 global stub_8C218, stub_8C223, randomd0, vgacopy_bg, vtoa, SaveSS
@@ -130,7 +130,7 @@ PlayMVI:
         mov eax, ecx
         mov ecx, 7Fh
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .5:
         call GetTicks
         mov dword [byte esp+024h], eax
@@ -249,7 +249,7 @@ PlayMVI:
         mov eax, dword [musichandle]
         mov ebx, 50h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .x:
         mov eax, esi
         add esp, byte 30h

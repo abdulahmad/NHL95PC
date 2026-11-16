@@ -7,7 +7,7 @@ extern fgets_, fileoncd, fopen_, FreeCoachClip, FreeMemBlock, fscanf_, gameopts,
 extern InputRemove, MakePath, memcpy_, MusicChanReset2, musicon, musicslot, PlayMVI, rand_
 extern SayCoachClip, songdata, SpeechBusy, sprintf_, str_ALLFILESTXT, str_ALLFILESTXT2, str_CantOpenNhlCfg2, str_Clip04d
 extern str_Cmv2, str_Coach, str_Coachcut, str_CouldNotOpenALLFILES, str_Iff13, str_NhlCfg, str_Pal29, str_Scrn4
-extern strcat_, stricmp_, PushMemDescriptorLocked, LoadBank, sub_8F98F, SndQuery, SetPalette, DrawBitmap
+extern strcat_, stricmp_, PushMemDescriptorLocked, LoadBank, LoadDigiFile, SndQuery, SetPalette, DrawBitmap
 extern FindShape, SetScreenTarget, str_ModeR, WaitClickTimeout
 global InitFileLocations, CoachCutScene
 ;-----------------------------------------------------------------------------
@@ -219,7 +219,7 @@ CoachCutScene:
         lea eax, [dword esp+0300h]
         call MakePath
         lea eax, [dword esp+0300h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
 .5:
         cmp byte [musicon], 0

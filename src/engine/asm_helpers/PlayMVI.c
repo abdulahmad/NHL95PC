@@ -16,7 +16,7 @@
 #define sub_1B92E sub_1B92E_decl
 #define sub_1ACF1 sub_1ACF1_decl
 #define sub_1B18B sub_1B18B_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #define GetTicks GetTicks_decl
 #include "nhl95.h"
 #undef GetTicks
@@ -37,7 +37,7 @@
 #undef sub_1B92E
 #undef sub_1ACF1
 #undef sub_1B18B
-#undef sub_8FB8E
+#undef PlayDigiBlockLoop
 
 int __cdecl sub_1B0F3(int size, int chunk, int flags);  /* cdstream: create a reader */
 void __cdecl sub_1B1C2(int stream, char *path);         /* cdstream: open a file */
@@ -55,7 +55,7 @@ int sub_1B0BB(int dec);
 void __cdecl sub_1B92E(int stream, int chunk);          /* cdstream: release a chunk */
 void sub_1ACF1(int dec);
 void __cdecl sub_1B18B(int stream);
-void sub_8FB8E(int song, int handle, int a, int b);
+void PlayDigiBlockLoop(int song, int handle, int a, int b);
 int __cdecl GetTicks(void);                              /* timer library (stack arguments, as SetTickDeadline) */
 
 /* PlayMVI (8BEDB, PC only): play the movie file path at x / y through the cdstream reader (493E0h-byte buffer,
@@ -111,7 +111,7 @@ int PlayMVI(char *path, int x, int y)
                     frame = sub_1B002(dec, chunk);
                     if (GetTicks() - t0 < due) DrawArtOpaque(frame, x, y);
                     if (!ends && n == nframes) {
-                        if (musicon && songdata) sub_8FB8E(songdata, musichandle, 3, 0x7F);
+                        if (musicon && songdata) PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
                         t0 = GetTicks();
                     }
                     n--;
@@ -146,7 +146,7 @@ int PlayMVI(char *path, int x, int y)
     sub_1B18B(stream);
     if (musicon && songdata) {
         while (!key && !SndQuery(musicslot, 3)) key = WaitClickTimeout(10);
-        sub_8FCDF(musichandle, 3, 0x50);
+        SetDigiChannelVolume(musichandle, 3, 0x50);
     }
     return key;
 }

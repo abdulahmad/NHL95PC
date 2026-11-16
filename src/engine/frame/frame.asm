@@ -19,7 +19,7 @@ extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep,
 extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
-extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, SetPalette
+extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, ReleaseAllVoices, SetPalette
 extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, SortPending
 extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, puckcross2, puckcross6, refYpos2, refXvel
 extern refYvel, xc1, yc1, yleader
@@ -674,7 +674,7 @@ StartHL2:
         jne short StartHL2.28
         jmp short .30
 .29:
-        call sub_8F633
+        call ReleaseAllVoices
 .30:
         call StopDigiSample
         mov word [exitgame], 0FFFFh

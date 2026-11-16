@@ -182,7 +182,7 @@ void main_(void)
     srand(s.t.hsecond);
     MainDeskLoop();
     pal = AllocMemBlock((char *)str_Temp3, 0x300, 0x20);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (musicon && songdata) {

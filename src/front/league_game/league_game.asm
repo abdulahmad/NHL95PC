@@ -20,7 +20,7 @@ extern savleague2, schedgameidx, SetDialogColors, SetPalette, SetupControllers, 
 extern SndQuery, songdata, sprintf_, standingscb, standingsmenucb, starpl, startm, str_02d
 extern str_backslash2, str_dot, str_Easndesk2, str_extDB, str_extxx, str_floppydrv, str_GAME, str_GSUMMARY
 extern str_MustBeExportedTo, str_MustBeImportedFrom, str_Pal17, str_Pal18, str_PINFO, str_S4, str_SAV, str_SelectATeamTo
-extern str_Temp5, str_Xx, strcat_, strcpy_, PushMemDescriptorLocked, sub_8FCDF, teamstatscb, treeteamnames
+extern str_Temp5, str_Xx, strcat_, strcpy_, PushMemDescriptorLocked, SetDigiChannelVolume, teamstatscb, treeteamnames
 extern UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg, VgaSetPalette, VisTeam, WaitLeagueFloppy, word_DDD48
 extern word_DDD4A, WriteGoalieSeasonRec, WriteSchedGame, WriteSeasonRec, WriteTeamRec
 global CheckLeagueDiskSync, MakeTeamDbFmt, PostGameToTeamDb, PlayLeagueGame
@@ -1097,7 +1097,7 @@ PlayLeagueGame:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .19:
         mov ecx, dword [dword esp+080h]
         push ecx
@@ -1343,7 +1343,7 @@ PlayLeagueGame:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .38:
         mov eax, dword [musicslot-3]
         sar eax, 18h
@@ -1902,7 +1902,7 @@ PlayLeagueGame:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .81:
         mov ecx, dword [dword esp+08Ch]
         push ecx

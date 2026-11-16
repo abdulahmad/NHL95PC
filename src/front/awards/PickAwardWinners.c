@@ -12,22 +12,22 @@
 #define ShapeBankEntry sub_9035C_decl
 #define FreeSample sub_8F1FE_decl
 #define LoadSample sub_8F13B_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #define GetTicks GetTicks_decl
 #include "nhl95.h"
 #undef FreeSample
 #undef LoadSample
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 #undef PickAwardWinners
 #undef ShowAwardScreens
 #undef ShapeBankEntry
 #undef GetTicks
 void FreeSample(void *smp);
 void *LoadSample(char *path);
-int sub_8F98F(char *path);
-void sub_8FB8E(int song, int handle, int a, int b);
+int LoadDigiFile(char *path);
+void PlayDigiBlockLoop(int song, int handle, int a, int b);
 
 int PickAwardWinners(void);
 int ShowAwardScreens(void);
@@ -489,7 +489,7 @@ void AwardsCeremony(void)
     ClearInputQueue();
     pal = (unsigned char *)AllocMemBlock((char *)str_Palmem, 0x300, 0x20);
     SetPalette(0, 0x100, pal);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x32);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x32);
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {
         do
@@ -508,8 +508,8 @@ void AwardsCeremony(void)
     FreeMemBlock(bank);
     if (musicon && !songdata) {
         MakePath(s.path, fileoncd[0x220] == 1 ? (char *)cddriveptr : 0, (char *)str_Awards, (char *)str_Iff);
-        songdata = sub_8F98F(s.path);
-        if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+        songdata = LoadDigiFile(s.path);
+        if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
     } else if (sounddev != 1) {
         if (sounddev == 8)
             MakePath(s.path, fileoncd[0xFA] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtafan, 0);
@@ -527,7 +527,7 @@ void AwardsCeremony(void)
     } else if (musicon) {
         done = 0;
         while (!done && SndQuery(musicslot, 3) == 0) done = WaitClickTimeout(0xA);
-        sub_8FCDF(musichandle, 3, 0x32);
+        SetDigiChannelVolume(musichandle, 3, 0x32);
         FadePalStep(1, pal, 0x10);
         do
             slot = musicslot;
@@ -542,8 +542,8 @@ void AwardsCeremony(void)
     r = PickAwardWinners();
     if (musicon && !songdata) {
         MakePath(s.path, fileoncd[0x224] == 1 ? (char *)cddriveptr : 0, (char *)str_Awasong, (char *)str_Iff);
-        songdata = sub_8F98F(s.path);
-        if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x7F);
+        songdata = LoadDigiFile(s.path);
+        if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
     } else {
         if (sounddev == 8)
             MakePath(s.path, fileoncd[0xFC] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtawards, 0);
@@ -573,7 +573,7 @@ void AwardsCeremony(void)
         ClearScreen(0);
     }
     if (musicon) {
-        sub_8FCDF(musichandle, 3, 0x78);
+        SetDigiChannelVolume(musichandle, 3, 0x78);
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);

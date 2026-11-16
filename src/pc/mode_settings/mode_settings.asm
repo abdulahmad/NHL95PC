@@ -8,8 +8,8 @@ extern FindShape, FreeMemBlock, gamemode, gameopts, GetInputEvent, GrabBlock, hm
 extern lcblink, lcboxon, LoadBank, LoadSettingsShapes, MakePath, modesetrects, MouseRead, musichandle
 extern musicon, musicslot, pointerspr, PrintString, ptrupdatefn, PutBlock, scpflags2, setbits
 extern settingsfile, SndQuery, songdata, sounddev, str_BKGD2, str_Dbox3, str_DigitizedSpeech2, str_Music2
-extern str_Pointer16, str_Setting4, str_Setting7, str_Sound2, sub_8F963, sub_8F96E, sub_8F979, sub_8F984
-extern sub_8FB8E, sub_8FCDF, sub_91284, SetScreenTarget, TextSetColors, VgaSetPalette, WriteCurModeState
+extern str_Pointer16, str_Setting4, str_Setting7, str_Sound2, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic, DisableMidiMusic
+extern PlayDigiBlockLoop, SetDigiChannelVolume, sub_91284, SetScreenTarget, TextSetColors, VgaSetPalette, WriteCurModeState
 global SettingsStub, MenuModeSettings, ModeSettings_epilogue, DrawModeSetDlg, ModeOptsToBits, ModeSetHitTest, DrawModeSetChecks, ModeSetViewLoop
 global ModeSetEditLoop
 ;-----------------------------------------------------------------------------
@@ -112,17 +112,17 @@ MenuModeSettings:
 .7:
         test byte [gameopts], 40h
         je short .8
-        call sub_8F979
+        call EnableMidiMusic
         jmp short .9
 .8:
-        call sub_8F984
+        call DisableMidiMusic
 .9:
         test byte [gameopts], 80h
         je short .10
-        call sub_8F963
+        call EnableMidiSfx
         jmp short .11
 .10:
-        call sub_8F96E
+        call DisableMidiSfx
 .11:
         push ebp
         call FreeMemBlock
@@ -961,9 +961,9 @@ ModeSetEditLoop:
         mov eax, dword [songdata]
         mov ecx, 7Fh
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .18:
-        call sub_8F979
+        call EnableMidiMusic
         jmp short .21
 .19:
         cmp byte [musicon], 0
@@ -979,16 +979,16 @@ ModeSetEditLoop:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .20:
-        call sub_8F984
+        call DisableMidiMusic
 .21:
         test byte [gameopts], 80h
         je short .22
-        call sub_8F963
+        call EnableMidiSfx
         jmp short .23
 .22:
-        call sub_8F96E
+        call DisableMidiSfx
 .23:
         call WriteCurModeState
         jmp short .26

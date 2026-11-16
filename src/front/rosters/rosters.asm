@@ -19,7 +19,7 @@ extern rosterteamrec, savepal, SetClipWindow, SetDrawBitmap, SetPalette, SetText
 extern songdata, sprintf_, str_AreYouSureYou, str_C4, str_Current3, str_DATABASE, str_ea, str_extDB
 extern str_fmt2d, str_FreeAgents, str_Menubuff, str_Pal, str_PleaseEnterANew, str_Pointer11, str_Prez2, str_Ratings
 extern str_S5, str_space, str_Temp7, str_TheDatabaseHasNot, str_TheJerseyNumber2d, str_Uar, str_Uarm, strcat_
-extern strcmp_, strcpy_, strlen_, strupr_, PushMemDescriptorLocked, sub_8FCDF, sub_9121C, SetScreenTarget
+extern strcmp_, strcpy_, strlen_, strupr_, PushMemDescriptorLocked, SetDigiChannelVolume, sub_9121C, SetScreenTarget
 extern FillRectColor, teamdivflags, teamratingidx, teamratingnames, TextRestoreState, TextSaveState, TextSetFont, TrackButtons
 extern TrackScrollBars, unk_EAFB8, VisTeam, XorBar
 global RunEditRosters, RunEditRosters_ret6, RunEditRosters_ret5, DrawRosterTitle, DrawRosterList, DrawDatabaseName, DrawRosterPanel, DrawEditRosters
@@ -79,7 +79,7 @@ RunEditRosters:
         mov eax, dword [musichandle]
         mov ebx, 32h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         push ebp
         push dword 100h
@@ -180,7 +180,7 @@ RunEditRosters:
         mov eax, dword [musichandle]
         mov ebx, 32h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .4:
         push ebp
         push dword 100h

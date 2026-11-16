@@ -276,7 +276,7 @@ int MenuNewLeague(void)
     pal = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
     SetPalette(0, 0x100, pal);
     if (musicon && songdata)
-        sub_8FCDF(musichandle, 3, 0x64);
+        SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     if (musicon && songdata) {

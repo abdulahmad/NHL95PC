@@ -2,14 +2,14 @@
 #define BuildStandingsGrid BuildStandingsGrid_decl
 #define ChooseLeagueController ChooseLeagueController_decl
 #define MenuHitTest MenuHitTest_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #include "nhl95.h"
 #undef BuildStandingsGrid
 #undef ChooseLeagueController
 #undef MenuHitTest
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 
 typedef struct MenuItem {
     int x1, y1, x2, y2;
@@ -24,8 +24,8 @@ typedef struct Str19 { char c[19]; } Str19;
 int BuildStandingsGrid(int fd, unsigned char (*order)[7]);
 void ChooseLeagueController(unsigned char *teams, int n, int x, int y);
 int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin, int *hitMenu, int *hitItem);
-int sub_8F98F(char *path);  /* music library: load a song */
-void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
+int LoadDigiFile(char *path);  /* music library: load a song */
+void PlayDigiBlockLoop(int song, int handle, int chan, int vol);  /* music library: play a song */
 
 /* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 5,891 vs 5,888 bytes, 45
    differing under 10.0 GA. Every call is in place and the frame size matches. Found under GA: the dropdown
@@ -126,7 +126,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         FileClose(&fh);
     }
     if (err == 0 && (mode != 8 || *humans != 1 ? 1 : 0)) {
-        sub_8FCDF(musichandle, 3, 100);
+        SetDigiChannelVolume(musichandle, 3, 100);
         pal = (unsigned char *)AllocMemBlock((char *)str_Pal19, 0x300, 0x20);
         SetPalette(0, 0x100, pal);
         FadePalStep(1, pal, 0x10);
@@ -172,8 +172,8 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
         if (musicon && !songdata) {
             MakePath(path, fileoncd[0x1E0] == 1 ? (char *)cddriveptr : 0, (char *)str_Leaguetm2, (char *)str_Iff10);
-            songdata = sub_8F98F(path);
-            if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+            songdata = LoadDigiFile(path);
+            if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
         }
         MakePath(path, fileoncd[0x1AD] == 1 ? (char *)cddriveptr : 0, (char *)str_Tspal, 0);
         palbank = LoadBank(path, 0);
@@ -219,7 +219,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                         if (teamselresult == -1) {
                             picks[cur] = -1;
                             pal = (unsigned char *)AllocMemBlock((char *)str_Pal19, 0x300, 0x20);
-                            if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+                            if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
                             SetPalette(0, 0x100, pal);
                             FadePalStep(1, pal, 0x10);
                             FreeMemBlock((int)pal);

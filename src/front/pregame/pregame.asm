@@ -14,8 +14,8 @@ extern str_Arena, str_Bkgd4, str_Ctbkgd, str_Ctlogo, str_Cttitle1, str_D4, str_D
 extern str_Fowa, str_GIPK, str_Iff4, str_Iff5, str_Indus030, str_Injured, str_Logoaway, str_Logohome
 extern str_Pal10, str_Pal11, str_Pal12, str_Pointer4, str_Rink, str_SAtS, str_Scouting, str_Scra
 extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, AllocMemBlock, PushMemDescriptorLocked
-extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
-extern sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, sub_913D0, GrabBlock
+extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery
+extern SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, sub_913D0, GrabBlock
 extern SetViewRect, FindShape, ClearScreen, SetScreenTarget, SetClipWindow, FillRectColor, teamabbrevs, teamconf
 extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
 global PreGameScreen_jt, PreGameScreen, PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines, TonightsGameScreen
@@ -117,7 +117,7 @@ PreGameScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .4:
         push esi
         push dword 100h
@@ -537,7 +537,7 @@ PreGameScreen:
         lea eax, [dword esp+0610h]
         call MakePath
         lea eax, [dword esp+0610h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .25
@@ -546,7 +546,7 @@ PreGameScreen:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .25:
         mov ebx, 10h
         mov edx, dword [dword esp+0644h]
@@ -826,7 +826,7 @@ PreGameScreen_homelines:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .8:
         mov ebx, 10h
         mov edx, dword [dword esp+0644h]
@@ -1223,7 +1223,7 @@ TonightsGameScreen:
         lea eax, [dword esp+0C8h]
         call MakePath
         lea eax, [dword esp+0C8h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .19
@@ -1232,7 +1232,7 @@ TonightsGameScreen:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .19:
         xor edx, edx
         mov dword [dword esp+0114h], edx
@@ -1683,7 +1683,7 @@ TonightsGameScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .50:
         mov ebx, 10h
         mov edx, dword [dword esp+0108h]

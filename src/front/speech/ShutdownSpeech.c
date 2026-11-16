@@ -21,7 +21,7 @@ typedef struct SpeechQ {
 /* SpeechTimerTick (832BC, PC only; segment 060, the same source file: it ends in ShutdownSpeech_ret5): the timer
    handler InitSpeech installs (addtimer). With the speech system up: count the silence after a sentence down;
    while a sentence plays, count the clip delay down, then start the next clip: its sample (data, size) plays on
-   channel speechchannel (toggled 0 / 1 per clip) through sub_8FBE5 for kind 'G' or sub_8FC37 (twice the size), at
+   channel speechchannel (toggled 0 / 1 per clip) through PlayDigiPtr for kind 'G' or PlayDigiPtrLoop (twice the size), at
    2B11h, volume 7Fh, and its delay is loaded. A slot of -1 ends the sentence; after the last clip the sentence
    ends and the silence is the bank's value at +3B70h. No arguments, no result. */
 void SpeechTimerTick(void)
@@ -52,10 +52,10 @@ void SpeechTimerTick(void)
         SPEECHQ->delay = s->delay;
         speechchannel++;
         speechchannel &= 1;
-        if (s->kind == 'G') sub_8FBE5(data, musichandle, speechchannel, len, 0x2B11, 0x7F);
+        if (s->kind == 'G') PlayDigiPtr(data, musichandle, speechchannel, len, 0x2B11, 0x7F);
         else {
             len *= 2;
-            sub_8FC37(data, musichandle, speechchannel, len, 0x2B11, 0x7F);
+            PlayDigiPtrLoop(data, musichandle, speechchannel, len, 0x2B11, 0x7F);
         }
     } else {
         SPEECHQ->playing = 0;

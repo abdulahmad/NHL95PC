@@ -2,11 +2,11 @@
 #include "nhl95.h"
 
 /* MusicChanReset: when the speech/sound system is up (speechinit), send command 0 and then 1
- to the music handle (sub_8FCAC). */
+ to the music handle (StopDigiChannel). */
 void MusicChanReset(void)
 {
     if (speechinit != 0) {
-        sub_8FCAC(musichandle, 0);
-        sub_8FCAC(musichandle, 1);
+        StopDigiChannel(musichandle, 0);
+        StopDigiChannel(musichandle, 1);
     }
 }

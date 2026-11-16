@@ -12,7 +12,7 @@ void IntermissionPC(void)
         SetScreenSize(0x280, 0x1E0);
         CrowdFadeOut();
         if (musicon) MusicChanReset();
-        else sub_8F633();
+        else ReleaseAllVoices();
         StopDigiSample();
         sub_1BAF3(0x222E0);
     }

@@ -9,8 +9,8 @@
 #define sub_913D0 sub_913D0_decl
 #define LoadSample sub_8F13B_decl
 #define FreeSample sub_8F1FE_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #define gsuminitff gsuminitff_decl
 #include "nhl95.h"
 #undef gsuminitff
@@ -21,16 +21,16 @@ struct SummaryHandles { int first, second; };
 #undef sub_913D0
 #undef LoadSample
 #undef FreeSample
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 
 int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unused);
 int ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
 void __cdecl sub_913D0(int shape, int x, int y);
 void *LoadSample(char *path);
 void FreeSample(void *smp);
-int sub_8F98F(char *path);
-void sub_8FB8E(int song, int handle, int a, int b);
+int LoadDigiFile(char *path);
+void PlayDigiBlockLoop(int song, int handle, int a, int b);
 
 /* A team record (2E8h bytes): the name at +1Ah, the players' key-record positions from +4Ch. */
 #define RECKEY(t, k) (((int *)(f.recs[t] + 0x4C))[k])
@@ -139,7 +139,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     f.gsumfh = -1;
     sub_1BAF3(700000);
     if (musicon && songdata) {
-        sub_8FCDF(musichandle, 3, 0x4B);
+        SetDigiChannelVolume(musichandle, 3, 0x4B);
         while (!SndQuery(musicslot, 3)) ;
         PushMemDescriptorLocked(songdata);
         songdata = 0;
@@ -260,8 +260,8 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         FadeOutPalCycle();
         if (musicon && !songdata) {
             MakePath(f.name, fileoncd[0x1E4] == 1 ? (char *)cddriveptr : 0, (char *)str_Gamesum, (char *)str_Iff6);
-            songdata = sub_8F98F(f.name);
-            if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+            songdata = LoadDigiFile(f.name);
+            if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
         } else {
             if (sounddev == 8) MakePath(f.name, fileoncd[0x102] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtsum, 0);
             else MakePath(f.name, fileoncd[0x21] == 1 ? (char *)cddriveptr : 0, (char *)str_Adsum, 0);
@@ -594,7 +594,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         }
     }
 
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
     FadePalStep(1, f.pal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3)) ;

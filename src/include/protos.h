@@ -93,7 +93,7 @@ short vtoa(int dx, int dy);                               /* hand-written: direc
 int SpeechBusy(void);                                     /* announcer sample still playing? */
 short randomd0(short range);                              /* random 0..range-1 */
 int OpenAnnouncerBank(void);                              /* 0 = failed */
-short sub_8F80E(int handle);                              /* sound library: sample finished? */
+short SongFinished(int handle);                              /* sound library: sample finished? */
 int ReplayIsEmpty(void);                                   /* 12034 */
 void TextGridFree(void);                                  /* 17756 */
 int FileClose(int *h);                                    /* 1457C */
@@ -128,7 +128,7 @@ float RatingToFloat(unsigned char r);  /* 6F6AD */
 int GetMemListHead(int which);  /* 10010 */
 int SpeechIsInit(void);  /* 836CA */
 void MusicChanCmd3(void);
-void sub_8FCAC(int handle, int cmd);  /* sound library */
+void StopDigiChannel(int handle, int cmd);  /* sound library */
 void CalReturn(void);  /* 3476B */
 int DeskToSportsDesk(void);  /* 1A5B1 */
 int FileCreate(char *name, int *h);
@@ -221,7 +221,7 @@ void SetListItemColors(int sel, int item);  /* 30209 */
 void __cdecl TextSetColors(int fg, int bg);  /* graphics library: set text colours */
 void PlayDigiSample(void *s);  /* 599B9 */
 void StopDigiSample(void);  /* 59981 */
-int sub_8F270(void *s, int a);  /* sound library: start sample */
+int PlaySong(void *s, int a);  /* sound library: start sample */
 void ClearSpeechSlot(unsigned char *s);  /* 833C5 */
 void WriteTeamRec(int fh, void *rec, int n);  /* 3A2B8 */
 int FileExists(char *name);  /* 142E7 */
@@ -230,9 +230,9 @@ void FreeCalendarIfLowMem(void);  /* 212C6 */
 int __cdecl sub_8DAB8(void);  /* memory library: free memory */
 void __cdecl FreeMemBlock(int p);  /* library: free a block */
 void StopDigiSample(void);  /* 59981 */
-void sub_8F67D(int h);  /* sound library: stop sample */
+void StopSongId(int h);  /* sound library: stop sample */
 void FreeDigiSample(int fade);  /* 59945 */
-void sub_8F7AE(int h, int fade);  /* sound library: free sample (fade: release count) */
+void ReleaseSong(int h, int fade);  /* sound library: free sample (fade: release count) */
 int ClearInputQueue(void);  /* 6B3D7 */
 int ResetInputSampling(void);  /* 1145F */
 void NormalizeDressFlags(void);  /* 65B48 */
@@ -455,7 +455,7 @@ void IntermissionPC(void);  /* 10F6D */
 void FadePalette(int dir, unsigned char *pal, int steps);
 void SetScreenSize(int w, int h);
 void MusicChanReset(void);
-void sub_8F633(void);  /* sound library: stop */
+void ReleaseAllVoices(void);  /* sound library: stop */
 void sub_1BAF3(int ticks);
 void __cdecl TextSetFont(int font);  /* text library: set font */
 void __cdecl TextSaveState(void *state);  /* text library: save the text state (40h bytes) */
@@ -467,8 +467,8 @@ void LoadScreenPalTick(void);  /* 47951 */
 void __cdecl sub_B4C61(void);  /* video library: wait for retrace */
 void MoveInDir(Player *p, short dir);  /* 49260 */
 void CrowdNoiseOff(void);  /* 59748 */
-void sub_8FDB2(int card, int voice, int vol);  /* sound library: set voice volume */
-void sub_8FE4F(int card, int voice, int what);  /* sound library: voice control */
+void MidiSetVolume(int card, int voice, int vol);  /* sound library: set voice volume */
+void MidiNoteOff(int card, int voice, int what);  /* sound library: voice control */
 void RenderTextLine(int x, int y, char *s);  /* 174D8 */
 int __cdecl CreateBitmap(int w, int h, int flags);  /* graphics library: create bitmap */
 void __cdecl SaveDrawState(void *save);  /* graphics library: save draw state */
@@ -525,7 +525,7 @@ void InitSpeech(unsigned char id, int size, int copybuf, int copylen);  /* 8357A
 int __cdecl addtimer(void (*fn)(void));  /* timer library: add tick handler */
 void BuildSavedGameLabels(void);  /* 1D518 */
 void sfx(int id);  /* 59884 */
-void sub_8F61D(int id);  /* sound library: play effect */
+void PlayPatchFull(int id);  /* sound library: play effect */
 void assrefatdot(Player *p);  /* 4DFF7 */
 int ChkTwoLinePass(Player *p);  /* 4DD51 */
 void SetTeamGoalie(short side, short g);  /* 672F9 */
@@ -652,7 +652,7 @@ int PreloadAnnouncerClips(char *home, char *vis);  /* 8579E */
 void OpenSpeechBank(char *path, int n);  /* 83897 */
 void QueuePenaltyType(void);
 int DeskExitGame(void);  /* 1A6A7 */
-void sub_8FCDF(int handle, int a, int b);
+void SetDigiChannelVolume(int handle, int a, int b);
 int SndQuery(int slot, int a);
 void __cdecl PushMemDescriptorLocked(int p);
 void SetTextMode(void);

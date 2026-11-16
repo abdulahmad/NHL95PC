@@ -1198,9 +1198,62 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008EB21,sub_8EB21,GetRandState,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_06,match96+97
 0008EB27,rand_,rand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 36 bytes),watcom_clib_06,flirt
 0008EB4B,srand_,srand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_06,flirt
+0008EB5B,sub_8EB5B,SndInit,PC-new,,,,medium,"sound library start: shuts down first, adds the sound timer callback and the exit handler once",ea_sound_hl_01,manual-trace
+0008EB93,sub_8EB93,SndShutdown,PC-new,,,,medium,"removes the sound timer, closes every driver handle, frees the songs and the music bank, clears the tables",ea_sound_hl_01,manual-trace
+0008EBE2,sub_8EBE2,SndClearTables,PC-new,,,,medium,"clears the track, voice, timbre bank, MIDI channel, song and digital channel tables",ea_sound_hl_01,manual-trace
+0008ECC0,sub_8ECC0,LoadMusicBank,PC-new,,,,low,"loads a .SCN music bank: its header, the PAT patch file and the TIM timbre files",ea_sound_hl_01,manual-trace
+0008EDD2,sub_8EDD2,FreeMusicBank,PC-new,,,,low,frees the timbre files and the patch file of the loaded music bank,ea_sound_hl_01,manual-trace
+0008EE2F,sub_8EE2F,LoadPatchFile,PC-new,,,,low,loads the patch file of a music bank,ea_sound_hl_01,manual-trace
+0008EE43,sub_8EE43,FreeSoundBlock,PC-new,,,,low,frees the memory block whose handle is passed by value,ea_sound_hl_01,manual-trace
+0008EE4F,sub_8EE4F,LoadTimbreFile,PC-new,,,,low,"loads a timbre file and its digital sample data, and links each timbre to its sample",ea_sound_hl_01,manual-trace
+0008EF50,sub_8EF50,AddTimbreBank,PC-new,,,,low,puts a timbre file in the first free slot of the 10-entry bank list,ea_sound_hl_01,manual-trace
+0008EF76,sub_8EF76,FreeTimbreFile,PC-new,,,,low,removes a timbre file from the bank list and frees it and its samples,ea_sound_hl_01,manual-trace
+0008EF91,sub_8EF91,RemoveTimbreBank,PC-new,,,,low,clears the bank list slot that holds a timbre file,ea_sound_hl_01,manual-trace
+0008EFBB,sub_8EFBB,LinkPatchTimbres,PC-new,,,,low,finds the timbre of each of the 256 patches in the loaded banks,ea_sound_hl_01,manual-trace
+0008F0D7,sub_8F0D7,GetPatchEntry,PC-new,,,,low,"(patch): the patch file entry of a patch number, 0 when none",ea_sound_hl_01,manual-trace
+0008F114,sub_8F114,GetPatchTimbre,PC-new,,,,low,(patch): the timbre a patch uses,ea_sound_hl_01,manual-trace
 0008F13B,sub_8F13B,LoadSample,PC-new,,,,medium,"sound library: load the sample file at path, returns its handle",ea_sound_hl_01,manual-trace
 0008F1FE,sub_8F1FE,FreeSample,PC-new,,,,medium,sound library: free a sample loaded by LoadSample,ea_sound_hl_01,manual-trace
+0008F247,sub_8F247,FindSongSlot,PC-new,,,,low,"the song table slot (0-12) that holds a song id, -1 when none",ea_sound_hl_01,manual-trace
+0008F270,sub_8F270,PlaySong,PC-new,,,,low,starts a loaded song once,ea_sound_hl_01,manual-trace
+0008F27A,sub_8F27A,StartSongTracks,PC-new,,,,low,body of StartSong: gives each track of the song a free track slot and MIDI channel and starts it,ea_sound_hl_01,manual-trace
+0008F433,sub_8F433,FindFreeTrack,PC-new,,,,low,"the first unused track slot of the 24, 0 when none",ea_sound_hl_01,manual-trace
+0008F451,sub_8F451,FindFreeMidiChannel,PC-new,,,,low,"the first free MIDI channel of the 16 that a mask allows, -1 when none",ea_sound_hl_01,manual-trace
+0008F48F,sub_8F48F,LoadAndPlaySong,PC-new,,,,low,loads a song and starts it,ea_sound_hl_01,manual-trace
+0008F4A7,sub_8F4A7,StartSong,PC-new,,,,low,"(song, loops): starts a loaded song through StartSongTracks",ea_sound_hl_01,manual-trace
+0008F4C4,sub_8F4C4,PlayPatch,PC-new,,,,low,plays a patch as a sound effect note on the MIDI driver,ea_sound_hl_01,manual-trace
+0008F61D,sub_8F61D,PlayPatchFull,PC-new,,,,low,plays a patch at full volume,ea_sound_hl_01,manual-trace
+0008F633,sub_8F633,ReleaseAllVoices,PC-new,,,,low,marks every playing patch voice for release,ea_sound_hl_01,manual-trace
+0008F67D,sub_8F67D,StopSongId,PC-new,,,,low,"stops a patch voice or every track of a song, all notes off",ea_sound_hl_01,manual-trace
+0008F7AE,sub_8F7AE,ReleaseSong,PC-new,,,,low,"(song, fade): sets the release count of a song's tracks",ea_sound_hl_01,manual-trace
+0008F80E,sub_8F80E,SongFinished,PC-new,,,,low,1 when no track of the song is playing,ea_sound_hl_01,manual-trace
+0008F846,sub_8F846,SongReleased,PC-new,,,,low,1 when no track of the song is in its release,ea_sound_hl_01,manual-trace
+0008F963,sub_8F963,EnableMidiSfx,PC-new,,,,low,lets patches play as sound effects,ea_sound_hl_01,manual-trace
+0008F96E,sub_8F96E,DisableMidiSfx,PC-new,,,,low,stops patches playing as sound effects,ea_sound_hl_01,manual-trace
+0008F979,sub_8F979,EnableMidiMusic,PC-new,,,,low,lets the song tracks play notes,ea_sound_hl_01,manual-trace
+0008F984,sub_8F984,DisableMidiMusic,PC-new,,,,low,stops the song tracks playing notes,ea_sound_hl_01,manual-trace
+0008F98F,sub_8F98F,LoadDigiFile,PC-new,,,,low,"loads a digital sound file, reads its header (RIFF or EA) and decodes the samples",ea_sound_hl_01,manual-trace
+0008FAF2,sub_8FAF2,FindSubstring,PC-new,,,,low,the position just after the first match of a string inside another,ea_sound_hl_01,manual-trace
+0008FB24,sub_8FB24,PlayDigiBlock,PC-new,,,,low,plays a loaded digital sample on a driver channel,ea_sound_hl_01,manual-trace
+0008FB8E,sub_8FB8E,PlayDigiBlockLoop,PC-new,,,,low,"plays a loaded digital sample on a driver channel, looping",ea_sound_hl_01,manual-trace
+0008FBE5,sub_8FBE5,PlayDigiPtr,PC-new,,,,low,plays digital sample data at a pointer on a driver channel,ea_sound_hl_01,manual-trace
+0008FC37,sub_8FC37,PlayDigiPtrLoop,PC-new,,,,low,"plays digital sample data at a pointer on a driver channel, looping",ea_sound_hl_01,manual-trace
 0008FC8A,sub_8FC8A,SndQuery,PC-new,,,,medium,"EA sound library: query a sound handle (handle, what); what 3 = has its digital music finished",ea_sound_hl_01,manual-trace
+0008FCAC,sub_8FCAC,StopDigiChannel,PC-new,,,,low,stops a digital channel of a driver,ea_sound_hl_01,manual-trace
+0008FCDF,sub_8FCDF,SetDigiChannelVolume,PC-new,,,,low,"(handle, channel, volume): sets the volume of a digital channel, stops it at 0",ea_sound_hl_01,manual-trace
+0008FD67,sub_8FD67,QueryDigiChannel,PC-new,,,,low,driver function 33h for a channel,ea_sound_hl_01,manual-trace
+0008FD84,sub_8FD84,MidiProgramChange,PC-new,,,,medium,sends a MIDI program change,ea_sound_hl_01,manual-trace
+0008FDB2,sub_8FDB2,MidiSetVolume,PC-new,,,,medium,sends a MIDI channel volume controller,ea_sound_hl_01,manual-trace
+0008FDE5,sub_8FDE5,MidiPitchBend,PC-new,,,,medium,sends a MIDI pitch bend,ea_sound_hl_01,manual-trace
+0008FE1C,sub_8FE1C,MidiNoteOn,PC-new,,,,medium,sends a MIDI note on at full velocity,ea_sound_hl_01,manual-trace
+0008FE4F,sub_8FE4F,MidiNoteOff,PC-new,,,,medium,sends a MIDI note off,ea_sound_hl_01,manual-trace
+0008FE83,sub_8FE83,SetSoundByteOrder,PC-new,,,,low,sets the byte order flag of the sound files,ea_sound_hl_01,manual-trace
+0008FE89,sub_8FE89,FindSoundChunk,PC-new,,,,low,finds a chunk by id in a sound bank's directory,ea_sound_hl_01,manual-trace
+0008FED2,sub_8FED2,ReplaceFileExt,PC-new,,,,medium,builds a file name with another extension (splitpath and makepath),ea_sound_hl_01,manual-trace
+0008FF1E,sub_8FF1E,FreeMemPtr,PC-new,,,,medium,frees the memory block a pointer variable holds and clears it,ea_sound_hl_01,manual-trace
+0008FF3E,sub_8FF3E,ReleaseMemPtr,PC-new,,,,low,releases the memory descriptor a pointer variable holds and clears it,ea_sound_hl_01,manual-trace
+0008FF5E,sub_8FF5E,SwapBytes16,PC-new,,,,medium,swaps the two bytes of a word,ea_sound_hl_01,manual-trace
+0008FF7C,sub_8FF7C,SwapBytes32,PC-new,,,,medium,reverses the four bytes of a dword,ea_sound_hl_01,manual-trace
 0008FFB0,sub_8FFB0,SetPalette,PC-new,,,,medium,"graphics library: set palette colours (first, count, rgb)",ea_sound_hl_01,manual-trace
 0008FFD4,start,start,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 725 bytes),watcom_clib_07,flirt
 00090267,sub_90267,WriteConsoleMessage,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.962),watcom_clib_07,match96+97

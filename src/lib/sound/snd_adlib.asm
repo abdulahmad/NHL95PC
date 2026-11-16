@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9DE9C progbits alloc exec nowrite align=1
 extern __GETDS, byte_F2F42, byte_F2F43, byte_F3196, byte_F3197, dword_D4F9A, dword_F2F28, dword_F3108
-extern memcpy_, sub_8F0D7, sub_91FA4, sub_A68C9, sub_A699D, sub_A69E8, sub_A69FB, sub_A6A01
+extern memcpy_, GetPatchEntry, sub_91FA4, sub_A68C9, sub_A699D, sub_A69E8, sub_A69FB, sub_A6A01
 extern sub_A6A09, sub_A6B32, sub_A6B5D, sub_A6B73, sub_B4A60, unk_F21FC, unk_F3148, word_F2F3C
 extern word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450, word_F3452
 global sub_9DE9C, sub_9DEA2, sub_9DEA9, sub_9DEAF, sub_9DEBE, sub_9DEC4, loc_9DEE3, loc_9DF3A
@@ -179,7 +179,7 @@ sub_9E026:
         xor eax, eax
         mov al, byte [byte esi+01Bh]
         push eax
-        call sub_8F0D7
+        call GetPatchEntry
         add esp, byte 4
         test eax, eax
         je short loc_9E082

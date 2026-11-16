@@ -8,8 +8,8 @@ extern oneminsaid, dword_D2427, crowdsamples, dword_ED7A4, gameopts, gmode, last
 extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
 extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
 extern SayPlayerNumber, SayPlayoffResult, SayPlayoffTonight, SayScoringPeriod, SayTonightIntro, SetTickDeadline, sounddev, SpeechBusy
-extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F80E, sub_8FD84
-extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, teamabbrevs, WaitTickDeadline
+extern sub_8E8B8, sub_8E908, PlaySong, PlayPatchFull, StopSongId, ReleaseSong, SongFinished, MidiProgramChange
+extern MidiSetVolume, MidiPitchBend, MidiNoteOn, MidiNoteOff, teamabbrevs, WaitTickDeadline
 global SndLoadFile, sndcb_addesp8_x, SndLoadFile2, Crowd_Noise, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, sfx
 global FreeDigiSample, StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PlayCrowdSample_ret, PaOneMinuteLeft, PaSpeechBusy
 global PaGoal, PaPlayerNumber, PaPenalty, PaPenaltyShot, PaTonightIntro, PaTonightIntro_ret, PaScoringPeriod, PaNhlIntro
@@ -157,12 +157,12 @@ Crowd_Noise:
         mov al, byte [crowddriver]
         xor ebx, ebx
         mov edx, 8
-        call sub_8FDB2
+        call MidiSetVolume
         xor eax, eax
         mov al, byte [crowddriver]
         mov ebx, 24h
         mov edx, 8
-        call sub_8FE4F
+        call MidiNoteOff
         jmp short .14
 .13:
         cmp dword [crowdvol8], byte 0
@@ -173,17 +173,17 @@ Crowd_Noise:
         mov al, byte [crowddriver]
         mov ebx, 7Dh
         mov edx, 8
-        call sub_8FD84
+        call MidiProgramChange
         xor eax, eax
         mov al, byte [crowddriver]
         mov ebx, 24h
         mov edx, 8
-        call sub_8FE1C
+        call MidiNoteOn
         xor eax, eax
         mov al, byte [crowddriver]
         mov ebx, 40h
         mov edx, 8
-        call sub_8FDE5
+        call MidiPitchBend
 .14:
         test ecx, ecx
         jle short .18
@@ -191,7 +191,7 @@ Crowd_Noise:
         mov al, byte [crowddriver]
         mov ebx, ecx
         mov edx, 8
-        call sub_8FDB2
+        call MidiSetVolume
         cmp ecx, byte 7Fh
         jge short .15
         cmp dword [crowdvol8], byte 7Fh
@@ -211,7 +211,7 @@ Crowd_Noise:
         xor eax, eax
         mov al, byte [crowddriver]
         mov edx, 8
-        call sub_8FDE5
+        call MidiPitchBend
 .18:
         mov dword [crowdvol8], ecx
         cmp dword [crowdvol7], byte 0
@@ -222,18 +222,18 @@ Crowd_Noise:
         mov al, byte [crowddriver]
         mov ebx, 7Eh
         mov edx, 7
-        call sub_8FD84
+        call MidiProgramChange
         xor eax, eax
         mov al, byte [crowddriver]
         mov ebx, 24h
         mov edx, 7
-        call sub_8FE1C
+        call MidiNoteOn
 .19:
         xor eax, eax
         mov al, byte [crowddriver]
         mov ebx, esi
         mov edx, 7
-        call sub_8FDB2
+        call MidiSetVolume
         mov ebx, 3
         mov eax, esi
         mov edx, esi
@@ -258,7 +258,7 @@ Crowd_Noise:
         xor eax, eax
         mov al, byte [crowddriver]
         mov edx, 7
-        call sub_8FDE5
+        call MidiPitchBend
         mov dword [crowdvol7], esi
 .x:
         pop esi
@@ -270,7 +270,7 @@ Crowd_Noise:
 ;-----------------------------------------------------------------------------
 ; CrowdNoiseOff                                59748  95 PC, medium confidence
 ; PC MIDI crowd noise off: for channels 8 and 7 when playing
-; (crowdvol8/crowdvol7 > 0): volume 0, note 24h off (sub_8FE4F, 80h), clears
+; (crowdvol8/crowdvol7 > 0): volume 0, note 24h off (MidiNoteOff, 80h), clears
 ; the level
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/CrowdNoiseOff.c
@@ -293,12 +293,12 @@ CrowdNoiseOff:
         mov al, byte [crowddriver]
         xor ebx, ebx
         mov edx, 8
-        call sub_8FDB2
+        call MidiSetVolume
         xor eax, eax
         mov al, byte [crowddriver]
         mov ebx, 24h
         mov edx, 8
-        call sub_8FE4F
+        call MidiNoteOff
         xor ebx, ebx
         mov dword [crowdvol8], ebx
 .1:
@@ -308,12 +308,12 @@ CrowdNoiseOff:
         mov al, byte [crowddriver]
         xor ebx, ebx
         mov edx, 7
-        call sub_8FDB2
+        call MidiSetVolume
         xor eax, eax
         mov al, byte [crowddriver]
         mov ebx, 24h
         mov edx, 7
-        call sub_8FE4F
+        call MidiNoteOff
         xor esi, esi
         mov dword [crowdvol7], esi
 .x:
@@ -448,7 +448,7 @@ sfx:
         jne short .5
         mov edx, dword [dword_D2427]
         mov eax, dword [dword_ED7A4]
-        call sub_8F270
+        call PlaySong
         pop edx
         pop ecx
         ret
@@ -459,13 +459,13 @@ sfx:
         jne short .6
         xor eax, eax
         mov ax, dx
-        call sub_8F61D
+        call PlayPatchFull
 .6:
         inc edx
 .7:
         xor eax, eax
         mov ax, dx
-        call sub_8F61D
+        call PlayPatchFull
 .x:
         pop edx
         pop ecx
@@ -473,8 +473,8 @@ sfx:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; FreeDigiSample                               59945  95 PC, medium confidence
-; When digihandle is set and sub_8F80E says it is not playing, frees it with
-; sub_8F7AE and sets digihandle -1; no callers
+; When digihandle is set and SongFinished says it is not playing, frees it with
+; ReleaseSong and sets digihandle -1; no callers
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/FreeDigiSample.c
 %ifdef CBUILD
@@ -490,11 +490,11 @@ FreeDigiSample:
         cmp ebx, byte 0FFFFFFFFh
         je short .x
         mov eax, ebx
-        call sub_8F80E
+        call SongFinished
         test ax, ax
         jne short .x
         mov eax, dword [digihandle]
-        call sub_8F7AE
+        call ReleaseSong
         mov dword [digihandle], 0FFFFFFFFh
 .x:
         pop edx
@@ -503,8 +503,8 @@ FreeDigiSample:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StopDigiSample                               59981  95 PC, medium confidence
-; If digihandle is set and still playing (sub_8F80E returns 0) stops it
-; (sub_8F67D); digihandle = -1
+; If digihandle is set and still playing (SongFinished returns 0) stops it
+; (StopSongId); digihandle = -1
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/StopDigiSample.c
 %ifdef CBUILD
@@ -518,11 +518,11 @@ StopDigiSample:
         cmp edx, byte 0FFFFFFFFh
         je short .x
         mov eax, edx
-        call sub_8F80E
+        call SongFinished
         test ax, ax
         jne short .x
         mov eax, dword [digihandle]
-        call sub_8F67D
+        call StopSongId
         mov dword [digihandle], 0FFFFFFFFh
 .x:
         pop edx
@@ -531,7 +531,7 @@ StopDigiSample:
 ;-----------------------------------------------------------------------------
 ; PlayDigiSample                               599B9  95 PC, medium confidence
 ; StopDigiSample, then unless the sound device (sounddev) has bits 11h, plays
-; sample eax via sub_8F270 on dword_D2427 and keeps the handle in digihandle
+; sample eax via PlaySong on dword_D2427 and keeps the handle in digihandle
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/PlayDigiSample.c
 %ifdef CBUILD
@@ -550,7 +550,7 @@ PlayDigiSample:
         je short .x
         mov edx, dword [dword_D2427]
         mov eax, ebx
-        call sub_8F270
+        call PlaySong
         mov dword [digihandle], eax
 .x:
         pop edx
@@ -559,7 +559,7 @@ PlayDigiSample:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; WaitDigiSample                               599EE  95 PC, medium confidence
-; Busy-waits until the sample in digihandle is done (sub_8F80E non-zero)
+; Busy-waits until the sample in digihandle is done (SongFinished non-zero)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/WaitDigiSample.c
 %ifdef CBUILD
@@ -572,7 +572,7 @@ WaitDigiSample:
         je short .x
 .1:
         mov eax, dword [digihandle]
-        call sub_8F80E
+        call SongFinished
         test ax, ax
         je short WaitDigiSample.1
 .x:

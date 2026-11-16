@@ -4,13 +4,13 @@ bits 32
 section s_3DB41 progbits alloc exec nowrite align=1
 extern __CHK, FatalError, fclose_, fopen_, fscanf_, greyramp, MakePath, MouseSetPos
 extern SetDialogColors, SetSoundDevice, sounddevids, str_CannotOpenNhlCfg, str_CFG, str_fmt4x, str_NHL2, str_R3
-extern sub_8EB93, sub_8FE83, AddExitHandler, VgaSetPalette
+extern SndShutdown, SetSoundByteOrder, AddExitHandler, VgaSetPalette
 global LoadNhlCfg, negone_3DC28
 ;-----------------------------------------------------------------------------
 ; LoadNhlCfg                                                      3DB41  95 PC
 ; Startup: opens NHL.CFG ("cannot open nhl.cfg" fatal), fscanf "%4x" sound
 ; device index -> sounddevids (default 10h), sets palette 0-3 to a grey ramp,
-; installs sub_8EB93 handler, mouse to 0,0, dialog colors, then starts the
+; installs SndShutdown handler, mouse to 0,0, dialog colors, then starts the
 ; sound driver (SetSoundDevice); the writer is in sound_config
 ;-----------------------------------------------------------------------------
 ; C: src/pc/config_cfg/LoadNhlCfg.c
@@ -72,7 +72,7 @@ LoadNhlCfg:
         inc esi
         cmp esi, byte 4
         jl short LoadNhlCfg.4
-        push sub_8EB93
+        push SndShutdown
         call AddExitHandler
         add esp, byte 4
         push byte 0
@@ -86,7 +86,7 @@ LoadNhlCfg:
         mov eax, 2
         call SetDialogColors
         mov eax, 1
-        call sub_8FE83
+        call SetSoundByteOrder
         mov eax, edi
         call SetSoundDevice
         add esp, byte 14h

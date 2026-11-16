@@ -42,10 +42,10 @@ int MenuModeSettings(void)
             hmtmpde[i] = 0x1000;
         }
     }
-    if (gameopts.music) sub_8F979();
-    else sub_8F984();
-    if (gameopts.sfx) sub_8F963();
-    else sub_8F96E();
+    if (gameopts.music) EnableMidiMusic();
+    else DisableMidiMusic();
+    if (gameopts.sfx) EnableMidiSfx();
+    else DisableMidiSfx();
     FreeMemBlock(bm);
     FreeMemBlock(settingsfile);
     settingsfile = 0;
@@ -195,15 +195,15 @@ short ModeSetEditLoop(void)
                     if (musicon) gameopts.speech = (setbits[0] & 0x100) != 0;
                     if (gameopts.music) {
                         if (musicon && songdata && !oldmusic && SndQuery(musicslot, 3))
-                            sub_8FB8E(songdata, musichandle, 3, 0x7F);
-                        sub_8F979();
+                            PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
+                        EnableMidiMusic();
                     } else {
                         if (musicon && songdata && !SndQuery(musicslot, 3))
-                            sub_8FCDF(musichandle, 3, 0x64);
-                        sub_8F984();
+                            SetDigiChannelVolume(musichandle, 3, 0x64);
+                        DisableMidiMusic();
                     }
-                    if (gameopts.sfx) sub_8F963();
-                    else sub_8F96E();
+                    if (gameopts.sfx) EnableMidiSfx();
+                    else DisableMidiSfx();
                     WriteCurModeState();
                     FreeMemBlock(bm);
                     return 0;

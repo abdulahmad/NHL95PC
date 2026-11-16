@@ -1,22 +1,22 @@
 /* Arena logos: the pre-game scouting report. */
 #define PreGameScreen PreGameScreen_decl
 #define TonightsGameScreen TonightsGameScreen_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #define MusicChanReset2 MusicChanReset2_decl
 #include "nhl95.h"
 #undef PreGameScreen
 #undef TonightsGameScreen
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 #undef MusicChanReset2
 
 typedef struct { char c[17]; } ArtHdr17;
 
 int PreGameScreen(unsigned char home, unsigned char away);
 int TonightsGameScreen(int home, int away);
-int sub_8F98F(char *path);
-void sub_8FB8E(int song, int handle, int a, int b);
+int LoadDigiFile(char *path);
+void PlayDigiBlockLoop(int song, int handle, int a, int b);
 void MusicChanReset2(void);
 
 /* PreGameScreen (29F28, PC only): the scouting report before a game. Read both teams' records from the league
@@ -81,7 +81,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     FileClose(&io.fh);
     SetScreenTarget();
     pal = (unsigned char *)AllocMemBlock((char *)str_Pal10, 0x300, 0x20);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
@@ -173,8 +173,8 @@ int PreGameScreen(unsigned char home, unsigned char away)
     ClearInputQueue();
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x1E3] == 1 ? (char *)cddriveptr : 0, (char *)str_Scouting, (char *)str_Iff4);
-        songdata = sub_8F98F(path);
-        if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+        songdata = LoadDigiFile(path);
+        if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
     }
     FadePalStep(0, apal, 0x10);
     if (schedgameidx < 0x444)
@@ -264,7 +264,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
             oldmy = io.my;
         }
     } while (done == 0);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, apal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9D68E progbits alloc exec nowrite align=1
 extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, _STACKLOW
-extern dword_D4F9A, dword_F27F6, sub_8F114, sub_9F685, sub_9F725, sub_9FA5D, sub_9FC24, sub_9FC94
+extern dword_D4F9A, dword_F27F6, GetPatchTimbre, sub_9F685, sub_9F725, sub_9FA5D, sub_9FC24, sub_9FC94
 extern sub_A65E8, sub_A6612, sub_A6635, sub_A6672, sub_A6684, sub_A677B, unk_F21FC, unk_F24D8
 extern unk_F27D8
 global CMainHook, sub_9D698, sub_9D69E, loc_9D6A2, loc_9D6B8, loc_9D6C4, loc_9D6D9, sub_9D6E6
@@ -88,7 +88,7 @@ loc_9D723:
         add al, 5Ch
         and eax, 0FFh
         push eax
-        call sub_8F114
+        call GetPatchTimbre
         add esp, byte 4
         mov edx, eax
         mov byte [byte esp+010h], 3Ch
@@ -196,7 +196,7 @@ sub_9D858:
         xor eax, eax
         mov al, byte [byte esp+0Ch]
         push eax
-        call sub_8F114
+        call GetPatchTimbre
         mov edx, eax
         add esp, byte 4
         xor eax, eax

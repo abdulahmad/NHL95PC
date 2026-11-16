@@ -26,7 +26,7 @@ extern str_PPV, str_Rockditi, str_Scrbrd2, str_Scrn2, str_Shp0, str_Srb3, str_St
 extern str_Title30, strlen_, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002, sub_1B092, sub_1B09F
 extern sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
 extern sub_1B2A7, sub_1B8AC, sub_1B92E, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState
-extern TextRestoreState, TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF
+extern TextRestoreState, TextSetFont, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume
 extern PutBlock, DrawBitmap, sub_9087C, FillRect, sub_9121C, sub_91284, sub_912C8, FreeBitmap
 extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, ReadJoyRaw, ClearScreen, SaveDrawState
 extern RestoreDrawState, VgaSetPalette, SetScreenTarget, sub_B4CD8, sub_B4CF2, SetColorRemap, sub_B4E50, CreateBitmap
@@ -418,7 +418,7 @@ TitleScreen:
         lea eax, [dword esp+0300h]
         call MakePath
         lea eax, [dword esp+0300h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         jmp short .13
 .8:
@@ -496,7 +496,7 @@ TitleScreen:
         mov eax, dword [songdata]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .18:
         mov ebx, 10h
         mov edx, esp
@@ -742,7 +742,7 @@ TitleScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .39:
         mov ebx, 10h
         mov edx, esp
@@ -899,7 +899,7 @@ RunIntro:
         lea eax, [dword esp+0600h]
         call MakePath
         lea eax, [dword esp+0600h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [dword esp+0644h], eax
         mov ecx, str_Iff2
         mov ebx, str_Pioneer3
@@ -913,7 +913,7 @@ RunIntro:
         lea eax, [dword esp+0600h]
         call MakePath
         lea eax, [dword esp+0600h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [dword esp+0648h], eax
         mov ecx, str_Iff2
         mov ebx, str_Pioneer2
@@ -927,7 +927,7 @@ RunIntro:
         lea eax, [dword esp+0600h]
         call MakePath
         lea eax, [dword esp+0600h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [dword esp+0640h], eax
         mov dword [songdata], eax
         test eax, eax
@@ -935,7 +935,7 @@ RunIntro:
         mov edx, dword [musichandle]
         mov ecx, 7Fh
         mov ebx, 1
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .12:
         push dword 104h
         call SetTickDeadline
@@ -954,7 +954,7 @@ RunIntro:
         mov edx, dword [musichandle]
         mov ecx, 64h
         xor ebx, ebx
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .15:
         mov ebx, 5Ah
         mov edx, esp
@@ -1083,7 +1083,7 @@ RunIntro:
         mov ecx, 7Fh
         mov ebx, 2
         mov eax, dword [dword esp+0648h]
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .26:
         mov esi, 1
 .27:
@@ -1151,7 +1151,7 @@ RunIntro:
         mov ecx, 7Fh
         mov ebx, 3
         mov eax, edi
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .32:
         mov esi, 0E0h
 .33:
@@ -1195,19 +1195,19 @@ RunIntro:
         mov eax, dword [musichandle]
         mov ebx, 64h
         xor edx, edx
-        call sub_8FCDF
+        call SetDigiChannelVolume
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 1
-        call sub_8FCDF
+        call SetDigiChannelVolume
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 2
-        call sub_8FCDF
+        call SetDigiChannelVolume
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
         jmp short .36
 .35:
         cmp dword [dword esp+0638h], byte 0
@@ -1338,14 +1338,14 @@ RunIntro:
         lea eax, [dword esp+0600h]
         call MakePath
         lea eax, [dword esp+0600h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .50
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .50:
         mov ebx, 10h
         mov edx, esp
@@ -1508,14 +1508,14 @@ ShowCredits:
         lea eax, [dword esp+0340h]
         call MakePath
         lea eax, [dword esp+0340h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je near .12
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
         jmp near .12
 .5:
         cmp dword [sounddev], byte 8
@@ -1713,7 +1713,7 @@ ShowCredits:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .24:
         call SpeechStopQueue
         mov ebx, 10h

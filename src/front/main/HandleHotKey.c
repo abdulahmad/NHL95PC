@@ -60,7 +60,7 @@ int HandleHotKey(int key)
         FadePalette(1, savepal, 0x10);
         CrowdFadeOut();
         if (musicon) MusicChanReset();
-        else sub_8F633();
+        else ReleaseAllVoices();
         SpeechStopQueue();
         StopDigiSample();
         InputInstall();
@@ -79,23 +79,23 @@ int HandleHotKey(int key)
         return 1;
     case 0x32:
         gameopts.music = !gameopts.music;
-        if (gameopts.music) sub_8F979();
+        if (gameopts.music) EnableMidiMusic();
         else {
             StopDigiSample();
-            sub_8F984();
+            DisableMidiMusic();
         }
         break;
     case 0x1F:
         if (gameopts.sfx) {
             CrowdNoiseOff();
             if (musicon) MusicChanReset();
-            else sub_8F633();
-            sub_8F96E();
+            else ReleaseAllVoices();
+            DisableMidiSfx();
         }
         gameopts.sfx = !gameopts.sfx;
         if (gameopts.sfx) {
             CrowdNoiseReset();
-            sub_8F963();
+            EnableMidiSfx();
         }
         break;
     case 1:

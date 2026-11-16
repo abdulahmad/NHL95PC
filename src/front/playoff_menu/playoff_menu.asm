@@ -20,7 +20,7 @@ extern songdata, sprintf_, standingscb, standingsmenucb, str_Adn1, str_Adn2, str
 extern str_Aup2, str_Aup3, str_BangPal, str_Bkgd2, str_D, str_EasternConference, str_Embpal, str_Embscup
 extern str_fmtcsp, str_GameSav, str_Menubuff2, str_Midl, str_Palette, str_PlayoffsHaveNotBeen, str_Pointer, str_POTitle
 extern str_Pstatbar2, str_Rst1, str_Rst2, str_Scuparrw, str_space4, str_space5, str_WesternConference, strcat_
-extern strcpy_, PushMemDescriptorLocked, sub_8FCDF, ClearScreenColour, XorRectOutline, SetScreenTarget, teamcitynames, teamconf
+extern strcpy_, PushMemDescriptorLocked, SetDigiChannelVolume, ClearScreenColour, XorRectOutline, SetScreenTarget, teamcitynames, teamconf
 extern teamstatscb, TextGridOff, TextGridOpen, TextRestoreState, TextSaveState, TextSetFont, treecol_Er1, treecol_Er2
 extern treecol_Wr2, treecolslots, treecolx, treeteamnames, VgaSetPalette, VisTeam, WriteModeState
 global PlayoffModeLoop, POReturnZero, POHiliteSlot, PlayoffTreeMenu, DrawPlayoffTree, SetSideControls, WriteCurModeState, ClearPlayerFromLines
@@ -105,7 +105,7 @@ PlayoffModeLoop:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .2:
         push byte 20h
         push dword 300h
@@ -302,7 +302,7 @@ PlayoffModeLoop:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .19:
         push byte 20h
         push dword 300h

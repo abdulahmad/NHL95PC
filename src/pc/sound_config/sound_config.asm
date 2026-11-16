@@ -26,9 +26,9 @@ extern str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20, str_Playoff, str_Playof
 extern str_Pointer21, str_Return, str_Room, str_SBDAC, str_SBDAC2, str_Settings, str_Settings3, str_ShowLeague
 extern str_Slapshot, str_Sound4, str_SoundBlaster, str_SoundBlaster2, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound
 extern str_ULTRASOUND, str_VisBck, str_VisitingTeam, str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock
-extern PushMemDescriptorLocked, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, sub_8EB5B, sub_8EB93
-extern sub_8ECC0, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, SndQuery
-extern sub_8FCDF, SetPalette, PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, DrawArt
+extern PushMemDescriptorLocked, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SndInit, SndShutdown
+extern LoadMusicBank, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, PlayDigiPtr, PlayDigiPtrLoop, SndQuery
+extern SetDigiChannelVolume, SetPalette, PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, DrawArt
 extern GrabBlock, PrintString, sub_91FE0, sub_97079, MouseRead, FindShape, VgaSetPalette, SetScreenTarget
 extern SetColorRemap, FillRectColor, PlotPixel, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
 extern sndselbox2, msg_NoSoundCard, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
@@ -634,7 +634,7 @@ SoundCardDlgLoop_poll:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .9:
         mov eax, dword [musicslot-3]
         sar eax, 18h
@@ -674,7 +674,7 @@ SoundCardDlgLoop_poll:
         mov eax, esp
         call MakePath
         mov eax, esp
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .13
@@ -683,7 +683,7 @@ SoundCardDlgLoop_poll:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .13:
         cmp byte [musicon], 0
         je short .14
@@ -713,7 +713,7 @@ SoundCardDlgLoop_poll:
         mov eax, esp
         call MakePath
         mov eax, esp
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .18
@@ -722,7 +722,7 @@ SoundCardDlgLoop_poll:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .18:
         mov eax, sndselbox1
         call DrawSelBoxOff
@@ -832,7 +832,7 @@ SetSoundDevice:
         mov eax, dword [dword_ED7A4]
         call FreeSample
 .3:
-        call sub_8EB93
+        call SndShutdown
 .4:
         mov dword [cursndbank], 20h
         xor edi, edi
@@ -929,7 +929,7 @@ SetSoundDevice:
         xor al, al
         mov byte [crowddriver], al
 .13:
-        call sub_8EB5B
+        call SndInit
         mov ebx, dword [dword_D2427]
         test ebx, ebx
         jl short .15
@@ -953,7 +953,7 @@ SetSoundDevice:
         je near .29
         lea edx, [byte esp+010h]
         lea eax, [byte esp+020h]
-        call sub_8ECC0
+        call LoadMusicBank
         cmp esi, byte 4
         jne short .18
         xor ecx, ecx
@@ -1133,7 +1133,7 @@ SetSoundDevice:
 .37:
         mov dword [dword_D2423], 0FFFFFFFFh
 .38:
-        call sub_8EB93
+        call SndShutdown
         push byte 64h
         call SetTickDeadline
         add esp, byte 4

@@ -3,7 +3,7 @@
 #define LoadRockMusic LoadRockMusic_decl
 #define ReloadGameGfx ReloadGameGfx_decl
 #define Gameloop GameLoop_decl
-#define sub_8F98F sub_8F98F_decl
+#define LoadDigiFile sub_8F98F_decl
 #define LoadSample sub_8F13B_decl
 #define TitleScreen TitleScreen_decl
 #define RunIntro RunIntro_decl
@@ -34,7 +34,7 @@
 #undef LoadRockMusic
 #undef ReloadGameGfx
 #undef Gameloop
-#undef sub_8F98F
+#undef LoadDigiFile
 #undef LoadSample
 #undef TitleScreen
 #undef RunIntro
@@ -98,7 +98,7 @@ int RunDemoGame(void);
 void LoadRockMusic(void);
 void ReloadGameGfx(void);
 void Gameloop(void);
-int sub_8F98F(char *path);  /* sound library: load a song */
+int LoadDigiFile(char *path);  /* sound library: load a song */
 int LoadSample(char *path);  /* sound library: load a digitized sample */
 
 typedef struct ExhRec { unsigned char b[0x75]; } ExhRec;
@@ -257,7 +257,7 @@ int TitleScreen(void)
     FreeMemBlock(bank);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x1DA] == 1 ? (char *)cddriveptr : 0, (char *)str_Title30, (char *)str_Iff2);
-        songdata = sub_8F98F(path);
+        songdata = LoadDigiFile(path);
     } else {
         if (sounddev == 8)
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Mttitle, (char *)str_KMS);
@@ -274,7 +274,7 @@ int TitleScreen(void)
     delay = 10;
     pal[2] = pal[1] = pal[0] = 0;
     if (musicon) {
-        if (songdata) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+        if (songdata) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
         FadePalStep(0, (unsigned char *)pal, 0x10);
         SetTickDeadline(0x5A);
         while (!TickDeadlinePassed()) sub_1B2A7();
@@ -352,7 +352,7 @@ int TitleScreen(void)
     if (bmp) FreeBitmap(bmp);
     sub_1ACF1(dec);
     sub_1B18B(stream);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));
@@ -411,19 +411,19 @@ void RunIntro(void)
     bank2 = LoadBank(path, 0);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x12C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer4, (char *)str_Iff2);
-        song4 = sub_8F98F(path);
+        song4 = LoadDigiFile(path);
         MakePath(path, fileoncd[0x12B] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer3, (char *)str_Iff2);
-        song3 = sub_8F98F(path);
+        song3 = LoadDigiFile(path);
         MakePath(path, fileoncd[0x12A] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer2, (char *)str_Iff2);
-        songdata = song2 = sub_8F98F(path);
-        if (songdata) sub_8FB8E(songdata, musichandle, 1, 0x7F);
+        songdata = song2 = LoadDigiFile(path);
+        if (songdata) PlayDigiBlockLoop(songdata, musichandle, 1, 0x7F);
         SetTickDeadline(0x104);
         WaitTickDeadline();
         wait = 0x50;
     } else {
         wait = 0xC8;
     }
-    if (musicon && songdata) sub_8FB8E(songdata, musichandle, 0, 0x64);
+    if (musicon && songdata) PlayDigiBlockLoop(songdata, musichandle, 0, 0x64);
     FadePalStep(0, (unsigned char *)pal, 0x5A);
     changed = 1;
     while (changed) {
@@ -465,7 +465,7 @@ void RunIntro(void)
     memcpy(tgt, (char *)FindShape(bank2, (char *)str_Pio) + 0x10, 0x300);
     SetTickDeadline(0x50);
     WaitTickDeadline();
-    if (musicon && song3) sub_8FB8E(song3, musichandle, 2, 0x7F);
+    if (musicon && song3) PlayDigiBlockLoop(song3, musichandle, 2, 0x7F);
     for (i = 1; i < 5; i++) DrawShape(shapes[i]);
     VgaSetPalette(0, 0x100, (unsigned char *)pal);
     sub_9121C(shapes[0]);
@@ -486,7 +486,7 @@ void RunIntro(void)
     }
     SetTickDeadline(0x28);
     WaitTickDeadline();
-    if (musicon && song4) sub_8FB8E(song4, musichandle, 3, 0x7F);
+    if (musicon && song4) PlayDigiBlockLoop(song4, musichandle, 3, 0x7F);
     for (i = 0xE0; i < 0xF0; i++) {
         if (i > 0xE0) {
             pal[(i - 1) * 3] = 0;
@@ -501,10 +501,10 @@ void RunIntro(void)
     SetTickDeadline(0xC8);
     WaitTickDeadline();
     if (musicon) {
-        sub_8FCDF(musichandle, 0, 0x64);
-        sub_8FCDF(musichandle, 1, 0x64);
-        sub_8FCDF(musichandle, 2, 0x64);
-        sub_8FCDF(musichandle, 3, 0x64);
+        SetDigiChannelVolume(musichandle, 0, 0x64);
+        SetDigiChannelVolume(musichandle, 1, 0x64);
+        SetDigiChannelVolume(musichandle, 2, 0x64);
+        SetDigiChannelVolume(musichandle, 3, 0x64);
     } else if (!skip) {
         WaitClickTimeout(0x78);
     }
@@ -535,9 +535,9 @@ void RunIntro(void)
         FreeMemBlock(bank);
         if (musicon && !songdata) {
             MakePath(path, fileoncd[0x1DC] == 1 ? (char *)cddriveptr : 0, (char *)str_Easports, (char *)str_Iff2);
-            i = sub_8F98F(path);                 /* i reused for the song */
+            i = LoadDigiFile(path);                 /* i reused for the song */
             songdata = i;
-            if (songdata) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+            if (songdata) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
         }
         FadePalStep(0, (unsigned char *)pal, 0x10);
         SetTickDeadline(0xC8);
@@ -609,9 +609,9 @@ void ShowCredits(void)
     GrabBlock(bg, 0x14A, 0x3F);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x1E1] == 1 ? (char *)cddriveptr : 0, (char *)str_Credits, (char *)str_Iff2);
-        wait = sub_8F98F(path);
+        wait = LoadDigiFile(path);
         songdata = wait;
-        if (wait) sub_8FB8E(wait, musichandle, 3, 0x4C);
+        if (wait) PlayDigiBlockLoop(wait, musichandle, 3, 0x4C);
     } else {
         if (sounddev == 8)
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Adtitle, (char *)str_KMS);
@@ -656,7 +656,7 @@ void ShowCredits(void)
         if (WaitClickTimeout(wait)) break;
     }
     PutBlock(bg, 0x14A, 0x3F);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     SpeechStopQueue();
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {

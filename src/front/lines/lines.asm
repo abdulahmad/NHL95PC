@@ -19,7 +19,7 @@ extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmtEmb, str_fmtMinSec, str_fmtTenths
 extern str_GAA4, str_GP8, str_Gstat3, str_Keys3, str_L8, str_Lelogo, str_Lineditp2, str_Menubuff8
 extern str_Min4, str_Name2, str_No2, str_Pal25, str_Pal26, str_PCT2, str_PIM4, str_PlusMinus7
 extern str_Pntr3, str_Pointer13, str_Pos2, str_Pstat3, str_PT2, str_S2dSS, str_S6, str_SA3
-extern str_Shots4, str_Shrt2, str_SRoster, str_T6, str_W6, sub_8FCDF, sub_9121C, sub_91FE0
+extern str_Shots4, str_Shrt2, str_SRoster, str_T6, str_W6, SetDigiChannelVolume, sub_9121C, sub_91FE0
 extern SetScreenTarget, TextRestoreState, TextSaveState, TextSetColors, TextSetFont
 global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
 global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
@@ -80,7 +80,7 @@ DbLineEditor:
         mov eax, dword [musichandle]
         mov ebx, 32h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         call ShowLoadingScreen
         mov ebx, dword [fullscrbmp]

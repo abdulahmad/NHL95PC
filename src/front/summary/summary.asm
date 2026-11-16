@@ -21,7 +21,7 @@ extern str_Per2, str_Per3, str_Period, str_PP, str_PRDS, str_Rd, str_RParen2, st
 extern str_S3, str_Scra2, str_SDD, str_SH, str_ShotsOnGoal, str_SS4, str_St, str_Summ2
 extern str_Th, str_Tlu2, str_Top2, str_VFN, strcat_, strcpy_, sub_1BAF3, AllocMemBlock
 extern PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
-extern sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, PutBlock, DrawShape, sub_913D0, FindShape
+extern LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, PutBlock, DrawShape, sub_913D0, FindShape
 extern ClearScreen, VgaSetPalette, SetScreenTarget, SetClipWindow, CreateBitmap, teamstartlag, VisTeam, vscrestbmp
 extern WaitClickTimeout, WaitTickDeadline
 global GameSummaryScreen_jt, GameSummaryScreen, GameSummaryScreen_p1, GameSummaryScreen_p2, GameSummaryScreen_p3, GameSummaryScreen_ot, GameSummaryScreen_finalot, GameSummaryScreen_final
@@ -66,7 +66,7 @@ GameSummaryScreen:
         mov eax, dword [musichandle]
         mov ebx, 4Bh
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         mov eax, dword [musicslot-3]
         sar eax, 18h
@@ -532,7 +532,7 @@ GameSummaryScreen:
         lea eax, [dword esp+05D4h]
         call MakePath
         lea eax, [dword esp+05D4h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je near .37
@@ -541,7 +541,7 @@ GameSummaryScreen:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
         jmp near .37
 .32:
         cmp dword [sounddev], byte 8
@@ -1973,7 +1973,7 @@ GameSummaryScreen_period:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .82:
         mov ebx, 10h
         mov edx, dword [dword esp+07A8h]
@@ -2900,7 +2900,7 @@ GameStatsScreen:
         mov eax, dword [musichandle]
         mov ebx, 28h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
         push byte 28h
         call SetTickDeadline
         add esp, byte 4
@@ -2925,7 +2925,7 @@ GameStatsScreen:
         lea eax, [byte ebp-034h]
         call MakePath
         lea eax, [byte ebp-034h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je near .21
@@ -2934,7 +2934,7 @@ GameStatsScreen:
         mov edx, dword [musichandle]
         mov ecx, 7Fh
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
         jmp near .21
 .16:
         cmp dword [sounddev], byte 8
@@ -2981,7 +2981,7 @@ GameStatsScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .22:
         mov ebx, 10h
         lea edx, [dword ebp-0374h]

@@ -19,12 +19,12 @@ void sfx(int id)
         return;
     }
     if (sounddev == 4 && id == 0xAA) {
-        sub_8F270((void *)dword_ED7A4, dword_D2427);
+        PlaySong((void *)dword_ED7A4, dword_D2427);
         return;
     }
     if (id == 0x90) {
-        if (sounddev == 4) sub_8F61D((unsigned short)id);
+        if (sounddev == 4) PlayPatchFull((unsigned short)id);
         id++;
     }
-    sub_8F61D((unsigned short)id);
+    PlayPatchFull((unsigned short)id);
 }

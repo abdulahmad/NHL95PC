@@ -1,19 +1,19 @@
 /* Arena logos: tonight's game, the line-ups before a game. */
 #define TonightsGameScreen TonightsGameScreen_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #define sub_913D0 sub_913D0_decl
 #include "nhl95.h"
 #undef TonightsGameScreen
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 #undef sub_913D0
 
 typedef struct { char c[17]; } ArtHdr17;
 
 int TonightsGameScreen(int home, int away);
-int sub_8F98F(char *path);
-void sub_8FB8E(int song, int handle, int a, int b);
+int LoadDigiFile(char *path);
+void PlayDigiBlockLoop(int song, int handle, int a, int b);
 void __cdecl sub_913D0(int art, int x, int y);  /* graphics library: draw art (another mode than DrawArt) */
 
 /* TonightsGameScreen (2ABDF, PC only): tonight's game. Copy the two teams' crests (CTLOGO) into LOGOHOME and
@@ -108,8 +108,8 @@ int TonightsGameScreen(int home, int away)
     key = 0;
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x1DF] == 1 ? (char *)cddriveptr : 0, (char *)str_Tonights, (char *)str_Iff5);
-        songdata = sub_8F98F(path);
-        if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+        songdata = LoadDigiFile(path);
+        if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
     }
     for (side = 0; side < 2 && key < 2 && !err; side++) {
         short out;
@@ -203,7 +203,7 @@ int TonightsGameScreen(int home, int away)
         }
     }
     FreeMemBlock((int)gipk);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, pal, 0x10);
     SetScreenTarget();
     ClearScreen(0);

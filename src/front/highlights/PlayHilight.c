@@ -35,7 +35,7 @@ void PlayHilight(void)
         i++;
     } while (i < 0x1C);
     if (musicon && songdata)
-        sub_8FCDF(musichandle, 3, 0x64);
+        SetDigiChannelVolume(musichandle, 3, 0x64);
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {

@@ -1,12 +1,12 @@
 /* Coach files: the coach cutscene. */
 #define PlayMVI PlayMVI_decl
-#define sub_8F98F sub_8F98F_decl
+#define LoadDigiFile sub_8F98F_decl
 #include "nhl95.h"
 #undef PlayMVI
-#undef sub_8F98F
+#undef LoadDigiFile
 
 int PlayMVI(char *path, int x, int y);
-int sub_8F98F(char *path);
+int LoadDigiFile(char *path);
 
 /* CoachCutScene: fade out, show the coach screen, and play a random coach clip unless the
  user clicks through. Pal29 is copied into a 300h-byte buffer. The coach song loads when
@@ -36,7 +36,7 @@ int CoachCutScene(void)
     FreeMemBlock(bank);
     if (musicon && !songdata) {
         MakePath(s.path, fileoncd[0x21F] == 1 ? (char *)cddriveptr : 0, (char *)str_Coach, (char *)str_Iff13);
-        songdata = sub_8F98F(s.path);
+        songdata = LoadDigiFile(s.path);
     }
     if (musicon && (((unsigned char *)&gameopts)[1] & 1)) {
         flag = 1;

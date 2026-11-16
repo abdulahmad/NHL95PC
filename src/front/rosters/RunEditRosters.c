@@ -45,7 +45,7 @@ void RunEditRosters(void)
     rostereditmode = (int)pal;
     pal = (unsigned char *)AllocMemBlock((char *)str_Temp7, 0x300, 0x20);
     if (musicon && songdata)
-        sub_8FCDF(musichandle, 3, 0x32);
+        SetDigiChannelVolume(musichandle, 3, 0x32);
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
@@ -69,7 +69,7 @@ void RunEditRosters(void)
     FreeLeagueDbsMem();
     FreeMemBlock(editptrspr);
     if (musicon && songdata)
-        sub_8FCDF(musichandle, 3, 0x32);
+        SetDigiChannelVolume(musichandle, 3, 0x32);
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);

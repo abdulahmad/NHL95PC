@@ -5,8 +5,8 @@
 #define MenuNewExhibition MenuNewExhibition_decl
 #define PreGameScreen PreGameScreen_decl
 #define MenuHitTest MenuHitTest_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #include "nhl95.h"
 #undef MainDeskLoop
 #undef LoadModeState
@@ -14,8 +14,8 @@
 #undef MenuNewExhibition
 #undef PreGameScreen
 #undef MenuHitTest
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 
 typedef struct MenuItem {
     int x1, y1, x2, y2;
@@ -28,8 +28,8 @@ typedef struct Hdr17 { char c[17]; } Hdr17;
 typedef struct { char c[9]; } Str9;
 
 int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin, int *hitMenu, int *hitItem);
-int sub_8F98F(char *path);
-void sub_8FB8E(int song, int handle, int a, int b);
+int LoadDigiFile(char *path);
+void PlayDigiBlockLoop(int song, int handle, int a, int b);
 int PreGameScreen(int home, int vis);
 
 /* MainDeskLoop (31AB5, PC only; owner of MainDeskLoop_x / MainDeskLoop_x2): the main desk screen. Reset the
@@ -105,7 +105,7 @@ int MainDeskLoop(void)
             MakePath(path, fileoncd[0x1DF] == 1 ? (char *)cddriveptr : 0, (char *)str_Tonights2, (char *)str_Iff8);
             desksongalt = 1;
         }
-        songdata = sub_8F98F(path);
+        songdata = LoadDigiFile(path);
     }
     MakePath(path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_Easndesk, 0);
     bank = LoadBank(path, 0);
@@ -116,7 +116,7 @@ int MainDeskLoop(void)
     GrabBlock(ptr, oldmx, oldmy);
     DrawArt(pointerspr, oldmx, oldmy);
     scrpitch = 0x50;
-    if (musicon && songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+    if (musicon && songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
     FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_Pal15) + 0x10, 0x10);
     FreeMemBlock(bank);
     ClearInputQueue();
@@ -173,7 +173,7 @@ int MainDeskLoop(void)
                     if (r == 2) {
                         SetScreenTarget();
                         if (!keepdesksong && musicon && songdata) {
-                            sub_8FCDF(musichandle, 3, 0x46);
+                            SetDigiChannelVolume(musichandle, 3, 0x46);
                             while (SndQuery(musicslot, 3) == 0);
                             PushMemDescriptorLocked(songdata);
                             songdata = 0;
@@ -192,7 +192,7 @@ int MainDeskLoop(void)
                                     (char *)str_Iff8);
                                 desksongalt = 1;
                             }
-                            songdata = sub_8F98F(path);
+                            songdata = LoadDigiFile(path);
                         }
                         SetClipWindow(0, 0x280, 0, 0x1E0);
                         MakePath(path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_Easndesk, 0);
@@ -201,7 +201,7 @@ int MainDeskLoop(void)
                         DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
                         pal = (unsigned char *)FindShape(bank, (char *)str_Pal15) + 0x10;
                         if (musicon && newsong == 1 && gameopts.music && songdata)
-                            sub_8FB8E(songdata, musichandle, 3, 0x4C);
+                            PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
                         FadePalStep(0, pal, 0x10);
                         FreeMemBlock(bank);
                     }
@@ -365,10 +365,10 @@ void LoadModeState(unsigned char *st)
         ctl1side[b] = ctl1side[a] == 0;
         ctl1team[b] = (ctl1side[b] == 0) - 2;
     }
-    if (gameopts.music) sub_8F979();
-    else sub_8F984();
-    if (gameopts.sfx) sub_8F963();
-    else sub_8F96E();
+    if (gameopts.music) EnableMidiMusic();
+    else DisableMidiMusic();
+    if (gameopts.sfx) EnableMidiSfx();
+    else DisableMidiSfx();
     SetSideControls();
     if (gamemode) return;
     if (((char *)teamabbrevs[HomeTeam])[2]) {
@@ -460,7 +460,7 @@ int MenuNewExhibition(int *fh)
             pal = (unsigned char *)AllocMemBlock((char *)str_Palette2, 0x300, 0x20);
             SetPalette(0, 0x100, pal);
             if (musicon && songdata)
-                sub_8FCDF(musichandle, 3, 0x64);
+                SetDigiChannelVolume(musichandle, 3, 0x64);
             FadePalStep(1, pal, 0x10);
             FreeMemBlock((int)pal);
             if (musicon && songdata) {
@@ -477,7 +477,7 @@ int MenuNewExhibition(int *fh)
     }
     pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
     if (musicon && songdata)
-        sub_8FCDF(musichandle, 3, 0x19);
+        SetDigiChannelVolume(musichandle, 3, 0x19);
     SetPalette(0, 0x100, pal2);
     FadePalStep(1, pal2, 0x10);
     FreeMemBlock((int)pal2);

@@ -6,8 +6,8 @@ extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _
 extern addtimer, AllocMemBlock, byte_D27B6, cursndbank, FreeClip_ret, FreeMemBlock, lseek_, musichandle
 extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RemoveTimerCallback, samplereq, SayNhlIntro
 extern speechbank, speechchannel, speechcopybuf, speechcopylen, speechinit, speechq, str_SampleMemMan, str_Sentence
-extern str_SpeechBank, str_Speechbuf, strncpy_, sub_8CC70, PushMemDescriptorLocked, MemDescPtr, sub_8FBE5, sub_8FC37
-extern sub_8FCAC, UnpackTo
+extern str_SpeechBank, str_Speechbuf, strncpy_, sub_8CC70, PushMemDescriptorLocked, MemDescPtr, PlayDigiPtr, PlayDigiPtrLoop
+extern StopDigiChannel, UnpackTo
 global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue, InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, ShutdownSpeech_ret6
 global ShutdownSpeech_ret5, SpeechIsInit, SpeechBusy, SpeechIdle, MusicChanReset2, SpeechStopQueue, MusicChanCmd3, MusicChanReset
 global Swap16, ReadBE24, ReadBE24_ret, ReadCString, OpenSpeechBank, OpenSpeechBank_ret, SpeechSlotSize, ReadSpeechSample
@@ -86,7 +86,7 @@ SpeechTimerTick:
         push dword 2B11h
         mov edx, dword [musichandle]
         mov eax, esi
-        call sub_8FBE5
+        call PlayDigiPtr
         jmp near ShutdownSpeech_ret5
 .4:
         add ecx, ecx
@@ -94,7 +94,7 @@ SpeechTimerTick:
         push dword 2B11h
         mov edx, dword [musichandle]
         mov eax, esi
-        call sub_8FC37
+        call PlayDigiPtrLoop
         jmp near ShutdownSpeech_ret5
 .5:
         mov dword [byte edx+060h], edi
@@ -489,13 +489,13 @@ MusicChanCmd3:
         push edx
         mov eax, dword [musichandle]
         mov edx, 3
-        call sub_8FCAC
+        call StopDigiChannel
         pop edx
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; MusicChanReset                               837A8  95 PC, medium confidence
-; When speechinit: sub_8FCAC(musichandle,0) then (musichandle,1)
+; When speechinit: StopDigiChannel(musichandle,0) then (musichandle,1)
 ;-----------------------------------------------------------------------------
 ; C: src/front/speech/MusicChanReset.c
 %ifdef CBUILD
@@ -509,10 +509,10 @@ MusicChanReset:
         je short .x
         mov eax, dword [musichandle]
         xor edx, edx
-        call sub_8FCAC
+        call StopDigiChannel
         mov eax, dword [musichandle]
         mov edx, 1
-        call sub_8FCAC
+        call StopDigiChannel
 .x:
         pop edx
         ret

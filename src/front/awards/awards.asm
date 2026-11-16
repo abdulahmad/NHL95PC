@@ -40,7 +40,7 @@ extern str_PPG, str_PPV, str_Pt, str_Scrn, str_SHG, str_Shots, str_SO, str_SS
 extern str_Summ, str_T, str_Titl, str_Trinknd, str_VFN, str_W, strcat_, strcpy_
 extern strnicmp_, sub_1B982, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
-extern sub_8F633, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, ShapeBankCount, ShapeBankEntry
+extern ReleaseAllVoices, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry
 extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
@@ -1535,7 +1535,7 @@ AwardsCeremony:
         mov eax, dword [musichandle]
         mov ebx, 32h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         mov ebx, 10h
         mov edx, esi
@@ -1625,7 +1625,7 @@ AwardsCeremony:
         lea eax, [byte esp+040h]
         call MakePath
         lea eax, [byte esp+040h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je near .13
@@ -1634,7 +1634,7 @@ AwardsCeremony:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
         jmp short .13
 .8:
         mov ebx, dword [sounddev]
@@ -1705,7 +1705,7 @@ AwardsCeremony:
         mov eax, dword [musichandle]
         mov ebx, 32h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
         mov ebx, 10h
         mov edx, esi
         mov eax, 1
@@ -1756,7 +1756,7 @@ AwardsCeremony:
         lea eax, [byte esp+040h]
         call MakePath
         lea eax, [byte esp+040h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je near .28
@@ -1765,7 +1765,7 @@ AwardsCeremony:
         mov edx, dword [musichandle]
         mov ecx, 7Fh
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
         jmp short .28
 .23:
         cmp dword [sounddev], byte 8
@@ -1868,7 +1868,7 @@ AwardsCeremony:
         mov eax, dword [musichandle]
         mov ebx, 78h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .33:
         mov eax, dword [musicslot-3]
         sar eax, 18h

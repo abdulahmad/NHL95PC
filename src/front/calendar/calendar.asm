@@ -15,7 +15,7 @@ extern ptrupdatefn, PutBlock, ReadSchedGame, savepal, SetClipWindow, SetColorRem
 extern SetPalette, ShowLoadingScreen, skaterstatscb, SndQuery, songdata, sprintf_, standingscb, standingsmenucb
 extern str_02d9D, str_Away, str_Bkgd7, str_Boxb, str_Boxr, str_Calendar, str_Callogo, str_D8
 extern str_Home, str_Iff9, str_L7, str_Menubuff5, str_Pal17, str_Pointer8, str_SDD2, str_T5
-extern str_W5, PushMemDescriptorLocked, sub_8F98F, sub_8FB8E, sub_8FCDF, sub_913D0, SetScreenTarget, FillRectColor
+extern str_W5, PushMemDescriptorLocked, LoadDigiFile, PlayDigiBlockLoop, SetDigiChannelVolume, sub_913D0, SetScreenTarget, FillRectColor
 extern teamstatscb, TextRestoreState, TextSaveState, TextSetFont
 global DrawCalendarDay, CalNextMonth, CalPrevMonth, CalReturn, ApplyShapePalette, SetGameSides, CalendarScreen
 ;-----------------------------------------------------------------------------
@@ -762,7 +762,7 @@ CalendarScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         push savepal
         push dword 100h
@@ -1120,7 +1120,7 @@ CalendarScreen:
         lea eax, [dword esp+06F8h]
         call MakePath
         lea eax, [dword esp+06F8h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .31
@@ -1129,7 +1129,7 @@ CalendarScreen:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .31:
         mov eax, dword [calendarshapes]
         call ApplyShapePalette
@@ -1338,7 +1338,7 @@ CalendarScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .41:
         xor eax, eax
         jmp near .x
@@ -2127,7 +2127,7 @@ CalendarScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .84:
         mov eax, dword [calsel]
 .x:

@@ -123,7 +123,7 @@ void Gameloop(void)
                 }
                 CrowdFadeOut();
                 if (musicon) MusicChanReset();
-                else sub_8F633();
+                else ReleaseAllVoices();
                 StopDigiSample();
                 SpeechStopQueue();
                 FlushGSumQueue();

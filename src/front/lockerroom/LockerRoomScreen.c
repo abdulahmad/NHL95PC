@@ -3,18 +3,18 @@
 #define LockerRoomScreen LockerRoomScreen_decl
 #define LockerRoomLoop LockerRoomLoop_decl
 #define sub_912C8 sub_912C8_decl
-#define sub_8F98F sub_8F98F_decl
+#define LoadDigiFile sub_8F98F_decl
 #include "nhl95.h"
 #undef LockerRoomScreen
 #undef LockerRoomLoop
 #undef sub_912C8
-#undef sub_8F98F
+#undef LoadDigiFile
 
 typedef struct { char c[17]; } Hdr17;
 
 int LockerRoomLoop(void);
 void __cdecl sub_912C8(int art);  /* graphics library: set the palette from an art block */
-int sub_8F98F(char *path);  /* sound library: load a song */
+int LoadDigiFile(char *path);  /* sound library: load a song */
 
 #define LR ((Rect4 *)lockerrects)
 
@@ -28,7 +28,7 @@ int LockerRoomScreen(void)
     int r;
 
     if (musicon && songdata)
-        sub_8FCDF(musichandle, 3, 0x64);
+        SetDigiChannelVolume(musichandle, 3, 0x64);
     SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
     if (musicon && songdata) {
@@ -216,8 +216,8 @@ void DrawLockerRoom(void)
     TextSetFont(mainfont);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x1DD] == 1 ? (char *)cddriveptr : 0, (char *)str_Jersey, (char *)str_Iff11);
-        songdata = sub_8F98F(path);
-        if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+        songdata = LoadDigiFile(path);
+        if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
     }
     FadePalStep(0, (unsigned char *)pal, 0x10);
     for (i = 0; i < 0x100; i++) homeremap[i] = i;
@@ -381,7 +381,7 @@ int LockerRoomLoop(void)
                         else ctl2team = VisTeam;
                     }
                     WriteCurModeState();
-                    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+                    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
                     SetPalette(0, 0x100, buf);
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
@@ -392,7 +392,7 @@ int LockerRoomLoop(void)
                     }
                     return 0;
                 case 7:
-                    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+                    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
                     SetPalette(0, 0x100, buf);
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
@@ -409,7 +409,7 @@ int LockerRoomLoop(void)
             ox = x;
             oy = y;
         } else {
-            if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+            if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
             SetPalette(0, 0x100, buf);
             FadePalStep(1, buf, 0x10);
             FreeMemBlock(bm);

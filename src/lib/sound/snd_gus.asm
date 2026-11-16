@@ -6,7 +6,7 @@ extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI, byte_
 extern cliprect_x0, cliprect_x1, ScreenWidth, dword_D30A8, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
 extern dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
 extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
-extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, PrintString
+extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, GetPatchEntry, PrintString
 extern sub_AA210, sub_AA300, GusOpen, GusClose, sub_AB79C, sub_AC0CC, sub_AC6E8, sub_AD298
 extern sub_AD4DC, sub_AD6F4, GusServiceStream, GusStartStream, sub_AEDBC, sub_AEE54, sub_AEF0E, sub_AEF33
 extern sub_AEFA2, sub_AEFC9, sub_AEFEA, sub_AF076, sub_AF0D5, sub_AF112, GusStreamBusy, sub_AF1A4
@@ -836,7 +836,7 @@ sub_A08D7:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         push eax
-        call sub_8F0D7
+        call GetPatchEntry
         mov edx, eax
         add esp, byte 4
         mov eax, dword [byte ebp-0Ch]

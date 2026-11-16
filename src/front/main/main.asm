@@ -35,8 +35,8 @@ extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, s
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
 extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, InitZoneManager
 extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, PushMemDescriptorLocked, sub_8DF54, initgraphics
-extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, SndQuery, sub_8FCDF, SetPalette, ShapeBankCount, ShapeBankEntry, RemoveKeyboardHandler, KeyDown
+extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, ReleaseAllVoices, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
+extern DisableMidiMusic, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry, RemoveKeyboardHandler, KeyDown
 extern SetViewRect, InitMouse, sub_B3036, FindShape, sub_B30F4, JoyResetCentres, ReadJoyRaw, ClearScreen
 extern KbdFlush, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetrace, sub_B4C84, teamabbrevs
 extern TicksSinceLastCall, treeteamnames, blackpal, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
@@ -524,7 +524,7 @@ main_:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .33:
         push esi
         push dword 100h
@@ -1514,7 +1514,7 @@ IntermissionPC:
         call MusicChanReset
         jmp short .2
 .1:
-        call sub_8F633
+        call ReleaseAllVoices
 .2:
         call StopDigiSample
         mov eax, 222E0h
@@ -1833,7 +1833,7 @@ HandleHotKey:
         call MusicChanReset
         jmp short .14
 .13:
-        call sub_8F633
+        call ReleaseAllVoices
 .14:
         call SpeechStopQueue
         call StopDigiSample
@@ -1884,11 +1884,11 @@ HandleHotKey:
         or dword [gameopts], eax
         test byte [gameopts], 40h
         je short .18
-        call sub_8F979
+        call EnableMidiMusic
         jmp near .19
 .18:
         call StopDigiSample
-        call sub_8F984
+        call DisableMidiMusic
 .19:
         xor eax, eax
 HandleHotKey_ret:
@@ -1908,9 +1908,9 @@ HandleHotKey_ret:
         call MusicChanReset
         jmp short .22
 .21:
-        call sub_8F633
+        call ReleaseAllVoices
 .22:
-        call sub_8F96E
+        call DisableMidiSfx
 .23:
         mov cl, byte [gameopts]
         test cl, 80h
@@ -1924,7 +1924,7 @@ HandleHotKey_ret:
         test byte [gameopts], 80h
         je short HandleHotKey.19
         call CrowdNoiseReset
-        call sub_8F963
+        call EnableMidiSfx
         jmp short HandleHotKey.19
 .24:
         mov esi, 1
@@ -2387,7 +2387,7 @@ Gameloop:
         call MusicChanReset
         jmp short .15
 .14:
-        call sub_8F633
+        call ReleaseAllVoices
 .15:
         call StopDigiSample
         call SpeechStopQueue

@@ -18,8 +18,8 @@ extern schedgameidx, scrpitch, setdiskmsg, SetLeagueSetImage, SetScreenTitle, Se
 extern SetupStatsSourceMenu, ShowLoadingScreen, skaterstatscb, songdata, standingscb, standingsmenucb, str_Desk2, str_Easndesk
 extern str_fee2, str_fee3, str_fee4, str_Game, str_GameSav4, str_GameSet4, str_Iff8, str_LAAtMTL
 extern str_Maindesk, str_Menubuff4, str_Pal15, str_Palette2, str_Pointer7, str_Set, str_Temp4, str_Tonights2
-extern strcat_, strcpy_, strncpy_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8F963, sub_8F96E
-extern sub_8F979, sub_8F984, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, PutBlock
+extern strcat_, strcpy_, strncpy_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, EnableMidiSfx, DisableMidiSfx
+extern EnableMidiMusic, DisableMidiMusic, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, SetPalette, PutBlock
 extern DrawBitmap, DrawArt, GrabBlock, SetViewRect, FindShape, SetScreenTarget, SetClipWindow, teamabbrevs
 extern teamstatscb, TradePlayers, UpdateTeamDbs, ViewHilights, VisTeam
 global MainDeskLoop, MainDeskLoop_x, MainDeskLoop_x2, MenuExit, SaveModeState, LoadModeState, WriteModeState, CopyGameSettings
@@ -172,7 +172,7 @@ MainDeskLoop:
         mov byte [desksongalt], 1
 .6:
         lea eax, [byte esp+020h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
 .7:
         xor ecx, ecx
@@ -235,7 +235,7 @@ MainDeskLoop:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .10:
         push str_Pal15
         push ebp
@@ -441,7 +441,7 @@ MainDeskLoop:
         mov eax, dword [musichandle]
         mov ebx, 46h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .20:
         mov eax, dword [musicslot-3]
         sar eax, 18h
@@ -495,7 +495,7 @@ MainDeskLoop:
         mov byte [desksongalt], 1
 .27:
         lea eax, [byte esp+020h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
 .28:
         push dword 1E0h
@@ -553,7 +553,7 @@ MainDeskLoop:
         mov eax, ebx
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .31:
         mov ebx, 10h
         mov edx, esi
@@ -1189,17 +1189,17 @@ LoadModeState:
 .21:
         test byte [gameopts], 40h
         je short .22
-        call sub_8F979
+        call EnableMidiMusic
         jmp short .23
 .22:
-        call sub_8F984
+        call DisableMidiMusic
 .23:
         test byte [gameopts], 80h
         je short .24
-        call sub_8F963
+        call EnableMidiSfx
         jmp short .25
 .24:
-        call sub_8F96E
+        call DisableMidiSfx
 .25:
         call SetSideControls
         cmp dword [gamemode], byte 0
@@ -1521,7 +1521,7 @@ MenuNewExhibition:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .3:
         mov ebx, 10h
         mov edx, edi
@@ -1568,7 +1568,7 @@ MenuNewExhibition:
         mov eax, dword [musichandle]
         mov ebx, 19h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .8:
         push esi
         push dword 100h
@@ -1723,7 +1723,7 @@ MenuNewLeague:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .12:
         mov ebx, 10h
         mov edx, esi

@@ -1,13 +1,13 @@
 /* Front-end desk: the sports desk (pause, intermission and post-game menus). */
 #define MenuHitTest MenuHitTest_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #define SetViewRect sub_B2E1B_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
 #include "nhl95.h"
 #undef MenuHitTest
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 #undef SetViewRect
 #undef TicksSinceLastCall
 
@@ -21,8 +21,8 @@ typedef struct MenuItem {
 typedef struct Hdr17 { char c[17]; } Hdr17;
 
 int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin, int *hitMenu, int *hitItem);
-int sub_8F98F(char *path);  /* music library: load a song (register arguments) */
-void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
+int LoadDigiFile(char *path);  /* music library: load a song (register arguments) */
+void PlayDigiBlockLoop(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
 int __cdecl SetViewRect(int x, int y, int w, int h);  /* graphics library: view rect; returns x in eax */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
@@ -140,8 +140,8 @@ void SportsDesk(int mode)
     DrawArt(pointerspr, oldmx, oldmy);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x21C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pause, (char *)str_Iff3);
-        songdata = sub_8F98F(path);
-        if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
+        songdata = LoadDigiFile(path);
+        if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
     }
     FadePalStep(0, pal, 0x10);
     SetViewRect(0, 0, 0x280, 0x1E0);
@@ -177,7 +177,7 @@ void SportsDesk(int mode)
         if (autoret) {
             timeout -= TicksSinceLastCall();
             if (timeout < 0) {
-                if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+                if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
                 dword_C66D4 = 1;
                 dword_C66D0 = 1;
                 ClearInputQueue();
@@ -251,7 +251,7 @@ void SportsDesk(int mode)
                         deferpending = 0;
                         MouseSetPos(savex, savey);
                         SetPalette(0, 0x100, pal);
-                        if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
+                        if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
                         if (r == 1 && musicon && gameopts.speech) {
                             MusicChanReset();
                             SayNowBack();

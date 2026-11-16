@@ -18,7 +18,7 @@ extern schedgameidx, scrollx, scrolly, SetDialogColors, SetModeMenuLabels, SetSc
 extern ShowCredits, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, StartHL2, str_Desk, str_DoYouWishToExit
 extern str_DoYouWishToReturn, str_Eadesk1d, str_ExitingTheGame, str_Iff3, str_Menubuff3, str_Pal5, str_Pause, str_PleaseEnterOutputFile
 extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, sub_1B982, sub_1BAF3, AllocMemBlock, PushMemDescriptorLocked
-extern LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF
+extern LoadBank, TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume
 extern SetPalette, PutBlock, DrawBitmap, DrawArt, GrabBlock, MouseRead, SetViewRect, FindShape
 extern ClearScreen, SetTextMode, SetScreenTarget, FillRectColor, teamconf, TextInputDialog, TicksSinceLastCall, deskmenubar
 extern deskmenubar_lg, desklinesmenubar, deskbankname, UpdateOtherScores, VisTeam, WaitClickTimeout, SortPending, WriteGSumHeader
@@ -760,7 +760,7 @@ SportsDesk:
         lea eax, [dword esp+0344h]
         call MakePath
         lea eax, [dword esp+0344h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .12
@@ -769,7 +769,7 @@ SportsDesk:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .12:
         mov ebx, 10h
         lea edx, [byte esp+04h]
@@ -896,7 +896,7 @@ SportsDesk:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .25:
         mov edx, 1
         mov dword [dword_C66D4], edx
@@ -1174,7 +1174,7 @@ SportsDesk:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .40:
         cmp dword [dword esp+03DCh], byte 1
         jne short .41
@@ -1830,7 +1830,7 @@ DeskExitGame:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         mov eax, esp
         push eax
@@ -2070,7 +2070,7 @@ DeskPenaltySummary:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         mov ebx, 10h
         mov edx, savepal

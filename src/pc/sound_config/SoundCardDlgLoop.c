@@ -1,35 +1,35 @@
 /* Sound config: the sound card dialog. */
 #define SoundCardDlgLoop SoundCardDlgLoop_decl
 #define SetSoundDevice SetSoundDevice_decl
-#define sub_8F98F sub_8F98F_decl
-#define sub_8FB8E sub_8FB8E_decl
+#define LoadDigiFile sub_8F98F_decl
+#define PlayDigiBlockLoop sub_8FB8E_decl
 #define sub_97079 sub_97079_decl
-#define sub_8EB5B sub_8EB5B_decl
-#define sub_8EB93 sub_8EB93_decl
-#define sub_8ECC0 sub_8ECC0_decl
+#define SndInit sub_8EB5B_decl
+#define SndShutdown sub_8EB93_decl
+#define LoadMusicBank sub_8ECC0_decl
 #define LoadSample sub_8F13B_decl
 #define FreeSample sub_8F1FE_decl
 #include "nhl95.h"
 #undef sub_97079
-#undef sub_8EB5B
-#undef sub_8EB93
-#undef sub_8ECC0
+#undef SndInit
+#undef SndShutdown
+#undef LoadMusicBank
 #undef LoadSample
 #undef FreeSample
 #undef SoundCardDlgLoop
 #undef SetSoundDevice
-#undef sub_8F98F
-#undef sub_8FB8E
+#undef LoadDigiFile
+#undef PlayDigiBlockLoop
 
 int SetSoundDevice(int dev);
-int sub_8F98F(char *path);  /* sound library: load a song */
-void sub_8FB8E(int song, int handle, int a, int b);  /* sound library: start a song */
+int LoadDigiFile(char *path);  /* sound library: load a song */
+void PlayDigiBlockLoop(int song, int handle, int a, int b);  /* sound library: start a song */
 
 int fprintf(void *fp, const char *fmt, ...);  /* Watcom CRT fprintf_ */
 int sub_97079(int dev);                       /* sound library: open a driver, -1 on failure */
-void sub_8EB5B(void);
-void sub_8EB93(void);
-void sub_8ECC0(char *drv, char *port);        /* sound library: driver and port names */
+void SndInit(void);
+void SndShutdown(void);
+void LoadMusicBank(char *drv, char *port);        /* sound library: driver and port names */
 int LoadSample(char *path);                    /* sound library: load a sample */
 void FreeSample(int sample);                   /* sound library: free a sample */
 typedef struct { char b[0x11]; } SprHdr;
@@ -103,7 +103,7 @@ int SoundCardDlgLoop(void)
                         DrawSelBoxOn((Rect4 *)sndselbox1);
                         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
                         if (musicon && songdata) {
-                            sub_8FCDF(musichandle, 3, 0x64);
+                            SetDigiChannelVolume(musichandle, 3, 0x64);
                             while (!SndQuery(musicslot, 3));
                             PushMemDescriptorLocked(songdata);
                             songdata = 0;
@@ -113,9 +113,9 @@ int SoundCardDlgLoop(void)
                             FreeMemBlock(bg);
                             if (musicon && !songdata) {
                                 MakePath(s.path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk2, (char *)str_Iff12);
-                                t = sub_8F98F(s.path);
+                                t = LoadDigiFile(s.path);
                                 songdata = t;
-                                if (t && gameopts.music) sub_8FB8E(t, musichandle, 3, 0x4C);
+                                if (t && gameopts.music) PlayDigiBlockLoop(t, musichandle, 3, 0x4C);
                             }
                             if (musicon) gameopts.speech = 1;
                             else gameopts.speech = 0;
@@ -125,9 +125,9 @@ int SoundCardDlgLoop(void)
                         setbits[0] = sounddev;
                         if (musicon && !songdata) {
                             MakePath(s.path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk2, (char *)str_Iff12);
-                            t = sub_8F98F(s.path);
+                            t = LoadDigiFile(s.path);
                             songdata = t;
-                            if (t && gameopts.music) sub_8FB8E(t, musichandle, 3, 0x4C);
+                            if (t && gameopts.music) PlayDigiBlockLoop(t, musichandle, 3, 0x4C);
                         }
                         DrawSelBoxOff((Rect4 *)sndselbox1);
                         break;
@@ -192,7 +192,7 @@ int SetSoundDevice(int dev)
         } else if (sounddev == 4) {
             FreeSample(dword_ED7A4);
         }
-        sub_8EB93();
+        SndShutdown();
     }
     cursndbank = 0x20;
     dword_D2423 = 0;
@@ -241,13 +241,13 @@ int SetSoundDevice(int dev)
             crowddriver = 0;
             break;
         }
-        sub_8EB5B();
+        SndInit();
         if (dword_D2427 >= 0 && (h1 = sub_97079(dword_D2427)) != -1) {
             if (digidriver < 0) dword_D2423 = -1;
             else if ((s.h2 = sub_97079(digidriver)) != -1) dword_D2423 = -1;
         }
         if (dword_D2423) {
-            sub_8ECC0(s.drv, s.port);
+            LoadMusicBank(s.drv, s.port);
             if (dev == 4) {
                 MakePath(s.path, fileoncd[0x18F] == 1 ? (char *)cddriveptr : 0, (char *)str_Slapshot, 0);
                 dword_ED7A4 = LoadSample(s.path);
@@ -308,7 +308,7 @@ int SetSoundDevice(int dev)
             } else {
                 dword_D2423 = -1;
             }
-            sub_8EB93();
+            SndShutdown();
             SetTickDeadline(0x64);
             WaitTickDeadline();
         }

@@ -157,7 +157,7 @@ void PlayLeagueGame(int *fh)
             if (!err) s.ok = -1;
         }
         s.pal = (unsigned char *)AllocMemBlock((char *)str_Pal18, 0x300, 0x20);
-        if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+        if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
         SetPalette(0, 0x100, s.pal);
         FadePalStep(1, s.pal, 0x10);
         FreeMemBlock((int)s.pal);
@@ -224,7 +224,7 @@ void PlayLeagueGame(int *fh)
                         FreeMemBlock((int)pal);
                     }
                     if (musicon && songdata) {
-                        sub_8FCDF(musichandle, 3, 0x64);
+                        SetDigiChannelVolume(musichandle, 3, 0x64);
                         do
                             slot = musicslot;
                         while (SndQuery(slot, 3) == 0);
@@ -388,7 +388,7 @@ void PlayLeagueGame(int *fh)
                 FileClose(&s.fhsched1);
             }
             s.pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp5, 0x300, 0x20);
-            if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+            if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
             SetPalette(0, 0x100, s.pal2);
             FadePalStep(1, s.pal2, 0x10);
             FreeMemBlock((int)s.pal2);

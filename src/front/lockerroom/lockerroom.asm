@@ -20,7 +20,7 @@ extern str_PCSpeaker, str_Pg01, str_Pg03, str_Pg05, str_Pg07, str_Pl05, str_Pl10
 extern str_Playoff, str_PlayoffTree2, str_Pointer20, str_Return, str_Room, str_Settings, str_Settings3, str_ShowLeague
 extern str_Sound4, str_SoundBlaster, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound, str_VisBck, str_VisitingTeam
 extern str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, TextSetColors
-extern TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette
+extern TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, SetPalette
 extern PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, GrabBlock, PrintString, sub_91FE0
 extern MouseRead, FindShape, VgaSetPalette, SetScreenTarget, SetColorRemap, FillRectColor, PlotPixel, teamcitynames
 extern teamdivflags, titlebckspr, visbckspr, visnamebckspr, VisTeam, WriteCurModeState
@@ -523,7 +523,7 @@ LockerRoomScreen:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         mov eax, esp
         push eax
@@ -1356,7 +1356,7 @@ DrawLockerRoom:
         lea eax, [dword esp+0300h]
         call MakePath
         lea eax, [dword esp+0300h]
-        call sub_8F98F
+        call LoadDigiFile
         mov dword [songdata], eax
         test eax, eax
         je short .35
@@ -1365,7 +1365,7 @@ DrawLockerRoom:
         mov edx, dword [musichandle]
         mov ecx, 4Ch
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .35:
         mov ebx, 10h
         mov edx, esp
@@ -2451,7 +2451,7 @@ LockerRoomLoop_n6:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .11:
         mov eax, esp
         push eax
@@ -2497,7 +2497,7 @@ LockerRoomLoop_n7:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .1:
         mov eax, esp
         push eax
@@ -2541,7 +2541,7 @@ LockerRoomLoop_n7:
         mov eax, dword [musichandle]
         mov ebx, 64h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .5:
         mov eax, esp
         push eax

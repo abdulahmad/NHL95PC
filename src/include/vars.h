@@ -54,7 +54,7 @@ extern unsigned char *attdb;        /* D07CF: attribute database buffer */
 /* speech bank slots, 26h bytes each (SpeechSlotLoaded SpeechSlotSize) */
 typedef struct SpeechSlot {
     unsigned char pad0[0xD];
-    unsigned char kind;         /* 0Dh: 'G' plays through sub_8FBE5, else sub_8FC37 (SpeechTimerTick) */
+    unsigned char kind;         /* 0Dh: 'G' plays through PlayDigiPtr, else PlayDigiPtrLoop (SpeechTimerTick) */
     int data;                   /* 0Eh: sample data in speech memory */
     unsigned char pad12[4];
     int size;                   /* 16h: sample size */

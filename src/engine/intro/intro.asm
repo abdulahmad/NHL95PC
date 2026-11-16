@@ -36,7 +36,7 @@ extern sflags3, sfx, ShotLaneOpen, ShotMode, shotongoal, shotplayer, shownumbers
 extern skatetopuck, SkateToSpot, sopathend, sopathpoint, sopathx, sopathy, SortCords, sortobj15
 extern sounddev, SpeechStopQueue, sprintf_, spritedrawcount, SprSort, starordtab, starpl, startm
 extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_6ADA7, sub_6AF52, sub_6AF97
-extern sub_6B008, sub_8F633, SetPalette, teamabbrevs, textline1, textline2, textline3, textline4
+extern sub_6B008, ReleaseAllVoices, SetPalette, teamabbrevs, textline1, textline2, textline3, textline4
 extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, hmglstats, sortobj11, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, penaltysc
 extern SortPending, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
@@ -1843,7 +1843,7 @@ StartThreeStars:
         call MusicChanReset
         jmp near PreGameIntro_popx
 .4:
-        call sub_8F633
+        call ReleaseAllVoices
         jmp near PreGameIntro_popx
 %endif ; C
 ;-----------------------------------------------------------------------------

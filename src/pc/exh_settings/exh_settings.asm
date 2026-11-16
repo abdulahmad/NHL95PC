@@ -7,8 +7,8 @@ extern DrawArt, DrawSettingsHeading, exhsetrects, fdlg_cancel, fileoncd, FindSha
 extern gameopts, GetInputEvent, GrabBlock, LoadBank, LoadSettingsShapes, MakePath, MouseRead, musichandle
 extern musicon, musicslot, pl05spr, pl10spr, pl20spr, pointerspr, PrintString, ptrupdatefn
 extern PutBlock, setbits, settingsfile, SndQuery, songdata, sounddev, str_BKGD3, str_Dbox4
-extern str_DigitizedSpeech3, str_Music3, str_Pointer17, str_Setting6, str_Sound3, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, sub_8FB8E, sub_8FCDF, sub_91284, sub_96440, SetScreenTarget, TextSetColors, VgaSetPalette
+extern str_DigitizedSpeech3, str_Music3, str_Pointer17, str_Setting6, str_Sound3, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
+extern DisableMidiMusic, PlayDigiBlockLoop, SetDigiChannelVolume, sub_91284, sub_96440, SetScreenTarget, TextSetColors, VgaSetPalette
 extern WriteCurModeState
 global MenuExhibitionSettings, ExhSettings_ret, ExhOptsToBits, DrawExhSetChecks, DrawExhSetDlg, ExhSetHitTest, ExhSetEditLoop
 ;-----------------------------------------------------------------------------
@@ -777,9 +777,9 @@ ExhSetEditLoop:
         mov eax, dword [songdata]
         mov ecx, 7Fh
         mov ebx, 3
-        call sub_8FB8E
+        call PlayDigiBlockLoop
 .17:
-        call sub_8F979
+        call EnableMidiMusic
         jmp short .20
 .18:
         cmp byte [musicon], 0
@@ -795,16 +795,16 @@ ExhSetEditLoop:
         mov eax, dword [musichandle]
         mov ebx, 28h
         mov edx, 3
-        call sub_8FCDF
+        call SetDigiChannelVolume
 .19:
-        call sub_8F984
+        call DisableMidiMusic
 .20:
         test byte [gameopts], 80h
         je short .21
-        call sub_8F963
+        call EnableMidiSfx
         jmp short .22
 .21:
-        call sub_8F96E
+        call DisableMidiSfx
 .22:
         call WriteCurModeState
         jmp short .25

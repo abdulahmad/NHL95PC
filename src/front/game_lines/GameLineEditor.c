@@ -44,7 +44,7 @@ void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mo
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     if (musicon && songdata) {
-        sub_8FCDF(musichandle, 3, 0x32);
+        SetDigiChannelVolume(musichandle, 3, 0x32);
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;

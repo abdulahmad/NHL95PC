@@ -10,7 +10,7 @@ int DeskExitGame(void)
     int y;
     int r;
 
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     MouseRead(&x, &y, &r);
     msg_DeskExit = (int)str_ExitingTheGame;
     msg_DeskExit_e02 = (int)str_DoYouWishToExit;

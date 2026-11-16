@@ -22,7 +22,7 @@ extern str_dot, str_EnterANewDatabase, str_ErrorGettingDiskSpace, str_extDB, str
 extern str_LEFTJOYSTICK, str_Pal24, str_Pointer11, str_Puck, str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_S5
 extern str_SaveAsGameDatabases, str_SavingDatabases, str_Scrn3, str_space, str_Temp7, str_XXXKbytesOfFree2, strcat_, strcpy_
 extern strlen_, strupr_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
-extern TextRestoreState, TextSetFont, SndQuery, sub_8FCDF, SetPalette, FillRect, XorBar, DrawArtOpaque
+extern TextRestoreState, TextSetFont, SndQuery, SetDigiChannelVolume, SetPalette, FillRect, XorBar, DrawArtOpaque
 extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, WriteFile
 extern RemoveKeyboardHandler, KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E
 extern sub_B387E, ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, CreateBitmap, FillRectColor

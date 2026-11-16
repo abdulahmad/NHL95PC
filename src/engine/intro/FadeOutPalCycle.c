@@ -365,7 +365,7 @@ void PickThreeStars(void)
    puck and the second object at (C8h, -12Ch) on assignments 1Ah / 19h and the referee at (-C8h, 0) on assignment
    15h (assthreestars). Two game frames, the camera at (-20h, 0), close the overlay and run the loop
    (ThreeStarsLoop; when it was cut short the crowd goes quiet). Then the period back, the crowd faded out and the
-   music reset (MusicChanReset, or sub_8F633 with the music off). No arguments, no result. */
+   music reset (MusicChanReset, or ReleaseAllVoices with the music off). No arguments, no result. */
 void StartThreeStars(void)
 {
     Player *q;
@@ -457,7 +457,7 @@ void StartThreeStars(void)
     CrowdFadeOut();
     crowdlevel = 0;
     if (musicon) MusicChanReset();
-    else sub_8F633();
+    else ReleaseAllVoices();
 }
 
 /* DRAFT: same size under 10.0 GA, 56 differing; no pass-through copy. The team abbreviation index goes through the

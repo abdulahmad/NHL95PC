@@ -16,7 +16,7 @@ void DbLineEditor(unsigned char team, int lines, int buttons, int n)
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
-    if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x32);
+    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x32);
     ShowLoadingScreen();
     SetDrawBitmap(fullscrbmp);
     lineedpanel = team;
