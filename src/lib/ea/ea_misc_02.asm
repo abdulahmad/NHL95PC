@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9BA18 progbits alloc exec nowrite align=1
-extern __FDFS, byte_C4B6C, ScanBitMasks, memset_, off_D566C, tolower_
+extern __FDFS, CharClassTable, ScanBitMasks, memset_, __EFG_scanf, tolower_
 global ScanFormat, ScanParseSpec, ScanSkipSpace, ScanStoreCount, ScanChars, ScanStoreInt, ScanBuildCharSet, ScanCharSet
 global ScanFloatField, ScanIntegerField, HexDigitValue, ScanGetCharWidth
 ScanFormat:
@@ -30,7 +30,7 @@ ScanFormat:
         mov al, bl
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 2
+        test byte [dword eax+CharClassTable], 2
         je short .2
         mov eax, esi
         call ScanSkipSpace
@@ -241,7 +241,7 @@ ScanParseSpec:
         mov dl, byte [esp]
         inc dl
         and edx, 0FFh
-        test byte [dword edx+byte_C4B6C], 20h
+        test byte [dword edx+CharClassTable], 20h
         je short .3
         xor edx, edx
 .2:
@@ -255,7 +255,7 @@ ScanParseSpec:
         mov cl, byte [esp]
         inc cl
         movzx esi, cl
-        test byte [dword esi+byte_C4B6C], 20h
+        test byte [dword esi+CharClassTable], 20h
         jne short .2
         mov dword [byte ebx+0Ch], edx
 .3:
@@ -323,7 +323,7 @@ ScanSkipSpace:
         mov esi, eax
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 2
+        test byte [dword eax+CharClassTable], 2
         je short .2
         inc ecx
         jmp short .1
@@ -459,7 +459,7 @@ ScanChars:
         mov edx, eax
         inc al
         movzx edi, al
-        test byte [dword edi+byte_C4B6C], 2
+        test byte [dword edi+CharClassTable], 2
         je short .7
         inc esi
         jmp short .6
@@ -497,7 +497,7 @@ ScanChars:
         je short .14
         inc al
         movzx edi, al
-        test byte [dword edi+byte_C4B6C], 2
+        test byte [dword edi+CharClassTable], 2
         je short .9
 .13:
         mov eax, edx
@@ -724,7 +724,7 @@ ScanFloatField:
         mov ebx, eax
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 2
+        test byte [dword eax+CharClassTable], 2
         je short .2
         inc dword [byte esp+06Ch]
         jmp short .1
@@ -755,7 +755,7 @@ ScanFloatField:
         mov al, bl
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         jne short .5
         cmp ebx, byte 2Eh
         jne near .20
@@ -766,7 +766,7 @@ ScanFloatField:
         mov al, bl
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         je short .8
         mov dword [byte esp+05Ch], 1
 .6:
@@ -788,7 +788,7 @@ ScanFloatField:
         je near .21
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         jne short .6
 .8:
         cmp ebx, byte 2Eh
@@ -805,7 +805,7 @@ ScanFloatField:
         mov al, bl
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         je near .20
 .9:
         inc edi
@@ -813,7 +813,7 @@ ScanFloatField:
         mov al, bl
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         je short .11
         inc edi
         mov eax, ecx
@@ -882,7 +882,7 @@ ScanFloatField:
         mov al, bl
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         jne short .19
         xor edi, edi
         jmp short .20
@@ -897,7 +897,7 @@ ScanFloatField:
         je short .21
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         jne short .19
 .20:
         mov eax, ebx
@@ -919,7 +919,7 @@ ScanFloatField:
 .22:
         mov eax, esp
         lea edx, [byte esp+050h]
-        call dword [off_D566C]
+        call dword [__EFG_scanf]
 .23:
         mov ah, byte [byte ecx+010h]
         test ah, 4
@@ -997,7 +997,7 @@ ScanIntegerField:
         mov edx, eax
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 2
+        test byte [dword eax+CharClassTable], 2
         je short .2
         inc ebp
         jmp short .1

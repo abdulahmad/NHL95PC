@@ -5,11 +5,11 @@ bits 32
 section s_5FB03 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, __STOSD, awlinetab, awroster, awteamrec, awtmglstats, awtmlines
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, BuildEventLines
-extern rinkobjanim, byte_DC264, byte_DC265, byte_DC266, byte_DC267, byte_DC268, milestonesaid, curevent
+extern rinkobjanim, byte_DC264, byte_DC265, byte_DC266, byte_DC267, UnusedStateByte, milestonesaid, curevent
 extern goalevent, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
 extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
 extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, goalienotebits, hmplstats, hmtmplattr
-extern hmtmglattr, awtmplattr, awtmglattr, SumCwdExciteLvl, dword_E9A9E, dword_E9AB6, rinkobjused_m2, energywarn
+extern hmtmglattr, awtmplattr, awtmglattr, SumCwdExciteLvl, SpeechPatchNext, dword_E9AB6, rinkobjused_m2, energywarn
 extern exhstate, exitgame, fadeinpending, FatalError, FileReadAt, FileWriteAt, fodir1, fodir2
 extern fofdata2, fox, foy, frameaccum, gameclock, gamemode, gameover, gamepal
 extern GetPeriodTime, gmode, gmode2, gsp, hmlinetab, hmroster, hmteamrec, hmtmglstats
@@ -28,8 +28,8 @@ extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopat
 extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, gsumheader
 extern gsumtail, hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats
 extern VisTeam, penaltysc, SortPending, lcsel_aw, word_CBD64, word_CBD66, refhitcount, injurystop
-extern Pencntdwn2, word_CC10C, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, milestonesaid_b2
-extern word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam, word_E9AB0, rinkobjused
+extern Pencntdwn2, lcline_aw, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, milestonesaid_b2
+extern UnusedSpeechWord, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam, GoalState, rinkobjused
 extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
 ;-----------------------------------------------------------------------------
@@ -282,7 +282,7 @@ SaveGameState:
         mov dx, word [injurystop]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_E9AB0]
+        mov dx, word [GoalState]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [bannermsg]
@@ -410,7 +410,7 @@ SaveGameState:
         mov dx, word [periodendtime]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [dword_E9A9E]
+        mov dx, word [SpeechPatchNext]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [ltack]
@@ -419,7 +419,7 @@ SaveGameState:
         mov dx, word [lastsfx]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_E9A9C]
+        mov dx, word [UnusedSpeechWord]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [crowdlevel]
@@ -485,7 +485,7 @@ SaveGameState:
         mov dx, word [gamemode]
         mov word [eax], dx
         add eax, byte 2
-        mov dl, byte [byte_DC268]
+        mov dl, byte [UnusedStateByte]
         mov byte [eax], dl
         mov dl, byte [byte_DC267]
         mov byte [byte eax+01h], dl
@@ -552,7 +552,7 @@ SaveGameState:
         mov dx, word [penshotctl]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_CC10C]
+        mov dx, word [lcline_aw]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [penshotfox]
@@ -1067,7 +1067,7 @@ LoadGameState:
         mov word [injurystop], ax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [word_E9AB0], ax
+        mov word [GoalState], ax
         add ebx, byte 2
         mov ax, word [ebx]
         mov word [bannermsg], ax
@@ -1198,7 +1198,7 @@ LoadGameState:
         mov word [periodendtime], ax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [dword_E9A9E], ax
+        mov word [SpeechPatchNext], ax
         add ebx, byte 2
         mov ax, word [ebx]
         mov word [ltack], ax
@@ -1207,7 +1207,7 @@ LoadGameState:
         mov word [lastsfx], ax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [word_E9A9C], ax
+        mov word [UnusedSpeechWord], ax
         add ebx, byte 2
         mov ax, word [ebx]
         mov word [crowdlevel], ax
@@ -1276,7 +1276,7 @@ LoadGameState:
         mov dword [gamemode], eax
         add ebx, byte 2
         mov al, byte [ebx]
-        mov byte [byte_DC268], al
+        mov byte [UnusedStateByte], al
         mov al, byte [byte ebx+01h]
         mov byte [byte_DC267], al
         add ebx, byte 2
@@ -1401,7 +1401,7 @@ LoadGameState:
         mov dword [penshotctl], eax
         add ebx, byte 2
         movsx eax, word [ebx]
-        mov dword [word_CC10C], eax
+        mov dword [lcline_aw], eax
         add ebx, byte 2
         movsx eax, word [ebx]
         mov dword [penshotfox], eax

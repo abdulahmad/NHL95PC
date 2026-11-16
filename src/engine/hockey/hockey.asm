@@ -7,8 +7,8 @@ extern awtmnearpl, awtmstruct, bannermsg, bannertimer, LinePlayersAway, c1player
 extern camy, changeplayer_ret5, checkcoll, checkwindow, ChkGoalies, ClearPenaltyBuffer, clearteams, cliprect_y0
 extern cliprect_y1, clockticks, collflag, cont1team, cont2team, crowdlevel, cupceremony, curperiod
 extern CwdExciteLvl, DecayCrowdLevel, defsort_d, defsort_fwd, doinput, DrawCallBanner, DrawFrameSprite, DrawRinkEndArt
-extern DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay, ds2list, dword_CCD4F, dword_D30BC, dword_D30C0, dword_E03A8
-extern dword_E9A9E, EndPenaltyShot, energywarn, exitgame, fadeinpending, findpc, findpc_ret5, findpc_ret6
+extern DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay, ds2list, dword_CCD4F, DrawClipLeft, DrawClipRight, dword_E03A8
+extern SpeechPatchNext, EndPenaltyShot, energywarn, exitgame, fadeinpending, findpc, findpc_ret5, findpc_ret6
 extern fodir1, fodir2, fox, foy, gameclock, gameopts, gameover, gmode
 extern gmode2, goalevent, gsp, hmscore, hmtmgoaliesc, hmtmnear, hmtmnearpl, hmtmstruct
 extern InitCoachModes, IntermissionPC, IsCupClinched, joysampling, joysampling_save, lastsfx, lcblink, lcboxon
@@ -652,7 +652,7 @@ StartPer:
         mov word [lcrequest+2], dx
         mov word [lcrequest], dx
         call InitCoachModes
-        mov word [dword_E9A9E], dx
+        mov word [SpeechPatchNext], dx
         call setupice
         call ResetClock
         mov si, word [cont1team]
@@ -1859,9 +1859,9 @@ DrawRinkOverlays:
         push dword 244h
         mov ebx, dword [cliprect_y0]
         push ebx
-        mov ecx, dword [dword_D30C0]
+        mov ecx, dword [DrawClipRight]
         push ecx
-        mov esi, dword [dword_D30BC]
+        mov esi, dword [DrawClipLeft]
         push esi
         call SetClipWindow
         add esp, byte 10h
@@ -2420,9 +2420,9 @@ DrawRinkOverlays:
         push eax
         mov edi, dword [cliprect_y0]
         push edi
-        mov eax, dword [dword_D30C0]
+        mov eax, dword [DrawClipRight]
         push eax
-        mov edx, dword [dword_D30BC]
+        mov edx, dword [DrawClipLeft]
         push edx
         call SetClipWindow
         add esp, byte 10h

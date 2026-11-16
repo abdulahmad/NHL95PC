@@ -7,7 +7,7 @@ extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmfla
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, assonetimer_blade, assonetimer_blade_y, fofdata2_b3
 extern fofdata2_b7, c1playernum, c2playernum, camx, camy, CanBlockShot_ret5, CenterMouse, changeplayer
 extern checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel, donothing
-extern doshot, DrawPanelLine, demoflag, dword_CC0FA, ovlartbank, dword_E9A9E, Endfaceoff, energywarn
+extern doshot, DrawPanelLine, demoflag, dword_CC0FA, ovlartbank, SpeechPatchNext, Endfaceoff, energywarn
 extern EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1, fodir2, fofdata2, forcepldata
 extern fox, foy, FreeMemBlock, gameclock, gameopts, gmode, gmode2, gsp
 extern hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline, hmtmpdst, hmtmstruct, iflags

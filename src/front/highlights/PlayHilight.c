@@ -12,7 +12,7 @@ void PlayHilight(void)
     unsigned char pal[0x300];
     int i;
 
-    byte_DC268 = hilightrec[0];
+    UnusedStateByte = hilightrec[0];
     byte_DC267 = hilightrec[1];
     HomeTeam = hilightrec[2];
     VisTeam = hilightrec[0x1F];

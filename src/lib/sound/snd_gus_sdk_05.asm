@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_B07D0 progbits alloc exec nowrite align=1
-extern _dos_close_, _dos_getvect_, _dos_open_, _dos_read_, _dos_setvect_, byte_D86C8, GusDmaLatchBits, GusDmaReady
-extern GusPlayDmaChannel, GusRecordDmaChannel, byte_F79C8, dword_D86DC, GusDmaBusy, dword_F79BC, dword_F79C0, dword_F79C4
+extern _dos_close_, _dos_getvect_, _dos_open_, _dos_read_, _dos_setvect_, GusDmaPageTable, GusDmaLatchBits, GusDmaReady
+extern GusPlayDmaChannel, GusRecordDmaChannel, GusDmaControl, GusIrqOldHandler, GusDmaBusy, GusDmaLeft, GusDmaChunkSize, GusDmaDone
 extern inp_, lseek_, outp_, outpw_, GusDelay, GusSetDmaCallbacks, GusServiceIrq, GusPokeFill
-extern GusConvertAddr16, GusDmaChannels, word_D86DA, word_D86E0, GusIrqStatusPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort
-extern GusIrqPending, word_D8ACC, GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA
-extern word_F79C9
+extern GusConvertAddr16, GusDmaChannels, GusIrqVectorTable, GusIrqOldSelector, GusIrqStatusPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort
+extern GusIrqPending, word_D8ACC, GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, GusDmaChunkLo, GusDmaChunkHi
+extern GusDmaFlags
 global GusSetupDmaChannel, GusProgramDma, GusMaskDma, GusDmaCount, GusDosRead, GusDosClose, GusDosSeek, GusDosOpen
 global GusSetVect, GusGetVect, GusHookIrq, GusUnhookIrq, GusSendEoi, GusInitPlayDma, GusInitRecordDma, GusInitDma
 global GusStartDramDma, GusDownload, GusDmaNextChunk, GusDramDmaDone, GusDmaIdle, GusStopDma, GusCalcVoiceAddrs, GusClearIrqState
@@ -52,7 +52,7 @@ GusSetupDmaChannel:
         mov byte [byte eax+01h], bl
         or bl, 4
         mov byte [eax], bl
-        mov dl, byte [nosplit edx*2+byte_D86C8]
+        mov dl, byte [nosplit edx*2+GusDmaPageTable]
         mov byte [byte eax+02h], dl
         lea esp, [byte ebp-0Ch]
         pop esi
@@ -328,11 +328,11 @@ GusHookIrq:
         xor ebx, ebx
         pushfw
         cli
-        mov bx, word [nosplit ecx*8+word_D86DA]
+        mov bx, word [nosplit ecx*8+GusIrqVectorTable]
         mov eax, ebx
         call GusGetVect
-        mov word [nosplit ecx*8+word_D86E0], dx
-        mov dword [nosplit ecx*8+dword_D86DC], eax
+        mov word [nosplit ecx*8+GusIrqOldSelector], dx
+        mov dword [nosplit ecx*8+GusIrqOldHandler], eax
         mov eax, ebx
         mov ecx, edi
         mov ebx, esi
@@ -404,9 +404,9 @@ GusUnhookIrq:
         call outp_
 .3:
         xor eax, eax
-        mov cx, word [nosplit ebx*8+word_D86E0]
-        mov ax, word [nosplit ebx*8+word_D86DA]
-        mov ebx, dword [nosplit ebx*8+dword_D86DC]
+        mov cx, word [nosplit ebx*8+GusIrqOldSelector]
+        mov ax, word [nosplit ebx*8+GusIrqVectorTable]
+        mov ebx, dword [nosplit ebx*8+GusIrqOldHandler]
         call GusSetVect
         popfw
         lea esp, [byte ebp-0Ch]
@@ -516,14 +516,14 @@ GusStartDramDma:
         mov esi, eax
         xor si, ax
         shr esi, 10h
-        mov word [word_F79BA], si
-        mov word [word_F79B8], ax
-        mov dword [dword_F79BC], edx
+        mov word [GusDmaChunkHi], si
+        mov word [GusDmaChunkLo], ax
+        mov dword [GusDmaLeft], edx
         mov eax, dword [byte ebp+08h]
-        mov word [word_F79C9], ax
+        mov word [GusDmaFlags], ax
         xor edx, edx
-        mov dword [dword_F79C0], edx
-        mov dword [dword_F79C4], edx
+        mov dword [GusDmaChunkSize], edx
+        mov dword [GusDmaDone], edx
         mov dl, cl
         mov ah, byte [byte ebp+08h]
         or dl, 4
@@ -557,7 +557,7 @@ GusStartDramDma:
         mov cl, dl
 .3:
         or cl, 21h
-        mov byte [byte_F79C8], cl
+        mov byte [GusDmaControl], cl
         xor eax, eax
         mov ax, word [byte ebp+08h]
         call GusDmaNextChunk
@@ -681,9 +681,9 @@ GusDmaNextChunk:
         xor eax, eax
         jmp near .8
 .1:
-        mov eax, dword [dword_F79C0]
-        add dword [dword_F79C4], eax
-        mov esi, dword [dword_F79BC]
+        mov eax, dword [GusDmaChunkSize]
+        add dword [GusDmaDone], eax
+        mov esi, dword [GusDmaLeft]
         test esi, esi
         jne short .2
         mov dword [GusDmaBusy], esi
@@ -697,25 +697,25 @@ GusDmaNextChunk:
         ret
 .2:
         xor esi, esi
-        mov si, word [word_F79B8]
+        mov si, word [GusDmaChunkLo]
         mov eax, 10000h
         sub eax, esi
         mov esi, eax
-        cmp esi, dword [dword_F79BC]
+        cmp esi, dword [GusDmaLeft]
         jbe short .3
-        mov esi, dword [dword_F79BC]
+        mov esi, dword [GusDmaLeft]
 .3:
-        mov dword [dword_F79C0], esi
+        mov dword [GusDmaChunkSize], esi
         pushfw
         cli
         test dl, 1
         je short .6
         xor eax, eax
-        mov ax, word [word_F79B8]
+        mov ax, word [GusDmaChunkLo]
         xor ecx, ecx
-        mov cx, word [word_F79BA]
+        mov cx, word [GusDmaChunkHi]
         push eax
-        test byte [byte_F79C8], 2
+        test byte [GusDmaControl], 2
         je short .4
         mov eax, 44h
         jmp short .5
@@ -724,7 +724,7 @@ GusDmaNextChunk:
 .5:
         xor ebx, ebx
         mov bx, ax
-        mov edx, dword [dword_F79C0]
+        mov edx, dword [GusDmaChunkSize]
         xor eax, eax
         call GusProgramDma
         xor eax, eax
@@ -732,11 +732,11 @@ GusDmaNextChunk:
         jmp short .7
 .6:
         xor eax, eax
-        mov ax, word [word_F79B8]
+        mov ax, word [GusDmaChunkLo]
         xor ecx, ecx
-        mov cx, word [word_F79BA]
+        mov cx, word [GusDmaChunkHi]
         push eax
-        mov edx, dword [dword_F79C0]
+        mov edx, dword [GusDmaChunkSize]
         mov eax, 1
         mov ebx, 44h
         call GusProgramDma
@@ -746,16 +746,16 @@ GusDmaNextChunk:
         mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
-        mov dl, byte [byte_F79C8]
+        mov dl, byte [GusDmaControl]
         xor eax, eax
         mov ax, word [GusDataHighPort]
         call outp_
         call GusDelay
         popfw
-        sub dword [dword_F79BC], esi
-        add word [word_F79B8], si
-        mov ax, word [word_F79BA]
-        inc word [word_F79BA]
+        sub dword [GusDmaLeft], esi
+        add word [GusDmaChunkLo], si
+        mov ax, word [GusDmaChunkHi]
+        inc word [GusDmaChunkHi]
         mov eax, 1
 .8:
         lea esp, [byte ebp-010h]
@@ -843,13 +843,13 @@ GusStopDma:
         call GusMaskDma
         mov eax, 1
         call GusMaskDma
-        and byte [byte_F79C8], 0DEh
+        and byte [GusDmaControl], 0DEh
         xor eax, eax
         mov edx, 41h
         mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
-        mov dl, byte [byte_F79C8]
+        mov dl, byte [GusDmaControl]
         xor eax, eax
         mov ax, word [GusDataHighPort]
         call outp_
@@ -858,7 +858,7 @@ GusStopDma:
         mov ax, word [GusRegSelectPort]
         call outp_
         xor edx, edx
-        mov dl, byte [byte_F79C8]
+        mov dl, byte [GusDmaControl]
         xor eax, eax
         mov ax, word [GusDataHighPort]
         call outp_

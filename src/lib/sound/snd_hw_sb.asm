@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A6BE1 progbits alloc exec nowrite align=1
-extern __set_errno_, byte_C4B6C, byte_D6CE0, byte_D6CE1, byte_D6CE3, byte_D6D1E, byte_D6D1F, byte_D6D24
+extern __set_errno_, CharClassTable, byte_D6CE0, byte_D6CE1, byte_D6CE3, byte_D6D1E, byte_D6D1F, byte_D6D24
 extern byte_D6E24, byte_D6E25, byte_D6E27, byte_D6E62, byte_D6E63, byte_D6E68, byte_D6F68, byte_D6F69
 extern byte_D6F6B, byte_D6FA6, byte_D6FA7, byte_D6FAC, byte_D70AC, byte_D70AD, byte_D70AF, byte_D70EA
 extern byte_D70EB, byte_D70F0, byte_D7618, byte_D7619, byte_D781C, dword_D6B00, dword_D6CE4, dword_D6CF8
@@ -68,7 +68,7 @@ StrToLong:
         mov al, byte [edx]
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 2
+        test byte [dword eax+CharClassTable], 2
         je short .3
         inc edx
         jmp short .2

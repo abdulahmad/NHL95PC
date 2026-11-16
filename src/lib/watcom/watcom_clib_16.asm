@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_92068 progbits alloc exec nowrite align=1
-extern __close_, __IOMode_, __set_errno_, __set_errno_dos_, __SetIOMode_, dword_D4F21, SopenMask, isatty_
+extern __close_, __IOMode_, __set_errno_, __set_errno_dos_, __SetIOMode_, _fmode, SopenMask, isatty_
 extern lseek_
 global open_, sopen_, __set_binary_, read_, j___close_, byteswap_, med3_, med3_
 global qsort_
@@ -185,7 +185,7 @@ sopen_:
         je short .17
         jmp short .16
 .15:
-        cmp dword [dword_D4F21], 200h
+        cmp dword [_fmode], 200h
         jne short .17
 .16:
         mov edx, eax

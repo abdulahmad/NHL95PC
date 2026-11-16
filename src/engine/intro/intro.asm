@@ -13,7 +13,7 @@ extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, D
 extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, dword_CBEBE, demoflag
 extern dword_CC9AD, introstandanims_m2, assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end
 extern dword_D8C72, dword_D8C7A, hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3
-extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7
+extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, SpeechPatchNext, dword_E9AB6, dword_E9AB7
 extern EndPenaltyShot, energywarn, escrequest, EvadePC, EvadePlayers, exitgame, fadeinpending, FadePalette
 extern Findhittype, findpc, fodir1, fodir2, fofdata2, forcepldata, FormatPlayerName, fox
 extern foy, frameaccum, FreeMemBlock, gameclock, gameopts, gameover, gamepal, GetHot
@@ -43,7 +43,7 @@ extern SortPending, injurystop, word_CC9CC, assstarskate_path, assstarskate_path
 extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 extern hmplstats_w2, hmglstats_w2, hmglstats_w4, hmglstats_w8, hmglstats_w14, hmtmtouch1, puckcross2, puckcross6
 extern refYpos2, refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, reftemp5
-extern fofdata2_w2, fofdata2_w4, fofdata2_w6, penevteam, word_E9AB0, xc1, yc1, yleader
+extern fofdata2_w2, fofdata2_w4, fofdata2_w6, penevteam, GoalState, xc1, yc1, yleader
 global FadeOutPalCycle, PreGameIntro, PreGameIntro_scroll, PreGameIntro_frameloop, PreGameIntro_end, PreGameIntro_popebp, PreGameIntro_popx, StartPreGame
 global ThreeStarsLoop, ThreeStarsLoop_tick, assintrostand, assintroline, AddStar, StarEligible, StarCompare, PickThreeStars
 global StartThreeStars, MoveInDir, SteerToTarget, assstarskate, assthreestars

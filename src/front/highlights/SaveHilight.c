@@ -19,7 +19,7 @@ typedef struct DiskFree {
 
 /* SaveHilight: append the current replay as a highlight to the league's file for team (curleague
  \ team name.HI, created when missing). Needs 9652h bytes free on the current drive (else sets replaynosave and
- returns 1). The 9652h-byte record hilightrec: the two teams' ids (byte_DC268 byte_DC267, HomeTeam, VisTeam),
+ returns 1). The 9652h-byte record hilightrec: the two teams' ids (UnusedStateByte byte_DC267, HomeTeam, VisTeam),
  the 28 jerseys of each roster, period, clock (min sec hundredths), sflags, the replay length (recbpr -
  replaystart) and the replay. File errors are fatal. Returns 0. */
 int SaveHilight(int team)
@@ -36,7 +36,7 @@ int SaveHilight(int team)
         replaynosave = 1;
         return 1;
     }
-    hilightrec[0] = byte_DC268;
+    hilightrec[0] = UnusedStateByte;
     hilightrec[1] = byte_DC267;
     hilightrec[2] = HomeTeam;
     hilightrec[0x1F] = VisTeam;

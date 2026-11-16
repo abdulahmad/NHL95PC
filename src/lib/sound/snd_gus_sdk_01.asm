@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_AA210 progbits alloc exec nowrite align=1
-extern str_GF1PATCH110, str_110, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, GusDmaLatchBits, byte_D87D8, byte_D89E0
+extern str_GF1PATCH110, str_110, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, GusDmaLatchBits, byte_D87D8, GusDramSized
 extern byte_F5978, byte_F5979, byte_F597A, byte_F59F8, byte_F59F9, byte_F5A00, byte_F5A01, byte_F5A04
 extern byte_F5C0B, GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, GusOpenCount, dword_D7ABC
 extern dword_D87DC, dword_D87E0, dword_D89D8, dword_F59FC, dword_F6016, dword_F6116, inp_, inpw_
@@ -10,8 +10,8 @@ extern outp_, outpw_, strcmp_, strncmp_, GusProbePort, GusDosRead, GusDosClose, 
 extern GusDosOpen, GusHookIrq, GusUnhookIrq, GusDownload, GusDramDmaDone, GusCalcVoiceAddrs, GusClearIrqState, GusEnterCritical
 extern GusLeaveCritical, GusWaveIrqHandler, GusMidiIrqHandler, GusDelay, GusSetBasePort, GusClearCallbacks, GusClaimVoiceCallbacks, GusClaimTimerCallbacks
 extern GusRunInitTable, GusStartTimer2, GusStopTimer2, GusAllocVoice, GusReleaseVoice, GusAddVoicePriority, GusPeek, GusPoke
-extern GusTestDramBank, unk_F5BF8, GusBasePort, GusIrqStatusPort, word_D8768, word_D876A, GusVoiceSelectPort, GusRegSelectPort
-extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, word_F6128, GusDosResult
+extern GusTestDramBank, unk_F5BF8, GusBasePort, GusIrqStatusPort, GusIrqLatchPort, GusDmaLatchPort, GusVoiceSelectPort, GusRegSelectPort
+extern GusDataLowPort, GusDataHighPort, word_F59FA, word_F6018, word_F6118, word_F611A, GusDramSize, GusDosResult
 extern GusIrqFlags, GusActiveVoices
 global GusReadPatchHeader, GusLoadPatch, GusUnloadPatch, GusSetPatchFlags, GusStopDmaAndTimers, GusUnhookIrqs, GusHookIrqs, GusOpenCard
 global GusStopAllVoices, GusOpen, GusClose, GusSetIrqDmaLatches, GusResetVoices, GusMidiInit, GusVoiceUpdateVolume, GusSetChannelVolume
@@ -1029,7 +1029,7 @@ GusSetIrqDmaLatches:
         cli
         xor eax, eax
         mov edx, 5
-        mov ax, word [word_D876A]
+        mov ax, word [GusDmaLatchPort]
         call outp_
         xor edx, edx
         mov dl, byte [GusIrqLatch]
@@ -1038,11 +1038,11 @@ GusSetIrqDmaLatches:
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8768]
+        mov ax, word [GusIrqLatchPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D876A]
+        mov ax, word [GusDmaLatchPort]
         call outp_
         xor edx, edx
         mov dl, byte [GusIrqLatch]
@@ -1054,7 +1054,7 @@ GusSetIrqDmaLatches:
         or al, 80h
         mov dl, al
         xor eax, eax
-        mov ax, word [word_D8768]
+        mov ax, word [GusIrqLatchPort]
         call outp_
         mov al, byte [GusIrqLatch]
         or al, 40h
@@ -1065,7 +1065,7 @@ GusSetIrqDmaLatches:
         call outp_
         xor eax, eax
         and ebx, 0FFh
-        mov ax, word [word_D8768]
+        mov ax, word [GusIrqLatchPort]
         mov edx, ebx
         call outp_
         xor edx, edx
@@ -1075,7 +1075,7 @@ GusSetIrqDmaLatches:
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D8768]
+        mov ax, word [GusIrqLatchPort]
         mov dl, cl
         call outp_
         mov al, byte [GusIrqLatch]
@@ -1087,11 +1087,11 @@ GusSetIrqDmaLatches:
         call outp_
         xor eax, eax
         mov edx, ebx
-        mov ax, word [word_D8768]
+        mov ax, word [GusIrqLatchPort]
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D876A]
+        mov ax, word [GusDmaLatchPort]
         call outp_
         or byte [GusIrqLatch], 8
         xor edx, edx
@@ -1101,7 +1101,7 @@ GusSetIrqDmaLatches:
         call outp_
         xor eax, eax
         xor edx, edx
-        mov ax, word [word_D876A]
+        mov ax, word [GusDmaLatchPort]
         call outp_
         popfw
         lea esp, [byte ebp-0Ch]
@@ -4389,10 +4389,10 @@ GusSizeDram:
         push edx
         push esi
         sub esp, byte 10h
-        mov byte [byte_D89E0], 1
+        mov byte [GusDramSized], 1
         xor edx, edx
         xor ebx, ebx
-        mov word [word_F6128], dx
+        mov word [GusDramSize], dx
 .1:
         mov edx, ebx
         shl edx, 12h
@@ -4406,11 +4406,11 @@ GusSizeDram:
         mov dword [byte ebp-01Ch], esi
         mov dword [byte ebp-018h], esi
         shl eax, cl
-        mov cx, word [word_F6128]
+        mov cx, word [GusDramSize]
         xor esi, esi
         or ecx, eax
         mov word [byte ebp-014h], si
-        mov word [word_F6128], cx
+        mov word [GusDramSize], cx
         mov ecx, 40000h
         mov eax, edx
         mov dword [byte ebp-020h], ecx
@@ -4422,7 +4422,7 @@ GusSizeDram:
         inc ebx
         cmp ebx, byte 4
         jl short .1
-        cmp word [word_F6128], byte 0
+        cmp word [GusDramSize], byte 0
         jne short .3
         mov eax, 6
         jmp short .4
@@ -4465,7 +4465,7 @@ GusDramAlloc:
         mov cl, byte [byte ebp-018h]
         xor edx, edx
         mov eax, 1
-        mov dx, word [word_F6128]
+        mov dx, word [GusDramSize]
         shl eax, cl
         test edx, eax
         je near .6
@@ -4663,7 +4663,7 @@ GusDramFreeTotal:
         mov eax, 1
         xor edx, edx
         mov cl, bl
-        mov dx, word [word_F6128]
+        mov dx, word [GusDramSize]
         shl eax, cl
         test edx, eax
         je short .4
@@ -4711,7 +4711,7 @@ GusDramLargestFree:
         mov eax, 1
         xor edx, edx
         mov cl, bl
-        mov dx, word [word_F6128]
+        mov dx, word [GusDramSize]
         shl eax, cl
         test edx, eax
         je short .4

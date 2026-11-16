@@ -272,7 +272,7 @@ void DrawRinkOverlays(short vx, short vy)
     DrawRinkObjects();
     if (camy < -0xB0) {
         y1 = cliprect_y1;
-        SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, 0x244);
+        SetClipWindow(DrawClipLeft, DrawClipRight, cliprect_y0, 0x244);
     }
     for (i = 0; i < 3; i++) {
         ys[i] = 0;
@@ -367,7 +367,7 @@ void DrawRinkOverlays(short vx, short vy)
     }
     if (*pucky <= -0xE8 && *pucky >= -0xEC && ABS(*puckx) <= 0x14 && (z = *(short *)puckz) >= 0xD)
         DrawFrameSprite(((Player *)puckstruct)->frame, *puckx, z * 3 / 2 + *pucky, 0, 0);
-    if (camy < -0xB0) SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, y1);
+    if (camy < -0xB0) SetClipWindow(DrawClipLeft, DrawClipRight, cliprect_y0, y1);
     if (camy < -0x90) DrawRinkEndArt();
     q = (Player *)sortobj15;
     if (HIWORD(q->Ypos) < 0 && q->frame >= 0x22A && q->frame <= 0x237)

@@ -38,9 +38,9 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
             strcpy((char *)p + 7, (char *)buf + 0x3B);
             strcpy((char *)p + 0x17, (char *)buf + 0x4B);
             if (mode == 0 || mode == 2) {
-                if (byte_DC268 < buf[0x92])
+                if (UnusedStateByte < buf[0x92])
                     hmroster[team * 1092 + i * 39] = 1;
-                else if (byte_DC268 > buf[0x92])
+                else if (UnusedStateByte > buf[0x92])
                     hmroster[team * 1092 + i * 39] = 3;
                 else if (byte_DC267 < buf[0x93])
                     hmroster[team * 1092 + i * 39] = 1;
@@ -82,9 +82,9 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
             strcpy((char *)p + 7, (char *)buf + 0x3B);
             strcpy((char *)p + 0x17, (char *)buf + 0x4B);
             if (mode == 0 || mode == 2) {
-                if (byte_DC268 < buf[0x2E])
+                if (UnusedStateByte < buf[0x2E])
                     hmroster[(i + 25) * 39 + team * 1092] = 1;
-                else if (byte_DC268 > buf[0x2E])
+                else if (UnusedStateByte > buf[0x2E])
                     hmroster[(i + 25) * 39 + team * 1092] = 3;
                 else if (byte_DC267 < buf[0x2F])
                     hmroster[(i + 25) * 39 + team * 1092] = 1;

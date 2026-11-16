@@ -4,7 +4,7 @@ bits 32
 section s_A1CA2 progbits alloc exec nowrite align=1
 extern __ccmdline_, __cenvarg_, __CHK, __dospawn, __set_doserrno_, __set_errno_, __Slash_C_, _makepath_
 extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD
-extern str_COMMAND, _osmajor, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
+extern str_COMMAND, _osmajor, getenv_, EmuInitHook, EmuFiniHook, spawnl_, stricmp_, strlen_
 extern ErrnoPtr, CMainHook, unk_C4AB4, _dos_findfirst_
 global SpawnPathExists, SpawnCommand, spawnve_
 SpawnPathExists:
@@ -118,7 +118,7 @@ spawnve_:
         mov eax, esi
         call _splitpath2_
         lea eax, [byte ebp-02Eh]
-        call dword [off_D6600]
+        call dword [EmuInitHook]
         mov eax, dword [byte ebp+052h]
         call _nmalloc_
         mov edx, eax
@@ -293,7 +293,7 @@ spawnve_:
         mov eax, dword [byte ebp+05Eh]
         call _nfree_
         lea eax, [byte ebp-02Eh]
-        call dword [off_D6604]
+        call dword [EmuFiniHook]
         mov eax, dword [byte ebp+076h]
 .21:
         lea esp, [dword ebp+082h]

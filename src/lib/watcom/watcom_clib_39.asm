@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_A18D6 progbits alloc exec nowrite align=1
-extern unk_A197C
+extern IntrStubs
 global IntrLoadSegRegs
 IntrLoadSegRegs:
         lea esi, [esi+esi*2]
-        lea eax, [dword cs:esi+unk_A197C]
+        lea eax, [dword cs:esi+IntrStubs]
         push eax
         mov es, word [ebx]
         mov bp, word [byte ebx+06h]

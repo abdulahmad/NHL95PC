@@ -4,19 +4,19 @@ bits 32
 section s_ADEE9 progbits alloc exec nowrite align=1
 extern byte_D7B18, byte_D7B58, byte_D7B5C, byte_D7D70, byte_D7DB0, byte_D7DB4, byte_D7FC8, byte_D8008
 extern byte_D800C, byte_D8220, byte_D8260, byte_D8264, byte_D849C, byte_D84A0, dword_D6B00, dword_D7ABC
-extern dword_D7AF0, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight, dword_D7B0C
+extern GusStreamActive, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight, dword_D7B0C
 extern dword_D7B1C, dword_D7B30, dword_D7B34, dword_D7B38, dword_D7B44, dword_D7B48, dword_D7B4C, dword_D7B50
 extern dword_D7B60, dword_D7D64, dword_D7D74, dword_D7D88, dword_D7D8C, dword_D7D90, dword_D7D9C, dword_D7DA0
 extern dword_D7DA4, dword_D7DA8, dword_D7DB8, dword_D7FBC, dword_D7FCC, dword_D7FE0, dword_D7FE4, dword_D7FE8
 extern dword_D7FF4, dword_D7FF8, dword_D7FFC, dword_D8000, dword_D8010, dword_D8214, dword_D8224, dword_D8238
-extern dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8258, dword_D8268, dword_D847C
-extern dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498, dword_D84A8
-extern dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC, dword_D84D0
-extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_F612C, getenv_, inp_
+extern dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8258, dword_D8268, GusStreamBufSize
+extern GusStreamHalfSize, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498, dword_D84A8
+extern dword_D84AC, dword_D84B0, dword_D84B4, GusStreamCardEnd, GusStreamStartLo, GusStreamEndLo, GusEnvVarName, dword_D84D0
+extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, GusEnvConfig, getenv_, inp_
 extern GusStreamNoOp, off_D846C, outp_, strtoul_, GusSetChannelVolume, GusSetChannelBend, GusSetChannelModulation, GusSetSustain
 extern GusSetChannelPan, GusChannelNotesOff, GusMixAdd8, GusClearMixBuffer, GusDownload, GusClaimVoiceCallbacks, GusAllocVoice, GusPoke
-extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
-extern word_D84C6, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
+extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, GusStreamLoopLo, GusStreamLoopHi, GusStreamStartHi
+extern GusStreamEndHi, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
 global GusFillStreamBuffer, GusStreamVoiceIrq, GusServiceStream, GusStartStream, GusStopStream, GusStreamStart, GusStreamIdle, GusStreamPlayNote
 global GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetBend, GusStreamSetRate, GusStreamSetSample, GusStreamApplyBend, GusStreamBusy
 global GusStreamGetVolume, GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController
@@ -686,10 +686,10 @@ GusFillStreamBuffer:
         jne short .69
         LD mov, esi, eax
         movzx edx, byte [esi]
-        mov eax, dword [dword_D84B8]
+        mov eax, dword [GusStreamCardEnd]
         call GusPoke
         movzx edx, byte [byte esi+01h]
-        mov eax, dword [dword_D84B8]
+        mov eax, dword [GusStreamCardEnd]
         inc eax
         call GusPoke
         mov ebx, dword [dword_D84B0]
@@ -700,7 +700,7 @@ GusFillStreamBuffer:
         mov eax, 1
         push eax
         mov eax, dword_D84A8
-        mov edx, dword [dword_D8480]
+        mov edx, dword [GusStreamHalfSize]
         mov ecx, 41h
         call GusDownload
 .71:
@@ -710,7 +710,7 @@ GusFillStreamBuffer:
         leave
         ret
 GusStreamVoiceIrq:
-        cmp dword [dword_D7AF0], byte 0
+        cmp dword [GusStreamActive], byte 0
         je near .3
         cmp eax, dword [byte_D849C]
         je short .1
@@ -752,13 +752,13 @@ GusStreamVoiceIrq:
         mov al, 0Bh
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BC]
+        mov ax, word [GusStreamLoopLo]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Ah
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BE]
+        mov ax, word [GusStreamLoopHi]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0
@@ -818,9 +818,9 @@ GusStartStream:
         inc esi
         loop .1
         mov eax, dword [byte ebp+010h]
-        mov dword [dword_D847C], eax
+        mov dword [GusStreamBufSize], eax
         shr eax, 1
-        mov dword [dword_D8480], eax
+        mov dword [GusStreamHalfSize], eax
         shr eax, 1
         mov dword [dword_D8484], eax
         mov eax, 1
@@ -837,7 +837,7 @@ GusStartStream:
         mov dword [dword_D8488], eax
         mov eax, dword [byte ebp+08h]
         mov dword [dword_D7AF4], eax
-        add eax, dword [dword_D8480]
+        add eax, dword [GusStreamHalfSize]
         mov dword [dword_D7B00], eax
         push es
         push ds
@@ -857,9 +857,9 @@ GusStartStream:
         LD or, eax, ebx
         shl eax, 9
         pop ebx
-        mov dword [word_D84BC], eax
+        mov dword [GusStreamLoopLo], eax
         mov eax, dword [byte ebp+0Ch]
-        add eax, dword [dword_D8480]
+        add eax, dword [GusStreamHalfSize]
         mov dword [dword_D84B4], eax
         push ebx
         LD mov, ebx, eax
@@ -869,10 +869,10 @@ GusStartStream:
         LD or, eax, ebx
         shl eax, 9
         pop ebx
-        mov dword [dword_D84C0], eax
+        mov dword [GusStreamStartLo], eax
         mov eax, dword [byte ebp+0Ch]
-        add eax, dword [dword_D847C]
-        mov dword [dword_D84B8], eax
+        add eax, dword [GusStreamBufSize]
+        mov dword [GusStreamCardEnd], eax
         push ebx
         LD mov, ebx, eax
         and ebx, 0FFFC000h
@@ -881,7 +881,7 @@ GusStartStream:
         LD or, eax, ebx
         shl eax, 9
         pop ebx
-        mov dword [dword_D84C4], eax
+        mov dword [GusStreamEndLo], eax
         mov dword [dword_D8498], 0
         mov dword [dword_D7AF8], 1
         mov dword [dword_D7B04], 1
@@ -891,7 +891,7 @@ GusStartStream:
         LD mov, eax, esi
         call GusPoke
         inc esi
-        cmp esi, dword [dword_D84B8]
+        cmp esi, dword [GusStreamCardEnd]
         jbe short .3
         LD xor, edx, edx
         LD mov, eax, esi
@@ -918,37 +918,37 @@ GusStartStream:
         mov al, 3
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BC]
+        mov ax, word [GusStreamLoopLo]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 2
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BE]
+        mov ax, word [GusStreamLoopHi]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Bh
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BC]
+        mov ax, word [GusStreamLoopLo]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Ah
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BE]
+        mov ax, word [GusStreamLoopHi]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 5
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [dword_D84C4]
+        mov ax, word [GusStreamEndLo]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 4
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84C6]
+        mov ax, word [GusStreamEndHi]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0
@@ -1000,25 +1000,25 @@ GusStartStream:
         mov al, 3
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BC]
+        mov ax, word [GusStreamLoopLo]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 2
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BE]
+        mov ax, word [GusStreamLoopHi]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 5
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [dword_D84C0]
+        mov ax, word [GusStreamStartLo]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 4
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84C2]
+        mov ax, word [GusStreamStartHi]
         mov dx, word [GusDataLowPort]
         out dx, ax
         pushf
@@ -1029,13 +1029,13 @@ GusStartStream:
         mov al, 0Bh
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BC]
+        mov ax, word [GusStreamLoopLo]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0Ah
         mov dx, word [GusRegSelectPort]
         out dx, al
-        mov ax, word [word_D84BE]
+        mov ax, word [GusStreamLoopHi]
         mov dx, word [GusDataLowPort]
         out dx, ax
         mov al, 0
@@ -1059,7 +1059,7 @@ GusStartStream:
         out dx, al
         popf
         mov dword [dword_D8498], 0Fh
-        mov dword [dword_D7AF0], 1
+        mov dword [GusStreamActive], 1
         popf
         pop edi
         pop esi
@@ -1069,7 +1069,7 @@ GusStartStream:
 GusStopStream:
         pushf
         cli
-        cmp dword [dword_D7AF0], byte 0
+        cmp dword [GusStreamActive], byte 0
         je near .1
         mov dword [dword_D8498], 0
         pushf
@@ -1119,7 +1119,7 @@ GusStopStream:
         pop dx
         pop ax
         out dx, al
-        mov dword [dword_D7AF0], 0
+        mov dword [GusStreamActive], 0
 .1:
         popf
         ret
@@ -1499,58 +1499,58 @@ GusGetEnvConfig:
         push ecx
         push edx
         mov ecx, eax
-        mov eax, dword [dword_D84CC]
+        mov eax, dword [GusEnvVarName]
         call getenv_
         mov edx, eax
-        mov dword [dword_F612C], eax
+        mov dword [GusEnvConfig], eax
         test eax, eax
         je near .6
-        mov edx, dword_F612C
+        mov edx, GusEnvConfig
         mov ebx, 10h
         call strtoul_
         mov word [byte ecx+02h], ax
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         cmp byte [eax], 2Ch
         jne short .1
         inc eax
-        mov dword [dword_F612C], eax
+        mov dword [GusEnvConfig], eax
 .1:
-        mov edx, dword_F612C
+        mov edx, GusEnvConfig
         mov ebx, 0Ah
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         call strtoul_
         mov byte [byte ecx+07h], al
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         cmp byte [eax], 2Ch
         jne short .2
         inc eax
-        mov dword [dword_F612C], eax
+        mov dword [GusEnvConfig], eax
 .2:
-        mov edx, dword_F612C
+        mov edx, GusEnvConfig
         mov ebx, 0Ah
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         call strtoul_
         mov byte [byte ecx+06h], al
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         cmp byte [eax], 2Ch
         jne short .3
         inc eax
-        mov dword [dword_F612C], eax
+        mov dword [GusEnvConfig], eax
 .3:
-        mov edx, dword_F612C
+        mov edx, GusEnvConfig
         mov ebx, 0Ah
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         call strtoul_
         mov byte [byte ecx+04h], al
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         cmp byte [eax], 2Ch
         jne short .4
         inc eax
-        mov dword [dword_F612C], eax
+        mov dword [GusEnvConfig], eax
 .4:
-        mov edx, dword_F612C
+        mov edx, GusEnvConfig
         mov ebx, 0Ah
-        mov eax, dword [dword_F612C]
+        mov eax, dword [GusEnvConfig]
         call strtoul_
         mov dx, word [byte ecx+02h]
         mov byte [byte ecx+05h], al

@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_91370 progbits alloc exec nowrite align=1
-extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, ScreenWidth
-extern dword_D30A8, KeyedDraw, DrawVideoBase, ScreenRowTable, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8
-extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, RowCopyFunc, fontcolor
-extern DrawArtOpaqueHotspot, off_D42A4, TextSetCursor, PutBlock, bcopy, SetClipWindow, PutPixel, VesaSetBankArg
+extern TextFirstChar, byte_D42C1, TextCharW, TextCharH, TextSpacing, cliprect_y0, cliprect_y1, ScreenWidth
+extern dword_D30A8, KeyedDraw, DrawVideoBase, ScreenRowTable, TextOriginX, dword_D42B4, TextFontTag, TextWidthTable
+extern TextCursorX, TextCursorY, dword_D42D4, TextTop, TextRight, TextBottom, RowCopyFunc, fontcolor
+extern DrawArtOpaqueHotspot, TextFont, TextSetCursor, PutBlock, bcopy, SetClipWindow, PutPixel, VesaSetBankArg
 extern BlitArt, BlitShapeFast
 global DrawArt, DrawShape, DrawArtHotspot, GrabBlock, DrawShapeAtOwnPos, GrabBlockHotspot, PrintStringAtCursor, PrintString
 DrawArt:
@@ -201,11 +201,11 @@ PrintStringAtCursor:
         push edi
         push ebp
         sub esp, byte 3Ch
-        mov eax, dword [off_D42A4]
+        mov eax, dword [TextFont]
         mov dword [esp], eax
         xor eax, eax
         mov al, byte [byte_D42C1]
-        movzx esi, byte [byte_D42C0]
+        movzx esi, byte [TextFirstChar]
         sub eax, esi
         inc eax
         mov dword [byte esp+02Ch], eax
@@ -216,11 +216,11 @@ PrintStringAtCursor:
         mov dword [byte esp+08h], eax
         mov eax, dword [fontcolor]
         mov dword [byte esp+038h], eax
-        cmp dword [dword_D42BC], 464E544Dh
+        cmp dword [TextFontTag], 464E544Dh
         sete al
         and eax, 0FFh
         mov dword [byte esp+01Ch], eax
-        mov eax, dword [dword_D42DC]
+        mov eax, dword [TextRight]
         mov dword [byte esp+028h], eax
         mov eax, dword [byte esp+04Ch]
         cmp byte [eax], 0
@@ -230,21 +230,21 @@ PrintStringAtCursor:
         lea ebx, [byte eax+01h]
         mov dword [byte esp+04Ch], ebx
         mov al, byte [eax]
-        sub al, byte [byte_D42C0]
+        sub al, byte [TextFirstChar]
         movzx esi, al
         cmp esi, dword [byte esp+02Ch]
         jge near .42
-        mov edi, dword [dword_D42C8]
+        mov edi, dword [TextWidthTable]
         test edi, edi
         je short .2
         mov ah, byte [edi+esi]
         jmp short .3
 .2:
-        mov ah, byte [byte_D42C2]
+        mov ah, byte [TextCharW]
 .3:
         movzx esi, ah
         mov dword [byte esp+014h], esi
-        mov ebp, dword [dword_D42CC]
+        mov ebp, dword [TextCursorX]
         test ebp, ebp
         je short .4
         movzx esi, al
@@ -252,10 +252,10 @@ PrintStringAtCursor:
         mov ah, byte [edi+esi]
         jmp short .5
 .4:
-        mov ah, byte [byte_D42C3]
+        mov ah, byte [TextCharH]
 .5:
         movzx esi, ah
-        mov edx, dword [dword_D42D0]
+        mov edx, dword [TextCursorY]
         test edx, edx
         je short .6
         movzx edi, al
@@ -263,7 +263,7 @@ PrintStringAtCursor:
         movzx edi, byte [edi+ebp]
         jmp short .7
 .6:
-        movzx edi, byte [byte_D42C4]
+        movzx edi, byte [TextSpacing]
         add edi, dword [byte esp+014h]
 .7:
         mov dword [byte esp+04h], edi
@@ -277,13 +277,13 @@ PrintStringAtCursor:
 .8:
         xor edi, edi
 .9:
-        mov ebp, dword [dword_D42B0]
+        mov ebp, dword [TextOriginX]
         add ebp, edi
         mov dword [byte esp+030h], ebp
-        cmp dword [dword_D42D8], byte 0
+        cmp dword [TextTop], byte 0
         je short .10
         movzx edi, al
-        mov ebp, dword [dword_D42D8]
+        mov ebp, dword [TextTop]
         movzx ebp, byte [edi+ebp]
         jmp short .11
 .10:
@@ -292,7 +292,7 @@ PrintStringAtCursor:
         add ebp, dword [dword_D42B4]
         and eax, 0FFh
         lea edi, [nosplit eax*4+00h]
-        mov eax, dword [dword_D42E0]
+        mov eax, dword [TextBottom]
         mov edi, dword [edi+eax]
         cmp dword [byte esp+01Ch], byte 0
         je short .12
@@ -555,7 +555,7 @@ PrintStringAtCursor:
         jmp short .38
 .41:
         mov eax, dword [byte esp+04h]
-        add dword [dword_D42B0], eax
+        add dword [TextOriginX], eax
 .42:
         mov eax, dword [byte esp+04Ch]
         cmp byte [eax], 0

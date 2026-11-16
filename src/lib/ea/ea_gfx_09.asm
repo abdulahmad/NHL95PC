@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_92890 progbits alloc exec nowrite align=1
-extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, ScreenWidth
-extern dword_D30A8, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8, dword_D42CC, dword_D42D0
-extern dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, fontcolor, off_D42A4, TextSetCursor, PutBlock
+extern TextFirstChar, byte_D42C1, TextCharW, TextCharH, TextSpacing, cliprect_y0, cliprect_y1, ScreenWidth
+extern dword_D30A8, dword_D42AC, TextOriginX, dword_D42B4, TextFontTag, TextWidthTable, TextCursorX, TextCursorY
+extern dword_D42D4, TextTop, TextRight, TextBottom, fontcolor, TextFont, TextSetCursor, PutBlock
 extern FillRectClipped, SetClipWindow, PutPixel
 global TextPrint, TextPrintAt, TextPutCharAt
 TextPrint:
@@ -12,11 +12,11 @@ TextPrint:
         push edi
         push ebp
         sub esp, byte 40h
-        mov eax, dword [off_D42A4]
+        mov eax, dword [TextFont]
         mov dword [byte esp+02Ch], eax
         xor eax, eax
         mov al, byte [byte_D42C1]
-        movzx esi, byte [byte_D42C0]
+        movzx esi, byte [TextFirstChar]
         sub eax, esi
         inc eax
         mov dword [byte esp+014h], eax
@@ -29,11 +29,11 @@ TextPrint:
         mov dword [byte esp+03Ch], eax
         mov eax, dword [dword_D42AC]
         mov dword [byte esp+0Ch], eax
-        cmp dword [dword_D42BC], 464E544Dh
+        cmp dword [TextFontTag], 464E544Dh
         sete al
         and eax, 0FFh
         mov dword [byte esp+04h], eax
-        mov eax, dword [dword_D42DC]
+        mov eax, dword [TextRight]
         mov dword [esp], eax
         mov eax, dword [byte esp+050h]
         cmp byte [eax], 0
@@ -43,21 +43,21 @@ TextPrint:
         lea ebx, [byte eax+01h]
         mov dword [byte esp+050h], ebx
         mov al, byte [eax]
-        sub al, byte [byte_D42C0]
+        sub al, byte [TextFirstChar]
         movzx esi, al
         cmp esi, dword [byte esp+014h]
         jge near .43
-        mov edi, dword [dword_D42C8]
+        mov edi, dword [TextWidthTable]
         test edi, edi
         je short .2
         mov ah, byte [edi+esi]
         jmp short .3
 .2:
-        mov ah, byte [byte_D42C2]
+        mov ah, byte [TextCharW]
 .3:
         movzx esi, ah
         mov dword [byte esp+038h], esi
-        mov ebp, dword [dword_D42CC]
+        mov ebp, dword [TextCursorX]
         test ebp, ebp
         je short .4
         movzx esi, al
@@ -65,10 +65,10 @@ TextPrint:
         mov ah, byte [edi+esi]
         jmp short .5
 .4:
-        mov ah, byte [byte_D42C3]
+        mov ah, byte [TextCharH]
 .5:
         movzx esi, ah
-        mov edx, dword [dword_D42D0]
+        mov edx, dword [TextCursorY]
         test edx, edx
         je short .6
         movzx edi, al
@@ -76,7 +76,7 @@ TextPrint:
         movzx edi, byte [edi+ebp]
         jmp short .7
 .6:
-        movzx edi, byte [byte_D42C4]
+        movzx edi, byte [TextSpacing]
         add edi, dword [byte esp+038h]
 .7:
         mov dword [byte esp+08h], edi
@@ -90,13 +90,13 @@ TextPrint:
 .8:
         xor edi, edi
 .9:
-        mov ebp, dword [dword_D42B0]
+        mov ebp, dword [TextOriginX]
         add ebp, edi
         mov dword [byte esp+01Ch], ebp
-        cmp dword [dword_D42D8], byte 0
+        cmp dword [TextTop], byte 0
         je short .10
         movzx edi, al
-        mov ebp, dword [dword_D42D8]
+        mov ebp, dword [TextTop]
         movzx ebp, byte [edi+ebp]
         jmp short .11
 .10:
@@ -105,7 +105,7 @@ TextPrint:
         add ebp, dword [dword_D42B4]
         and eax, 0FFh
         lea edi, [nosplit eax*4+00h]
-        mov eax, dword [dword_D42E0]
+        mov eax, dword [TextBottom]
         mov edi, dword [edi+eax]
         cmp dword [byte esp+04h], byte 0
         je short .12
@@ -399,7 +399,7 @@ TextPrint:
         jmp short .36
 .42:
         mov eax, dword [byte esp+08h]
-        add dword [dword_D42B0], eax
+        add dword [TextOriginX], eax
 .43:
         mov eax, dword [byte esp+050h]
         cmp byte [eax], 0

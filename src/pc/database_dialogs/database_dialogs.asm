@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_71F0C progbits alloc exec nowrite align=1
-extern __CHK, attdb, attdb_size, btn_POHumanOut, byte_C4B6C, byte_D42C3, careerdb, careerdb_size
+extern __CHK, attdb, attdb_size, btn_POHumanOut, CharClassTable, TextCharH, careerdb, careerdb_size
 extern carteamsdb, carteamsdb_size, cddriveptr, ClearInputQueue, CmpFileNames, curdbname, dbdirty, dbdlgrects
 extern dblistcur, dblistorig, dblisttemp, dblisttempnames, dbtablists, deldbmsg, DeleteDir, dlgedgecol1
 extern dlgedgecol2, dlgfillcol, DlgReturnZero, DrawDlgFrame, DrawEditRosters, dword_D42AC, EditTextField, fdlg_arrow
@@ -47,7 +47,7 @@ InputDialog:
         mov dword [byte esp+048h], ebx
         mov dword [byte esp+044h], ebx
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 2
         mov dword [byte esp+058h], eax
         xor esi, esi
@@ -245,7 +245,7 @@ InputDialog:
         mov al, byte [esi+ebp]
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         je short .11
         mov eax, ebp
         call atoi_

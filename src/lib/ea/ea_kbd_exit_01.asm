@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_981AD progbits alloc exec nowrite align=1
 extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, BackBufferWidth, joycalactive, joycalposthook, joycalprehook, mousepollfn
-extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
+extern HidePointerKeepHook, HidePointerHook, ShowPointerHook, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
 extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, DrawFrameClipped, ReturnFalse, FindNearestColor
 extern PrintStringCentered, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
 extern SetBitmapClip, DefaultFont
@@ -109,7 +109,7 @@ ShowPromptBox:
         push BackBufferWidth
         call SetBitmapClip
         add esp, byte 14h
-        call dword [off_D3070]
+        call dword [HidePointerHook]
         push esi
         call SetDrawBitmap
         add esp, byte 4
@@ -162,7 +162,7 @@ ShowPromptBox:
         push edi
         call PrintStringCentered
         add esp, byte 8
-        call dword [off_D3074]
+        call dword [ShowPointerHook]
         push BackBufferWidth
         call ResetClipRect
         add esp, byte 4
@@ -202,12 +202,12 @@ ShowPromptBox:
         push BackBufferWidth
         call SetBitmapClip
         add esp, byte 14h
-        call dword [off_D306C]
+        call dword [HidePointerKeepHook]
         mov ebx, dword [dword esp+0B8h]
         mov edx, dword [dword esp+0B4h]
         mov eax, dword [dword esp+0ACh]
         call RestoreBoxBackground
-        call dword [off_D3074]
+        call dword [ShowPointerHook]
         lea eax, [byte esp+060h]
         push eax
         call TextRestoreState
@@ -286,7 +286,7 @@ ShowMessageBox:
         push BackBufferWidth
         call SetBitmapClip
         add esp, byte 14h
-        call dword [off_D3070]
+        call dword [HidePointerHook]
         mov ebx, 0BEh
         xor edx, edx
         mov eax, esi
@@ -314,17 +314,17 @@ ShowMessageBox:
         push ebx
         call PrintStringCentered
         add esp, byte 8
-        call dword [off_D3074]
+        call dword [ShowPointerHook]
         mov ecx, dword [dword esp+0B0h]
         push ecx
         call DebugLineCount
         add esp, byte 4
-        call dword [off_D306C]
+        call dword [HidePointerKeepHook]
         mov ebx, 0BEh
         xor edx, edx
         mov eax, esi
         call RestoreBoxBackground
-        call dword [off_D3074]
+        call dword [ShowPointerHook]
         lea eax, [byte esp+060h]
         push eax
         call TextRestoreState

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B4CD8 progbits alloc exec nowrite align=1
-extern ColourRemap, cliprect_y0, cliprect_y1, ScreenWidth, dword_D30BC, dword_D30C0, DrawDestBuffer, DrawVideoBase
+extern ColourRemap, cliprect_y0, cliprect_y1, ScreenWidth, DrawClipLeft, DrawClipRight, DrawDestBuffer, DrawVideoBase
 extern CreateMcgaWindow, FillRectSpans, SetupRectFill
 global VgaBlitKeyed, VgaBlitKeyedAtOwnPos, SetColorRemap, GetColorRemap, VgaBlitRemap, SetDrawBitmap, CreateBitmap, CreateBitmapJump
 global FillRectColor, VgaBlitKeyedFlipVHot, VgaBlitKeyedFlipV, VgaBlitRemapFlipVHot, VgaBlitRemapFlipV, VgaBlitKeyedFlipHHot, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHVHot
@@ -446,10 +446,10 @@ VgaBlitKeyedFlipV:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         mov ecx, dword [byte ebp-0Ch]
-        cmp eax, dword [dword_D30BC]
+        cmp eax, dword [DrawClipLeft]
         jl short .4
         LD add, eax, ecx
-        sub eax, dword [dword_D30C0]
+        sub eax, dword [DrawClipRight]
         jle short .6
         LD sub, ecx, eax
         jle short .1
@@ -458,14 +458,14 @@ VgaBlitKeyedFlipV:
         jmp short .6
 .4:
         inc edi
-        mov ebx, dword [dword_D30BC]
+        mov ebx, dword [DrawClipLeft]
         LD add, eax, ecx
         LD sub, eax, ebx
         jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-014h], esi
-        mov esi, dword [dword_D30C0]
+        mov esi, dword [DrawClipRight]
         LD sub, esi, ebx
         LD cmp, eax, esi
         jl short .5
@@ -759,10 +759,10 @@ VgaBlitRemapFlipV:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         mov ecx, dword [byte ebp-0Ch]
-        cmp eax, dword [dword_D30BC]
+        cmp eax, dword [DrawClipLeft]
         jl short .4
         LD add, eax, ecx
-        sub eax, dword [dword_D30C0]
+        sub eax, dword [DrawClipRight]
         jle short .6
         LD sub, ecx, eax
         jle short .1
@@ -771,14 +771,14 @@ VgaBlitRemapFlipV:
         jmp short .6
 .4:
         inc edi
-        mov ebx, dword [dword_D30BC]
+        mov ebx, dword [DrawClipLeft]
         LD add, eax, ecx
         LD sub, eax, ebx
         jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-014h], esi
-        mov esi, dword [dword_D30C0]
+        mov esi, dword [DrawClipRight]
         LD sub, esi, ebx
         LD cmp, eax, esi
         jl short .5
@@ -1228,10 +1228,10 @@ VgaBlitKeyedFlipHV:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         mov ecx, dword [byte ebp-0Ch]
-        cmp eax, dword [dword_D30BC]
+        cmp eax, dword [DrawClipLeft]
         jl short .4
         LD add, eax, ecx
-        sub eax, dword [dword_D30C0]
+        sub eax, dword [DrawClipRight]
         jle short .6
         add dword [byte ebp-014h], eax
         LD sub, ecx, eax
@@ -1241,13 +1241,13 @@ VgaBlitKeyedFlipHV:
         jmp short .6
 .4:
         inc edi
-        mov ebx, dword [dword_D30BC]
+        mov ebx, dword [DrawClipLeft]
         LD add, eax, ecx
         LD sub, eax, ebx
         jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
-        mov esi, dword [dword_D30C0]
+        mov esi, dword [DrawClipRight]
         LD sub, esi, ebx
         LD cmp, eax, esi
         jl short .5
@@ -1708,10 +1708,10 @@ VgaBlitRemapFlipHV:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         mov ecx, dword [byte ebp-0Ch]
-        cmp eax, dword [dword_D30BC]
+        cmp eax, dword [DrawClipLeft]
         jl short .4
         LD add, eax, ecx
-        sub eax, dword [dword_D30C0]
+        sub eax, dword [DrawClipRight]
         jle short .6
         add dword [byte ebp-014h], eax
         LD sub, ecx, eax
@@ -1721,13 +1721,13 @@ VgaBlitRemapFlipHV:
         jmp short .6
 .4:
         inc edi
-        mov ebx, dword [dword_D30BC]
+        mov ebx, dword [DrawClipLeft]
         LD add, eax, ecx
         LD sub, eax, ebx
         jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
-        mov esi, dword [dword_D30C0]
+        mov esi, dword [DrawClipRight]
         LD sub, esi, ebx
         LD cmp, eax, esi
         jl short .5

@@ -66,7 +66,7 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
                 TextSetColors(0x42, 0x41);
             else
                 TextSetColors(0x40, 0x41);
-            PrintBoxedText((((side << 3) - side) << 6) + 5, byte_D42C3 * i + 0x1D, (char *)str_C2dS,
+            PrintBoxedText((((side << 3) - side) << 6) + 5, TextCharH * i + 0x1D, (char *)str_C2dS,
                       traderoster[side * 0x268 + i * 22], tradejersey[side * 0x268 + i * 22],
                       (char *)traderoster + side * 0x268 + i * 22 + 3);
         }

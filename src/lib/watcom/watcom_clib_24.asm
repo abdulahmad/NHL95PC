@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9805E progbits alloc exec nowrite align=1
 extern fgetc_
-global _fmemmove_, unk_980C0, utoa_, itoa_, fgets_
+global _fmemmove_, _Alphabet, utoa_, itoa_, fgets_
 _fmemmove_:
         push esi
         push edi
@@ -58,7 +58,7 @@ _fmemmove_:
         pop edi
         pop esi
         ret 4
-unk_980C0:
+_Alphabet:
         db 030h,031h,032h,033h,034h,035h,036h,037h,038h,039h,061h,062h,063h,064h,065h,066h
         db 067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh,070h,071h,072h,073h,074h,075h,076h
         db 077h,078h,079h,07Ah,00h
@@ -80,7 +80,7 @@ utoa_:
         xor edx, edx
         div dword [ebx]
         mov dword [ebx], eax
-        mov al, byte [dword cs:edx+unk_980C0]
+        mov al, byte [dword cs:edx+_Alphabet]
         mov byte [ecx], al
         mov eax, dword [byte esp+024h]
         inc ecx

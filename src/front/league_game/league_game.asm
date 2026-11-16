@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_35FB9 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _fstrcspn_, AllocMemBlock, AskTeamPassword, awlinetab, awscore, awtmgoalie
-extern awtmlines, btn_MasterDB, btn_MergeNeeded, byte_DC267, byte_DC268, CalendarScreen, cddriveptr, CheckGameDiskSpace
+extern awtmlines, btn_MasterDB, btn_MergeNeeded, byte_DC267, UnusedStateByte, CalendarScreen, cddriveptr, CheckGameDiskSpace
 extern ClearScreen, curleague, dword_DDD34, dword_DDD3C, FadePalStep, FileClose, FileExists, fileoncd
 extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, FindLeagueFloppy, FindShape, firstteammsg
 extern FmtFromLeague, FreeMemBlock, GameGoalieStatsScreen, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu, GameStandingsScreen
@@ -1417,7 +1417,7 @@ PlayLeagueGame:
         cmp dword [edi], byte 0
         jge short .47
         mov al, byte [lgschedrec]
-        mov byte [byte_DC268], al
+        mov byte [UnusedStateByte], al
         mov al, byte [lgschedrec_b1]
         mov byte [byte_DC267], al
         xor eax, eax
@@ -1436,7 +1436,7 @@ PlayLeagueGame:
         jne short .48
         xor edx, edx
         mov dl, byte [byte_DC267]
-        mov al, byte [byte_DC268]
+        mov al, byte [UnusedStateByte]
         call InitGameSummary
         xor edx, edx
         mov dl, byte [VisTeam]

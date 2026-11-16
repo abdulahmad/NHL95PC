@@ -115,7 +115,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     FillRectColor(0x6E, 0xCF, 0x21C, 0xCF, boxlitecolor);
     FillRectColor(0x6E, 0xD3, 0x21C, 0xD3, boxshadecolor);
     for (k = 0; k < 9; k++) {
-        y = (byte_D42C3 + 3) * k + 0xDA;
+        y = (TextCharH + 3) * k + 0xDA;
         if (k == 8) {
             FillRect(0x6E, y + 5, 0x1AE, 5, boxfillcolor);
             y += 0xE;
@@ -131,7 +131,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
         rc = 0xFA;
         if (p1[scoutcatidx[k]] > p0[scoutcatidx[k]]) lc = 0xFD;
         else if (p1[scoutcatidx[k]] < p0[scoutcatidx[k]]) rc = 0xFD;
-        y = (byte_D42C3 + 3) * k + 0xDA;
+        y = (TextCharH + 3) * k + 0xDA;
         if (k == 8) y += 0xC;
         SetTextColors(lc, 0xF7);
         sprintf(path, (char *)str_D4, p1[scoutcatidx[k]]);

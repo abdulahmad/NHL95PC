@@ -297,7 +297,7 @@ void puckstick(Player *puck, Player *p)
     if (p->position == 0) {
         if (gmode & 0x10) return;
         ((unsigned char *)p)[0x63] = 0;
-        if (!dword_E9A9E && !(p->pflags & 0x40) && (gmode2 & 0x10)
+        if (!SpeechPatchNext && !(p->pflags & 0x40) && (gmode2 & 0x10)
             && ((p->SCnum < 6) ^ (shotplayer < 6))
             && ABS(HIWORD(SortCords[shotplayer].Ypos)) > 0x58
             && ((HIWORD(SortCords[shotplayer].Ypos) > 0) ^ ((p->pflags & 0x80) != 0))) {

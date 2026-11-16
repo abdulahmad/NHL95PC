@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_7F724 progbits alloc exec nowrite align=1
-extern __CHK, _dos_getdiskfree_, AllocMemBlock, awteamrec, bothneitherstrs, byte_DB7F1, byte_DC267, byte_DC268
+extern __CHK, _dos_getdiskfree_, AllocMemBlock, awteamrec, bothneitherstrs, byte_DB7F1, byte_DC267, UnusedStateByte
 extern ClearInputQueue, curleague, curperiod, DrawGadgetButton, DrawGadgetButton_ret, FadeOutPalCycle, FadePalStep, FatalError
 extern FileClose, FileCreate, FileOpenRead, FileOpenWrite, FileReadAt, FileWriteAt, FillRect, fontcolor
 extern fputchar, FreeMemBlock, FreeRinkGfx, FreeRockMusic, gamepal, GetFileSize, hilightfont, hilightrec
@@ -324,7 +324,7 @@ SaveHilight:
         mov eax, ebx
         jmp near .x
 .2:
-        mov al, byte [byte_DC268]
+        mov al, byte [UnusedStateByte]
         mov byte [hilightrec], al
         mov al, byte [byte_DC267]
         mov byte [hilightrec+1], al
@@ -912,7 +912,7 @@ PlayHilight:
         push ebp
         sub esp, 300h
         mov al, byte [hilightrec]
-        mov byte [byte_DC268], al
+        mov byte [UnusedStateByte], al
         mov al, byte [hilightrec+1]
         mov byte [byte_DC267], al
         xor eax, eax

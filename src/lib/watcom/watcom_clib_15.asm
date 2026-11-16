@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_91D0B progbits alloc exec nowrite align=1
-extern __close_, __flush_, __freefp_, __ioalloc_, _nfree_, dword_F24C8, fputc_, ftell_
+extern __close_, __flush_, __freefp_, __ioalloc_, _nfree_, __ClosedStreams, fputc_, ftell_
 extern j_unlink_, lseek_, GetPsp
 global fclose_, __shutdown_stream_, __hex_, __MkTmpFile_, __doclose_, strncpy_, fputs_, strcmp_
 global FixedMulRound, memcmp_
@@ -10,7 +10,7 @@ fclose_:
         push ebx
         push edx
         mov edx, eax
-        mov eax, dword [dword_F24C8]
+        mov eax, dword [__ClosedStreams]
 .1:
         test eax, eax
         jne short .2

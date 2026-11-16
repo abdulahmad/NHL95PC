@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_6BE95 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, addtimer, attdb, attdb_size, boxfillcolor, boxlitecolor, boxshadecolor
-extern btn_LeagueExists, JoyPortMask, byte_D42C3, careerdb, careerdb_size, carteamsdb, carteamsdb_size, CheckDatabases
+extern btn_LeagueExists, JoyPortMask, TextCharH, careerdb, careerdb_size, carteamsdb, carteamsdb_size, CheckDatabases
 extern ctlavailmask, curdbname, dbdirty, dbexistsmsg, DeleteDir, dlgtextbg, dlgtextfg, DrawButtons
 extern DrawEditRosters, DrawScrollBar, dword_C4CFC, dword_C71E0, cursndbank, dword_CDA24, dword_CDA38, rostereditmode
 extern fascrollbar_len, fascrollbar_thumb, fascrollbar_top, fascrollbar_count, dword_D0C20, dword_EA2B0, falisttop, editptrspr

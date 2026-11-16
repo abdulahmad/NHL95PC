@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_B3B00 progbits alloc exec nowrite align=1
-extern str_OpenhandleSFILEERROR, ResourceArchiveName, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, SlowDeadline
+extern str_OpenhandleSFILEERROR, ResourceArchiveName, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, FindFilePtr, SlowDeadline
 extern PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, FatalError, slowtickcount
-extern sprintf_, AngleFromDelta, TableSin, TableCos, unk_D4448, unk_D44B0, unk_D44CE
+extern sprintf_, AngleFromDelta, TableSin, TableCos, FindFileDta, FindFileName, FindFilePattern
 global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, DosCloseFile, DosWriteFile, DosReadFile
 global DosSeekFile, FindFirstFile, FindFirstFile, FindNextFile, SetSlowDeadline, WaitSlowDeadline, SlowDeadlinePassed, DebugLineCount
 global vecdist, SprintfSaveRegs
@@ -193,7 +193,7 @@ FindFirstFile:
         LD mov, ebp, esp
         push esi
         push edi
-        mov edx, unk_D44B0
+        mov edx, FindFileName
         mov ah, 1Ah
         int 21h
         mov edx, dword [byte ebp+08h]
@@ -201,8 +201,8 @@ FindFirstFile:
         mov ah, 4Eh
         int 21h
         jb short FindFirstFile+05Eh
-        mov edi, unk_D4448
-        mov dword [dword_D44AC], edi
+        mov edi, FindFileDta
+        mov dword [FindFilePtr], edi
         mov esi, dword [byte ebp+08h]
         mov ecx, 57h
 .1:
@@ -215,15 +215,15 @@ FindFirstFile:
         cmp al, 5Ch
         jne short .3
 .2:
-        mov dword [dword_D44AC], edi
+        mov dword [FindFilePtr], edi
 .3:
         loop .1
-        mov esi, unk_D44CE
-        mov edi, dword [dword_D44AC]
+        mov esi, FindFilePattern
+        mov edi, dword [FindFilePtr]
         mov ecx, 0Dh
         cld
         rep movsb
-        mov eax, unk_D4448
+        mov eax, FindFileDta
 .4:
         pop edi
         pop esi
@@ -236,7 +236,7 @@ FindNextFile:
         LD mov, ebp, esp
         push esi
         push edi
-        mov edx, unk_D44B0
+        mov edx, FindFileName
         mov ah, 1Ah
         int 21h
         mov ah, 4Fh

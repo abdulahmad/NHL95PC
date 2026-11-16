@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_F7978 nobits alloc noexec write align=1
-global GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, byte_F79C8, GusVoiceIrqBits, byte_F79E8
-global dword_F79BC, dword_F79C0, dword_F79C4, dword_F79F8, dword_F79FC, dword_F7A00, GusVoiceAllocMask, GusDmaChannels
-global GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, word_F79B8, word_F79BA, word_F79C9
+global GusPlayDmaChannel, GusIrqLatch, GusRecordDmaChannel, GusMidiIrq, GusWaveIrq, GusDmaControl, GusVoiceIrqBits, byte_F79E8
+global GusDmaLeft, GusDmaChunkSize, GusDmaDone, dword_F79F8, dword_F79FC, dword_F7A00, GusVoiceAllocMask, GusDmaChannels
+global GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, GusDmaChunkLo, GusDmaChunkHi, GusDmaFlags
 GusDmaChannels:
         resb 36
 GusDosResult:
@@ -25,19 +25,19 @@ GusMidiIrq:
         resb 1
 GusWaveIrq:
         resb 16
-word_F79B8:
+GusDmaChunkLo:
         resb 2
-word_F79BA:
+GusDmaChunkHi:
         resb 2
-dword_F79BC:
+GusDmaLeft:
         resb 4
-dword_F79C0:
+GusDmaChunkSize:
         resb 4
-dword_F79C4:
+GusDmaDone:
         resb 4
-byte_F79C8:
+GusDmaControl:
         resb 1
-word_F79C9:
+GusDmaFlags:
         resb 15
 GusVoiceIrqBits:
         resb 16

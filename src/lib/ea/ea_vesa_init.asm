@@ -4,10 +4,10 @@ bits 32
 section s_8DF70 progbits alloc exec nowrite align=1
 extern __STOSB, str_EavesaCom, str_CUtilEavesaCom, str_InitgraphicsEAVESACOM, str_CEavesaDat, str_InitgraphicsNEWVERSIONOF, str_VESA, str_InitgraphicsINITMEMMAN
 extern str_InitgraphicsINVALIDSCREEN, str_VESAVideoBiosDriver, byte_EDABB, vesamodeok, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7
-extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, GraphicsReady, dword_D3044, dword_D3048, dword_D304C
-extern dword_D3050, dword_D3054, dword_D3058, ScreenWidth, BackBufferWidth, dword_D30D8, dword_D30DC, dword_D30E0
-extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108
-extern dword_D4F4C, dword_D4F50, dword_EDABA, vesapresent, dword_EDCBC, FatalError, FreeMemBlock, spawnl_
+extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, GraphicsReady, dword_D3044, ViewScreenHeight, dword_D304C
+extern dword_D3050, ScreenSaveBitmap, dword_D3058, ScreenWidth, BackBufferWidth, dword_D30D8, dword_D30DC, dword_D30E0
+extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, ScreenRowTable, PutBlockScaleSteps
+extern VesaBank, dword_D4F50, dword_EDABA, vesapresent, ScreenWidthPtr, FatalError, FreeMemBlock, spawnl_
 extern strncmp_, MemPtrSize, OpenArtArchiveErr, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
 extern VesaSetBankArg, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
 global ProbeVesa, initgraphics
@@ -206,10 +206,10 @@ initgraphics:
         jmp short .15
 .16:
         xor eax, eax
-        mov dword [dword_D4F4C], eax
+        mov dword [VesaBank], eax
         test byte [byte_EDABB], 1
         je short .17
-        mov dword [dword_D4F4C], 1
+        mov dword [VesaBank], 1
 .17:
         mov ecx, 8
         xor edx, edx
@@ -299,11 +299,11 @@ initgraphics:
         mov dword [GraphicsReady], 8
 .30:
         mov dword [dword_D3044], ecx
-        mov dword [dword_D3048], eax
+        mov dword [ViewScreenHeight], eax
         mov ebx, dword [dword_D304C]
         mov ebp, ecx
         sub ebp, ebx
-        mov dword [dword_D3054], ebp
+        mov dword [ScreenSaveBitmap], ebp
         mov ebx, dword [dword_D3050]
         mov ebp, eax
         sub ebp, ebx
@@ -341,13 +341,13 @@ initgraphics:
         mov edx, esi
         sar edx, 1Fh
         idiv ecx
-        mov dword [dword ebx+dword_D4108], eax
+        mov dword [dword ebx+PutBlockScaleSteps], eax
         add ebx, byte 4
         add esi, 10000h
         cmp ebx, byte 50h
         jne short .33
         call SetScreenTarget
-        mov dword [dword_EDCBC], ScreenWidth
+        mov dword [ScreenWidthPtr], ScreenWidth
         add esp, byte 8
         pop ebp
         pop edi

@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_D4D0F progbits alloc noexec write align=1
-extern dword_F24C8, DefaultFpeHandler, str_EACSNDFLIBJul28
-global _osmajor, _osminor, byte_D4D59, SavedTextMode, SavedTextPage, SavedTextRows, VesaBankShift, byte_D4F5C
-global byte_D4F5D, byte_D4F5E, FpeHandler, dword_D4F21, PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi
-global PrintfSavedEdi, PrintfSavedReturn, dword_D4F4C, dword_D4F50, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F8E
-global dword_D4F92, unk_D4D18, unk_D4D32, unk_D4D4C, unk_D4D9A, unk_D4F20, SavedTextColumns, word_D4F68
+extern __ClosedStreams, DefaultFpeHandler, str_EACSNDFLIBJul28
+global _osmajor, _osminor, __iob_flags, SavedTextMode, SavedTextPage, SavedTextRows, VesaBankShift, byte_D4F5C
+global byte_D4F5D, byte_D4F5E, FpeHandler, _fmode, PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi
+global PrintfSavedEdi, PrintfSavedReturn, VesaBank, dword_D4F50, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F8E
+global dword_D4F92, __iob, __stdout_buf, unk_D4D4C, __iob_end, __NFiles, SavedTextColumns, word_D4F68
 global word_D4F88
 _osmajor:
         db 00h
@@ -15,21 +15,21 @@ _osminor:
 FpeHandler:
         dd DefaultFpeHandler
         db 00h,00h,00h
-unk_D4D18:
+__iob:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D4D32:
+__stdout_buf:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,02h,00h,00h,00h
         db 01h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 unk_D4D4C:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,02h
-byte_D4D59:
+__iob_flags:
         db 00h,00h,00h,02h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,03h,00h,00h,00h,03h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,02h,00h,00h,00h,04h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h
-unk_D4D9A:
+__iob_end:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -55,11 +55,11 @@ unk_D4D9A:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h
-unk_D4F20:
+__NFiles:
         db 061h
-dword_D4F21:
+_fmode:
         db 00h,01h,00h,00h
-        dd dword_F24C8
+        dd __ClosedStreams
         db 00h,00h,00h
 PrintfSavedEbx:
         db 00h,00h,00h,00h
@@ -81,7 +81,7 @@ SavedTextColumns:
         db 00h,00h
 SavedTextRows:
         db 00h,00h,00h,00h
-dword_D4F4C:
+VesaBank:
         db 00h,00h,00h,00h
 dword_D4F50:
         db 00h,00h,00h,00h

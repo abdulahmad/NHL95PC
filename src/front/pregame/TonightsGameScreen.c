@@ -130,7 +130,7 @@ int TonightsGameScreen(int home, int away)
         DrawArtHotspot(logos[side], 0x3D, 0x50);
         SetTextColors(0x40, 0);
         SetClipWindow(0, 0x280, 0, 0x154);
-        y = byte_D42C3 + 0xA6;
+        y = TextCharH + 0xA6;
         for (n = 0; n < 4 && !err; n++) {
             for (i = 0; i < 3 && !err; i++) {
                 p = (linetab[side] + n * 3)[i];
@@ -140,7 +140,7 @@ int TonightsGameScreen(int home, int away)
                     PrintShadowText(i * 0x96 + 0x91 + (0x96 - fputchar(name)) / 2, y, name);
                 }
             }
-            y += byte_D42C3 + 0xE;
+            y += TextCharH + 0xE;
         }
         if (!faded) {
             FadePalStep(0, pal, 0x10);
@@ -156,7 +156,7 @@ int TonightsGameScreen(int home, int away)
             DrawGadgetByType(0x10, 0, (int)pal, gad, 0, (int)&out);
             DrawArtHotspot(logos[side], 0x3D, 0x50);
             SetClipWindow(0, 0x280, 0, 0x1E0);
-            y = byte_D42C3 + 0xA6;
+            y = TextCharH + 0xA6;
             for (n = 0; n < 3 && !err; n++) {
                 for (i = 0; i < 2 && !err; i++) {
                     p = (linetab[side] + 0xC + n * 2)[i];
@@ -166,7 +166,7 @@ int TonightsGameScreen(int home, int away)
                         PrintShadowText(i * 0xF0 + 0x91 + (0xF0 - fputchar(name)) / 2, y, name);
                     }
                 }
-                y += byte_D42C3 + 0xE;
+                y += TextCharH + 0xE;
             }
             if (!faded) {
                 FadePalStep(0, pal, 0x10);
@@ -182,7 +182,7 @@ int TonightsGameScreen(int home, int away)
             DrawGadgetByType(4, 0, (int)pal, gad, 0, (int)&out);
             DrawArtHotspot(logos[side], 0x3D, 0x50);
             SetClipWindow(0, 0x280, 0, 0x1E0);
-            y = byte_D42C3 + 0x7E;
+            y = TextCharH + 0x7E;
             for (n = 0; n < 8 && !err; n++) {
                 p = linetab[side][n + 0x28];
                 if (p < 0x64) {
@@ -192,7 +192,7 @@ int TonightsGameScreen(int home, int away)
                         PrintShadowText(0xB4, y, name);
                         if (hmroster[side * 0x444 + p * 0x27] == 1) PrintShadowText(0x226, y, (char *)str_Injured);
                     }
-                    y += byte_D42C3 + 0xE;
+                    y += TextCharH + 0xE;
                 }
             }
             if (!faded) {

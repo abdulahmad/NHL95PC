@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_A2D16 progbits alloc exec nowrite align=1
 extern __fatal_runtime_error_, __flush_, __IOMode_, __set_errno_, __set_errno_dos_, __shutdown_stream_, _nmalloc_, str_NotEnoughMemoryTo
-extern byte_D4D59, UngetChar, dword_EDF00, dword_F24C8, __freefp_, lseek_, unk_D4D18, unk_D4D9A
+extern __iob_flags, UngetChar, __OpenStreams, __ClosedStreams, __freefp_, lseek_, __iob, __iob_end
 global tell_, __InitFiles_, __full_io_exit_, fcloseall_, docloseall_, __qwrite_, flushall_, __flushall_
 global getche_, __qread_, __FDFS
 tell_:
@@ -19,13 +19,13 @@ __InitFiles_:
         push ebx
         push ecx
         push edx
-        mov ah, byte [byte_D4D59]
+        mov ah, byte [__iob_flags]
         and ah, 0F8h
         mov dl, ah
-        mov byte [byte_D4D59], ah
+        mov byte [__iob_flags], ah
         or dl, 4
-        mov ecx, unk_D4D18
-        mov byte [byte_D4D59], dl
+        mov ecx, __iob
+        mov byte [__iob_flags], dl
         jmp short .3
 .1:
         mov eax, 8
@@ -42,16 +42,16 @@ __InitFiles_:
         mov edx, 1
         call __fatal_runtime_error_
 .2:
-        mov edx, dword [dword_F24C8]
+        mov edx, dword [__ClosedStreams]
         mov dword [byte ebx+04h], ecx
-        mov dword [dword_F24C8], ebx
+        mov dword [__ClosedStreams], ebx
         add ecx, byte 1Ah
         mov dword [ebx], edx
 .3:
         mov edx, dword [byte ecx+0Ch]
         test edx, edx
         jne short .1
-        mov dword [dword_EDF00], edx
+        mov dword [__OpenStreams], edx
         pop edx
         pop ecx
         pop ebx
@@ -72,11 +72,11 @@ docloseall_:
         sub eax, edx
         shl eax, 2
         add eax, edx
-        mov esi, unk_D4D18
+        mov esi, __iob
         add eax, eax
         xor ebx, ebx
         add esi, eax
-        mov eax, dword [dword_F24C8]
+        mov eax, dword [__ClosedStreams]
         jmp short .4
 .1:
         mov ecx, dword [eax]
@@ -86,7 +86,7 @@ docloseall_:
         jne short .2
         cmp eax, esi
         jb short .3
-        cmp eax, unk_D4D9A
+        cmp eax, __iob_end
         jae short .2
         xor edx, edx
 .2:
@@ -172,7 +172,7 @@ __flushall_:
         push ecx
         push edx
         mov ecx, eax
-        mov edx, dword [dword_F24C8]
+        mov edx, dword [__ClosedStreams]
         xor ebx, ebx
         jmp short .3
 .1:

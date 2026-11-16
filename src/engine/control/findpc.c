@@ -81,7 +81,7 @@ void GetHot(Player *p)
    an offside AddPenalty 8 and AddPenalty2 1Bh. During a penalty shot a goal by the other side only ends the shot.
    Else tmscore + 1; the last toucher (lasttouch) becomes shotplayer when on the other side's team (gmode2 bit 4);
    ChkShotStat, sfx 9Ch, freezewindow; the crowd (home goal +320h, kept in 708h-7D0h; else at least 320h), the box
-   door, crowd sample 3 for a home goal unless speech and music are on, excitement +0Ah (away) or +1Eh. word_E9AB0
+   door, crowd sample 3 for a home goal unless speech and music are on, excitement +0Ah (away) or +1Eh. GoalState
    = 2 short-handed / 4 power play / 1 even, bit 3 for an empty net. Outside a highlight (gmode bit 4) the
    stats: the scorer (team byte 30h) a goal and the PP / SH / empty-net goal, team words 22h (penalty shot) or
    1Eh (a shot on goal) and 1Ah (one-timer), the assists (words 32h 34h), the goalie's goals against
@@ -144,10 +144,10 @@ void Goal(Player *net)
     if (side == 0 && (!gameopts.speech || !musicon) != 0) PlayCrowdSample(3);
     if (side == 1) CwdExciteLvl += 0xA;
     else CwdExciteLvl += 0x1E;
-    if (t->tmap < o->tmap) word_E9AB0 = 2;
-    else if (t->tmap > o->tmap) word_E9AB0 = 4;
-    else word_E9AB0 = 1;
-    if (o->tmgoalie < 0) *(unsigned char *)&word_E9AB0 |= 8;
+    if (t->tmap < o->tmap) GoalState = 2;
+    else if (t->tmap > o->tmap) GoalState = 4;
+    else GoalState = 1;
+    if (o->tmgoalie < 0) *(unsigned char *)&GoalState |= 8;
     if (!(gmode & 0x10)) {
         i = TW(t, 0x30);
         i &= 0xFF;
@@ -461,7 +461,7 @@ void StartPer(void)
 {
     lcrequest[0] = lcrequest[1] = 0;            /* no line change request */
     InitCoachModes();
-    dword_E9A9E = 0;
+    SpeechPatchNext = 0;
     setupice();
     ResetClock();
     if (cont1team == 1) c1playernum[0] = 2;     /* home: player 2 */

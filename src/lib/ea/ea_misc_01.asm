@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9B498 progbits alloc exec nowrite align=1
-extern KeyedDraw, FillRect, PlotPixel, FillRectSpansCore, unk_9B470
+extern KeyedDraw, FillRect, PlotPixel, FillRectSpansCore, FillRectSpansModeTable
 global FillRectSpans, FillRectSpans, FillRectSpans
 FillRectSpans:
         push esi
@@ -51,7 +51,7 @@ FillRectSpans:
         and edx, 0FFFFh
         and ebx, 0FFFFh
         mov ecx, dword [esp]
-        jmp dword [dword cs:ecx+unk_9B470]
+        jmp dword [dword cs:ecx+FillRectSpansModeTable]
         test esi, esi
         je near .8
         mov eax, dword [byte esp+028h]

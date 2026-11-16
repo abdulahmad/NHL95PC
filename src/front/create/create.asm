@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_6F159 progbits alloc exec nowrite align=1
-extern __CHK, __CHP, _dos_getdiskfree_, AllocMemBlock, attdb_size, btn_CreateFreeAgent, byte_C4B6C, careerdb_size
+extern __CHK, __CHP, _dos_getdiskfree_, AllocMemBlock, attdb_size, btn_CreateFreeAgent, CharClassTable, careerdb_size
 extern carteamsdb_size, cddriveptr, ClearInputQueue, ClearScreen, dbdirty, DeleteTempDatabases, DrawArt, DrawBitmap
 extern DrawButtons, DrawEditRosters, DrawShape, dword_EA994, editptrspr, facount, FadePalStep, falist
 extern falistsel, FatalError, FileClose, fileoncd, FileOpenWrite, FileWriteAt, FindShape, FixJerseyNumber
@@ -52,7 +52,7 @@ SplitPlayerName:
         mov dl, byte [ecx+eax]
         inc dl
         and edx, 0FFh
-        mov edx, dword [dword edx+byte_C4B6C-3]
+        mov edx, dword [dword edx+CharClassTable-3]
         sar edx, 18h
         test dl, 0C0h
         jne short .2
@@ -69,7 +69,7 @@ SplitPlayerName:
         mov bl, byte [edi]
         inc bl
         and ebx, 0FFh
-        mov ebx, dword [dword ebx+byte_C4B6C-3]
+        mov ebx, dword [dword ebx+CharClassTable-3]
         sar ebx, 18h
         test bl, 0C0h
         je short .4
@@ -97,7 +97,7 @@ SplitPlayerName:
         mov dl, byte [ecx+eax]
         inc dl
         and edx, 0FFh
-        mov edx, dword [dword edx+byte_C4B6C-3]
+        mov edx, dword [dword edx+CharClassTable-3]
         sar edx, 18h
         test dl, 0C0h
         je short .9
@@ -105,7 +105,7 @@ SplitPlayerName:
         mov dl, byte [ecx+eax]
         inc dl
         and edx, 0FFh
-        mov edx, dword [dword edx+byte_C4B6C-3]
+        mov edx, dword [dword edx+CharClassTable-3]
         sar edx, 18h
         test dl, 0C0h
         je short .9
@@ -117,7 +117,7 @@ SplitPlayerName:
         mov dl, byte [ecx+eax]
         inc dl
         and edx, 0FFh
-        mov edx, dword [dword edx+byte_C4B6C-3]
+        mov edx, dword [dword edx+CharClassTable-3]
         sar edx, 18h
         test dl, 0C0h
         jne short .10
@@ -134,7 +134,7 @@ SplitPlayerName:
         mov bl, byte [edi]
         inc bl
         and ebx, 0FFh
-        mov ebx, dword [dword ebx+byte_C4B6C-3]
+        mov ebx, dword [dword ebx+CharClassTable-3]
         sar ebx, 18h
         test bl, 0C0h
         je short .12

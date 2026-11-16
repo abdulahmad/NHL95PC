@@ -25,7 +25,7 @@ void DrawTeamGridName(int team, char *names, int bm, unsigned char *tab)
                 }
                 y = r * 92 + 0x97;
                 x2 = x + 0x4D;
-                SetClipWindow(x, x2, y, y + byte_D42C3 + 1);
+                SetClipWindow(x, x2, y, y + TextCharH + 1);
                 DrawArt(bm, 0, 0);
                 SetClipWindow(0, 0x280, 0, 0x1E0);
                 s = names + team * 30;

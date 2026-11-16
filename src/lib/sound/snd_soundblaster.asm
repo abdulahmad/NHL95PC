@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_9F226 progbits alloc exec nowrite align=1
-extern __GETDS, str_BLASTER, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_
+extern __GETDS, str_BLASTER, dword_D524C, SbDmaAlloc, SbDma, dword_F3462, dword_F34DC, getenv_
 extern int386x_, memset_, outp_, GetPatchEntry, strtoul_, SbMixRateDiv, SbMixerOpen, SbMixerClose
 extern SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetRate, SbStreamSetSample, SbStreamStart, SbStreamIdle
-extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, SbSetStereo, unk_D522E, unk_D5254, unk_D5258
+extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, SbSetStereo, unk_D522E, unk_D5254, SbIrq
 extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
 extern word_F3718
 global ParseBlasterEnv, ParseHexValue, SbPopArgsReturn, SbOpen, SbInit, SbClose, SbService, SbQuery
@@ -151,8 +151,8 @@ SbOpen:
         push esi
         cmp dword [byte esp+0Ch], byte 0
         je near .3
-        mov ebx, dword_D525C
-        mov edx, unk_D5258
+        mov ebx, SbDma
+        mov edx, SbIrq
         mov eax, 40h
         call SbAllocDosBuffer
         mov esi, eax
@@ -178,14 +178,14 @@ SbOpen:
         movsx eax, al
         cmp eax, byte 0FFFFFFFFh
         je short .2
-        mov dword [dword_D5250], esi
+        mov dword [SbDmaAlloc], esi
         mov eax, 1
         pop esi
         pop ds
         ret
 .2:
         xor esi, esi
-        mov dword [dword_D5250], esi
+        mov dword [SbDmaAlloc], esi
 .3:
         xor eax, eax
         pop esi
@@ -196,7 +196,7 @@ SbInit:
         call __GETDS
         push esi
         push edi
-        cmp dword [dword_D5250], byte 0
+        cmp dword [SbDmaAlloc], byte 0
         je short .3
         mov word [word_F3716], 0Fh
         xor ebx, ebx
@@ -239,13 +239,13 @@ SbInit:
 SbClose:
         push ds
         call __GETDS
-        cmp dword [dword_D5250], byte 0
+        cmp dword [SbDmaAlloc], byte 0
         je short .1
         call SbMixerClose
-        mov eax, dword [dword_D525C]
+        mov eax, dword [SbDma]
         call SbFreeDosBuffer
         xor ebx, ebx
-        mov dword [dword_D5250], ebx
+        mov dword [SbDmaAlloc], ebx
 .1:
         pop ds
         ret

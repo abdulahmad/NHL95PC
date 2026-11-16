@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_B2D38 progbits alloc exec nowrite align=1
-extern mouseminx, mouseminy, mousemaxx, mousemaxy, dword_D2FFC, MouseButtonState, dword_D301C, MousePresent
-extern PointerCount, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollfn, mousex, mousey
-extern off_D306C, off_D3070, off_D3074, AddExitHandler, word_D3004, word_D3006, word_D3008
+extern mouseminx, mouseminy, mousemaxx, mousemaxy, MouseDeltaX, MouseButtonState, MouseForceTwoButtons, MousePresent
+extern PointerCount, MouseButtons, dword_D3044, ViewScreenHeight, mousebtns, mousepollfn, mousex, mousey
+extern HidePointerKeepHook, HidePointerHook, ShowPointerHook, AddExitHandler, MouseSavedSensX, MouseSavedSensY, MouseSavedThreshold
 global MouseReadButtons, MouseSetSensitivity, MouseSetSensitivityDefault, MouseSetPos, MouseRead, MouseSetXRange, SetViewRect, MouseReadMotion
 global PointerCountUp, PointerCountDown, MouseRestoreSensitivity, InitMouse
 MouseReadButtons:
@@ -118,7 +118,7 @@ MouseReadMotion:
         movsx ecx, cx
         movsx edx, dx
         mov eax, dword [mousex]
-        mov ebx, dword [dword_D2FFC]
+        mov ebx, dword [MouseDeltaX]
         LD add, ebx, ebx
         LD adc, eax, eax
         LD add, ecx, eax
@@ -145,7 +145,7 @@ MouseReadMotion:
         mov edx, dword [mousemaxy]
         dec edx
 .4:
-        mov dword [dword_D2FFC], ebx
+        mov dword [MouseDeltaX], ebx
         mov dword [mousex], ecx
         mov dword [mousey], edx
         inc dword [MouseButtonState]
@@ -165,36 +165,36 @@ PointerCountDown:
 MouseRestoreSensitivity:
         pusha
         mov ax, 1Ah
-        mov bx, word [word_D3004]
-        mov cx, word [word_D3006]
-        mov dx, word [word_D3008]
+        mov bx, word [MouseSavedSensX]
+        mov cx, word [MouseSavedSensY]
+        mov dx, word [MouseSavedThreshold]
         int 33h
         popa
         ret
 InitMouse:
         mov dword [MousePresent], 0
         mov dword [PointerCount], 0
-        mov dword [dword_D303C], 0
+        mov dword [MouseButtons], 0
         LD xor, eax, eax
         int 33h
         LD or, ax, ax
         je near .2
         inc dword [MousePresent]
-        cmp dword [dword_D301C], byte 0
+        cmp dword [MouseForceTwoButtons], byte 0
         je short .1
-        mov dword [dword_D303C], 2
+        mov dword [MouseButtons], 2
         mov eax, 3
         int 33h
         LD or, ax, ax
         jne short .1
         mov dword [MousePresent], 2
 .1:
-        push dword [dword_D3048]
+        push dword [ViewScreenHeight]
         push dword [dword_D3044]
         push byte 0
         push byte 0
         call SetViewRect
-        mov eax, dword [dword_D3048]
+        mov eax, dword [ViewScreenHeight]
         shr eax, 2
         mov dword [mousex], eax
         mov eax, dword [dword_D3044]
@@ -202,16 +202,16 @@ InitMouse:
         mov dword [mousey], eax
         mov ax, 1Bh
         int 33h
-        mov word [word_D3004], bx
-        mov word [word_D3006], cx
-        mov word [word_D3008], dx
+        mov word [MouseSavedSensX], bx
+        mov word [MouseSavedSensY], cx
+        mov word [MouseSavedThreshold], dx
         push byte 40h
         push byte 20h
         push byte 20h
         call MouseSetSensitivity
-        mov dword [off_D306C], PointerCountDown
-        mov dword [off_D3070], PointerCountDown
-        mov dword [off_D3074], PointerCountUp
+        mov dword [HidePointerKeepHook], PointerCountDown
+        mov dword [HidePointerHook], PointerCountDown
+        mov dword [ShowPointerHook], PointerCountUp
         mov dword [mousepollfn], MouseReadMotion
         push MouseRestoreSensitivity
         call AddExitHandler

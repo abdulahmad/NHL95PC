@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B0100 progbits alloc exec nowrite align=1
-extern byte_D89E4, KeyedDraw, RowCopyFunc, DmaDefaultMode, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
+extern RemapTable, KeyedDraw, RowCopyFunc, DmaDefaultMode, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
 global GetBytesLE, GetBytesBE, PutBytesLE, PutBytesBE, CopyRowShadowKeyed, DrawArtKeyedRemap, DrawArtKeyedRemapOwnPos, RemapBytes
 global SetDmaDefaultMode
 GetBytesLE:
@@ -110,7 +110,7 @@ CopyRowShadowKeyed:
         cmp dl, 0FEh
         jne short .3
         movzx esi, byte [eax]
-        mov dl, byte [dword esi+byte_D89E4]
+        mov dl, byte [dword esi+RemapTable]
 .3:
         mov byte [eax], dl
         inc eax

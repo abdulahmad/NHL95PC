@@ -49,7 +49,7 @@ int InputDialog(int *lines, int n, char *buf, int len, int fw, int numeric, int 
     r = -1;
     s.w = 0;
     s.h = 0;
-    s.lh = byte_D42C3 + 2;
+    s.lh = TextCharH + 2;
     for (i = 0; i < n; i++) MeasureTextLine((char *)lines[i], &s.w, &s.h, s.lh);
     s.fieldw = fw + 8;
     if (s.fieldw > s.w) s.w = s.fieldw;
@@ -94,7 +94,7 @@ int InputDialog(int *lines, int n, char *buf, int len, int fw, int numeric, int 
                 r = -1;
                 if (!required || *buf) {
                     for (i = 0; i < len; i++) {
-                        if (!(byte_C4B6C[(unsigned char)(buf[i] + 1)] & 0x20)) break;
+                        if (!(CharClassTable[(unsigned char)(buf[i] + 1)] & 0x20)) break;
                         r = atoi_(buf);
                     }
                 }

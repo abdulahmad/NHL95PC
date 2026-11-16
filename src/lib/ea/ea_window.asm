@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_8E7A0 progbits alloc exec nowrite align=1
-extern str_SUBWINDOW, str_SubwindowdefadrOUTOFROW, byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, byte_D42C5
-extern byte_D42C6, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8, dword_D42CC
-extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, FatalError, fontcolor, off_D42A4
+extern str_SUBWINDOW, str_SubwindowdefadrOUTOFROW, TextFirstChar, byte_D42C1, TextCharW, TextCharH, TextSpacing, TextFontH
+extern TextFontAscent, dword_D42AC, TextOriginX, dword_D42B4, TextShadowOn, TextFontTag, TextWidthTable, TextCursorX
+extern TextCursorY, dword_D42D4, TextTop, TextRight, TextBottom, FatalError, fontcolor, TextFont
 extern AllocMemBlock, AllocMemBlockEx, FindCachedFile, FillRowTable, LoadFileCached, DosOpenFile, DosCloseFile, DosReadFile
 extern ZeroMem
 global subwindowdefadr, LoadFileCachedQuiet, LoadBank, LoadFileCachedFlag, str_LocateshapeSHAPENOTFOUND, OpenArtArchiveErr, OpenArtArchive, OpenArtArchiveFlag
@@ -234,7 +234,7 @@ TextSetColors:
         db 090h
 TextSetCursor:
         mov eax, dword [byte esp+04h]
-        mov dword [dword_D42B0], eax
+        mov dword [TextOriginX], eax
         mov eax, dword [byte esp+08h]
         mov dword [dword_D42B4], eax
         ret
@@ -244,7 +244,7 @@ TextSaveState:
         push edi
         mov ecx, 10h
         mov edi, dword [byte esp+0Ch]
-        mov esi, off_D42A4
+        mov esi, TextFont
         rep movsd
         pop edi
         pop esi
@@ -254,7 +254,7 @@ TextRestoreState:
         push esi
         push edi
         mov ecx, 10h
-        mov edi, off_D42A4
+        mov edi, TextFont
         mov esi, dword [byte esp+0Ch]
         rep movsd
         pop edi
@@ -264,25 +264,25 @@ TextRestoreState:
 TextSetFont:
         mov edx, dword [byte esp+04h]
         mov eax, edx
-        mov dword [off_D42A4], edx
+        mov dword [TextFont], edx
         mov ebx, dword [edx]
-        mov dword [dword_D42BC], ebx
+        mov dword [TextFontTag], ebx
         mov bl, byte [byte edx+04h]
-        mov byte [byte_D42C0], bl
+        mov byte [TextFirstChar], bl
         mov bl, byte [byte edx+05h]
         mov byte [byte_D42C1], bl
         mov bl, byte [byte edx+06h]
-        mov byte [byte_D42C2], bl
+        mov byte [TextCharW], bl
         mov bl, byte [byte edx+07h]
-        mov byte [byte_D42C3], bl
+        mov byte [TextCharH], bl
         mov bl, byte [byte edx+08h]
-        mov byte [byte_D42C4], bl
+        mov byte [TextSpacing], bl
         mov bl, byte [byte edx+09h]
-        mov byte [byte_D42C5], bl
+        mov byte [TextFontH], bl
         mov bl, byte [byte edx+0Ah]
-        mov byte [byte_D42C6], bl
+        mov byte [TextFontAscent], bl
         xor ebx, ebx
-        mov dword [dword_D42B8], ebx
+        mov dword [TextShadowOn], ebx
         mov ebx, dword [byte edx+010h]
         sar ebx, 10h
         test ebx, ebx
@@ -292,7 +292,7 @@ TextSetFont:
 .1:
         xor edx, edx
 .2:
-        mov dword [dword_D42C8], edx
+        mov dword [TextWidthTable], edx
         mov edx, dword [byte eax+014h]
         shl edx, 10h
         sar edx, 10h
@@ -300,14 +300,14 @@ TextSetFont:
         je short .3
         add edx, eax
 .3:
-        mov dword [dword_D42CC], edx
+        mov dword [TextCursorX], edx
         mov edx, dword [byte eax+014h]
         sar edx, 10h
         test edx, edx
         je short .4
         add edx, eax
 .4:
-        mov dword [dword_D42D0], edx
+        mov dword [TextCursorY], edx
         mov edx, dword [byte eax+018h]
         shl edx, 10h
         sar edx, 10h
@@ -322,10 +322,10 @@ TextSetFont:
         je short .6
         add edx, eax
 .6:
-        mov dword [dword_D42D8], edx
+        mov dword [TextTop], edx
         mov edx, dword [byte eax+01Ch]
         lea ebx, [eax+edx]
-        mov dword [dword_D42DC], ebx
+        mov dword [TextRight], ebx
         add eax, byte 20h
-        mov dword [dword_D42E0], eax
+        mov dword [TextBottom], eax
         ret

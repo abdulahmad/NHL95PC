@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2AC8 progbits alloc exec nowrite align=1
-extern __fatal_runtime_error_, str_FloatingPointSupportNot, __heap_enabled, dword_D5674
+extern __fatal_runtime_error_, str_FloatingPointSupportNot, __heap_enabled, __amblksiz
 global abs_, __CommonInit_, NoFloatSupport, unk_A2AEE, ultoa_, ltoa_, toupper_, _heapenable_
 abs_:
         test eax, eax
@@ -11,7 +11,7 @@ abs_:
 .1:
         ret
 __CommonInit_:
-        mov dword [dword_D5674], 8000h
+        mov dword [__amblksiz], 8000h
         ret
         db 00h,00h
 NoFloatSupport:

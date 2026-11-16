@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_A1948 progbits alloc exec nowrite align=1
-global IntrLoadRegs, unk_A197C, __Slash_C_
+global IntrLoadRegs, IntrStubs, __Slash_C_
 IntrLoadRegs:
         and eax, 0FFh
         lea eax, [eax+eax*2]
         db 02Eh,08Dh,080h
-        dd unk_A197C
+        dd IntrStubs
         push eax
         mov ebx, edx
         push dword [byte ebx+01Ch]
@@ -23,7 +23,7 @@ IntrLoadRegs:
         mov ebx, dword [byte ebx+04h]
         pop ds
         ret
-unk_A197C:
+IntrStubs:
         db 0CDh,00h,0C3h,0CDh,01h,0C3h,0CDh,02h,0C3h,0CCh,090h,0C3h,0CDh,04h,0C3h,0CDh
         db 05h,0C3h,0CDh,06h,0C3h,0CDh,07h,0C3h,0CDh,08h,0C3h,0CDh,09h,0C3h,0CDh,0Ah
         db 0C3h,0CDh,0Bh,0C3h,0CDh,0Ch,0C3h,0CDh,0Dh,0C3h,0CDh,0Eh,0C3h,0CDh,0Fh,0C3h

@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_15D6B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, awscore, awtmline, awtmstruct
-extern byte_D42C3, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap_e43, homeremap_eFF, cddriveptr
+extern TextCharH, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap_e43, homeremap_eFF, cddriveptr
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
 extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines, hmpanelpens, awpanelpens, hmlinetimer
@@ -1655,7 +1655,7 @@ ShowCredits:
         mov eax, dword [byte eax+01h]
         mov dword [dword esp+0358h], eax
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         mov edx, dword [dword esp+0368h]
         movsx edx, byte [edx]
         imul eax, edx
@@ -1680,7 +1680,7 @@ ShowCredits:
         mov edx, edi
         call RenderTextLine
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add edi, eax
         inc esi
 .21:
@@ -1802,7 +1802,7 @@ RenderTextLine:
         and eax, 0FFC0h
         lea esi, [byte eax+040h]
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         inc eax
         push byte 0
         push eax

@@ -4,7 +4,7 @@
 #define INVERT ((void (__cdecl *)(int x, int y, int w, int h, int col))XorBar)
 
 /* RosterPanelClick: x in the left list (23h..113h) is side 0, x in the right list (15Eh..24Eh)
- is side 1. A y in the 28 rows under 35h, each byte_D42C3 tall, toggles that row. A free-agent
+ is side 1. A y in the 28 rows under 35h, each TextCharH tall, toggles that row. A free-agent
  list toggles falistsel[scroll + row] when the row is on screen. A team list toggles
  rostersel[side * 28 + row] when that rosterlist entry is filled. Then, if the list has a
  selection, point the move-to-free-agents item at MoveToFreeAgents when the other pool has
@@ -22,7 +22,7 @@ void RosterPanelClick(int x, int y)
     else if (x >= 0x15E && x <= 0x24E) side = 1;
     if (side < 0) return;
     if (y >= 0x35) {
-    h = byte_D42C3;
+    h = TextCharH;
     if (y < h * 28 + 0x35) {
         row = (y - 0x35) / h;
         rowy = row * h + 0x35;

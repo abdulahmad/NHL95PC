@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_C4B6C progbits alloc noexec write align=1
-global byte_C4B6C, byte_C4C70, ScanBitMasks, DblMaxLow, DblMaxHigh, DblMinusMaxLow, DblMinusMaxHigh, dword_C4CA0
-global dword_C4CA4, dword_C4CFC, joypresent, inputticks, joysampling, joyqhead, joyqcount
+global CharClassTable, byte_C4C70, ScanBitMasks, DblMaxLow, DblMaxHigh, DblMinusMaxLow, DblMinusMaxHigh, HugeValLo
+global HugeValHi, dword_C4CFC, joypresent, inputticks, joysampling, joyqhead, joyqcount
 global F64_Scale10Max, F64_Scale10Min, Pow10Table, Scale10Count
-byte_C4B6C:
+CharClassTable:
         db 00h,01h,01h,01h,01h,01h,01h,01h,01h,01h,03h,03h,03h,03h,03h,01h
         db 01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h
         db 01h,0Ah,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch,0Ch
@@ -39,9 +39,9 @@ DblMinusMaxLow:
         db 0FFh,0FFh,0FFh,0FFh
 DblMinusMaxHigh:
         db 0FFh,0FFh,0EFh,0FFh
-dword_C4CA0:
+HugeValLo:
         db 00h,00h,00h,00h
-dword_C4CA4:
+HugeValHi:
         db 00h,00h,0F0h,07Fh
 Scale10Count:
         db 0D8h,00h

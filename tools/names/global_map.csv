@@ -4290,3 +4290,152 @@ FatalErrorHook,D2F74,Routine FatalError returns into instead of the boxed messag
 __heap_enabled,D5670,Non-zero while the near heap may grow
 MemLockHandleStore,EDEFC,Lock handle storage for the memory manager
 FpeHandler,D4D11,Floating point exception handler
+JoyButtons,D4174,Last joystick button byte
+JoyButtonsPrev,D4175,Previous joystick button byte
+JoyDirection,D4176,Joystick direction bits built from the axes
+TextFirstChar,D42C0,First character in the font
+TextCharW,D42C2,Font character width
+TextCharH,D42C3,Font character height
+TextSpacing,D42C4,Font spacing
+TextFontH,D42C5,Font height
+TextFontAscent,D42C6,Font ascent of the current font
+DebugBackColor,D4545,Debug background colour
+WVideoActive,D5440,Debugger video active
+HotkeyScanTable,D545C,Scan code per registered hotkey
+HotkeyModTable,D54DC,Shift state per registered hotkey
+AngleOctantTable,D6074,Octant per delta slope for AngleFromDelta
+GusDmaPageTable,D86C8,ISA DMA page port and channel bits for each DMA channel
+GusDramSized,D89E0,Set once the card memory size has been measured
+RemapTable,D89E4,Colour remap table
+UnusedStateByte,DC268,Saved and restored with the game state; otherwise unused
+GusDmaControl,F79C8,DMA control register value for the download
+HugeValLo,C4CA0,Low half of HUGE_VAL
+HugeValHi,C4CA4,High half of HUGE_VAL
+SavedKbdVecOffset,D2D5C,Previous keyboard interrupt offset
+SavedInt16Offset,D2D62,Previous INT 16h offset
+SavedRealKbdOffset,D2D68,Previous real mode keyboard handler offset
+MouseDeltaX,D2FFC,Mouse motion X since the last read
+MouseForceTwoButtons,D301C,Treat the mouse as two buttons
+MouseButtons,D303C,Mouse buttons
+ViewScreenHeight,D3048,Full screen height the game view is sized against
+ScreenSaveBitmap,D3054,Bitmap holding a copy of the screen
+SavedBreakOffset,D3090,Previous ctrl-break handler offset
+BreakCallFunc,D3096,Ctrl-break chain routine
+DrawClipLeft,D30BC,Left edge of the draw target's clip rectangle; x below it is not drawn
+DrawClipRight,D30C0,Right edge of the draw target's clip rectangle (exclusive)
+PutBlockScaleSteps,D4108,Block scale steps
+JoyX1Min,D417B,Joystick 1 X axis minimum seen
+JoyX1Max,D4183,Joystick 1 X axis maximum seen
+JoyX1Settle,D4187,Reads left before the joystick 1 X range is trusted
+JoyY1Min,D418B,Joystick 1 Y axis minimum seen
+JoyY1Max,D418F,Joystick 1 Y axis maximum seen
+JoyY1MinSeen,D4197,Joystick 1 Y axis lowest reading this pass
+JoyY1MaxSeen,D419F,Joystick 1 Y axis highest reading this pass
+JoyY1Settle,D41A3,Reads left before the joystick 1 Y range is trusted
+JoyX2Min,D41A7,Joystick 2 X axis minimum seen
+JoyX2Max,D41AB,Joystick 2 X axis maximum seen
+RetraceTimeout,D429C,Loop count before giving up on vertical retrace
+TextOriginX,D42B0,X of the text drawing position
+TextShadowOn,D42B8,Text shadow is on
+TextFontTag,D42BC,Text font tag
+TextWidthTable,D42C8,Font width table
+TextCursorX,D42CC,Text cursor x
+TextCursorY,D42D0,Text cursor y
+TextTop,D42D8,Text window top
+TextRight,D42DC,Text window right
+TextBottom,D42E0,Carried name by usage
+FindFilePtr,D44AC,Find file pointer
+MemViewCursor,D4598,Memory viewer cursor
+PaletteCursorColours,D45A4,Palette viewer cursor xor colours
+CMainEnv,D4CF0,Environment pointer passed to main
+CMainResult,D4CF4,Value main returned
+VesaBank,D4F4C,Current VESA bank
+RetraceMode,D4FA0,How the wait for retrace works
+DosErrnoTable,D4FF1,DOS error to errno table
+SbDmaAlloc,D5250,Sound Blaster DMA buffer allocation
+SbDma,D525C,Sound Blaster DMA channel
+GusDriverStreaming,D53B4,Set while the Gravis driver streams
+HotkeyNesting,D5562,Hotkey dispatch nesting count
+HotkeyFuncTable,D5566,Routine per registered hotkey
+GusStreamActive,D7AF0,Set while the stream voices are running
+GusStreamBufSize,D847C,Size of the stream buffer in card memory
+GusStreamHalfSize,D8480,Size of one half of the stream buffer
+GusStreamCardEnd,D84B8,End of the stream buffers in card memory
+GusStreamStartLo,D84C0,Low word of the stream voices' start address
+GusStreamEndLo,D84C4,Low word of the stream voices' end address
+GusEnvVarName,D84CC,Points to the name of the environment variable that holds the card settings
+GusIrqOldHandler,D86DC,Saved old handler offset in the IRQ table
+GusMidiPending,D87A0,Used by GusMidiIrqHandler
+StreamHandle,DC8A0,CD stream handle
+SpeechPatchNext,E9A9E,Speech patch header: next (set to 0 at start up)
+MemDescriptorTop,EDAAC,Memory descriptor top
+ScreenWidthPtr,EDCBC,Pointer to the screen width
+MemViewSel,EDE68,Memory viewer selected row
+MemViewKey,EDE78,Memory viewer last key
+MemViewFlags,EDE7C,Memory viewer flags
+MemViewPrevSel,EDE84,Memory viewer previous selection
+UnpackSrcPtr,EDEE8,Byte pair unpacker source pointer
+UnpackPairState,EDEF0,Byte pair unpacker state
+CMainArgc,F58D8,Argument count passed to main
+CMainArgv,F58DC,Argument vector passed to main
+GusEnvConfig,F612C,ULTRASND environment settings
+GusDmaLeft,F79BC,Bytes of the download still to transfer
+GusDmaChunkSize,F79C0,Size of the current DMA chunk
+GusDmaDone,F79C4,Bytes of the download transferred so far
+FpuExitHook,D2F70,FPU shutdown routine called at exit
+HidePointerKeepHook,D306C,Hides the pointer keeping the screen
+HidePointerHook,D3070,Hides the pointer
+ShowPointerHook,D3074,Shows the pointer
+TextFont,D42A4,Current text font
+ArtDrawModeFuncs,D516C,Draw routine for each art draw mode
+EmuInitHook,D6600,X87 emulator init routine
+EmuFiniHook,D6604,X87 emulator shutdown routine
+FindFileDta,D4448,Find file data block
+FindFileName,D44B0,Find file name
+FindFilePattern,D44CE,Find file pattern
+SbIrq,D5258,Sound Blaster interrupt
+EmuTrapFrame,D657C,X87 emulator trap frame
+ErrnoVar,F24D4,C library errno
+lcline_aw,CC10C,Away counterpart of lcline
+SavedKbdVecSelector,D2D60,Previous keyboard interrupt selector
+SavedInt16Selector,D2D66,Previous INT 16h selector
+SavedRealKbdSegment,D2D6C,Previous real mode keyboard handler segment
+KbdDataSelector,D2D6E,Data selector used by the keyboard handler
+MouseSavedSensX,D3004,Mouse X sensitivity saved at start up
+MouseSavedSensY,D3006,Mouse Y sensitivity saved at start up
+MouseSavedThreshold,D3008,Mouse double speed threshold saved at start up
+SavedBreakSelector,D3094,Previous ctrl-break handler selector
+BreakDataSelector,D309A,Data selector for the ctrl-break handler
+SavedEsSelector,D41FA,ES selector saved at start up
+GusStreamLoopLo,D84BC,Low word of the stream voices' loop point
+GusStreamLoopHi,D84BE,High word of the stream voices' loop point
+GusStreamStartHi,D84C2,High word of the stream voices' start address
+GusStreamEndHi,D84C6,High word of the stream voices' end address
+GusIrqVectorTable,D86DA,Interrupt vector and saved old handler of each card IRQ line
+GusIrqOldSelector,D86E0,Saved old handler selector in the IRQ table
+GusIrqLatchPort,D8768,Card port of the IRQ latch register
+GusDmaLatchPort,D876A,Card port of the DMA latch register
+UnusedSpeechWord,E9A9C,Reset to -1 for each game; otherwise unused
+GoalState,E9AB0,Goal state
+GusDriverBasePort,F531E,Base port of the Gravis card
+GusDramSize,F6128,Gravis on-board memory size
+GusDmaChunkLo,F79B8,Low word of the current DMA chunk's card address
+GusDmaChunkHi,F79BA,High word of the current DMA chunk's card address
+GusDmaFlags,F79C9,Flags of the current download
+CharClassTable,C4B6C,Run-time library character classes
+__iob_flags,D4D59,Stdio stream flags
+__HeapFlags,F24C4,Heap manager flags
+__nheap_clean,F24C5,Near heap clean flag
+_fmode,D4F21,Default file translation mode
+__NHandles,D500C,Number of file handles
+__io_mode,D5060,File handle mode table pointer
+__amblksiz,D5674,Heap growth amount
+__OpenStreams,EDF00,List of open stdio streams
+__ClosedStreams,F24C8,List of closed stdio streams
+__EFG_printf,D5668,Float formatting routine for printf
+__EFG_scanf,D566C,Float parsing routine for scanf
+__iob,D4D18,Stdio stream table
+__stdout_buf,D4D32,Stdout buffer
+__iob_end,D4D9A,End of the stdio stream table
+__NFiles,D4F20,Number of stdio streams
+_doserrno,F24D0,DOS error number

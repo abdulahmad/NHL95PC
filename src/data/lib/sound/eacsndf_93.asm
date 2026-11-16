@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_EDCFC nobits alloc noexec write align=1
 global byte_EDE7D, dword_EDCFC, dword_EDD00, dword_EDD04, dword_EDE34, dword_EDE5C, MemViewTop
-global MemViewCount, dword_EDE68, MemViewTitle, MemViewRow, MemViewList, dword_EDE78, dword_EDE7C, MemViewMode
-global dword_EDE84
-global dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0, dword_EDEF4
-global dword_EDEF8, MemLockHandleStore, dword_EDF00, SndHandleTable
+global MemViewCount, MemViewSel, MemViewTitle, MemViewRow, MemViewList, MemViewKey, MemViewFlags, MemViewMode
+global MemViewPrevSel
+global dword_EDEE0, dword_EDEE4, UnpackSrcPtr, dword_EDEEC, UnpackPairState, dword_EDEF4
+global dword_EDEF8, MemLockHandleStore, __OpenStreams, SndHandleTable
 dword_EDCFC:
         resb 4
 dword_EDD00:
@@ -21,7 +21,7 @@ MemViewTop:
         resb 4
 MemViewCount:
         resb 4
-dword_EDE68:
+MemViewSel:
         resb 4
 MemViewTitle:
         resb 4
@@ -29,15 +29,15 @@ MemViewRow:
         resb 4
 MemViewList:
         resb 4
-dword_EDE78:
+MemViewKey:
         resb 4
-dword_EDE7C:
+MemViewFlags:
         resb 1
 byte_EDE7D:
         resb 3
 MemViewMode:
         resb 4
-dword_EDE84:
+MemViewPrevSel:
         resb 4
 SndHandleTable:
         resb 4
@@ -55,11 +55,11 @@ dword_EDEE0:
         resb 4
 dword_EDEE4:
         resb 4
-dword_EDEE8:
+UnpackSrcPtr:
         resb 4
 dword_EDEEC:
         resb 4
-dword_EDEF0:
+UnpackPairState:
         resb 4
 dword_EDEF4:
         resb 4
@@ -67,5 +67,5 @@ dword_EDEF8:
         resb 4
 MemLockHandleStore:
         resb 4
-dword_EDF00:
+__OpenStreams:
         resb 4

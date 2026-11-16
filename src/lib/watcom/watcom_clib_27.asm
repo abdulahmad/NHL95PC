@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_98801 progbits alloc exec nowrite align=1
-extern __ExpandDGROUP_, _nfree_, _Extender, _ExtenderSubtype, byte_F24C4, HeapList
+extern __ExpandDGROUP_, _nfree_, _Extender, _ExtenderSubtype, __HeapFlags, HeapList
 global _nexpand_, __HeapManager_expand_, __HeapManager_expand_, __HeapManager_expand_, _nmsize_
 _nexpand_:
         push ebx
@@ -110,7 +110,7 @@ __HeapManager_expand_:
         dec eax
         xor dl, dl
         mov dword [byte esi+01Ch], eax
-        mov byte [byte_F24C4], dl
+        mov byte [__HeapFlags], dl
         mov edx, dword [ecx]
         cmp ebp, edx
         jb short .12
@@ -133,7 +133,7 @@ __HeapManager_expand_:
         add edi, eax
         xor ah, ah
         mov dword [edx], edi
-        mov byte [byte_F24C4], ah
+        mov byte [__HeapFlags], ah
         jmp near .20
 .12:
         mov eax, edx

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_29F18 progbits alloc exec nowrite align=1
-extern __CHK, awlinetab, boxfillcolor, boxlitecolor, boxshadecolor, byte_D42C3, cddriveptr, ClearInputQueue
+extern __CHK, awlinetab, boxfillcolor, boxlitecolor, boxshadecolor, TextCharH, cddriveptr, ClearInputQueue
 extern cont2team, crestnames, ctl1team, ctl2team, curleague, DrawBevelBox, DrawButtons, DrawGadgetByType
 extern hmteamrec_skaters, FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, fputchar, FreeMemBlock
 extern GameLineEditor, gameopts, GetInputEvent, hmlinetab, hmroster, HomeTeam, kaufmfont, leaguedbnames
@@ -298,7 +298,7 @@ PreGameScreen:
         xor esi, esi
 .11:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 3
         imul eax, esi
         lea edi, [dword eax+0DAh]
@@ -374,7 +374,7 @@ PreGameScreen:
         mov ecx, 0FDh
 .15:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         lea edi, [byte eax+03h]
         imul edi, esi
         add edi, 0DAh
@@ -1310,7 +1310,7 @@ TonightsGameScreen:
         push byte 0
         call SetClipWindow
         add esp, byte 10h
-        movzx edi, byte [byte_D42C3]
+        movzx edi, byte [TextCharH]
         add edi, 0A6h
         xor eax, eax
         mov dword [dword esp+0110h], eax
@@ -1383,7 +1383,7 @@ TonightsGameScreen:
         je near TonightsGameScreen.24
 .27:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 0Eh
         add edi, eax
         inc dword [dword esp+0110h]
@@ -1448,7 +1448,7 @@ TonightsGameScreen:
         push byte 0
         call SetClipWindow
         add esp, byte 10h
-        movzx edi, byte [byte_D42C3]
+        movzx edi, byte [TextCharH]
         add edi, 0A6h
         xor ecx, ecx
         mov dword [dword esp+0110h], ecx
@@ -1516,7 +1516,7 @@ TonightsGameScreen:
         je near TonightsGameScreen.33
 .36:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 0Eh
         add edi, eax
         inc dword [dword esp+0110h]
@@ -1578,7 +1578,7 @@ TonightsGameScreen:
         push byte 0
         call SetClipWindow
         add esp, byte 10h
-        movzx edi, byte [byte_D42C3]
+        movzx edi, byte [TextCharH]
         add edi, byte 7Eh
         xor eax, eax
         mov dword [dword esp+0110h], eax
@@ -1639,7 +1639,7 @@ TonightsGameScreen:
         call PrintShadowText
 .42:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 0Eh
         add edi, eax
 .43:

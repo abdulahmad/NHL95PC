@@ -6,7 +6,7 @@
 #include "nhl95.h"
 
 /* DrawListItem: draw list item idx (text) of a list box at x y, w wide, scrolled to top: its row
- (byte_D42C3 + 2 high) filled with boxfillcolor when marks is set and flags[idx] is, else dlgtextfg for the
+ (TextCharH + 2 high) filled with boxfillcolor when marks is set and flags[idx] is, else dlgtextfg for the
  selection sel or dlgtextbg; item colours (SetListItemColors), then the text 2 in, 1 down: align 1 right
  aligned, 2 centred (fputchar = text width). */
 void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, unsigned align, int marks, char *flags)
@@ -14,14 +14,14 @@ void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, un
     int c;
     int fontheight;
 
-    fontheight = byte_D42C3;
+    fontheight = TextCharH;
     y += (idx - top) * (fontheight + 2) + 2;
     x += 2;
     w -= 4;
     if (marks && flags[idx]) c = boxfillcolor;
     else if (sel == idx) c = dlgtextfg;
     else c = dlgtextbg;
-    FillRect(x, y, w, byte_D42C3 + 2, c);
+    FillRect(x, y, w, TextCharH + 2, c);
     SetListItemColors(idx, sel);
     switch (align) {
     case 1:

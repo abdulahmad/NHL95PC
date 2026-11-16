@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_2FDD1 progbits alloc exec nowrite align=1
-extern __CHK, boxfillcolor, boxlitecolor, boxshadecolor, byte_C4B6C, byte_D42C3, byte_D42C5, ClearInputQueue
+extern __CHK, boxfillcolor, boxlitecolor, boxshadecolor, CharClassTable, TextCharH, TextFontH, ClearInputQueue
 extern criterrflag, dbchoicebtns, dbchoicelines, dbextension, dlgsavebuf, dlgsavex, dlgsavey, dlgtextbg
 extern dlgtextfg, dword_C4B69, dword_D42AC, editbuf, editcuron, editcurw, editmaxw, editpos
 extern editx, edity, fontcolor, fputchar, FreeMemBlock, GetInputEvent, InputInstall, InputRemove
@@ -205,7 +205,7 @@ TextInputDialog:
         lea ebp, [byte ecx+010h]
 .4:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, eax
         add eax, byte 20h
         mov dword [dword esp+0104h], eax
@@ -331,7 +331,7 @@ TextInputDialog:
         mov al, byte [edx+esi]
         inc al
         and eax, 0FFh
-        test byte [dword eax+byte_C4B6C], 20h
+        test byte [dword eax+CharClassTable], 20h
         jne short .8
         mov ch, byte [esi]
         cmp ch, 20h
@@ -470,7 +470,7 @@ ListHitTest:
         jmp short .3
 .1:
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         lea ebx, [byte edx+02h]
         imul ebx, eax
         add ebx, dword [byte esp+08h]
@@ -515,7 +515,7 @@ DrawListItem:
         mov edi, ebx
         mov ebp, ecx
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, dword [byte esp+018h]
         sub eax, dword [byte esp+014h]
         add edx, byte 2
@@ -543,7 +543,7 @@ DrawListItem:
 .3:
         push edx
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 2
         push eax
         push ebp
@@ -712,7 +712,7 @@ ListDialog:
         add esp, byte 4
         mov edi, eax
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 2
         mov ecx, dword [byte esp+03Ch]
         imul eax, ecx
@@ -1354,7 +1354,7 @@ DrawButton:
         je short DrawButton_x
         mov edi, eax
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, dword [byte esi+0Ch]
         sub eax, edx
         mov edx, eax
@@ -1866,7 +1866,7 @@ MessageBox:
         mov dword [byte esp+04h], edx
         mov dword [esp], edx
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 2
         mov dword [byte esp+014h], eax
         xor esi, esi
@@ -2363,7 +2363,7 @@ DrawEditCursor:
         add esp, byte 8
 .7:
         add eax, dword [editx]
-        movzx edi, byte [byte_D42C5]
+        movzx edi, byte [TextFontH]
         add edi, dword [edity]
         mov ebp, dword [editcurw]
         sub edi, ebp
@@ -2501,7 +2501,7 @@ DrawEditText:
         jle near DrawEditCursor_ret
         mov esi, dword [dword_D42AC]
         push esi
-        movzx esi, byte [byte_D42C5]
+        movzx esi, byte [TextFontH]
         sub esi, byte 2
         push esi
         push eax
@@ -2627,7 +2627,7 @@ EditTextField:
         jne short .10
         mov ebp, 1
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         mov dword [editcurw], eax
         jmp short .16
 .10:
@@ -2751,7 +2751,7 @@ EditTextField:
         mov al, byte [byte esp+04h]
         inc al
         and eax, 0FFh
-        mov eax, dword [dword eax+byte_C4B6C-3]
+        mov eax, dword [dword eax+CharClassTable-3]
         sar eax, 18h
         test al, 0E0h
         je near EditTextField.17

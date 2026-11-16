@@ -5,7 +5,7 @@
 
 /* TradeHitTest: x is tested 4 pixels to the right. A point over the four trade buttons (tradebtnx/y,
  3Ah by 28h, stride 8) writes the button into out[slot], or when slot is negative writes slot/2 and
- sets flag to -1. A point in the roster columns (y at least 1Dh, under byte_D42C3 * 28 rows) writes
+ sets flag to -1. A point in the roster columns (y at least 1Dh, under TextCharH * 28 rows) writes
  the side (x past BEh) into slot and the row + 64h into out[slot]. Returns 1 for a hit.
  The button edges are read in place, and each branch sets hit (Watcom merges the two stores into one). */
 int TradeHitTest(int x, int y, int *out, int *slot, int *flag)
@@ -35,9 +35,9 @@ int TradeHitTest(int x, int y, int *out, int *slot, int *flag)
             }
         }
     } else if (y >= 0x1D) {
-        if (y < byte_D42C3 * 28 + 0x1D) {
+        if (y < TextCharH * 28 + 0x1D) {
             *slot = x >= 0xBE;
-            e = byte_D42C3;
+            e = TextCharH;
             row = (y - 0x1D) / e;
             out[*slot] = row + 0x64;
             hit = 1;

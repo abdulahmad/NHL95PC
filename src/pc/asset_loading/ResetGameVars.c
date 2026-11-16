@@ -107,7 +107,7 @@ void ResetGameVars(void)
         } while (i < 20);
     }
     __STOSB(rinkobjused, 0, 0x20);
-    dword_E9A9E = 0;
+    SpeechPatchNext = 0;
     penevteam = 0;
     dword_E9AB6 = 0;
     NumCwdExciteLvl = 0;
@@ -115,7 +115,7 @@ void ResetGameVars(void)
     word_E9AA2 = 0;
     word_E9AAA = 0;
     SumCwdExciteLvl = 0;
-    word_E9A9C = -1;
+    UnusedSpeechWord = -1;
     StartGame();
     curperiod = 1;
     if (pad1dev[0] == 1 || pad2dev == 1)

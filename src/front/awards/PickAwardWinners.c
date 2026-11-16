@@ -332,64 +332,64 @@ int ShowAwardScreens(void)
                 strcat(buf, (char *)str_ctl06);
             }
             x = 0x1FE - (fputchar(buf) >> 1);
-            y += byte_D42C3;
+            y += TextCharH;
             PrintShadowText(x, y, buf);
             x = 0x1A4;
             y += 0x2C;
             if (awardtype[k] == 0) {
                 PrintShadowText(x, y, (char *)str_GP);
-                PrintShadowText(x, y + byte_D42C3, (char *)str_Min);
-                PrintShadowText(x, y + byte_D42C3 * 2, (char *)str_GAA);
-                PrintShadowText(x, y + byte_D42C3 * 3, (char *)str_W);
-                PrintShadowText(x, y + byte_D42C3 * 4, (char *)str_L);
-                PrintShadowText(x, y + byte_D42C3 * 5, (char *)str_T);
-                PrintShadowText(x, y + byte_D42C3 * 6, (char *)str_SO);
-                PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_EN);
-                PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
-                PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
+                PrintShadowText(x, y + TextCharH, (char *)str_Min);
+                PrintShadowText(x, y + TextCharH * 2, (char *)str_GAA);
+                PrintShadowText(x, y + TextCharH * 3, (char *)str_W);
+                PrintShadowText(x, y + TextCharH * 4, (char *)str_L);
+                PrintShadowText(x, y + TextCharH * 5, (char *)str_T);
+                PrintShadowText(x, y + TextCharH * 6, (char *)str_SO);
+                PrintShadowText(x, y + TextCharH * 7, (char *)str_EN);
+                PrintShadowText(x, y + TextCharH * 8, (char *)str_Shots);
+                PrintShadowText(x, y + TextCharH * 9, (char *)str_Pct);
                 s = ss = (unsigned short *)awardstatsptrs[k];
                 for (j = 0; j < 2; j++) {
                     x += 0x50;
-                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)awardscopenames[j]);
+                    PrintShadowText(x - 0x1C, y - TextCharH, (char *)awardscopenames[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
-                    PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[6]);
-                    PrintFmt2(x, y + byte_D42C3 * 2, (char *)str_D02d, s[8] / 100, s[8] % 100);
-                    PrintFmt1(x, y + byte_D42C3 * 3, (char *)str_fmtpd, s[1]);
-                    PrintFmt1(x, y + byte_D42C3 * 4, (char *)str_fmtpd, s[2]);
-                    if (j == 0) PrintFmt1(x, y + byte_D42C3 * 5, (char *)str_fmtpd, s[3]);
-                    PrintFmt1(x, y + byte_D42C3 * 6, (char *)str_fmtpd, s[4]);
-                    PrintFmt1(x, y + byte_D42C3 * 7, (char *)str_fmtpd, s[5]);
-                    PrintFmt1(x, y + byte_D42C3 * 8, (char *)str_fmtpd, s[9]);
-                    PrintFmt2(x, y + byte_D42C3 * 9, (char *)str_D01d, s[10] / 10, s[10] % 10);
+                    PrintFmt1(x, y + TextCharH, (char *)str_fmtpd, s[6]);
+                    PrintFmt2(x, y + TextCharH * 2, (char *)str_D02d, s[8] / 100, s[8] % 100);
+                    PrintFmt1(x, y + TextCharH * 3, (char *)str_fmtpd, s[1]);
+                    PrintFmt1(x, y + TextCharH * 4, (char *)str_fmtpd, s[2]);
+                    if (j == 0) PrintFmt1(x, y + TextCharH * 5, (char *)str_fmtpd, s[3]);
+                    PrintFmt1(x, y + TextCharH * 6, (char *)str_fmtpd, s[4]);
+                    PrintFmt1(x, y + TextCharH * 7, (char *)str_fmtpd, s[5]);
+                    PrintFmt1(x, y + TextCharH * 8, (char *)str_fmtpd, s[9]);
+                    PrintFmt2(x, y + TextCharH * 9, (char *)str_D01d, s[10] / 10, s[10] % 10);
                     s = (unsigned short *)((char *)ss + 0x16);
                 }
             } else if (awardtype[k] == 1) {
                 PrintShadowText(x, y, (char *)str_GP);
-                PrintShadowText(x, y + byte_D42C3, (char *)str_G);
-                PrintShadowText(x, y + byte_D42C3 * 2, (char *)str_A);
-                PrintShadowText(x, y + byte_D42C3 * 3, (char *)str_Pt);
-                PrintShadowText(x, y + byte_D42C3 * 4, (char *)str_PIM);
-                PrintShadowText(x, y + byte_D42C3 * 5, (char *)str_PlusMinus);
-                PrintShadowText(x, y + byte_D42C3 * 6, (char *)str_PPG);
-                PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_SHG);
-                PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
-                PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
+                PrintShadowText(x, y + TextCharH, (char *)str_G);
+                PrintShadowText(x, y + TextCharH * 2, (char *)str_A);
+                PrintShadowText(x, y + TextCharH * 3, (char *)str_Pt);
+                PrintShadowText(x, y + TextCharH * 4, (char *)str_PIM);
+                PrintShadowText(x, y + TextCharH * 5, (char *)str_PlusMinus);
+                PrintShadowText(x, y + TextCharH * 6, (char *)str_PPG);
+                PrintShadowText(x, y + TextCharH * 7, (char *)str_SHG);
+                PrintShadowText(x, y + TextCharH * 8, (char *)str_Shots);
+                PrintShadowText(x, y + TextCharH * 9, (char *)str_Pct);
                 s = gs = (unsigned short *)awardstatsptrs[k];
                 for (j = 0; j < 2; j++) {
                     x += 0x50;
-                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)awardscopenames[j]);
+                    PrintShadowText(x - 0x1C, y - TextCharH, (char *)awardscopenames[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
-                    PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[1]);
-                    PrintFmt1(x, y + byte_D42C3 * 2, (char *)str_fmtpd, s[2]);
-                    PrintFmt1(x, y + byte_D42C3 * 3, (char *)str_fmtpd, s[3]);
-                    PrintFmt1(x, y + byte_D42C3 * 4, (char *)str_fmtpd, s[6]);
-                    PrintFmt1(x, y + byte_D42C3 * 5, (char *)str_fmtpd, ((short *)s)[8]);
-                    PrintFmt1(x, y + byte_D42C3 * 6, (char *)str_fmtpd, s[4]);
-                    PrintFmt1(x, y + byte_D42C3 * 7, (char *)str_fmtpd, s[5]);
-                    PrintFmt1(x, y + byte_D42C3 * 8, (char *)str_fmtpd, s[7]);
+                    PrintFmt1(x, y + TextCharH, (char *)str_fmtpd, s[1]);
+                    PrintFmt1(x, y + TextCharH * 2, (char *)str_fmtpd, s[2]);
+                    PrintFmt1(x, y + TextCharH * 3, (char *)str_fmtpd, s[3]);
+                    PrintFmt1(x, y + TextCharH * 4, (char *)str_fmtpd, s[6]);
+                    PrintFmt1(x, y + TextCharH * 5, (char *)str_fmtpd, ((short *)s)[8]);
+                    PrintFmt1(x, y + TextCharH * 6, (char *)str_fmtpd, s[4]);
+                    PrintFmt1(x, y + TextCharH * 7, (char *)str_fmtpd, s[5]);
+                    PrintFmt1(x, y + TextCharH * 8, (char *)str_fmtpd, s[7]);
                     if (s[7]) pct = (s[1] * 1000 + s[7] / 2) / s[7];
                     else pct = 0;
-                    PrintFmt2(x, y + byte_D42C3 * 9, (char *)str_D01d, pct / 10, pct % 10);
+                    PrintFmt2(x, y + TextCharH * 9, (char *)str_D01d, pct / 10, pct % 10);
                     s = (unsigned short *)((char *)gs + 0x12);
                 }
             }
@@ -398,7 +398,7 @@ int ShowAwardScreens(void)
         if (awardtitles[k * 2 + 1]) {
             x = 0x1FE - (fputchar((char *)awardtitles[k * 2 + 1]) >> 1);
             PrintShadowText(x, y, (char *)awardtitles[k * 2 + 1]);
-            y = 0x1BA - byte_D42C3;
+            y = 0x1BA - TextCharH;
         }
         x = 0x1FE - (fputchar((char *)awardtitles[k * 2]) >> 1);
         PrintShadowText(x, y, (char *)awardtitles[k * 2]);

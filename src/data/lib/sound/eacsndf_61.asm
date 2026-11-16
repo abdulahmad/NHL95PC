@@ -9,7 +9,7 @@ extern SbSetTrack, SbPlayDigi, Mpu401Detect, Mpu401Open, Mpu401Init, Mpu401Close
 extern GusDetect, GusInitDigi, GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack
 extern GusPlayDigi, GusMusicMidi, GusDigiMidi
 global _Extender, _ExtenderSubtype, Is8087, _dynend, _curbrk, _LpCmdLine, _LpPgmName
-global _STACKLOW, _STACKTOP, dword_D4CF0, dword_D4CF4, UngetChar, dword_D4D00, _Envptr, SndDriverTable
+global _STACKLOW, _STACKTOP, CMainEnv, CMainResult, UngetChar, dword_D4D00, _Envptr, SndDriverTable
 global _psp, __no87, _Envptr_w4
 SndDriverTable:
         dd NullDriverOpen
@@ -97,9 +97,9 @@ _STACKLOW:
         db 00h,00h,00h,00h
 _STACKTOP:
         db 00h,00h,00h,00h
-dword_D4CF0:
+CMainEnv:
         db 00h,00h,00h,00h
-dword_D4CF4:
+CMainResult:
         db 00h,00h,00h,00h
 UngetChar:
         db 00h,00h,00h,00h,00h,00h,00h,00h

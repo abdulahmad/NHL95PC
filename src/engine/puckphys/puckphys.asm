@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_56D06 progbits alloc exec nowrite align=1
-extern __CHK, a2touchpuck, assreplace, ChkShotStat, crowdlevel, CwdExciteLvl, dopass_ret6, dword_E9A9E
+extern __CHK, a2touchpuck, assreplace, ChkShotStat, crowdlevel, CwdExciteLvl, dopass_ret6, SpeechPatchNext
 extern EndPenaltyShot, FallDown, GetHot, GiveControl, gmode, gmode2, iflags, imul32
 extern lastplayer, onetimerflag, PassCompleted, passdir, PassLaneChk, PassLaneChk_ret5a, passplayer, passspeed
 extern penshotlive, puckc, puckflip, puckvx, puckvy, puckvz, puckx, pucky
@@ -434,7 +434,7 @@ puckgoalie:
         jge near .x
 .4:
         mov byte [byte ebx+063h], 0
-        cmp word [dword_E9A9E], byte 0
+        cmp word [SpeechPatchNext], byte 0
         jne near .12
         test byte [byte ebx+pflags], 40h
         jne near .12
@@ -721,7 +721,7 @@ puckstick:
         test byte [gmode], 10h
         jne near PassLaneChk_ret5a
         mov byte [byte esi+063h], 0
-        cmp word [dword_E9A9E], byte 0
+        cmp word [SpeechPatchNext], byte 0
         jne near .8
         test byte [byte esi+pflags], 40h
         jne near .8

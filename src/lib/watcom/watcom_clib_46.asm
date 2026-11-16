@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_AF6D3 progbits alloc exec nowrite align=1
 extern __set_doserrno_, __set_errno_, _dosretax_, _nfree_, _nmalloc_, dword_D4D00, _Envptr, _environ
-extern ___env_mask, dword_D5674, dword_D8690, dword_D8696, dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC
+extern ___env_mask, __amblksiz, dword_D8690, dword_D8696, dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC
 extern dword_D86B0, memset_, strcpy_, strlen_, _Envptr_w4, word_D8694, word_D869A, word_D86A0
 extern word_D86A6, word_D86B4, word_D86B6
 global __setenvp_, stpcpy_, __cenvarg_, __ccmdline_, __dospawn, pcopy_, _splitpath2_
@@ -146,11 +146,11 @@ __cenvarg_:
         add eax, byte 3
         add ebx, eax
 .5:
-        mov eax, dword [dword_D5674]
+        mov eax, dword [__amblksiz]
         add ebx, byte 0Fh
         mov dword [byte ebp-08h], eax
         mov eax, ebx
-        mov dword [dword_D5674], 10h
+        mov dword [__amblksiz], 10h
         call _nmalloc_
         test eax, eax
         jne short .7
@@ -163,13 +163,13 @@ __cenvarg_:
         mov eax, 8
         call __set_doserrno_
         mov eax, dword [byte ebp-08h]
-        mov dword [dword_D5674], eax
+        mov dword [__amblksiz], eax
 .6:
         mov eax, 0FFFFFFFFh
         jmp near .17
 .7:
         mov edx, dword [byte ebp-08h]
-        mov dword [dword_D5674], edx
+        mov dword [__amblksiz], edx
         mov edx, dword [byte ebp-04h]
         mov dword [edx], eax
         mov edx, dword [byte ebp+010h]

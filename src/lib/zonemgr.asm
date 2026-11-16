@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_6A033 progbits alloc exec nowrite align=1
-extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, byte_D42C3, ZoneFlags, ZoneScreenLeft, ZoneScreenRight
+extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, TextCharH, ZoneFlags, ZoneScreenLeft, ZoneScreenRight
 extern ZoneScreenTop, ZoneScreenBottom, ZoneBoundsLeft, ZoneBoundsRight, ZoneBoundsTop, ZoneBoundsBottom, ZoneCurRect, ZonePrevAdded
 extern ZoneNodeRects, ZoneFreeHead, ZoneNewNode, ZoneListHead, ZoneListTail, ZoneRects, ZoneMgrOn, ZoneListCount
 extern ZoneRectsB, ZoneRectsA, ZoneMemBlock, ZonePrevStates, ZoneNextLinks, ZonePrevRects, ZoneBufferParity, ZoneStates
@@ -1185,7 +1185,7 @@ ZonePutChar:
         mov edi, ebx
         mov esi, ecx
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, ecx
         push eax
         push edx

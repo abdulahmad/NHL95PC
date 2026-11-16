@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_92D21 progbits alloc exec nowrite align=1
-extern __set_errno_dos_, byte_C4B6C
+extern __set_errno_dos_, CharClassTable
 global stricmp_, unlink_, atoi_
 stricmp_:
         push ebx
@@ -63,7 +63,7 @@ atoi_:	;IDA: unknown_libname_4
         mov dl, byte [eax]
         inc dl
         and edx, 0FFh
-        test byte [dword edx+byte_C4B6C], 2
+        test byte [dword edx+CharClassTable], 2
         je short .2
         inc eax
         jmp short .1
@@ -81,7 +81,7 @@ atoi_:	;IDA: unknown_libname_4
         mov dl, byte [eax]
         inc dl
         and edx, 0FFh
-        test byte [dword edx+byte_C4B6C], 20h
+        test byte [dword edx+CharClassTable], 20h
         je short .6
         imul ebx, byte 0Ah
         xor edx, edx

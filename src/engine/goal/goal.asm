@@ -14,7 +14,7 @@ extern hmtmgoalie, hmtmlines, hmtmpbox, hmtmplattr, hmtmplstats, hmtmptrF2, hmtm
 extern hmtmstruct, lastplayer, lasttouch, ltx, lty, musicon, onetimerflag, PenGoalStuff
 extern penshotfox, penshotfoy, penshotlive, penshotmode, penshotteam, PlayCrowdSample, puckcross, puckstruct
 extern pucky, regd1, restorepl, restoreteams_pdsttab, SetBoxDoorObject, Setplass_alist, SetSPA, sfx
-extern shotongoal, shotplayer, SortCords, UpdateCoachModes, word_E9AB0
+extern shotongoal, shotplayer, SortCords, UpdateCoachModes, GoalState
 global PenTeamScored, Goal, GiveControl, Setplass, setplayer, reenergizeteam, clearteams, restoreteams
 ;-----------------------------------------------------------------------------
 ; PenTeamScored                                5AAAE  95 PC, medium confidence
@@ -249,18 +249,18 @@ Goal:
         mov dx, word [byte ebp+036h]
         cmp ax, dx
         jge short .23
-        mov word [word_E9AB0], 2
+        mov word [GoalState], 2
         jmp short .25
 .23:
         jle short .24
-        mov word [word_E9AB0], 4
+        mov word [GoalState], 4
         jmp short .25
 .24:
-        mov word [word_E9AB0], 1
+        mov word [GoalState], 1
 .25:
         cmp word [byte ebp+038h], byte 0
         jge short .26
-        or byte [word_E9AB0], 8
+        or byte [GoalState], 8
 .26:
         test byte [gmode], 10h
         jne near .44

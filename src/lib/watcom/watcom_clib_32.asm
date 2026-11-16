@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_9AFB0 progbits alloc exec nowrite align=1
-extern __qwrite_, __set_errno_, __SetIOMode_, _nfree_, _nmalloc_, dword_EDF00, dword_F24C8, isatty_
-extern FillRectSpans, FillRectSpans, lseek_, memset_, tell_, unk_D4D18, unk_D4F20, _psp
+extern __qwrite_, __set_errno_, __SetIOMode_, _nfree_, _nmalloc_, __OpenStreams, __ClosedStreams, isatty_
+extern FillRectSpans, FillRectSpans, lseek_, memset_, tell_, __iob, __NFiles, _psp
 global tolower_, __allocfp_, __freefp_, __update_buffer_, fseek_, __chktty_, GetPsp, __flush_
-global ftell_, __close_, __ioalloc_, fputc_, unk_9B470
+global ftell_, __close_, __ioalloc_, fputc_, FillRectSpansModeTable
 tolower_:
         cmp eax, byte 41h
         jl short .1
@@ -20,18 +20,18 @@ __allocfp_:
         push edx
         push esi
         push edi
-        mov esi, dword [dword_EDF00]
+        mov esi, dword [__OpenStreams]
         test esi, esi
         je short .1
         mov ecx, dword [byte esi+04h]
         mov edi, dword [byte ecx+0Ch]
         mov eax, dword [esi]
         and edi, 4003h
-        mov dword [dword_EDF00], eax
+        mov dword [__OpenStreams], eax
         or di, byte 3
         jmp short .5
 .1:
-        mov ecx, unk_D4D18
+        mov ecx, __iob
         jmp short .4
 .2:
         test byte [byte ecx+0Ch], 3
@@ -46,7 +46,7 @@ __allocfp_:
 .3:
         add ecx, byte 1Ah
 .4:
-        cmp ecx, unk_D4F20
+        cmp ecx, __NFiles
         jb short .2
         mov eax, 22h
         mov edi, 4003h
@@ -62,9 +62,9 @@ __allocfp_:
         xor edx, edx
         call memset_
         mov dword [byte ecx+0Ch], edi
-        mov eax, dword [dword_F24C8]
+        mov eax, dword [__ClosedStreams]
         mov dword [byte esi+04h], ecx
-        mov dword [dword_F24C8], esi
+        mov dword [__ClosedStreams], esi
         mov dword [esi], eax
         mov eax, ecx
         jmp short .7
@@ -84,7 +84,7 @@ __freefp_:
         push ecx
         push edx
         mov ebx, eax
-        mov edx, dword_F24C8
+        mov edx, __ClosedStreams
 .1:
         mov eax, dword [edx]
         test eax, eax
@@ -100,8 +100,8 @@ __freefp_:
         mov byte [byte ebx+0Ch], cl
         mov ebx, dword [eax]
         mov dword [edx], ebx
-        mov edx, dword [dword_EDF00]
-        mov dword [dword_EDF00], eax
+        mov edx, dword [__OpenStreams]
+        mov dword [__OpenStreams], eax
         mov dword [eax], edx
 .3:
         pop edx
@@ -110,13 +110,13 @@ __freefp_:
         ret
         push edx
 .4:
-        mov edx, dword [dword_EDF00]
+        mov edx, dword [__OpenStreams]
         test edx, edx
         je short .5
         mov eax, edx
         mov edx, dword [edx]
         call _nfree_
-        mov dword [dword_EDF00], edx
+        mov dword [__OpenStreams], edx
         jmp short .4
 .5:
         pop edx
@@ -541,7 +541,7 @@ fputc_:
         pop ebx
         ret
         db 00h,00h
-unk_9B470:
+FillRectSpansModeTable:
         dd FillRectSpans+0ACh
         dd FillRectSpans+0ACh
         dd FillRectSpans+0CDh

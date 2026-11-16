@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_A3274 progbits alloc exec nowrite align=1
-extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, Hook387Flag, Hook387Saved, FpeHandler, unk_D657C, Hook387Save
-global unk_A3274, unk_A3278, unk_A327C, unk_A327E, unk_A3280, unk_A3282, unk_A32CE, unk_A32D0
-global unk_A32D4, unk_A32D6, unk_A331E, unk_A3322, unk_A332C, unk_A338C, jpt_A33EC, jpt_A34EC
+extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, Hook387Flag, Hook387Saved, FpeHandler, EmuTrapFrame, Hook387Save
+global unk_A3274, unk_A3278, unk_A327C, EmuRegRing, EmuRegLastSlot, EmuRegSlots, EmuRegTagMasks, unk_A32D0
+global unk_A32D4, unk_A32D6, EmuCompareCcBits, unk_A3322, EmuEaModRmTable, EmuEaSibTable, EmuOpcodeJumpTable, EmuModRmJumpTable
 global __int7_pl3, __int7_X32VM, __int7, EmuTrapExit, RoundToSingle, RoundToDouble, RoundToDouble_32, RoundToDouble_32
 global RaiseFpuError, EaEax, EaEcx, EaEdx, EaEbx, EaEsp, EaDisp32, EaEsi
 global EaEdi, EaEaxDisp8, EaEcxDisp8, EaEdxDisp8, EaEbxDisp8, EaEspDisp8, EaEbpDisp8, EaEsiDisp8
@@ -16,13 +16,13 @@ global EmuFidivM32, EmuFidivrM32, EmuFildM32, EmuFistM32, EmuFistpM32, EmuFaddM6
 global EmuFcompM64, EmuFsubM64, EmuFsubrM64, EmuFdivM64, EmuFdivrM64, EmuFldM80, EmuFldM64, EmuFstM64
 global EmuFstpM80, EmuFstpM64, EmuFrstor, EmuFsave, EmuFstswM16, EmuFiaddM16, EmuFimulM16, EmuFicomM16
 global EmuFicompM16, EmuFisubM16, EmuFisubrM16, EmuFidivM16, EmuFidivrM16, EmuFildM16, EmuFistM16, EmuFistpM16
-global EmuFbld, EmuFildM64, EmuFbstp, EmuFistpM64, EmuReservedOp, EmuDispatchD9Reg, jpt_A41C1, EmuFaddSt
+global EmuFbld, EmuFildM64, EmuFbstp, EmuFistpM64, EmuReservedOp, EmuDispatchD9Reg, EmuDispatchD9RegJumpTable, EmuFaddSt
 global EmuFmulSt, EmuFcomSt, EmuFcompSt, EmuFsubSt, EmuFsubrSt, EmuFdivSt, EmuFdivrSt, EmuFldSt
-global EmuFxch, EmuFtstFxam, jpt_A4300, EmuSignOps, jpt_A4381, EmuLogOps, jpt_A459C, EmuRemOps
-global jpt_A46A6, EmuFucompp, jpt_A47BE, EmuDispatchDBReg, jpt_A4847, jpt_A4847, EmuFaddToSt, EmuFmulToSt
+global EmuFxch, EmuFtstFxam, EmuFtstFxamJumpTable, EmuSignOps, EmuSignOpsJumpTable, EmuLogOps, EmuLogOpsJumpTable, EmuRemOps
+global EmuRemOpsJumpTable, EmuFucompp, EmuFucomppJumpTable, EmuDispatchDBReg, EmuDispatchDBRegJumpTable, EmuDispatchDBRegJumpTable, EmuFaddToSt, EmuFmulToSt
 global EmuFsubrToSt, EmuFsubToSt, EmuFdivrToSt, EmuFdivToSt, EmuFfree, EmuFstSt, EmuFucom, EmuFucomp
-global EmuFstpSt, EmuFaddp, EmuFmulp, EmuFcompp, jpt_A4A50, EmuFsubrp, EmuFsubp, EmuFdivrp
-global EmuFdivp, EmuDispatchDFReg, jpt_A4C05, jpt_A4C05, EmuSub, EmuAdd, AddExtRaw, AddMantissas
+global EmuFstpSt, EmuFaddp, EmuFmulp, EmuFcompp, EmuFcomppJumpTable, EmuFsubrp, EmuFsubp, EmuFdivrp
+global EmuFdivp, EmuDispatchDFReg, EmuDispatchDFRegJumpTable, EmuDispatchDFRegJumpTable, EmuSub, EmuAdd, AddExtRaw, AddMantissas
 global EmuCompare, EmuDiv, DivideMantissas, EmuMul, MultiplyMantissas, StoreM32IntTrunc, StoreM32Int, Emu387LdToInt
 global LoadM32Int, Emu387IntToLd, LoadM64Real, StoreM32Real, StoreM64Real, LoadM32Real, EmuMantissaMasks, ExtToInt
 global EmuRemPolyCoefs, EmuRemainder, RemainderStep, EmuRoundInt, RoundMantissa, EmuExamine, EmuLog2PolyNum, EmuLog2PolyDen
@@ -35,17 +35,17 @@ unk_A3278:
         db 00h,00h,00h,00h
 unk_A327C:
         db 00h,00h
-unk_A327E:
+EmuRegRing:
         db 0Ah,00h
-unk_A3280:
+EmuRegLastSlot:
         db 046h,00h
-unk_A3282:
+EmuRegSlots:
         db 00h,00h,00h,00h,00h,00h,014h,00h,00h,00h,00h,08h,01h,00h,00h,00h
         db 01Eh,00h,0Ah,00h,00h,010h,02h,00h,00h,00h,028h,00h,014h,00h,00h,018h
         db 03h,00h,00h,00h,032h,00h,01Eh,00h,00h,020h,04h,00h,00h,00h,03Ch,00h
         db 028h,00h,00h,028h,05h,00h,00h,00h,046h,00h,032h,00h,00h,030h,06h,00h
         db 00h,00h,00h,00h,03Ch,00h,00h,038h,07h,00h,00h,00h
-unk_A32CE:
+EmuRegTagMasks:
         db 0FCh,0FFh
 unk_A32D0:
         db 01h,00h,00h,00h
@@ -57,11 +57,11 @@ unk_A32D6:
         db 0FFh,0FCh,00h,01h,00h,00h,00h,02h,00h,03h,0FFh,0F3h,00h,04h,00h,00h
         db 00h,08h,00h,0Ch,0FFh,0CFh,00h,010h,00h,00h,00h,020h,00h,030h,0FFh,03Fh
         db 00h,040h,00h,00h,00h,080h,00h,0C0h
-unk_A331E:
+EmuCompareCcBits:
         db 01h,040h,00h,045h
 unk_A3322:
         db 00h,02h,040h,042h,01h,03h,041h,043h,087h,0DBh
-unk_A332C:
+EmuEaModRmTable:
         dd EaEax
         dd EaEcx
         dd EaEdx
@@ -86,7 +86,7 @@ unk_A332C:
         dd EaEbpDisp32
         dd EaEsiDisp32
         dd EaEdiDisp32
-unk_A338C:
+EmuEaSibTable:
         dd EaEax
         dd EaEcx
         dd EaEdx
@@ -111,7 +111,7 @@ unk_A338C:
         dd EaEbpDisp32
         dd EaEsiDisp32
         dd EaEdiDisp32
-jpt_A33EC:
+EmuOpcodeJumpTable:
         dd EmuFaddM32
         dd EmuFldM32
         dd EmuFiaddM32
@@ -176,7 +176,7 @@ jpt_A33EC:
         dd EmuFstswM16
         dd EmuFidivrM16
         dd EmuFistpM64
-jpt_A34EC:
+EmuModRmJumpTable:
         dd EmuFaddSt
         dd EmuFldSt
         dd EmuReservedOp
@@ -345,7 +345,7 @@ EmuTrapExit:
         and ebx, 1807h
         LD or, bl, bh
         mov bh, 0
-        call dword [nosplit cs:ebx*4+unk_A332C]
+        call dword [nosplit cs:ebx*4+EmuEaModRmTable]
         mov es, cx
         mov dword [byte ebp+038h], esi
         LD mov, esi, ebx
@@ -353,13 +353,13 @@ EmuTrapExit:
         and ebx, byte 38h
         LD or, bl, al
         call __GETDS
-        lea ebp, [unk_D657C]
+        lea ebp, [EmuTrapFrame]
         mov edi, dword [byte ds:ebp+04h]
         and edi, 3800h
         shr edi, 0Bh
         lea edi, [edi+edi*4]
         LD add, edi, edi
-        jmp dword [nosplit cs:ebx*4+jpt_A33EC]
+        jmp dword [nosplit cs:ebx*4+EmuOpcodeJumpTable]
 .2:
         mov al, byte [esi]
         cmp al, 9Bh
@@ -418,7 +418,7 @@ EmuTrapExit:
 .11:
         mov dword [byte ebp+038h], esi
         call __GETDS
-        lea ebp, [unk_D657C]
+        lea ebp, [EmuTrapFrame]
         LD mov, dl, ah
         and edx, byte 38h
         LD or, dl, al
@@ -438,7 +438,7 @@ EmuTrapExit:
         LD add, edi, edi
         lea esi, [esi+esi*4]
         LD add, esi, esi
-        jmp dword [nosplit cs:edx*4+jpt_A34EC]
+        jmp dword [nosplit cs:edx*4+EmuModRmJumpTable]
 .13:
         ret
 RoundToSingle:
@@ -481,21 +481,21 @@ RoundToDouble_32:
         inc eax
         mov dx, word [byte ds:ebp+04h]
         and dx, 0B8FFh
-        or dh, byte [dword cs:eax+unk_A331E]
+        or dh, byte [dword cs:eax+EmuCompareCcBits]
         mov word [byte ds:ebp+04h], dx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp near EmuTrapExit
         inc eax
         mov dx, word [byte ds:ebp+04h]
         and dx, 0B8FFh
-        or dh, byte [dword cs:eax+unk_A331E]
+        or dh, byte [dword cs:eax+EmuCompareCcBits]
         mov word [byte ds:ebp+04h], dx
         jmp near EmuTrapExit
 RaiseFpuError:
@@ -661,7 +661,7 @@ EaSib:
         and bh, 18h
         LD or, bl, bh
         mov bh, 0
-        call dword [nosplit cs:ebx*4+unk_A338C]
+        call dword [nosplit cs:ebx*4+EmuEaSibTable]
         pop edx
         push ecx
         LD mov, ecx, edx
@@ -750,11 +750,11 @@ EmuFdivrM32:
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
 EmuFldM32:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov eax, dword [es:esi]
         lea edx, [byte edi+ebp+01Ch]
@@ -886,11 +886,11 @@ EmuFidivrM32:
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
 EmuFildM32:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov eax, dword [es:esi]
         lea edx, [byte edi+ebp+01Ch]
@@ -1001,11 +1001,11 @@ EmuFdivrM64:
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
 EmuFldM80:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov eax, dword [es:esi]
         mov dword [byte edi+ebp+01Ch], eax
@@ -1015,11 +1015,11 @@ EmuFldM80:
         mov word [byte edi+ebp+024h], ax
         jmp near EmuTrapExit
 EmuFldM64:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
@@ -1067,7 +1067,7 @@ EmuFrstor:
         movsd
         movsd
         movsw
-        movzx ebx, word [dword cs:ebx+unk_A327E]
+        movzx ebx, word [dword cs:ebx+EmuRegRing]
         loop .1
         pop es
         pop ds
@@ -1084,10 +1084,10 @@ EmuFsave:
         movsd
         movsd
         movsw
-        movzx ebx, word [dword cs:ebx+unk_A327E]
+        movzx ebx, word [dword cs:ebx+EmuRegRing]
         loop .1
         LD mov, edi, ebx
-        jmp near jpt_A4847+02Ch
+        jmp near EmuDispatchDBRegJumpTable+02Ch
 EmuFstswM16:
         mov ax, word [byte ds:ebp+04h]
         mov word [es:esi], ax
@@ -1171,11 +1171,11 @@ EmuFidivrM16:
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
 EmuFildM16:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov ax, word [es:esi]
         cwde
@@ -1223,11 +1223,11 @@ EmuFistpM16:
 EmuFbld:
         jmp near EmuTrapExit
 EmuFildM64:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov eax, dword [es:esi]
         lea edx, [byte edi+ebp+01Ch]
@@ -1247,8 +1247,8 @@ EmuFistpM64:
 EmuReservedOp:
         jmp near EmuTrapExit
 EmuDispatchD9Reg:
-        jmp dword [nosplit cs:ebx*4+jpt_A41C1]
-jpt_A41C1:
+        jmp dword [nosplit cs:ebx*4+EmuDispatchD9RegJumpTable]
+EmuDispatchD9RegJumpTable:
         dd .1
         dd EmuReservedOp
         dd EmuReservedOp
@@ -1306,11 +1306,11 @@ EmuFdivrSt:
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
 EmuFldSt:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov eax, dword [byte esi+ebp+01Ch]
         mov dword [byte edi+ebp+01Ch], eax
@@ -1333,8 +1333,8 @@ EmuFxch:
         mov word [byte esi+08h], ax
         jmp near EmuTrapExit
 EmuFtstFxam:
-        jmp dword [nosplit cs:ebx*4+jpt_A4300]
-jpt_A4300:
+        jmp dword [nosplit cs:ebx*4+EmuFtstFxamJumpTable]
+EmuFtstFxamJumpTable:
         dd .1
         dd .2
         dd EmuReservedOp
@@ -1367,8 +1367,8 @@ jpt_A4300:
         call EmuExamine
         jmp near EmuTrapExit
 EmuSignOps:
-        jmp dword [nosplit cs:ebx*4+jpt_A4381]
-jpt_A4381:
+        jmp dword [nosplit cs:ebx*4+EmuSignOpsJumpTable]
+EmuSignOpsJumpTable:
         dd .1
         dd .2
         dd .3
@@ -1378,11 +1378,11 @@ jpt_A4381:
         dd .7
         dd EmuReservedOp
 .1:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         LD sub, eax, eax
@@ -1391,11 +1391,11 @@ jpt_A4381:
         mov word [byte esi+08h], 3FFFh
         jmp near EmuTrapExit
 .2:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         mov dword [esi], 0CD1B8AFEh
@@ -1403,11 +1403,11 @@ jpt_A4381:
         mov word [byte esi+08h], 4000h
         jmp near EmuTrapExit
 .3:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         mov dword [esi], 5C17F0BCh
@@ -1415,11 +1415,11 @@ jpt_A4381:
         mov word [byte esi+08h], 3FFFh
         jmp near EmuTrapExit
 .4:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         mov dword [esi], 2168C235h
@@ -1427,11 +1427,11 @@ jpt_A4381:
         mov word [byte esi+08h], 4000h
         jmp near EmuTrapExit
 .5:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         mov dword [esi], 0FBCFF799h
@@ -1439,11 +1439,11 @@ jpt_A4381:
         mov word [byte esi+08h], 3FFDh
         jmp near EmuTrapExit
 .6:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         mov dword [esi], 0D1CF79ACh
@@ -1451,31 +1451,31 @@ jpt_A4381:
         mov word [byte esi+08h], 3FFEh
         jmp near EmuTrapExit
 .7:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         LD sub, eax, eax
         mov dword [esi], eax
         mov dword [byte esi+04h], eax
         mov word [byte esi+08h], ax
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D0]
         or word [byte ds:ebp+08h], bx
         jmp near EmuTrapExit
 EmuLogOps:
-        jmp dword [nosplit cs:ebx*4+jpt_A459C]
-jpt_A459C:
+        jmp dword [nosplit cs:ebx*4+EmuLogOpsJumpTable]
+EmuLogOpsJumpTable:
         dd .1
         dd .2
         dd .3
-        dd jpt_A4C05+020h
-        dd jpt_A4C05+069h
-        dd jpt_A4C05+0CEh
+        dd EmuDispatchDFRegJumpTable+020h
+        dd EmuDispatchDFRegJumpTable+069h
+        dd EmuDispatchDFRegJumpTable+0CEh
         dd .4
         dd .5
 .1:
@@ -1484,12 +1484,12 @@ jpt_A459C:
         jmp dword [byte ds:ebp+076h]
 .2:
         lea eax, [byte edi+ebp+01Ch]
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         lea edx, [byte edi+ebp+01Ch]
@@ -1498,11 +1498,11 @@ jpt_A459C:
 .3:
         lea eax, [byte edi+ebp+01Ch]
         call EmuTan
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea esi, [byte edi+ebp+01Ch]
         LD sub, eax, eax
@@ -1511,26 +1511,26 @@ jpt_A459C:
         mov word [byte esi+08h], 3FFFh
         jmp near EmuTrapExit
 .4:
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp near EmuTrapExit
 .5:
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp near EmuTrapExit
 EmuRemOps:
-        jmp dword [nosplit cs:ebx*4+jpt_A46A6]
-jpt_A46A6:
+        jmp dword [nosplit cs:ebx*4+EmuRemOpsJumpTable]
+EmuRemOpsJumpTable:
         dd .1
         dd .2
         dd .3
         dd .4
-        dd jpt_A4C05+0F8h
-        dd jpt_A4C05+0110h
+        dd EmuDispatchDFRegJumpTable+0F8h
+        dd EmuDispatchDFRegJumpTable+0110h
         dd .5
         dd .6
 .1:
@@ -1545,12 +1545,12 @@ jpt_A46A6:
         jmp dword [byte ds:ebp+076h]
 .2:
         lea eax, [byte edi+ebp+01Ch]
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         lea edx, [byte edi+ebp+01Ch]
@@ -1567,11 +1567,11 @@ jpt_A46A6:
         push dword [byte ebx+06h]
         lea eax, [byte edi+ebp+01Ch]
         call EmuSin
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea ebx, [byte edi+ebp+01Ch]
         pop dword [byte ebx+06h]
@@ -1589,8 +1589,8 @@ jpt_A46A6:
         call EmuCos
         jmp dword [byte ds:ebp+076h]
 EmuFucompp:
-        jmp dword [nosplit cs:ebx*4+jpt_A47BE]
-jpt_A47BE:
+        jmp dword [nosplit cs:ebx*4+EmuFucomppJumpTable]
+EmuFucomppJumpTable:
         dd EmuReservedOp
         dd .1
         dd EmuReservedOp
@@ -1606,12 +1606,12 @@ jpt_A47BE:
         mov dword [byte ds:ebp+070h], eax
         mov ax, word [byte edi+ebp+024h]
         mov word [byte ds:ebp+074h], ax
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         lea eax, [byte ebp+06Ch]
@@ -1619,12 +1619,12 @@ jpt_A47BE:
         call EmuCompare
         jmp near RoundToDouble_32
 EmuDispatchDBReg:
-        jmp dword [nosplit cs:ebx*4+jpt_A4847]
-jpt_A4847:
+        jmp dword [nosplit cs:ebx*4+EmuDispatchDBRegJumpTable]
+EmuDispatchDBRegJumpTable:
         dd EmuReservedOp
         dd EmuReservedOp
         dd .1
-        dd jpt_A4847+02Ch
+        dd EmuDispatchDBRegJumpTable+02Ch
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
@@ -1676,7 +1676,7 @@ EmuFdivToSt:
         call EmuDiv
         jmp dword [byte ds:ebp+076h]
 EmuFfree:
-        mov bx, word [dword cs:esi+unk_A32CE]
+        mov bx, word [dword cs:esi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:esi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
@@ -1688,7 +1688,7 @@ EmuFstSt:
         mov dword [byte esi+ebp+020h], eax
         mov ax, word [byte edi+ebp+024h]
         mov word [byte esi+ebp+024h], ax
-        mov bx, word [dword cs:esi+unk_A32CE]
+        mov bx, word [dword cs:esi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         jmp near EmuTrapExit
 EmuFucom:
@@ -1708,7 +1708,7 @@ EmuFstpSt:
         mov dword [byte esi+ebp+020h], eax
         mov ax, word [byte edi+ebp+024h]
         mov word [byte esi+ebp+024h], ax
-        mov bx, word [dword cs:esi+unk_A32CE]
+        mov bx, word [dword cs:esi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         jmp near RoundToDouble_32+017h
 EmuFaddp:
@@ -1716,12 +1716,12 @@ EmuFaddp:
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuAdd
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
@@ -1730,18 +1730,18 @@ EmuFmulp:
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuMul
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
 EmuFcompp:
-        jmp dword [nosplit cs:ebx*4+jpt_A4A50]
-jpt_A4A50:
+        jmp dword [nosplit cs:ebx*4+EmuFcomppJumpTable]
+EmuFcomppJumpTable:
         dd EmuReservedOp
         dd .1
         dd EmuReservedOp
@@ -1757,12 +1757,12 @@ jpt_A4A50:
         mov dword [byte ds:ebp+070h], eax
         mov ax, word [byte edi+ebp+024h]
         mov word [byte ds:ebp+074h], ax
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         lea eax, [byte ebp+06Ch]
@@ -1774,12 +1774,12 @@ EmuFsubrp:
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuSub
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
@@ -1788,12 +1788,12 @@ EmuFsubp:
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuSub
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
@@ -1802,12 +1802,12 @@ EmuFdivrp:
         lea edx, [byte esi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuDiv
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
@@ -1816,18 +1816,18 @@ EmuFdivp:
         lea edx, [byte edi+ebp+01Ch]
         lea ebx, [byte esi+ebp+01Ch]
         call EmuDiv
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp dword [byte ds:ebp+076h]
 EmuDispatchDFReg:
-        jmp dword [nosplit cs:ebx*4+jpt_A4C05]
-jpt_A4C05:
+        jmp dword [nosplit cs:ebx*4+EmuDispatchDFRegJumpTable]
+EmuDispatchDFRegJumpTable:
         dd .6
         dd EmuReservedOp
         dd EmuReservedOp
@@ -1837,12 +1837,12 @@ jpt_A4C05:
         dd EmuReservedOp
         dd EmuReservedOp
         lea edx, [byte edi+ebp+01Ch]
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
         or word [byte ds:ebp+08h], bx
-        movzx edi, word [dword cs:edi+unk_A327E]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegRing]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         lea eax, [byte edi+ebp+01Ch]
@@ -1850,11 +1850,11 @@ jpt_A4C05:
         call EmuRemainder
         jmp dword [byte ds:ebp+076h]
         lea esi, [byte edi+ebp+01Ch]
-        movzx edi, word [dword cs:edi+unk_A3280]
-        mov bx, word [dword cs:edi+unk_A3282]
+        movzx edi, word [dword cs:edi+EmuRegLastSlot]
+        mov bx, word [dword cs:edi+EmuRegSlots]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
-        mov bx, word [dword cs:edi+unk_A32CE]
+        mov bx, word [dword cs:edi+EmuRegTagMasks]
         and word [byte ds:ebp+08h], bx
         lea ebx, [byte edi+ebp+01Ch]
         mov eax, dword [esi]
@@ -1887,7 +1887,7 @@ jpt_A4C05:
         call ExtToInt
         jmp near EmuTrapExit
         LD mov, esi, edi
-        movzx edi, word [dword cs:edi+unk_A327E]
+        movzx edi, word [dword cs:edi+EmuRegRing]
         lea eax, [byte edi+ebp+01Ch]
         mov cx, word [byte eax+08h]
         call StoreM32Int

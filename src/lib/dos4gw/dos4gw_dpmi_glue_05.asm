@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_A1877 progbits alloc exec nowrite align=1
-extern byte_D5440
+extern WVideoActive
 global __EnterWVIDEO_
 __EnterWVIDEO_:
-        cmp byte [byte_D5440], 0
+        cmp byte [WVideoActive], 0
         je short .2
         and edx, 0FFFFh
         push edx

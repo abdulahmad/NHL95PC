@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, awlinetab, btn_MasterDB, btn_TradeStats, btn_WrongDisk
-extern byte_D11BC, byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, byte_D42C3, awayremap
+extern byte_D11BC, byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, TextCharH, awayremap
 extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
 extern curperiod, DeleteFiles, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol
 extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, menuwidth_trade1, menutext_trade1, menuwidth_trade2
@@ -934,7 +934,7 @@ DrawTradeRow:
         push eax
         push str_C2dS
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, dword [nosplit edx*4+tradecursor]
         add eax, byte 1Dh
         push eax
@@ -1281,7 +1281,7 @@ DrawTradeScreen:
         push eax
         push str_C2dS
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, esi
         add eax, byte 1Dh
         push eax
@@ -1325,7 +1325,7 @@ DrawTradeScreen:
 ; X is tested 4 pixels to the right. A point over the four trade buttons
 ; (tradebtnx/y, 3Ah by 28h, stride 8) writes the button into out[slot], or
 ; when slot is negative writes slot/2 and sets flag to -1. A point in the
-; roster columns (y at least 1Dh, under byte_D42C3 * 28 rows) writes the side
+; roster columns (y at least 1Dh, under TextCharH * 28 rows) writes the side
 ; (x past BEh) into slot and the row + 64h into out[slot]. Returns 1 for a
 ; hit. The button edges are read in place, and each branch sets hit (Watcom
 ; merges the two stores into one).
@@ -1398,7 +1398,7 @@ TradeHitTest:
         cmp edi, byte 1Dh
         jl short .6
         xor ebx, ebx
-        mov bl, byte [byte_D42C3]
+        mov bl, byte [TextCharH]
         mov eax, ebx
         shl eax, 3
         sub eax, ebx
@@ -1411,7 +1411,7 @@ TradeHitTest:
         and eax, 0FFh
         mov dword [ecx], eax
         xor ebx, ebx
-        mov bl, byte [byte_D42C3]
+        mov bl, byte [TextCharH]
         lea edx, [byte edi-01Dh]
         mov eax, edx
         sar edx, 1Fh

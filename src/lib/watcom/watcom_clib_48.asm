@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B028E progbits alloc exec nowrite align=1
-extern __CHP, __cvt_, __Nan_Inf_, __set_ERANGE_, _Scale10V_, dword_C4CA0, dword_C4CA4, floor_
+extern __CHP, __cvt_, __Nan_Inf_, __set_ERANGE_, _Scale10V_, HugeValLo, HugeValHi, floor_
 extern memset_, DecimalToInt64
 global DoEFormat_, DoEFormat_, DoFFormat_, AdjField_, _FtoS_, strtod_
 DoEFormat_:
@@ -600,14 +600,14 @@ strtod_:
         call __set_ERANGE_
         test cl, 1
         je short .25
-        fld qword [dword_C4CA0]
+        fld qword [HugeValLo]
         fchs
         fstp qword [byte ebp-020h]
         jmp short .29
 .25:
-        mov eax, dword [dword_C4CA0]
+        mov eax, dword [HugeValLo]
         mov dword [byte ebp-020h], eax
-        mov eax, dword [dword_C4CA4]
+        mov eax, dword [HugeValHi]
         mov dword [byte ebp-01Ch], eax
         jmp short .29
 .26:

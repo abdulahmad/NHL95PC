@@ -56,7 +56,7 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
     w += 0xC;
     minw = fputchar(prompt) + 0x10;
     if (minw < w) minw = w + 0x10;
-    h = byte_D42C3 * 2 + 0x20;
+    h = TextCharH * 2 + 0x20;
     x = (0x280 - minw) / 2;
     y = (0x1E0 - h) / 2;
     SaveDialogBg(x, y, minw, h);
@@ -76,7 +76,7 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
             EditTextField(buf, maxlen, w - 8, x + 6, y + 0x20, DlgReturnZero, 0, arg);
             r = 0;
             for (i = 0; i < maxlen; i++) {
-                if (!(byte_C4B6C[(unsigned char)(buf[i] + 1)] & 0x20) && buf[0] != ' ' && buf[0] && buf[0] != '-') break;
+                if (!(CharClassTable[(unsigned char)(buf[i] + 1)] & 0x20) && buf[0] != ' ' && buf[0] && buf[0] != '-') break;
                 r = atoi_(buf);
             }
         } while (r < lo || r > hi);
@@ -96,7 +96,7 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
 }
 
 /* MessageBox (31013, PC only; ends in DlgNullCallback): a message box with n text lines centred above nb buttons
-   b. The box fits the widest line and the lines (byte_D42C3 + 2 high each) plus 10h, grown for the buttons
+   b. The box fits the widest line and the lines (TextCharH + 2 high each) plus 10h, grown for the buttons
    (GrowToButtons), at x / y or centred on the screen when negative; the screen under it is saved first. Each
    button is placed from the box's left edge (flags bit 0) or right edge and from its top (bit 2) or bottom.
    With wait set, run the buttons (RunMessageBox from the mouse position *mx / *my) and restore the screen; the
@@ -117,7 +117,7 @@ int MessageBox(int x, int y, char **lines, int n, DlgBtn *b, int nb, int *mx, in
     SetScreenTarget();
     RestoreDialogBg();
     h = w = 0;
-    lineh = byte_D42C3 + 2;
+    lineh = TextCharH + 2;
     for (i = 0; i < n; i++) MeasureTextLine(lines[i], &w, &h, lineh);
     w += 0x10;
     h += 0x10;

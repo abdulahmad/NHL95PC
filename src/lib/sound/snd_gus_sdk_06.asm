@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B12A0 progbits alloc exec nowrite align=1
-extern __GETDS, GusMidiIrq, GusWaveIrq, GusVoiceIrqBits, dword_D87A0, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback
+extern __GETDS, GusMidiIrq, GusWaveIrq, GusVoiceIrqBits, GusMidiPending, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback
 extern GusRecordDoneCallback, GusWaveCallback, GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, GusMidiXmitCallback
 extern GusMidiRecvCallback, inp_, outp_, GusSendEoi, GusBasePort, GusIrqStatusPort, GusMidiControlPort, GusMidiDataPort
 extern GusRegSelectPort, GusDataHighPort, GusDramPort, GusIrqFlags, GusCriticalDepth
@@ -61,15 +61,15 @@ GusMidiIrqHandler:
         mov al, byte [GusMidiIrq]
         and eax, 0FFFFh
         call GusSendEoi
-        cmp dword [dword_D87A0], byte 0
+        cmp dword [GusMidiPending], byte 0
         je short .1
         mov dx, word [GusIrqFlags]
         or dl, 8
         mov word [GusIrqFlags], dx
         jmp short .3
 .1:
-        mov eax, dword [dword_D87A0]
-        inc dword [dword_D87A0]
+        mov eax, dword [GusMidiPending]
+        inc dword [GusMidiPending]
         push ds
         pop es
 .2:
@@ -80,8 +80,8 @@ GusMidiIrqHandler:
         mov cx, word [GusIrqFlags]
         test cl, 8
         jne short .2
-        mov eax, dword [dword_D87A0]
-        dec dword [dword_D87A0]
+        mov eax, dword [GusMidiPending]
+        dec dword [GusMidiPending]
 .3:
         pop gs
         pop fs

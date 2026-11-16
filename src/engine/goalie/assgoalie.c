@@ -449,7 +449,7 @@ void assrefsignal(Player *p)
                 if (gameclock < 0x3C && clockticks[0]) tm--;
                 PostGoalEvent(side, *(short *)((char *)t + 0x30),
                     *(short *)((char *)t + 0x32) < 0 ? -1 : *(short *)((char *)t + 0x32),
-                    *(short *)((char *)t + 0x34) < 0 ? -1 : *(short *)((char *)t + 0x34), word_E9AB0, tm / 0x3C,
+                    *(short *)((char *)t + 0x34) < 0 ? -1 : *(short *)((char *)t + 0x34), GoalState, tm / 0x3C,
                     tm % 0x3C);
             }
             assreplace(p, 0x21);
@@ -571,11 +571,11 @@ void assrefgoalpa(Player *p)
         SetSPA(p, 0xA5B);
         if (RefPen == 4) {
             if (!QueueGoalieNote()) {
-                if (byte_DF87F[penaltysc << 7] && !dword_E9A9E) {
+                if (byte_DF87F[penaltysc << 7] && !SpeechPatchNext) {
                     byte_DF87F[penaltysc << 7] = 0;
                     LoadTeamPPV(8);
                     if (ovlseq != -1) {
-                        dword_E9A9E = 1;
+                        SpeechPatchNext = 1;
                         CloseTextOverlay();
                         return;
                     }

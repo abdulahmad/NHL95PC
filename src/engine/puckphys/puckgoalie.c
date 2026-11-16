@@ -32,7 +32,7 @@ void puckgoalie(Player *pk, Player *p)
     v = p->frame;
     if (v >= 0x206 && v < 0x216 && *(short *)puckz >= 5) return;
     p->pad_63[0] = 0;                               /* byte +63h: the big save flag */
-    if (dword_E9A9E == 0 && !(p->pflags & 0x40) && (gmode2 & 0x10) && ((p->SCnum < 6) ^ (shotplayer < 6))
+    if (SpeechPatchNext == 0 && !(p->pflags & 0x40) && (gmode2 & 0x10) && ((p->SCnum < 6) ^ (shotplayer < 6))
         && ABS(HIWORD(SortCords[shotplayer].Ypos)) > 0x58
         && ((HIWORD(SortCords[shotplayer].Ypos) > 0) ^ ((p->pflags & 0x80) != 0))) {
         v = ABS(*puckvy) + ABS(*puckvx);

@@ -14,7 +14,7 @@ global assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData
 global digihandle, crowdsmooth, crowdvol8, crowdvol7, cursndbank, oneminsaid, playsuspended, dword_CCC9D
 global dword_CCC9E, sublist_m2, sublist, sublist_defl_m3, dword_CCD4F, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, sideobjpos
 global ovlscripts, starordtab, shotsets, sublist_defl, ovlsteptime, Pencntdwn2, lldispodd, ltack
-global crowdlevel, word_CC10C, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+global crowdlevel, lcline_aw, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 global linenext, FallDown_pinxr, FallDown_pinxl, FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, blockspd
 global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
@@ -78,7 +78,7 @@ penshotteam:
         db 00h,00h,00h,00h
 penshotctl:
         db 00h,00h,00h,00h
-word_CC10C:
+lcline_aw:
         db 00h,00h,00h,00h
 penshotfox:
         db 00h,00h,00h,00h

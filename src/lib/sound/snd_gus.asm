@@ -4,14 +4,14 @@ bits 32
 section s_9FFCA progbits alloc exec nowrite align=1
 extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI, byte_F5320, byte_F5321
 extern cliprect_x0, cliprect_x1, ScreenWidth, dword_D30A8, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
-extern dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
+extern dword_D53AC, dword_D53B0, GusDriverStreaming, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
 extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
 extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, GetPatchEntry, PrintString
 extern GusReadPatchHeader, GusLoadPatch, GusOpen, GusClose, GusSetMasterVolume, GusMidiNoteOn, GusMidiNoteOff, GusSetChannelPatch
 extern GusDramAlloc, GusDramFreeTotal, GusServiceStream, GusStartStream, GusStopStream, GusStreamStart, GusStreamIdle, GusStreamPlayNote
 extern GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetRate, GusStreamSetSample, GusStreamApplyBend, GusStreamBusy, GusStreamGetVolume
 extern GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController, SetClipWindow, SetBitmapClip, unk_D5382, unk_D5408
-extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326
+extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, GusDriverBasePort, word_F5324, word_F5326
 extern word_F53B0, word_F53C2, word_F58D2, word_F58D4, word_F58D6
 global GusAllocDosBuffer, GusFreeDosBuffer, GusLoadMidiPatch, GusStartup, GusDriverClose, GusProbe, GusDetect, GusInitDigi
 global GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack, GusPlayDigi, GusProgramChange
@@ -370,7 +370,7 @@ GusDriverClose:
         sub esp, 0
         cmp dword [dword_D53A8], byte 0
         je short .1
-        cmp dword [dword_D53B4], byte 0
+        cmp dword [GusDriverStreaming], byte 0
         je short .2
 .1:
         jmp short .3
@@ -422,7 +422,7 @@ GusProbe:
         mov dword [dword_D53A0], 1
 .2:
         xor eax, eax
-        mov ax, word [word_F531E]
+        mov ax, word [GusDriverBasePort]
         call GusProbePort
         test eax, eax
         jne short .3
@@ -463,7 +463,7 @@ GusDetect:
         shl eax, 10h
         mov edx, eax
         xor eax, eax
-        mov ax, word [word_F531E]
+        mov ax, word [GusDriverBasePort]
         or edx, eax
         mov dword [byte ebp-04h], edx
 .2:
@@ -484,10 +484,10 @@ GusInitDigi:
         push ebp
         mov ebp, esp
         sub esp, 0
-        cmp dword [dword_D53B4], byte 0
+        cmp dword [GusDriverStreaming], byte 0
         jne short .1
         call GusStartup
-        mov dword [dword_D53B4], 1
+        mov dword [GusDriverStreaming], 1
 .1:
         pop ebp
         pop edi
@@ -524,9 +524,9 @@ GusCloseDigi:
         push ebp
         mov ebp, esp
         sub esp, 0
-        cmp dword [dword_D53B4], byte 0
+        cmp dword [GusDriverStreaming], byte 0
         je short .1
-        mov dword [dword_D53B4], 0
+        mov dword [GusDriverStreaming], 0
         call GusDriverClose
 .1:
         pop ebp

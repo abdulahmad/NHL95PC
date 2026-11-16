@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
-extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, dword_EDAAC, MemLockHandle, dword_EDAB4, FatalError, findmemblock
+extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, MemDescriptorTop, MemLockHandle, dword_EDAB4, FatalError, findmemblock
 extern memlist1, reservemem, StrCompareN, FileNameOnly, MemUnlock, bcopy, MemLock
 global PushMemDescriptorLocked, UnlinkMemBlockLocked, FreeMemBlocksAfter, FreeBlocksAfter, MergeFreeSpaceLocked, MergeFreeSpace, MarkBlockPurgeable, MarkDescPurgeable
 global SetMemBlockPurgeLevel, SetMemBlockPurge, FindNamedBlock, FindMemBlockNamed, FindNamedBlockNext, FindMemBlockNamedNext, FindFreeSpaceLocked, FindFreeSpace
@@ -909,7 +909,7 @@ MemFreeSize:
         ret
 InitMemDescriptors:
         mov eax, dword [byte esp+04h]
-        mov dword [dword_EDAAC], eax
+        mov dword [MemDescriptorTop], eax
         xor edx, edx
         mov ebx, dword [byte esp+08h]
         dec ebx
@@ -928,13 +928,13 @@ InitMemDescriptors:
         db 08Dh,040h,00h
 PushMemDescriptor:
         mov edx, dword [byte esp+04h]
-        mov eax, dword [dword_EDAAC]
+        mov eax, dword [MemDescriptorTop]
         mov dword [byte edx+020h], eax
-        mov dword [dword_EDAAC], edx
+        mov dword [MemDescriptorTop], edx
         ret
         db 090h
 getmemblock:
-        cmp dword [dword_EDAAC], byte 0
+        cmp dword [MemDescriptorTop], byte 0
         jne short .1
         mov ebx, dword [MemLockHandle]
         push ebx
@@ -944,9 +944,9 @@ getmemblock:
         call FatalError
         add esp, byte 4
 .1:
-        mov eax, dword [dword_EDAAC]
+        mov eax, dword [MemDescriptorTop]
         mov edx, dword [byte eax+020h]
-        mov dword [dword_EDAAC], edx
+        mov dword [MemDescriptorTop], edx
         ret
 MemPtrSize:
         mov edx, dword [byte esp+04h]

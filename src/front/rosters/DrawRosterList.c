@@ -29,13 +29,13 @@ void DrawRosterList(int x, int y, int side)
             step = i * 0x1B;
             if (rosterlist[base + step] != 0) {
                 sprintf(buf, (char *)str_fmt2d, rosterjersey[base + step]);
-                PrintString(buf, x, byte_D42C3 * i + y);
+                PrintString(buf, x, TextCharH * i + y);
                 sprintf(buf, (char *)str_C4, rosterlist[base + step]);
-                PrintString(buf, x + 0x28, byte_D42C3 * i + y);
+                PrintString(buf, x + 0x28, TextCharH * i + y);
                 FitPlayerName(buf, 0, (char *)rosterlist + base + step + 8, 0x91);
-                PrintString(buf, x + 0x50, byte_D42C3 * i + y);
+                PrintString(buf, x + 0x50, TextCharH * i + y);
                 if (rostersel[side * 28 + i] != 0)
-                    XorBar(side ? 0x15E : 0x23, byte_D42C3 * i + 0x35, 0xF0, byte_D42C3, 0x80);
+                    XorBar(side ? 0x15E : 0x23, TextCharH * i + 0x35, 0xF0, TextCharH, 0x80);
             } else
                 i = 0x1C;
         }
@@ -44,13 +44,13 @@ void DrawRosterList(int x, int y, int side)
         for (i = 0; i < 0x1C && n < facount; n++, i++) {
             off = n * 0x1B;
             sprintf(buf, (char *)str_fmt2d, falist[off + 1]);
-            PrintString(buf, x, byte_D42C3 * i + y);
+            PrintString(buf, x, TextCharH * i + y);
             sprintf(buf, (char *)str_C4, falist[off]);
-            PrintString(buf, x + 0x28, byte_D42C3 * i + y);
+            PrintString(buf, x + 0x28, TextCharH * i + y);
             FitPlayerName(buf, 0, (char *)falist + off + 8, 0x91);
-            PrintString(buf, x + 0x50, byte_D42C3 * i + y);
+            PrintString(buf, x + 0x50, TextCharH * i + y);
             if (((unsigned char *)falistsel)[n] != 0)
-                XorBar(side ? 0x15E : 0x23, byte_D42C3 * i + 0x35, 0xF0, byte_D42C3, 0x80);
+                XorBar(side ? 0x15E : 0x23, TextCharH * i + 0x35, 0xF0, TextCharH, 0x80);
         }
         if (dword_D0C20) {
             DrawButtons((Button *)btn_RosterList, 2);

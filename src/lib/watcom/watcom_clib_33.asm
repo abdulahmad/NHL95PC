@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9B710 progbits alloc exec nowrite align=1
-extern __flushall_, __ioalloc_, __qread_, __set_errno_, byte_C4C70, dword_D500C, dword_D5060, getche_
+extern __flushall_, __ioalloc_, __qread_, __set_errno_, byte_C4C70, __NHandles, __io_mode, getche_
 extern memset_
 global isatty_, __IOMode_, __SetIOMode_, __fsetbits_, __setbits_, fgetc_, __filbuf_, __fill_buffer_
 global ungetc_
@@ -28,7 +28,7 @@ __IOMode_:
         push ecx
         push edx
         mov edx, eax
-        cmp eax, dword [dword_D500C]
+        cmp eax, dword [__NHandles]
         jb short .1
         xor eax, eax
         pop edx
@@ -39,7 +39,7 @@ __IOMode_:
         cmp eax, byte 5
         jg short .2
         mov ebx, eax
-        mov eax, dword [dword_D5060]
+        mov eax, dword [__io_mode]
         shl ebx, 2
         add eax, ebx
         mov cl, byte [byte eax+01h]
@@ -52,10 +52,10 @@ __IOMode_:
         call isatty_
         test eax, eax
         je short .2
-        mov eax, dword [dword_D5060]
+        mov eax, dword [__io_mode]
         or byte [byte ebx+eax+01h], 20h
 .2:
-        mov eax, dword [dword_D5060]
+        mov eax, dword [__io_mode]
         mov eax, dword [eax+edx*4]
         pop edx
         pop ecx
@@ -66,7 +66,7 @@ __SetIOMode_:
         or dh, 40h
         mov ebx, edx
         mov edx, eax
-        mov eax, dword [dword_D5060]
+        mov eax, dword [__io_mode]
         shl edx, 2
         mov dword [edx+eax], ebx
         pop ebx

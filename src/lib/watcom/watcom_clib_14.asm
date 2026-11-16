@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_91984 progbits alloc exec nowrite align=1
 extern __allocfp_, __chktty_, __doclose_, __ExpandDGROUP_, __freefp_, __MemAllocator, __MemFree, __set_errno_
-extern byte_F24C5, HeapList, HeapRover, HeapLargestFree, dword_D4F21, dword_EDF00, dword_F24C8, fseek_
+extern __nheap_clean, HeapList, HeapRover, HeapLargestFree, _fmode, __OpenStreams, __ClosedStreams, fseek_
 extern sopen_, McgaNoWindow, tolower_
 global _nmalloc_, _nfree_, strlen_, __open_flags_, __doopen_, _fsopen_, fopen_, close_file_
 _nmalloc_:
@@ -91,7 +91,7 @@ _nmalloc_:
 .12:
         xor ch, ch
         mov eax, ebx
-        mov byte [byte_F24C5], ch
+        mov byte [__nheap_clean], ch
 .13:
         add esp, byte 4
         pop ebp
@@ -139,7 +139,7 @@ _nfree_:
         mov dword [HeapLargestFree], edx
 .5:
         xor ah, ah
-        mov byte [byte_F24C5], ah
+        mov byte [__nheap_clean], ah
         pop ebp
         pop edx
         pop ecx
@@ -197,7 +197,7 @@ __open_flags_:
         je short .3
         cmp cl, 74h
         je short .8
-        cmp dword [dword_D4F21], 200h
+        cmp dword [_fmode], 200h
 .2:
         jne short .8
 .3:
@@ -220,7 +220,7 @@ __open_flags_:
         cmp byte [byte edx+02h], 2Bh
         jmp short .2
 .6:
-        cmp dword [dword_D4F21], 200h
+        cmp dword [_fmode], 200h
         jne short .8
 .7:
         mov ebx, ecx
@@ -354,7 +354,7 @@ close_file_:
         push ecx
         push edx
         mov ebx, eax
-        mov eax, dword [dword_F24C8]
+        mov eax, dword [__ClosedStreams]
 .1:
         test eax, eax
         je short .4
@@ -376,7 +376,7 @@ close_file_:
         mov eax, dword [eax]
         jmp short .1
 .4:
-        mov edx, dword_EDF00
+        mov edx, __OpenStreams
 .5:
         mov eax, dword [edx]
         test eax, eax
@@ -385,8 +385,8 @@ close_file_:
         jne short .6
         mov ecx, dword [eax]
         mov dword [edx], ecx
-        mov edx, dword [dword_F24C8]
-        mov dword [dword_F24C8], eax
+        mov edx, dword [__ClosedStreams]
+        mov dword [__ClosedStreams], eax
         mov dword [eax], edx
         jmp short .2
 .6:

@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_D89E4 progbits alloc noexec write align=1
-global byte_D89E4
-byte_D89E4:
+global RemapTable
+RemapTable:
         db 00h,09Eh,06Eh,07Eh,02Eh,0BEh,03Eh,08h,01Eh,08Dh,06Ah,07Ch,0DFh,0BCh,04Ch,018h
         db 018h,019h,019h,01Ah,08h,08h,01Ch,01Ch,01Ch,01Dh,01Eh,01Eh,01Fh,01Fh,01Fh,00h
         db 019h,0C9h,0CAh,0CBh,0DFh,0DFh,02Ch,02Ch,02Dh,02Dh,02Eh,02Eh,02Fh,02Fh,02Fh,00h

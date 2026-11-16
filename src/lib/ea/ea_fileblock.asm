@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_93308 progbits alloc exec nowrite align=1
-extern str_SavefileblockaOPENFAILEDFOR, DebugRow, byte_D4545, DebugTabWidth, DebugMode, DebugScreenBase, DebugLineWidth, FatalError
+extern str_SavefileblockaOPENFAILEDFOR, DebugRow, DebugBackColor, DebugTabWidth, DebugMode, DebugScreenBase, DebugLineWidth, FatalError
 extern MemDescPtr, MemDescSize, bcopy, CreateHandle, DosCloseFile, DosWriteFile, ZeroMem, vsprintf_
 global SaveDataFile, SaveFileBlockErr, SaveFileBlockQuiet, savefileblocka, imul32, umul32, IntSqrt, SortIndices
 global DebugPrintf, DebugSetLine, DebugShowLinesJumpTable, DebugShowLines, DebugShowLines, DebugScrollUp, DebugClearScreen, DebugSetRow
@@ -406,7 +406,7 @@ DebugShowLines:
         jb short .3
         call DebugScrollUp
         xor dh, dh
-        mov dl, byte [byte_D4545]
+        mov dl, byte [DebugBackColor]
         shl edx, 8
         xor ah, ah
         mov al, byte [esp]
@@ -587,7 +587,7 @@ DebugSetRow:
         db 090h
 DebugSetAttr:
         mov al, byte [byte esp+04h]
-        mov byte [byte_D4545], al
+        mov byte [DebugBackColor], al
         ret
         db 08Bh,0C0h
 DebugSetTabWidth:

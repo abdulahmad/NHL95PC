@@ -2,17 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_B3E4A progbits alloc exec nowrite align=1
-extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, byte_D4FE8, byte_D545C, byte_D54DC
-extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, GraphicsReady, cpuinfo_d0, cpuinfo_d1
-extern ScreenWidth, dword_D30A8, dword_D30BC, dword_D30C0, BackBufferWidth, dword_D429C, PrintfSavedEbx, PrintfSavedEcx
-extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
-extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, VgaBlitKeyedAtOwnPos
+extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, byte_D4FE8, HotkeyScanTable, HotkeyModTable
+extern AngleOctantTable, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, GraphicsReady, cpuinfo_d0, cpuinfo_d1
+extern ScreenWidth, dword_D30A8, DrawClipLeft, DrawClipRight, BackBufferWidth, RetraceTimeout, PrintfSavedEbx, PrintfSavedEcx
+extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, RetraceMode, dword_D4FA4, dword_D4FEB, HotkeyNesting
+extern HotkeyFuncTable, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, VgaBlitKeyedAtOwnPos
 extern mousepollfn, off_D567C, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
 extern SavedTextColumns, word_D4FE4, word_D4FE6, word_D4FE9
 global PrintfSaveRegs, SaveTextMode, RestoreTextMode, DetectCPU, FillMem, ZeroMem, ResetHotkeyState, KbdGetKeyQuiet
 global PollHotkeys, SetupRectFillBlend, SetupRectFill, SetupRectFill, jpt_B4253, jpt_B4253, jpt_B42B2, jpt_B42B2
 global jpt_B439E, jpt_B439E, jpt_B4488, jpt_B4488, jpt_B4488, jpt_B466E, jpt_B466E, jpt_B466E
-global jpt_B466E, AngleFromDelta, unk_B4A0C, TableSin, TableCos, DispatchHotkey, RegisterHotkey, SetTextMode
+global jpt_B466E, AngleFromDelta, AngleFromDeltaJumpTable, TableSin, TableCos, DispatchHotkey, RegisterHotkey, SetTextMode
 global VgaSetPalette, SetScreenTarget, SetClipWindow, ResetRetraceTimeout, WaitRetrace, WaitRetraceStart, WaitRetraceEnd, InRetrace
 global VgaBlitKeyedHot
 PrintfSaveRegs:
@@ -147,7 +147,7 @@ ZeroMem:
         ret
         db 00h
 ResetHotkeyState:
-        mov dword [dword_D4FA0], 0
+        mov dword [RetraceMode], 0
         ret
         db 00h
 KbdGetKeyQuiet:
@@ -1088,12 +1088,12 @@ AngleFromDelta:
         div ecx
         shr eax, 18h
         adc eax, byte 0
-        movzx eax, byte [dword eax+byte_D6074]
-        jmp dword [dword cs:ebx+unk_B4A0C]
+        movzx eax, byte [dword eax+AngleOctantTable]
+        jmp dword [dword cs:ebx+AngleFromDeltaJumpTable]
 .4:
         mov eax, 80h
-        jmp dword [dword cs:ebx+unk_B4A0C]
-unk_B4A0C:
+        jmp dword [dword cs:ebx+AngleFromDeltaJumpTable]
+AngleFromDeltaJumpTable:
         dd .2
         dd .1
         dd .3
@@ -1165,24 +1165,24 @@ TableCos:
 DispatchHotkey:
         push ebp
         LD mov, ebp, esp
-        dec dword [dword_D5562]
+        dec dword [HotkeyNesting]
         jne short .4
         mov ebx, dword [byte ebp+08h]
         LD or, bl, bl
         je short .2
         and ebx, byte 7Fh
         mov dword [byte ebp+08h], ebx
-        mov bl, byte [dword ebx+byte_D545C]
+        mov bl, byte [dword ebx+HotkeyScanTable]
 .1:
         dec ebx
         jl short .4
         push edi
         push esi
-        call dword [nosplit ebx*4+dword_D5566]
+        call dword [nosplit ebx*4+HotkeyFuncTable]
         pop esi
         pop edi
         LD xor, eax, eax
-        inc dword [dword_D5562]
+        inc dword [HotkeyNesting]
         leave
         ret
 .2:
@@ -1191,11 +1191,11 @@ DispatchHotkey:
         jl short .3
         mov ebx, 84h
 .3:
-        mov bl, byte [dword ebx+byte_D54DC]
+        mov bl, byte [dword ebx+HotkeyModTable]
         jmp short .1
 .4:
         mov eax, dword [byte ebp+08h]
-        inc dword [dword_D5562]
+        inc dword [HotkeyNesting]
         leave
         ret
 RegisterHotkey:
@@ -1203,7 +1203,7 @@ RegisterHotkey:
         LD mov, ebp, esp
         mov eax, dword [byte ebp+0Ch]
         mov ecx, 40h
-        mov ebx, dword_D5566
+        mov ebx, HotkeyFuncTable
 .1:
         cmp dword [ebx], eax
         je short .3
@@ -1224,7 +1224,7 @@ RegisterHotkey:
         je short .6
         cmp ebx, byte 7Fh
         jg short .5
-        mov byte [dword ebx+byte_D545C], al
+        mov byte [dword ebx+HotkeyScanTable], al
 .5:
         leave
         ret
@@ -1232,7 +1232,7 @@ RegisterHotkey:
         movzx ebx, bh
         cmp ebx, 84h
         jg short .5
-        mov byte [dword ebx+byte_D54DC], al
+        mov byte [dword ebx+HotkeyModTable], al
         leave
         ret
         push ebp
@@ -1309,17 +1309,17 @@ SetClipWindow:
         mov dword [cliprect_y0], ecx
         mov dword [cliprect_x1], edx
         mov dword [cliprect_y1], ebx
-        mov dword [dword_D30BC], eax
-        mov dword [dword_D30C0], edx
+        mov dword [DrawClipLeft], eax
+        mov dword [DrawClipRight], edx
         ret
         db 00h
 ResetRetraceTimeout:
-        mov dword [dword_D429C], 2710h
+        mov dword [RetraceTimeout], 2710h
         ret
 WaitRetrace:
         mov dx, 3DAh
-        mov ecx, dword [dword_D429C]
-        cmp dword [dword_D4FA0], byte 1
+        mov ecx, dword [RetraceTimeout]
+        cmp dword [RetraceMode], byte 1
         jg short .3
         je short .2
 .1:
@@ -1333,11 +1333,11 @@ WaitRetrace:
         loope .2
         jecxz ResetRetraceTimeout
 .3:
-        mov dword [dword_D429C], 186A0h
+        mov dword [RetraceTimeout], 186A0h
         ret
 WaitRetraceStart:
         mov dx, 3DAh
-        mov ecx, dword [dword_D429C]
+        mov ecx, dword [RetraceTimeout]
 .1:
         in al, dx
         test al, 8
@@ -1348,11 +1348,11 @@ WaitRetraceStart:
         test al, 8
         loope .2
         jecxz ResetRetraceTimeout
-        mov dword [dword_D429C], 186A0h
+        mov dword [RetraceTimeout], 186A0h
         ret
 WaitRetraceEnd:
         mov dx, 3DAh
-        mov ecx, dword [dword_D429C]
+        mov ecx, dword [RetraceTimeout]
 .1:
         in al, dx
         test al, 8
@@ -1363,7 +1363,7 @@ WaitRetraceEnd:
         test al, 8
         loopne .2
         jecxz ResetRetraceTimeout
-        mov dword [dword_D429C], 186A0h
+        mov dword [RetraceTimeout], 186A0h
         ret
 InRetrace:
         mov dx, 3DAh

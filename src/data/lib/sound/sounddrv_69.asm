@@ -5,19 +5,19 @@ section s_D71F0 progbits alloc noexec write align=1
 extern byte_D6CE0, byte_D6E24, byte_D6F68, byte_D70AC, str_ULTRASND
 global byte_D7618, byte_D7619, byte_D781C, GusIrqLatchBits, byte_D7A3C, byte_D7AEC, byte_D7B18, byte_D7B58
 global byte_D7B5C, byte_D7D70, byte_D7DB0, byte_D7DB4, byte_D7FC8, byte_D8008, byte_D800C, byte_D8220
-global byte_D8260, byte_D8264, byte_D849C, byte_D84A0, byte_D86C8, GusDmaLatchBits, byte_D87D8, byte_D89E0
+global byte_D8260, byte_D8264, byte_D849C, byte_D84A0, GusDmaPageTable, GusDmaLatchBits, byte_D87D8, GusDramSized
 global dword_D7200, dword_D7204, dword_D7208, dword_D720C, dword_D7614, dword_D7A1E, dword_D7A22, GusOpenCount
-global dword_D7ABC, dword_D7AF0, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight
+global dword_D7ABC, GusStreamActive, dword_D7AF4, dword_D7AF8, GusStreamBusyLeft, dword_D7B00, dword_D7B04, GusStreamBusyRight
 global dword_D7B0C, dword_D7B1C, dword_D7B30, dword_D7B34, dword_D7B38, dword_D7B44, dword_D7B48, dword_D7B4C
 global dword_D7B50, dword_D7B60, dword_D7D64, dword_D7D74, dword_D7D88, dword_D7D8C, dword_D7D90, dword_D7D9C
 global dword_D7DA0, dword_D7DA4, dword_D7DA8, dword_D7DB8, dword_D7FBC, dword_D7FCC, dword_D7FE0, dword_D7FE4
 global dword_D7FE8, dword_D7FF4, dword_D7FF8, dword_D7FFC, dword_D8000, dword_D8010, dword_D8214, dword_D8224
 global dword_D8238, dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8258, dword_D8268
-global dword_D847C, dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498
-global dword_D84A8, dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC
+global GusStreamBufSize, GusStreamHalfSize, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498
+global dword_D84A8, dword_D84AC, dword_D84B0, dword_D84B4, GusStreamCardEnd, GusStreamStartLo, GusStreamEndLo, GusEnvVarName
 global dword_D84D0, dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_D8690, dword_D8696
 global dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC, dword_D86B0, BlitColumnOffsets, BlitSourcePtr, DmaDefaultMode
-global dword_D86DC, GusDmaBusy, dword_D87A0, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback, GusRecordDoneCallback, GusWaveCallback
+global GusIrqOldHandler, GusDmaBusy, GusMidiPending, GusMidiIrqCount, GusTimerCallback, GusDmaDoneCallback, GusRecordDoneCallback, GusWaveCallback
 global GusVolumeCallback, GusTimer1Callback, GusTimer2Callback, GusWaveIrqCallback, GusVolumeIrqCallback, GusMidiXmitCallback, GusMidiRecvCallback, dword_D87DC
 global dword_D87E0, dword_D89D8, dword_D89DC, off_D71F0, off_D846C, word_D7214, word_D7216, word_D7218
 global word_D721A, word_D721C, word_D721E, word_D7220, word_D7222, word_D7224, word_D7226, word_D7228
@@ -52,9 +52,9 @@ global word_D73DA, word_D73DC, word_D73DE, word_D73E0, word_D73E2, word_D73E4, w
 global word_D73EA, word_D73EC, word_D73EE, word_D73F0, word_D73F2, word_D73F4, word_D73F6, word_D73F8
 global word_D73FA, word_D73FC, word_D73FE, word_D7400, word_D7402, word_D7404, word_D7406, word_D7408
 global word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, word_D7414, word_D7B64, word_D7DBC
-global word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2, word_D84C6, word_D8694, word_D869A
-global word_D86A0, word_D86A6, word_D86B4, word_D86B6, word_D86DA, word_D86E0, GusBasePort, GusIrqStatusPort
-global word_D8764, word_D8766, word_D8768, word_D876A, GusMidiControlPort, GusMidiDataPort, GusVoiceSelectPort, GusRegSelectPort
+global word_D8014, word_D826C, GusStreamLoopLo, GusStreamLoopHi, GusStreamStartHi, GusStreamEndHi, word_D8694, word_D869A
+global word_D86A0, word_D86A6, word_D86B4, word_D86B6, GusIrqVectorTable, GusIrqOldSelector, GusBasePort, GusIrqStatusPort
+global word_D8764, word_D8766, GusIrqLatchPort, GusDmaLatchPort, GusMidiControlPort, GusMidiDataPort, GusVoiceSelectPort, GusRegSelectPort
 global GusDataLowPort, GusDataHighPort, GusDramPort, GusIrqPending
 off_D71F0:
         dd byte_D6CE0
@@ -709,7 +709,7 @@ dword_D7ABC:
         db 059h,06h,00h,00h,0BAh,06h,00h,00h,021h,07h,00h,00h,08Dh,07h,00h,00h
 byte_D7AEC:
         db 01h,00h,00h,00h
-dword_D7AF0:
+GusStreamActive:
         db 00h,00h,00h,00h
 dword_D7AF4:
         db 00h,00h,00h,00h
@@ -968,9 +968,9 @@ off_D846C:
         dd dword_D7D64
         dd dword_D7FBC
         dd dword_D8214
-dword_D847C:
+GusStreamBufSize:
         db 00h,00h,00h,00h
-dword_D8480:
+GusStreamHalfSize:
         db 00h,00h,00h,00h
 dword_D8484:
         db 00h,00h,00h,00h
@@ -996,21 +996,21 @@ dword_D84B0:
         db 00h,00h,00h,00h
 dword_D84B4:
         db 00h,00h,00h,00h
-dword_D84B8:
+GusStreamCardEnd:
         db 00h,00h,00h,00h
-word_D84BC:
+GusStreamLoopLo:
         db 00h,00h
-word_D84BE:
+GusStreamLoopHi:
         db 00h,00h
-dword_D84C0:
+GusStreamStartLo:
         db 00h,00h
-word_D84C2:
+GusStreamStartHi:
         db 00h,00h
-dword_D84C4:
+GusStreamEndLo:
         db 00h,00h
-word_D84C6:
+GusStreamEndHi:
         db 00h,00h,00h,080h,0Bh,00h
-dword_D84CC:
+GusEnvVarName:
         dd str_ULTRASND
 dword_D84D0:
         db 02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h
@@ -1078,14 +1078,14 @@ BlitSourcePtr:
         db 00h,00h,00h,00h
 DmaDefaultMode:
         db 011h,00h,00h,00h,00h,00h,00h,00h
-byte_D86C8:
+GusDmaPageTable:
         db 087h,00h,083h,00h,081h,00h,082h,00h,08Fh,00h,08Bh,00h,089h,00h,08Ah,00h
         db 00h,00h
-word_D86DA:
+GusIrqVectorTable:
         db 08h,00h
-dword_D86DC:
+GusIrqOldHandler:
         db 00h,00h,00h,00h
-word_D86E0:
+GusIrqOldSelector:
         db 00h,00h,09h,00h,00h,00h,00h,00h,00h,00h,0Ah,00h,00h,00h,00h,00h
         db 00h,00h,0Bh,00h,00h,00h,00h,00h,00h,00h,0Ch,00h,00h,00h,00h,00h
         db 00h,00h,0Dh,00h,00h,00h,00h,00h,00h,00h,0Eh,00h,00h,00h,00h,00h
@@ -1102,9 +1102,9 @@ word_D8764:
         db 028h,02h
 word_D8766:
         db 029h,02h
-word_D8768:
+GusIrqLatchPort:
         db 02Bh,02h
-word_D876A:
+GusDmaLatchPort:
         db 02Fh,02h
 GusMidiControlPort:
         db 020h,03h
@@ -1127,7 +1127,7 @@ GusDmaBusy:
 GusIrqPending:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_D87A0:
+GusMidiPending:
         db 00h,00h,00h,00h,00h,00h,00h,00h
 GusMidiIrqCount:
         db 00h,00h,00h,00h
@@ -1194,5 +1194,5 @@ dword_D89D8:
         db 00h,00h,00h,00h
 dword_D89DC:
         db 01h,00h,00h,00h
-byte_D89E0:
+GusDramSized:
         db 00h,00h,00h,00h

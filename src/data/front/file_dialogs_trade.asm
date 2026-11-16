@@ -9,7 +9,7 @@ global savefname, fdlgmask, leaguedbfmt2, leaguedbfmt, othergames, othergamesb
 global otherscores, otherscoresb, leagueflags, lgteamflags, lgteam_17, lgteam_18, lgteam_19, savedname
 global lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3, lgschedrec_b5, traderoster, tradejersey, tradeslot
 global byte_DE268, loadpals, palcyclephase, palcycledelay, statsfilepos, lgstatsfilepos, dword_DC868, deskptry
-global deskptrx, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
+global deskptrx, StreamHandle, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
 global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, exhfiles
 global exhfilenames, pofiles, pofilenames, lgfiles
 global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
@@ -41,7 +41,7 @@ deskptrx:
         resb 4
 deskbankname:
         resb 16
-dword_DC8A0:
+StreamHandle:
         resb 40
 dword_DC8C8:
         resb 8

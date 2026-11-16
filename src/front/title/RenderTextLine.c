@@ -11,7 +11,7 @@ void RenderTextLine(int x, int y, char *s)
     int h;
 
     w = (fputchar(s) & 0xFFC0) + 0x40;
-    h = byte_D42C3 + 1;
+    h = TextCharH + 1;
     bmp = CreateBitmap(w, h, 0);
     SaveDrawState(save);
     SetDrawBitmap(bmp);

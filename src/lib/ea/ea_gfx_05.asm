@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90D20 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable
-extern dword_D4108, RowCopyFunc, FreeMemBlock, PushMemDescriptorLocked, removewindow, ClearScreen, SaveDrawState, RestoreDrawState
+extern PutBlockScaleSteps, RowCopyFunc, FreeMemBlock, PushMemDescriptorLocked, removewindow, ClearScreen, SaveDrawState, RestoreDrawState
 extern bcopy, FillMem, SetScreenTarget, VesaSetBankArg, FillRectCore, XorRectCore, BlitArtOpaque, BlitArtKeyFF
 global FillRect, FillRectClipped, FillRectClipped, XorRowBytes, XorBar, XorRectClipped, ClearScreenColour, DrawArtOpaque
 global DrawArtOpaqueAtOwnPos, DrawArtOpaqueHotspot, DrawArtKeyFF, DrawArtKeyFFAtOwnPos, DrawArtKeyFFHotspot, FreeWindowBitmap, FreeBitmap
@@ -55,7 +55,7 @@ FillRect:
         mov dword [byte esp+0Ch], eax
 .2:
         mov edi, dword [byte esp+08h]
-        mov edi, dword [nosplit edi*4+dword_D4108]
+        mov edi, dword [nosplit edi*4+PutBlockScaleSteps]
         sub edi, dword [byte esp+028h]
         mov ecx, dword [byte esp+04h]
         cmp edi, ecx

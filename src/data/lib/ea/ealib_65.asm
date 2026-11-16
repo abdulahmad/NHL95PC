@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_D544C progbits alloc noexec write align=1
 extern NoFloatSupport
-global str_SHPI2, byte_D545C, byte_D54DC, byte_D6074, dword_D5562, dword_D5566, __heap_enabled, dword_D5674
-global dword_D5678, dword_D5D78, dword_D6178, dword_D6578, off_D5668, off_D566C, off_D567C, off_D5742
+global str_SHPI2, HotkeyScanTable, HotkeyModTable, AngleOctantTable, HotkeyNesting, HotkeyFuncTable, __heap_enabled, __amblksiz
+global dword_D5678, dword_D5D78, dword_D6178, dword_D6578, __EFG_printf, __EFG_scanf, off_D567C, off_D5742
 global unk_D5744, unk_D5748, unk_D574E, unk_D5756, unk_D5760, unk_D576C, unk_D577A, unk_D578A
 global unk_D579C, unk_D57B0, unk_D57C6, unk_D57DE, unk_D57F8, unk_D5814, unk_D5832, unk_D5852
 global unk_D5874, unk_D5898, unk_D58BE, unk_D58E6, unk_D5910, unk_D593C, unk_D596A, unk_D599A
@@ -13,7 +13,7 @@ global unk_D5BA4, unk_D5BE8, unk_D5C2E, unk_D5C76, unk_D5CC0, unk_D5D0C, unk_D5D
 global unk_D5DFC, unk_D5E50, unk_D5EA6, unk_D5EFE, unk_D5F58, unk_D5FB4, unk_D6012
 str_SHPI2:
         db 053h,048h,050h,049h,00h,00h,00h,00h,00h,00h,00h,00h,053h,050h,049h,054h
-byte_D545C:
+HotkeyScanTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -22,7 +22,7 @@ byte_D545C:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-byte_D54DC:
+HotkeyModTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -32,9 +32,9 @@ byte_D54DC:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h
-dword_D5562:
+HotkeyNesting:
         db 01h,00h,00h,00h
-dword_D5566:
+HotkeyFuncTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -52,13 +52,13 @@ dword_D5566:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h
-off_D5668:
+__EFG_printf:
         dd NoFloatSupport
-off_D566C:
+__EFG_scanf:
         dd NoFloatSupport
 __heap_enabled:
         db 01h,00h,00h,00h
-dword_D5674:
+__amblksiz:
         db 010h,00h,00h,00h
 dword_D5678:
         db 032h,00h,00h,00h
@@ -331,7 +331,7 @@ unk_D6012:
         db 02Fh,0A7h,068h,0ACh,0A1h,0B1h,0DBh,0B6h,014h,0BCh,04Eh,0C1h,087h,0C6h,0C1h,0CBh
         db 0FAh,0D0h,034h,0D6h,06Dh,0DBh,0A7h,0E0h,0E0h,0E5h,01Ah,0EBh,053h,0F0h,08Dh,0F5h
         db 0C6h,0FAh
-byte_D6074:
+AngleOctantTable:
         db 00h,01h,01h,02h,03h,03h,04h,04h,05h,06h,06h,07h,08h,08h,09h,0Ah
         db 0Ah,0Bh,0Bh,0Ch,0Dh,0Dh,0Eh,0Fh,0Fh,010h,010h,011h,012h,012h,013h,014h
         db 014h,015h,016h,016h,017h,017h,018h,019h,019h,01Ah,01Bh,01Bh,01Ch,01Ch,01Dh,01Eh

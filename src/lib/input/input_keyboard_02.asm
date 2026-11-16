@@ -4,31 +4,31 @@ bits 32
 section s_B29F0 progbits alloc exec nowrite align=1
 extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12
 extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, BiosKeyFunc
-extern KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask, dword_D2D5C, dword_D2D62, dword_D2D68, FatalErrorHook
+extern KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask, SavedKbdVecOffset, SavedInt16Offset, SavedRealKbdOffset, FatalErrorHook
 extern GraphicsReady, PrintBoxedText, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
-extern WaitKey, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
+extern WaitKey, SavedKbdVecSelector, SavedInt16Selector, SavedRealKbdSegment, KbdDataSelector
 global InstallKeyboardHandler, RemoveKeyboardHandler, KeyboardIrqHandler, IretStub, Int16Handler, Int16Service, KeyDown, BiosKeyCall
 global FatalError, FatalErrorEnd
 InstallKeyboardHandler:
-        cmp word [word_D2D6E], byte 0
+        cmp word [KbdDataSelector], byte 0
         jne near .1
-        o16 mov word [word_D2D6E], ds
+        o16 mov word [KbdDataSelector], ds
         in al, 21h
         push eax
         or al, 3
         out 21h, al
         mov ebx, 9
         call DosGetVector
-        mov dword [dword_D2D5C], eax
-        mov word [word_D2D60], dx
+        mov dword [SavedKbdVecOffset], eax
+        mov word [SavedKbdVecSelector], dx
         mov ebx, 16h
         call DosGetVector
-        mov dword [dword_D2D62], eax
-        mov word [word_D2D66], dx
+        mov dword [SavedInt16Offset], eax
+        mov word [SavedInt16Selector], dx
         mov ebx, 23h
         call DosGetVector
-        mov dword [dword_D2D68], eax
-        mov word [word_D2D6C], dx
+        mov dword [SavedRealKbdOffset], eax
+        mov word [SavedRealKbdSegment], dx
         mov dx, cs
         mov ebx, 9
         mov eax, KeyboardIrqHandler
@@ -50,24 +50,24 @@ InstallKeyboardHandler:
 .1:
         ret
 RemoveKeyboardHandler:
-        cmp word [word_D2D6E], byte 0
+        cmp word [KbdDataSelector], byte 0
         je short .1
-        mov word [word_D2D6E], 0
+        mov word [KbdDataSelector], 0
         pusha
         in al, 21h
         push eax
         or al, 3
         out 21h, al
         mov ebx, 9
-        mov eax, dword [dword_D2D5C]
-        mov dx, word [word_D2D60]
+        mov eax, dword [SavedKbdVecOffset]
+        mov dx, word [SavedKbdVecSelector]
         call DosSetVector
         mov ebx, 16h
-        mov eax, dword [dword_D2D62]
-        mov dx, word [word_D2D66]
+        mov eax, dword [SavedInt16Offset]
+        mov dx, word [SavedInt16Selector]
         mov ebx, 23h
-        mov eax, dword [dword_D2D68]
-        mov dx, word [word_D2D6C]
+        mov eax, dword [SavedRealKbdOffset]
+        mov dx, word [SavedRealKbdSegment]
         call DosSetVector
         and byte [0417h], 0F0h
         pop eax
@@ -91,7 +91,7 @@ KeyboardIrqHandler:
         in al, 60h
         LD mov, ebx, eax
         db 066h,02Eh,08Eh,01Dh                  ; insn: o16 mov ds,[cs:12D6Eh]
-        dd word_D2D6E
+        dd KbdDataSelector
         LD or, bl, bl
         jns short .1
         mov byte [dword ebx+byte_D2C5C], 0

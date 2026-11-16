@@ -4,13 +4,13 @@ bits 32
 %include "hockey.inc"
 section s_1205D progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awardart, awardnames, awardtitles, awardtype
-extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, byte_D42C3
+extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, TextCharH
 extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, dword_C66D0, dword_C66D4, ovlartfiles
 extern goalienotebits, demoflag, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
-extern dword_E9A9E, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
+extern SpeechPatchNext, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox
 extern foy, fputchar, frameaccum, FreeMemBlock, gameclock, gamemode, gameopts, gameover
 extern gamepal, gameresult, GetTicks, gsp, HandleHotKey_ret, hilightfont, hmtmap, HomeTeam
@@ -46,7 +46,7 @@ extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, t
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
 extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
 extern WaitClickTimeout, WaitDigiSample, penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount
-extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
+extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, UnusedSpeechWord, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
 extern word_E9AAA, penevteam, rinkobjused
 global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary, AwardsCeremony
 ;-----------------------------------------------------------------------------
@@ -800,7 +800,7 @@ ShowAwardScreens:
         mov esi, 1FEh
         sub esi, eax
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add ebp, eax
         mov ebx, esp
         mov edx, ebp
@@ -819,20 +819,20 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         add edx, ebp
         mov ebx, str_Min
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         add edx, edx
         add edx, ebp
         mov ebx, str_GAA
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -841,14 +841,14 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         shl eax, 2
         lea edx, [eax+ebp]
         mov ebx, str_L
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         add eax, edx
@@ -857,7 +857,7 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -867,7 +867,7 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         sub eax, edx
@@ -876,14 +876,14 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         shl edx, 3
         add edx, ebp
         mov ebx, str_Shots
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         add eax, edx
@@ -900,7 +900,7 @@ ShowAwardScreens:
         mov eax, dword [byte esp+03Ch]
         mov ebx, dword [nosplit eax*4+awardscopenames]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         lea eax, [byte esi+034h]
         mov ecx, ebp
         sub ecx, edx
@@ -916,7 +916,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+0Ch]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         add edx, ebp
         mov ebx, str_fmtpd
         mov eax, esi
@@ -934,7 +934,7 @@ ShowAwardScreens:
         sar edx, 1Fh
         idiv ecx
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         add edx, edx
         add edx, ebp
         mov ecx, eax
@@ -944,7 +944,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+02h]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -955,7 +955,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+04h]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         shl edx, 2
         add edx, ebp
         mov ebx, str_fmtpd
@@ -966,7 +966,7 @@ ShowAwardScreens:
         jne short .20
         xor ecx, ecx
         mov cx, word [byte edi+06h]
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         add eax, edx
@@ -978,7 +978,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+08h]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -990,7 +990,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+0Ah]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         sub eax, edx
@@ -1001,7 +1001,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+012h]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         shl edx, 3
         add edx, ebp
         mov ebx, str_fmtpd
@@ -1021,7 +1021,7 @@ ShowAwardScreens:
         idiv ecx
         mov ecx, eax
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         add eax, edx
@@ -1045,20 +1045,20 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         add edx, ebp
         mov ebx, str_G
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         add edx, edx
         add edx, ebp
         mov ebx, str_A
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -1067,14 +1067,14 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         shl edx, 2
         add edx, ebp
         mov ebx, str_PIM
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         add eax, edx
@@ -1083,7 +1083,7 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -1093,7 +1093,7 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         sub eax, edx
@@ -1102,14 +1102,14 @@ ShowAwardScreens:
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         shl edx, 3
         add edx, ebp
         mov ebx, str_Shots
         mov eax, esi
         call PrintShadowText
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         add eax, edx
@@ -1126,7 +1126,7 @@ ShowAwardScreens:
         mov eax, dword [byte esp+03Ch]
         mov ebx, dword [nosplit eax*4+awardscopenames]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         lea eax, [byte esi+034h]
         mov ecx, ebp
         sub ecx, edx
@@ -1142,7 +1142,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+02h]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         add edx, ebp
         mov ebx, str_fmtpd
         mov eax, esi
@@ -1150,7 +1150,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+04h]
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, eax
         lea edx, [eax+ebp]
         mov ebx, str_fmtpd
@@ -1159,7 +1159,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+06h]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -1170,7 +1170,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+0Ch]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         shl edx, 2
         add edx, ebp
         mov ebx, str_fmtpd
@@ -1179,7 +1179,7 @@ ShowAwardScreens:
         mov ecx, dword [byte edi+0Eh]
         sar ecx, 10h
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         add eax, edx
@@ -1190,7 +1190,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+08h]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -1202,7 +1202,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+0Ah]
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         sub eax, edx
@@ -1213,7 +1213,7 @@ ShowAwardScreens:
         xor ecx, ecx
         mov cx, word [byte edi+0Eh]
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         shl eax, 3
         lea edx, [eax+ebp]
         mov ebx, str_fmtpd
@@ -1257,7 +1257,7 @@ ShowAwardScreens:
         idiv ebx
         mov ecx, eax
         xor edx, edx
-        mov dl, byte [byte_D42C3]
+        mov dl, byte [TextCharH]
         mov eax, edx
         shl eax, 3
         add eax, edx
@@ -1289,7 +1289,7 @@ ShowAwardScreens:
         mov edx, ebp
         mov eax, esi
         call PrintShadowText
-        movzx ebp, byte [byte_D42C3]
+        movzx ebp, byte [TextCharH]
         mov eax, 1BAh
         sub eax, ebp
         mov ebp, eax

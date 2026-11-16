@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_F23BC nobits alloc noexec write align=1
-global byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType, byte_F24C4, byte_F24C5
-global dword_F23EA, dword_F23EE, dword_F2416, dword_F243C, AtexitTable, SpeechBankCount, dword_F24C8, delaycount
-global unk_F24D0, unk_F24D4
+global byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType, __HeapFlags, __nheap_clean
+global dword_F23EA, dword_F23EE, dword_F2416, dword_F243C, AtexitTable, SpeechBankCount, __ClosedStreams, delaycount
+global _doserrno, ErrnoVar
 byte_F23BC:
         resb 16
 byte_F23CC:
@@ -29,15 +29,15 @@ AtexitTable:
         resb 128
 SpeechBankCount:
         resb 4
-byte_F24C4:
+__HeapFlags:
         resb 1
-byte_F24C5:
+__nheap_clean:
         resb 3
-dword_F24C8:
+__ClosedStreams:
         resb 4
 delaycount:
         resb 4
-unk_F24D0:
+_doserrno:
         resb 4
-unk_F24D4:
+ErrnoVar:
         resb 4

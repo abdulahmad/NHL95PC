@@ -4,7 +4,7 @@ bits 32
 section s_4DFF7 progbits alloc exec nowrite align=1
 extern __CHK, assgoalie, assgoalie_popebp, assreplace, asswingd, asswingd_skateto, awscore, awtmap
 extern awtmstruct, byte_DF87F, camy, ChkScorerMilestone, clockticks, CloseTextOverlay, crowdlevel, deferpending
-extern demoflag, doplayeracc, dword_E9A9E, dword_E9AB6, EvadePlayers, exitgame, fox, foy
+extern demoflag, doplayeracc, SpeechPatchNext, dword_E9AB6, EvadePlayers, exitgame, fox, foy
 extern gameclock, gameopts, gmode, gmode2, goalevent, goalevent_b1, goalevent_b2, goalevent_b3
 extern goalevent_b4, gsp, hmrosterjersey, hmscore, hmtmap, hmtmstruct, HomeTeam, injurystop
 extern joysampling, joysampling_save, LoadTeamPPV, musicon, ovlseq, ovltimer, PaGoal, PaSpeechBusy
@@ -12,7 +12,7 @@ extern penaltysc, PenBuf, PenShotAssign, penshotmode, periodendtime, PerTimeTota
 extern puckc, puckstruct, puckvx, puckvy, puckvz, puckx, pucky, puckz
 extern QueueGoalieNote, randomd0, RefPen, refsigdir, refsigspa_m2, RefStep, regd0, regd1
 extern regd2, SetSPA, sflags3, skateto, SortCords, sounddev, teamabbrevs, VisTeam
-extern vtoa, word_E9AB0
+extern vtoa, GoalState
 global assrefatdot, assreffollow, SkateToSpot, CrowdOnStoppage, assrefwhistle, ass_replace_popx, ass_popx, ass_skate_temp34
 global assrefsignal, assrefgoalpa, assrefdrop, assrefgoalline
 ;-----------------------------------------------------------------------------
@@ -1035,7 +1035,7 @@ assrefsignal:
         sar edx, 1Fh
         idiv dword [byte ebp-04h]
         push eax
-        mov eax, dword [word_E9AB0-2]
+        mov eax, dword [GoalState-2]
         sar eax, 10h
         push eax
         cmp word [byte ecx+034h], byte 0
@@ -1356,7 +1356,7 @@ assrefgoalpa:
         shl eax, 7
         cmp byte [dword eax+byte_DF87F], 0
         je short .19
-        cmp word [dword_E9A9E], byte 0
+        cmp word [SpeechPatchNext], byte 0
         jne short .19
         xor dh, dh
         mov byte [dword eax+byte_DF87F], dh
@@ -1366,7 +1366,7 @@ assrefgoalpa:
         sar eax, 10h
         cmp eax, byte 0FFFFFFFFh
         je short .20
-        mov word [dword_E9A9E], 1
+        mov word [SpeechPatchNext], 1
         call CloseTextOverlay
         jmp near .64
 .17:

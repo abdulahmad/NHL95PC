@@ -342,7 +342,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             DrawShape(f.bkgd);
             DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, 0, (int)f.goals);
             DrawArtHotspot(*(int *)(hmcrestbmp[side] + 0x2C), 0x3D, 0x50);
-            y = byte_D42C3 + 0x78;
+            y = TextCharH + 0x78;
             for (f.i = 0; f.i < 8 && !f.err; f.i++) {
                 f.k = f.linetab[side][f.i + 0x28];
                 if (f.k < 0x64) {
@@ -352,7 +352,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                         PrintShadowText(0xB4, y, f.name);
                         if (hmroster[f.k * 0x27 + side * 0x444] == 1) PrintShadowText(0x226, y, (char *)str_Injured2);
                     }
-                    y += byte_D42C3 + 0xE;
+                    y += TextCharH + 0xE;
                 }
             }
             FadePalStep(0, f.pal, 0x10);
@@ -438,7 +438,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                         f.scored = 0xFF;
                         sprintf(f.name, (char *)str_02d02d, goal[6], goal[7]);
                         PrintShadowText(0x20D, y, f.name);
-                        y += byte_D42C3;
+                        y += TextCharH;
                         if (goal[2] != 0xFF) {
                             f.k = goal[2];
                             f.err = ReadKeyRec(f.dbfh, f.keyrec, RECKEY(goal[0], f.k));
@@ -460,7 +460,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                                 PrintShadowText(0xE6, y, f.name);
                             }
                         }
-                        y += byte_D42C3;
+                        y += TextCharH;
                     }
                 }
                 break;
@@ -475,11 +475,11 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                         PrintShadowText(0xDC, y, f.keyrec + 0x13);
                         sprintf(f.name, (char *)str_02d02d, ev[5], ev[6]);
                         PrintShadowText(0x229, y, f.name);
-                        y += byte_D42C3;
+                        y += TextCharH;
                         if (ev[3] == 0xFF) sprintf(f.name, (char *)str_SS4, (char *)penaltynames[ev[2]]);
                         else sprintf(f.name, (char *)str_DMinS, ev[3], (char *)penaltynames[ev[2]]);
                         PrintShadowText(0xDC, y, f.name);
-                        y += byte_D42C3;
+                        y += TextCharH;
                         f.penalties = 0xFF;
                     }
                 }
@@ -494,7 +494,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                 break;
             }
             f.i++;
-            if (y >= 0x177 - byte_D42C3 || f.pageend || f.done || f.err) {
+            if (y >= 0x177 - TextCharH || f.pageend || f.done || f.err) {
                 /* The page is full, or the f.period is over: the f.shots on goal, the announcer, then wait. */
                 if (mode & 1) {
                     f.score[0] = 0;
@@ -509,7 +509,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                     }
                     sprintf(f.name, (char *)str_ShotsOnGoal);
                     PrintShadowText((500 - fputchar(f.name)) / 2 + 0x86, 400, f.name);
-                    y = byte_D42C3 + 400;
+                    y = TextCharH + 400;
                     sprintf(f.name, (char *)str_SDD, (char *)f.recs[0] + 0x1A, f.prds[f.period - 1][1], f.shots[0]);
                     PrintShadowText(0x17F - fputchar(f.name) - 0x1E, y, f.name);
                     sprintf(f.name, (char *)str_SDD, (char *)f.recs[1] + 0x1A, f.prds[f.period - 1][3], f.shots[1]);

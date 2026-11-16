@@ -1,0 +1,174 @@
+byte_D4174 JoyButtons {source_game=96PC,confidence=medium} Last joystick button byte
+byte_D4175 JoyButtonsPrev {source_game=96PC,confidence=medium} Previous joystick button byte
+byte_D4176 JoyDirection {source_game=96PC,confidence=medium} Joystick direction bits built from the axes
+byte_D42C0 TextFirstChar {source_game=96PC,confidence=medium} First character in the font
+byte_D42C2 TextCharW {source_game=96PC,confidence=medium} Font character width
+byte_D42C3 TextCharH {source_game=96PC,confidence=medium} Font character height
+byte_D42C4 TextSpacing {source_game=96PC,confidence=medium} Font spacing
+byte_D42C5 TextFontH {source_game=96PC,confidence=medium} Font height
+byte_D42C6 TextFontAscent {source_game=96PC,confidence=medium} Font ascent of the current font
+byte_D4545 DebugBackColor {source_game=96PC,confidence=medium} Debug background colour
+byte_D5440 WVideoActive {source_game=96PC,confidence=medium} Debugger video active
+byte_D545C HotkeyScanTable {source_game=96PC,confidence=medium} Scan code per registered hotkey
+byte_D54DC HotkeyModTable {source_game=96PC,confidence=medium} Shift state per registered hotkey
+byte_D6074 AngleOctantTable {source_game=96PC,confidence=medium} Octant per delta slope for AngleFromDelta
+byte_D86C8 GusDmaPageTable {source_game=96PC,confidence=medium} ISA DMA page port and channel bits for each DMA channel
+byte_D89E0 GusDramSized {source_game=96PC,confidence=medium} Set once the card memory size has been measured
+byte_D89E4 RemapTable {source_game=96PC,confidence=medium} Colour remap table
+byte_DC268 UnusedStateByte {source_game=96PC,confidence=medium} Saved and restored with the game state; otherwise unused
+byte_F79C8 GusDmaControl {source_game=96PC,confidence=medium} DMA control register value for the download
+dword_C4CA0 HugeValLo {source_game=96PC,confidence=medium} Low half of HUGE_VAL
+dword_C4CA4 HugeValHi {source_game=96PC,confidence=medium} High half of HUGE_VAL
+dword_D2D5C SavedKbdVecOffset {source_game=96PC,confidence=medium} Previous keyboard interrupt offset
+dword_D2D62 SavedInt16Offset {source_game=96PC,confidence=medium} Previous INT 16h offset
+dword_D2D68 SavedRealKbdOffset {source_game=96PC,confidence=medium} Previous real mode keyboard handler offset
+dword_D2FFC MouseDeltaX {source_game=96PC,confidence=medium} Mouse motion X since the last read
+dword_D301C MouseForceTwoButtons {source_game=96PC,confidence=medium} Treat the mouse as two buttons
+dword_D303C MouseButtons {source_game=96PC,confidence=medium} Mouse buttons
+dword_D3048 ViewScreenHeight {source_game=96PC,confidence=medium} Full screen height the game view is sized against
+dword_D3054 ScreenSaveBitmap {source_game=96PC,confidence=medium} Bitmap holding a copy of the screen
+dword_D3090 SavedBreakOffset {source_game=96PC,confidence=medium} Previous ctrl-break handler offset
+dword_D3096 BreakCallFunc {source_game=96PC,confidence=medium} Ctrl-break chain routine
+dword_D30BC DrawClipLeft {source_game=96PC,confidence=medium} Left edge of the draw target's clip rectangle; x below it is not drawn
+dword_D30C0 DrawClipRight {source_game=96PC,confidence=medium} Right edge of the draw target's clip rectangle (exclusive)
+dword_D4108 PutBlockScaleSteps {source_game=96PC,confidence=medium} Block scale steps
+dword_D417B JoyX1Min {source_game=96PC,confidence=medium} Joystick 1 X axis minimum seen
+dword_D4183 JoyX1Max {source_game=96PC,confidence=medium} Joystick 1 X axis maximum seen
+dword_D4187 JoyX1Settle {source_game=96PC,confidence=medium} Reads left before the joystick 1 X range is trusted
+dword_D418B JoyY1Min {source_game=96PC,confidence=medium} Joystick 1 Y axis minimum seen
+dword_D418F JoyY1Max {source_game=96PC,confidence=medium} Joystick 1 Y axis maximum seen
+dword_D4197 JoyY1MinSeen {source_game=96PC,confidence=medium} Joystick 1 Y axis lowest reading this pass
+dword_D419F JoyY1MaxSeen {source_game=96PC,confidence=medium} Joystick 1 Y axis highest reading this pass
+dword_D41A3 JoyY1Settle {source_game=96PC,confidence=medium} Reads left before the joystick 1 Y range is trusted
+dword_D41A7 JoyX2Min {source_game=96PC,confidence=medium} Joystick 2 X axis minimum seen
+dword_D41AB JoyX2Max {source_game=96PC,confidence=medium} Joystick 2 X axis maximum seen
+dword_D429C RetraceTimeout {source_game=96PC,confidence=medium} Loop count before giving up on vertical retrace
+dword_D42B0 TextOriginX {source_game=96PC,confidence=medium} X of the text drawing position
+dword_D42B8 TextShadowOn {source_game=96PC,confidence=medium} Text shadow is on
+dword_D42BC TextFontTag {source_game=96PC,confidence=medium} Text font tag
+dword_D42C8 TextWidthTable {source_game=96PC,confidence=medium} Font width table
+dword_D42CC TextCursorX {source_game=96PC,confidence=medium} Text cursor x
+dword_D42D0 TextCursorY {source_game=96PC,confidence=medium} Text cursor y
+dword_D42D8 TextTop {source_game=96PC,confidence=medium} Text window top
+dword_D42DC TextRight {source_game=96PC,confidence=medium} Text window right
+dword_D42E0 TextBottom {source_game=96PC,confidence=medium} Carried name by usage
+dword_D44AC FindFilePtr {source_game=96PC,confidence=medium} Find file pointer
+dword_D4598 MemViewCursor {source_game=96PC,confidence=medium} Memory viewer cursor
+dword_D45A4 PaletteCursorColours {source_game=96PC,confidence=medium} Palette viewer cursor xor colours
+dword_D4CF0 CMainEnv {source_game=96PC,confidence=medium} Environment pointer passed to main
+dword_D4CF4 CMainResult {source_game=96PC,confidence=medium} Value main returned
+dword_D4F4C VesaBank {source_game=96PC,confidence=medium} Current VESA bank
+dword_D4FA0 RetraceMode {source_game=96PC,confidence=medium} How the wait for retrace works
+dword_D4FF1 DosErrnoTable {source_game=96PC,confidence=medium} DOS error to errno table
+dword_D5250 SbDmaAlloc {source_game=96PC,confidence=medium} Sound Blaster DMA buffer allocation
+dword_D525C SbDma {source_game=96PC,confidence=medium} Sound Blaster DMA channel
+dword_D53B4 GusDriverStreaming {source_game=96PC,confidence=medium} Set while the Gravis driver streams
+dword_D5562 HotkeyNesting {source_game=96PC,confidence=medium} Hotkey dispatch nesting count
+dword_D5566 HotkeyFuncTable {source_game=96PC,confidence=medium} Routine per registered hotkey
+dword_D7AF0 GusStreamActive {source_game=96PC,confidence=medium} Set while the stream voices are running
+dword_D847C GusStreamBufSize {source_game=96PC,confidence=medium} Size of the stream buffer in card memory
+dword_D8480 GusStreamHalfSize {source_game=96PC,confidence=medium} Size of one half of the stream buffer
+dword_D84B8 GusStreamCardEnd {source_game=96PC,confidence=medium} End of the stream buffers in card memory
+dword_D84C0 GusStreamStartLo {source_game=96PC,confidence=medium} Low word of the stream voices' start address
+dword_D84C4 GusStreamEndLo {source_game=96PC,confidence=medium} Low word of the stream voices' end address
+dword_D84CC GusEnvVarName {source_game=96PC,confidence=medium} Points to the name of the environment variable that holds the card settings
+dword_D86DC GusIrqOldHandler {source_game=96PC,confidence=medium} Saved old handler offset in the IRQ table
+dword_D87A0 GusMidiPending {source_game=96PC,confidence=medium} Used by GusMidiIrqHandler
+dword_DC8A0 StreamHandle {source_game=96PC,confidence=medium} CD stream handle
+dword_E9A9E SpeechPatchNext {source_game=96PC,confidence=medium} Speech patch header: next (set to 0 at start up)
+dword_EDAAC MemDescriptorTop {source_game=96PC,confidence=medium} Memory descriptor top
+dword_EDCBC ScreenWidthPtr {source_game=96PC,confidence=medium} Pointer to the screen width
+dword_EDE68 MemViewSel {source_game=96PC,confidence=medium} Memory viewer selected row
+dword_EDE78 MemViewKey {source_game=96PC,confidence=medium} Memory viewer last key
+dword_EDE7C MemViewFlags {source_game=96PC,confidence=medium} Memory viewer flags
+dword_EDE84 MemViewPrevSel {source_game=96PC,confidence=medium} Memory viewer previous selection
+dword_EDEE8 UnpackSrcPtr {source_game=96PC,confidence=medium} Byte pair unpacker source pointer
+dword_EDEF0 UnpackPairState {source_game=96PC,confidence=medium} Byte pair unpacker state
+dword_F58D8 CMainArgc {source_game=96PC,confidence=medium} Argument count passed to main
+dword_F58DC CMainArgv {source_game=96PC,confidence=medium} Argument vector passed to main
+dword_F612C GusEnvConfig {source_game=96PC,confidence=medium} ULTRASND environment settings
+dword_F79BC GusDmaLeft {source_game=96PC,confidence=medium} Bytes of the download still to transfer
+dword_F79C0 GusDmaChunkSize {source_game=96PC,confidence=medium} Size of the current DMA chunk
+dword_F79C4 GusDmaDone {source_game=96PC,confidence=medium} Bytes of the download transferred so far
+jpt_A33EC EmuOpcodeJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuTrapExit
+jpt_A34EC EmuModRmJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuTrapExit
+jpt_A41C1 EmuDispatchD9RegJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuDispatchD9Reg
+jpt_A4300 EmuFtstFxamJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuFtstFxam
+jpt_A4381 EmuSignOpsJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuSignOps
+jpt_A459C EmuLogOpsJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuLogOps
+jpt_A46A6 EmuRemOpsJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuRemOps
+jpt_A47BE EmuFucomppJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuFucompp
+jpt_A4847 EmuDispatchDBRegJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuDispatchDBReg
+jpt_A4A50 EmuFcomppJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuFcompp
+jpt_A4C05 EmuDispatchDFRegJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of EmuDispatchDFReg
+jpt_B5E1F VesaSetBankJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of VesaSetBank
+jpt_B708F FillRectSpansJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of FillRectSpansCore
+off_D2F70 FpuExitHook {source_game=96PC,confidence=medium} FPU shutdown routine called at exit
+off_D306C HidePointerKeepHook {source_game=96PC,confidence=medium} Hides the pointer keeping the screen
+off_D3070 HidePointerHook {source_game=96PC,confidence=medium} Hides the pointer
+off_D3074 ShowPointerHook {source_game=96PC,confidence=medium} Shows the pointer
+off_D42A4 TextFont {source_game=96PC,confidence=medium} Current text font
+off_D516C ArtDrawModeFuncs {source_game=96PC,confidence=medium} Draw routine for each art draw mode
+off_D6600 EmuInitHook {source_game=96PC,confidence=medium} X87 emulator init routine
+off_D6604 EmuFiniHook {source_game=96PC,confidence=medium} X87 emulator shutdown routine
+unk_93C50 MemMapRulePtr {source_game=96PC,confidence=medium} Pointer to the line of stars written in the memory map file
+unk_9B470 FillRectSpansModeTable {source_game=96PC,confidence=medium} Used by FillRectSpans
+unk_A197C IntrStubs {source_game=96PC,confidence=medium} Used by IntrLoadRegs; IntrLoadSegRegs
+unk_A327E EmuRegRing {source_game=96PC,confidence=medium} Used by EmuFaddp; EmuFcomppJumpTable; EmuFdivp ...
+unk_A3280 EmuRegLastSlot {source_game=96PC,confidence=medium} Offset of the last emulator register slot
+unk_A3282 EmuRegSlots {source_game=96PC,confidence=medium} Used by EmuFaddp; EmuFcomppJumpTable; EmuFdivp ...
+unk_A32CE EmuRegTagMasks {source_game=96PC,confidence=medium} Used by EmuExamine; EmuFaddp; EmuFcomppJumpTable ...
+unk_A331E EmuCompareCcBits {source_game=96PC,confidence=medium} Used by RoundToDouble
+unk_A332C EmuEaModRmTable {source_game=96PC,confidence=medium} Used by EmuTrapExit
+unk_A338C EmuEaSibTable {source_game=96PC,confidence=medium} Used by EaSib
+unk_B4A0C AngleFromDeltaJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of AngleFromDelta
+unk_D4448 FindFileDta {source_game=96PC,confidence=medium} Find file data block
+unk_D44B0 FindFileName {source_game=96PC,confidence=medium} Find file name
+unk_D44CE FindFilePattern {source_game=96PC,confidence=medium} Find file pattern
+unk_D5258 SbIrq {source_game=96PC,confidence=medium} Sound Blaster interrupt
+unk_D657C EmuTrapFrame {source_game=96PC,confidence=medium} X87 emulator trap frame
+unk_F24D4 ErrnoVar {source_game=96PC,confidence=medium} C library errno
+word_CC10C lcline_aw {source_game=96PC,confidence=medium} Away counterpart of lcline
+word_D2D60 SavedKbdVecSelector {source_game=96PC,confidence=medium} Previous keyboard interrupt selector
+word_D2D66 SavedInt16Selector {source_game=96PC,confidence=medium} Previous INT 16h selector
+word_D2D6C SavedRealKbdSegment {source_game=96PC,confidence=medium} Previous real mode keyboard handler segment
+word_D2D6E KbdDataSelector {source_game=96PC,confidence=medium} Data selector used by the keyboard handler
+word_D3004 MouseSavedSensX {source_game=96PC,confidence=medium} Mouse X sensitivity saved at start up
+word_D3006 MouseSavedSensY {source_game=96PC,confidence=medium} Mouse Y sensitivity saved at start up
+word_D3008 MouseSavedThreshold {source_game=96PC,confidence=medium} Mouse double speed threshold saved at start up
+word_D3094 SavedBreakSelector {source_game=96PC,confidence=medium} Previous ctrl-break handler selector
+word_D309A BreakDataSelector {source_game=96PC,confidence=medium} Data selector for the ctrl-break handler
+word_D41FA SavedEsSelector {source_game=96PC,confidence=medium} ES selector saved at start up
+word_D84BC GusStreamLoopLo {source_game=96PC,confidence=medium} Low word of the stream voices' loop point
+word_D84BE GusStreamLoopHi {source_game=96PC,confidence=medium} High word of the stream voices' loop point
+word_D84C2 GusStreamStartHi {source_game=96PC,confidence=medium} High word of the stream voices' start address
+word_D84C6 GusStreamEndHi {source_game=96PC,confidence=medium} High word of the stream voices' end address
+word_D86DA GusIrqVectorTable {source_game=96PC,confidence=medium} Interrupt vector and saved old handler of each card IRQ line
+word_D86E0 GusIrqOldSelector {source_game=96PC,confidence=medium} Saved old handler selector in the IRQ table
+word_D8768 GusIrqLatchPort {source_game=96PC,confidence=medium} Card port of the IRQ latch register
+word_D876A GusDmaLatchPort {source_game=96PC,confidence=medium} Card port of the DMA latch register
+word_E9A9C UnusedSpeechWord {source_game=96PC,confidence=medium} Reset to -1 for each game; otherwise unused
+word_E9AB0 GoalState {source_game=96PC,confidence=medium} Goal state
+word_F531E GusDriverBasePort {source_game=96PC,confidence=medium} Base port of the Gravis card
+word_F6128 GusDramSize {source_game=96PC,confidence=medium} Gravis on-board memory size
+word_F79B8 GusDmaChunkLo {source_game=96PC,confidence=medium} Low word of the current DMA chunk's card address
+word_F79BA GusDmaChunkHi {source_game=96PC,confidence=medium} High word of the current DMA chunk's card address
+word_F79C9 GusDmaFlags {source_game=96PC,confidence=medium} Flags of the current download
+byte_C4B6C CharClassTable {source_game=96PC,confidence=medium} Run-time library character classes
+byte_D4D59 __iob_flags {source_game=96PC,confidence=medium} Stdio stream flags
+byte_F24C4 __HeapFlags {source_game=96PC,confidence=medium} Heap manager flags
+byte_F24C5 __nheap_clean {source_game=96PC,confidence=medium} Near heap clean flag
+dword_D4F21 _fmode {source_game=96PC,confidence=medium} Default file translation mode
+dword_D500C __NHandles {source_game=96PC,confidence=medium} Number of file handles
+dword_D5060 __io_mode {source_game=96PC,confidence=medium} File handle mode table pointer
+dword_D5674 __amblksiz {source_game=96PC,confidence=medium} Heap growth amount
+dword_EDF00 __OpenStreams {source_game=96PC,confidence=medium} List of open stdio streams
+dword_F24C8 __ClosedStreams {source_game=96PC,confidence=medium} List of closed stdio streams
+off_D5668 __EFG_printf {source_game=96PC,confidence=medium} Float formatting routine for printf
+off_D566C __EFG_scanf {source_game=96PC,confidence=medium} Float parsing routine for scanf
+unk_980C0 _Alphabet {source_game=96PC,confidence=medium} Run-time library digit and letter characters
+unk_D4D18 __iob {source_game=96PC,confidence=medium} Stdio stream table
+unk_D4D32 __stdout_buf {source_game=96PC,confidence=medium} Stdout buffer
+unk_D4D9A __iob_end {source_game=96PC,confidence=medium} End of the stdio stream table
+unk_D4F20 __NFiles {source_game=96PC,confidence=medium} Number of stdio streams
+unk_F24D0 _doserrno {source_game=96PC,confidence=medium} DOS error number

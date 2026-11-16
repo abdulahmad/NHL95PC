@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
 extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
-extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, FlipArtHorizontal
+extern fputchar, FreeMemBlock, ArtDrawModeFuncs, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, FlipArtHorizontal
 extern FlipArtVertical, RemapArt, bcopy, UnpackArtRle
 global ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered, ShapePixelSize, DrawArtAnyFormat, DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos
 ToUpperChar:
@@ -399,7 +399,7 @@ DrawArtAnyFormat:
         mov edi, dword [byte esp+0Ch]
         push edi
         push esi
-        call dword [nosplit eax*4+off_D516C]
+        call dword [nosplit eax*4+ArtDrawModeFuncs]
         add esp, byte 0Ch
         mov ebp, dword [esp]
         test ebp, ebp

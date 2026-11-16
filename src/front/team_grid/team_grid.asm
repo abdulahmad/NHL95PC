@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_37B92 progbits alloc exec nowrite align=1
-extern __CHK, AllocMemBlock, byte_D42C3, cddriveptr, crestnames, dlgtextbg, dlgtextfg, DrawArt
+extern __CHK, AllocMemBlock, TextCharH, cddriveptr, crestnames, dlgtextbg, dlgtextfg, DrawArt
 extern fileoncd, FindShape, fputchar, FreeMemBlock, GrabBlock, gridcellbuf, gridcellx, gridcelly
 extern LoadBank, MakePath, memset_, PrintCenteredText, PrintShadowText, PutBlock, SetClipWindow, SetTextColors
 extern str_Back, str_Callogo2, strcpy_, XorRectOutline, DrawFrameClipped
@@ -155,7 +155,7 @@ DrawTeamGridName:
         lea ebp, [dword eax+097h]
         lea edx, [byte esi+04Dh]
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, ebp
         inc eax
         push eax

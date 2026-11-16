@@ -8,7 +8,7 @@ extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, bu
 extern assonetimer_blade_y, fofdata2_b3, fofdata2_b7, c1playernum, c2playernum, camx, camy, changeplayer
 extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel
 extern donothing, doplayeracc, doshot, DrawPanelLine, demoflag, dword_CC0FA, playsuspended, ovlartbank
-extern dword_E9A9E, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
+extern SpeechPatchNext, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
 extern fodir2, fofdata2, forcepldata, fox, foy, FreeMemBlock, gameclock, gameopts
 extern gmode, gmode2, gsp, hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline
 extern hmtmpdst, hmtmstruct, iflags, introskipped, joyqcount, joyqhead, joyqtick, joyqueue

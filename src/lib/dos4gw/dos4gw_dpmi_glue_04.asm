@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9AA66 progbits alloc exec nowrite align=1
 extern __brk_, __unlink_, _nfree_, _Extender, _ExtenderSubtype, Is8087, HeapList, _curbrk
-extern __heap_enabled, dword_D5674, RationalAllocLimit, RationalAllocFlags
+extern __heap_enabled, __amblksiz, RationalAllocLimit, RationalAllocFlags
 global __FreeDPMIBlocks_, __ReAllocDPMIBlock_, __LinkUpNewMHeap_, __LastFree_, RationalAlloc_, RationalAlloc_, __CreateNewNHeap_, __ExpandDGROUP_
 global __AdjustAmount_
 __FreeDPMIBlocks_:
@@ -541,7 +541,7 @@ __AdjustAmount_:
         add edx, byte 3Ch
         cmp edx, dword [ebx]
         jb short .1
-        mov esi, dword [dword_D5674]
+        mov esi, dword [__amblksiz]
         cmp edx, esi
         jae short .7
         mov edx, esi

@@ -7,36 +7,36 @@ extern str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul, str_Aug, str_Sep
 extern str_Oct, str_Nov, str_Dec
 global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, KeyStateTable, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
 global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, joyenablemask, cpuinfo_b0
-global cpuinfo_b1, JoyButtonBits, JoyPortMask, byte_D4174, byte_D4175, byte_D4176, joyedgedir, byte_D41CC
-global byte_D41CD, byte_D4244, byte_D4245, byte_D4246, byte_D4280, byte_D42C0, byte_D42C1, byte_D42C2
-global byte_D42C3, byte_D42C4, byte_D42C5, byte_D42C6, ColourRemap, ResourceArchiveName, DebugRow, byte_D4545
+global cpuinfo_b1, JoyButtonBits, JoyPortMask, JoyButtons, JoyButtonsPrev, JoyDirection, joyedgedir, byte_D41CC
+global byte_D41CD, byte_D4244, byte_D4245, byte_D4246, byte_D4280, TextFirstChar, byte_D42C1, TextCharW
+global TextCharH, TextSpacing, TextFontH, TextFontAscent, ColourRemap, ResourceArchiveName, DebugRow, DebugBackColor
 global DebugTabWidth, __8087, FpuType, BiosKeyFunc, KeyBuffer, KeyBufferHead, KeyBufferTail, KeyBufferMask
-global dword_D2D5C, dword_D2D62, dword_D2D68, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, FatalErrorHook
+global SavedKbdVecOffset, SavedInt16Offset, SavedRealKbdOffset, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, FatalErrorHook
 global dword_D2F78, dword_D2F7A, dword_D2F7C, dword_D2F80, dword_D2F84, dword_D2F88, dword_D2F8C, dword_D2F90
 global joycalactive, tickcount, slowtickcount, oldint8off, mouseminx, mouseminy, mousemaxx, mousemaxy
-global dword_D2FFC, MouseButtonState, dword_D301C, GraphicsReady, MousePresent, mousex, mousey, mousebtns
-global PointerCount, dword_D303C, dword_D3044, dword_D3048, dword_D304C, dword_D3050, dword_D3054, dword_D3058
-global cpuinfo_d0, cpuinfo_d1, dword_D3090, dword_D3096, ScreenWidth, dword_D30A8, cliprect_x0, cliprect_y0
-global cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase
+global MouseDeltaX, MouseButtonState, MouseForceTwoButtons, GraphicsReady, MousePresent, mousex, mousey, mousebtns
+global PointerCount, MouseButtons, dword_D3044, ViewScreenHeight, dword_D304C, dword_D3050, ScreenSaveBitmap, dword_D3058
+global cpuinfo_d0, cpuinfo_d1, SavedBreakOffset, BreakCallFunc, ScreenWidth, dword_D30A8, cliprect_x0, cliprect_y0
+global cliprect_x1, cliprect_y1, DrawClipLeft, DrawClipRight, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase
 global BackBufferWidth, dword_D30D8, dword_D30DC, dword_D30E0, dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0
-global dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108, JoyRawX1, JoyRawY1, JoyRawX2, JoyRawY2
-global JoyAxisY2, JoyAxisMask, JoyX1Threshold, dword_D417B, JoyX1Center, dword_D4183, dword_D4187, dword_D418B
-global dword_D418F, JoyY1Threshold, dword_D4197, JoyY1Center, dword_D419F, dword_D41A3, dword_D41A7, dword_D41AB
+global dword_D30F4, dword_D30F8, ScreenRowTable, PutBlockScaleSteps, JoyRawX1, JoyRawY1, JoyRawX2, JoyRawY2
+global JoyAxisY2, JoyAxisMask, JoyX1Threshold, JoyX1Min, JoyX1Center, JoyX1Max, JoyX1Settle, JoyY1Min
+global JoyY1Max, JoyY1Threshold, JoyY1MinSeen, JoyY1Center, JoyY1MaxSeen, JoyY1Settle, JoyX2Min, JoyX2Max
 global JoyXScale, JoyYScale, dword_D41CE, dword_D41EA, bailout_vec, FpuFlags, dword_D41FC, dword_D4200
 global dword_D4204, dword_D4208, dword_D420C, dword_D4210, dword_D4214, dword_D4218, dword_D421C, dword_D4220
 global dword_D4224, dword_D4228, dword_D422C, dword_D4230, dword_D4234, dword_D4238, dword_D423C, dword_D4240
 global dword_D4248, dword_D424C, dword_D4250, dword_D4254, dword_D4258, dword_D425C, dword_D4260, dword_D4264
 global dword_D4268, dword_D426C, dword_D4270, dword_D4274, dword_D4278, dword_D427C, tickdeadline, ticklast
-global dword_D429C, fontcolor, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8
-global dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, RowCopyFunc, HeapList
-global HeapRover, HeapLargestFree, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, SlowDeadline
+global RetraceTimeout, fontcolor, dword_D42AC, TextOriginX, dword_D42B4, TextShadowOn, TextFontTag, TextWidthTable
+global TextCursorX, TextCursorY, dword_D42D4, TextTop, TextRight, TextBottom, RowCopyFunc, HeapList
+global HeapRover, HeapLargestFree, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, FindFilePtr, SlowDeadline
 global DebugMode, DebugScreenBase, DebugLineWidth, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
-global MemViewRed, MemViewShowDetail, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
-global ExitHook, Int23Hook, off_D2F70, off_D306C, off_D3070, off_D3074, mousepollfn, off_D3088
-global off_D308C, KbdIdleHook, off_D42A4, joycalprehook, joycalposthook, randseed, unk_D41D2, unk_D4448
-global unk_D44B0, unk_D44CE, DefaultFont, unk_D45F8, unk_D47B4, word_D2D60, word_D2D66, word_D2D6C
-global word_D2D6E, saved_ss, oldint8sel, word_D3004, word_D3006, word_D3008, word_D3094, word_D309A
-global EmuHookFlags, word_D41FA
+global MemViewRed, MemViewShowDetail, dword_D4594, MemViewCursor, dword_D459C, dword_D45A0, PaletteCursorColours, dword_D45B0
+global ExitHook, Int23Hook, FpuExitHook, HidePointerKeepHook, HidePointerHook, ShowPointerHook, mousepollfn, off_D3088
+global off_D308C, KbdIdleHook, TextFont, joycalprehook, joycalposthook, randseed, unk_D41D2, FindFileDta
+global FindFileName, FindFilePattern, DefaultFont, unk_D45F8, unk_D47B4, SavedKbdVecSelector, SavedInt16Selector, SavedRealKbdSegment
+global KbdDataSelector, saved_ss, oldint8sel, MouseSavedSensX, MouseSavedSensY, MouseSavedThreshold, SavedBreakSelector, BreakDataSelector
+global EmuHookFlags, SavedEsSelector
 BiosKeyFunc:
         dd BiosKeyCall
         db 00h,00h,00h,00h
@@ -69,19 +69,19 @@ byte_D2D2F:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D2D5C:
+SavedKbdVecOffset:
         db 00h,00h,00h,00h
-word_D2D60:
+SavedKbdVecSelector:
         db 00h,00h
-dword_D2D62:
+SavedInt16Offset:
         db 00h,00h,00h,00h
-word_D2D66:
+SavedInt16Selector:
         db 00h,00h
-dword_D2D68:
+SavedRealKbdOffset:
         db 00h,00h,00h,00h
-word_D2D6C:
+SavedRealKbdSegment:
         db 00h,00h
-word_D2D6E:
+KbdDataSelector:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h
 byte_D2D7C:
         db 00h,01Bh,031h,032h,033h,034h,035h,036h,037h,038h,039h,030h,02Dh,03Dh,08h,09h
@@ -135,7 +135,7 @@ ExitHook:
         dd __null_int23_exit_
 Int23Hook:
         dd __null_int23_exit_
-off_D2F70:
+FpuExitHook:
         dd __null_int23_exit_
 FatalErrorHook:
         db 00h,00h,00h,00h
@@ -177,18 +177,18 @@ mousemaxx:
         db 040h,01h,00h,00h
 mousemaxy:
         db 0C8h,00h,00h,00h
-dword_D2FFC:
+MouseDeltaX:
         db 00h,00h,00h,00h
 MouseButtonState:
         db 01h,00h,00h,00h
-word_D3004:
+MouseSavedSensX:
         db 00h,00h
-word_D3006:
+MouseSavedSensY:
         db 00h,00h
-word_D3008:
+MouseSavedThreshold:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D301C:
+MouseForceTwoButtons:
         db 00h,00h,00h,00h,01h,00h,00h,00h
 GraphicsReady:
         db 00h,00h,00h,00h
@@ -202,19 +202,19 @@ mousebtns:
         db 00h,00h,00h,00h
 PointerCount:
         db 00h,00h,00h,00h
-dword_D303C:
+MouseButtons:
         db 00h,00h,00h,00h
 joyenablemask:
         db 00h,00h,00h,00h
 dword_D3044:
         db 00h,00h,00h,00h
-dword_D3048:
+ViewScreenHeight:
         db 00h,00h,00h,00h
 dword_D304C:
         db 00h,00h,00h,00h
 dword_D3050:
         db 00h,00h,00h,00h
-dword_D3054:
+ScreenSaveBitmap:
         db 040h,01h,00h,00h
 dword_D3058:
         db 0C8h,00h,00h,00h
@@ -226,11 +226,11 @@ cpuinfo_b0:
         db 00h,00h,00h,00h
 cpuinfo_b1:
         db 00h,00h,00h,00h
-off_D306C:
+HidePointerKeepHook:
         dd ReturnZero
-off_D3070:
+HidePointerHook:
         dd ReturnZero
-off_D3074:
+ShowPointerHook:
         dd ReturnZero
 mousepollfn:
         dd ReturnZero
@@ -241,13 +241,13 @@ off_D3088:
         dd ReturnZero
 off_D308C:
         dd ReturnZero
-dword_D3090:
+SavedBreakOffset:
         db 00h,00h,00h,00h
-word_D3094:
+SavedBreakSelector:
         db 00h,00h
-dword_D3096:
+BreakCallFunc:
         db 00h,00h,00h,00h
-word_D309A:
+BreakDataSelector:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 ScreenWidth:
         db 080h,02h,00h,00h
@@ -261,9 +261,9 @@ cliprect_x1:
         db 080h,02h,00h,00h
 cliprect_y1:
         db 0E0h,01h,00h,00h
-dword_D30BC:
+DrawClipLeft:
         db 00h,00h,00h,00h
-dword_D30C0:
+DrawClipRight:
         db 080h,02h,00h,00h
 DrawRowBytes:
         db 080h,02h,00h,00h
@@ -553,7 +553,7 @@ ScreenRowTable:
         db 00h,0ECh,09h,00h,080h,0EEh,09h,00h,00h,0F1h,09h,00h,080h,0F3h,09h,00h
         db 00h,0F6h,09h,00h,080h,0F8h,09h,00h,00h,0FBh,09h,00h,080h,0FDh,09h,00h
         db 00h,00h,0Ah,00h
-dword_D4108:
+PutBlockScaleSteps:
         db 066h,00h,00h,00h,0CCh,00h,00h,00h,033h,01h,00h,00h,099h,01h,00h,00h
         db 00h,02h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
         db 00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h,00h,04h,00h,00h
@@ -575,39 +575,39 @@ JoyAxisY2:
         db 00h,00h,00h,00h
 JoyAxisMask:
         db 00h,00h,00h,00h
-byte_D4174:
+JoyButtons:
         db 00h
-byte_D4175:
+JoyButtonsPrev:
         db 00h
-byte_D4176:
+JoyDirection:
         db 00h
 JoyX1Threshold:
         db 050h,00h,00h,00h
-dword_D417B:
+JoyX1Min:
         db 00h,00h,00h,00h
 JoyX1Center:
         db 00h,00h,00h,00h
-dword_D4183:
+JoyX1Max:
         db 00h,00h,00h,00h
-dword_D4187:
+JoyX1Settle:
         db 014h,00h,00h,00h
-dword_D418B:
+JoyY1Min:
         db 00h,00h,00h,00h
-dword_D418F:
+JoyY1Max:
         db 00h,00h,00h,00h
 JoyY1Threshold:
         db 050h,00h,00h,00h
-dword_D4197:
+JoyY1MinSeen:
         db 00h,00h,00h,00h
 JoyY1Center:
         db 00h,00h,00h,00h
-dword_D419F:
+JoyY1MaxSeen:
         db 00h,00h,00h,00h
-dword_D41A3:
+JoyY1Settle:
         db 014h,00h,00h,00h
-dword_D41A7:
+JoyX2Min:
         db 00h,00h,00h,00h
-dword_D41AB:
+JoyX2Max:
         db 00h,00h,00h,00h
 JoyXScale:
         db 00h,00h,00h,00h
@@ -635,7 +635,7 @@ FpuFlags:
         db 00h,00h,00h,00h
 EmuHookFlags:
         db 020h,00h
-word_D41FA:
+SavedEsSelector:
         db 00h,00h
 dword_D41FC:
         db 00h,00h,00h,00h
@@ -714,51 +714,51 @@ tickdeadline:
         db 00h,00h,00h,00h
 ticklast:
         db 00h,00h,00h,00h
-dword_D429C:
+RetraceTimeout:
         db 0A0h,086h,01h,00h
 KbdIdleHook:
         dd PollHotkeys
-off_D42A4:
+TextFont:
         dd DefaultFont
 fontcolor:
         db 0Fh,00h,00h,00h
 dword_D42AC:
         db 00h,00h,00h,00h
-dword_D42B0:
+TextOriginX:
         db 00h,00h,00h,00h
 dword_D42B4:
         db 00h,00h,00h,00h
-dword_D42B8:
+TextShadowOn:
         db 00h,00h,00h,00h
-dword_D42BC:
+TextFontTag:
         db 031h,044h,033h,046h
-byte_D42C0:
+TextFirstChar:
         db 020h
 byte_D42C1:
         db 08Eh
-byte_D42C2:
+TextCharW:
         db 08h
-byte_D42C3:
+TextCharH:
         db 08h
-byte_D42C4:
+TextSpacing:
         db 00h
-byte_D42C5:
+TextFontH:
         db 08h
-byte_D42C6:
+TextFontAscent:
         db 07h,00h
-dword_D42C8:
+TextWidthTable:
         dd unk_D47B4
-dword_D42CC:
+TextCursorX:
         db 00h,00h,00h,00h
-dword_D42D0:
+TextCursorY:
         db 00h,00h,00h,00h
 dword_D42D4:
         db 00h,00h,00h,00h
-dword_D42D8:
+TextTop:
         db 00h,00h,00h,00h
-dword_D42DC:
+TextRight:
         db 00h,00h,00h,00h
-dword_D42E0:
+TextBottom:
         dd unk_D45F8
 ColourRemap:
         db 00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
@@ -800,7 +800,7 @@ ArchiveCount:
         db 00h,00h,00h,00h
 ResourceArchive:
         db 00h,00h,00h,00h
-unk_D4448:
+FindFileDta:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -808,12 +808,12 @@ unk_D4448:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-dword_D44AC:
+FindFilePtr:
         db 00h,00h,00h,00h
-unk_D44B0:
+FindFileName:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D44CE:
+FindFilePattern:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -831,7 +831,7 @@ DebugLineWidth:
         db 080h,07h,00h,00h
 DebugRow:
         db 00h
-byte_D4545:
+DebugBackColor:
         db 07h
 DebugTabWidth:
         db 08h,02Fh
@@ -863,13 +863,13 @@ MemViewShowDetail:
         db 00h,00h,00h,00h
 dword_D4594:
         db 00h,00h,00h,00h
-dword_D4598:
+MemViewCursor:
         db 00h,00h,00h,00h
 dword_D459C:
         db 00h,00h,00h,00h
 dword_D45A0:
         db 00h,00h,00h,00h
-dword_D45A4:
+PaletteCursorColours:
         db 0FFh,0FFh,00h,00h,0AAh,0AAh,00h,00h,055h,055h,00h,00h
 dword_D45B0:
         db 00h,00h,00h,00h

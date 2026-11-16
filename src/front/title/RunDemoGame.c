@@ -558,7 +558,7 @@ void RunIntro(void)
 }
 
 /* DRAFT (ShowCredits): 1320 vs 1320, 4 differing under 10.0 GA (two reordered instructions).
-   A block-local int height gives the EXE's byte_D42C3 / line-count load order. Left: the first rand() % 8
+   A block-local int height gives the EXE's TextCharH / line-count load order. Left: the first rand() % 8
    loads the divisor into ecx before sar edx, 1Fh; the EXE loads it after. See docs/UNSURE.md. */
 /* ShowCredits (16F9A, PC only; ends in RunDemoGame_x): the credits. Keep the text state, load the BACKWIN block
    and the CREDITS bank (from the CD when listed there): its palette (kept for the fade and copied to blackpal)
@@ -644,13 +644,13 @@ void ShowCredits(void)
         }
         wait = cur->time;
         {
-            int height = byte_D42C3;
+            int height = TextCharH;
             y = 0xDA - (cur->n * height >> 1);
         }
         for (i = 0; i < cur->n; i++) {
             s = cur->lines[i];
             RenderTextLine(0x1EA - (fputchar(s) >> 1), y, s);
-            y += byte_D42C3;
+            y += TextCharH;
         }
         ClearInputQueue();
         if (WaitClickTimeout(wait)) break;

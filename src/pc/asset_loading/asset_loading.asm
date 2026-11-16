@@ -5,7 +5,7 @@ section s_13867 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefaultLines
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
 extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
-extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, dword_E9A9E
+extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, SpeechPatchNext
 extern dword_E9AB6, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, gameover
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
@@ -26,7 +26,7 @@ extern TextSetFont, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, Snd
 extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
 extern penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
-extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
+extern rinkobjs, milestonesaid_b2, UnusedSpeechWord, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
 extern rinkobjused
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
 global ReloadGameGfx, PlacePlayersAtStart, SetupGame, SetupDemoGame, ResetGameVars, FileExists
@@ -870,7 +870,7 @@ ResetGameVars:
         mov eax, rinkobjused
         call __STOSB
         xor edx, edx
-        mov word [dword_E9A9E], dx
+        mov word [SpeechPatchNext], dx
         mov word [penevteam], dx
         mov word [dword_E9AB6], dx
         mov word [NumCwdExciteLvl], dx
@@ -879,7 +879,7 @@ ResetGameVars:
         mov word [word_E9AAA], dx
         xor ecx, ecx
         mov dword [SumCwdExciteLvl], ecx
-        mov word [word_E9A9C], 0FFFFh
+        mov word [UnusedSpeechWord], 0FFFFh
         call StartGame
         mov dword [curperiod], 1
         cmp byte [pad1dev], 1

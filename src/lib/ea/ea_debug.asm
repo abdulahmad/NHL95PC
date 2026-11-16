@@ -13,10 +13,10 @@ extern str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked, str_
 extern str_ShapeIsInvalidDraw, str_MEMSHPTXT, str_ErrorDumpingShapesList, str_ShapeFileName0, str_ShapeFileSizeLd, str_NumberOfShapesD, str_44s66ld, str_Bytes3dRows3d2
 extern str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d, asc_C46F8, str_SCREEN2, asc_C470C
 extern str_2d02d02d2, DebugRow, byte_EDE7D, DebugPrintf, dword_D2F78, dword_D2F7A, dword_D2F80, GraphicsReady
-extern dword_D3044, dword_D3048, DebugMode, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
-extern MemViewRed, MemViewShowDetail, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
-extern dword_EDAB4, MemViewTop, MemViewCount, dword_EDE68, MemViewTitle, MemViewRow, MemViewList, dword_EDE78
-extern dword_EDE7C, MemViewMode, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
+extern dword_D3044, ViewScreenHeight, DebugMode, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
+extern MemViewRed, MemViewShowDetail, dword_D4594, MemViewCursor, dword_D459C, dword_D45A0, PaletteCursorColours, dword_D45B0
+extern dword_EDAB4, MemViewTop, MemViewCount, MemViewSel, MemViewTitle, MemViewRow, MemViewList, MemViewKey
+extern MemViewFlags, MemViewMode, MemViewPrevSel, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, MarkDescPurgeable, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId, PutBlock
 extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, DrawFrameClipped, PrintBoxedText, DebugSetLine, DebugShowLines
@@ -27,7 +27,7 @@ extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_M
 extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
 extern MemViewStrings, str_X_DebugSprintf, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, str_W_DumpMemoryMap
 extern str_Un, unk_C46C0, DefaultFont, vsprintf_, WaitTickDeadline
-global DebugLogOpen, DebugLogClose, DebugLog, DebugLogPrintf, FindWildcardDigits, FormatDateStamp, unk_93C50, unk_93C54
+global DebugLogOpen, DebugLogClose, DebugLog, DebugLogPrintf, FindWildcardDigits, FormatDateStamp, MemMapRulePtr, unk_93C54
 global DebugWaitKey, DebugGetKey, MemViewerGetMode, MemViewer, MemViewer, MemViewerStart, MemViewerListHead, MemViewerDrawRows
 global MemViewerCountBlocks, MemViewerSelectRow, MemViewerDrawList, MemPoolTotals, MemViewerDrawTitle, DebugSprintf, MemViewerBlockInfo, MemViewerHexDump
 global HexDumpRow, WriteMemMap, DumpMemoryMap, ShapeViewerFindShape, ShapeViewer, ReadShapeFileHeader, ShapeInfo, DumpShapesList
@@ -343,7 +343,7 @@ FormatDateStamp:
         pop ebx
         ret
         db 00h
-unk_93C50:
+MemMapRulePtr:
         dd unk_C40A0
 unk_93C54:
         dd str_Fs
@@ -501,7 +501,7 @@ MemViewerListHead:
         push ebx
         push edx
         mov ebx, eax
-        mov edx, dword [dword_D4598]
+        mov edx, dword [MemViewCursor]
         lea eax, [nosplit edx*4+00h]
         add eax, edx
         shl eax, 2
@@ -566,8 +566,8 @@ MemViewerDrawRows:
 .7:
         cmp esi, byte 0Dh
         jne short .8
-        mov edx, dword [dword_EDE84]
-        mov eax, dword [dword_EDE68]
+        mov edx, dword [MemViewPrevSel]
+        mov eax, dword [MemViewSel]
         mov ebx, dword [dword esp+0B8h]
         call MemViewerHexDump
 .8:
@@ -588,8 +588,8 @@ MemViewerDrawRows:
 .11:
         cmp esi, byte 42h
         jne short .12
-        mov edx, dword [dword_EDE78]
-        mov eax, dword [dword_EDE7C]
+        mov edx, dword [MemViewKey]
+        mov eax, dword [MemViewFlags]
         mov ebx, dword [dword esp+0B8h]
         call MemViewerBlockInfo
 .12:
@@ -617,8 +617,8 @@ MemViewerDrawRows:
 .16:
         test byte [byte_EDE7D], 80h
         jne short .17
-        mov edx, dword [dword_EDE84]
-        mov eax, dword [dword_EDE68]
+        mov edx, dword [MemViewPrevSel]
+        mov eax, dword [MemViewSel]
         mov ecx, esi
         mov ebx, dword [dword esp+0B8h]
         call ShapeViewer
@@ -634,7 +634,7 @@ MemViewerDrawRows:
 .19:
         cmp esi, byte 57h
         jne short .20
-        mov eax, dword [dword_EDE68]
+        mov eax, dword [MemViewSel]
         mov edx, dword [dword esp+0B8h]
         call MemViewerShowArt
 .20:
@@ -755,13 +755,13 @@ MemViewerSelectRow:
         mov dword [MemViewRow], eax
         mov dword [MemViewTop], 70h
         mov eax, dword [byte esp+04h]
-        mov dword [dword_EDE68], eax
+        mov dword [MemViewSel], eax
         mov eax, dword [byte esp+08h]
-        mov dword [dword_EDE84], eax
+        mov dword [MemViewPrevSel], eax
         mov eax, dword [byte esp+0Ch]
-        mov dword [dword_EDE7C], eax
+        mov dword [MemViewFlags], eax
         mov eax, dword [byte esp+010h]
-        mov dword [dword_EDE78], eax
+        mov dword [MemViewKey], eax
         xor eax, eax
         ret 10h
 .3:
@@ -1230,7 +1230,7 @@ MemViewerDrawList:
         jne short .28
         cmp esi, eax
         jge short .26
-        mov eax, dword [dword_D3048]
+        mov eax, dword [ViewScreenHeight]
         push eax
         mov eax, esi
         sub eax, dword [byte ebp+07Ah]
@@ -1242,7 +1242,7 @@ MemViewerDrawList:
         push edi
         jmp short .27
 .26:
-        mov ecx, dword [dword_D3048]
+        mov ecx, dword [ViewScreenHeight]
         push ecx
         push dword 0C4h
         mov edi, dword [dword_D3044]
@@ -1352,7 +1352,7 @@ MemViewerDrawTitle:
         call _os_handle_0
         add esp, byte 4
         mov dword [esi], eax
-        mov ebp, dword [dword_D4598]
+        mov ebp, dword [MemViewCursor]
         lea eax, [nosplit ebp*4+00h]
         add eax, ebp
         mov eax, dword [nosplit eax*4+memlist1]
@@ -1372,7 +1372,7 @@ MemViewerDrawTitle:
         mov eax, dword [esi]
         mov edx, dword [byte esp+01Ch]
         mov dword [edx], eax
-        mov edx, dword [dword_D4598]
+        mov edx, dword [MemViewCursor]
         lea eax, [nosplit edx*4+00h]
         add eax, edx
         mov eax, dword [nosplit eax*4+memlist1]
@@ -2073,7 +2073,7 @@ WriteMemMap:
         mov edx, esp
         lea eax, [byte esp+014h]
         call FormatDateTime
-        mov edx, dword [unk_93C50]
+        mov edx, dword [MemMapRulePtr]
         push edx
         push asc_C4200
         mov ebx, dword [MemViewList]
@@ -2101,7 +2101,7 @@ WriteMemMap:
         push ebp
         call fprintf_
         add esp, byte 0Ch
-        mov eax, dword [unk_93C50]
+        mov eax, dword [MemMapRulePtr]
         push eax
         push asc_C4200
         mov edx, dword [MemViewList]
@@ -2653,7 +2653,7 @@ ShapeInfo:
         jl short .5
         mov eax, dword [byte esi+04h]
         sar eax, 10h
-        cmp eax, dword [dword_D3048]
+        cmp eax, dword [ViewScreenHeight]
         jg short .5
         cmp word [byte esi+0Ch], byte 0
         jl short .5
@@ -2665,7 +2665,7 @@ ShapeInfo:
         jl short .5
         mov esi, dword [byte esi+0Ch]
         sar esi, 10h
-        mov ebp, dword [dword_D3048]
+        mov ebp, dword [ViewScreenHeight]
         cmp esi, ebp
         jg short .5
         add edx, ebx
@@ -2764,7 +2764,7 @@ DumpShapesList:
         lea edx, [byte esp+040h]
         lea eax, [byte esp+054h]
         call FormatDateTime
-        mov edx, dword [unk_93C50]
+        mov edx, dword [MemMapRulePtr]
         push edx
         push asc_C4200
         mov ebx, dword [MemViewList]
@@ -2792,7 +2792,7 @@ DumpShapesList:
         push edi
         call fprintf_
         add esp, byte 0Ch
-        mov ebp, dword [unk_93C50]
+        mov ebp, dword [MemMapRulePtr]
         push ebp
         push asc_C4200
         mov eax, dword [MemViewList]
@@ -2977,7 +2977,7 @@ PaletteViewer:
         mov dword [dword esp+0314h], edx
         mov ebx, 17h
         mov dword [dword esp+030Ch], ebx
-        mov ecx, dword [dword_D45A4]
+        mov ecx, dword [PaletteCursorColours]
         push ecx
         push byte 21h
         push byte 26h
@@ -3201,7 +3201,7 @@ PaletteViewer:
         add eax, byte 17h
         mov dword [dword esp+030Ch], eax
         mov eax, dword [dword esp+031Ch]
-        mov edx, dword [nosplit eax*4+dword_D45A4]
+        mov edx, dword [nosplit eax*4+PaletteCursorColours]
         push edx
         mov eax, dword [dword esp+0308h]
         add eax, byte 0Ah
@@ -3223,7 +3223,7 @@ PaletteViewer:
         xor eax, eax
 .37:
         mov dword [dword esp+031Ch], eax
-        mov ebx, dword [nosplit eax*4+dword_D45A4]
+        mov ebx, dword [nosplit eax*4+PaletteCursorColours]
         push ebx
         mov eax, dword [dword esp+0310h]
         add eax, byte 0Ah

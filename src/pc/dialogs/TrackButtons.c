@@ -69,7 +69,7 @@ void DrawButton(Button *b)
     }
     if (r[6] != 0) {
         s = (char *)r[6];
-        y = (r[3] - byte_D42C3) / 2 + r[1];
+        y = (r[3] - TextCharH) / 2 + r[1];
         PrintShadowText((r[2] - fputchar(s)) / 2 + r[0], y, s);
     }
 }

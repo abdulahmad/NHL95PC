@@ -85,7 +85,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&fadeinpending);
     *p++ = *(short *)(&deferpending);
     *p++ = *(short *)(&injurystop);
-    *p++ = *(short *)(&word_E9AB0);
+    *p++ = *(short *)(&GoalState);
     *p++ = *(short *)(&bannermsg);
     *p++ = *(short *)(&bannertimer);
     *(int *)p = *(int *)(&seed);
@@ -128,10 +128,10 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&dword_E9AB6);
     *p++ = *(short *)(&penevteam);
     *p++ = *(short *)(&periodendtime);
-    *p++ = *(short *)(&dword_E9A9E);
+    *p++ = *(short *)(&SpeechPatchNext);
     *p++ = *(short *)(&ltack);
     *p++ = *(short *)(&lastsfx);
-    *p++ = *(short *)(&word_E9A9C);
+    *p++ = *(short *)(&UnusedSpeechWord);
     *p++ = *(short *)(&crowdlevel);
     *p++ = *(short *)(&word_E9AAA);
     *p++ = *(short *)(&word_E9AA2);
@@ -153,7 +153,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&milestonesaid);
     *p++ = *(short *)(&milestonesaid_b2);
     *p++ = *(short *)(&gamemode);
-    ((char *)p)[0] = *(char *)(&byte_DC268);
+    ((char *)p)[0] = *(char *)(&UnusedStateByte);
     ((char *)p)[1] = *(char *)(&byte_DC267);
     p++;
     ((char *)p)[0] = *(char *)(&byte_DC264);
@@ -177,7 +177,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&penshotpnum);
     *p++ = *(short *)(&penshotteam);
     *p++ = *(short *)(&penshotctl);
-    *p++ = *(short *)(&word_CC10C);
+    *p++ = *(short *)(&lcline_aw);
     *p++ = *(short *)(&penshotfox);
     *p++ = *(short *)(&penshotfoy);
     *p++ = *(short *)(&penshotmode);
@@ -326,7 +326,7 @@ int LoadGameState(int fh)
     fadeinpending = *p++;
     deferpending = *p++;
     injurystop = *p++;
-    word_E9AB0 = *p++;
+    GoalState = *p++;
     bannermsg = *p++;
     bannertimer = *p++;
     *(int *)&seed = *(int *)p;
@@ -369,10 +369,10 @@ int LoadGameState(int fh)
     dword_E9AB6 = *p++;
     penevteam = *p++;
     periodendtime = *p++;
-    dword_E9A9E = *p++;
+    SpeechPatchNext = *p++;
     ltack = *p++;
     lastsfx = *p++;
-    word_E9A9C = *p++;
+    UnusedSpeechWord = *p++;
     crowdsmooth = crowdlevel = *p++;
     word_E9AAA = *p++;
     word_E9AA2 = *p++;
@@ -394,7 +394,7 @@ int LoadGameState(int fh)
     milestonesaid[0] = *p++;
     milestonesaid_b2 = *p++;
     gamemode = *p++;
-    *(char *)&byte_DC268 = ((char *)p)[0];
+    *(char *)&UnusedStateByte = ((char *)p)[0];
     *(char *)&byte_DC267 = ((char *)p)[1];
     p++;
     *(char *)&byte_DC264 = ((char *)p)[0];
@@ -431,7 +431,7 @@ int LoadGameState(int fh)
     penshotpnum = *p++;
     penshotteam = *p++;
     penshotctl = *p++;
-    *(int *)&word_CC10C = *p++;
+    *(int *)&lcline_aw = *p++;
     *(int *)&penshotfox = *p++;
     *(int *)&penshotfoy = *p++;
     penshotmode = *p++;

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECCDSTREAM, str_IllegalChunkSizeD, bannertimer, CrowdNoiseOff
-extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
+extern cupseries, dword_C66B0, StreamHandle, dword_DC8C8, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
 extern MemLargestFree, TextSetFont, FixedMulRound, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
@@ -40,7 +40,7 @@ CdStreamCreate:
         mov dword [byte esi+024h], eax
         mov dword [byte esi+018h], 0
         mov dword [dword_DC8C8], esi
-        mov dword [dword_DC8A0], esi
+        mov dword [StreamHandle], esi
         mov dword [byte esi+01Ch], 7
         mov ebx, dword [dword_C66B0]
         push ebx
@@ -130,7 +130,7 @@ CdStreamCreateSecondary:
         mov dword [byte eax+040h], 0
         mov dword [byte eax+038h], 1
         mov edx, dword [byte esp+04h]
-        mov dword [nosplit edx*4+dword_DC8A0], eax
+        mov dword [nosplit edx*4+StreamHandle], eax
         ret
 jpt_1B283:
         dd CdStreamService+039h
@@ -148,7 +148,7 @@ CdStreamService:
         push esi
         push edi
         push ebp
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         cmp dword [byte edx+04Ch], byte 0
         jg near .1
         mov eax, dword [byte edx+01Ch]
@@ -169,7 +169,7 @@ CdStreamService:
         call DosCloseFile
         add esp, byte 4
 .2:
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         lea edx, [byte eax+03Ch]
         push edx
         lea edx, [byte eax+034h]
@@ -180,46 +180,46 @@ CdStreamService:
         push ebp
         call openhandle
         add esp, byte 10h
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+034h]
         mov dword [byte eax+044h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+034h]
         mov ebx, dword [byte eax+03Ch]
         add edx, ebx
         mov dword [byte eax+038h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+01Ch], 2
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov eax, edx
         call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
         jl short .1
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+01Ch], 3
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+0Ch]
         mov dword [byte eax+08h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+044h]
         mov dword [byte eax+040h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov esi, dword [byte eax+040h]
         push esi
         mov edi, dword [byte eax+018h]
         push edi
         call DosSeekFile
         add esp, byte 8
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+030h], 0
         mov ebp, dword [dword_C66B0]
         push ebp
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
         push edx
         call FixedMulRound
         add esp, byte 8
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov dword [byte edx+04Ch], eax
         pop ebp
         pop edi
@@ -231,7 +231,7 @@ CdStreamService:
         call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
         jl near .1
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov esi, dword [byte eax+04Ch]
         mov edi, dword [byte eax+024h]
         push edi
@@ -241,37 +241,37 @@ CdStreamService:
         push edx
         call DosReadFile
         add esp, byte 0Ch
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+04Ch], esi
         mov ebx, dword [dword_C66B0]
         push ebx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov ecx, dword [byte eax+024h]
         push ecx
         call FixedMulRound
         add esp, byte 8
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov dword [byte edx+04Ch], eax
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
         add dword [byte eax+08h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
         add dword [byte eax+040h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
         add dword [byte eax+030h], edx
 .3:
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+0Ch]
         mov edx, dword [byte edx+04h]
         mov dword [byte eax+02Ch], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+02Ch]
         mov ebx, dword [byte eax+030h]
         sub edx, ebx
         mov dword [byte eax+028h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov eax, dword [byte eax+0Ch]
         movsx eax, byte [eax]
         sub eax, byte 30h
@@ -279,18 +279,18 @@ CdStreamService:
         jle short .4
         cmp eax, byte 9
         jge short .4
-        mov eax, dword [nosplit eax*4+dword_DC8A0]
+        mov eax, dword [nosplit eax*4+StreamHandle]
         jmp short .5
 .4:
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
 .5:
         mov dword [dword_DC8C8], eax
         cmp dword [dword_DC8C8], byte 0
         jne short .6
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [dword_DC8C8], eax
 .6:
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov esi, dword [byte eax+02Ch]
         cmp esi, byte 8
         jb short .7
@@ -301,25 +301,25 @@ CdStreamService:
         mov eax, dword [dword_DC8C8]
         mov ebp, dword [byte eax+020h]
         push ebp
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+02Ch]
         push edx
         push str_IllegalChunkSizeD
         call FatalError
         add esp, byte 0Ch
         mov eax, dword [dword_DC8C8]
-        mov ebx, dword [dword_DC8A0]
+        mov ebx, dword [StreamHandle]
         cmp eax, ebx
         je near CdStreamService+0344h
         mov dword [byte ebx+01Ch], 4
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
         add edx, byte 8
         mov eax, dword [dword_DC8C8]
         call CdStreamSkipReleased
         cmp eax, edx
         jb near .1
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+02Ch]
         add edx, dword [byte eax+024h]
         mov eax, dword [dword_DC8C8]
@@ -337,7 +337,7 @@ CdStreamService:
         mov dword [byte eax+08h], edx
         jmp near CdStreamService+0Dh
 .8:
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         cmp dword [byte eax+028h], byte 0
         jl short .9
         mov edx, dword [byte eax+030h]
@@ -350,15 +350,15 @@ CdStreamService:
         call bcopy
         add esp, byte 0Ch
         mov eax, dword [dword_DC8C8]
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov ebx, dword [byte eax+0Ch]
         mov esi, dword [byte edx+030h]
         add ebx, esi
         mov dword [byte eax+08h], ebx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+0Ch]
         mov dword [byte eax+08h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+030h], 0
         jmp short CdStreamService+0344h
 .9:
@@ -372,16 +372,16 @@ CdStreamService:
         call bcopy
         add esp, byte 0Ch
         mov eax, dword [dword_DC8C8]
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov ebx, dword [byte eax+0Ch]
         mov ecx, dword [byte edx+02Ch]
         add ebx, ecx
         mov dword [byte eax+08h], ebx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+028h]
         neg edx
         mov dword [byte eax+030h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov esi, dword [byte eax+030h]
         push esi
         mov edi, dword [byte eax+0Ch]
@@ -391,10 +391,10 @@ CdStreamService:
         push eax
         call bcopy
         add esp, byte 0Ch
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+02Ch]
         sub dword [byte eax+08h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edi, dword [byte eax+028h]
         test edi, edi
         jle near CdStreamService+03DAh
@@ -405,14 +405,14 @@ CdStreamService:
         add edx, byte 8
         cmp eax, edx
         jae short CdStreamService+03DAh
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+01Ch], 5
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov eax, dword [dword_DC8C8]
         call CdStreamFilled
         cmp eax, dword [byte edx+030h]
         jl near .1
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov ecx, dword [byte eax+030h]
         push ecx
         mov eax, dword [dword_DC8C8]
@@ -425,7 +425,7 @@ CdStreamService:
         mov eax, dword [dword_DC8C8]
         mov eax, dword [byte eax+0Ch]
         mov dword [eax], 0FFFFFFFFh
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov eax, dword [dword_DC8C8]
         mov ebx, dword [eax]
         mov ebp, dword [byte edx+030h]
@@ -434,16 +434,16 @@ CdStreamService:
         mov eax, dword [dword_DC8C8]
         mov edx, dword [eax]
         mov dword [byte eax+0Ch], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+01Ch], 6
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         cmp dword [byte edx+028h], byte 0
         jle near .10
         mov eax, dword [dword_DC8C8]
         call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
         jl near .1
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov esi, dword [byte eax+04Ch]
         mov edi, dword [byte eax+024h]
         push edi
@@ -454,9 +454,9 @@ CdStreamService:
         push edx
         call DosReadFile
         add esp, byte 0Ch
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+04Ch], esi
-        mov esi, dword [dword_DC8A0]
+        mov esi, dword [StreamHandle]
         mov ebx, dword [dword_C66B0]
         push ebx
         mov ecx, dword [byte esi+024h]
@@ -464,14 +464,14 @@ CdStreamService:
         call FixedMulRound
         add esp, byte 8
         add dword [byte esi+04Ch], eax
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
         add dword [byte eax+040h], edx
         mov eax, dword [dword_DC8C8]
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov edx, dword [byte edx+024h]
         add dword [byte eax+08h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
         sub dword [byte eax+028h], edx
         pop ebp
@@ -483,7 +483,7 @@ CdStreamService:
         mov edx, dword [byte edx+02Ch]
         add dword [byte eax+0Ch], edx
         mov eax, dword [dword_DC8C8]
-        mov ecx, dword [dword_DC8A0]
+        mov ecx, dword [StreamHandle]
         cmp eax, ecx
         je short .11
         mov edx, ecx
@@ -493,7 +493,7 @@ CdStreamService:
         mov ebp, dword [byte eax+0Ch]
         sub ebx, ebp
         mov dword [byte ecx+030h], ebx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+030h]
         push edx
         mov ebx, dword [byte eax+0Ch]
@@ -506,7 +506,7 @@ CdStreamService:
         mov eax, dword [dword_DC8C8]
         mov edx, dword [byte eax+0Ch]
         mov dword [byte eax+08h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+0Ch]
         mov esi, dword [byte eax+030h]
         add edx, esi
@@ -518,30 +518,30 @@ CdStreamService:
         mov esi, dword [byte eax+0Ch]
         sub edx, esi
         mov dword [byte ecx+030h], edx
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov eax, dword [byte edx+040h]
         sub eax, dword [byte edx+030h]
         cmp eax, dword [byte edx+038h]
         jl short .12
         mov dword [byte edx+01Ch], 9
-        mov edx, dword [dword_DC8A0]
+        mov edx, dword [StreamHandle]
         mov eax, edx
         call CdStreamSkipReleased
         add eax, dword [byte edx+030h]
         cmp eax, byte 8
         jb near .1
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov eax, dword [byte eax+0Ch]
         mov dword [eax], 0FFFFFFFDh
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov eax, dword [byte eax+0Ch]
         mov dword [byte eax+04h], 8
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         add dword [byte eax+0Ch], byte 8
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+0Ch]
         mov dword [byte eax+08h], edx
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         mov dword [byte eax+01Ch], 7
         jmp near CdStreamService+0Dh
 .12:
@@ -550,7 +550,7 @@ CdStreamService:
 CdStreamTimer:
         push dword 4
         call __CHK
-        mov eax, dword [dword_DC8A0]
+        mov eax, dword [StreamHandle]
         dec dword [byte eax+04Ch]
         ret
 CdStreamSkipReleased:

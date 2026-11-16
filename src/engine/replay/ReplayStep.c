@@ -207,7 +207,7 @@ void DrawRinkSideObjects(short vx, short vy)
     }
     if (camy < -0xB0) {
         y1 = cliprect_y1;
-        SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, 0x244);
+        SetClipWindow(DrawClipLeft, DrawClipRight, cliprect_y0, 0x244);
     }
     for (i = 0; i < 3; i++) {
         ys[i] = 0;
@@ -294,7 +294,7 @@ void DrawRinkSideObjects(short vx, short vy)
     }
     if (rpl_y_e14 <= -0xE8 && rpl_y_e14 >= -0xEC && ABS(rpl_x_e14) <= 0x14 && rpl_puckz >= 0xD)
         DrawFrameSprite(rpl_frame_e14, rpl_x_e14, rpl_puckz * 3 / 2 + rpl_y_e14, 0, 0);
-    if (camy < -0xB0) SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, y1);
+    if (camy < -0xB0) SetClipWindow(DrawClipLeft, DrawClipRight, cliprect_y0, y1);
     if (camy < -0x90) DrawRinkEndArt();
     if (rpl_y_e15 < 0 && rpl_frame_e15 >= 0x22A && rpl_frame_e15 <= 0x237)
         DrawFrameSprite(rpl_frame_e15, rpl_x_e15, rpl_y_e15, 0, 0);

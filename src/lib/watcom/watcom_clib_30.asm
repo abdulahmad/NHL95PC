@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_99A12 progbits alloc exec nowrite align=1
-extern __set_doserrno_, __set_errno_, _osmajor, dword_D4CF0, dword_D4CF4, dword_D4FF1, dword_F243C, AtexitTable
-extern SpeechBankCount, dword_F58D8, dword_F58DC, exit_, itoa_, ltoa_, main_, ExitHook
-extern off_D5668, CMainHook, __CommonInit_, toupper_, ultoa_, InitRtnsEntry, FiniRtnsEntry, GusInitTable
+extern __set_doserrno_, __set_errno_, _osmajor, CMainEnv, CMainResult, DosErrnoTable, dword_F243C, AtexitTable
+extern SpeechBankCount, CMainArgc, CMainArgv, exit_, itoa_, ltoa_, main_, ExitHook
+extern __EFG_printf, CMainHook, __CommonInit_, toupper_, ultoa_, InitRtnsEntry, FiniRtnsEntry, GusInitTable
 global copypart_, _splitpath_, pickup_, _makepath_, _Full_at_exit_rtn_, atexit_, __CMain, __InitRtns
 global __FiniRtns, __prtf_, getprintspecs_, evalflags_, far_strlen_, far_other_strlen_, fmt4hex_, FixedPoint_Format_
 global float_format_, formstring_, zupstr_, __doserror_, _dosret0_, _dosretax_, __set_errno_dos_
@@ -285,7 +285,7 @@ __CMain:
         push edx
         push ebp
         mov ebp, esp
-        mov edx, dword [dword_D4CF0]
+        mov edx, dword [CMainEnv]
         add edx, byte 3
         and dl, 0FCh
         call CMainHook
@@ -298,12 +298,12 @@ __CMain:
 .1:
         xor eax, eax
 .2:
-        mov edx, dword [dword_D4CF0]
+        mov edx, dword [CMainEnv]
         add eax, edx
-        mov dword [dword_D4CF4], eax
+        mov dword [CMainResult], eax
         call __CommonInit_
-        mov edx, dword [dword_F58DC]
-        mov eax, dword [dword_F58D8]
+        mov edx, dword [CMainArgv]
+        mov eax, dword [CMainArgc]
         call main_
         call exit_
         db 089h,0ECh,05Dh,05Ah,0C3h,00h
@@ -1060,7 +1060,7 @@ FixedPoint_Format_:
         pop ecx
         ret
 float_format_:
-        call dword [off_D5668]
+        call dword [__EFG_printf]
         ret
 formstring_:
         push esi
@@ -1559,7 +1559,7 @@ __set_errno_dos_:
 .4:
         xor edx, edx
         mov dl, bl
-        mov eax, dword [dword edx+dword_D4FF1]
+        mov eax, dword [dword edx+DosErrnoTable]
         sar eax, 18h
         jmp short .6
 .5:

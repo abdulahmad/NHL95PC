@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_2D346 progbits alloc exec nowrite align=1
-extern __CHK, awlinetab, byte_D42C3, cddriveptr, ClearInputQueue, cont2team, crestnames, curleague
+extern __CHK, awlinetab, TextCharH, cddriveptr, ClearInputQueue, cont2team, crestnames, curleague
 extern DrawGadgetByType, cursndbank, hmteamrec_skaters, FadeOutPalCycle, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, FileOpenRW, FitPlayerName, fputchar, FreeMemBlock, gameopts, gameresult, gamestatlabels
 extern gsuminitff, hmcrestbmp, hmlinetab, hmpassatt, hmpasscmp, hmroster, hmscore, hmteamrec
@@ -849,7 +849,7 @@ GameSummaryScreen_period:
         push ebp
         call DrawArtHotspot
         add esp, byte 0Ch
-        movzx edi, byte [byte_D42C3]
+        movzx edi, byte [TextCharH]
         add edi, byte 78h
         xor eax, eax
         mov dword [dword esp+0778h], eax
@@ -905,7 +905,7 @@ GameSummaryScreen_period:
         call PrintShadowText
 .10:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add eax, byte 0Eh
         add edi, eax
 .11:
@@ -1304,7 +1304,7 @@ GameSummaryScreen_period:
         mov eax, 20Dh
         call PrintShadowText
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add edi, eax
         mov bh, byte [byte ebp+02h]
         cmp bh, 0FFh
@@ -1392,7 +1392,7 @@ GameSummaryScreen_period:
         call PrintShadowText
 .42:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add edi, eax
         jmp near .47
 .43:
@@ -1466,7 +1466,7 @@ GameSummaryScreen_period:
         mov eax, 229h
         call PrintShadowText
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add edi, eax
         mov dh, byte [byte esi+03h]
         cmp dh, 0FFh
@@ -1500,7 +1500,7 @@ GameSummaryScreen_period:
         mov eax, 0DCh
         call PrintShadowText
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         add edi, eax
         mov byte [dword esp+07E8h], 0FFh
         jmp short .47
@@ -1518,7 +1518,7 @@ GameSummaryScreen_period:
         mov dword [dword esp+07B0h], ecx
 .47:
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         inc dword [dword esp+0778h]
         mov edx, 177h
         sub edx, eax
@@ -1580,7 +1580,7 @@ GameSummaryScreen_period:
         lea ebx, [dword esp+05D4h]
         mov edx, 190h
         call PrintShadowText
-        movzx edi, byte [byte_D42C3]
+        movzx edi, byte [TextCharH]
         add edi, 190h
         xor eax, eax
         mov al, byte [dword esp+07C8h]

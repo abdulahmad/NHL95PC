@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_903F0 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable
-extern dword_D4108, RowCopyFunc, bcopy, VesaSetBankArg, BlitBlock, BlitBlockXor, BlitBlockAnd, AndPixel
+extern PutBlockScaleSteps, RowCopyFunc, bcopy, VesaSetBankArg, BlitBlock, BlitBlockXor, BlitBlockAnd, AndPixel
 extern BlitBlockOr, OrPixel
 global PutBlock, DrawBitmap, PutBlockHotspot, DrawArtXor, DrawArtXorAtOwnPos, DrawArtAnd, DrawArtAndAtOwnPos, DrawArtOr
 global DrawArtOrAtOwnPos
@@ -97,7 +97,7 @@ PutBlock:
         test eax, eax
         jle near .14
         mov ebp, dword [byte esp+010h]
-        mov ebp, dword [nosplit ebp*4+dword_D4108]
+        mov ebp, dword [nosplit ebp*4+PutBlockScaleSteps]
         sub ebp, dword [byte esp+03Ch]
         cmp ebp, eax
         jle short .7

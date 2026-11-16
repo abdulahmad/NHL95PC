@@ -66,7 +66,7 @@ int ListDialog(char **items, int n, char *title, unsigned align, int marks, char
     s.maxw += 9;
     if (tw > s.maxw) s.maxw = tw;
     tw = fputchar(s.title);
-    s.lh = (byte_D42C3 + 2) * s.shown + 4;
+    s.lh = (TextCharH + 2) * s.shown + 4;
     s.bx = (0x280 - s.maxw - 0x10) / 2;
     s.by = (0x1E0 - s.lh - 0x20) / 2;
     s.bw = s.maxw + 0x10;

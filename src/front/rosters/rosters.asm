@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_6CC20 progbits alloc exec nowrite align=1
 extern __CHK, AllocMemBlock, boxfillcolor, boxlitecolor, boxshadecolor, btn_EditRosters, btn_LeagueExists, btn_RosterList
-extern BuildFreeAgentList, BuildTeamRosterList, byte_D42C3, CarTeamRecPtr, cddriveptr, ClearInputQueue, ClearScreen, CreateBitmap
+extern BuildFreeAgentList, BuildTeamRosterList, TextCharH, CarTeamRecPtr, cddriveptr, ClearInputQueue, ClearScreen, CreateBitmap
 extern curdbname, dbdirty, DbLineEditor, dblinesmenubar, divisionteams, dlgtextbg, dlgtextfg, DrawArt
 extern DrawButtons, DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, DrawScrollBar, DrawShape
 extern dword_D0C20, dword_EA2B0, editptrspr, editrosters_exit, editrostersmenubar, facount, FadePalStep, falist
@@ -347,7 +347,7 @@ DrawRosterList:
         call sprintf_
         add esp, byte 0Ch
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, esi
         add eax, dword [byte ebp-068h]
         push eax
@@ -366,7 +366,7 @@ DrawRosterList:
         call sprintf_
         add esp, byte 0Ch
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, esi
         add eax, dword [byte ebp-068h]
         push eax
@@ -386,7 +386,7 @@ DrawRosterList:
         lea eax, [byte ebp-060h]
         call FitPlayerName
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, esi
         add eax, dword [byte ebp-068h]
         push eax
@@ -405,7 +405,7 @@ DrawRosterList:
         je short .5
         push dword 80h
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         push eax
         push dword 0F0h
         imul eax, esi
@@ -451,7 +451,7 @@ DrawRosterList:
         call sprintf_
         add esp, byte 0Ch
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, esi
         add eax, dword [byte ebp-068h]
         push eax
@@ -472,7 +472,7 @@ DrawRosterList:
         call sprintf_
         add esp, byte 0Ch
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, esi
         add eax, dword [byte ebp-068h]
         push eax
@@ -491,7 +491,7 @@ DrawRosterList:
         lea eax, [byte ebp-060h]
         call FitPlayerName
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         imul eax, esi
         add eax, dword [byte ebp-068h]
         push eax
@@ -507,7 +507,7 @@ DrawRosterList:
         je short .10
         push dword 80h
         xor eax, eax
-        mov al, byte [byte_D42C3]
+        mov al, byte [TextCharH]
         push eax
         push dword 0F0h
         imul eax, esi
@@ -1377,7 +1377,7 @@ RosterPanelClick:
         cmp edx, byte 35h
         jl near .8
         xor ebx, ebx
-        mov bl, byte [byte_D42C3]
+        mov bl, byte [TextCharH]
         mov eax, ebx
         shl eax, 3
         sub eax, ebx

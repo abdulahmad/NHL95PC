@@ -97,7 +97,7 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
             DrawEditCursor(flags);
             if (!ins) {
                 ins = 1;
-                editcurw = byte_D42C3;
+                editcurw = TextCharH;
             } else {
                 ins = 0;
                 editcurw = 1;
@@ -131,7 +131,7 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
                 if (key < 0x20 || key > 0x7A) continue;
                 if (maxlen <= editpos) continue;
                 if (!(flags & 1) || ((flags & 1) &&
-                    (((signed char *)byte_C4B6C)[(unsigned char)(key + 1)] & 0xE0))) {
+                    (((signed char *)CharClassTable)[(unsigned char)(key + 1)] & 0xE0))) {
                     /* This key passes the character-class filter. */
                 } else continue;
             }

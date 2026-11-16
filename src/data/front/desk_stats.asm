@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_DB7EC nobits alloc noexec write align=1
 global awroster, byte_DB7F1, hmgoalieidx, hmscratch, byte_DC264, byte_DC265, byte_DC266
-global byte_DC267, byte_DC268, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr, dword_DC23E
+global byte_DC267, UnusedStateByte, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr, dword_DC23E
 global linesprites, hudhundstep, penaltydigits, dword_DC2B8, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
 global clockdigits, clockcolon, cupseries, titlesample, statsteamorder, statsmenuresult, sfpal2, sfpal1
 global dword_DC6B4, statsnumgoalies, statsskaterorder, statsgoalieorder, dword_DC734, leaguestatsmode, statsgoalieplr, statsnumskaters
@@ -63,7 +63,7 @@ byte_DC266:
         resb 1
 byte_DC267:
         resb 1
-byte_DC268:
+UnusedStateByte:
         resb 4
 linesprites:
         resb 32
