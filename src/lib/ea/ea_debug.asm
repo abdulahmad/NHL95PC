@@ -3,19 +3,19 @@ bits 32
 %include "hockey.inc"
 section s_93938 progbits alloc exec nowrite align=1
 extern _dos_getdate_, _dos_gettime_, _os_handle, _os_handle_0, _os_handle_1, str_DBUGTXT, str_FILES, str_DATES
-extern str_TIMES, str_CLOSED, str_TIMES2, asc_C4080, str_2d02d02d, str_CS44xDS, str_CS44xDS2, str_Used66xFree
-extern str_Used7uFree7u, str_NAMESIZEADREND, str_IDXNAMESIZEADR, str_80s, asc_C4200, str_S_MemViewerDrawList, str_SPACE9x8s8s, str_SPACE9d8s8s
-extern str_SPACE66x6, str_SPACE7d66s, asc_C428C, str_1212s9d8s8s, str_33d1212s66x66s66s44x, asc_C42E4, str_MEMMANAGER, str_044X00000000
+extern str_TIMES, str_CLOSED, str_TIMES2, str_DateStampFmt, str_2d02d02d, str_CS44xDS, str_CS44xDS2, str_Used66xFree
+extern str_Used7uFree7u, str_NAMESIZEADREND, str_IDXNAMESIZEADR, str_80s, str_StrNewline, str_S_MemViewerDrawList, str_SPACE9x8s8s, str_SPACE9d8s8s
+extern str_SPACE66x6, str_SPACE7d66s, str_MemListRowFmt, str_1212s9d8s8s, str_33d1212s66x66s66s44x, str_MemBlockRowFmt, str_MEMMANAGER, str_044X00000000
 extern str_SYSTEM, str_SPACE3, str_HIGHMemoryBlock, str_LOWMemoryBlock, str_ConventionalMemory, str_RelocatableBlock, str_NonRelocatableBlock, str_ALIGNFlagIsSet
-extern str_PRIORITY1d, str_SequenceD, str_BlockIsPURGABLE, str_04x2, str_02x, asc_C441C, str_FILES2, str_DATES2
+extern str_PRIORITY1d, str_SequenceD, str_BlockIsPURGABLE, str_04x2, str_02x, str_FourSpaces, str_FILES2, str_DATES2
 extern str_TIMES3, str_HexmemdspOS, str_XxMMAPTXT, str_ErrorDumpingMemoryMap, str_ShapeFileIsInvalid, str_NumDPackedD, str_ThereAreNoShapes, str_44s05x
 extern str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked, str_Packed, str_Unpacked, str_3d3d3d3dS
 extern str_ShapeIsInvalidDraw, str_MEMSHPTXT, str_ErrorDumpingShapesList, str_ShapeFileName0, str_ShapeFileSizeLd, str_NumberOfShapesD, str_44s66ld, str_Bytes3dRows3d2
-extern str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d, asc_C46F8, str_SCREEN2, asc_C470C
+extern str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d, str_TwoDigitFmt, str_SCREEN2, str_DateTimeFmt
 extern str_2d02d02d2, DebugRow, MemViewAttrFlags, DebugPrintf, StartupCs, StartupDs, MemDescriptors, GraphicsReady
 extern ViewScreenWidth, ViewScreenHeight, DebugMode, DebugLogOn, MemViewBlack, MemViewWhite, MemViewYellow, MemViewGreen
 extern MemViewRed, MemViewShowDetail, MemViewOpen, MemViewCursor, MemViewRowY, MemViewRowX, PaletteCursorColours, DebugLastKey
-extern dword_EDAB4, MemViewTop, MemViewCount, MemViewSel, MemViewTitle, MemViewRow, MemViewList, MemViewKey
+extern MemFreeBytes, MemViewTop, MemViewCount, MemViewSel, MemViewTitle, MemViewRow, MemViewList, MemViewKey
 extern MemViewFlags, MemViewMode, MemViewPrevSel, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, MarkDescPurgeable, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId, PutBlock
@@ -23,11 +23,11 @@ extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, DrawFrameClipped, Prin
 extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered
 extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, SnapScreenToShape, SelectBitmap, FindShape, ClearScreen, KbdGetKey, KbdFlush
 extern SaveDrawState, RestoreDrawState, FindFirstFile, PollHotkeys, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
-extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3
-extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
-extern MemViewStrings, str_X_DebugSprintf, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, str_W_DumpMemoryMap
-extern str_Un, unk_C46C0, DefaultFont, vsprintf_, WaitTickDeadline
-global DebugLogOpen, DebugLogClose, DebugLog, DebugLogPrintf, FindWildcardDigits, FormatDateStamp, MemMapRulePtr, unk_93C54
+extern str_Wt2, str_Asterisks, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3
+extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, str_CharFmt
+extern MemViewStrings, str_X_DebugSprintf, str_One, str_Asterisk, str_SpaceChar, str_N, str_FF, str_W_DumpMemoryMap
+extern str_Un, str_Newline, DefaultFont, vsprintf_, WaitTickDeadline
+global DebugLogOpen, DebugLogClose, DebugLog, DebugLogPrintf, FindWildcardDigits, FormatDateStamp, MemMapRulePtr, MonthNameTable
 global DebugWaitKey, DebugGetKey, MemViewerGetMode, MemViewer, MemViewer, MemViewerStart, MemViewerListHead, MemViewerDrawRows
 global MemViewerCountBlocks, MemViewerSelectRow, MemViewerDrawList, MemPoolTotals, MemViewerDrawTitle, DebugSprintf, MemViewerBlockInfo, MemViewerHexDump
 global HexDumpRow, WriteMemMap, DumpMemoryMap, ShapeViewerFindShape, ShapeViewer, ReadShapeFileHeader, ShapeInfo, DumpShapesList
@@ -320,7 +320,7 @@ FormatDateStamp:
         xor eax, eax
         mov al, byte [byte esp+08h]
         push eax
-        push asc_C4080
+        push str_DateStampFmt
         push ebx
         call sprintf_
         add esp, byte 14h
@@ -344,8 +344,8 @@ FormatDateStamp:
         ret
         db 00h
 MemMapRulePtr:
-        dd unk_C40A0
-unk_93C54:
+        dd str_Asterisks
+MonthNameTable:
         dd str_Fs
         dd str_Jan2
         dd str_Feb3
@@ -580,7 +580,7 @@ MemViewerDrawRows:
         cmp esi, byte 46h
         jne short .10
         xor edx, edx
-        mov dword [dword_EDAB4], edx
+        mov dword [MemFreeBytes], edx
 .10:
         cmp esi, byte 44h
         jne short .11
@@ -790,7 +790,7 @@ MemViewerDrawList:
         call MemPoolTotals
         mov edx, dword [byte ebp+05Eh]
         push edx
-        mov ebx, dword [dword_EDAB4]
+        mov ebx, dword [MemFreeBytes]
         push ebx
         mov ecx, dword [StartupDs]
         push ecx
@@ -907,7 +907,7 @@ MemViewerDrawList:
         cmp edi, byte 1
         jne short .6
         push byte 0Bh
-        push unk_C41F0
+        push str_CharFmt
         call DebugPrintf
         add esp, byte 8
         lea eax, [byte ebp-02Eh]
@@ -943,14 +943,14 @@ MemViewerDrawList:
         jne short .7
         lea eax, [byte ebp-02Eh]
         push eax
-        push asc_C4200
+        push str_StrNewline
         mov edx, dword [MemViewList]
         push edx
         call fprintf_
         add esp, byte 0Ch
         lea eax, [dword ebp-082h]
         push eax
-        push asc_C4200
+        push str_StrNewline
         mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
@@ -1083,7 +1083,7 @@ MemViewerDrawList:
         jne short .15
         lea eax, [byte ebp-02Eh]
         push eax
-        push asc_C4200
+        push str_StrNewline
         mov edx, dword [MemViewList]
         push edx
         call fprintf_
@@ -1133,7 +1133,7 @@ MemViewerDrawList:
         push edx
         cmp dword [MemViewShowDetail], byte 0
         je short .18
-        mov eax, asc_C428C
+        mov eax, str_MemListRowFmt
         jmp short .19
 .18:
         mov eax, str_1212s9d8s8s
@@ -1178,7 +1178,7 @@ MemViewerDrawList:
         mov eax, str_33d1212s66x66s66s44x
         jmp short .22
 .21:
-        mov eax, asc_C42E4
+        mov eax, str_MemBlockRowFmt
 .22:
         push eax
         lea eax, [dword ebp-082h]
@@ -1211,7 +1211,7 @@ MemViewerDrawList:
         jne short .24
         lea eax, [dword ebp-082h]
         push eax
-        push asc_C4200
+        push str_StrNewline
         mov edx, dword [MemViewList]
         push edx
         call fprintf_
@@ -1483,7 +1483,7 @@ MemViewerBlockInfo:
         je short .2
         push byte 3Dh
         push edi
-        push unk_C433C
+        push str_One
         call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
@@ -1937,7 +1937,7 @@ HexDumpRow:
         mov esi, ebx
         mov dword [esp], ecx
         push byte 0Bh
-        push unk_C41F0
+        push str_CharFmt
         call DebugPrintf
         add esp, byte 8
         shl edi, 4
@@ -1973,7 +1973,7 @@ HexDumpRow:
         jne short .4
         cmp dword [byte esp+024h], byte 0
         je short .4
-        push unk_C4414
+        push str_Asterisk
         call DebugPrintf
         add esp, byte 4
         push byte 7
@@ -1983,7 +1983,7 @@ HexDumpRow:
         push byte 7
         call DebugSetAttr
         add esp, byte 4
-        push unk_C4418
+        push str_SpaceChar
         call DebugPrintf
 .5:
         add esp, byte 4
@@ -1991,7 +1991,7 @@ HexDumpRow:
         and eax, byte 3
         cmp eax, byte 3
         jne short .6
-        push unk_C4418
+        push str_SpaceChar
         call DebugPrintf
         add esp, byte 4
 .6:
@@ -1999,7 +1999,7 @@ HexDumpRow:
         inc edi
         cmp edi, byte 10h
         jl near .2
-        push unk_C4418
+        push str_SpaceChar
         call DebugPrintf
         add esp, byte 4
         xor edi, edi
@@ -2024,7 +2024,7 @@ HexDumpRow:
         xor eax, eax
         mov al, byte [byte esp+0Ch]
         push eax
-        push unk_C41F0
+        push str_CharFmt
         call DebugPrintf
         add esp, byte 8
         inc esi
@@ -2034,7 +2034,7 @@ HexDumpRow:
         push byte 7
         call DebugSetAttr
         add esp, byte 4
-        push asc_C441C
+        push str_FourSpaces
         call DebugPrintf
         add esp, byte 4
         add dword [byte esp+08h], byte 10h
@@ -2075,7 +2075,7 @@ WriteMemMap:
         call FormatDateTime
         mov edx, dword [MemMapRulePtr]
         push edx
-        push asc_C4200
+        push str_StrNewline
         mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
@@ -2103,14 +2103,14 @@ WriteMemMap:
         add esp, byte 0Ch
         mov eax, dword [MemMapRulePtr]
         push eax
-        push asc_C4200
+        push str_StrNewline
         mov edx, dword [MemViewList]
         push edx
         call fprintf_
         add esp, byte 0Ch
         cmp dword [MemViewShowDetail], byte 0
         je short .1
-        mov eax, unk_C4448
+        mov eax, str_N
         jmp short .2
 .1:
         mov eax, str_FF
@@ -2152,7 +2152,7 @@ DumpMemoryMap:
         mov byte [byte esp+01h], 45h
         mov eax, esp
         call NextFreeFileName
-        mov esi, dword [dword_EDAB4]
+        mov esi, dword [MemFreeBytes]
         cmp dword [GraphicsReady], byte 0
         je short .1
         push byte 14h
@@ -2174,10 +2174,10 @@ DumpMemoryMap:
         call ShowMessageBox
         add esp, byte 8
 .2:
-        mov dword [dword_EDAB4], esi
+        mov dword [MemFreeBytes], esi
         jmp short .4
 .3:
-        mov dword [dword_EDAB4], esi
+        mov dword [MemFreeBytes], esi
         mov esi, esp
         push esi
         push eax
@@ -2739,7 +2739,7 @@ DumpShapesList:
         movsb
         mov eax, esp
         call NextFreeFileName
-        mov esi, dword [dword_EDAB4]
+        mov esi, dword [MemFreeBytes]
         push byte 14h
         lea eax, [byte esp+04h]
         push eax
@@ -2757,16 +2757,16 @@ DumpShapesList:
         call ShowMessageBox
         add esp, byte 8
         call ReturnFalse
-        mov dword [dword_EDAB4], esi
+        mov dword [MemFreeBytes], esi
         jmp near .7
 .1:
-        mov dword [dword_EDAB4], esi
+        mov dword [MemFreeBytes], esi
         lea edx, [byte esp+040h]
         lea eax, [byte esp+054h]
         call FormatDateTime
         mov edx, dword [MemMapRulePtr]
         push edx
-        push asc_C4200
+        push str_StrNewline
         mov ebx, dword [MemViewList]
         push ebx
         call fprintf_
@@ -2794,7 +2794,7 @@ DumpShapesList:
         add esp, byte 0Ch
         mov ebp, dword [MemMapRulePtr]
         push ebp
-        push asc_C4200
+        push str_StrNewline
         mov eax, dword [MemViewList]
         push eax
         call fprintf_
@@ -2900,7 +2900,7 @@ DumpShapesList:
 .5:
         cmp dword [dword esp+088h], byte 0
         je short .6
-        push unk_C46C0
+        push str_Newline
         mov esi, dword [MemViewList]
         push esi
         call fprintf_
@@ -3336,13 +3336,13 @@ PaletteViewerLabel:
         mov esi, ebp
 .1:
         push edi
-        push asc_C46F8
+        push str_TwoDigitFmt
         push byte 0Dh
         push esi
         call PrintBoxedText
         add esp, byte 10h
         push edi
-        push asc_C46F8
+        push str_TwoDigitFmt
         push ebp
         push byte 7
         call PrintBoxedText
@@ -3366,7 +3366,7 @@ SaveScreenshot:
         push edi
         push ebp
         sub esp, byte 40h
-        mov ebp, dword [dword_EDAB4]
+        mov ebp, dword [MemFreeBytes]
         mov edi, esp
         mov esi, str_SCREEN2
         movsd
@@ -3387,7 +3387,7 @@ SaveScreenshot:
         push eax
         call SnapScreenToShape
         add esp, byte 4
-        mov dword [dword_EDAB4], ebp
+        mov dword [MemFreeBytes], ebp
         add esp, byte 40h
         pop ebp
         pop edi
@@ -3483,12 +3483,12 @@ FormatDateTime:
         push edx
         xor eax, eax
         mov al, byte [byte esp+05h]
-        mov edx, dword [nosplit eax*4+unk_93C54]
+        mov edx, dword [nosplit eax*4+MonthNameTable]
         push edx
         xor eax, eax
         mov al, byte [byte esp+08h]
         push eax
-        push asc_C470C
+        push str_DateTimeFmt
         push ebx
         call sprintf_
         add esp, byte 14h

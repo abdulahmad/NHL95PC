@@ -1,0 +1,151 @@
+byte_ED0F7 gmrosterpos {source_game=PC-new,confidence=low} Byte 3 of each game roster record (26 bytes): copied from the roster file record
+byte_ED0F8 gmrosterdot {source_game=PC-new,confidence=low} Byte 4 of each game roster record: set to a full stop after the jersey number
+byte_ED0F9 gmrosterspace {source_game=PC-new,confidence=low} Byte 5 of each game roster record: set to a space before the name
+byte_ED0FA gmrostername {source_game=PC-new,confidence=low} Player name (16 bytes) of each game roster record
+dword_ED364 ControlsDlgFlags {source_game=PC-new,confidence=low} Bit flags the controls dialog builds from its options
+dword_ED6D0 GadgetMovie {source_game=PC-new,confidence=low} Movie handle whose frame GadgetSoundStub fetches
+dword_ED6E8 ReplaySpeedAccum {source_game=PC-new,confidence=low} Replay speed accumulator; the replay steps a frame each time it reaches five
+dword_ED6EC ReplayHoverPrev {source_game=PC-new,confidence=low} Player last highlighted under the replay pointer (-1 for none)
+dword_ED70C ReplayCamFree {source_game=PC-new,confidence=low} Set when the replay camera follows the pointer instead of a player
+dword_ED74C ReplayHoverPlayer {source_game=PC-new,confidence=low} Player nearest the replay pointer (-1 for none)
+dword_ED750 ReplayStartRate {source_game=PC-new,confidence=low} Set to 8 when instant replay starts
+dword_ED754 ReplayCtlFlags {source_game=PC-new,confidence=low} Replay control button state flags (44h at start)
+dword_ED7A4 SfxTestSample {source_game=PC-new,confidence=low} Sample handle the sound setup frees when the device changes
+dword_ED7A8 SpeechMemBlock {source_game=PC-new,confidence=low} Memory block freed after the speech system shuts down
+byte_D9299 presidentsteam+029h {no_record}
+unk_E0416 ReplayBuffer {source_game=PC-new,confidence=medium} Instant replay frame buffer that replaystart points at
+dword_EA994 rosterlistkeys {source_game=PC-new,confidence=low} Player key table read by the roster move and create routines (indexed by two registers)
+unk_EAC84 roster2list {source_game=PC-new,confidence=low} Second roster list (4-byte records like rosterlist)
+byte_EAC86 roster2slot {source_game=PC-new,confidence=low} Slot byte of each second roster list record
+dword_EAF7C roster2teamrec {source_game=PC-new,confidence=low} Team record pointer of the second roster
+byte_EAF99 rosterselgoalies {source_game=PC-new,confidence=low} Selection flags of the roster 1 goalies (rostersel entries 25 to 27)
+byte_EAFB5 roster2selgoalies {source_game=PC-new,confidence=low} Selection flags of the roster 2 goalies (rostersel entries 53 to 55)
+unk_EAFB8 rosterteamcopy {source_game=PC-new,confidence=low} Copy of a roster team record (2E8h bytes) made by CopyRoster1Rec
+unk_A9C80 SbCardDmaPage {source_game=PC-new,confidence=medium} DMA page of the Sound Blaster buffer
+unk_A9C81 SbCardDmaAddr {source_game=PC-new,confidence=medium} DMA offset of the Sound Blaster buffer
+unk_A9C83 SbCardDmaLength {source_game=PC-new,confidence=medium} Sound Blaster DMA transfer length
+unk_A9C85 SbCardDmaActive {source_game=PC-new,confidence=medium} Set while Sound Blaster DMA output is running
+unk_A9C86 SbCardPort {source_game=PC-new,confidence=medium} Sound Blaster base port
+unk_A9C88 SbCardIrq {source_game=PC-new,confidence=medium} Sound Blaster IRQ
+unk_A9C89 SbCardDma {source_game=PC-new,confidence=medium} Sound Blaster DMA channel
+unk_A9C8A SbCardRate {source_game=PC-new,confidence=medium} Sound Blaster sample rate (22050 or 11025)
+unk_A9C8E SbCardHighSpeed {source_game=PC-new,confidence=low} Set when the DSP supports the auto-init block mode
+unk_A9C8F SbCardPicMask {source_game=PC-new,confidence=medium} Master PIC mask saved when the card opens
+unk_A9C90 SbCardPicMask2 {source_game=PC-new,confidence=medium} Slave PIC mask saved when the card opens
+unk_A9C91 SbCardIrqHooked {source_game=PC-new,confidence=low} Set while the Sound Blaster IRQ handler is hooked
+unk_A9C92 SbCardOldIsr {source_game=PC-new,confidence=medium} Offset of the IRQ handler replaced by SbHookIrq
+unk_A9C96 SbCardOldIsrSel {source_game=PC-new,confidence=medium} Selector of the IRQ handler replaced by SbHookIrq
+unk_A9C98 SbDmaPagePorts {source_game=PC-new,confidence=medium} DMA page register port for each DMA channel
+dword_D524C SbEnvDma {source_game=PC-new,confidence=low} DMA channel parsed from the BLASTER variable
+unk_D5254 SbEnvErf {source_game=PC-new,confidence=low} Value of the ErF field of the BLASTER variable
+dword_D5260 Mpu401DataPort {source_game=PC-new,confidence=medium} MPU-401 data port (330h)
+dword_D5264 Mpu401StatusPort {source_game=PC-new,confidence=medium} MPU-401 status and command port (331h)
+dword_D5268 Mpu401RxCount {source_game=PC-new,confidence=low} Cleared by Mpu401Init
+dword_D526C Mpu401RxMask {source_game=PC-new,confidence=low} Set to FFh by Mpu401Init
+dword_D5270 Mpu401OldIsr {source_game=PC-new,confidence=low} Saved interrupt handler offset; non-zero when one is hooked
+dword_D5274 Mpu401OldIsrSel {source_game=PC-new,confidence=low} Saved interrupt handler selector
+byte_D5279 Mpu401Irq {source_game=PC-new,confidence=medium} MPU-401 IRQ number
+byte_D527A Mpu401IrqMask {source_game=PC-new,confidence=medium} PIC mask bit for the MPU-401 IRQ
+byte_D5224 PcSpkVoiceDefaults {source_game=PC-new,confidence=low} Default voice record for the PC speaker driver
+unk_D522E SbVoiceDefaults {source_game=PC-new,confidence=low} Default voice record copied by SbInit
+unk_D5382 GusVoiceDefaults {source_game=PC-new,confidence=low} Default voice record copied by GusStartup
+dword_D53A0 GusEnvRead {source_game=PC-new,confidence=low} Set once the ULTRASND variable has been read
+dword_D53A4 GusCardFound {source_game=PC-new,confidence=low} Set once the GUS port has been probed
+dword_D53A8 GusDriverIsOpen {source_game=PC-new,confidence=low} Set while the GUS driver is open
+dword_D53AC GusDigiOpen {source_game=PC-new,confidence=low} Keeps the GUS driver open while digital sound is in use
+dword_D53B0 GusMusicOpen {source_game=PC-new,confidence=low} Set once GusInitMusic has started the GUS music layer
+unk_D5408 GusPatchNameMap {source_game=PC-new,confidence=low} Patch number and file name records (14 bytes each; -1 ends the list)
+dword_D5424 GusPatchFallbacks {source_game=PC-new,confidence=low} Pairs of patch numbers: load the second when the first is missing (-1 ends)
+dword_D543C GusPatchChannelMask {source_game=PC-new,confidence=low} Channel bit mask tested by GusLoadMidiPatch
+byte_D8B0E GusTimerCtrl {source_game=PC-new,confidence=low} Timer control byte cleared by GusResetTimers
+byte_D8B10 GusVoiceAllocCtrl {source_game=PC-new,confidence=low} Byte cleared by GusResetVoiceAlloc
+word_D8ACC GusVoiceRateTable {source_game=PC-new,confidence=medium} Playback rate word per active voice count (14 voices give 44100)
+byte_F79E8 GusTimerState {source_game=PC-new,confidence=low} Shadow of the GUS timer control register
+dword_F79F8 GusVoicePrioLo {source_game=PC-new,confidence=low} Low dword of each voice's steal priority (12-byte records)
+dword_F79FC GusVoicePrioHi {source_game=PC-new,confidence=low} High dword of each voice's steal priority
+dword_F7A00 GusVoiceStealFn {source_game=PC-new,confidence=low} Routine called when a voice is stolen
+byte_F23BC MidiChannelUsed {source_game=PC-new,confidence=low} One byte per MIDI channel: set while the channel is taken
+byte_F23CC MusicBankHeader {source_game=PC-new,confidence=low} Music bank header read from the bank file (type byte first)
+byte_F23CD MusicBankPatchNum {source_game=PC-new,confidence=low} Patch file number from the music bank header
+byte_F23CF MusicBankTimbreCount {source_game=PC-new,confidence=low} Timbre file count from the music bank header
+byte_F23E0 MusicBankTimbreNums {source_game=PC-new,confidence=low} Timbre file numbers from the music bank header
+dword_F23EA MusicPatchFile {source_game=PC-new,confidence=low} Loaded patch file of the music bank
+dword_F23EE MusicTimbreFiles {source_game=PC-new,confidence=low} Loaded timbre files of the music bank
+dword_F2416 MusicTimbreSizes {source_game=PC-new,confidence=low} Size of each loaded timbre file
+dword_F243C AtexitRoutines {source_game=PC-new,confidence=low} Exit routine table walked by _Full_at_exit_rtn_
+unk_F1884 SeqEvent {source_game=PC-new,confidence=low} Event record SeqReadEvent fills: delta time first
+dword_F1888 SeqEventValue {source_game=PC-new,confidence=low} Event value (controller number or pitch bend)
+byte_F188C SeqEventNote {source_game=PC-new,confidence=low} Event status or note byte
+byte_F188D SeqEventVelocity {source_game=PC-new,confidence=low} Event velocity or data byte
+byte_F188E SeqEventLength {source_game=PC-new,confidence=low} Event length in bytes
+dword_F1890 SeqNextEvent {source_game=PC-new,confidence=low} Record for the delta time of the next event
+dword_F189C SongRecords {source_game=PC-new,confidence=low} Song records (12 bytes): song pointer first
+dword_F18A4 SongRelease {source_game=PC-new,confidence=low} Release flag of each song record
+byte_F1784 SeqSysexBuffer {source_game=PC-new,confidence=low} Buffer for system exclusive messages
+byte_F1704 SeqQueue {source_game=PC-new,confidence=low} Sequencer command queue (128 bytes)
+byte_F1705 SeqQueueData {source_game=PC-new,confidence=low} Data bytes of the sequencer command queue
+byte_F1A1C SeqTracks {source_game=PC-new,confidence=low} Track records (54h bytes each)
+byte_F1A1D SeqTrackFlags {source_game=PC-new,confidence=low} Flags byte of each track record
+dword_F1A1E SeqTrackPos {source_game=PC-new,confidence=low} Data position of each track record
+unk_F21FC MidiOutQueue {source_game=PC-new,confidence=low} MIDI output ring buffer used by every MIDI driver
+byte_F234D MidiChanVolume {source_game=PC-new,confidence=low} Volume per MIDI channel (7-byte records)
+byte_F234E MidiChanCtrlState {source_game=PC-new,confidence=low} Controller values per MIDI channel
+dword_F22FC DigiFadeLevel {source_game=PC-new,confidence=low} Current level of each digital channel fade (20-byte records)
+dword_F2300 DigiFadeAccum {source_game=PC-new,confidence=low} Fixed-point level of each digital channel fade
+dword_F2304 DigiFadeStep {source_game=PC-new,confidence=low} Step per tick of each digital channel fade
+dword_F2308 DigiFadeChannel {source_game=PC-new,confidence=low} Channel of each digital channel fade
+dword_F230C DigiFadeDriver {source_game=PC-new,confidence=low} Driver of each digital channel fade
+dword_EDABA vesamodeinfo+02h {no_record}
+byte_EDABB vesamodeinfo+03h {no_record}
+word_EDBCA vesainfo+012h {no_record}
+byte_EDCC1 vesamodeok+01h {no_record}
+byte_EDCC3 vesamodeok+03h {no_record}
+byte_EDCC5 vesamodeok+05h {no_record}
+byte_EDCC7 vesamodeok+07h {no_record}
+dword_EDAA8 MemDescriptorBase {source_game=PC-new,confidence=low} Lowest memory descriptor address checked by the shape and window code
+dword_EDAB4 MemFreeBytes {source_game=96PC,confidence=medium} Largest free memory figure kept by the memory tracker
+unk_EDF04 RowTableDefault {source_game=PC-new,confidence=low} Default row table storage initmemman points RowTableBuffer at
+dword_C4CFC SpeechSlotMemSize {source_game=PC-new,confidence=medium} Memory for the speech slots: 800000 with enough free memory or 200000
+dword_D7178 CosTableTail {source_game=PC-new,confidence=low} End of the cosine table reached with negated indexes
+byte_C4C70 CLibBitMasks {source_game=PC-new,confidence=medium} Bit mask per bit number (1 2 4 ...) used by the C library set routines
+asc_C4080 str_DateStampFmt {source_game=PC-new,confidence=medium} Date format string
+asc_C470C str_DateTimeFmt {source_game=PC-new,confidence=medium} Date format string used by FormatDateTime
+asc_C4200 str_StrNewline {source_game=PC-new,confidence=medium} Format: string then newline
+asc_C428C str_MemListRowFmt {source_game=PC-new,confidence=medium} Memory viewer list row format
+asc_C42E4 str_MemBlockRowFmt {source_game=PC-new,confidence=medium} Memory viewer block row format
+asc_C441C str_FourSpaces {source_game=PC-new,confidence=medium} Four spaces
+asc_C46F8 str_TwoDigitFmt {source_game=PC-new,confidence=medium} Two-digit number format
+unk_C3FD5 str_EmptyExt {source_game=PC-new,confidence=low} Empty extension string
+unk_C40A0 str_Asterisks {source_game=PC-new,confidence=medium} Row of asterisks for the memory map
+unk_C41F0 str_CharFmt {source_game=PC-new,confidence=medium} Character format
+unk_C433C str_One {source_game=PC-new,confidence=medium} String 1
+unk_C4414 str_Asterisk {source_game=PC-new,confidence=medium} One asterisk
+unk_C4418 str_SpaceChar {source_game=PC-new,confidence=medium} One space
+unk_C4448 str_N {source_game=PC-new,confidence=medium} Letter N
+unk_C46C0 str_Newline {source_game=PC-new,confidence=medium} Newline
+unk_C472C str_ColonSpace {source_game=PC-new,confidence=medium} Colon and space printed by perror
+unk_C4AB4 str_DotBackslash {source_game=PC-new,confidence=medium} Current directory prefix used by spawnve
+unk_A2AEE str_DigitChars {source_game=PC-new,confidence=medium} Digit characters used by ultoa
+unk_93C54 MonthNameTable {source_game=PC-new,confidence=low} Month name strings for FormatDateTime
+unk_A3274 EmuZeroTbyte {source_game=96PC,confidence=medium} Ten-byte zero used by the FTST and FXAM emulation
+unk_A3278 EmuZeroTbyte+04h {no_record}
+unk_A327C EmuZeroTbyte+08h {no_record}
+unk_A32D0 EmuRegTagMasks+02h {no_record}
+unk_A32D4 EmuRegTagMasks+06h {no_record}
+unk_A32D6 EmuRegTagMasks+08h {no_record}
+unk_A3322 EmuFpremCcBits {source_game=96PC,confidence=medium} Condition code bits for the partial remainder results
+jpt_1B283 CdStreamServiceJumpTable {source_game=PC-new,confidence=medium} Jump table for the switch cases of CdStreamService
+jpt_998DD SeqReadEventJumpTable {source_game=PC-new,confidence=medium} Jump table for the switch cases of SeqReadEvent
+jpt_9E414 AdlibEnvelopeJumpTable {source_game=PC-new,confidence=medium} Jump table for the switch cases of AdlibEnvelopeStep
+jpt_AB964 GusVibratoJumpTable {source_game=PC-new,confidence=medium} Jump table for the switch cases of GusVibratoTick
+jpt_B66B3 FillRectJumpTable {source_game=PC-new,confidence=medium} Jump table for the switch cases of FillRectCore
+jpt_B67CB XorRectJumpTable {source_game=PC-new,confidence=medium} Jump table for the switch cases of XorRectCore
+unk_B74AA CopyRowFastJumpTable {source_game=PC-new,confidence=medium} Jump table for the switch cases of CopyRowFast
+jpt_B4253 SetupRectFillJumpTable {source_game=96PC,confidence=medium} Jump table for the switch cases of SetupRectFill
+jpt_B42B2 RectFillClipLeftJumpTable {source_game=96PC,confidence=medium} Jump table for the left clip cases of the rectangle fill
+jpt_B439E RectFillClipBottomJumpTable {source_game=96PC,confidence=medium} Jump table for the bottom clip cases of the rectangle fill
+jpt_B4488 RectFillClipRightJumpTable {source_game=96PC,confidence=medium} Jump table for the right clip cases of the rectangle fill
+jpt_B466E RectFillStepJumpTable {source_game=96PC,confidence=medium} Jump table for the step cases of the rectangle fill
+dword_D1229 TeamJerseyBase+06Dh {no_record}
+dword_D122B TeamJerseyBase+06Fh {no_record}
+dword_ED756 ReplayCtlFlags+02h {no_record}

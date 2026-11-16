@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
 extern __CHK, crowddriver, crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, cursndbank
-extern oneminsaid, musicdriver, crowdsamples, dword_ED7A4, gameopts, gmode, lastsfx, leaguesetimg
+extern oneminsaid, musicdriver, crowdsamples, SfxTestSample, gameopts, gmode, lastsfx, leaguesetimg
 extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
 extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
 extern SayPlayerNumber, SayPlayoffResult, SayPlayoffTonight, SayScoringPeriod, SayTonightIntro, SetTickDeadline, sounddev, SpeechBusy
@@ -401,7 +401,7 @@ CrowdNoiseReset:
 ; Play sound effect id (remembered in lastsfx): while speech plays only 9Ch
 ; passes (and in a replay only with oneminsaid); A0h/A1h not on sound devices
 ; 4/8; 7Dh raises crowdlevel by 500; AAh on device 4 starts sample
-; dword_ED7A4; 90h also plays 91h (both on device 4).
+; SfxTestSample; 90h also plays 91h (both on device 4).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/sfx.c
 %ifdef CBUILD
@@ -447,7 +447,7 @@ sfx:
         cmp edx, 0AAh
         jne short .5
         mov edx, dword [musicdriver]
-        mov eax, dword [dword_ED7A4]
+        mov eax, dword [SfxTestSample]
         call PlaySong
         pop edx
         pop ecx

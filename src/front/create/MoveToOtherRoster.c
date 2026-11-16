@@ -40,7 +40,7 @@ void MoveToOtherRoster(int *mode, int *x, int *y)
         for (; i < 0x1C; i++) {
             if (!rostersel[src * 28 + i]) continue;
             nsel++;
-            key = *(int *)((char *)dword_EA994 + src * 0x2F4 + i * 27);
+            key = *(int *)((char *)rosterlistkeys + src * 0x2F4 + i * 27);
             p = KeyDbPtr(key);
             slot = -1;
             if (rosterlist[src * 0x2F4 + i * 27] == 'G') {

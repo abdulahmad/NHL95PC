@@ -1760,7 +1760,7 @@ extern unsigned char str_03sFF03dTIM[]; /* C3FB8 */
 extern unsigned char str_KMS2[]; /* C3FC8 */
 extern unsigned char str_CFG2[]; /* C3FCC */
 extern unsigned char str_VHDR[]; /* C3FD0 */
-extern unsigned char unk_C3FD5[]; /* C3FD5 */
+extern unsigned char str_EmptyExt[]; /* C3FD5 */
 extern unsigned char str_SavefileblockaOPENFAILEDFOR[]; /* C3FD8 */
 extern unsigned char str_Jan[]; /* C4004 */
 extern unsigned char str_Feb2[]; /* C4008 */
@@ -1781,9 +1781,9 @@ extern unsigned char str_DATES[]; /* C4050 */
 extern unsigned char str_TIMES[]; /* C405C */
 extern unsigned char str_CLOSED[]; /* C4068 */
 extern unsigned char str_TIMES2[]; /* C4074 */
-extern unsigned char asc_C4080[]; /* C4080 */
+extern unsigned char str_DateStampFmt[]; /* C4080 */
 extern unsigned char str_2d02d02d[]; /* C4090 */
-extern unsigned char unk_C40A0[]; /* C40A0 */
+extern unsigned char str_Asterisks[]; /* C40A0 */
 extern unsigned char str_Fs[]; /* C40CC */
 extern unsigned char str_Jan2[]; /* C40D0 */
 extern unsigned char str_Feb3[]; /* C40D4 */
@@ -1803,23 +1803,23 @@ extern unsigned char str_Used66xFree[]; /* C4154 */
 extern unsigned char str_Used7uFree7u[]; /* C417C */
 extern unsigned char str_NAMESIZEADREND[]; /* C419C */
 extern unsigned char str_IDXNAMESIZEADR[]; /* C41C4 */
-extern unsigned char unk_C41F0[]; /* C41F0 */
+extern unsigned char str_CharFmt[]; /* C41F0 */
 extern unsigned char str_80s[]; /* C41F4 */
 extern unsigned char MemViewStrings[]; /* C41FC */
-extern unsigned char asc_C4200[]; /* C4200 */
+extern unsigned char str_StrNewline[]; /* C4200 */
 extern unsigned char str_S_MemViewerDrawList[]; /* C4204 */
 extern unsigned char str_SPACE9x8s8s[]; /* C420C */
 extern unsigned char str_SPACE9d8s8s[]; /* C4228 */
 extern unsigned char str_SPACE66x6[]; /* C4244 */
 extern unsigned char str_SPACE7d66s[]; /* C4268 */
-extern unsigned char asc_C428C[]; /* C428C */
+extern unsigned char str_MemListRowFmt[]; /* C428C */
 extern unsigned char str_1212s9d8s8s[]; /* C42A4 */
 extern unsigned char str_33d1212s66x66s66s44x[]; /* C42BC */
-extern unsigned char asc_C42E4[]; /* C42E4 */
+extern unsigned char str_MemBlockRowFmt[]; /* C42E4 */
 extern unsigned char str_MEMMANAGER[]; /* C430C */
 extern unsigned char str_X_DebugSprintf[]; /* C4318 */
 extern unsigned char str_044X00000000[]; /* C431C */
-extern unsigned char unk_C433C[]; /* C433C */
+extern unsigned char str_One[]; /* C433C */
 extern unsigned char str_SYSTEM[]; /* C4340 */
 extern unsigned char str_SPACE3[]; /* C434C */
 extern unsigned char str_HIGHMemoryBlock[]; /* C4354 */
@@ -1833,13 +1833,13 @@ extern unsigned char str_SequenceD[]; /* C43E0 */
 extern unsigned char str_BlockIsPURGABLE[]; /* C43F0 */
 extern unsigned char str_04x2[]; /* C4404 */
 extern unsigned char str_02x[]; /* C440C */
-extern unsigned char unk_C4414[]; /* C4414 */
-extern unsigned char unk_C4418[]; /* C4418 */
-extern unsigned char asc_C441C[]; /* C441C */
+extern unsigned char str_Asterisk[]; /* C4414 */
+extern unsigned char str_SpaceChar[]; /* C4418 */
+extern unsigned char str_FourSpaces[]; /* C441C */
 extern unsigned char str_FILES2[]; /* C4424 */
 extern unsigned char str_DATES2[]; /* C4430 */
 extern unsigned char str_TIMES3[]; /* C443C */
-extern unsigned char unk_C4448[]; /* C4448 */
+extern unsigned char str_N[]; /* C4448 */
 extern unsigned char str_FF[]; /* C444C */
 extern unsigned char str_HexmemdspOS[]; /* C4450 */
 extern unsigned char str_XxMMAPTXT[]; /* C4464 */
@@ -1867,16 +1867,16 @@ extern unsigned char str_NumberOfShapesD[]; /* C4658 */
 extern unsigned char str_44s66ld[]; /* C4670 */
 extern unsigned char str_Bytes3dRows3d2[]; /* C4684 */
 extern unsigned char str_XY3d3d[]; /* C46A0 */
-extern unsigned char unk_C46C0[]; /* C46C0 */
+extern unsigned char str_Newline[]; /* C46C0 */
 extern unsigned char str_033d022X[]; /* C46C4 */
 extern unsigned char str_R022d[]; /* C46D4 */
 extern unsigned char str_G022d[]; /* C46E0 */
 extern unsigned char str_B022d[]; /* C46EC */
-extern unsigned char asc_C46F8[]; /* C46F8 */
+extern unsigned char str_TwoDigitFmt[]; /* C46F8 */
 extern unsigned char str_SCREEN2[]; /* C4700 */
-extern unsigned char asc_C470C[]; /* C470C */
+extern unsigned char str_DateTimeFmt[]; /* C470C */
 extern unsigned char str_2d02d02d2[]; /* C471C */
-extern unsigned char unk_C472C[]; /* C472C */
+extern unsigned char str_ColonSpace[]; /* C472C */
 extern unsigned char str_FrameRate3dFrames[]; /* C4730 */
 extern unsigned char str_Width3dHeight3d[]; /* C4760 */
 extern unsigned char str_Colours3d1stColour[]; /* C4780 */
@@ -1926,7 +1926,7 @@ extern unsigned char str_BLASTER[]; /* C4A94 */
 extern unsigned char str_PAT[]; /* C4A9C */
 extern unsigned char str_ULTRADIR[]; /* C4AA1 */
 extern unsigned char str_MIDI[]; /* C4AAA */
-extern unsigned char unk_C4AB4[]; /* C4AB4 */
+extern unsigned char str_DotBackslash[]; /* C4AB4 */
 extern unsigned char str_Bat[]; /* C4AB7 */
 extern unsigned char str_Com[]; /* C4ABC */
 extern unsigned char str_Exe[]; /* C4AC1 */
@@ -1944,7 +1944,7 @@ extern int str_Nan; /* C4B60 */
 extern short F64_neg1_floor_; /* C4B64 */
 extern int dword_C4B69[]; /* C4B69 */
 extern unsigned char CharClassTable[]; /* C4B6C */
-extern unsigned char byte_C4C70[]; /* C4C70 */
+extern unsigned char CLibBitMasks[]; /* C4C70 */
 extern unsigned char ScanBitMasks[]; /* C4C78 */
 extern short F64_Scale10Max; /* C4C80 */
 extern short F64_Scale10Min; /* C4C88 */
@@ -1956,7 +1956,7 @@ extern short HugeValLo; /* C4CA0 */
 extern int HugeValHi; /* C4CA4 */
 extern unsigned char Scale10Count[]; /* C4CA8 */
 extern short Pow10Table; /* C4CAA */
-extern int dword_C4CFC; /* C4CFC */
+extern int SpeechSlotMemSize; /* C4CFC */
 extern int joypresent[]; /* C4D00 */
 extern int inputticks; /* C4D08 */
 extern int joysampling; /* C4D0C */
@@ -3948,32 +3948,32 @@ extern short OldFpuVectorSelector; /* D51D8 */
 extern short FpuCr0Bits; /* D51DA */
 extern unsigned char __real87; /* D51DC */
 extern int StrErrorTable[]; /* D51E4 */
-extern unsigned char byte_D5224; /* D5224 */
-extern unsigned char unk_D522E[]; /* D522E */
-extern int dword_D524C; /* D524C */
+extern unsigned char PcSpkVoiceDefaults; /* D5224 */
+extern unsigned char SbVoiceDefaults[]; /* D522E */
+extern int SbEnvDma; /* D524C */
 extern int SbDmaAlloc; /* D5250 */
-extern unsigned char unk_D5254[]; /* D5254 */
+extern unsigned char SbEnvErf[]; /* D5254 */
 extern unsigned char SbIrq[]; /* D5258 */
 extern int SbDma; /* D525C */
-extern int dword_D5260; /* D5260 */
-extern int dword_D5264; /* D5264 */
-extern int dword_D5268; /* D5268 */
-extern int dword_D526C; /* D526C */
-extern int dword_D5270; /* D5270 */
-extern int dword_D5274; /* D5274 */
-extern unsigned char byte_D5279; /* D5279 */
-extern unsigned char byte_D527A; /* D527A */
-extern unsigned char unk_D5382[]; /* D5382 */
-extern int dword_D53A0; /* D53A0 */
-extern int dword_D53A4; /* D53A4 */
-extern int dword_D53A8; /* D53A8 */
-extern int dword_D53AC; /* D53AC */
-extern int dword_D53B0; /* D53B0 */
+extern int Mpu401DataPort; /* D5260 */
+extern int Mpu401StatusPort; /* D5264 */
+extern int Mpu401RxCount; /* D5268 */
+extern int Mpu401RxMask; /* D526C */
+extern int Mpu401OldIsr; /* D5270 */
+extern int Mpu401OldIsrSel; /* D5274 */
+extern unsigned char Mpu401Irq; /* D5279 */
+extern unsigned char Mpu401IrqMask; /* D527A */
+extern unsigned char GusVoiceDefaults[]; /* D5382 */
+extern int GusEnvRead; /* D53A0 */
+extern int GusCardFound; /* D53A4 */
+extern int GusDriverIsOpen; /* D53A8 */
+extern int GusDigiOpen; /* D53AC */
+extern int GusMusicOpen; /* D53B0 */
 extern int GusDriverStreaming; /* D53B4 */
 extern unsigned char str_CULTRASNDMIDI[]; /* D53B8 */
-extern unsigned char unk_D5408[]; /* D5408 */
-extern int dword_D5424[]; /* D5424 */
-extern int dword_D543C; /* D543C */
+extern unsigned char GusPatchNameMap[]; /* D5408 */
+extern int GusPatchFallbacks[]; /* D5424 */
+extern int GusPatchChannelMask; /* D543C */
 extern unsigned char WVideoActive; /* D5440 */
 extern int _environ; /* D5444 */
 extern int ___env_mask; /* D5448 */
@@ -4146,7 +4146,7 @@ extern unsigned char byte_D70EA; /* D70EA */
 extern unsigned char byte_D70EB; /* D70EB */
 extern int dword_D70EC; /* D70EC */
 extern signed char byte_D70F0[]; /* D70F0 */
-extern int dword_D7178[]; /* D7178 */
+extern int CosTableTail[]; /* D7178 */
 extern int SbStreamTable[]; /* D71F0 */
 extern int SbMixSrcPos; /* D7200 */
 extern int SbMixStep; /* D7204 */
@@ -4568,10 +4568,10 @@ extern int GusFreqDivisor; /* D89D8 */
 extern int GusVoiceAllocAge; /* D89DC */
 extern unsigned char GusDramSized; /* D89E0 */
 extern unsigned char RemapTable[]; /* D89E4 */
-extern short word_D8ACC[]; /* D8ACC */
+extern short GusVoiceRateTable[]; /* D8ACC */
 extern unsigned char GusDmaReady; /* D8AE4 */
-extern unsigned char byte_D8B0E; /* D8B0E */
-extern unsigned char byte_D8B10; /* D8B10 */
+extern unsigned char GusTimerCtrl; /* D8B0E */
+extern unsigned char GusVoiceAllocCtrl; /* D8B10 */
 extern unsigned char InitRtnsEntry[]; /* D8B14 */
 extern unsigned char FiniRtnsEntry[]; /* D8B3E */
 extern unsigned char GusInitTable[]; /* D8B4A */
@@ -4992,7 +4992,7 @@ extern int regd0_m3; /* E03B9 */
 extern int regd1_m3; /* E03BD */
 extern signed char regd1_b1; /* E03C1 */
 extern unsigned char hilightrec[]; /* E03C4 */
-extern unsigned char unk_E0416[]; /* E0416 */
+extern unsigned char ReplayBuffer[]; /* E0416 */
 extern int PenBuf_m5[]; /* E9A11 */
 extern int PenBuf_m2[]; /* E9A14 */
 extern unsigned char PenBuf_pl_m2[]; /* E9A15 */
@@ -5168,15 +5168,15 @@ extern unsigned char rosterlist[]; /* EA990 */
 extern unsigned char rosterjersey[]; /* EA991 */
 extern unsigned char rosterslot[]; /* EA992 */
 extern unsigned char rosterstat[]; /* EA993 */
-extern int dword_EA994[]; /* EA994 */
-extern unsigned char unk_EAC84[]; /* EAC84 */
-extern unsigned char byte_EAC86[]; /* EAC86 */
+extern int rosterlistkeys[]; /* EA994 */
+extern unsigned char roster2list[]; /* EAC84 */
+extern unsigned char roster2slot[]; /* EAC86 */
 extern int rosterteamrec[]; /* EAF78 */
-extern int dword_EAF7C; /* EAF7C */
+extern int roster2teamrec; /* EAF7C */
 extern unsigned char rostersel[]; /* EAF80 */
-extern unsigned char byte_EAF99[]; /* EAF99 */
-extern unsigned char byte_EAFB5[]; /* EAFB5 */
-extern unsigned char unk_EAFB8[]; /* EAFB8 */
+extern unsigned char rosterselgoalies[]; /* EAF99 */
+extern unsigned char roster2selgoalies[]; /* EAFB5 */
+extern unsigned char rosterteamcopy[]; /* EAFB8 */
 extern int dbdirty; /* EBC68 */
 extern int msglines[]; /* EBC74 */
 extern int falisttop; /* EBCA4 */
@@ -5198,25 +5198,25 @@ extern unsigned char gamelinespal[]; /* ECDF4 */
 extern unsigned char gmroster[]; /* ED0F4 */
 extern unsigned char gmrosterjersey[]; /* ED0F5 */
 extern unsigned char gmrosterslot[]; /* ED0F6 */
-extern unsigned char byte_ED0F7[]; /* ED0F7 */
-extern unsigned char byte_ED0F8[]; /* ED0F8 */
-extern unsigned char byte_ED0F9[]; /* ED0F9 */
-extern unsigned char byte_ED0FA[]; /* ED0FA */
+extern unsigned char gmrosterpos[]; /* ED0F7 */
+extern unsigned char gmrosterdot[]; /* ED0F8 */
+extern unsigned char gmrosterspace[]; /* ED0F9 */
+extern unsigned char gmrostername[]; /* ED0FA */
 extern int leaguesetimg[]; /* ED35C */
 extern int setbits[]; /* ED360 */
-extern int dword_ED364; /* ED364 */
+extern int ControlsDlgFlags; /* ED364 */
 extern int rockteamcues[]; /* ED368 */
 extern int crowdsamples[]; /* ED374 */
 extern int rocktunes[]; /* ED380 */
 extern int rockrandcues[]; /* ED38C */
-extern int dword_ED6D0; /* ED6D0 */
+extern int GadgetMovie; /* ED6D0 */
 extern int hilightslot; /* ED6D4 */
 extern int gadgetfile; /* ED6D8 */
 extern int gadgetptry; /* ED6DC */
 extern int gadgetptrx; /* ED6E0 */
 extern int gadgetshape; /* ED6E4 */
-extern int dword_ED6E8; /* ED6E8 */
-extern int dword_ED6EC; /* ED6EC */
+extern int ReplaySpeedAccum; /* ED6E8 */
+extern int ReplayHoverPrev; /* ED6EC */
 extern int replayspotx; /* ED6F0 */
 extern int replayspoty; /* ED6F4 */
 extern int replaynosave; /* ED6F8 */
@@ -5224,10 +5224,10 @@ extern int replaybtnarmed; /* ED6FC */
 extern int hilightfont; /* ED700 */
 extern int replayptrx; /* ED704 */
 extern int replayptry; /* ED708 */
-extern int dword_ED70C; /* ED70C */
-extern int dword_ED74C; /* ED74C */
-extern int dword_ED750; /* ED750 */
-extern int dword_ED754; /* ED754 */
+extern int ReplayCamFree; /* ED70C */
+extern int ReplayHoverPlayer; /* ED74C */
+extern int ReplayStartRate; /* ED750 */
+extern int ReplayCtlFlags; /* ED754 */
 extern int dword_ED756[]; /* ED756 */
 extern short replayfrac; /* ED758 */
 extern int pl20spr; /* ED75C */
@@ -5248,8 +5248,8 @@ extern int homebckspr; /* ED794 */
 extern int homenamebckspr; /* ED798 */
 extern int visbckspr; /* ED79C */
 extern int visnamebckspr; /* ED7A0 */
-extern int dword_ED7A4; /* ED7A4 */
-extern int dword_ED7A8; /* ED7A8 */
+extern int SfxTestSample; /* ED7A4 */
+extern int SpeechMemBlock; /* ED7A8 */
 extern int speechq; /* ED7AC */
 extern int speechcopybuf; /* ED7B8 */
 extern unsigned char poseriesbuf[]; /* ED7BC */
@@ -5258,10 +5258,10 @@ extern unsigned char portraitoncd[]; /* ED909 */
 extern int vgapage; /* EDA04 */
 extern int memlist1[]; /* EDA08 */
 extern int memlist0[]; /* EDA0C */
-extern int dword_EDAA8; /* EDAA8 */
+extern int MemDescriptorBase; /* EDAA8 */
 extern int MemDescriptorTop; /* EDAAC */
 extern int MemLockHandle; /* EDAB0 */
-extern int dword_EDAB4; /* EDAB4 */
+extern int MemFreeBytes; /* EDAB4 */
 extern unsigned char vesamodeinfo[]; /* EDAB8 */
 extern int dword_EDABA; /* EDABA */
 extern unsigned char byte_EDABB; /* EDABB */
@@ -5311,40 +5311,40 @@ extern int BytePairDst; /* EDEF4 */
 extern int BytePairStack; /* EDEF8 */
 extern int MemLockHandleStore; /* EDEFC */
 extern int __OpenStreams; /* EDF00 */
-extern unsigned char unk_EDF04[]; /* EDF04 */
+extern unsigned char RowTableDefault[]; /* EDF04 */
 extern unsigned char SoundDrvWorkArea[]; /* F0000 */
-extern unsigned char byte_F1704[]; /* F1704 */
-extern unsigned char byte_F1705[]; /* F1705 */
-extern unsigned char byte_F1784[]; /* F1784 */
-extern unsigned char unk_F1884[]; /* F1884 */
-extern int dword_F1888; /* F1888 */
-extern unsigned char byte_F188C; /* F188C */
-extern unsigned char byte_F188D; /* F188D */
-extern unsigned char byte_F188E; /* F188E */
-extern int dword_F1890; /* F1890 */
-extern int dword_F189C[]; /* F189C */
-extern int dword_F18A4[]; /* F18A4 */
-extern unsigned char byte_F1A1C[]; /* F1A1C */
-extern unsigned char byte_F1A1D[]; /* F1A1D */
-extern int dword_F1A1E[]; /* F1A1E */
+extern unsigned char SeqQueue[]; /* F1704 */
+extern unsigned char SeqQueueData[]; /* F1705 */
+extern unsigned char SeqSysexBuffer[]; /* F1784 */
+extern unsigned char SeqEvent[]; /* F1884 */
+extern int SeqEventValue; /* F1888 */
+extern unsigned char SeqEventNote; /* F188C */
+extern unsigned char SeqEventVelocity; /* F188D */
+extern unsigned char SeqEventLength; /* F188E */
+extern int SeqNextEvent; /* F1890 */
+extern int SongRecords[]; /* F189C */
+extern int SongRelease[]; /* F18A4 */
+extern unsigned char SeqTracks[]; /* F1A1C */
+extern unsigned char SeqTrackFlags[]; /* F1A1D */
+extern int SeqTrackPos[]; /* F1A1E */
 extern unsigned char byte_F1D61; /* F1D61 */
-extern unsigned char unk_F21FC[]; /* F21FC */
-extern int dword_F22FC[]; /* F22FC */
-extern int dword_F2300[]; /* F2300 */
-extern int dword_F2304[]; /* F2304 */
-extern int dword_F2308[]; /* F2308 */
-extern int dword_F230C[]; /* F230C */
-extern unsigned char byte_F234D[]; /* F234D */
-extern unsigned char byte_F234E[]; /* F234E */
-extern unsigned char byte_F23BC[]; /* F23BC */
-extern unsigned char byte_F23CC; /* F23CC */
-extern unsigned char byte_F23CD; /* F23CD */
-extern unsigned char byte_F23CF; /* F23CF */
-extern unsigned char byte_F23E0[]; /* F23E0 */
-extern int dword_F23EA; /* F23EA */
-extern int dword_F23EE[]; /* F23EE */
-extern int dword_F2416[]; /* F2416 */
-extern int dword_F243C[]; /* F243C */
+extern unsigned char MidiOutQueue[]; /* F21FC */
+extern int DigiFadeLevel[]; /* F22FC */
+extern int DigiFadeAccum[]; /* F2300 */
+extern int DigiFadeStep[]; /* F2304 */
+extern int DigiFadeChannel[]; /* F2308 */
+extern int DigiFadeDriver[]; /* F230C */
+extern unsigned char MidiChanVolume[]; /* F234D */
+extern unsigned char MidiChanCtrlState[]; /* F234E */
+extern unsigned char MidiChannelUsed[]; /* F23BC */
+extern unsigned char MusicBankHeader; /* F23CC */
+extern unsigned char MusicBankPatchNum; /* F23CD */
+extern unsigned char MusicBankTimbreCount; /* F23CF */
+extern unsigned char MusicBankTimbreNums[]; /* F23E0 */
+extern int MusicPatchFile; /* F23EA */
+extern int MusicTimbreFiles[]; /* F23EE */
+extern int MusicTimbreSizes[]; /* F2416 */
+extern int AtexitRoutines[]; /* F243C */
 extern unsigned char SndHandleType[]; /* F243E */
 extern int AtexitTable[]; /* F2440 */
 extern int SpeechBankCount; /* F24C0 */
@@ -5454,10 +5454,10 @@ extern int GusDmaDone; /* F79C4 */
 extern unsigned char GusDmaControl; /* F79C8 */
 extern short GusDmaFlags; /* F79C9 */
 extern unsigned char GusVoiceIrqBits; /* F79D8 */
-extern unsigned char byte_F79E8; /* F79E8 */
-extern int dword_F79F8[]; /* F79F8 */
-extern int dword_F79FC[]; /* F79FC */
-extern int dword_F7A00[]; /* F7A00 */
+extern unsigned char GusTimerState; /* F79E8 */
+extern int GusVoicePrioLo[]; /* F79F8 */
+extern int GusVoicePrioHi[]; /* F79FC */
+extern int GusVoiceStealFn[]; /* F7A00 */
 extern int GusVoiceAllocMask; /* F7B78 */
 extern unsigned char stackarea[]; /* F7B88 */
 

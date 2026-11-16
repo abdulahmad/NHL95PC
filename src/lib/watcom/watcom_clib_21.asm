@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_96185 progbits alloc exec nowrite align=1
 extern __delay_, __fprtf_, __IOMode_, __set_errno_, __set_errno_dos_, __sys_fini_387_emulator, __sys_init_387_emulator, fputc_
-extern fputs_, strerror_, __STKOVF, ErrnoPtr, CMainHook, unk_C472C, PerrorSeparator
+extern fputs_, strerror_, __STKOVF, ErrnoPtr, CMainHook, str_ColonSpace, PerrorSeparator
 global fprintf_, strupr_, __CHP, j___sys_init_387_emulator, j___sys_fini_387_emulator, strlwr_, j___delay_, perror_
 global write_
 fprintf_:
@@ -93,7 +93,7 @@ perror_:
         je short .1
         mov edx, PerrorSeparator
         call fputs_
-        mov eax, unk_C472C
+        mov eax, str_ColonSpace
         mov edx, PerrorSeparator
         call fputs_
 .1:

@@ -279,7 +279,7 @@ void DrawRinkSideObjects(short vx, short vy)
         }
         if (i < 0xC && (signed char)rpl_pos[i] < 0) continue;
         if (rpl_frame[i] != -1 && i < 0xC) {
-            if (rpl_puckc != -1 && i == rpl_puckc || i == rpl_c1player || i == rpl_c2player || i == dword_ED74C
+            if (rpl_puckc != -1 && i == rpl_puckc || i == rpl_c1player || i == rpl_c2player || i == ReplayHoverPlayer
                 || i == replayfollowpl)
                 DrawSpriteNumber(rpl_x[i], rpl_y[i], (signed char)rpl_jersey[i], (signed char)rpl_pos[i]);
             else if (shownumbers)

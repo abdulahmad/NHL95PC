@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_70E8D progbits alloc exec nowrite align=1
-extern __CHK, attdb, attdb_size, btn_LeagueExists, byte_EAC86, byte_EAF99, byte_EAFB5, careerdb
+extern __CHK, attdb, attdb_size, btn_LeagueExists, roster2slot, rosterselgoalies, roster2selgoalies, careerdb
 extern careerdb_size, carteamsdb, carteamsdb_size, CountSelected, dbdirty, divisionteams, DrawEditRosters, FaListScrolls
-extern dword_EA994, dword_EAF7C, EditTeamLines, facount, falist, falistsel, falisttop, FixJerseyNumber
+extern rosterlistkeys, roster2teamrec, EditTeamLines, facount, falist, falistsel, falisttop, FixJerseyNumber
 extern FreeLeagueDbsMem, GetFileSize, InputDialog, j_unlink_, keydb, keydb_size, KeyDbPtr, leaguedbnames
 extern ListDialog, LoadRosterList, MakePath, menu_r1_editlines, menu_r1_freeagents, menu_r1_tofa, menu_r1_toroster2, menu_r2_editlines
 extern menu_r2_freeagents, menu_r2_tofa, menu_r2_toroster1, MessageBox, MoveToOtherRoster, msglines, roster1divmenus, roster2divmenus
@@ -13,7 +13,7 @@ extern SelectRosterTeam, ShowFreeAgents, SplitPlayerName, str_ChooseWhichTeamTo,
 extern str_Goalies, str_InTheFreeAgent, str_IsAlreadyDisplayedOn, str_Move, str_MustBeTheSame, str_NotEnoughSpaceFA, str_Players, str_PlayersAndGoalies
 extern str_Roster1, str_Roster2, str_space, str_TheNumberOfSelected, str_TMP, str_ToFreeAgentList, strcat_, strcmp_
 extern strcpy_, strlwr_, OpenArtArchiveErr, teamcitynames, teamdivflags, TeamRecPtr, teamsdb, teamsdb_size
-extern tmpdbpath, unk_EAC84
+extern tmpdbpath, roster2list
 global MoveToFreeAgents, RemovePlayerFromTeam, LoadTempDatabases, DeleteTempDatabases, SwapSelectedPlayers, SelectMatchingPlayers, SetRosterTeamMenus, FindPlayer
 ;-----------------------------------------------------------------------------
 ; MoveToFreeAgents                                                70E8D  95 PC
@@ -69,7 +69,7 @@ MoveToFreeAgents:
         shl eax, 2
         sub eax, ebp
         inc dword [byte esp+034h]
-        mov eax, dword [dword edx+eax+dword_EA994]
+        mov eax, dword [dword edx+eax+rosterlistkeys]
         mov dword [byte esp+038h], eax
         call KeyDbPtr
         mov edi, eax
@@ -428,11 +428,11 @@ SwapSelectedPlayers:
         jl short SwapSelectedPlayers.1
         xor ebx, ebx
 .4:
-        cmp byte [dword ebx+byte_EAF99], 0
+        cmp byte [dword ebx+rosterselgoalies], 0
         je short .5
         inc ebp
 .5:
-        cmp byte [dword ebx+byte_EAFB5], 0
+        cmp byte [dword ebx+roster2selgoalies], 0
         je short .6
         inc eax
 .6:
@@ -507,7 +507,7 @@ SwapSelectedPlayers:
         sub edx, ebx
         shl edx, 2
         sub edx, ebx
-        mov dl, byte [dword edx+byte_EAC86]
+        mov dl, byte [dword edx+roster2slot]
         mov byte [dword esp+ecx+0CCh], dl
         mov byte [dword esp+ecx+094h], bl
         inc ecx
@@ -529,7 +529,7 @@ SwapSelectedPlayers:
         mov al, byte [dword esp+ebx+0CCh]
         mov ecx, eax
         shl ecx, 2
-        mov eax, dword [dword_EAF7C]
+        mov eax, dword [roster2teamrec]
         mov eax, dword [byte ecx+eax+04Ch]
         call KeyDbPtr
         mov cl, byte [eax]
@@ -551,13 +551,13 @@ SwapSelectedPlayers:
         mov dl, byte [dword esp+ebx+0CCh]
         mov ecx, edx
         shl ecx, 2
-        mov edx, dword [dword_EAF7C]
+        mov edx, dword [roster2teamrec]
         mov edx, dword [byte ecx+edx+04Ch]
         xor dword [byte eax+04Ch], edx
         xor edx, edx
         mov dl, byte [dword esp+ebx+0CCh]
         shl edx, 2
-        mov eax, dword [dword_EAF7C]
+        mov eax, dword [roster2teamrec]
         add eax, edx
         xor edx, edx
         mov dl, byte [dword esp+ebx+0B0h]
@@ -573,7 +573,7 @@ SwapSelectedPlayers:
         mov dl, byte [dword esp+ebx+0CCh]
         mov ecx, edx
         shl ecx, 2
-        mov edx, dword [dword_EAF7C]
+        mov edx, dword [roster2teamrec]
         mov edx, dword [byte ecx+edx+04Ch]
         xor dword [byte eax+04Ch], edx
         movzx ebp, byte [byte esp+ebx+078h]
@@ -589,14 +589,14 @@ SwapSelectedPlayers:
         sub edx, ecx
         shl edx, 2
         sub edx, ecx
-        mov cl, byte [dword edx+byte_EAC86]
+        mov cl, byte [dword edx+roster2slot]
         mov ch, byte [dword eax+rosterslot]
         xor ch, cl
         mov byte [dword eax+rosterslot], ch
         mov cl, ch
-        mov ch, byte [dword edx+byte_EAC86]
+        mov ch, byte [dword edx+roster2slot]
         xor ch, cl
-        mov byte [dword edx+byte_EAC86], ch
+        mov byte [dword edx+roster2slot], ch
         mov cl, ch
         xor byte [dword eax+rosterslot], cl
         mov ecx, 6
@@ -607,12 +607,12 @@ SwapSelectedPlayers:
         movsb
         mov ecx, 6
         lea edi, [dword eax+rosterlist]
-        lea esi, [dword edx+unk_EAC84]
+        lea esi, [dword edx+roster2list]
         rep movsd
         movsw
         movsb
         mov ecx, 6
-        lea edi, [dword edx+unk_EAC84]
+        lea edi, [dword edx+roster2list]
         lea esi, [byte esp+05Ch]
         rep movsd
         movsw
@@ -637,7 +637,7 @@ SwapSelectedPlayers:
         inc eax
         cmp eax, byte 30h
         jl short SwapSelectedPlayers.17
-        mov esi, dword [dword_EAF7C]
+        mov esi, dword [roster2teamrec]
         add esi, 0BCh
         xor eax, eax
 .19:
@@ -714,7 +714,7 @@ SelectMatchingPlayers:
         sub eax, ecx
         shl eax, 2
         sub eax, ecx
-        mov eax, dword [dword ebx+eax+dword_EA994]
+        mov eax, dword [dword ebx+eax+rosterlistkeys]
         call KeyDbPtr
         mov ebx, eax
         lea edx, [byte eax+03h]

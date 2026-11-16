@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_9D68E progbits alloc exec nowrite align=1
-extern __GETDS, abs_, byte_D5224, _STACKLOW
+extern __GETDS, abs_, PcSpkVoiceDefaults, _STACKLOW
 extern MidiTickCount, GetPatchTimbre, SbNoteOff, SbNoteOn, SbController, SbProgramChange, SbPitchBend
-extern PcSpkHwInit, PcSpkHwClose, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, unk_F21FC, PcSpkVoices
+extern PcSpkHwInit, PcSpkHwClose, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, MidiOutQueue, PcSpkVoices
 global CMainHook, PcSpkInit, PcSpkClose, PcSpkService, PcSpkNoteOn, PcSpkNoteOff, PcSpkProgramChange, PcSpkUpdateVoices
 global PcSpkTimbreUsable, PcSpkMidi, SbMidi
 CMainHook:
@@ -378,7 +378,7 @@ PcSpkUpdateVoices:
         xor edx, edx
         mov dx, word [esp]
         xor eax, eax
-        mov al, byte [byte_D5224]
+        mov al, byte [PcSpkVoiceDefaults]
         cmp edx, eax
         jl near .1
         call PcSpkOutput
@@ -409,7 +409,7 @@ PcSpkMidi:
         mov byte [byte ebp-010h], 1
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
-        mov eax, unk_F21FC
+        mov eax, MidiOutQueue
         mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-028h], edx
@@ -585,7 +585,7 @@ SbMidi:
         mov byte [byte ebp-08h], 1
         mov byte [byte ebp-0Ch], 0
         mov dword [byte ebp-014h], 0
-        mov eax, unk_F21FC
+        mov eax, MidiOutQueue
         mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx

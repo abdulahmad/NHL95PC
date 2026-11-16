@@ -3,7 +3,7 @@
 
 /* sfx: play sound effect id (remembered in lastsfx): while speech plays only 9Ch passes (and in a replay only
  with oneminsaid); A0h/A1h not on sound devices 4/8; 7Dh raises crowdlevel by 500; AAh on device 4 starts
- sample dword_ED7A4; 90h also plays 91h (both on device 4). */
+ sample SfxTestSample; 90h also plays 91h (both on device 4). */
 void sfx(int id)
 {
     lastsfx = id;
@@ -19,7 +19,7 @@ void sfx(int id)
         return;
     }
     if (sounddev == 4 && id == 0xAA) {
-        PlaySong((void *)dword_ED7A4, musicdriver);
+        PlaySong((void *)SfxTestSample, musicdriver);
         return;
     }
     if (id == 0x90) {

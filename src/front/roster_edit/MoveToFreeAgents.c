@@ -27,7 +27,7 @@ void MoveToFreeAgents(int *mode, int *x, int *y)
         nsel++;
         if (facount >= 0x1E) continue;
         ntried++;
-        key = *(int *)((char *)dword_EA994 + side * 0x2F4 + i * 27);
+        key = *(int *)((char *)rosterlistkeys + side * 0x2F4 + i * 27);
         p = KeyDbPtr(key);
         msglines[0] = (int)str_Move;
         strcpy(name, (char *)p + 3);

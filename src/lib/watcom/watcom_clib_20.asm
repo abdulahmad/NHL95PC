@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_93284 progbits alloc exec nowrite align=1
-extern __setbits_, byte_C4C70
+extern __setbits_, CLibBitMasks
 global strcspn_
 strcspn_:
         push ebx
@@ -19,7 +19,7 @@ strcspn_:
         mov dl, byte [esp+edx]
         and eax, byte 7
         and edx, 0FFh
-        mov al, byte [dword eax+byte_C4C70]
+        mov al, byte [dword eax+CLibBitMasks]
         and eax, 0FFh
         test edx, eax
         jne short .3

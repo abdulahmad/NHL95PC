@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
-extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, MemDescriptorTop, MemLockHandle, dword_EDAB4, FatalError, findmemblock
+extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, MemDescriptorTop, MemLockHandle, MemFreeBytes, FatalError, findmemblock
 extern memlist1, reservemem, StrCompareN, FileNameOnly, MemUnlock, bcopy, MemLock
 global PushMemDescriptorLocked, UnlinkMemBlockLocked, FreeMemBlocksAfter, FreeBlocksAfter, MergeFreeSpaceLocked, MergeFreeSpace, MarkBlockPurgeable, MarkDescPurgeable
 global SetMemBlockPurgeLevel, SetMemBlockPurge, FindNamedBlock, FindMemBlockNamed, FindNamedBlockNext, FindMemBlockNamedNext, FindFreeSpaceLocked, FindFreeSpace
@@ -832,11 +832,11 @@ MemTrackLargestFree:
         push ecx
         push edx
         call MemLargestFreeOfList
-        cmp eax, dword [dword_EDAB4]
+        cmp eax, dword [MemFreeBytes]
         jge short .1
-        mov dword [dword_EDAB4], eax
+        mov dword [MemFreeBytes], eax
 .1:
-        mov eax, dword [dword_EDAB4]
+        mov eax, dword [MemFreeBytes]
         pop edx
         pop ecx
         pop ebx

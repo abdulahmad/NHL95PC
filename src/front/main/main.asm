@@ -5,10 +5,10 @@ bits 32
 section s_10010 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, addtimer, awardtype, awardwinners
 extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, fadeendlvl, JoyPortMask, fadepalbuf
-extern byte_D9299, camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, clockticks
+extern camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, clockticks
 extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoiseOff, CrowdNoiseReset, ctl1dev
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
-extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
+extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, SpeechSlotMemSize
 extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, BackBufferWidth, JoyRawX1, JoyRawY1, JoyRawX2
 extern JoyRawY2, gfxidlist, ovlstepart, ovlartbank, SpeechPatchNext, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
@@ -250,10 +250,10 @@ main_:
 .5:
         cmp dword [byte esp+064h], 3EF000h
         jbe short .6
-        mov dword [dword_C4CFC], 0C3500h
+        mov dword [SpeechSlotMemSize], 0C3500h
         jmp short .7
 .6:
-        mov dword [dword_C4CFC], 30D40h
+        mov dword [SpeechSlotMemSize], 30D40h
 .7:
         push dword 1E0h
         push dword 280h

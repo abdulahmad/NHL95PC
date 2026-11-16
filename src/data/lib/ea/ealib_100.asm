@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_F234D nobits alloc noexec write align=1
-global byte_F234D, byte_F234E
-byte_F234D:
+global MidiChanVolume, MidiChanCtrlState
+MidiChanVolume:
         resb 1
-byte_F234E:
+MidiChanCtrlState:
         resb 110

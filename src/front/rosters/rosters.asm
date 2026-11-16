@@ -21,7 +21,7 @@ extern str_fmt2d, str_FreeAgents, str_Menubuff, str_Pal, str_PleaseEnterANew, st
 extern str_S5, str_space, str_Temp7, str_TheDatabaseHasNot, str_TheJerseyNumber2d, str_Uar, str_Uarm, strcat_
 extern strcmp_, strcpy_, strlen_, strupr_, PushMemDescriptorLocked, SetDigiChannelVolume, DrawArtOpaqueAtOwnPos, SetScreenTarget
 extern FillRectColor, teamdivflags, teamratingidx, teamratingnames, TextRestoreState, TextSaveState, TextSetFont, TrackButtons
-extern TrackScrollBars, unk_EAFB8, VisTeam, XorBar
+extern TrackScrollBars, rosterteamcopy, VisTeam, XorBar
 global RunEditRosters, RunEditRosters_ret6, RunEditRosters_ret5, DrawRosterTitle, DrawRosterList, DrawDatabaseName, DrawRosterPanel, DrawEditRosters
 global EditRostersReturn, SelectRosterTeam, ShowFreeAgents, ComparePlayerEntry, ShellSortBytes, LoadRosterList_fa, LoadRosterList_faloop, LoadRosterList_team
 global CountSelected, RosterPanelClick, RosterPanelClick_ret, FixJerseyNumber, CopyRoster1Rec, LoadBothRosterLists, LoadRosterList, EditTeamLines
@@ -1661,7 +1661,7 @@ FixJerseyNumber:
 ;-----------------------------------------------------------------------------
 ; CopyRoster1Rec                                  6DE4C  95 PC, low confidence
 ; Unreferenced: rostereditmode = 2, copies 2E8h bytes from the roster-1 team
-; record to unk_EAFB8 and redraws
+; record to rosterteamcopy and redraws
 ;-----------------------------------------------------------------------------
 ; C: src/front/rosters/CopyRoster1Rec.c
 %ifdef CBUILD
@@ -1676,7 +1676,7 @@ CopyRoster1Rec:
         mov dword [rostereditmode], 2
         mov esi, dword [rosterteamrec]
         mov ecx, 0BAh
-        mov edi, unk_EAFB8
+        mov edi, rosterteamcopy
         rep movsd
         call DrawEditRosters
         pop edi

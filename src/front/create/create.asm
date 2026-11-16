@@ -4,7 +4,7 @@ bits 32
 section s_6F159 progbits alloc exec nowrite align=1
 extern __CHK, __CHP, _dos_getdiskfree_, AllocMemBlock, attdb_size, btn_CreateFreeAgent, CharClassTable, careerdb_size
 extern carteamsdb_size, cddriveptr, ClearInputQueue, ClearScreen, dbdirty, DeleteTempDatabases, DrawArt, DrawBitmap
-extern DrawButtons, DrawEditRosters, DrawShape, dword_EA994, editptrspr, facount, FadePalStep, falist
+extern DrawButtons, DrawEditRosters, DrawShape, rosterlistkeys, editptrspr, facount, FadePalStep, falist
 extern falistsel, FatalError, FileClose, fileoncd, FileOpenWrite, FileWriteAt, FindShape, FixJerseyNumber
 extern fp_10, fp_100, fp_1000, fp_200, fp_30, fp_300, fp_347, fp_390
 extern fp_500, fp_58, fp_70, fp_84, fp_90, fp_m50, fputchar, FreeMemBlock
@@ -220,7 +220,7 @@ MoveToOtherRoster:
         sub eax, esi
         inc dword [byte esp+014h]
         lea edx, [ebx+eax]
-        mov eax, dword [dword edx+dword_EA994]
+        mov eax, dword [dword edx+rosterlistkeys]
         mov dword [byte esp+018h], eax
         call KeyDbPtr
         mov esi, eax

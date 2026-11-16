@@ -89,8 +89,8 @@ void InstantReplay(int mode)
 
     if (gamemode == 0 || ctl1team[0] < 0 && ctl2team < 0) replaynosave = 1;
     else replaynosave = 0;
-    dword_ED754 = 0x44;
-    dword_ED750 = 8;
+    ReplayCtlFlags = 0x44;
+    ReplayStartRate = 8;
     gadgetptrx = 0x100;
     gadgetptry = 0xBC;
     SetViewRect(0, 0, 0x140, 0xC1);
@@ -113,9 +113,9 @@ void InstantReplay(int mode)
     ox = viewscrollx;
     oy = viewscrolly;
     ocl = crowdlevel;
-    dword_ED70C = 0;
+    ReplayCamFree = 0;
     replayfollowpl = -1;
-    dword_ED6EC = dword_ED74C = -1;
+    ReplayHoverPrev = ReplayHoverPlayer = -1;
     replaybtnarmed = 0;
     replayfrac = 0;
     rinkscrollx += 0x3E8;
@@ -150,9 +150,9 @@ void InstantReplay(int mode)
         replayfrac += step * 6;
         step = replayfrac / 0x14;
         replayfrac = replayfrac % 0x14;
-        step = ReplayStep(step, (dword_ED754 & 0x3F) == 0x10);
+        step = ReplayStep(step, (ReplayCtlFlags & 0x3F) == 0x10);
         SelectRinkBM();
-        if (dword_ED70C) {
+        if (ReplayCamFree) {
             camx = replayspotx;
             camy = replayspoty;
             if (camx > 0x20) camx = 0x20;
@@ -183,19 +183,19 @@ void InstantReplay(int mode)
         spritedrawcount = 0;
         DrawRinkSideObjects(viewscrollx, viewscrolly);
         if (gadgetptry < 0xA8) {
-            if (dword_ED74C == -1) {
-                dword_ED6EC = dword_ED74C;
+            if (ReplayHoverPlayer == -1) {
+                ReplayHoverPrev = ReplayHoverPlayer;
                 replayptrx = camx + gadgetptrx - 0xA0;
                 replayptry = camy - gadgetptry + 0x54;
                 DrawFrameSprite(0x188, (short)replayptrx + 1, (short)replayptry + 1, 0, 0);
             } else {
-                DrawFrameSprite(0x188, rpl_x[dword_ED74C] + 1, rpl_y[dword_ED74C] + 1, 0, 1);
-                if (dword_ED6EC != dword_ED74C) {
-                    gadgetptrx = rpl_x[dword_ED74C] - camx + 0xA0;
-                    gadgetptry = camy - rpl_y[dword_ED74C] + 0x54;
+                DrawFrameSprite(0x188, rpl_x[ReplayHoverPlayer] + 1, rpl_y[ReplayHoverPlayer] + 1, 0, 1);
+                if (ReplayHoverPrev != ReplayHoverPlayer) {
+                    gadgetptrx = rpl_x[ReplayHoverPlayer] - camx + 0xA0;
+                    gadgetptry = camy - rpl_y[ReplayHoverPlayer] + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
-                    dword_ED6EC = dword_ED74C;
+                    ReplayHoverPrev = ReplayHoverPlayer;
                 }
             }
         }
@@ -232,9 +232,9 @@ void ReplaySaveHilight(int unused, int x, int y);
    pointer to it (MouseSetPos). Then, when the pointer or the buttons changed, redraw the panel (gadgetshape, the
    lit buttons, the pointer). *step: the replay speed, set to the frames to move. Result: 1, 0 to quit. */
 /* Matched under 10.0 GA here (after DrawGadgetButton, whose exit it ends in): the free-spot branch writes
-   dword_ED6EC = -1 as a constant (the EXE still stores the eax it knows holds -1, and the constant takes the
-   register slot that puts the pointer clamps in edi / ecx), and the camera button clears dword_ED70C and d in two
-   statements (found by tools/permute.py; the chained `dword_ED70C = d = 0` put the step-forward zero in eax and
+   ReplayHoverPrev = -1 as a constant (the EXE still stores the eax it knows holds -1, and the constant takes the
+   register slot that puts the pointer clamps in edi / ecx), and the camera button clears ReplayCamFree and d in two
+   statements (found by tools/permute.py; the chained `ReplayCamFree = d = 0` put the step-forward zero in eax and
    the -1 chain in edx). */
 int ReplayControlLoop(int *step)
 {
@@ -251,7 +251,7 @@ int ReplayControlLoop(int *step)
     int x1;
 
     d = 0;
-    oldbits = dword_ED754;
+    oldbits = ReplayCtlFlags;
     oldx = gadgetptrx;
     oldy = gadgetptry;
     ev = d;
@@ -273,77 +273,77 @@ int ReplayControlLoop(int *step)
         replayptrx = camx + gadgetptrx - 0xA0;
         replayptry = camy - gadgetptry + 0x54;
     }
-    a = dword_ED754 & 0x54;
-    b = dword_ED754 & 0x40;
+    a = ReplayCtlFlags & 0x54;
+    b = ReplayCtlFlags & 0x40;
     switch ((unsigned)hit) {
     case 4:
-        dword_ED754 = b | 4;
+        ReplayCtlFlags = b | 4;
         d = 0;
         break;
     case 0x10:
-        if ((dword_ED754 & 0x3F) != 0x10) replayfrac = 0;
-        dword_ED754 = dword_ED754 & 0x40 | 0x10;
+        if ((ReplayCtlFlags & 0x3F) != 0x10) replayfrac = 0;
+        ReplayCtlFlags = ReplayCtlFlags & 0x40 | 0x10;
         d = *step;
         break;
     case 1:
-        dword_ED754 = a | 1;
+        ReplayCtlFlags = a | 1;
         d = -(*step << 2);
         break;
     case 0x20:
-        dword_ED754 = a | 0x20;
+        ReplayCtlFlags = a | 0x20;
         d = *step << 2;
         break;
     case 2:
-        if (dword_ED754 & 2) {
-            dword_ED6E8 += *step;
-            if (dword_ED6E8 < 5) {
+        if (ReplayCtlFlags & 2) {
+            ReplaySpeedAccum += *step;
+            if (ReplaySpeedAccum < 5) {
                 d = 0;
             } else {
                 d = -1;
-                dword_ED6E8 -= 5;
+                ReplaySpeedAccum -= 5;
             }
         } else {
-            dword_ED6E8 = 0;
+            ReplaySpeedAccum = 0;
             d = -1;
             replayfrac = -0xE;
         }
-        dword_ED754 = dword_ED754 & 0x40 | 6;
+        ReplayCtlFlags = ReplayCtlFlags & 0x40 | 6;
         break;
     case 8:
-        if (dword_ED754 & 8) {
-            dword_ED6E8 += *step;
-            if (dword_ED6E8 < 5) {
+        if (ReplayCtlFlags & 8) {
+            ReplaySpeedAccum += *step;
+            if (ReplaySpeedAccum < 5) {
                 d = 0;
             } else {
                 d = 1;
-                dword_ED6E8 -= 5;
+                ReplaySpeedAccum -= 5;
             }
         } else {
-            dword_ED6E8 = 0;
+            ReplaySpeedAccum = 0;
             d = 1;
             replayfrac = 0xE;
         }
-        dword_ED754 = dword_ED754 & 0x40 | 0xC;
+        ReplayCtlFlags = ReplayCtlFlags & 0x40 | 0xC;
         break;
     case 0x40:
-        dword_ED754 |= 0x40;
-        dword_ED70C = 0;
+        ReplayCtlFlags |= 0x40;
+        ReplayCamFree = 0;
         d = 0;
-        dword_ED6EC = dword_ED74C = -1;
+        ReplayHoverPrev = ReplayHoverPlayer = -1;
         replayfollowpl = -1;
         break;
     case 0x80:
-        dword_ED754 = b | 0x84;
+        ReplayCtlFlags = b | 0x84;
         break;
     case 0x100:
         return 0;
     default:
         if (gadgetptry < 0xA8) {
-            dword_ED74C = PickNearestPlayer(replayptrx, replayptry);
+            ReplayHoverPlayer = PickNearestPlayer(replayptrx, replayptry);
             if (ev & 2) {
-                if (dword_ED74C == -1) {
-                    dword_ED70C = 1;
-                    dword_ED6EC = -1;
+                if (ReplayHoverPlayer == -1) {
+                    ReplayCamFree = 1;
+                    ReplayHoverPrev = -1;
                     replayfollowpl = -1;
                     replayspotx = replayptrx;
                     replayspoty = replayptry;
@@ -358,30 +358,30 @@ int ReplayControlLoop(int *step)
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
                 } else {
-                    dword_ED70C = 0;
-                    replayfollowpl = dword_ED74C;
-                    gadgetptrx = rpl_x[dword_ED74C];
-                    gadgetptry = rpl_y[dword_ED74C];
+                    ReplayCamFree = 0;
+                    replayfollowpl = ReplayHoverPlayer;
+                    gadgetptrx = rpl_x[ReplayHoverPlayer];
+                    gadgetptry = rpl_y[ReplayHoverPlayer];
                     if (gadgetptrx > 0x20) gadgetptrx = 0x20;
                     else if (gadgetptrx < -0x20) gadgetptrx = -0x20;
                     if (gadgetptry > 0xEC) gadgetptry = 0xEC;
                     else if (gadgetptry < -0xBC) gadgetptry = -0xBC;
-                    gadgetptrx = rpl_x[dword_ED74C] - gadgetptrx + 0xA0;
-                    gadgetptry = gadgetptry - rpl_y[dword_ED74C] + 0x54;
+                    gadgetptrx = rpl_x[ReplayHoverPlayer] - gadgetptrx + 0xA0;
+                    gadgetptry = gadgetptry - rpl_y[ReplayHoverPlayer] + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
-                    dword_ED6EC = dword_ED74C;
+                    ReplayHoverPrev = ReplayHoverPlayer;
                 }
-                dword_ED754 &= 0x14;
+                ReplayCtlFlags &= 0x14;
             }
         }
-        dword_ED754 &= 0x54;
-        if (dword_ED754 & 0x10) d = *step;
+        ReplayCtlFlags &= 0x54;
+        if (ReplayCtlFlags & 0x10) d = *step;
         else d = 0;
         break;
     }
-    if (oldx != gadgetptrx || oldy != gadgetptry || oldbits != dword_ED754) {
-        if (oldbits == dword_ED754) {
+    if (oldx != gadgetptrx || oldy != gadgetptry || oldbits != ReplayCtlFlags) {
+        if (oldbits == ReplayCtlFlags) {
             x1 = ((short *)pointerspr)[2] + oldx;
             oldy -= 0xA8;
             y1 = ((short *)pointerspr)[3] + oldy;
@@ -396,17 +396,17 @@ int ReplayControlLoop(int *step)
             SetClipWindow(oldx, x1, oldy, y1);
         }
         VgaBlitKeyedFlipV(gadgetshape, 0, 0);
-        if (oldbits == dword_ED754) SetClipWindow(0, 0x140, 0, 0x20);
+        if (oldbits == ReplayCtlFlags) SetClipWindow(0, 0x140, 0, 0x20);
         for (hit = 0; hit < 9; hit++) {
-            if (dword_ED754 & 1 << hit) DrawGadgetButton(hit);
+            if (ReplayCtlFlags & 1 << hit) DrawGadgetButton(hit);
         }
         if (gadgetptry >= 0xA8) DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }
-    if (dword_ED754 & 0x80) {
+    if (ReplayCtlFlags & 0x80) {
         replaybtnarmed = 0;
         ReplaySaveHilight(0, gadgetptrx, gadgetptry);
         ClearInputQueue();
-        dword_ED754 = 4;
+        ReplayCtlFlags = 4;
         SelectScreenBM();
         SetClipWindow(0, 0x140, 0, 0x20);
         VgaBlitKeyed(gadgetshape, 0, 0);

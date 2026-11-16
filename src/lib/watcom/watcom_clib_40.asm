@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_A2AC8 progbits alloc exec nowrite align=1
 extern __fatal_runtime_error_, str_FloatingPointSupportNot, __heap_enabled, __amblksiz
-global abs_, __CommonInit_, NoFloatSupport, unk_A2AEE, ultoa_, ltoa_, toupper_, _heapenable_
+global abs_, __CommonInit_, NoFloatSupport, str_DigitChars, ultoa_, ltoa_, toupper_, _heapenable_
 abs_:
         test eax, eax
         jge short .1
@@ -21,7 +21,7 @@ NoFloatSupport:
         call __fatal_runtime_error_
         pop edx
         ret
-unk_A2AEE:
+str_DigitChars:
         db 030h,031h,032h,033h,034h,035h,036h,037h,038h,039h,061h,062h,063h,064h,065h,066h
         db 067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh,070h,071h,072h,073h,074h,075h,076h
         db 077h,078h,079h,07Ah,00h
@@ -43,7 +43,7 @@ ultoa_:
         div dword [ebx]
         mov dword [ebx], edx
         mov edx, dword [byte esp+028h]
-        mov dl, byte [dword cs:edx+unk_A2AEE]
+        mov dl, byte [dword cs:edx+str_DigitChars]
         mov byte [ecx], dl
         inc ecx
         test eax, eax

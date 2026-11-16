@@ -2,25 +2,25 @@
 bits 32
 %include "hockey.inc"
 section s_F1704 nobits alloc noexec write align=1
-global byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, dword_F1888, dword_F1890
-global dword_F189C, unk_F1884
-byte_F1704:
+global SeqQueue, SeqQueueData, SeqSysexBuffer, SeqEventNote, SeqEventVelocity, SeqEventLength, SeqEventValue, SeqNextEvent
+global SongRecords, SeqEvent
+SeqQueue:
         resb 1
-byte_F1705:
+SeqQueueData:
         resb 127
-byte_F1784:
+SeqSysexBuffer:
         resb 256
-unk_F1884:
+SeqEvent:
         resb 4
-dword_F1888:
+SeqEventValue:
         resb 4
-byte_F188C:
+SeqEventNote:
         resb 1
-byte_F188D:
+SeqEventVelocity:
         resb 1
-byte_F188E:
+SeqEventLength:
         resb 2
-dword_F1890:
+SeqNextEvent:
         resb 12
-dword_F189C:
+SongRecords:
         resb 8

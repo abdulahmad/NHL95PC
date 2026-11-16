@@ -2,27 +2,27 @@
 bits 32
 %include "hockey.inc"
 section s_EA994 nobits alloc noexec write align=1
-global byte_EAC86, rostersel, byte_EAF99, byte_EAFB5, dword_EA994, rosterteamrec, dword_EAF7C
+global roster2slot, rostersel, rosterselgoalies, roster2selgoalies, rosterlistkeys, rosterteamrec, roster2teamrec
 global dbdirty, rostergstat, rosterpstat, msglines, falisttop, editptrspr
-global editrosters_exit, unk_EAC84, unk_EAFB8
-dword_EA994:
+global editrosters_exit, roster2list, rosterteamcopy
+rosterlistkeys:
         resb 752
-unk_EAC84:
+roster2list:
         resb 2
-byte_EAC86:
+roster2slot:
         resb 754
 rosterteamrec:
         resb 4
-dword_EAF7C:
+roster2teamrec:
         resb 4
 rostersel:
         resb 25
-byte_EAF99:
+rosterselgoalies:
         resb 3
         resb 25
-byte_EAFB5:
+roster2selgoalies:
         resb 3
-unk_EAFB8:
+rosterteamcopy:
         resb 3248
 dbdirty:
         resb 4

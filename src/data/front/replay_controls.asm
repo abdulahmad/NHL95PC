@@ -2,18 +2,18 @@
 bits 32
 %include "hockey.inc"
 section s_EC6B8 nobits alloc noexec write align=1
-global lineedpanel, fadepal, fadepal2, gamelinespal, gmroster, gmrosterjersey, gmrosterslot, byte_ED0F7
-global byte_ED0F8, byte_ED0F9, byte_ED0FA, fileoncd
+global lineedpanel, fadepal, fadepal2, gamelinespal, gmroster, gmrosterjersey, gmrosterslot, gmrosterpos
+global gmrosterdot, gmrosterspace, gmrostername, fileoncd
 global portraitoncd
 global dblistcur, dblisttemp
 global dblisttempnames, dblistorig
-global blitclipright, blitclipbottom, blitcliptop, blitclipleft, leaguesetimg, setbits, dword_ED364, rockteamcues
-global crowdsamples, rocktunes, rockrandcues, dword_ED6D0, hilightslot, gadgetfile
-global gadgetptry, gadgetptrx, gadgetshape, dword_ED6E8, dword_ED6EC, replayspotx, replayspoty, replaynosave
-global replaybtnarmed, hilightfont, replayptrx, replayptry, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
-global dword_ED756, pl20spr, pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr
+global blitclipright, blitclipbottom, blitcliptop, blitclipleft, leaguesetimg, setbits, ControlsDlgFlags, rockteamcues
+global crowdsamples, rocktunes, rockrandcues, GadgetMovie, hilightslot, gadgetfile
+global gadgetptry, gadgetptrx, gadgetshape, ReplaySpeedAccum, ReplayHoverPrev, replayspotx, replayspoty, replaynosave
+global replaybtnarmed, hilightfont, replayptrx, replayptry, ReplayCamFree, ReplayHoverPlayer, ReplayStartRate, ReplayCtlFlags
+global pl20spr, pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr
 global na03spr, pg03spr, chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr
-global homenamebckspr, visbckspr, visnamebckspr, dword_ED7A4, dword_ED7A8, speechq, speechbank, samplereq
+global homenamebckspr, visbckspr, visnamebckspr, SfxTestSample, SpeechMemBlock, speechq, speechbank, samplereq
 global speechcopybuf, vgapage, memlist1, memlist0, curdbname, poseriesbuf, replayfrac
 dblistcur:
         resb 4
@@ -58,20 +58,20 @@ gmrosterjersey:
         resb 1
 gmrosterslot:
         resb 1
-byte_ED0F7:
+gmrosterpos:
         resb 1
-byte_ED0F8:
+gmrosterdot:
         resb 1
-byte_ED0F9:
+gmrosterspace:
         resb 1
-byte_ED0FA:
+gmrostername:
         resb 610
 leaguesetimg:
         resb 4
 setbits:
         resb 1
         resb 3
-dword_ED364:
+ControlsDlgFlags:
         resb 4
 rockteamcues:
         resb 12
@@ -83,7 +83,7 @@ rocktunes:
         resb 4
 rockrandcues:
         resb 836
-dword_ED6D0:
+GadgetMovie:
         resb 4
 hilightslot:
         resb 4
@@ -95,9 +95,9 @@ gadgetptrx:
         resb 4
 gadgetshape:
         resb 4
-dword_ED6E8:
+ReplaySpeedAccum:
         resb 4
-dword_ED6EC:
+ReplayHoverPrev:
         resb 4
 replayspotx:
         resb 4
@@ -113,15 +113,14 @@ replayptrx:
         resb 4
 replayptry:
         resb 4
-dword_ED70C:
+ReplayCamFree:
         resb 64
-dword_ED74C:
+ReplayHoverPlayer:
         resb 4
-dword_ED750:
+ReplayStartRate:
         resb 4
-dword_ED754:
+ReplayCtlFlags:
         resb 2
-dword_ED756:
         resb 2
 replayfrac:
         resb 4
@@ -161,9 +160,9 @@ visbckspr:
         resb 4
 visnamebckspr:
         resb 4
-dword_ED7A4:
+SfxTestSample:
         resb 4
-dword_ED7A8:
+SpeechMemBlock:
         resb 4
 speechq:
         resb 4

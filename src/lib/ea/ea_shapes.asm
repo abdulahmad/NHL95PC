@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_98B30 progbits alloc exec nowrite align=1
 extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, SeqQueueCount, SeqTickCount, SeqServiceBusy
-extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
-extern byte_F234E, RowTableBuffer, SeqQueueHead, sndhandlecount, SongReleasedFlag, MidiMusicEnabled, SndTimerHandle, MidiTickCount
-extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, AllocMemBlockEx
+extern SeqQueue, SeqQueueData, SeqSysexBuffer, SeqEventNote, SeqEventVelocity, SeqEventLength, SeqTracks, MidiChanVolume
+extern MidiChanCtrlState, RowTableBuffer, SeqQueueHead, sndhandlecount, SongReleasedFlag, MidiMusicEnabled, SndTimerHandle, MidiTickCount
+extern MemDescriptorBase, SeqEventValue, SeqNextEvent, SongRecords, DigiFadeLevel, FatalError, stricmp_, AllocMemBlockEx
 extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, SndHandleService, SndDriverCall, SndHandleMidi, DrawShapeQuad
-extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, ShapeWidth, ShapeHeight, unk_F1884, unk_F21FC
+extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, ShapeWidth, ShapeHeight, SeqEvent, MidiOutQueue
 extern ActiveSongCount
 global DrawShapeStretched, DrawShapeStretchedAt, FillRowTable, removewindow, LoadFileCached, SeqService, SeqUpdate, SeqUpdate
 global SeqStepTrack, SeqSendController, SeqNoteOffSlot, SeqChannelNotesOff, SeqSendPitchBend, SeqNoteOn, SeqQueueCommand, SeqFlushQueue
-global SeqSendProgram, jpt_998DD, SeqReadEvent, SeqReadEvent, SeqReadEvent, PeekDword, PeekWord
+global SeqSendProgram, SeqReadEventJumpTable, SeqReadEvent, SeqReadEvent, SeqReadEvent, PeekDword, PeekWord
 DrawShapeStretched:
         push esi
         push edi
@@ -180,7 +180,7 @@ FillRowTable:
         mov esi, ebx
         xor ebx, ebx
         mov eax, dword [RowTableBuffer]
-        cmp eax, dword [dword_EDAA8]
+        cmp eax, dword [MemDescriptorBase]
         jae short .4
         mov edx, ecx
         add edx, edi
@@ -207,7 +207,7 @@ FillRowTable:
         shl edx, 2
         add edx, byte 8
         add eax, edx
-        cmp eax, dword [dword_EDAA8]
+        cmp eax, dword [MemDescriptorBase]
         jb short .1
 .4:
         test ebx, ebx
@@ -293,7 +293,7 @@ removewindow:
         add eax, byte 2
         shl eax, 2
         add eax, esi
-        cmp eax, dword [dword_EDAA8]
+        cmp eax, dword [MemDescriptorBase]
         jae short .4
         cmp dword [byte eax+04h], byte 0
         ja short .4
@@ -426,7 +426,7 @@ SeqUpdate:
         shl eax, 2
         add eax, ecx
         shl eax, 2
-        mov ebx, dword_F22FC
+        mov ebx, DigiFadeLevel
         add ebx, eax
         cmp dword [ebx], byte 0
         je short .3
@@ -486,7 +486,7 @@ SeqUpdate:
         call SeqFlushQueue
         cmp dword [SongReleasedFlag], byte 0
         jne near .13
-        mov ebx, byte_F1A1C
+        mov ebx, SeqTracks
         xor ecx, ecx
 .8:
         mov dl, byte [byte ebx+01h]
@@ -527,7 +527,7 @@ SeqUpdate:
         inc ecx
         cmp ecx, byte 18h
         jl short .8
-        mov ebx, dword_F189C
+        mov ebx, SongRecords
         xor ecx, ecx
 .11:
         cmp byte [byte ebx+05h], 0FFh
@@ -573,7 +573,7 @@ SeqStepTrack:
         mov esi, eax
         cmp dword [byte eax+0Ah], byte 0
         je near .42
-        mov edi, unk_F21FC
+        mov edi, MidiOutQueue
         mov ebx, dword [MidiTickCount]
         add edi, ebx
         lea ecx, [byte ebx+04h]
@@ -584,7 +584,7 @@ SeqStepTrack:
         mov eax, dword [byte esi+06h]
         cmp word [byte eax+0Eh], byte 0
         jne short .4
-        mov edx, dword_F189C
+        mov edx, SongRecords
         xor ebx, ebx
         jmp short .3
 .1:
@@ -642,7 +642,7 @@ SeqStepTrack:
         shl eax, 3
         sub eax, edx
         xor ebx, ebx
-        mov bl, byte [dword eax+byte_F234D]
+        mov bl, byte [dword eax+MidiChanVolume]
         mov edx, 7
         mov eax, esi
         call SeqSendController
@@ -654,7 +654,7 @@ SeqStepTrack:
         jl near .41
         cmp dword [byte esi+0Ah], byte 0
         je near .41
-        mov edx, dword_F189C
+        mov edx, SongRecords
         xor ebx, ebx
         jmp short .10
 .8:
@@ -689,17 +689,17 @@ SeqStepTrack:
         test ebx, ebx
         je near .39
         mov edx, ebx
-        mov eax, unk_F1884
+        mov eax, SeqEvent
         call SeqReadEvent
         xor eax, eax
-        mov al, byte [byte_F188E]
+        mov al, byte [SeqEventLength]
         mov ebp, dword [byte esi+0Ah]
         add ebp, eax
         mov dword [byte esi+0Ah], ebp
-        mov al, byte [byte_F188C]
+        mov al, byte [SeqEventNote]
         cmp al, 0D9h
         jb near .34
-        mov dl, byte [byte_F188D]
+        mov dl, byte [SeqEventVelocity]
         cmp al, 0E2h
         jb short .15
         jbe near .24
@@ -761,7 +761,7 @@ SeqStepTrack:
         mov al, cl
         mov edx, dword [byte esi+0Ah]
         mov dword [byte esi+eax*4+032h], edx
-        mov eax, dword [dword_F1888]
+        mov eax, dword [SeqEventValue]
         add eax, byte 4
 .21:
         mov dword [byte esi+0Ah], eax
@@ -809,13 +809,13 @@ SeqStepTrack:
         jmp near .38
 .27:
         xor eax, eax
-        mov al, byte [byte_F188E]
+        mov al, byte [SeqEventLength]
         sub eax, byte 4
         xor edx, edx
         mov dx, ax
         xor eax, eax
         mov al, byte [byte esi+051h]
-        mov ebx, byte_F1784
+        mov ebx, SeqSysexBuffer
 .28:
         call SndHandleMidi
         jmp near .38
@@ -823,7 +823,7 @@ SeqStepTrack:
         test byte [byte esi+01h], 8
         jne near .38
         xor ebx, ebx
-        mov bl, byte [dword_F1888]
+        mov bl, byte [SeqEventValue]
         and edx, 0FFh
         mov eax, esi
         call SeqSendController
@@ -858,7 +858,7 @@ SeqStepTrack:
         mov edx, 2
         jmp short .28
 .33:
-        movsx edx, word [dword_F1888]
+        movsx edx, word [SeqEventValue]
         mov eax, esi
         call SeqSendPitchBend
         jmp near .38
@@ -866,18 +866,18 @@ SeqStepTrack:
         cmp al, 80h
         jae short .35
         mov al, byte [byte esi+052h]
-        mov byte [byte_F188D], al
+        mov byte [SeqEventVelocity], al
 .35:
-        mov dl, byte [byte_F188C]
+        mov dl, byte [SeqEventNote]
         and dl, 7Fh
-        mov byte [byte_F188C], dl
+        mov byte [SeqEventNote], dl
         cmp byte [byte esi+050h], 9
         je short .36
         mov eax, dword [byte esi+06h]
         mov al, byte [byte eax+013h]
         mov bl, dl
         add bl, al
-        mov byte [byte_F188C], bl
+        mov byte [SeqEventNote], bl
 .36:
         cmp dword [MidiMusicEnabled], byte 0
         je short .38
@@ -885,7 +885,7 @@ SeqStepTrack:
         mov byte [esp], al
         cmp byte [byte esi+050h], 9
         jne short .37
-        mov al, byte [byte_F188C]
+        mov al, byte [SeqEventNote]
         add al, 5Ch
         and eax, 0FFh
         push eax
@@ -907,20 +907,20 @@ SeqStepTrack:
         push eax
         xor ecx, ecx
         mov cl, byte [byte esi+050h]
-        mov ebx, dword [dword_F1888]
+        mov ebx, dword [SeqEventValue]
         xor edx, edx
-        mov dl, byte [byte_F188D]
+        mov dl, byte [SeqEventVelocity]
         xor eax, eax
-        mov al, byte [byte_F188C]
+        mov al, byte [SeqEventNote]
         call SeqNoteOn
 .38:
         mov ebx, dword [byte esi+0Ah]
         test ebx, ebx
         je near .12
         mov edx, ebx
-        mov eax, dword_F1890
+        mov eax, SeqNextEvent
         call SeqReadEvent
-        mov eax, dword [dword_F1890]
+        mov eax, dword [SeqNextEvent]
         mov dword [byte esi+0Eh], eax
         jmp near .12
 .39:
@@ -940,7 +940,7 @@ SeqSendController:
         push edi
         push ebp
         mov ecx, eax
-        mov esi, unk_F21FC
+        mov esi, MidiOutQueue
         mov edi, dword [MidiTickCount]
         add esi, edi
         lea ebp, [byte edi+04h]
@@ -961,7 +961,7 @@ SeqSendController:
         mov eax, edx
         shl eax, 3
         sub eax, edx
-        mov byte [dword eax+byte_F234D], bl
+        mov byte [dword eax+MidiChanVolume], bl
         mov eax, dword [byte ecx+06h]
         xor edx, edx
         mov dl, byte [byte eax+011h]
@@ -983,7 +983,7 @@ SeqSendController:
         mov eax, edx
         shl eax, 3
         sub eax, edx
-        mov byte [dword eax+byte_F234E], bl
+        mov byte [dword eax+MidiChanCtrlState], bl
         mov eax, dword [byte ecx+06h]
         mov dl, byte [byte eax+012h]
         cmp dl, 3Fh
@@ -1033,7 +1033,7 @@ SeqNoteOffSlot:
         push edx
         push esi
         mov ecx, eax
-        mov ebx, unk_F21FC
+        mov ebx, MidiOutQueue
         mov edx, dword [MidiTickCount]
         add ebx, edx
         lea esi, [byte edx+04h]
@@ -1063,7 +1063,7 @@ SeqChannelNotesOff:
         sub esp, byte 4
         mov edi, eax
         mov byte [esp], dl
-        mov ebx, byte_F1A1C
+        mov ebx, SeqTracks
         xor ecx, ecx
         movzx esi, byte [esp]
         jmp short .3
@@ -1093,7 +1093,7 @@ SeqSendPitchBend:
         push ecx
         push esi
         mov ecx, edx
-        mov ebx, unk_F21FC
+        mov ebx, MidiOutQueue
         mov edx, dword [MidiTickCount]
         add ebx, edx
         lea esi, [byte edx+04h]
@@ -1123,9 +1123,9 @@ SeqNoteOn:
         mov byte [byte esp+04h], dl
         mov esi, ebx
         mov dl, cl
-        mov ebx, unk_F21FC
+        mov ebx, MidiOutQueue
         add ebx, dword [MidiTickCount]
-        mov eax, dword_F189C
+        mov eax, SongRecords
         xor ecx, ecx
         add dword [MidiTickCount], byte 4
 .1:
@@ -1190,7 +1190,7 @@ SeqQueueCommand:
         add eax, esi
         cmp eax, 80h
         jge short .3
-        mov byte [dword esi+byte_F1704], cl
+        mov byte [dword esi+SeqQueue], cl
         inc word [ActiveSongCount]
         inc byte [SeqQueueCount]
         lea eax, [byte esi+01h]
@@ -1204,7 +1204,7 @@ SeqQueueCommand:
         lea ecx, [byte eax+01h]
         mov dword [SeqQueueHead], ecx
         mov cl, byte [esi]
-        mov byte [dword eax+byte_F1704], cl
+        mov byte [dword eax+SeqQueue], cl
         dec edx
         jmp short .1
 .2:
@@ -1231,7 +1231,7 @@ SeqFlushQueue:
 .1:
         mov esi, 3
         movsx eax, cx
-        mov al, byte [dword eax+byte_F1705]
+        mov al, byte [dword eax+SeqQueueData]
         and al, 0F0h
         cmp al, 0C0h
         jne short .2
@@ -1239,10 +1239,10 @@ SeqFlushQueue:
 .2:
         movsx eax, cx
         lea ebx, [byte eax+01h]
-        add ebx, byte_F1704
+        add ebx, SeqQueue
         xor edx, edx
         mov dx, si
-        mov al, byte [dword eax+byte_F1704]
+        mov al, byte [dword eax+SeqQueue]
         and eax, 0FFh
         call SndHandleMidi
         inc esi
@@ -1263,7 +1263,7 @@ SeqSendProgram:
         push ecx
         push esi
         mov ah, bl
-        mov ebx, unk_F21FC
+        mov ebx, MidiOutQueue
         mov ecx, dword [MidiTickCount]
         add ebx, ecx
         lea esi, [byte ecx+04h]
@@ -1279,7 +1279,7 @@ SeqSendProgram:
         pop ecx
         ret
         db 08Bh,0C0h
-jpt_998DD:
+SeqReadEventJumpTable:
         dd SeqReadEvent+0AAh
         dd SeqReadEvent+0AAh
         dd SeqReadEvent+0AAh
@@ -1327,12 +1327,12 @@ SeqReadEvent:
         ja near SeqReadEvent+0AAh
         and eax, 0FFh
         lea esi, [byte edx+01h]
-        jmp dword [nosplit cs:eax*4+jpt_998DD]
+        jmp dword [nosplit cs:eax*4+SeqReadEventJumpTable]
         xor eax, eax
         jmp short .3
 .2:
         mov cl, byte [byte edx+eax+01h]
-        mov byte [dword eax+byte_F1784], cl
+        mov byte [dword eax+SeqSysexBuffer], cl
         inc eax
 .3:
         movzx esi, byte [edx]

@@ -6,7 +6,7 @@ extern _dos_close_, _dos_getvect_, _dos_open_, _dos_read_, _dos_setvect_, GusDma
 extern GusPlayDmaChannel, GusRecordDmaChannel, GusDmaControl, GusIrqOldHandler, GusDmaBusy, GusDmaLeft, GusDmaChunkSize, GusDmaDone
 extern inp_, lseek_, outp_, outpw_, GusDelay, GusSetDmaCallbacks, GusServiceIrq, GusPokeFill
 extern GusConvertAddr16, GusDmaChannels, GusIrqVectorTable, GusIrqOldSelector, GusIrqStatusPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort
-extern GusIrqPending, word_D8ACC, GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, GusDmaChunkLo, GusDmaChunkHi
+extern GusIrqPending, GusVoiceRateTable, GusDosResult, GusIrqFlags, GusActiveVoices, GusCriticalDepth, GusDmaChunkLo, GusDmaChunkHi
 extern GusDmaFlags
 global GusSetupDmaChannel, GusProgramDma, GusMaskDma, GusDmaCount, GusDosRead, GusDosClose, GusDosSeek, GusDosOpen
 global GusSetVect, GusGetVect, GusHookIrq, GusUnhookIrq, GusSendEoi, GusInitPlayDma, GusInitRecordDma, GusInitDma
@@ -975,7 +975,7 @@ GusCalcVoiceAddrs:
         xor eax, eax
         mov word [byte ebx+02Ch], dx
         mov ax, word [GusActiveVoices]
-        mov ax, word [nosplit eax*2+word_D8ACC]
+        mov ax, word [nosplit eax*2+GusVoiceRateTable]
         and eax, 0FFFFh
         xor edx, edx
         xor ecx, ecx

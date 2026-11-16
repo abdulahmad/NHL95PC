@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_9F226 progbits alloc exec nowrite align=1
-extern __GETDS, str_BLASTER, dword_D524C, SbDmaAlloc, SbDma, SbVoiceSample, getenv_
+extern __GETDS, str_BLASTER, SbEnvDma, SbDmaAlloc, SbDma, SbVoiceSample, getenv_
 extern int386x_, memset_, outp_, GetPatchEntry, strtoul_, SbMixRateDiv, SbMixerOpen, SbMixerClose
 extern SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetRate, SbStreamSetSample, SbStreamStart, SbStreamIdle
-extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, SbSetStereo, unk_D522E, unk_D5254, SbIrq
+extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, SbSetStereo, SbVoiceDefaults, SbEnvErf, SbIrq
 extern SbChanRecords, SbMidiVoices, SbVoiceRate, SbChanVolume, SbChanTrack, SbChanBend
 global ParseBlasterEnv, ParseHexValue, SbPopArgsReturn, SbOpen, SbInit, SbClose, SbService, SbQuery
 global SbSetTrack, SbPlayDigi, SbNoteOff, SbNoteOn, SbStartVoice, SbVoiceStartSample, SbVoiceSetVolume, SbController
@@ -88,7 +88,7 @@ ParseBlasterEnv:
         jne short .10
         lea eax, [byte ecx+04h]
         mov ebx, 0Ah
-        mov edx, unk_D5254
+        mov edx, SbEnvErf
         jmp short .11
 .10:
         inc ecx
@@ -105,7 +105,7 @@ ParseBlasterEnv:
         jmp near .1
 .13:
         mov eax, dword [byte esp+04h]
-        mov dword [dword_D524C], eax
+        mov dword [SbEnvDma], eax
         mov eax, dword [byte esp+08h]
         shl eax, 10h
         add eax, dword [byte esp+0Ch]
@@ -168,7 +168,7 @@ SbOpen:
         call memset_
         push dword 200h
         push esi
-        mov ebx, dword [dword_D524C]
+        mov ebx, dword [SbEnvDma]
         push ebx
         mov ecx, dword [byte esp+018h]
         push ecx
@@ -202,7 +202,7 @@ SbInit:
         mov word [SbMidiVoices+02C4h], bx
         mov word [SbMidiVoices+02C0h], bx
         xor eax, eax
-        mov ebx, unk_D522E
+        mov ebx, SbVoiceDefaults
 .1:
         mov cl, al
         mov edx, 1
@@ -224,7 +224,7 @@ SbInit:
         sub edx, eax
         mov ecx, 7
         lea edi, [nosplit edx*2+SbChanRecords]
-        mov esi, unk_D522E
+        mov esi, SbVoiceDefaults
         rep movsd
         movsw
         inc eax

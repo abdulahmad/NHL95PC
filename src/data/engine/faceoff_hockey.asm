@@ -8,7 +8,7 @@ extern assbenchside, assrefpenshot, asspsclear, asspenshooter, assbench, asscent
 extern assdefo, assdopen, asseben, assepen, assfaceoff, assfaceoffpl, assgoalie, assgoalietopuck
 extern assnearest, asspassrec, asspenalty, asspuckc, assscore, assshoot, assstanley, asswingd
 extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
-extern unk_E0416, puckstruct
+extern ReplayBuffer, puckstruct
 global seed, asstab, sflags, gmode2, pendelaytab
 global pendelaytab_e13, penmintab, pendelay2tab, pendelay2tab_e4, priolist_m1, priolist, apl, collflag
 global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, penmintab_m3, shownumbers
@@ -24,7 +24,7 @@ global lcblinktime, lcsel, lcsel_aw, lcline, lctimer
 global lcboxon, ObjInitFrame, ObjInitAttr, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
 global refhitcount, fadeinpending, injurystop, bannermsg, ovlseq, ovlstep
 replaystart:
-        dd unk_E0416
+        dd ReplayBuffer
 puckx:
         dd puckstruct+2
 puckvx:

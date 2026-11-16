@@ -2,26 +2,26 @@
 bits 32
 %include "hockey.inc"
 section s_F23BC nobits alloc noexec write align=1
-global byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, SndHandleType, __HeapFlags, __nheap_clean
-global dword_F23EA, dword_F23EE, dword_F2416, dword_F243C, AtexitTable, SpeechBankCount, __ClosedStreams, delaycount
+global MidiChannelUsed, MusicBankHeader, MusicBankPatchNum, MusicBankTimbreCount, MusicBankTimbreNums, SndHandleType, __HeapFlags, __nheap_clean
+global MusicPatchFile, MusicTimbreFiles, MusicTimbreSizes, AtexitRoutines, AtexitTable, SpeechBankCount, __ClosedStreams, delaycount
 global _doserrno, ErrnoVar
-byte_F23BC:
+MidiChannelUsed:
         resb 16
-byte_F23CC:
+MusicBankHeader:
         resb 1
-byte_F23CD:
+MusicBankPatchNum:
         resb 2
-byte_F23CF:
+MusicBankTimbreCount:
         resb 17
-byte_F23E0:
+MusicBankTimbreNums:
         resb 10
-dword_F23EA:
+MusicPatchFile:
         resb 4
-dword_F23EE:
+MusicTimbreFiles:
         resb 40
-dword_F2416:
+MusicTimbreSizes:
         resb 38
-dword_F243C:
+AtexitRoutines:
         resb 2
 SndHandleType:
         resb 2

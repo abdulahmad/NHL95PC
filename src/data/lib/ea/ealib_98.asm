@@ -2,6 +2,6 @@
 bits 32
 %include "hockey.inc"
 section s_F21FC nobits alloc noexec write align=1
-global unk_F21FC
-unk_F21FC:
+global MidiOutQueue
+MidiOutQueue:
         resb 256

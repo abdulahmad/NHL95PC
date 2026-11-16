@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_9FD94 progbits alloc exec nowrite align=1
-extern __GETDS, byte_D5279, byte_D527A, dword_D5260, dword_D5264, dword_D5268, dword_D526C, dword_D5270
-extern dword_D5274
+extern __GETDS, Mpu401Irq, Mpu401IrqMask, Mpu401DataPort, Mpu401StatusPort, Mpu401RxCount, Mpu401RxMask, Mpu401OldIsr
+extern Mpu401OldIsrSel
 global Mpu401Detect, Mpu401Open, Mpu401Init, Mpu401Close, Mpu401Reset, Mpu401Command, Mpu401Delay, Mpu401ReadData
 global Mpu401WriteData, Mpu401Midi
 Mpu401Detect:
@@ -13,15 +13,15 @@ Mpu401Open:
         push ebp
         LD mov, ebp, esp
         movzx eax, word [byte ebp+08h]
-        mov dword [dword_D5260], eax
+        mov dword [Mpu401DataPort], eax
         inc eax
-        mov dword [dword_D5264], eax
+        mov dword [Mpu401StatusPort], eax
         movzx eax, word [byte ebp+0Ah]
-        mov byte [byte_D5279], al
+        mov byte [Mpu401Irq], al
         LD mov, cl, al
         mov al, 1
         shl al, cl
-        mov byte [byte_D527A], al
+        mov byte [Mpu401IrqMask], al
         push dword 0FFh
         call Mpu401Command
         push byte 24h
@@ -39,23 +39,23 @@ Mpu401Init:
         push ebp
         LD mov, ebp, esp
         movzx eax, word [byte ebp+08h]
-        mov dword [dword_D5260], eax
+        mov dword [Mpu401DataPort], eax
         inc eax
-        mov dword [dword_D5264], eax
+        mov dword [Mpu401StatusPort], eax
         movzx eax, word [byte ebp+0Ah]
-        mov byte [byte_D5279], al
+        mov byte [Mpu401Irq], al
         LD mov, cl, al
         mov al, 1
         shl al, cl
-        mov byte [byte_D527A], al
+        mov byte [Mpu401IrqMask], al
         pushfw
         cli
         mov eax, 0
-        mov dword [dword_D5268], eax
+        mov dword [Mpu401RxCount], eax
         mov eax, 0FFh
-        mov dword [dword_D526C], eax
-        mov eax, dword [dword_D5270]
-        or eax, dword [dword_D5274]
+        mov dword [Mpu401RxMask], eax
+        mov eax, dword [Mpu401OldIsr]
+        or eax, dword [Mpu401OldIsrSel]
         call Mpu401Reset
         popfw
         leave
@@ -85,8 +85,8 @@ Mpu401Close:
         push byte 9
         call Mpu401Delay
         add esp, byte 10h
-        mov eax, dword [dword_D5270]
-        or eax, dword [dword_D5274]
+        mov eax, dword [Mpu401OldIsr]
+        or eax, dword [Mpu401OldIsrSel]
         popa
         ret
 Mpu401Reset:
@@ -101,7 +101,7 @@ Mpu401Reset:
 Mpu401Command:
         push ebp
         LD mov, ebp, esp
-        mov edx, dword [dword_D5264]
+        mov edx, dword [Mpu401StatusPort]
         mov ecx, 0FFh
 .1:
         in al, dx
@@ -116,7 +116,7 @@ Mpu401Command:
         mov eax, dword [byte ebp+08h]
         out dx, al
 .3:
-        mov edx, dword [dword_D5264]
+        mov edx, dword [Mpu401StatusPort]
         mov ecx, 0FFh
 .4:
         in al, dx
@@ -126,7 +126,7 @@ Mpu401Command:
         mov eax, 0FFFFFFFFh
         jmp short .6
 .5:
-        mov edx, dword [dword_D5260]
+        mov edx, dword [Mpu401DataPort]
         in al, dx
         cmp al, 0FEh
         mov eax, 0
@@ -194,7 +194,7 @@ Mpu401Delay:
         leave
         ret
 Mpu401ReadData:
-        mov edx, dword [dword_D5264]
+        mov edx, dword [Mpu401StatusPort]
         mov ecx, 0FFh
 .1:
         in al, dx
@@ -204,7 +204,7 @@ Mpu401ReadData:
         mov eax, 0FFFFFFFFh
         jmp short .3
 .2:
-        mov edx, dword [dword_D5260]
+        mov edx, dword [Mpu401DataPort]
         LD xor, eax, eax
         in al, dx
 .3:
@@ -212,7 +212,7 @@ Mpu401ReadData:
 Mpu401WriteData:
         push ebp
         LD mov, ebp, esp
-        mov edx, dword [dword_D5264]
+        mov edx, dword [Mpu401StatusPort]
         mov ecx, 0FFh
 .1:
         in al, dx
@@ -222,7 +222,7 @@ Mpu401WriteData:
         mov eax, 0FFFFFFFFh
         jmp short .3
 .2:
-        mov edx, dword [dword_D5260]
+        mov edx, dword [Mpu401DataPort]
         mov eax, dword [byte ebp+08h]
         out dx, al
 .3:

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9B710 progbits alloc exec nowrite align=1
-extern __flushall_, __ioalloc_, __qread_, __set_errno_, byte_C4C70, __NHandles, __io_mode, getche_
+extern __flushall_, __ioalloc_, __qread_, __set_errno_, CLibBitMasks, __NHandles, __io_mode, getche_
 extern memset_
 global isatty_, __IOMode_, __SetIOMode_, __fsetbits_, __setbits_, fgetc_, __filbuf_, __fill_buffer_
 global ungetc_
@@ -102,7 +102,7 @@ __fsetbits_:
         sar eax, 3
         and dl, 7
         and edx, 0FFh
-        mov dl, byte [dword edx+byte_C4C70]
+        mov dl, byte [dword edx+CLibBitMasks]
         mov dh, byte [fs:esi+eax]
         or dh, dl
         inc ebx
@@ -133,7 +133,7 @@ __setbits_:
         sar eax, 3
         and dl, 7
         and edx, 0FFh
-        mov dl, byte [dword edx+byte_C4C70]
+        mov dl, byte [dword edx+CLibBitMasks]
         mov dh, byte [esi+eax]
         or dh, dl
         inc ecx

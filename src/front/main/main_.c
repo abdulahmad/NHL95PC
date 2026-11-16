@@ -113,8 +113,8 @@ void main_(void)
         printf((char *)str_CheckRefCard2);
         exit(0);
     }
-    if (s.mem[3] > 0x3EF000) dword_C4CFC = 0xC3500;
-    else dword_C4CFC = 0x30D40;
+    if (s.mem[3] > 0x3EF000) SpeechSlotMemSize = 0xC3500;
+    else SpeechSlotMemSize = 0x30D40;
     initgraphics(0x280, 0x1E0);
     InstallTimer();
     joysampling = 0;

@@ -4847,3 +4847,107 @@ OvlScriptHook,CBFA9,Overlay animation script for the hooking overlay
 OvlScriptSaved,CBFC3,Overlay animation script for the save overlay
 OvlScriptCross,CBFEB,Overlay animation script for the cross-checking overlay
 OvlScriptGuilt,CBFFA,Overlay animation script for the guilty player overlay
+gmrosterpos,ED0F7,Byte 3 of each game roster record (26 bytes): copied from the roster file record
+gmrosterdot,ED0F8,Byte 4 of each game roster record: set to a full stop after the jersey number
+gmrosterspace,ED0F9,Byte 5 of each game roster record: set to a space before the name
+gmrostername,ED0FA,Player name (16 bytes) of each game roster record
+ControlsDlgFlags,ED364,Bit flags the controls dialog builds from its options
+GadgetMovie,ED6D0,Movie handle whose frame GadgetSoundStub fetches
+ReplaySpeedAccum,ED6E8,Replay speed accumulator; the replay steps a frame each time it reaches five
+ReplayHoverPrev,ED6EC,Player last highlighted under the replay pointer (-1 for none)
+ReplayCamFree,ED70C,Set when the replay camera follows the pointer instead of a player
+ReplayHoverPlayer,ED74C,Player nearest the replay pointer (-1 for none)
+ReplayStartRate,ED750,Set to 8 when instant replay starts
+ReplayCtlFlags,ED754,Replay control button state flags (44h at start)
+SfxTestSample,ED7A4,Sample handle the sound setup frees when the device changes
+SpeechMemBlock,ED7A8,Memory block freed after the speech system shuts down
+ReplayBuffer,E0416,Instant replay frame buffer that replaystart points at
+rosterlistkeys,EA994,Player key table read by the roster move and create routines (indexed by two registers)
+roster2list,EAC84,Second roster list (4-byte records like rosterlist)
+roster2slot,EAC86,Slot byte of each second roster list record
+roster2teamrec,EAF7C,Team record pointer of the second roster
+rosterselgoalies,EAF99,Selection flags of the roster 1 goalies (rostersel entries 25 to 27)
+roster2selgoalies,EAFB5,Selection flags of the roster 2 goalies (rostersel entries 53 to 55)
+rosterteamcopy,EAFB8,Copy of a roster team record (2E8h bytes) made by CopyRoster1Rec
+SbEnvDma,D524C,DMA channel parsed from the BLASTER variable
+SbEnvErf,D5254,Value of the ErF field of the BLASTER variable
+Mpu401DataPort,D5260,MPU-401 data port (330h)
+Mpu401StatusPort,D5264,MPU-401 status and command port (331h)
+Mpu401RxCount,D5268,Cleared by Mpu401Init
+Mpu401RxMask,D526C,Set to FFh by Mpu401Init
+Mpu401OldIsr,D5270,Saved interrupt handler offset; non-zero when one is hooked
+Mpu401OldIsrSel,D5274,Saved interrupt handler selector
+Mpu401Irq,D5279,MPU-401 IRQ number
+Mpu401IrqMask,D527A,PIC mask bit for the MPU-401 IRQ
+PcSpkVoiceDefaults,D5224,Default voice record for the PC speaker driver
+SbVoiceDefaults,D522E,Default voice record copied by SbInit
+GusVoiceDefaults,D5382,Default voice record copied by GusStartup
+GusEnvRead,D53A0,Set once the ULTRASND variable has been read
+GusCardFound,D53A4,Set once the GUS port has been probed
+GusDriverIsOpen,D53A8,Set while the GUS driver is open
+GusDigiOpen,D53AC,Keeps the GUS driver open while digital sound is in use
+GusMusicOpen,D53B0,Set once GusInitMusic has started the GUS music layer
+GusPatchNameMap,D5408,Patch number and file name records (14 bytes each; -1 ends the list)
+GusPatchFallbacks,D5424,Pairs of patch numbers: load the second when the first is missing (-1 ends)
+GusPatchChannelMask,D543C,Channel bit mask tested by GusLoadMidiPatch
+GusTimerCtrl,D8B0E,Timer control byte cleared by GusResetTimers
+GusVoiceAllocCtrl,D8B10,Byte cleared by GusResetVoiceAlloc
+GusVoiceRateTable,D8ACC,Playback rate word per active voice count (14 voices give 44100)
+GusTimerState,F79E8,Shadow of the GUS timer control register
+GusVoicePrioLo,F79F8,Low dword of each voice's steal priority (12-byte records)
+GusVoicePrioHi,F79FC,High dword of each voice's steal priority
+GusVoiceStealFn,F7A00,Routine called when a voice is stolen
+MidiChannelUsed,F23BC,One byte per MIDI channel: set while the channel is taken
+MusicBankHeader,F23CC,Music bank header read from the bank file (type byte first)
+MusicBankPatchNum,F23CD,Patch file number from the music bank header
+MusicBankTimbreCount,F23CF,Timbre file count from the music bank header
+MusicBankTimbreNums,F23E0,Timbre file numbers from the music bank header
+MusicPatchFile,F23EA,Loaded patch file of the music bank
+MusicTimbreFiles,F23EE,Loaded timbre files of the music bank
+MusicTimbreSizes,F2416,Size of each loaded timbre file
+AtexitRoutines,F243C,Exit routine table walked by _Full_at_exit_rtn_
+SeqEvent,F1884,Event record SeqReadEvent fills: delta time first
+SeqEventValue,F1888,Event value (controller number or pitch bend)
+SeqEventNote,F188C,Event status or note byte
+SeqEventVelocity,F188D,Event velocity or data byte
+SeqEventLength,F188E,Event length in bytes
+SeqNextEvent,F1890,Record for the delta time of the next event
+SongRecords,F189C,Song records (12 bytes): song pointer first
+SongRelease,F18A4,Release flag of each song record
+SeqSysexBuffer,F1784,Buffer for system exclusive messages
+SeqQueue,F1704,Sequencer command queue (128 bytes)
+SeqQueueData,F1705,Data bytes of the sequencer command queue
+SeqTracks,F1A1C,Track records (54h bytes each)
+SeqTrackFlags,F1A1D,Flags byte of each track record
+SeqTrackPos,F1A1E,Data position of each track record
+MidiOutQueue,F21FC,MIDI output ring buffer used by every MIDI driver
+MidiChanVolume,F234D,Volume per MIDI channel (7-byte records)
+MidiChanCtrlState,F234E,Controller values per MIDI channel
+DigiFadeLevel,F22FC,Current level of each digital channel fade (20-byte records)
+DigiFadeAccum,F2300,Fixed-point level of each digital channel fade
+DigiFadeStep,F2304,Step per tick of each digital channel fade
+DigiFadeChannel,F2308,Channel of each digital channel fade
+DigiFadeDriver,F230C,Driver of each digital channel fade
+MemDescriptorBase,EDAA8,Lowest memory descriptor address checked by the shape and window code
+MemFreeBytes,EDAB4,Largest free memory figure kept by the memory tracker
+RowTableDefault,EDF04,Default row table storage initmemman points RowTableBuffer at
+SpeechSlotMemSize,C4CFC,Memory for the speech slots: 800000 with enough free memory or 200000
+CosTableTail,D7178,End of the cosine table reached with negated indexes
+CLibBitMasks,C4C70,Bit mask per bit number (1 2 4 ...) used by the C library set routines
+str_DateStampFmt,C4080,Date format string
+str_DateTimeFmt,C470C,Date format string used by FormatDateTime
+str_StrNewline,C4200,Format: string then newline
+str_MemListRowFmt,C428C,Memory viewer list row format
+str_MemBlockRowFmt,C42E4,Memory viewer block row format
+str_FourSpaces,C441C,Four spaces
+str_TwoDigitFmt,C46F8,Two-digit number format
+str_EmptyExt,C3FD5,Empty extension string
+str_Asterisks,C40A0,Row of asterisks for the memory map
+str_CharFmt,C41F0,Character format
+str_One,C433C,String 1
+str_Asterisk,C4414,One asterisk
+str_SpaceChar,C4418,One space
+str_N,C4448,Letter N
+str_Newline,C46C0,Newline
+str_ColonSpace,C472C,Colon and space printed by perror
+str_DotBackslash,C4AB4,Current directory prefix used by spawnve

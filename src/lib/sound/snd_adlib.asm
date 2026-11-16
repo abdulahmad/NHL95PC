@@ -4,9 +4,9 @@ bits 32
 section s_9DE9C progbits alloc exec nowrite align=1
 extern __GETDS, MidiTickCount, AdlibVoices, AdlibChanState
 extern memcpy_, GetPatchEntry, FixedMulRound, OplFlush, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
-extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, TableSin, unk_F21FC
+extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, TableSin, MidiOutQueue
 global AdlibDetect, AdlibOpen, AdlibInit, AdlibClose, AdlibService, AdlibLoadTimbre, AdlibNoteOff, AdlibController
-global AdlibProgramChange, AdlibPitchBend, AdlibVoiceSetup, AdlibVoiceRelease, AdlibVoiceResetEnvelopes, jpt_9E414, AdlibEnvelopeStep, AdlibEnvelopeStep
+global AdlibProgramChange, AdlibPitchBend, AdlibVoiceSetup, AdlibVoiceRelease, AdlibVoiceResetEnvelopes, AdlibEnvelopeJumpTable, AdlibEnvelopeStep, AdlibEnvelopeStep
 global AdlibStartLfo, AdlibStepLfo, AdlibStartPitchEnv, AdlibStepPitchEnv, AdlibMidi, AdlibApplyModulation, AdlibModulationJumps, AdlibModulationJumps
 global AdlibUpdateVoice, AdlibWriteVoice, AdlibNoteOn
 AdlibDetect:
@@ -508,7 +508,7 @@ AdlibVoiceResetEnvelopes:
         pop ecx
         ret
         db 08Dh,040h,00h
-jpt_9E414:
+AdlibEnvelopeJumpTable:
         dd AdlibEnvelopeStep+020h
         dd AdlibEnvelopeStep+03Bh
         dd AdlibEnvelopeStep+05Ch
@@ -524,7 +524,7 @@ AdlibEnvelopeStep:
         cmp bl, 4
         ja near .2
         and ebx, 0FFh
-        jmp dword [nosplit cs:ebx*4+jpt_9E414]
+        jmp dword [nosplit cs:ebx*4+AdlibEnvelopeJumpTable]
         mov si, word [byte edx+02h]
         dec esi
         mov word [byte edx+02h], si
@@ -768,7 +768,7 @@ AdlibMidi:
         mov byte [byte ebp-010h], 1
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
-        mov eax, unk_F21FC
+        mov eax, MidiOutQueue
         mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx

@@ -15,7 +15,7 @@ extern GusDataLowPort, GusDataHighPort, GusDramSize, GusDosResult
 extern GusIrqFlags, GusActiveVoices
 global GusReadPatchHeader, GusLoadPatch, GusUnloadPatch, GusSetPatchFlags, GusStopDmaAndTimers, GusUnhookIrqs, GusHookIrqs, GusOpenCard
 global GusStopAllVoices, GusOpen, GusClose, GusSetIrqDmaLatches, GusResetVoices, GusMidiInit, GusVoiceUpdateVolume, GusSetChannelVolume
-global GusSetChannelBend, GusSetMasterVolume, GusSetChannelModulation, jpt_AB964, GusVibratoTick, GusStartVibratoTimer, GusStopVibratoTimer, GusVoiceSetVibrato
+global GusSetChannelBend, GusSetMasterVolume, GusSetChannelModulation, GusVibratoJumpTable, GusVibratoTick, GusStartVibratoTimer, GusStopVibratoTimer, GusVoiceSetVibrato
 global GusVoiceSetEnvelope, GusScaleRatio, GusNoteFrequency, GusVoiceStopRamp, GusVoiceStopWave, GusStopNoteVoices, GusMidiNoteOn, GusMidiNoteOff
 global GusSetSustain, GusVoiceWaveEnd, GusVoiceRampEnd, GusStopPatchVoices, GusForgetPatch, GusSetChannelPatch, GusSetChannelPan, GusChannelNotesOff
 global GusPokeBlock, GusPeekBlock, GusSizeDram, GusDramAlloc, GusDramFree, GusDramFreeTotal, GusDramLargestFree, GusMixAdd8
@@ -2040,7 +2040,7 @@ GusSetChannelModulation:
         pop ebp
         ret
         db 08Bh,0C0h
-jpt_AB964:
+GusVibratoJumpTable:
         dd GusVibratoTick+083h
         dd GusVibratoTick+068h
         dd GusVibratoTick+074h
@@ -2082,7 +2082,7 @@ GusVibratoTick:
         cmp al, 3
         ja short GusVibratoTick+083h
         and eax, 0FFh
-        jmp dword [nosplit cs:eax*4+jpt_AB964]
+        jmp dword [nosplit cs:eax*4+GusVibratoJumpTable]
         mov eax, dword [byte ebx+0Ah]
         sar eax, 10h
         sub eax, ecx

@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_F22FC nobits alloc noexec write align=1
-global dword_F22FC, dword_F2300, dword_F2304, dword_F2308, dword_F230C
-dword_F22FC:
+global DigiFadeLevel, DigiFadeAccum, DigiFadeStep, DigiFadeChannel, DigiFadeDriver
+DigiFadeLevel:
         resb 4
-dword_F2300:
+DigiFadeAccum:
         resb 4
-dword_F2304:
+DigiFadeStep:
         resb 4
-dword_F2308:
+DigiFadeChannel:
         resb 4
-dword_F230C:
+DigiFadeDriver:
         resb 65

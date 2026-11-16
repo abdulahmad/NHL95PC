@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_8DCF8 progbits alloc exec nowrite align=1
-extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, RowTableSize, RowTableBuffer, MemDescriptorsEnd, MemDescriptors, dword_EDAA8, MemLockHandle
-extern dword_EDAB4, FatalError, int386_, InitMemList, AddHighMemList, MemLargestFree, InitMemDescriptors, GrabLargestBlock
-extern MemLockHandleInit, MemUnlock, DetectCPU, unk_EDF04, MemLock
+extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, RowTableSize, RowTableBuffer, MemDescriptorsEnd, MemDescriptors, MemDescriptorBase, MemLockHandle
+extern MemFreeBytes, FatalError, int386_, InitMemList, AddHighMemList, MemLargestFree, InitMemDescriptors, GrabLargestBlock
+extern MemLockHandleInit, MemUnlock, DetectCPU, RowTableDefault, MemLock
 global initmemman, InitMemoryPoolDefault, SetupMemoryPool, SetupMemoryPoolReserve
 initmemman:
         push esi
@@ -35,7 +35,7 @@ initmemman:
         mov dword [MemDescriptorsEnd], eax
         cmp dword [RowTableBuffer], byte 0
         jne short .2
-        mov dword [RowTableBuffer], unk_EDF04
+        mov dword [RowTableBuffer], RowTableDefault
 .2:
         cmp dword [RowTableSize], 0CCh
         jge short .3
@@ -47,7 +47,7 @@ initmemman:
         shl edx, 2
         mov eax, dword [RowTableBuffer]
         lea ebx, [eax+edx]
-        mov dword [dword_EDAA8], ebx
+        mov dword [MemDescriptorBase], ebx
         mov edx, dword [RowTableSize]
         sub edx, byte 2
         mov dword [eax], edx
@@ -164,7 +164,7 @@ initmemman:
         call MemUnlock
         add esp, byte 4
         call MemLargestFree
-        mov dword [dword_EDAB4], eax
+        mov dword [MemFreeBytes], eax
         add esp, byte 40h
         pop ebp
         pop edi

@@ -2,40 +2,40 @@
 bits 32
 %include "hockey.inc"
 section s_D5224 progbits alloc noexec write align=1
-global str_CULTRASNDMIDI, byte_D5224, byte_D5279, byte_D527A, WVideoActive, dword_D524C, SbDmaAlloc, SbDma
-global dword_D5260, dword_D5264, dword_D5268, dword_D526C, dword_D5270, dword_D5274, dword_D53A0, dword_D53A4
-global dword_D53A8, dword_D53AC, dword_D53B0, GusDriverStreaming, dword_D5424, dword_D543C, _environ, ___env_mask
-global unk_D522E, unk_D5254, SbIrq, unk_D5382, unk_D5408
-byte_D5224:
+global str_CULTRASNDMIDI, PcSpkVoiceDefaults, Mpu401Irq, Mpu401IrqMask, WVideoActive, SbEnvDma, SbDmaAlloc, SbDma
+global Mpu401DataPort, Mpu401StatusPort, Mpu401RxCount, Mpu401RxMask, Mpu401OldIsr, Mpu401OldIsrSel, GusEnvRead, GusCardFound
+global GusDriverIsOpen, GusDigiOpen, GusMusicOpen, GusDriverStreaming, GusPatchFallbacks, GusPatchChannelMask, _environ, ___env_mask
+global SbVoiceDefaults, SbEnvErf, SbIrq, GusVoiceDefaults, GusPatchNameMap
+PcSpkVoiceDefaults:
         db 010h,00h,00h,00h,07Fh,040h,00h,00h,00h,00h
-unk_D522E:
+SbVoiceDefaults:
         db 00h,00h,00h,00h,0Fh,00h,0FFh,0FFh,04h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,07Fh,040h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D524C:
+SbEnvDma:
         db 0FFh,0FFh,0FFh,0FFh
 SbDmaAlloc:
         db 00h,00h,00h,00h
-unk_D5254:
+SbEnvErf:
         db 0FFh,0FFh,0FFh,0FFh
 SbIrq:
         db 00h,00h,00h,00h
 SbDma:
         db 00h,00h,00h,00h
-dword_D5260:
+Mpu401DataPort:
         db 030h,03h,00h,00h
-dword_D5264:
+Mpu401StatusPort:
         db 031h,03h,00h,00h
-dword_D5268:
+Mpu401RxCount:
         db 00h,00h,00h,00h
-dword_D526C:
+Mpu401RxMask:
         db 00h,00h,00h,00h
-dword_D5270:
+Mpu401OldIsr:
         db 00h,00h,00h,00h
-dword_D5274:
+Mpu401OldIsrSel:
         db 00h,00h,00h,00h,00h
-byte_D5279:
+Mpu401Irq:
         db 07h
-byte_D527A:
+Mpu401IrqMask:
         db 080h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -53,18 +53,18 @@ byte_D527A:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,07Fh,040h,00h,00h,00h,00h
-unk_D5382:
+GusVoiceDefaults:
         db 00h,00h,00h,00h,0Fh,00h,0FFh,0FFh,04h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,07Fh,040h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D53A0:
+GusEnvRead:
         db 00h,00h,00h,00h
-dword_D53A4:
+GusCardFound:
         db 00h,00h,00h,00h
-dword_D53A8:
+GusDriverIsOpen:
         db 00h,00h,00h,00h
-dword_D53AC:
+GusDigiOpen:
         db 00h,00h,00h,00h
-dword_D53B0:
+GusMusicOpen:
         db 00h,00h,00h,00h
 GusDriverStreaming:
         db 00h,00h,00h,00h
@@ -74,13 +74,13 @@ str_CULTRASNDMIDI:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_D5408:
+GusPatchNameMap:
         db 0Bh,00h,00h,00h,068h,06Fh,06Dh,065h,06Fh,072h,067h,00h,00h,00h,0FFh,0FFh
         db 0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D5424:
+GusPatchFallbacks:
         db 0Dh,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h,0Bh,00h,00h,00h
         db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-dword_D543C:
+GusPatchChannelMask:
         db 0Fh,00h,00h,00h
 WVideoActive:
         db 00h,00h,00h,00h

@@ -7,7 +7,7 @@ extern cupseries, dword_C66B0, StreamHandle, CurStream, ovlartbank, FatalError, 
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
 extern MemLargestFree, TextSetFont, FixedMulRound, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
-global CdStreamCreate, CdStreamClose, CdStreamOpen, CdStreamSeek, CdStreamCreateSecondary, jpt_1B283, CdStreamService, CdStreamService
+global CdStreamCreate, CdStreamClose, CdStreamOpen, CdStreamSeek, CdStreamCreateSecondary, CdStreamServiceJumpTable, CdStreamService, CdStreamService
 global CdStreamService, CdStreamTimer, CdStreamSkipReleased, CdStreamSpace, CdStreamFilled, CdStreamNextChunk, CdStreamNextChunk, CdStreamReleaseChunk
 global FreeGameMemory, FreeGameMemory, FreePhotoBankF, FreePhotoBanks, EnsureFreeMemory
 CdStreamCreate:
@@ -132,7 +132,7 @@ CdStreamCreateSecondary:
         mov edx, dword [byte esp+04h]
         mov dword [nosplit edx*4+StreamHandle], eax
         ret
-jpt_1B283:
+CdStreamServiceJumpTable:
         dd CdStreamService+039h
         dd CdStreamService+08Dh
         dd CdStreamService+0107h
@@ -155,7 +155,7 @@ CdStreamService:
         dec eax
         cmp eax, byte 8
         ja short CdStreamService+0Dh
-        jmp dword [nosplit cs:eax*4+jpt_1B283]
+        jmp dword [nosplit cs:eax*4+CdStreamServiceJumpTable]
         mov dword [byte edx+04Ch], 0
 .1:
         pop ebp

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_99A12 progbits alloc exec nowrite align=1
-extern __set_doserrno_, __set_errno_, _osmajor, CMainEnv, CMainResult, DosErrnoTable, dword_F243C, AtexitTable
+extern __set_doserrno_, __set_errno_, _osmajor, CMainEnv, CMainResult, DosErrnoTable, AtexitRoutines, AtexitTable
 extern SpeechBankCount, CMainArgc, CMainArgv, exit_, itoa_, ltoa_, main_, ExitHook
 extern __EFG_printf, CMainHook, __CommonInit_, toupper_, ultoa_, InitRtnsEntry, FiniRtnsEntry, GusInitTable
 global copypart_, _splitpath_, pickup_, _makepath_, _Full_at_exit_rtn_, atexit_, __CMain, __InitRtns
@@ -245,7 +245,7 @@ _Full_at_exit_rtn_:
 .1:
         test edx, edx
         je short .2
-        mov eax, dword [dword edx+dword_F243C]
+        mov eax, dword [dword edx+AtexitRoutines]
         sub edx, byte 4
         mov dword [esp], eax
         dec ebx

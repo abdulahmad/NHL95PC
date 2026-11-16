@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_8DF70 progbits alloc exec nowrite align=1
 extern __STOSB, str_EavesaCom, str_CUtilEavesaCom, str_InitgraphicsEAVESACOM, str_CEavesaDat, str_InitgraphicsNEWVERSIONOF, str_VESA, str_InitgraphicsINITMEMMAN
-extern str_InitgraphicsINVALIDSCREEN, str_VESAVideoBiosDriver, byte_EDABB, vesamodeok, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7
+extern str_InitgraphicsINVALIDSCREEN, str_VESAVideoBiosDriver, vesamodeok
 extern MemDescriptors, VesaProbed, ModeWidthTable, ModeHeightTable, GraphicsReady, ViewScreenWidth, ViewScreenHeight, ViewMarginX
 extern ViewMarginY, ViewMaxX, ViewMaxY, ScreenWidth, BackBufferWidth, ScreenBmHeight, ScreenBmClipX0, ScreenBmClipY0
 extern ScreenBmClipX1, ScreenBmClipY1, ScreenBmOffset, ScreenBmRowBytes, ScreenBmPitch, ScreenBmBanked, ScreenRowTable, PutBlockScaleSteps
-extern VesaBank, VesaWindowGranularity, dword_EDABA, vesapresent, ScreenWidthPtr, FatalError, FreeMemBlock, spawnl_
+extern VesaBank, VesaWindowGranularity, vesapresent, ScreenWidthPtr, FatalError, FreeMemBlock, spawnl_
 extern strncmp_, MemPtrSize, OpenArtArchiveErr, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
-extern VesaSetBankArg, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
+extern VesaSetBankArg, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_
 global ProbeVesa, initgraphics
 ProbeVesa:
         push ebx
@@ -81,10 +81,10 @@ ProbeVesa:
         push eax
         call bcopy
         add esp, byte 0Ch
-        cmp word [word_EDBCA], byte 4
+        cmp word [vesainfo+012h], byte 4
         jg short .5
         push byte 1Ah
-        push byte_EDCC1
+        push vesamodeok+01h
         call ZeroMem
         add esp, byte 8
 .5:
@@ -194,7 +194,7 @@ initgraphics:
 .14:
         xor edi, edi
         mov dword [VesaWindowGranularity], edi
-        mov ebx, dword [dword_EDABA]
+        mov ebx, dword [vesamodeinfo+02h]
         sar ebx, 10h
         test ebx, ebx
         je short .16
@@ -207,7 +207,7 @@ initgraphics:
 .16:
         xor eax, eax
         mov dword [VesaBank], eax
-        test byte [byte_EDABB], 1
+        test byte [vesamodeinfo+03h], 1
         je short .17
         mov dword [VesaBank], 1
 .17:
@@ -217,13 +217,13 @@ initgraphics:
         call __STOSB
         mov al, byte [vesamodeok]
         mov byte [esp], al
-        mov al, byte [byte_EDCC1]
+        mov al, byte [vesamodeok+01h]
         mov byte [byte esp+01h], al
-        mov al, byte [byte_EDCC3]
+        mov al, byte [vesamodeok+03h]
         mov byte [byte esp+03h], al
-        mov al, byte [byte_EDCC5]
+        mov al, byte [vesamodeok+05h]
         mov byte [byte esp+05h], al
-        mov al, byte [byte_EDCC7]
+        mov al, byte [vesamodeok+07h]
         mov byte [byte esp+07h], al
 .18:
         xor edi, edi

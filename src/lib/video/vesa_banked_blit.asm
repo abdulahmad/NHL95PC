@@ -8,11 +8,11 @@ extern BlitColumnOffsets, BlitSourcePtr
 global PutPixel, PlotPixel, VesaSetBankArg, VesaSetBank, VesaSetBankJumpTable, VesaSetMode, VgaSetModeTwice, VesaSetDisplayStart
 global BlitBlockHot, BlitBlock, BlitBlockXorHot, BlitBlockXor, BlitBlockXor, BlitBlockAndHot, BlitBlockAnd, AndPixelClipped
 global AndPixel, BlitBlockOrHot, BlitBlockOr, BlitBlockOr, OrPixelClipped, OrPixel, FillRectClippedCore, FillRectClippedCore
-global FillRectCore, jpt_B66B3, XorRectClippedCore, XorRectClippedCore, XorRectCore, jpt_B67CB, BlitArtOpaqueHot, BlitArtOpaque
+global FillRectCore, FillRectJumpTable, XorRectClippedCore, XorRectClippedCore, XorRectCore, XorRectJumpTable, BlitArtOpaqueHot, BlitArtOpaque
 global BlitArtKeyFFHot, BlitArtKeyFF, BlitArtHot, BlitArt, BlitShapeFastHot, BlitShapeFast, BlitShapeFast, BlitArtKeyColourHot
 global BlitArtKeyColour, BlitArtMaskedHot, BlitArtMasked, BlitShapeClippedHot, BlitShapeClipped, SetBitmapClip, ShapeWidth, ShapeHeight
 global ShapeDataSize, FillRectSpansCore, FillRectSpansJumpTable, UnpackArtRle, SetBlitSource, CopyRowKeyFF, CopyRowRemapKeyed, CopyRowFast
-global unk_B74AA, BlitBlockShadowHot, BlitBlockShadow, SetRemapTable, BlitBlockRemapKeyedHot, BlitBlockRemapKeyed
+global CopyRowFastJumpTable, BlitBlockShadowHot, BlitBlockShadow, SetRemapTable, BlitBlockRemapKeyedHot, BlitBlockRemapKeyed
 PutPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
@@ -1019,8 +1019,8 @@ FillRectCore:
         LD sub, edx, ecx
         shr dword [byte ebp+010h], 2
         and ecx, byte 3
-        jmp dword [nosplit ecx*4+jpt_B66B3]
-jpt_B66B3:
+        jmp dword [nosplit ecx*4+FillRectJumpTable]
+FillRectJumpTable:
         dd .1
         dd .2
         dd .4
@@ -1149,8 +1149,8 @@ XorRectCore:
         LD sub, edx, ecx
         shr dword [byte ebp+010h], 2
         and ecx, byte 3
-        jmp dword [nosplit ecx*4+jpt_B67CB]
-jpt_B67CB:
+        jmp dword [nosplit ecx*4+XorRectJumpTable]
+XorRectJumpTable:
         dd .1
         dd .4
         dd .8
@@ -2616,7 +2616,7 @@ CopyRowFast:
         LD sub, edx, ebx
         LD sub, edx, ebx
         LD sub, edx, ebx
-        jmp dword [nosplit ebx*2+unk_B74AA]
+        jmp dword [nosplit ebx*2+CopyRowFastJumpTable]
 .3:
         test edi, 1
         jne short .2
@@ -2631,8 +2631,8 @@ CopyRowFast:
         LD sub, edx, ebx
         LD sub, edx, ebx
         LD sub, edx, ebx
-        jmp dword [nosplit ebx*2+unk_B74AA]
-unk_B74AA:
+        jmp dword [nosplit ebx*2+CopyRowFastJumpTable]
+CopyRowFastJumpTable:
         dd .2
         dd .3
         dd .4

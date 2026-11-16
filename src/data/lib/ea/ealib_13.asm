@@ -6,24 +6,24 @@ global str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_Reservem
 global str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, str_GetmemblockNOMEMORYBLOCKS, str_InitmemmanINSUFFICIENTROW, str_EavesaCom, str_CUtilEavesaCom, str_InitgraphicsEAVESACOM
 global str_CEavesaDat, str_InitgraphicsNEWVERSIONOF, str_VESA, str_InitgraphicsINITMEMMAN, str_InitgraphicsINVALIDSCREEN, str_VESAVideoBiosDriver, str_AddtimerLISTFULL, str_SUBWINDOW
 global str_SubwindowdefadrOUTOFROW, str_SCN, str_03sFF03dPAT, str_03sFF03dTIM, str_KMS2, str_CFG2, str_VHDR, str_SavefileblockaOPENFAILEDFOR
-global str_DBUGTXT, str_FILES, str_DATES, str_TIMES, str_CLOSED, str_TIMES2, asc_C4080, str_2d02d02d
-global str_CS44xDS, str_CS44xDS2, str_Used66xFree, str_Used7uFree7u, str_NAMESIZEADREND, str_IDXNAMESIZEADR, str_80s, asc_C4200
-global str_S_MemViewerDrawList, str_SPACE9x8s8s, str_SPACE9d8s8s, str_SPACE66x6, str_SPACE7d66s, asc_C428C, str_1212s9d8s8s, str_33d1212s66x66s66s44x
-global asc_C42E4, str_MEMMANAGER, str_044X00000000, str_SYSTEM, str_SPACE3, str_HIGHMemoryBlock, str_LOWMemoryBlock, str_ConventionalMemory
+global str_DBUGTXT, str_FILES, str_DATES, str_TIMES, str_CLOSED, str_TIMES2, str_DateStampFmt, str_2d02d02d
+global str_CS44xDS, str_CS44xDS2, str_Used66xFree, str_Used7uFree7u, str_NAMESIZEADREND, str_IDXNAMESIZEADR, str_80s, str_StrNewline
+global str_S_MemViewerDrawList, str_SPACE9x8s8s, str_SPACE9d8s8s, str_SPACE66x6, str_SPACE7d66s, str_MemListRowFmt, str_1212s9d8s8s, str_33d1212s66x66s66s44x
+global str_MemBlockRowFmt, str_MEMMANAGER, str_044X00000000, str_SYSTEM, str_SPACE3, str_HIGHMemoryBlock, str_LOWMemoryBlock, str_ConventionalMemory
 global str_RelocatableBlock, str_NonRelocatableBlock, str_ALIGNFlagIsSet, str_PRIORITY1d, str_SequenceD, str_BlockIsPURGABLE, str_04x2, str_02x
-global asc_C441C, str_FILES2, str_DATES2, str_TIMES3, str_HexmemdspOS, str_XxMMAPTXT, str_ErrorDumpingMemoryMap, str_ShapeFileIsInvalid
+global str_FourSpaces, str_FILES2, str_DATES2, str_TIMES3, str_HexmemdspOS, str_XxMMAPTXT, str_ErrorDumpingMemoryMap, str_ShapeFileIsInvalid
 global str_NumDPackedD, str_ThereAreNoShapes, str_44s05x, str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked
 global str_Packed, str_Unpacked, str_3d3d3d3dS, str_ShapeIsInvalidDraw, str_MEMSHPTXT, str_ErrorDumpingShapesList, str_ShapeFileName0, str_ShapeFileSizeLd
 global str_NumberOfShapesD, str_44s66ld, str_Bytes3dRows3d2, str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d
-global asc_C46F8, str_SCREEN2, asc_C470C, str_2d02d02d2, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal
+global str_TwoDigitFmt, str_SCREEN2, str_DateTimeFmt, str_2d02d02d2, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal
 global str_DATABUFFER, str_Copyright, str_UnpackINVALIDPACKCODE, str_EXITTODOSY, str_PAUSEPRESSANYKEY, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh
 global str_Qvs, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLOCK, str_WindowdefadrOUTOFROW, str_Unpackf, str_Unpacking, str_SHAPE2
 global str_Snap, str_Pal31, str_Snap2, str_UnknownError, str_BLASTER, str_PAT, str_ULTRADIR, str_MIDI
-global unk_C3FD5, str_Jan, str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul
-global str_Aug, str_Sep, str_Oct, str_Nov, str_Dec, str_Wt2, unk_C40A0, str_Fs
+global str_EmptyExt, str_Jan, str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul
+global str_Aug, str_Sep, str_Oct, str_Nov, str_Dec, str_Wt2, str_Asterisks, str_Fs
 global str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3, str_Jun2, str_Jul2, str_Aug2
-global str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0, MemViewStrings, str_X_DebugSprintf, unk_C433C
-global unk_C4414, unk_C4418, unk_C4448, str_FF, str_W_DumpMemoryMap, str_Un, unk_C46C0, unk_C472C
+global str_Sep2, str_Oct2, str_Nov2, str_Dec2, str_CharFmt, MemViewStrings, str_X_DebugSprintf, str_One
+global str_Asterisk, str_SpaceChar, str_N, str_FF, str_W_DumpMemoryMap, str_Un, str_Newline, str_ColonSpace
 global str_EACSNDFLIBJul28, str_Fsh, str_3sh, str_SHPI, str_SHPM, str_Error0, str_NoSuchFileOr, str_ArgumentListTooBig
 global str_ExecFormatError, str_BadFileNumber, str_NotEnoughMemory, str_PermissionDenied, str_FileExists, str_CrossDeviceLink, str_InvalidArgument, str_FileTableOverflow
 global str_TooManyOpenFiles, str_NoSpaceLeftOn, str_ArgumentTooLarge, str_ResultTooLarge, str_ResourceDeadlockWouldOccur
@@ -140,7 +140,7 @@ str_CFG2:
         db 043h,046h,047h,00h
 str_VHDR:
         db 056h,048h,044h,052h,00h
-unk_C3FD5:
+str_EmptyExt:
         db 00h,00h,00h
 str_SavefileblockaOPENFAILEDFOR:
         db 073h,061h,076h,065h,066h,069h,06Ch,065h,062h,06Ch,06Fh,063h,06Bh,061h,020h,02Dh
@@ -184,11 +184,11 @@ str_CLOSED:
         db 0Ah,043h,04Ch,04Fh,053h,045h,044h,0Ah,00h,069h,02Ch,020h
 str_TIMES2:
         db 054h,049h,04Dh,045h,03Ah,020h,025h,073h,0Ah,00h,02Ch,020h
-asc_C4080:
+str_DateStampFmt:
         db 025h,030h,032h,064h,02Dh,025h,033h,073h,02Dh,025h,030h,032h,064h,00h,020h,066h
 str_2d02d02d:
         db 025h,032h,064h,03Ah,025h,030h,032h,064h,03Ah,025h,030h,032h,064h,00h,00h,00h
-unk_C40A0:
+str_Asterisks:
         db 02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah
         db 02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah
         db 02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,02Ah,00h,020h,02Ah,066h
@@ -241,13 +241,13 @@ str_IDXNAMESIZEADR:
         db 049h,044h,058h,020h,020h,020h,020h,020h,04Eh,041h,04Dh,045h,020h,020h,020h,020h
         db 020h,020h,020h,053h,049h,05Ah,045h,020h,020h,020h,020h,041h,044h,052h,020h,020h
         db 020h,020h,045h,04Eh,044h,020h,020h,046h,04Ch,041h,047h,00h
-unk_C41F0:
+str_CharFmt:
         db 025h,063h,00h,048h
 str_80s:
         db 025h,02Dh,038h,030h,073h,00h,020h,050h
 MemViewStrings:
         db 00h,00h,00h,00h
-asc_C4200:
+str_StrNewline:
         db 025h,073h,0Ah,00h
 str_S_MemViewerDrawList:
         db 025h,073h,0Ah,0Ah,00h,078h,020h,020h
@@ -265,7 +265,7 @@ str_SPACE7d66s:
         db 020h,020h,020h,020h,020h,020h,020h,053h,050h,041h,043h,045h,020h,020h,020h,020h
         db 020h,025h,037h,064h,020h,025h,036h,02Eh,036h,073h,020h,025h,036h,02Eh,036h,073h
         db 00h,020h,020h,041h
-asc_C428C:
+str_MemListRowFmt:
         db 025h,02Dh,031h,032h,02Eh,031h,032h,073h,020h,025h,039h,078h,020h,025h,038h,073h
         db 020h,025h,038h,073h,00h,02Dh,038h,030h
 str_1212s9d8s8s:
@@ -275,7 +275,7 @@ str_33d1212s66x66s66s44x:
         db 025h,033h,02Eh,033h,064h,020h,025h,02Dh,031h,032h,02Eh,031h,032h,073h,020h,020h
         db 025h,036h,02Eh,036h,078h,020h,025h,036h,02Eh,036h,073h,020h,025h,036h,02Eh,036h
         db 073h,020h,025h,034h,02Eh,034h,078h,00h
-asc_C42E4:
+str_MemBlockRowFmt:
         db 025h,033h,02Eh,033h,064h,020h,025h,02Dh,031h,032h,02Eh,031h,032h,073h,020h,025h
         db 037h,064h,020h,025h,036h,02Eh,036h,073h,020h,025h,036h,02Eh,036h,073h,020h,025h
         db 034h,02Eh,034h,078h,00h,041h,043h,045h
@@ -286,7 +286,7 @@ str_X_DebugSprintf:
 str_044X00000000:
         db 025h,030h,034h,02Eh,034h,058h,020h,028h,030h,030h,030h,030h,020h,030h,030h,030h
         db 030h,020h,030h,030h,030h,030h,020h,030h,030h,030h,030h,029h,00h,025h,036h,02Eh
-unk_C433C:
+str_One:
         db 031h,00h,020h,025h
 str_SYSTEM:
         db 020h,053h,059h,053h,054h,045h,04Dh,020h,00h,02Dh,031h,032h
@@ -321,11 +321,11 @@ str_04x2:
         db 025h,030h,034h,078h,020h,020h,020h,00h
 str_02x:
         db 025h,030h,032h,078h,00h,00h,00h,00h
-unk_C4414:
+str_Asterisk:
         db 02Ah,00h,057h,020h
-unk_C4418:
+str_SpaceChar:
         db 020h,00h,06Dh,06Fh
-asc_C441C:
+str_FourSpaces:
         db 020h,020h,020h,020h,00h,06Fh,063h,06Bh
 str_FILES2:
         db 02Ah,020h,046h,049h,04Ch,045h,03Ah,020h,025h,073h,0Ah,00h
@@ -333,7 +333,7 @@ str_DATES2:
         db 02Ah,020h,044h,041h,054h,045h,03Ah,020h,025h,073h,0Ah,00h
 str_TIMES3:
         db 02Ah,020h,054h,049h,04Dh,045h,03Ah,020h,025h,073h,0Ah,00h
-unk_C4448:
+str_N:
         db 04Eh,00h,06Fh,063h
 str_FF:
         db 046h,046h,00h,025h
@@ -412,7 +412,7 @@ str_Bytes3dRows3d2:
 str_XY3d3d:
         db 078h,02Fh,079h,020h,03Dh,020h,025h,033h,064h,02Fh,025h,033h,064h,02Ch,020h,063h
         db 078h,02Fh,063h,079h,020h,03Dh,020h,025h,033h,064h,02Fh,025h,033h,064h,00h,072h
-unk_C46C0:
+str_Newline:
         db 0Ah,00h,072h,020h
 str_033d022X:
         db 025h,030h,033h,02Eh,033h,064h,020h,028h,025h,030h,032h,02Eh,032h,058h,029h,00h
@@ -422,15 +422,15 @@ str_G022d:
         db 047h,03Dh,025h,030h,032h,02Eh,032h,064h,00h,00h,00h,00h
 str_B022d:
         db 042h,03Dh,025h,030h,032h,02Eh,032h,064h,00h,065h,020h,073h
-asc_C46F8:
+str_TwoDigitFmt:
         db 025h,030h,032h,064h,00h,025h,06Ch,064h
 str_SCREEN2:
         db 053h,043h,052h,045h,045h,04Eh,03Fh,03Fh,02Eh,02Ah,00h,06Fh
-asc_C470C:
+str_DateTimeFmt:
         db 025h,030h,032h,064h,02Dh,025h,033h,073h,02Dh,025h,030h,032h,064h,00h,00h,065h
 str_2d02d02d2:
         db 025h,032h,064h,03Ah,025h,030h,032h,064h,03Ah,025h,030h,032h,064h,00h,00h,00h
-unk_C472C:
+str_ColonSpace:
         db 03Ah,020h,00h,00h
 str_FrameRate3dFrames:
         db 046h,072h,061h,06Dh,065h,020h,052h,061h,074h,065h,03Ah,020h,025h,033h,064h,020h

@@ -6,13 +6,13 @@ extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, KbdR
 extern AngleOctantTable, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, GraphicsReady, cpuinfo_d0, cpuinfo_d1
 extern ScreenWidth, ScreenHeight, DrawClipLeft, DrawClipRight, BackBufferWidth, RetraceTimeout, PrintfSavedEbx, PrintfSavedEcx
 extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, RetraceMode, KbdKeyTranslate, KbdRepeatTick, HotkeyNesting
-extern HotkeyFuncTable, RectFillMaxShades, CosTable, CosTableFine, CosTableEnd, dword_D7178, GetTicks, VgaBlitKeyedAtOwnPos
+extern HotkeyFuncTable, RectFillMaxShades, CosTable, CosTableFine, CosTableEnd, CosTableTail, GetTicks, VgaBlitKeyedAtOwnPos
 extern mousepollfn, RectFillPatternPtrs, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
 extern SavedTextColumns, KbdLastKey, KbdPrevKey, KbdHeldKey
 global PrintfSaveRegs, SaveTextMode, RestoreTextMode, DetectCPU, FillMem, ZeroMem, ResetHotkeyState, KbdGetKeyQuiet
-global PollHotkeys, SetupRectFillBlend, SetupRectFill, SetupRectFill, jpt_B4253, jpt_B4253, jpt_B42B2, jpt_B42B2
-global jpt_B439E, jpt_B439E, jpt_B4488, jpt_B4488, jpt_B4488, jpt_B466E, jpt_B466E, jpt_B466E
-global jpt_B466E, AngleFromDelta, AngleFromDeltaJumpTable, TableSin, TableCos, DispatchHotkey, RegisterHotkey, SetTextMode
+global PollHotkeys, SetupRectFillBlend, SetupRectFill, SetupRectFill, SetupRectFillJumpTable, SetupRectFillJumpTable, RectFillClipLeftJumpTable, RectFillClipLeftJumpTable
+global RectFillClipBottomJumpTable, RectFillClipBottomJumpTable, RectFillClipRightJumpTable, RectFillClipRightJumpTable, RectFillClipRightJumpTable, RectFillStepJumpTable, RectFillStepJumpTable, RectFillStepJumpTable
+global RectFillStepJumpTable, AngleFromDelta, AngleFromDeltaJumpTable, TableSin, TableCos, DispatchHotkey, RegisterHotkey, SetTextMode
 global VgaSetPalette, SetScreenTarget, SetClipWindow, ResetRetraceTimeout, WaitRetrace, WaitRetraceStart, WaitRetraceEnd, InRetrace
 global VgaBlitKeyedHot
 PrintfSaveRegs:
@@ -270,7 +270,7 @@ SetupRectFill:
         mov dword [byte esi+014h], eax
 .2:
         jne short SetupRectFill+05Ah
-        jmp near jpt_B466E+01BFh
+        jmp near RectFillStepJumpTable+01BFh
         LD xor, edx, edx
         cmp byte [byte ebp-05h], 0
         jne short .11
@@ -280,7 +280,7 @@ SetupRectFill:
         LD cmp, eax, ecx
         jl short .3
         mov dl, 8
-        jmp near jpt_B4488+014Ah
+        jmp near RectFillClipRightJumpTable+014Ah
 .3:
         LD cmp, eax, ebx
         jge short .4
@@ -290,7 +290,7 @@ SetupRectFill:
         LD cmp, eax, ebx
         jge short .5
         mov dl, 4
-        jmp near jpt_B4488+014Ah
+        jmp near RectFillClipRightJumpTable+014Ah
 .5:
         LD cmp, eax, ecx
         jl short .6
@@ -319,7 +319,7 @@ SetupRectFill:
         test dh, dl
         je short .11
         LD and, dl, dh
-        jmp near jpt_B4488+014Ah
+        jmp near RectFillClipRightJumpTable+014Ah
 .11:
         LD or, dl, dh
         movzx edx, dl
@@ -328,7 +328,7 @@ SetupRectFill:
         sub ecx, dword [byte esi+0Ch]
         jno short .13
 .12:
-        jmp near jpt_B466E+027Eh
+        jmp near RectFillStepJumpTable+027Eh
 .13:
         mov edx, dword [byte esi+010h]
         sub edx, dword [byte esi+04h]
@@ -390,21 +390,21 @@ SetupRectFill:
         inc ecx
         mov dword [byte esi+018h], ecx
         mov ebx, dword [byte ebp-04h]
-        je short jpt_B4253+040h
-        jmp dword [nosplit cs:ebx*4+jpt_B4253]
-jpt_B4253:
-        dd jpt_B4253+040h
-        dd jpt_B4488+01DAh
-        dd jpt_B439E+0DFh
-        dd jpt_B439E+0DFh
+        je short SetupRectFillJumpTable+040h
+        jmp dword [nosplit cs:ebx*4+SetupRectFillJumpTable]
+SetupRectFillJumpTable:
+        dd SetupRectFillJumpTable+040h
+        dd RectFillClipRightJumpTable+01DAh
+        dd RectFillClipBottomJumpTable+0DFh
+        dd RectFillClipBottomJumpTable+0DFh
         dd .1
         dd .1
         dd .1
         dd .1
-        dd jpt_B42B2+0D2h
-        dd jpt_B42B2+0D2h
-        dd jpt_B42B2+0D2h
-        dd jpt_B42B2+0D2h
+        dd RectFillClipLeftJumpTable+0D2h
+        dd RectFillClipLeftJumpTable+0D2h
+        dd RectFillClipLeftJumpTable+0D2h
+        dd RectFillClipLeftJumpTable+0D2h
         dd .1
         dd .1
         dd .1
@@ -420,8 +420,8 @@ jpt_B4253:
         mov dword [byte esi+0Ch], ecx
         LD sub, ecx, eax
         mov bl, byte [byte esi+034h]
-        jmp dword [nosplit cs:ebx*4+jpt_B42B2]
-jpt_B42B2:
+        jmp dword [nosplit cs:ebx*4+RectFillClipLeftJumpTable]
+RectFillClipLeftJumpTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .1
         dd .2
@@ -432,29 +432,29 @@ jpt_B42B2:
         dd .8
 .1:
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
 .2:
         sub dword [byte esi+04h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
 .3:
         add dword [byte esi+04h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
 .4:
         mov eax, dword [byte esi+030h]
         mul ecx
         sub dword [esi], eax
         sbb dword [byte esi+04h], edx
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
 .5:
         mov eax, dword [byte esi+030h]
         mul ecx
         add dword [esi], eax
         adc dword [byte esi+04h], edx
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
 .6:
         mov dword [byte esi+0Ch], eax
         LD mov, edx, ecx
@@ -470,14 +470,14 @@ jpt_B42B2:
         mul dword [byte esi+030h]
         add dword [byte esi+08h], eax
         adc dword [byte esi+0Ch], edx
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
 .7:
         mov dword [byte esi+018h], 1
         mov eax, dword [cliprect_y0]
         mov dword [byte esi+0Ch], eax
         mov eax, dword [byte esi+010h]
         mov dword [byte esi+04h], eax
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
 .8:
         mov dword [byte esi+0Ch], eax
         LD mov, edx, ecx
@@ -493,15 +493,15 @@ jpt_B42B2:
         mul dword [byte esi+030h]
         add dword [byte esi+08h], eax
         adc dword [byte esi+0Ch], edx
-        jmp near jpt_B466E+0145h
+        jmp near RectFillStepJumpTable+0145h
         mov ecx, dword [byte esi+014h]
         mov edx, dword [cliprect_y1]
         dec edx
         mov dword [byte esi+014h], edx
         LD sub, ecx, edx
         mov bl, byte [byte esi+034h]
-        jmp dword [nosplit cs:ebx*4+jpt_B439E]
-jpt_B439E:
+        jmp dword [nosplit cs:ebx*4+RectFillClipBottomJumpTable]
+RectFillClipBottomJumpTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .1
         dd .2
@@ -512,15 +512,15 @@ jpt_B439E:
         dd .9
 .1:
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0153h
+        jmp near RectFillStepJumpTable+0153h
 .2:
         add dword [byte esi+010h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0153h
+        jmp near RectFillStepJumpTable+0153h
 .3:
         sub dword [byte esi+010h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+0153h
+        jmp near RectFillStepJumpTable+0153h
 .4:
         mov edx, dword [byte esi+018h]
         LD sub, edx, ecx
@@ -535,7 +535,7 @@ jpt_B439E:
         add ebx, 80000000h
         adc ecx, byte 0
         mov dword [byte esi+010h], ecx
-        jmp near jpt_B466E+0153h
+        jmp near RectFillStepJumpTable+0153h
 .5:
         mov edx, dword [byte esi+018h]
         LD sub, edx, ecx
@@ -548,7 +548,7 @@ jpt_B439E:
         add eax, 80000000h
         adc edx, byte 0
         mov dword [byte esi+010h], edx
-        jmp near jpt_B466E+0153h
+        jmp near RectFillStepJumpTable+0153h
 .6:
         LD xor, eax, eax
         sub eax, dword [byte esi+08h]
@@ -565,7 +565,7 @@ jpt_B439E:
         mov dword [byte esi+010h], edx
         inc eax
         mov dword [byte esi+018h], eax
-        jmp near jpt_B466E+0153h
+        jmp near RectFillStepJumpTable+0153h
 .8:
         LD xor, eax, eax
         jmp short .7
@@ -584,10 +584,10 @@ jpt_B439E:
         mov dword [byte esi+010h], edx
         inc eax
         mov dword [byte esi+018h], eax
-        jmp near jpt_B466E+0153h
+        jmp near RectFillStepJumpTable+0153h
         mov bl, byte [byte esi+034h]
-        jmp dword [nosplit cs:ebx*4+jpt_B4488]
-jpt_B4488:
+        jmp dword [nosplit cs:ebx*4+RectFillClipRightJumpTable]
+RectFillClipRightJumpTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .10
         dd .1
@@ -604,7 +604,7 @@ jpt_B4488:
         add dword [byte esi+024h], ecx
         sub dword [byte esi+018h], ecx
         sub dword [byte esi+014h], ecx
-        jmp near jpt_B466E+01ACh
+        jmp near RectFillStepJumpTable+01ACh
 .2:
         mov eax, dword [byte esi+04h]
         mov ecx, dword [cliprect_x0]
@@ -613,7 +613,7 @@ jpt_B4488:
         add dword [byte esi+020h], ecx
         add dword [byte esi+0Ch], ecx
         sub dword [byte esi+018h], ecx
-        jmp near jpt_B466E+01ACh
+        jmp near RectFillStepJumpTable+01ACh
 .3:
         mov eax, dword [esi]
         mov edx, dword [byte esi+04h]
@@ -635,7 +635,7 @@ jpt_B4488:
         dec eax
         add eax, dword [byte esi+0Ch]
         mov dword [byte esi+014h], eax
-        jmp near jpt_B466E+01ACh
+        jmp near RectFillStepJumpTable+01ACh
 .5:
         mov eax, 1
         jmp short .4
@@ -657,7 +657,7 @@ jpt_B4488:
         mul dword [byte esi+030h]
         add dword [esi], eax
         adc dword [byte esi+04h], edx
-        jmp near jpt_B466E+01ACh
+        jmp near RectFillStepJumpTable+01ACh
 .7:
         jmp short .10
 .8:
@@ -677,7 +677,7 @@ jpt_B4488:
         LD sub, eax, edx
         mov dword [byte esi+014h], edx
         add dword [byte esi+024h], eax
-        jmp near jpt_B466E+01ACh
+        jmp near RectFillStepJumpTable+01ACh
 .9:
         mov ecx, dword [byte esi+04h]
         mov eax, dword [cliprect_x0]
@@ -697,7 +697,7 @@ jpt_B4488:
         adc edx, byte 0
         LD sub, edx, ecx
         add dword [byte esi+020h], edx
-        jmp near jpt_B466E+01ACh
+        jmp near RectFillStepJumpTable+01ACh
 .10:
         mov edx, 2
         mov byte [byte esi+035h], dl
@@ -752,8 +752,8 @@ jpt_B4488:
         leave
         ret
         movzx ebx, byte [byte esi+034h]
-        jmp dword [nosplit cs:ebx*4+jpt_B466E]
-jpt_B466E:
+        jmp dword [nosplit cs:ebx*4+RectFillStepJumpTable]
+RectFillStepJumpTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h
         dd .1
         dd .2
@@ -764,7 +764,7 @@ jpt_B466E:
         dd .7
 .1:
         mov edx, 1
-        jmp near jpt_B4488+014Ah
+        jmp near RectFillClipRightJumpTable+014Ah
 .2:
         mov ecx, dword [byte esi+04h]
         mov eax, dword [cliprect_x1]
@@ -774,7 +774,7 @@ jpt_B466E:
         add dword [byte esi+0Ch], ecx
         sub dword [byte esi+018h], ecx
         add dword [byte esi+028h], ecx
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
 .3:
         mov ecx, dword [cliprect_x1]
         dec ecx
@@ -784,7 +784,7 @@ jpt_B466E:
         add dword [byte esi+02Ch], eax
         sub dword [byte esi+018h], eax
         sub dword [byte esi+014h], eax
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
 .4:
         mov eax, dword [esi]
         mov edx, dword [byte esi+04h]
@@ -802,7 +802,7 @@ jpt_B466E:
         mul dword [byte esi+030h]
         sub dword [esi], eax
         sbb dword [byte esi+04h], edx
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
 .5:
         mov edx, dword [cliprect_x1]
         dec edx
@@ -824,7 +824,7 @@ jpt_B466E:
         dec eax
         add eax, dword [byte esi+0Ch]
         mov dword [byte esi+014h], eax
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
 .6:
         mov eax, dword [byte esi+04h]
         mov ecx, dword [cliprect_x1]
@@ -845,7 +845,7 @@ jpt_B466E:
         adc edx, byte 0
         LD sub, edx, ecx
         add dword [byte esi+028h], edx
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
 .7:
         mov eax, dword [cliprect_x1]
         LD mov, ecx, eax
@@ -863,10 +863,10 @@ jpt_B466E:
         LD sub, eax, edx
         mov dword [byte esi+014h], edx
         add dword [byte esi+02Ch], eax
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
         test dword [byte ebp-04h], 8
-        je short jpt_B466E+0153h
-        jmp near jpt_B42B2+0D2h
+        je short RectFillStepJumpTable+0153h
+        jmp near RectFillClipLeftJumpTable+0D2h
         LD xor, edx, edx
         mov eax, dword [byte esi+04h]
         cmp eax, dword [cliprect_x0]
@@ -892,7 +892,7 @@ jpt_B466E:
         test dh, dl
         je short .12
         LD and, dl, dh
-        jmp near jpt_B4488+014Ah
+        jmp near RectFillClipRightJumpTable+014Ah
 .12:
         LD or, dl, dh
         je short .13
@@ -901,9 +901,9 @@ jpt_B466E:
         jmp near SetupRectFill+0164h
         test dword [byte ebp-04h], 1
         je short .13
-        jmp near jpt_B4488+01DAh
+        jmp near RectFillClipRightJumpTable+01DAh
 .13:
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
         mov byte [byte esi+034h], 1
         LD cmp, ecx, edx
         jne short .14
@@ -935,7 +935,7 @@ jpt_B466E:
         LD sub, edx, ecx
         inc edx
         mov dword [byte esi+018h], edx
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
 .18:
         mov ebx, dword [cliprect_y1]
         LD cmp, eax, ebx
@@ -978,7 +978,7 @@ jpt_B466E:
         sub dword [byte esi+018h], eax
         mov dword [byte esi+010h], ebx
 .23:
-        jmp near jpt_B4253+040h
+        jmp near SetupRectFillJumpTable+040h
         mov ecx, dword [byte esi+014h]
         sar ecx, 1
         mov eax, dword [byte esi+0Ch]
@@ -1158,7 +1158,7 @@ TableCos:
         ret
 .3:
         neg eax
-        mov eax, dword [nosplit eax*4+dword_D7178]
+        mov eax, dword [nosplit eax*4+CosTableTail]
         neg eax
         ret
         db 00h,00h

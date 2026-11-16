@@ -57,8 +57,8 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
         if (rostersel[i + 0x1C]) nb++;
     }
     for (i = 0; i < 3; i++) {
-        if (byte_EAF99[i]) ga++;
-        if (byte_EAFB5[i]) gb++;
+        if (rosterselgoalies[i]) ga++;
+        if (roster2selgoalies[i]) gb++;
     }
     if (nb != s.na || ga != gb) {
         *(Msg24 *)s.msg = *(Msg24 *)str_TheNumberOfSelected;
@@ -79,7 +79,7 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
             a++;
         }
         if (rostersel[i + 0x1C]) {
-            s.slotb[b] = byte_EAC86[i * 27];
+            s.slotb[b] = roster2slot[i * 27];
             s.idxb[b] = i;
             b++;
         }
@@ -89,28 +89,28 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
         int ia;
 
         p = KeyDbPtr(((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]]);
-        q = KeyDbPtr(((int *)(dword_EAF7C + 0x4C))[s.slotb[i]]);
+        q = KeyDbPtr(((int *)(roster2teamrec + 0x4C))[s.slotb[i]]);
         *p ^= *q;
         *q ^= *p;
         *p ^= *q;
-        ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]] ^= ((int *)(dword_EAF7C + 0x4C))[s.slotb[i]];
-        ((int *)(dword_EAF7C + 0x4C))[s.slotb[i]] ^= ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]];
-        ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]] ^= ((int *)(dword_EAF7C + 0x4C))[s.slotb[i]];
+        ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]] ^= ((int *)(roster2teamrec + 0x4C))[s.slotb[i]];
+        ((int *)(roster2teamrec + 0x4C))[s.slotb[i]] ^= ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]];
+        ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]] ^= ((int *)(roster2teamrec + 0x4C))[s.slotb[i]];
         ia = s.idxa[i];
         offa = ia * 27;
         offb = s.idxb[i] * 27;
-        rosterslot[offa] ^= byte_EAC86[offb];
-        byte_EAC86[offb] ^= rosterslot[offa];
-        rosterslot[offa] ^= byte_EAC86[offb];
+        rosterslot[offa] ^= roster2slot[offb];
+        roster2slot[offb] ^= rosterslot[offa];
+        rosterslot[offa] ^= roster2slot[offb];
         s.tmp = *(RosterEnt *)(rosterlist + offa);
-        *(RosterEnt *)(rosterlist + offa) = *(RosterEnt *)(unk_EAC84 + offb);
-        *(RosterEnt *)(unk_EAC84 + offb) = s.tmp;
+        *(RosterEnt *)(rosterlist + offa) = *(RosterEnt *)(roster2list + offb);
+        *(RosterEnt *)(roster2list + offb) = s.tmp;
         FixJerseyNumber(0, ia);
         FixJerseyNumber(1, s.idxb[i]);
         p = (unsigned char *)rosterteamrec[0] + 0xBC;
         for (j = 0; j < 0x30; j++)
             if (p[j] == s.slota[i]) p[j] = 0x64;
-        p = (unsigned char *)dword_EAF7C + 0xBC;
+        p = (unsigned char *)roster2teamrec + 0xBC;
         for (j = 0; j < 0x30; j++)
             if (p[j] == s.slotb[i]) p[j] = 0x64;
     }

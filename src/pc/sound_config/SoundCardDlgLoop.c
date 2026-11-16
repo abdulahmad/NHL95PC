@@ -187,10 +187,10 @@ int SetSoundDevice(int dev)
     if (SoundDevActive) {
         if (sounddev == 2 || sounddev == 0x20) {
             ShutdownSpeech();
-            FreeMemBlock(dword_ED7A8);
-            dword_ED7A8 = 0;
+            FreeMemBlock(SpeechMemBlock);
+            SpeechMemBlock = 0;
         } else if (sounddev == 4) {
-            FreeSample(dword_ED7A4);
+            FreeSample(SfxTestSample);
         }
         SndShutdown();
     }
@@ -250,7 +250,7 @@ int SetSoundDevice(int dev)
             LoadMusicBank(s.drv, s.port);
             if (dev == 4) {
                 MakePath(s.path, fileoncd[0x18F] == 1 ? (char *)cddriveptr : 0, (char *)str_Slapshot, 0);
-                dword_ED7A4 = LoadSample(s.path);
+                SfxTestSample = LoadSample(s.path);
             }
             if (dev == 8 && !PcSpkSampleReady) {
                 MessageBox(-1, -1, (char *)msg_InitMT32, 2, 0, 0, (int)&s.x, (int)&s.y, 0);
@@ -314,8 +314,8 @@ int SetSoundDevice(int dev)
         }
     } while (!SoundDevActive);
     if (sounddev == 2 || sounddev == 0x20) {
-        dword_ED7A8 = AllocMemBlock((char *)str_Emmcopybuf, 0x400, 0x20);
-        InitSpeech(musicslot, dword_C4CFC, dword_ED7A8, 0x400);
+        SpeechMemBlock = AllocMemBlock((char *)str_Emmcopybuf, 0x400, 0x20);
+        InitSpeech(musicslot, SpeechSlotMemSize, SpeechMemBlock, 0x400);
     }
     cursndbank = 0;
     return 1;

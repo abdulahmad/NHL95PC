@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_C4B6C progbits alloc noexec write align=1
-global CharClassTable, byte_C4C70, ScanBitMasks, DblMaxLow, DblMaxHigh, DblMinusMaxLow, DblMinusMaxHigh, HugeValLo
-global HugeValHi, dword_C4CFC, joypresent, inputticks, joysampling, joyqhead, joyqcount
+global CharClassTable, CLibBitMasks, ScanBitMasks, DblMaxLow, DblMaxHigh, DblMinusMaxLow, DblMinusMaxHigh, HugeValLo
+global HugeValHi, SpeechSlotMemSize, joypresent, inputticks, joysampling, joyqhead, joyqcount
 global F64_Scale10Max, F64_Scale10Min, Pow10Table, Scale10Count
 CharClassTable:
         db 00h,01h,01h,01h,01h,01h,01h,01h,01h,01h,03h,03h,03h,03h,03h,01h
@@ -23,7 +23,7 @@ CharClassTable:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h
-byte_C4C70:
+CLibBitMasks:
         db 01h,02h,04h,08h,010h,020h,040h,080h
 ScanBitMasks:
         db 01h,02h,04h,08h,010h,020h,040h,080h
@@ -52,7 +52,7 @@ Pow10Table:
         db 08h,00h,00h,00h,00h,00h,084h,0D7h,097h,041h,04h,00h,00h,00h,00h,00h
         db 00h,088h,0C3h,040h,01h,00h,00h,00h,00h,00h,00h,00h,024h,040h,00h,00h
         db 00h,00h
-dword_C4CFC:
+SpeechSlotMemSize:
         db 00h,00h,00h,00h
 joypresent:
         db 00h,00h,00h,00h

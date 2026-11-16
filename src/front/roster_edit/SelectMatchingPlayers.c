@@ -15,7 +15,7 @@ void SelectMatchingPlayers(char *first, char *last, int side)
         int i;
         for (i = 0; i < 0x1C; i++) rostersel[side * 28 + i] = 0;
         for (i = 0; i < 0x1C; i++) {
-            k = KeyDbPtr(*(int *)((char *)dword_EA994 + side * 756 + i * 27));
+            k = KeyDbPtr(*(int *)((char *)rosterlistkeys + side * 756 + i * 27));
             strcpy(f, (char *)k + 3);
             strcpy(l, (char *)k + 0x13);
             strlwr(f);

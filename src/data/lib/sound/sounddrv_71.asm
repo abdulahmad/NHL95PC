@@ -4,17 +4,17 @@ bits 32
 section s_D8ACC progbits alloc noexec write align=1
 extern __InitFiles_, __chk8087_, __delay_init_, __full_io_exit_, __setEFGfmt_, __setenvp_, j___sys_fini_387_emulator, j___sys_init_387_emulator
 extern SaveSS, GusMidiInit, GusSizeDram, GusInitDma, GusResetTimers, GusResetVoiceAlloc
-global GusDmaReady, byte_D8B0E, byte_D8B10, InitRtnsEntry, FiniRtnsEntry, GusInitTable, word_D8ACC
-word_D8ACC:
+global GusDmaReady, GusTimerCtrl, GusVoiceAllocCtrl, InitRtnsEntry, FiniRtnsEntry, GusInitTable, GusVoiceRateTable
+GusVoiceRateTable:
         db 0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh
         db 0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,018h
 GusDmaReady:
         db 00h,00h,00h,00h,044h,0ACh,0C8h,0A0h,0BBh,096h,0DDh,08Dh,0FCh,085h,0EEh,07Eh
         db 096h,078h,0D8h,072h,09Fh,06Dh,0DBh,068h,07Dh,064h,078h,060h,0C2h,05Ch,052h,059h
         db 022h,056h,029h,053h,064h,050h,0CCh,04Dh,05Dh,04Bh
-byte_D8B0E:
+GusTimerCtrl:
         db 00h,00h
-byte_D8B10:
+GusVoiceAllocCtrl:
         db 00h,00h,00h,00h
 InitRtnsEntry:
         db 00h,020h

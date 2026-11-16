@@ -4,7 +4,7 @@ bits 32
 section s_7C852 progbits alloc exec nowrite align=1
 extern __CHK, AllocMemBlock, c1playernum, c2playernum, cddriveptr, ClearInputQueue, cont1team, cont2team
 extern ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, ctlboxrect1
-extern ctlboxrect2, ctldlgalt, ctldlgrects, DrawArt, DrawArtMasked, dword_ED364, fileoncd, FillRect
+extern ctlboxrect2, ctldlgalt, ctldlgrects, DrawArt, DrawArtMasked, ControlsDlgFlags, fileoncd, FillRect
 extern FindShape, FreeMemBlock, gameclock, gamemode, GetInputEvent, gmode, goaliemenuflags, goaliemenuflags_e02
 extern GrabBlock, gsp, hmscore, hmtmap, hmtmflags, hmtmline, hmtmstruct, HomeTeam
 extern lcblink, lcboxon, LoadBank, MakePath, MouseRead, pad1dev, pointerspr, PrintString
@@ -1244,7 +1244,7 @@ DrawControlsOpts:
         shr eax, 1Fh
         shl eax, 5
         or edx, eax
-        mov dword [dword_ED364], edx
+        mov dword [ControlsDlgFlags], edx
         test esi, esi
         sete al
         and eax, 0FFh
@@ -1258,7 +1258,7 @@ DrawControlsOpts:
         not eax
         mov edi, edx
         and edi, eax
-        mov dword [dword_ED364], edi
+        mov dword [ControlsDlgFlags], edi
 .5:
         mov eax, esi
         shl eax, 2
@@ -1282,7 +1282,7 @@ DrawControlsOpts:
         mov dword [setbits], eax
         mov eax, dword [nosplit esi*4+ctl1dev]
         shl eax, 2
-        test dword [dword_ED364], eax
+        test dword [ControlsDlgFlags], eax
         je short .8
         or dword [setbits], eax
 .8:
@@ -1315,7 +1315,7 @@ DrawControlsOpts:
 .13:
         call TextSetColors
         add esp, byte 8
-        test byte [dword_ED364], 4
+        test byte [ControlsDlgFlags], 4
         jne short .14
         mov eax, dword [ctldlgrects+24h]
         add eax, byte 14h
@@ -1327,7 +1327,7 @@ DrawControlsOpts:
         call PrintString
         add esp, byte 0Ch
 .14:
-        test byte [dword_ED364], 8
+        test byte [ControlsDlgFlags], 8
         jne short .15
         mov eax, dword [ctldlgrects+34h]
         add eax, byte 14h
@@ -1339,7 +1339,7 @@ DrawControlsOpts:
         call PrintString
         add esp, byte 0Ch
 .15:
-        test byte [dword_ED364], 10h
+        test byte [ControlsDlgFlags], 10h
         jne short .16
         mov eax, dword [ctldlgrects+44h]
         add eax, byte 14h
@@ -1351,7 +1351,7 @@ DrawControlsOpts:
         call PrintString
         add esp, byte 0Ch
 .16:
-        test byte [dword_ED364], 20h
+        test byte [ControlsDlgFlags], 20h
         jne near ControlsDlg_ret
         mov eax, dword [ctldlgrects+54h]
         add eax, byte 14h
@@ -1605,7 +1605,7 @@ ControlsDlgLoop:
         mov edi, dword [setbits]
         test eax, edi
         jne near ControlsDlgLoop.6
-        test dword [dword_ED364], eax
+        test dword [ControlsDlgFlags], eax
         je near ControlsDlgLoop.6
         cmp eax, byte 10h
         jb short .9

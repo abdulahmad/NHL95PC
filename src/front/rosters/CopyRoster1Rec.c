@@ -8,6 +8,6 @@ typedef struct { int d[0xBA]; } RosterRec;      /* 2E8h bytes: one team database
 void CopyRoster1Rec(void)
 {
     rostereditmode = 2;
-    *(RosterRec *)unk_EAFB8 = *(RosterRec *)rosterteamrec[0];
+    *(RosterRec *)rosterteamcopy = *(RosterRec *)rosterteamrec[0];
     DrawEditRosters();
 }

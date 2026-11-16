@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_A9C9C progbits alloc exec nowrite align=1
-extern __GETDS, unk_A9C80, unk_A9C81, unk_A9C83, unk_A9C85, unk_A9C86, unk_A9C88, unk_A9C89
-extern unk_A9C8A, unk_A9C8E, unk_A9C8F, unk_A9C90, unk_A9C91, unk_A9C92, unk_A9C96, unk_A9C98
+extern __GETDS, SbCardDmaPage, SbCardDmaAddr, SbCardDmaLength, SbCardDmaActive, SbCardPort, SbCardIrq, SbCardDma
+extern SbCardRate, SbCardHighSpeed, SbCardPicMask, SbCardPicMask2, SbCardIrqHooked, SbCardOldIsr, SbCardOldIsrSel, SbDmaPagePorts
 global SbHookIrq, SbUnhookIrq, SbIrqHandler, SbDspWrite, SbDspRead, SbCardClose, SbDspReset, SbDspVersion
 global SbCardOpen, SbStopDma, SbDmaCount, SbSetStereo
 SbHookIrq:
         pushf
         cli
         push es
-        mov byte [unk_A9C91], al
+        mov byte [SbCardIrqHooked], al
         add al, 8
         cmp al, 0Fh
         jbe short .1
@@ -18,13 +18,13 @@ SbHookIrq:
 .1:
         mov ah, 35h
         int 21h
-        o16 mov word [unk_A9C96], es
-        mov dword [unk_A9C92], ebx
+        o16 mov word [SbCardOldIsrSel], es
+        mov dword [SbCardOldIsr], ebx
         pop es
         push ds
         mov ax, cs
         mov ds, ax
-        mov al, byte [unk_A9C91]
+        mov al, byte [SbCardIrqHooked]
         add al, 8
         cmp al, 0Fh
         jbe short .2
@@ -44,7 +44,7 @@ SbHookIrq:
 .5:
         jmp short .6
 .6:
-        mov cl, byte [unk_A9C91]
+        mov cl, byte [SbCardIrqHooked]
         mov ah, 1
         cmp cl, 8
         jb short .11
@@ -81,7 +81,7 @@ SbHookIrq:
         popf
         ret
 SbUnhookIrq:
-        mov al, byte [unk_A9C91]
+        mov al, byte [SbCardIrqHooked]
         LD or, al, al
         je short .2
         pushf
@@ -92,13 +92,13 @@ SbUnhookIrq:
         add al, 60h
 .1:
         push ds
-        mov edx, dword [unk_A9C92]
-        o16 mov ds, word [unk_A9C96]
+        mov edx, dword [SbCardOldIsr]
+        o16 mov ds, word [SbCardOldIsrSel]
         mov ah, 25h
         int 21h
         pop ds
         LD xor, al, al
-        mov byte [unk_A9C91], al
+        mov byte [SbCardIrqHooked], al
         popf
 .2:
         ret
@@ -107,17 +107,17 @@ SbIrqHandler:
         pusha
         push ds
         call __GETDS
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Eh
         in al, dx
         jmp short .1
 .1:
         jmp short .2
 .2:
-        cmp byte [unk_A9C8E], 1
+        cmp byte [SbCardHighSpeed], 1
         je short .20
         mov ah, 14h
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Ch
         mov ecx, 3E8h
 .3:
@@ -139,7 +139,7 @@ SbIrqHandler:
         clc
 .8:
         mov ah, 0FFh
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Ch
         mov ecx, 3E8h
 .9:
@@ -160,7 +160,7 @@ SbIrqHandler:
 .13:
         clc
 .14:
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Ch
         mov ecx, 3E8h
 .15:
@@ -197,7 +197,7 @@ SbIrqHandler:
         popf
         iret
 SbDspWrite:
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Ch
         mov ecx, 3E8h
 .1:
@@ -220,7 +220,7 @@ SbDspWrite:
 .6:
         ret
 SbDspRead:
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Eh
         mov ecx, 3E8h
 .1:
@@ -244,13 +244,13 @@ SbDspRead:
         ret
 SbCardClose:
         call SbStopDma
-        mov al, byte [unk_A9C8F]
+        mov al, byte [SbCardPicMask]
         out 21h, al
         jmp short .1
 .1:
         jmp short .2
 .2:
-        mov al, byte [unk_A9C90]
+        mov al, byte [SbCardPicMask2]
         out 0A1h, al
         jmp short .3
 .3:
@@ -259,14 +259,14 @@ SbCardClose:
         call SbDspReset
         ret
 SbDspReset:
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Eh
         in al, dx
         jmp short .1
 .1:
         jmp short .2
 .2:
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 6
         mov al, 1
         out dx, al
@@ -361,7 +361,7 @@ SbDspReset:
         mov ecx, 3E8h
 .25:
         push ecx
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Eh
         mov ecx, 3E8h
 .26:
@@ -423,18 +423,18 @@ SbDspVersion:
         cmp eax, 400h
         jb short .5
         mov eax, 5622h
-        mov dword [unk_A9C8A], eax
-        mov byte [unk_A9C8E], 0
+        mov dword [SbCardRate], eax
+        mov byte [SbCardHighSpeed], 0
         jmp short .7
 .5:
         mov eax, 5622h
-        mov dword [unk_A9C8A], eax
-        mov byte [unk_A9C8E], 1
+        mov dword [SbCardRate], eax
+        mov byte [SbCardHighSpeed], 1
         jmp short .7
 .6:
         mov eax, 2B11h
-        mov dword [unk_A9C8A], eax
-        mov byte [unk_A9C8E], 0
+        mov dword [SbCardRate], eax
+        mov byte [SbCardHighSpeed], 0
 .7:
         pop ebx
         pop eax
@@ -443,24 +443,24 @@ SbCardOpen:
         push ebp
         LD mov, ebp, esp
         in al, 21h
-        mov byte [unk_A9C8F], al
+        mov byte [SbCardPicMask], al
         in al, 0A1h
-        mov byte [unk_A9C90], al
+        mov byte [SbCardPicMask2], al
         LD xor, al, al
-        mov byte [unk_A9C91], al
+        mov byte [SbCardIrqHooked], al
         mov eax, dword [byte ebp+08h]
-        mov word [unk_A9C86], ax
+        mov word [SbCardPort], ax
         mov eax, dword [byte ebp+0Ch]
-        mov byte [unk_A9C88], al
+        mov byte [SbCardIrq], al
         mov eax, dword [byte ebp+010h]
-        mov byte [unk_A9C89], al
+        mov byte [SbCardDma], al
         call SbDspReset
         jae short .1
         leave
         ret
 .1:
         call SbDspVersion
-        mov ebx, dword [unk_A9C8A]
+        mov ebx, dword [SbCardRate]
         LD or, ebx, ebx
         je short .2
         LD xor, edx, edx
@@ -489,29 +489,29 @@ SbCardOpen:
         ret
 .4:
         mov eax, dword [byte ebp+018h]
-        mov word [unk_A9C83], ax
+        mov word [SbCardDmaLength], ax
         mov eax, dword [byte ebp+014h]
-        mov word [unk_A9C81], ax
+        mov word [SbCardDmaAddr], ax
         shr eax, 10h
-        mov byte [unk_A9C80], al
-        mov al, byte [unk_A9C85]
+        mov byte [SbCardDmaPage], al
+        mov al, byte [SbCardDmaActive]
         LD or, al, al
         jne near .35
         mov al, 1
-        mov byte [unk_A9C85], al
-        mov al, byte [unk_A9C88]
+        mov byte [SbCardDmaActive], al
+        mov al, byte [SbCardIrq]
         mov edx, SbIrqHandler
         call SbHookIrq
         cli
         LD xor, edx, edx
-        mov al, byte [unk_A9C89]
+        mov al, byte [SbCardDma]
         or al, 4
         out 0Ah, al
         jmp short .5
 .5:
         jmp short .6
 .6:
-        mov al, byte [unk_A9C89]
+        mov al, byte [SbCardDma]
         or al, 58h
         out 0Bh, al
         jmp short .7
@@ -523,9 +523,9 @@ SbCardOpen:
 .9:
         jmp short .10
 .10:
-        mov dl, byte [unk_A9C89]
+        mov dl, byte [SbCardDma]
         shl dl, 1
-        mov ax, word [unk_A9C81]
+        mov ax, word [SbCardDmaAddr]
         out dx, al
         jmp short .11
 .11:
@@ -538,18 +538,18 @@ SbCardOpen:
         jmp short .14
 .14:
         LD xor, ebx, ebx
-        mov bl, byte [unk_A9C89]
-        mov dl, byte [dword ebx+unk_A9C98]
-        mov al, byte [unk_A9C80]
+        mov bl, byte [SbCardDma]
+        mov dl, byte [dword ebx+SbDmaPagePorts]
+        mov al, byte [SbCardDmaPage]
         out dx, al
         jmp short .15
 .15:
         jmp short .16
 .16:
-        mov dl, byte [unk_A9C89]
+        mov dl, byte [SbCardDma]
         shl dl, 1
         inc dl
-        mov ax, word [unk_A9C83]
+        mov ax, word [SbCardDmaLength]
         dec ax
         out 0Ch, al
         jmp short .17
@@ -567,13 +567,13 @@ SbCardOpen:
 .21:
         jmp short .22
 .22:
-        mov al, byte [unk_A9C89]
+        mov al, byte [SbCardDma]
         out 0Ah, al
         jmp short .23
 .23:
         jmp short .24
 .24:
-        cmp byte [unk_A9C8E], 1
+        cmp byte [SbCardHighSpeed], 1
         je short .29
         mov ah, 14h
         call SbDspWrite
@@ -637,18 +637,18 @@ SbCardOpen:
         leave
         ret
 SbStopDma:
-        cmp byte [unk_A9C85], 0
+        cmp byte [SbCardDmaActive], 0
         clc
         je short .6
         cli
-        mov al, byte [unk_A9C89]
+        mov al, byte [SbCardDma]
         or al, 4
         out 0Ah, al
         jmp short .1
 .1:
         jmp short .2
 .2:
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 0Eh
         in al, dx
         jmp short .3
@@ -656,12 +656,12 @@ SbStopDma:
         jmp short .4
 .4:
         LD xor, al, al
-        mov byte [unk_A9C85], al
-        mov al, byte [unk_A9C91]
+        mov byte [SbCardDmaActive], al
+        mov al, byte [SbCardIrqHooked]
         LD or, al, al
         je short .6
         call SbUnhookIrq
-        mov cl, byte [unk_A9C88]
+        mov cl, byte [SbCardIrq]
         cmp cl, 0FFh
         je short .6
         mov ah, 1
@@ -683,7 +683,7 @@ SbStopDma:
         ret
 SbDmaCount:
         LD xor, eax, eax
-        movzx edx, byte [unk_A9C89]
+        movzx edx, byte [SbCardDma]
         shl edx, 1
         inc edx
         in al, dx
@@ -699,14 +699,14 @@ SbDmaCount:
 .4:
         db 086h,0C4h                            ; insn: xchg al,ah
         LD mov, ebx, eax
-        movzx eax, word [unk_A9C83]
+        movzx eax, word [SbCardDmaLength]
         dec eax
         LD sub, eax, ebx
         ret
 SbSetStereo:
         push ebp
         LD mov, ebp, esp
-        movzx edx, word [unk_A9C86]
+        movzx edx, word [SbCardPort]
         add edx, byte 4
         mov al, 0Eh
         out dx, al

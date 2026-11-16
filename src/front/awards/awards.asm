@@ -5,7 +5,7 @@ bits 32
 section s_1205D progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awardart, awardnames, awardtitles, awardtype
 extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, TextCharH
-extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
+extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, dword_C66D0, dword_C66D4, ovlartfiles
@@ -171,7 +171,7 @@ PickAwardWinners:
         cmp edx, dword [dword esp+03E8h]
         jne short .9
         mov al, byte [byte esp+029h]
-        cmp al, byte [byte_D9299]
+        cmp al, byte [presidentsteam+029h]
         jbe short .9
 .8:
         mov ecx, 0BAh

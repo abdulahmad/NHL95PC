@@ -42,10 +42,10 @@ void LoadGameRoster(int team)
         if (n < 0 || n != 0x34) FatalError((char *)str_ErrA5);
         gmroster[s.i * 22] = s.rec[2];
         gmrosterjersey[s.i * 22] = s.rec[1];
-        byte_ED0F7[s.i * 22] = s.rec[3];
-        byte_ED0F8[s.i * 22] = '.';
-        byte_ED0F9[s.i * 22] = ' ';
-        for (k = 0; k < 16; k++) byte_ED0FA[k + s.i * 22] = s.rec[0x13 + k];
+        gmrosterpos[s.i * 22] = s.rec[3];
+        gmrosterdot[s.i * 22] = '.';
+        gmrosterspace[s.i * 22] = ' ';
+        for (k = 0; k < 16; k++) gmrostername[k + s.i * 22] = s.rec[0x13 + k];
     } while (++s.i < 0x19);
     s.i = 0;
     do {
@@ -59,10 +59,10 @@ void LoadGameRoster(int team)
         if (n < 0 || n != 0x34) FatalError((char *)str_ErrA8);
         gmroster[(s.i + 0x19) * 22] = s.rec[2];
         gmrosterjersey[(s.i + 0x19) * 22] = s.rec[1];
-        byte_ED0F7[(s.i + 0x19) * 22] = s.rec[3];
-        byte_ED0F8[(s.i + 0x19) * 22] = '.';
-        byte_ED0F9[(s.i + 0x19) * 22] = ' ';
-        for (k = 0; k < 16; k++) byte_ED0FA[k + (s.i + 0x19) * 22] = s.rec[0x13 + k];
+        gmrosterpos[(s.i + 0x19) * 22] = s.rec[3];
+        gmrosterdot[(s.i + 0x19) * 22] = '.';
+        gmrosterspace[(s.i + 0x19) * 22] = ' ';
+        for (k = 0; k < 16; k++) gmrostername[k + (s.i + 0x19) * 22] = s.rec[0x13 + k];
     } while (++s.i < 3);
     j___close(fh);
 }

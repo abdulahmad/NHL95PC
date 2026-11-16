@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_9FFCA progbits alloc exec nowrite align=1
 extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI
-extern cliprect_x0, cliprect_x1, ScreenWidth, ScreenHeight, MidiTickCount, dword_D53A0, dword_D53A4, dword_D53A8
-extern dword_D53AC, dword_D53B0, GusDriverStreaming, dword_D5424, dword_D543C
+extern cliprect_x0, cliprect_x1, ScreenWidth, ScreenHeight, MidiTickCount, GusEnvRead, GusCardFound, GusDriverIsOpen
+extern GusDigiOpen, GusMusicOpen, GusDriverStreaming, GusPatchFallbacks, GusPatchChannelMask
 extern fputchar
 extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, GetPatchEntry, PrintString
 extern GusReadPatchHeader, GusLoadPatch, GusOpen, GusClose, GusSetMasterVolume, GusMidiNoteOn, GusMidiNoteOff, GusSetChannelPatch
 extern GusDramAlloc, GusDramFreeTotal, GusServiceStream, GusStartStream, GusStopStream, GusStreamStart, GusStreamIdle, GusStreamPlayNote
 extern GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetRate, GusStreamSetSample, GusStreamApplyBend, GusStreamBusy, GusStreamGetVolume
-extern GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController, SetClipWindow, SetBitmapClip, unk_D5382, unk_D5408
-extern unk_F21FC, GusPatchState, GusDriverBasePort
+extern GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController, SetClipWindow, SetBitmapClip, GusVoiceDefaults, GusPatchNameMap
+extern MidiOutQueue, GusPatchState, GusDriverBasePort
 global GusAllocDosBuffer, GusFreeDosBuffer, GusLoadMidiPatch, GusStartup, GusDriverClose, GusProbe, GusDetect, GusInitDigi
 global GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack, GusPlayDigi, GusProgramChange
 global GusPitchBend, GusStopVoice, GusStartVoice, GusVoiceStartSample, GusVoiceSetVolume, GusSetVoiceOwner, GusVoiceController, GusMusicMidi
@@ -91,7 +91,7 @@ GusFreeDosBuffer:
         lea edx, [byte ebp-028h]
         mov eax, 31h
         call int386x_
-        mov dword [dword_D53A4], 0
+        mov dword [GusCardFound], 0
         mov esp, ebp
         pop ebp
         pop edi
@@ -134,11 +134,11 @@ GusLoadMidiPatch:
         mov cl, byte [GusPatchState+01EC8h]
         mov eax, 1
         shl eax, cl
-        test dword [dword_D543C], eax
+        test dword [GusPatchChannelMask], eax
         jne short .5
         or byte [byte ebp-018h], 1
 .5:
-        mov dword [byte ebp-014h], unk_D5408
+        mov dword [byte ebp-014h], GusPatchNameMap
         mov dword [byte ebp-010h], 0
 .6:
         mov eax, dword [byte ebp-014h]
@@ -200,17 +200,17 @@ GusLoadMidiPatch:
 .10:
         mov eax, dword [byte ebp-04h]
         shl eax, 2
-        cmp dword [dword eax+dword_D5424], byte 0FFFFFFFFh
+        cmp dword [dword eax+GusPatchFallbacks], byte 0FFFFFFFFh
         je short .12
         mov eax, dword [byte ebp-04h]
         inc dword [byte ebp-04h]
         shl eax, 2
-        mov eax, dword [dword eax+dword_D5424]
+        mov eax, dword [dword eax+GusPatchFallbacks]
         mov dword [byte ebp-08h], eax
         mov eax, dword [byte ebp-04h]
         inc dword [byte ebp-04h]
         shl eax, 2
-        mov eax, dword [dword eax+dword_D5424]
+        mov eax, dword [dword eax+GusPatchFallbacks]
         mov dword [byte ebp-0Ch], eax
         imul eax, dword [byte ebp-08h], byte 1Ch
         cmp word [dword eax+GusPatchState], byte 0
@@ -245,7 +245,7 @@ GusStartup:
         push ebp
         mov ebp, esp
         sub esp, 10h
-        cmp dword [dword_D53A8], byte 0
+        cmp dword [GusDriverIsOpen], byte 0
         jne near .13
         push byte 0
         call GusProbe
@@ -275,7 +275,7 @@ GusStartup:
         jne near .13
         mov eax, 7Fh
         call GusSetMasterVolume
-        mov dword [dword_D53A8], 1
+        mov dword [GusDriverIsOpen], 1
         mov dword [GusPatchState+01EC8h], 0
         call GusDramFreeTotal
         mov dword [byte ebp-08h], eax
@@ -328,7 +328,7 @@ GusStartup:
         mov eax, dword [byte ebp-0Ch]
         mov word [dword edx+GusPatchState+01C0Ah], ax
         imul edx, dword [byte ebp-0Ch], byte 22h
-        mov dword [dword edx+GusPatchState+01C16h], unk_D5382
+        mov dword [dword edx+GusPatchState+01C16h], GusVoiceDefaults
         jmp short .7
 .9:
         mov dword [byte ebp-0Ch], 0
@@ -343,7 +343,7 @@ GusStartup:
         imul esi, dword [byte ebp-0Ch], byte 1Eh
         mov ecx, 7
         lea edi, [dword esi+GusPatchState+01C90h]
-        mov esi, unk_D5382
+        mov esi, GusVoiceDefaults
         rep movsd
         movsw
         jmp short .11
@@ -367,27 +367,27 @@ GusDriverClose:
         push ebp
         mov ebp, esp
         sub esp, 0
-        cmp dword [dword_D53A8], byte 0
+        cmp dword [GusDriverIsOpen], byte 0
         je short .1
         cmp dword [GusDriverStreaming], byte 0
         je short .2
 .1:
         jmp short .3
 .2:
-        cmp dword [dword_D53B0], byte 0
+        cmp dword [GusMusicOpen], byte 0
         je short .4
 .3:
         jmp short .5
 .4:
-        cmp dword [dword_D53AC], byte 0
+        cmp dword [GusDigiOpen], byte 0
         je short .6
 .5:
         jmp short .7
 .6:
         call GusClose
         call GusFreeDosBuffer
-        mov dword [dword_D53A4], 0
-        mov dword [dword_D53A8], 0
+        mov dword [GusCardFound], 0
+        mov dword [GusDriverIsOpen], 0
         call GusStopStream
 .7:
         pop ebp
@@ -407,9 +407,9 @@ GusProbe:
         push ebp
         mov ebp, esp
         sub esp, 4
-        cmp dword [dword_D53A4], byte 0
+        cmp dword [GusCardFound], byte 0
         jne short .4
-        cmp dword [dword_D53A0], byte 0
+        cmp dword [GusEnvRead], byte 0
         jne short .2
         mov eax, GusPatchState+01C00h
         call GusGetEnvConfig
@@ -418,7 +418,7 @@ GusProbe:
         mov dword [byte ebp-04h], 0
         jmp short .5
 .1:
-        mov dword [dword_D53A0], 1
+        mov dword [GusEnvRead], 1
 .2:
         xor eax, eax
         mov ax, word [GusDriverBasePort]
@@ -428,7 +428,7 @@ GusProbe:
         mov dword [byte ebp-04h], 0
         jmp short .5
 .3:
-        mov dword [dword_D53A4], 1
+        mov dword [GusCardFound], 1
 .4:
         mov dword [byte ebp-04h], 1
 .5:
@@ -456,7 +456,7 @@ GusDetect:
         mov dword [byte ebp-04h], 0
         jmp short .2
 .1:
-        mov dword [dword_D53A0], 1
+        mov dword [GusEnvRead], 1
         xor eax, eax
         mov al, byte [GusPatchState+01C04h]
         shl eax, 10h
@@ -503,10 +503,10 @@ GusInitMusic:
         push ebp
         mov ebp, esp
         sub esp, 0
-        cmp dword [dword_D53B0], byte 0
+        cmp dword [GusMusicOpen], byte 0
         jne short .1
         call GusStartup
-        mov dword [dword_D53B0], 1
+        mov dword [GusMusicOpen], 1
 .1:
         pop ebp
         pop edi
@@ -543,9 +543,9 @@ GusCloseMusic:
         push ebp
         mov ebp, esp
         sub esp, 0
-        cmp dword [dword_D53B0], byte 0
+        cmp dword [GusMusicOpen], byte 0
         je short .1
-        mov dword [dword_D53B0], 0
+        mov dword [GusMusicOpen], 0
         call GusDriverClose
 .1:
         pop ebp
@@ -656,7 +656,7 @@ GusQuery:
         push ebp
         mov ebp, esp
         sub esp, 0Ch
-        cmp dword [dword_D53A8], byte 0
+        cmp dword [GusDriverIsOpen], byte 0
         je near .10
         mov eax, dword [byte ebp+014h]
         mov dword [byte ebp-0Ch], eax
@@ -759,7 +759,7 @@ GusPlayDigi:
         push ebp
         mov ebp, esp
         sub esp, 0
-        cmp dword [dword_D53A8], byte 0
+        cmp dword [GusDriverIsOpen], byte 0
         je short .1
         push dword [byte ebp+034h]
         push dword [byte ebp+030h]
@@ -1234,14 +1234,14 @@ GusMusicMidi:
         mov byte [byte ebp-08h], 1
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
-        mov eax, unk_F21FC
+        mov eax, MidiOutQueue
         mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx
         add dword [MidiTickCount], byte 4
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
-        cmp dword [dword_D53A8], byte 0
+        cmp dword [GusDriverIsOpen], byte 0
         je near .20
         mov eax, dword [byte ebp+018h]
         mov dword [byte ebp-018h], eax
@@ -1434,14 +1434,14 @@ GusDigiMidi:
         mov byte [byte ebp-08h], 1
         mov byte [byte ebp-04h], 0
         mov dword [byte ebp-014h], 0
-        mov eax, unk_F21FC
+        mov eax, MidiOutQueue
         mov edx, dword [MidiTickCount]
         add edx, eax
         mov dword [byte ebp-020h], edx
         add dword [MidiTickCount], byte 4
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
-        cmp dword [dword_D53A8], byte 0
+        cmp dword [GusDriverIsOpen], byte 0
         je near .18
         mov eax, dword [byte ebp+018h]
         mov dword [byte ebp-018h], eax

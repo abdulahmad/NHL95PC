@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_C4AB4 progbits alloc noexec write align=1
 global str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD, str_COMMAND, str_FloatingPointSupportNot, str_NotEnoughMemoryTo
-global str_RATIONALDOS4G, str_GF1PATCH110, str_110, str_Inf, str_Nan, F64_neg1_floor_, unk_C4AB4
+global str_RATIONALDOS4G, str_GF1PATCH110, str_110, str_Inf, str_Nan, F64_neg1_floor_, str_DotBackslash
 global str_ULTRASND
-unk_C4AB4:
+str_DotBackslash:
         db 02Eh,05Ch,00h
 str_Bat:
         db 02Eh,062h,061h,074h,00h

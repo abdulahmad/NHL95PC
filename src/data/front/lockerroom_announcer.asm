@@ -18,7 +18,7 @@ global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Sc
 global str_ThegameBar, str_VIV, str_AGameYouRequire3, TeamJerseyBase, fadeend, fadeend2, jerseyremap
 global jerseyremaptrim, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, crowddriver
 global SpeechInitMode, dbdlgrects
-global dword_D1229, dword_D122B, lineslotx
+global lineslotx
 global linesloty, LineEdPairX, LineEdPairY, LineEdFiveX, LineEdFiveY, LineEdFourX, LineEdFourY, LineEdExtraX
 global LineEdExtraY, LineEdGoalieX, LineEdGoalieY, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
@@ -90,9 +90,7 @@ TeamJerseyBase:
         db 0B0h,00h,00h,00h,0ACh,00h,00h,00h,0ADh,00h,00h,00h,0AEh,00h,00h,00h
         db 0AAh,00h,00h,00h,0B0h,00h,00h,00h,0ADh,00h,00h,00h,0ADh,00h,00h,00h
         db 0AAh,00h,00h,00h,0AAh,00h,00h,00h,0BCh,00h,00h,00h,09Ch
-dword_D1229:
         db 00h,00h
-dword_D122B:
         db 00h
 fadestart:
         db 01h

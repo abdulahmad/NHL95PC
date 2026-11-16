@@ -5,7 +5,7 @@ bits 32
 section s_767D0 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_PlusMinus7, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
 extern boxlitecolor, boxshadecolor, TeamJerseyBase, jerseyremaptrim, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3
-extern gamelinespal, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA, CareerDbPtr, CareerDbPtr2, cddriveptr
+extern gamelinespal, gmrosterpos, gmrosterdot, gmrosterspace, gmrostername, CareerDbPtr, CareerDbPtr2, cddriveptr
 extern ClearInputQueue, cont2team, crestnames, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2
 extern dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel
 extern LineEdPairX, LineEdPairY, LineEdFiveX, LineEdFiveY, LineEdFourX, LineEdFourY, LineEdExtraX, LineEdExtraY
@@ -2283,9 +2283,9 @@ LoadGameRoster:
         mov al, byte [byte esp+01h]
         mov byte [dword edx+gmrosterjersey], al
         mov al, byte [byte esp+03h]
-        mov byte [dword edx+byte_ED0F7], al
-        mov byte [dword edx+byte_ED0F8], 2Eh
-        mov byte [dword edx+byte_ED0F9], 20h
+        mov byte [dword edx+gmrosterpos], al
+        mov byte [dword edx+gmrosterdot], 2Eh
+        mov byte [dword edx+gmrosterspace], 20h
         xor eax, eax
 .10:
         mov ebx, dword [dword esp+080h]
@@ -2295,7 +2295,7 @@ LoadGameRoster:
         shl edx, 2
         sub edx, ebx
         mov bl, byte [byte esp+eax+013h]
-        mov byte [dword eax+edx*2+byte_ED0FA], bl
+        mov byte [dword eax+edx*2+gmrostername], bl
         inc eax
         cmp eax, byte 10h
         jl short LoadGameRoster.10
@@ -2383,9 +2383,9 @@ LoadGameRoster:
         mov al, byte [byte esp+01h]
         mov byte [dword edx+gmrosterjersey], al
         mov al, byte [byte esp+03h]
-        mov byte [dword edx+byte_ED0F7], al
-        mov byte [dword edx+byte_ED0F8], 2Eh
-        mov byte [dword edx+byte_ED0F9], 20h
+        mov byte [dword edx+gmrosterpos], al
+        mov byte [dword edx+gmrosterdot], 2Eh
+        mov byte [dword edx+gmrosterspace], 20h
         xor eax, eax
 .18:
         mov ebx, dword [dword esp+080h]
@@ -2396,7 +2396,7 @@ LoadGameRoster:
         shl edx, 2
         sub edx, ebx
         mov bl, byte [byte esp+eax+013h]
-        mov byte [dword eax+edx*2+byte_ED0FA], bl
+        mov byte [dword eax+edx*2+gmrostername], bl
         inc eax
         cmp eax, byte 10h
         jl short LoadGameRoster.18

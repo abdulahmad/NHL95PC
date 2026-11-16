@@ -10,9 +10,9 @@ extern MixVolumeTable
 global StrToLong, strtol_, strtoul_, DigitValue, SbStreamCheck, SbMixRateDiv, SbMixerOpen, SbMixerClose
 global SbStreamStopAll, SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetBend, SbStreamSetRate, SbStreamSetSample
 global SbStreamStart, SbStreamIdle, SbStreamGetVolume, SbStreamApplyBend, SbMixAdd8Vol, SbMixAdd8, SbMixChannels, SbDmaHalfReady
-global SbDmaStart, SbDmaStop, SbMixPause, SbConvertMix, unk_A9C80, unk_A9C81, unk_A9C83, unk_A9C85
-global unk_A9C86, unk_A9C88, unk_A9C89, unk_A9C8A, unk_A9C8E, unk_A9C8F, unk_A9C90, unk_A9C91
-global unk_A9C92, unk_A9C96, unk_A9C98
+global SbDmaStart, SbDmaStop, SbMixPause, SbConvertMix, SbCardDmaPage, SbCardDmaAddr, SbCardDmaLength, SbCardDmaActive
+global SbCardPort, SbCardIrq, SbCardDma, SbCardRate, SbCardHighSpeed, SbCardPicMask, SbCardPicMask2, SbCardIrqHooked
+global SbCardOldIsr, SbCardOldIsrSel, SbDmaPagePorts
 StrToLong:
         push esi
         push edi
@@ -221,7 +221,7 @@ SbStreamCheck:
 SbMixRateDiv:
         push edx
         push ecx
-        mov eax, dword [unk_A9C8A]
+        mov eax, dword [SbCardRate]
         LD xor, edx, edx
         mov ecx, 100h
         div ecx
@@ -408,7 +408,7 @@ SbStreamSetRate:
         call SbStreamCheck
         jb short .4
         mov esi, dword [nosplit esi*4+SbStreamTable]
-        mov ecx, dword [unk_A9C8A]
+        mov ecx, dword [SbCardRate]
         LD xor, edx, edx
         mov eax, dword [byte ebp+0Ch]
         div ecx
@@ -4314,33 +4314,33 @@ SbConvertMix:
         pop esi
         ret
         db 00h
-unk_A9C80:
+SbCardDmaPage:
         db 00h
-unk_A9C81:
+SbCardDmaAddr:
         db 00h,00h
-unk_A9C83:
+SbCardDmaLength:
         db 00h,00h
-unk_A9C85:
+SbCardDmaActive:
         db 00h
-unk_A9C86:
+SbCardPort:
         db 020h,02h
-unk_A9C88:
+SbCardIrq:
         db 05h
-unk_A9C89:
+SbCardDma:
         db 01h
-unk_A9C8A:
+SbCardRate:
         db 00h,00h,00h,00h
-unk_A9C8E:
+SbCardHighSpeed:
         db 00h
-unk_A9C8F:
+SbCardPicMask:
         db 00h
-unk_A9C90:
+SbCardPicMask2:
         db 00h
-unk_A9C91:
+SbCardIrqHooked:
         db 00h
-unk_A9C92:
+SbCardOldIsr:
         db 00h,00h,00h,00h
-unk_A9C96:
+SbCardOldIsrSel:
         db 00h,00h
-unk_A9C98:
+SbDmaPagePorts:
         db 087h,083h,081h,082h

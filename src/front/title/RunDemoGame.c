@@ -520,7 +520,7 @@ void RunIntro(void)
     }
     if (musicon) {
         cursndbank = 0x20;
-        InitSpeechSlots(dword_C4CFC);
+        InitSpeechSlots(SpeechSlotMemSize);
         cursndbank = 0;
     }
     PaOpenBank();

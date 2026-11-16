@@ -6,9 +6,9 @@ extern __CHK, __STOSD, acptspr, str_04x, sndcardmissing, crowddriver, homeremap,
 extern homeremap_e07, homeremap_e10, homeremap_e11, homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e49, homeremap_e50
 extern homeremap_e51, homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont2team, ctl1side, ctl1team, ctl2side, ctl2team, DrawSelBoxOff
-extern DrawSelBoxOn, dword_C4CFC, cursndbank, lockerindex, lockerteams, poroundnameidx, lockeracceptx, lockeraccepty
+extern DrawSelBoxOn, SpeechSlotMemSize, cursndbank, lockerindex, lockerteams, poroundnameidx, lockeracceptx, lockeraccepty
 extern lockercancelx, lockercancely, PcSpkSampleReady, SoundDevActive, musicdriver, digidriver, sndtempbuf, speechchannel
-extern dword_ED7A4, dword_ED7A8, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
+extern SfxTestSample, SpeechMemBlock, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
 extern fopen_, fprintf_, fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr
 extern homenamebckspr, HomeTeam, InitSpeech, kaufmfont, lockerrects, mainfont, MakePath, MessageBox
 extern modesetlabel, MouseSetPos, msg_InitMT32, musichandle, musicon, musicslot, na01spr, na03spr
@@ -819,17 +819,17 @@ SetSoundDevice:
         jne short .2
 .1:
         call ShutdownSpeech
-        mov edx, dword [dword_ED7A8]
+        mov edx, dword [SpeechMemBlock]
         push edx
         call FreeMemBlock
         add esp, byte 4
         xor ebx, ebx
-        mov dword [dword_ED7A8], ebx
+        mov dword [SpeechMemBlock], ebx
         jmp short .3
 .2:
         cmp ecx, byte 4
         jne short .3
-        mov eax, dword [dword_ED7A4]
+        mov eax, dword [SfxTestSample]
         call FreeSample
 .3:
         call SndShutdown
@@ -969,7 +969,7 @@ SetSoundDevice:
         call MakePath
         mov eax, esp
         call LoadSample
-        mov dword [dword_ED7A4], eax
+        mov dword [SfxTestSample], eax
 .18:
         cmp esi, byte 8
         jne near .21
@@ -1152,8 +1152,8 @@ SetSoundDevice:
         push str_Emmcopybuf
         call AllocMemBlock
         add esp, byte 0Ch
-        mov dword [dword_ED7A8], eax
-        mov edx, dword [dword_C4CFC]
+        mov dword [SpeechMemBlock], eax
+        mov edx, dword [SpeechSlotMemSize]
         movzx esi, byte [musicslot]
         mov ecx, 400h
         mov ebx, eax

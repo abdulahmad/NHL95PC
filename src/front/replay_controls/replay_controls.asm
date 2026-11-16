@@ -5,8 +5,8 @@ bits 32
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, AllocMemBlock, bgscrollx, bgscrolly, camx, camy, cddriveptr, ClearInputQueue
 extern crowdlevel, CrowdNoiseOff, crowdsmooth, ctl1team, ctl2team, cursndbank, DrawArt, DrawFrameSprite
-extern DrawRinkSideObjects, DrawShape, dressedskaters, dword_C66D0, dword_C66D4, dword_ED6D0, dword_ED6E8, dword_ED6EC
-extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, FadePalette, fileoncd, FindShape, FreeMemBlock
+extern DrawRinkSideObjects, DrawShape, dressedskaters, dword_C66D0, dword_C66D4, GadgetMovie, ReplaySpeedAccum, ReplayHoverPrev
+extern ReplayCamFree, ReplayHoverPlayer, ReplayStartRate, ReplayCtlFlags, FadePalette, fileoncd, FindShape, FreeMemBlock
 extern FreeSample, gadgetfile, gadgetptrx, gadgetptry, gadgetrect_x1, gadgetrect_y0, gadgetrect_y1, gadgetrects
 extern gadgetshape, gamemode, gamepal, GetInputEvent, GrabBlock, HilightSaveToDlg, hilightslot, HomeTeam
 extern lastsfx, LoadSample, mainfont, MakePath, MessageBox, MouseSetPos, msg_NoHilightSpace, musicon
@@ -408,7 +408,7 @@ GadgetStub0:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; GadgetSoundStub                                7E03F  95 PC, low confidence
-; MviGetFrame(dword_ED6D0) (EA sound library, one stack argument).
+; MviGetFrame(GadgetMovie) (EA sound library, one stack argument).
 ;-----------------------------------------------------------------------------
 ; C: src/front/replay_controls/GadgetSoundStub.c
 %ifdef CBUILD
@@ -420,7 +420,7 @@ GadgetSoundStub:
         push ebx
         push ecx
         push edx
-        mov edx, dword [dword_ED6D0]
+        mov edx, dword [GadgetMovie]
         push edx
         call MviGetFrame
         add esp, byte 4
@@ -531,8 +531,8 @@ InstantReplay:
         xor esi, esi
         mov dword [replaynosave], esi
 .3:
-        mov dword [dword_ED754], 44h
-        mov dword [dword_ED750], 8
+        mov dword [ReplayCtlFlags], 44h
+        mov dword [ReplayStartRate], 8
         mov dword [gadgetptrx], 100h
         mov dword [gadgetptry], 0BCh
         push dword 0C1h
@@ -618,11 +618,11 @@ InstantReplay:
         mov word [byte esp+018h], ax
         mov si, word [crowdlevel]
         xor ecx, ecx
-        mov dword [dword_ED70C], ecx
+        mov dword [ReplayCamFree], ecx
         mov word [replayfollowpl], 0FFFFh
         mov ebp, 0FFFFFFFFh
-        mov dword [dword_ED74C], ebp
-        mov dword [dword_ED6EC], ebp
+        mov dword [ReplayHoverPlayer], ebp
+        mov dword [ReplayHoverPrev], ebp
         xor edx, edx
         mov dword [replaybtnarmed], ecx
         xor ebx, ebx
@@ -741,7 +741,7 @@ InstantReplay:
         sar edx, 1Fh
         idiv ecx
         mov word [replayfrac], dx
-        mov eax, dword [dword_ED754]
+        mov eax, dword [ReplayCtlFlags]
         and eax, byte 3Fh
         cmp eax, byte 10h
         sete al
@@ -753,7 +753,7 @@ InstantReplay:
         cwde
         mov dword [byte esp+014h], eax
         call SelectRinkBM
-        cmp dword [dword_ED70C], byte 0
+        cmp dword [ReplayCamFree], byte 0
         je near .17
         mov ax, word [replayspotx]
         mov word [camx], ax
@@ -878,10 +878,10 @@ InstantReplay:
         call DrawRinkSideObjects
         cmp dword [gadgetptry], 0A8h
         jge near .28
-        mov edx, dword [dword_ED74C]
+        mov edx, dword [ReplayHoverPlayer]
         cmp edx, byte 0FFFFFFFFh
         jne short .26
-        mov dword [dword_ED6EC], edx
+        mov dword [ReplayHoverPrev], edx
         mov eax, dword [camx-2]
         sar eax, 10h
         add eax, dword [gadgetptrx]
@@ -915,8 +915,8 @@ InstantReplay:
         xor ecx, ecx
         mov eax, 188h
         call DrawFrameSprite
-        mov eax, dword [dword_ED6EC]
-        mov ebx, dword [dword_ED74C]
+        mov eax, dword [ReplayHoverPrev]
+        mov ebx, dword [ReplayHoverPlayer]
         cmp eax, ebx
         je short .28
         mov eax, ebx
@@ -944,8 +944,8 @@ InstantReplay:
         push edx
         call MouseSetPos
         add esp, byte 8
-        mov eax, dword [dword_ED74C]
-        mov dword [dword_ED6EC], eax
+        mov eax, dword [ReplayHoverPlayer]
+        mov dword [ReplayHoverPrev], eax
 .28:
         mov eax, dword [bgscrolly-2]
         sar eax, 10h
@@ -1133,7 +1133,7 @@ ReplayControlLoop:
         sub esp, byte 10h
         mov esi, eax
         xor edi, edi
-        mov eax, dword [dword_ED754]
+        mov eax, dword [ReplayCtlFlags]
         mov dword [byte esp+04h], eax
         mov eax, dword [gadgetptrx]
         mov dword [byte esp+08h], eax
@@ -1206,9 +1206,9 @@ ReplayControlLoop:
         add eax, byte 54h
         mov dword [replayptry], eax
 .10:
-        mov eax, dword [dword_ED754]
+        mov eax, dword [ReplayCtlFlags]
         and eax, byte 54h
-        mov edx, dword [dword_ED754]
+        mov edx, dword [ReplayCtlFlags]
         and edx, byte 40h
         mov ebx, dword [esp]
         cmp ebx, byte 10h
@@ -1243,43 +1243,43 @@ ReplayControlLoop:
         jmp near .32
 .14:
         or dl, 4
-        mov dword [dword_ED754], edx
+        mov dword [ReplayCtlFlags], edx
         jmp near .46
 .15:
-        mov eax, dword [dword_ED754]
+        mov eax, dword [ReplayCtlFlags]
         and eax, byte 3Fh
         cmp eax, byte 10h
         je short .16
         xor ebx, ebx
         mov word [replayfrac], bx
 .16:
-        mov eax, dword [dword_ED754]
+        mov eax, dword [ReplayCtlFlags]
         and eax, byte 40h
         or al, 10h
-        mov dword [dword_ED754], eax
+        mov dword [ReplayCtlFlags], eax
 .17:
         mov edi, dword [esi]
         jmp near .47
 .18:
         or al, 1
-        mov dword [dword_ED754], eax
+        mov dword [ReplayCtlFlags], eax
         mov edi, dword [esi]
         shl edi, 2
         neg edi
         jmp near .47
 .19:
         or al, 20h
-        mov dword [dword_ED754], eax
+        mov dword [ReplayCtlFlags], eax
         mov edi, dword [esi]
         shl edi, 2
         jmp near .47
 .20:
-        test byte [dword_ED754], 2
+        test byte [ReplayCtlFlags], 2
         je short .22
         mov eax, dword [esi]
-        mov edx, dword [dword_ED6E8]
+        mov edx, dword [ReplaySpeedAccum]
         add edx, eax
-        mov dword [dword_ED6E8], edx
+        mov dword [ReplaySpeedAccum], edx
         cmp edx, byte 5
         jge short .21
         xor edi, edi
@@ -1287,27 +1287,27 @@ ReplayControlLoop:
 .21:
         mov edi, 0FFFFFFFFh
         lea ecx, [byte edx-05h]
-        mov dword [dword_ED6E8], ecx
+        mov dword [ReplaySpeedAccum], ecx
         jmp short .23
 .22:
         xor edi, edi
-        mov dword [dword_ED6E8], edi
+        mov dword [ReplaySpeedAccum], edi
         mov edi, 0FFFFFFFFh
         mov word [replayfrac], 0FFF2h
 .23:
-        mov eax, dword [dword_ED754]
+        mov eax, dword [ReplayCtlFlags]
         and eax, byte 40h
         or al, 6
 .24:
-        mov dword [dword_ED754], eax
+        mov dword [ReplayCtlFlags], eax
         jmp near .47
 .25:
-        test byte [dword_ED754], 8
+        test byte [ReplayCtlFlags], 8
         je short .27
         mov eax, dword [esi]
-        mov edx, dword [dword_ED6E8]
+        mov edx, dword [ReplaySpeedAccum]
         add edx, eax
-        mov dword [dword_ED6E8], edx
+        mov dword [ReplaySpeedAccum], edx
         cmp edx, byte 5
         jge short .26
         xor edi, edi
@@ -1315,30 +1315,30 @@ ReplayControlLoop:
 .26:
         mov edi, 1
         lea ecx, [byte edx-05h]
-        mov dword [dword_ED6E8], ecx
+        mov dword [ReplaySpeedAccum], ecx
         jmp short .28
 .27:
         xor edi, edi
-        mov dword [dword_ED6E8], edi
+        mov dword [ReplaySpeedAccum], edi
         mov edi, 1
         mov word [replayfrac], 0Eh
 .28:
-        mov eax, dword [dword_ED754]
+        mov eax, dword [ReplayCtlFlags]
         and eax, byte 40h
         or al, 0Ch
         jmp short ReplayControlLoop.24
 .29:
-        or byte [dword_ED754], 40h
+        or byte [ReplayCtlFlags], 40h
         xor edi, edi
-        mov dword [dword_ED70C], edi
+        mov dword [ReplayCamFree], edi
         mov eax, 0FFFFFFFFh
-        mov dword [dword_ED74C], eax
-        mov dword [dword_ED6EC], eax
+        mov dword [ReplayHoverPlayer], eax
+        mov dword [ReplayHoverPrev], eax
         mov word [replayfollowpl], 0FFFFh
         jmp near .47
 .30:
         or dl, 84h
-        mov dword [dword_ED754], edx
+        mov dword [ReplayCtlFlags], edx
         jmp near .47
 .31:
         xor eax, eax
@@ -1349,13 +1349,13 @@ ReplayControlLoop:
         mov edx, dword [replayptry]
         mov eax, dword [replayptrx]
         call PickNearestPlayer
-        mov dword [dword_ED74C], eax
+        mov dword [ReplayHoverPlayer], eax
         test byte [byte esp+0Ch], 2
         je near .45
         cmp eax, byte 0FFFFFFFFh
         jne near .38
-        mov dword [dword_ED70C], 1
-        mov dword [dword_ED6EC], eax
+        mov dword [ReplayCamFree], 1
+        mov dword [ReplayHoverPrev], eax
         mov word [replayfollowpl], 0FFFFh
         mov eax, dword [replayptrx]
         mov dword [replayspotx], eax
@@ -1406,8 +1406,8 @@ ReplayControlLoop:
         jmp near .44
 .38:
         xor edx, edx
-        mov dword [dword_ED70C], edx
-        mov dx, word [dword_ED74C]
+        mov dword [ReplayCamFree], edx
+        mov dx, word [ReplayHoverPlayer]
         mov word [replayfollowpl], dx
         mov edx, dword [nosplit eax*2+dressedskaters]
         sar edx, 10h
@@ -1434,7 +1434,7 @@ ReplayControlLoop:
         jge short .42
         mov dword [gadgetptry], 0FFFFFF44h
 .42:
-        mov eax, dword [dword_ED74C]
+        mov eax, dword [ReplayHoverPlayer]
         mov edx, dword [nosplit eax*2+dressedskaters]
         sar edx, 10h
         sub edx, dword [gadgetptrx]
@@ -1456,13 +1456,13 @@ ReplayControlLoop:
         push edx
         call MouseSetPos
         add esp, byte 8
-        mov eax, dword [dword_ED74C]
-        mov dword [dword_ED6EC], eax
+        mov eax, dword [ReplayHoverPlayer]
+        mov dword [ReplayHoverPrev], eax
 .44:
-        and dword [dword_ED754], byte 14h
+        and dword [ReplayCtlFlags], byte 14h
 .45:
-        and dword [dword_ED754], byte 54h
-        test byte [dword_ED754], 10h
+        and dword [ReplayCtlFlags], byte 54h
+        test byte [ReplayCtlFlags], 10h
         jne near ReplayControlLoop.17
 .46:
         xor edi, edi
@@ -1473,11 +1473,11 @@ ReplayControlLoop:
         cmp ebp, dword [gadgetptry]
         jne short .48
         mov eax, dword [byte esp+04h]
-        cmp eax, dword [dword_ED754]
+        cmp eax, dword [ReplayCtlFlags]
         je near .61
 .48:
         mov eax, dword [byte esp+04h]
-        cmp eax, dword [dword_ED754]
+        cmp eax, dword [ReplayCtlFlags]
         jne near .57
         mov edx, dword [pointerspr]
         mov eax, dword [byte edx+02h]
@@ -1540,7 +1540,7 @@ ReplayControlLoop:
         call VgaBlitKeyedFlipV
         add esp, byte 0Ch
         mov eax, dword [byte esp+04h]
-        cmp eax, dword [dword_ED754]
+        cmp eax, dword [ReplayCtlFlags]
         jne short .58
         push byte 20h
         push byte 0
@@ -1555,7 +1555,7 @@ ReplayControlLoop:
         mov cl, byte [esp]
         mov eax, 1
         shl eax, cl
-        test dword [dword_ED754], eax
+        test dword [ReplayCtlFlags], eax
         je short .60
         mov eax, dword [esp]
         call DrawGadgetButton
@@ -1577,7 +1577,7 @@ ReplayControlLoop:
         call DrawArt
         add esp, byte 0Ch
 .61:
-        test byte [dword_ED754], 80h
+        test byte [ReplayCtlFlags], 80h
         je short .62
         xor ebp, ebp
         mov dword [replaybtnarmed], ebp
@@ -1586,7 +1586,7 @@ ReplayControlLoop:
         xor eax, eax
         call ReplaySaveHilight
         call ClearInputQueue
-        mov dword [dword_ED754], 4
+        mov dword [ReplayCtlFlags], 4
         call SelectScreenBM
         push byte 20h
         push ebp

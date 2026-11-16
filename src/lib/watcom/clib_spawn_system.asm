@@ -5,7 +5,7 @@ section s_A1CA2 progbits alloc exec nowrite align=1
 extern __ccmdline_, __cenvarg_, __CHK, __dospawn, __set_doserrno_, __set_errno_, __Slash_C_, _makepath_
 extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD
 extern str_COMMAND, _osmajor, getenv_, EmuInitHook, EmuFiniHook, spawnl_, stricmp_, strlen_
-extern ErrnoPtr, CMainHook, unk_C4AB4, _dos_findfirst_
+extern ErrnoPtr, CMainHook, str_DotBackslash, _dos_findfirst_
 global SpawnPathExists, SpawnCommand, spawnve_
 SpawnPathExists:
         push ebx
@@ -161,7 +161,7 @@ spawnve_:
         mov eax, dword [byte ebp+04Ah]
         cmp byte [eax], 0
         jne short .11
-        mov dword [byte ebp+04Ah], unk_C4AB4
+        mov dword [byte ebp+04Ah], str_DotBackslash
 .11:
         push dword [byte ebp+042h]
         mov eax, dword [byte ebp+07Ah]

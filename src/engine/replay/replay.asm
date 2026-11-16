@@ -13,7 +13,7 @@ extern ovlmemneed, DrawClipLeft, DrawClipRight, ovlstepart, ovlstepart_e21, ovls
 extern RinkSideShapeFlipped, ovlartbank, regd3_m2, regd0_m3, regd1_m3, SpeechPatchNext, lineslotmark
 extern linesortidx, dressedskaters, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
 extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
-extern rpl_objstep_m3, rpl_ysort, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
+extern rpl_objstep_m3, rpl_ysort, ReplayHoverPlayer, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
 extern joysampling, joysampling_save, lastsfx, MakePath, ovlartnames, ovlscripts, goaliemenuflags, goaliemenuflags_e02
 extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
@@ -1321,7 +1321,7 @@ DrawRinkSideObjects:
         cmp si, ax
         je short .57
         movsx eax, si
-        cmp eax, dword [dword_ED74C]
+        cmp eax, dword [ReplayHoverPlayer]
         je short .57
         cmp si, word [replayfollowpl]
         jne short .58
