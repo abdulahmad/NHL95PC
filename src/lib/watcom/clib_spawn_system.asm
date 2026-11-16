@@ -6,9 +6,7 @@ extern __ccmdline_, __cenvarg_, __CHK, __dospawn, __set_doserrno_, __set_errno_,
 extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD
 extern str_COMMAND, _osmajor, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
 extern ErrnoPtr, CMainHook, unk_C4AB4, _dos_findfirst_
-global SpawnPathExists, SpawnCommand, spawnve_, loc_A1D26, loc_A1D30, loc_A1D87, loc_A1D89, loc_A1D9A
-global loc_A1D9D, loc_A1DF6, loc_A1DF8, loc_A1E1F, loc_A1E22, loc_A1E42, loc_A1E92, loc_A1EB2
-global loc_A1ED4, loc_A1EFD, loc_A1F60, loc_A1FA4, loc_A1FA9, loc_A1FC0, loc_A1FC3, loc_A1FE7
+global SpawnPathExists, SpawnCommand, spawnve_
 SpawnPathExists:
         push ebx
         push edx
@@ -60,13 +58,13 @@ spawnve_:
         mov edx, ecx
         mov byte [byte ebp+07Eh], 0
         cmp eax, byte 2
-        jb short loc_A1D30
+        jb short .2
         mov eax, 9
         call __set_errno_
-loc_A1D26:
+.1:
         mov eax, 0FFFFFFFFh
-        jmp near loc_A1FE7
-loc_A1D30:
+        jmp near .21
+.2:
         push byte 0
         lea eax, [byte ebp+052h]
         push eax
@@ -78,7 +76,7 @@ loc_A1D30:
         call __cenvarg_
         mov dword [byte ebp+076h], eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_A1FE7
+        je near .21
         mov eax, esi
         call strlen_
         lea edx, [dword eax+09Ah]
@@ -87,28 +85,28 @@ loc_A1D30:
         mov ebx, eax
         mov dword [byte ebp+066h], eax
         test eax, eax
-        jne short loc_A1D9A
+        jne short .5
         lea ebx, [byte edx+03h]
         and bl, 0FCh
         call CMainHook
         cmp ebx, eax
-        jae short loc_A1D87
+        jae short .3
         mov eax, ebx
         sub esp, eax
         mov eax, esp
-        jmp short loc_A1D89
-loc_A1D87:
+        jmp short .4
+.3:
         xor eax, eax
-loc_A1D89:
+.4:
         mov dword [byte ebp+07Ah], eax
         test eax, eax
-        jne short loc_A1D9D
+        jne short .6
         mov eax, dword [byte ebp+05Eh]
         call _nfree_
-        jmp short loc_A1D26
-loc_A1D9A:
+        jmp short .1
+.5:
         mov dword [byte ebp+07Ah], eax
-loc_A1D9D:
+.6:
         lea eax, [byte ebp+042h]
         lea ebx, [byte ebp+046h]
         lea ecx, [byte ebp+04Ah]
@@ -126,45 +124,45 @@ loc_A1D9D:
         mov edx, eax
         mov dword [byte ebp+062h], eax
         test eax, eax
-        jne short loc_A1E1F
+        jne short .9
         mov eax, dword [byte ebp+052h]
         add eax, byte 3
         and al, 0FCh
         mov edx, eax
         call CMainHook
         cmp edx, eax
-        jae short loc_A1DF6
+        jae short .7
         mov eax, dword [byte ebp+052h]
         add eax, byte 3
         and al, 0FCh
         sub esp, eax
         mov eax, esp
-        jmp short loc_A1DF8
-loc_A1DF6:
+        jmp short .8
+.7:
         xor eax, eax
-loc_A1DF8:
+.8:
         mov dword [byte ebp+072h], eax
         test eax, eax
-        jne short loc_A1E22
+        jne short .10
         mov eax, 2
         call __set_errno_
         mov eax, 0Ah
         mov dword [byte ebp+076h], 0FFFFFFFFh
         call __set_doserrno_
-        jmp near loc_A1FC3
-loc_A1E1F:
+        jmp near .20
+.9:
         mov dword [byte ebp+072h], eax
-loc_A1E22:
+.10:
         cmp byte [_osmajor], 3
-        jb short loc_A1E42
+        jb short .11
         mov eax, dword [byte ebp+046h]
         cmp byte [eax], 0
-        jne short loc_A1E42
+        jne short .11
         mov eax, dword [byte ebp+04Ah]
         cmp byte [eax], 0
-        jne short loc_A1E42
+        jne short .11
         mov dword [byte ebp+04Ah], unk_C4AB4
-loc_A1E42:
+.11:
         push dword [byte ebp+042h]
         mov eax, dword [byte ebp+07Ah]
         mov edx, dword [byte ebp+046h]
@@ -175,18 +173,18 @@ loc_A1E42:
         call __set_errno_
         mov eax, dword [byte ebp+042h]
         cmp byte [eax], 0
-        je short loc_A1EB2
+        je short .13
         mov edx, str_Bat
         call stricmp_
         test eax, eax
-        jne short loc_A1E92
+        jne short .12
         mov eax, dword [byte ebp+07Ah]
         mov dword [byte ebp+076h], 0FFFFFFFFh
         call SpawnPathExists
         test eax, eax
-        jne near loc_A1F60
-        jmp near loc_A1FC3
-loc_A1E92:
+        jne near .16
+        jmp near .20
+.12:
         mov edx, dword [byte ebp+07Ah]
         xor eax, eax
         mov ebx, dword [byte ebp+072h]
@@ -195,19 +193,19 @@ loc_A1E92:
         mov eax, dword [byte ebp-032h]
         mov ecx, dword [byte ebp+05Eh]
         call SpawnCommand
-        jmp near loc_A1FC0
-loc_A1EB2:
+        jmp near .19
+.13:
         mov eax, dword [byte ebp+07Ah]
         mov edx, dword [byte ebp+07Ah]
         call strlen_
         add edx, eax
         mov dword [byte ebp+06Ah], edx
         cmp byte [byte ebp+07Eh], 0
-        je short loc_A1ED4
+        je short .14
         mov eax, 1
         call __set_errno_
-        jmp short loc_A1EFD
-loc_A1ED4:
+        jmp short .15
+.14:
         mov ebx, dword [byte ebp+072h]
         push ds
         pop es
@@ -223,10 +221,10 @@ loc_A1ED4:
         mov ecx, dword [byte ebp+05Eh]
         call SpawnCommand
         mov dword [byte ebp+076h], eax
-loc_A1EFD:
+.15:
         call ErrnoPtr
         cmp dword [eax], byte 1
-        jne near loc_A1FC3
+        jne near .20
         mov edi, dword [byte ebp+06Ah]
         mov edx, dword [byte ebp+07Ah]
         xor eax, eax
@@ -244,7 +242,7 @@ loc_A1EFD:
         mov dword [byte ebp+076h], eax
         call ErrnoPtr
         cmp dword [eax], byte 1
-        jne near loc_A1FC3
+        jne near .20
         mov edi, dword [byte ebp+06Ah]
         xor eax, eax
         mov esi, str_Bat
@@ -254,8 +252,8 @@ loc_A1EFD:
         movsb
         call SpawnPathExists
         test eax, eax
-        je short loc_A1FC3
-loc_A1F60:
+        je short .20
+.16:
         mov eax, dword [byte ebp+05Eh]
         mov edx, dword [byte ebp+06Eh]
         mov ebx, dword [byte ebp+072h]
@@ -272,12 +270,12 @@ loc_A1F60:
         call __Slash_C_
         push eax
         cmp byte [byte ebp+07Eh], 0
-        je short loc_A1FA4
+        je short .17
         mov eax, str_CMD
-        jmp short loc_A1FA9
-loc_A1FA4:
+        jmp short .18
+.17:
         mov eax, str_COMMAND
-loc_A1FA9:
+.18:
         push eax
         mov eax, str_COMSPEC
         call getenv_
@@ -285,9 +283,9 @@ loc_A1FA9:
         push dword [byte ebp-032h]
         call spawnl_
         add esp, byte 1Ch
-loc_A1FC0:
+.19:
         mov dword [byte ebp+076h], eax
-loc_A1FC3:
+.20:
         mov eax, dword [byte ebp+062h]
         call _nfree_
         mov eax, dword [byte ebp+066h]
@@ -297,7 +295,7 @@ loc_A1FC3:
         lea eax, [byte ebp-02Eh]
         call dword [off_D6604]
         mov eax, dword [byte ebp+076h]
-loc_A1FE7:
+.21:
         lea esp, [dword ebp+082h]
         pop ebp
         pop es

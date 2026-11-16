@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_98A40 progbits alloc exec nowrite align=1
 extern DosOpenReadOnly, DosCloseFile
-global DosFileInfo, loc_98A79
+global DosFileInfo
 DosFileInfo:
         sub esp, byte 0Ch
         mov eax, esp
@@ -21,9 +21,9 @@ DosFileInfo:
         call DosCloseFile
         add esp, byte 4
         cmp dword [byte esp+08h], byte 0
-        je short loc_98A79
+        je short .1
         mov dword [byte esp+08h], 1
-loc_98A79:
+.1:
         mov eax, dword [byte esp+08h]
         add esp, byte 0Ch
         ret

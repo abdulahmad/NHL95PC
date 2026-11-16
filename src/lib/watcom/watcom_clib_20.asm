@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_93284 progbits alloc exec nowrite align=1
 extern __setbits_, byte_C4C70
-global strcspn_, loc_93296, loc_932B8, loc_932C0
+global strcspn_
 strcspn_:
         push ebx
         push ecx
@@ -12,8 +12,8 @@ strcspn_:
         mov eax, esp
         call __setbits_
         xor ecx, ecx
-        jmp short loc_932B8
-loc_93296:
+        jmp short .2
+.1:
         mov edx, eax
         shr edx, 3
         mov dl, byte [esp+edx]
@@ -22,15 +22,15 @@ loc_93296:
         mov al, byte [dword eax+byte_C4C70]
         and eax, 0FFh
         test edx, eax
-        jne short loc_932C0
+        jne short .3
         inc ecx
         inc ebx
-loc_932B8:
+.2:
         xor eax, eax
         mov al, byte [ebx]
         test eax, eax
-        jne short loc_93296
-loc_932C0:
+        jne short .1
+.3:
         mov eax, ecx
         add esp, byte 20h
         pop ecx

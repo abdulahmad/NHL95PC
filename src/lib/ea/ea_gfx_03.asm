@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90B50 progbits alloc exec nowrite align=1
 extern FindShape, FindShapeQuiet
-global FindShapeList, loc_90B64, loc_90B7B, ProjectPointList, loc_90B94, loc_90BAB
+global FindShapeList, ProjectPointList
 FindShapeList:
         push esi
         push edi
@@ -12,8 +12,8 @@ FindShapeList:
         mov esi, dword [byte esp+014h]
         mov edi, dword [byte esp+018h]
         cmp byte [esi], 0
-        je short loc_90B7B
-loc_90B64:
+        je short .2
+.1:
         push esi
         push ebp
         call FindShapeQuiet
@@ -22,8 +22,8 @@ loc_90B64:
         add edi, byte 4
         add esi, byte 4
         cmp byte [esi], 0
-        jne short loc_90B64
-loc_90B7B:
+        jne short .1
+.2:
         pop ebp
         pop edi
         pop esi
@@ -37,8 +37,8 @@ ProjectPointList:
         mov esi, dword [byte esp+014h]
         mov edi, dword [byte esp+018h]
         cmp byte [esi], 0
-        je short loc_90BAB
-loc_90B94:
+        je short .2
+.1:
         push esi
         push ebp
         call FindShape
@@ -47,8 +47,8 @@ loc_90B94:
         add edi, byte 4
         add esi, byte 4
         cmp byte [esi], 0
-        jne short loc_90B94
-loc_90BAB:
+        jne short .1
+.2:
         pop ebp
         pop edi
         pop esi

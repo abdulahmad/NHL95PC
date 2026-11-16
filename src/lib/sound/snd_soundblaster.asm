@@ -8,21 +8,10 @@ extern SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStr
 extern SbStreamGetVolume, SbStreamApplyBend, SbMixChannels, SbDmaHalfReady, SbSetStereo, unk_D522E, unk_D5254, unk_D5258
 extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
 extern word_F3718
-global ParseBlasterEnv, loc_9F25C, loc_9F293, loc_9F29D, loc_9F2AE, loc_9F2B7, loc_9F2C1
-global loc_9F2C5, loc_9F2D1, loc_9F2F0, loc_9F311, loc_9F31D, loc_9F324, loc_9F333, ParseHexValue
-global loc_9F358, loc_9F36C, SbPopArgsReturn, SbOpen, loc_9F3CA, loc_9F40B, loc_9F413
-global SbInit, loc_9F449, loc_9F47A, loc_9F49C, SbClose, loc_9F4C6
-global SbService, loc_9F4DE, loc_9F511, loc_9F523, loc_9F52A, loc_9F533, loc_9F53C
-global loc_9F565, loc_9F566, SbQuery, loc_9F5A1, loc_9F5AC, loc_9F5B9, loc_9F5C1
-global loc_9F5C8, loc_9F5D8, loc_9F5E5, loc_9F5ED, loc_9F60B, loc_9F615, SbSetTrack
-global SbPlayDigi, SbNoteOff, loc_9F6B3, loc_9F6EA, loc_9F714, loc_9F717, loc_9F71D
-global SbNoteOn, loc_9F77A, loc_9F782, loc_9F7B1, loc_9F7EA, loc_9F81B, loc_9F81E, loc_9F829
-global loc_9F839, loc_9F858, loc_9F85C, loc_9F861, loc_9F880, loc_9F899, loc_9F89D, loc_9F8A4
-global loc_9F8B3, loc_9F8BD, SbStartVoice, SbVoiceStartSample, SbVoiceSetVolume, loc_9FA48, SbController, loc_9FA9D
-global loc_9FAB4, loc_9FABF, loc_9FACA, loc_9FAD5, loc_9FAF8, loc_9FB1E, loc_9FB21, loc_9FB29
-global loc_9FB35, loc_9FB55, loc_9FB58, loc_9FB5E, loc_9FB6A, loc_9FB85, loc_9FB88, SbVoiceController
-global loc_9FBA8, SbSetVoiceOwner, SbFreeVoice, SbStopVoice, SbProgramChange, loc_9FC70, loc_9FC76, loc_9FC8C
-global SbPitchBend, SbAllocDosBuffer, SbFreeDosBuffer, SbSetMixerVolumes
+global ParseBlasterEnv, ParseHexValue, SbPopArgsReturn, SbOpen, SbInit, SbClose, SbService, SbQuery
+global SbSetTrack, SbPlayDigi, SbNoteOff, SbNoteOn, SbStartVoice, SbVoiceStartSample, SbVoiceSetVolume, SbController
+global SbVoiceController, SbSetVoiceOwner, SbFreeVoice, SbStopVoice, SbProgramChange, SbPitchBend, SbAllocDosBuffer, SbFreeDosBuffer
+global SbSetMixerVolumes
 ParseBlasterEnv:
         push ds
         call __GETDS
@@ -36,51 +25,51 @@ ParseBlasterEnv:
         call getenv_
         mov ecx, eax
         test eax, eax
-        je near loc_9F333
-loc_9F25C:
+        je near .13
+.1:
         mov ah, byte [ecx]
         test ah, ah
-        je near loc_9F333
+        je near .13
         mov al, ah
         cmp ah, 56h
-        jb short loc_9F29D
-        jbe near loc_9F2D1
+        jb short .3
+        jbe near .8
         cmp ah, 64h
-        jb short loc_9F293
-        jbe near loc_9F2F0
+        jb short .2
+        jbe near .9
         cmp ah, 69h
-        jb near loc_9F324
-        jbe short loc_9F2C5
+        jb near .12
+        jbe short .7
         cmp ah, 76h
-        je short loc_9F2D1
-        jmp near loc_9F324
-loc_9F293:
+        je short .8
+        jmp near .12
+.2:
         cmp ah, 61h
-        je short loc_9F2B7
-        jmp near loc_9F324
-loc_9F29D:
+        je short .5
+        jmp near .12
+.3:
         cmp ah, 44h
-        jb short loc_9F2AE
-        jbe short loc_9F2F0
+        jb short .4
+        jbe short .9
         cmp ah, 49h
-        je short loc_9F2C5
-        jmp near loc_9F324
-loc_9F2AE:
+        je short .7
+        jmp near .12
+.4:
         cmp ah, 41h
-        jne near loc_9F324
-loc_9F2B7:
+        jne near .12
+.5:
         inc ecx
         mov ebx, 10h
         lea edx, [byte esp+0Ch]
-loc_9F2C1:
+.6:
         mov eax, ecx
-        jmp short loc_9F31D
-loc_9F2C5:
+        jmp short .11
+.7:
         inc ecx
         mov ebx, 0Ah
         lea edx, [byte esp+08h]
-        jmp short loc_9F2C1
-loc_9F2D1:
+        jmp short .6
+.8:
         inc ecx
         mov ebx, 0Ah
         mov edx, esp
@@ -90,32 +79,32 @@ loc_9F2D1:
         mov edx, dword [esp]
         mov eax, dword [byte esp+0Ch]
         call SbSetMixerVolumes
-        jmp short loc_9F324
-loc_9F2F0:
+        jmp short .12
+.9:
         cmp byte [byte ecx+01h], 45h
-        jne short loc_9F311
+        jne short .10
         cmp byte [byte ecx+02h], 72h
-        jne short loc_9F311
+        jne short .10
         cmp byte [byte ecx+03h], 46h
-        jne short loc_9F311
+        jne short .10
         lea eax, [byte ecx+04h]
         mov ebx, 0Ah
         mov edx, unk_D5254
-        jmp short loc_9F31D
-loc_9F311:
+        jmp short .11
+.10:
         inc ecx
         mov ebx, 0Ah
         lea edx, [byte esp+04h]
         mov eax, ecx
-loc_9F31D:
+.11:
         call ParseHexValue
         add ecx, eax
-loc_9F324:
+.12:
         cmp byte [ecx], 0
-        je near loc_9F25C
+        je near .1
         inc ecx
-        jmp near loc_9F25C
-loc_9F333:
+        jmp near .1
+.13:
         mov eax, dword [byte esp+04h]
         mov dword [dword_D524C], eax
         mov eax, dword [byte esp+08h]
@@ -132,17 +121,17 @@ ParseHexValue:
         mov esi, eax
         mov edi, edx
         xor ecx, ecx
-loc_9F358:
+.1:
         lea eax, [esi+ecx]
         mov dl, byte [eax]
         test dl, dl
-        je short loc_9F36C
+        je short .2
         cmp dl, 20h
-        je short loc_9F36C
+        je short .2
         mov byte [esp+ecx], dl
         inc ecx
-        jmp short loc_9F358
-loc_9F36C:
+        jmp short .1
+.2:
         xor al, al
         mov byte [esp+ecx], al
         lea edx, [byte esp+08h]
@@ -161,7 +150,7 @@ SbOpen:
         call __GETDS
         push esi
         cmp dword [byte esp+0Ch], byte 0
-        je near loc_9F413
+        je near .3
         mov ebx, dword_D525C
         mov edx, unk_D5258
         mov eax, 40h
@@ -170,10 +159,10 @@ SbOpen:
         mov edx, eax
         and edx, 0FFFFh
         cmp edx, 0FE00h
-        jle short loc_9F3CA
+        jle short .1
         and eax, 0F0000h
         lea esi, [dword eax+010000h]
-loc_9F3CA:
+.1:
         mov ebx, 200h
         mov edx, 80h
         mov eax, esi
@@ -188,16 +177,16 @@ loc_9F3CA:
         add esp, byte 10h
         movsx eax, al
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9F40B
+        je short .2
         mov dword [dword_D5250], esi
         mov eax, 1
         pop esi
         pop ds
         ret
-loc_9F40B:
+.2:
         xor esi, esi
         mov dword [dword_D5250], esi
-loc_9F413:
+.3:
         xor eax, eax
         pop esi
         pop ds
@@ -208,14 +197,14 @@ SbInit:
         push esi
         push edi
         cmp dword [dword_D5250], byte 0
-        je short loc_9F49C
+        je short .3
         mov word [word_F3716], 0Fh
         xor ebx, ebx
         mov word [word_F3718], bx
         mov word [word_F3714], bx
         xor eax, eax
         mov ebx, unk_D522E
-loc_9F449:
+.1:
         mov cl, al
         mov edx, 1
         shl edx, cl
@@ -228,9 +217,9 @@ loc_9F449:
         mov dword [nosplit edx*2+dword_F3462], ebx
         inc eax
         cmp eax, byte 4
-        jl short loc_9F449
+        jl short .1
         xor eax, eax
-loc_9F47A:
+.2:
         mov edx, eax
         shl edx, 4
         sub edx, eax
@@ -241,8 +230,8 @@ loc_9F47A:
         movsw
         inc eax
         cmp eax, byte 10h
-        jl short loc_9F47A
-loc_9F49C:
+        jl short .2
+.3:
         pop edi
         pop esi
         pop ds
@@ -251,13 +240,13 @@ SbClose:
         push ds
         call __GETDS
         cmp dword [dword_D5250], byte 0
-        je short loc_9F4C6
+        je short .1
         call SbMixerClose
         mov eax, dword [dword_D525C]
         call SbFreeDosBuffer
         xor ebx, ebx
         mov dword [dword_D5250], ebx
-loc_9F4C6:
+.1:
         pop ds
         ret
 SbService:
@@ -268,8 +257,8 @@ SbService:
         sub esp, byte 4
         xor edi, edi
         mov dword [esp], 1
-        jmp short loc_9F533
-loc_9F4DE:
+        jmp short .5
+.1:
         mov esi, edi
         shl esi, 4
         add esi, edi
@@ -278,39 +267,39 @@ loc_9F4DE:
         movsx edx, word [esp]
         movsx eax, word [word_F3714]
         test edx, eax
-        je short loc_9F511
+        je short .2
         push edi
         call SbStreamIdle
         add esp, byte 4
         test ax, ax
-        je short loc_9F511
+        je short .2
         mov eax, esi
         call SbFreeVoice
-loc_9F511:
+.2:
         mov bx, word [byte esi+06h]
         cmp bx, byte 1
-        jge short loc_9F523
+        jge short .3
         mov word [byte esi+06h], 0
-        jmp short loc_9F52A
-loc_9F523:
+        jmp short .4
+.3:
         mov ecx, ebx
         dec ecx
         mov word [byte esi+06h], cx
-loc_9F52A:
+.4:
         mov esi, dword [esp]
         add esi, esi
         mov dword [esp], esi
         inc edi
-loc_9F533:
+.5:
         cmp edi, byte 4
-        jl short loc_9F4DE
+        jl short .1
         xor edi, edi
-        jmp short loc_9F566
-loc_9F53C:
+        jmp short .8
+.6:
         imul esi, edi, byte 16h
         add esi, dword_F34DC
         cmp word [byte esi+0Ah], byte 0
-        je short loc_9F565
+        je short .7
         mov eax, dword [esi]
         movsx esi, word [byte esi+010h]
         push esi
@@ -321,11 +310,11 @@ loc_9F53C:
         push edi
         call SbStreamApplyBend
         add esp, byte 14h
-loc_9F565:
+.7:
         inc edi
-loc_9F566:
+.8:
         cmp edi, byte 4
-        jl short loc_9F53C
+        jl short .6
         call SbMixChannels
         add esp, byte 4
         pop edi
@@ -338,50 +327,50 @@ SbQuery:
         push esi
         mov edx, dword [byte esp+0Ch]
         cmp dx, byte 9
-        jb short loc_9F5AC
-        jbe short loc_9F5C8
+        jb short .2
+        jbe short .5
         cmp dx, byte 32h
-        jb short loc_9F5A1
-        jbe short loc_9F5ED
+        jb short .1
+        jbe short .8
         cmp dx, byte 33h
-        je near loc_9F615
-        jmp near loc_9F60B
-loc_9F5A1:
+        je near .10
+        jmp near .9
+.1:
         cmp dx, byte 0Ah
-        je short loc_9F5D8
-        jmp near loc_9F60B
-loc_9F5AC:
+        je short .6
+        jmp near .9
+.2:
         cmp dx, byte 7
-        jb short loc_9F60B
-        ja short loc_9F5C1
+        jb short .9
+        ja short .4
         call SbMixRateDiv
-loc_9F5B9:
+.3:
         movsx esi, ax
         mov eax, esi
         pop esi
         pop ds
         ret
-loc_9F5C1:
+.4:
         call SbDmaHalfReady
-        jmp short loc_9F5B9
-loc_9F5C8:
+        jmp short .3
+.5:
         movsx esi, word [byte esp+0Eh]
         push esi
         call SbStreamIdle
         add esp, byte 4
-        jmp short loc_9F5B9
-loc_9F5D8:
+        jmp short .3
+.6:
         movsx eax, word [byte esp+0Eh]
         push eax
         call SbStreamGetVolume
         mov esi, eax
-loc_9F5E5:
+.7:
         add esp, byte 4
         mov eax, esi
         pop esi
         pop ds
         ret
-loc_9F5ED:
+.8:
         mov esi, dword [byte esp+0Ch]
         sar esi, 10h
         and esi, 0FFh
@@ -391,17 +380,17 @@ loc_9F5ED:
         push esi
         call SbStreamSetVolume
         add esp, byte 8
-loc_9F60B:
+.9:
         mov esi, 0FFFFFFFFh
         mov eax, esi
         pop esi
         pop ds
         ret
-loc_9F615:
+.10:
         movsx eax, word [byte esp+0Eh]
         push eax
         call SbSetStereo
-        jmp short loc_9F5E5
+        jmp short .7
 SbSetTrack:
         push ds
         call __GETDS
@@ -461,12 +450,12 @@ SbNoteOff:
         mov dword [byte esp+04h], eax
         xor edx, edx
         mov ebx, 1
-        jmp near loc_9F717
-loc_9F6B3:
+        jmp near .4
+.1:
         movsx ecx, bx
         movsx eax, word [byte esp+04h]
         test ecx, eax
-        je short loc_9F714
+        je short .3
         movsx esi, dx
         mov eax, esi
         shl eax, 4
@@ -474,33 +463,33 @@ loc_9F6B3:
         add eax, eax
         add eax, word_F3454
         cmp edi, dword [byte eax+0Eh]
-        jne short loc_9F714
+        jne short .3
         mov ecx, dword [esp]
         cmp cx, word [byte eax+08h]
-        jne short loc_9F714
+        jne short .3
         cmp byte [byte edi+014h], 0
-        je short loc_9F6EA
+        je short .2
         or word [byte edi+02h], bx
-        jmp short loc_9F71D
-loc_9F6EA:
+        jmp short .5
+.2:
         or word [word_F3714], bx
         sar word [byte eax+06h], 1
         imul eax, esi, byte 16h
         add eax, dword_F34DC
         mov word [byte eax+0Ah], 1
         cmp dx, byte 1
-        jle short loc_9F71D
+        jle short .5
         push esi
         call SbStreamRelease
         add esp, byte 4
-        jmp short loc_9F71D
-loc_9F714:
+        jmp short .5
+.3:
         add ebx, ebx
         inc edx
-loc_9F717:
+.4:
         cmp dx, byte 4
-        jl short loc_9F6B3
-loc_9F71D:
+        jl short .1
+.5:
         add esp, byte 8
         pop edi
         pop esi
@@ -524,31 +513,31 @@ SbNoteOn:
         mov ecx, unk_F3534
         add ecx, edx
         cmp si, byte 9
-        jne short loc_9F77A
+        jne short .1
         mov edx, dword [byte esp+08h]
         cmp dx, byte 24h
-        jl near loc_9F8BD
+        jl near .17
         cmp dx, byte 64h
-        jge near loc_9F8BD
+        jge near .17
         add edx, byte 5Ch
         movsx edx, dx
         call SbProgramChange
         mov dword [byte esp+010h], 3Ch
-        jmp short loc_9F782
-loc_9F77A:
+        jmp short .2
+.1:
         mov eax, dword [byte esp+08h]
         mov dword [byte esp+010h], eax
-loc_9F782:
+.2:
         cmp word [byte ecx+04h], byte 0
-        je near loc_9F8BD
+        je near .17
         cmp word [byte ecx+08h], byte 0
-        je near loc_9F8BD
+        je near .17
         mov edi, 7D00h
         mov dword [byte esp+04h], word_F3454
         xor ebx, ebx
         mov eax, 1
-        jmp near loc_9F81E
-loc_9F7B1:
+        jmp near .6
+.3:
         movsx esi, bx
         mov edx, esi
         shl edx, 4
@@ -561,64 +550,64 @@ loc_9F7B1:
         and esi, dword [esp]
         movsx ebp, word [byte ecx+04h]
         test esi, ebp
-        je short loc_9F7EA
+        je short .4
         mov si, word [byte edx+06h]
         cmp di, si
-        jle short loc_9F7EA
+        jle short .4
         mov edi, esi
         mov dword [byte esp+04h], edx
-loc_9F7EA:
+.4:
         movsx esi, word [ecx]
         mov dword [esp], esi
         movsx esi, ax
         and esi, dword [esp]
         movsx ebp, word [byte ecx+04h]
         test esi, ebp
-        je short loc_9F81B
+        je short .5
         cmp ecx, dword [byte edx+0Eh]
-        jne short loc_9F81B
+        jne short .5
         mov esi, dword [byte esp+08h]
         cmp si, word [byte edx+08h]
-        jne short loc_9F81B
+        jne short .5
         push edx
         movsx ebx, word [byte esp+010h]
         movsx edx, si
-        jmp near loc_9F8B3
-loc_9F81B:
+        jmp near .16
+.5:
         add eax, eax
         inc ebx
-loc_9F81E:
+.6:
         cmp bx, byte 4
-        jl short loc_9F7B1
+        jl short .3
         xor ebx, ebx
         mov ax, word [ecx]
-loc_9F829:
+.7:
         test ax, ax
-        je short loc_9F839
+        je short .8
         mov edx, eax
         neg edx
         and edx, eax
         xor eax, edx
         inc ebx
-        jmp short loc_9F829
-loc_9F839:
+        jmp short .7
+.8:
         cmp bx, word [byte ecx+08h]
-        jge short loc_9F880
+        jge short .12
         mov ax, word [word_F3716]
         and ax, word [byte ecx+04h]
-        je short loc_9F880
+        je short .12
         mov edx, eax
         neg edx
         and eax, edx
         mov ebx, 0FFFFFFFFh
-        jmp short loc_9F85C
-loc_9F858:
+        jmp short .10
+.9:
         sar ax, 1
         inc ebx
-loc_9F85C:
+.10:
         test ax, ax
-        jne short loc_9F858
-loc_9F861:
+        jne short .9
+.11:
         movsx eax, bx
         mov edx, eax
         shl edx, 4
@@ -628,32 +617,32 @@ loc_9F861:
         push edx
         movsx ebx, word [byte esp+010h]
         movsx edx, word [byte esp+0Ch]
-        jmp short loc_9F8B3
-loc_9F880:
+        jmp short .16
+.12:
         mov ax, word [word_F3714]
         and ax, word [byte ecx+04h]
-        je short loc_9F8A4
+        je short .15
         mov edx, eax
         neg edx
         and eax, edx
         mov ebx, 0FFFFFFFFh
-        jmp short loc_9F89D
-loc_9F899:
+        jmp short .14
+.13:
         sar ax, 1
         inc ebx
-loc_9F89D:
+.14:
         test ax, ax
-        jne short loc_9F899
-        jmp short loc_9F861
-loc_9F8A4:
+        jne short .13
+        jmp short .11
+.15:
         mov edi, dword [byte esp+04h]
         push edi
         movsx ebx, word [byte esp+010h]
         movsx edx, word [byte esp+0Ch]
-loc_9F8B3:
+.16:
         movsx eax, word [byte esp+014h]
         call SbStartVoice
-loc_9F8BD:
+.17:
         add esp, byte 14h
         pop ebp
         pop edi
@@ -786,9 +775,9 @@ SbVoiceSetVolume:
         movsx eax, bx
         add eax, esi
         cmp eax, byte 7Fh
-        jl short loc_9FA48
+        jl short .1
         mov eax, 7Fh
-loc_9FA48:
+.1:
         cwde
         push eax
         movsx eax, dx
@@ -816,49 +805,49 @@ SbController:
         add ebx, eax
         mov edx, dword [byte esp+04h]
         cmp dx, byte 0Ah
-        jb short loc_9FA9D
-        jbe short loc_9FACA
+        jb short .1
+        jbe short .4
         cmp dx, byte 40h
-        jb near loc_9FB5E
-        jbe short loc_9FAD5
+        jb near .13
+        jbe short .5
         cmp dx, byte 7Bh
-        je near loc_9FB29
-        jmp near loc_9FB5E
-loc_9FA9D:
+        je near .9
+        jmp near .13
+.1:
         cmp dx, byte 1
-        jb near loc_9FB5E
-        jbe short loc_9FAB4
+        jb near .13
+        jbe short .2
         cmp dx, byte 7
-        je short loc_9FABF
-        jmp near loc_9FB5E
-loc_9FAB4:
+        je short .3
+        jmp near .13
+.2:
         mov al, byte [esp]
         mov byte [byte ebx+015h], al
-        jmp near loc_9FB5E
-loc_9FABF:
+        jmp near .13
+.3:
         mov al, byte [esp]
         mov byte [byte ebx+012h], al
-        jmp near loc_9FB5E
-loc_9FACA:
+        jmp near .13
+.4:
         mov al, byte [esp]
         mov byte [byte ebx+013h], al
-        jmp near loc_9FB5E
-loc_9FAD5:
+        jmp near .13
+.5:
         mov al, byte [esp]
         mov byte [byte ebx+014h], al
         mov edx, dword [esp]
         test dx, dx
-        jne near loc_9FB5E
+        jne near .13
         mov di, word [byte ebx+02h]
         mov word [byte ebx+02h], dx
         xor ecx, ecx
         mov esi, 1
-        jmp short loc_9FB21
-loc_9FAF8:
+        jmp short .8
+.6:
         movsx edx, si
         movsx eax, di
         test edx, eax
-        je short loc_9FB1E
+        je short .7
         movsx edx, cx
         mov eax, edx
         shl eax, 4
@@ -866,23 +855,23 @@ loc_9FAF8:
         movsx edx, word [nosplit eax*2+word_F345C]
         movsx eax, word [byte esp+08h]
         call SbNoteOff
-loc_9FB1E:
+.7:
         add esi, esi
         inc ecx
-loc_9FB21:
+.8:
         cmp cx, byte 4
-        jl short loc_9FAF8
-        jmp short loc_9FB5E
-loc_9FB29:
+        jl short .6
+        jmp short .13
+.9:
         mov di, word [ebx]
         xor ecx, ecx
         mov esi, 1
-        jmp short loc_9FB58
-loc_9FB35:
+        jmp short .12
+.10:
         movsx edx, si
         movsx eax, di
         test edx, eax
-        je short loc_9FB55
+        je short .11
         movsx edx, cx
         mov eax, edx
         shl eax, 4
@@ -890,44 +879,44 @@ loc_9FB35:
         add eax, eax
         add eax, word_F3454
         call SbFreeVoice
-loc_9FB55:
+.11:
         add esi, esi
         inc ecx
-loc_9FB58:
+.12:
         cmp cx, byte 4
-        jl short loc_9FB35
-loc_9FB5E:
+        jl short .10
+.13:
         mov di, word [ebx]
         xor ecx, ecx
         mov esi, 1
-        jmp short loc_9FB88
-loc_9FB6A:
+        jmp short .16
+.14:
         movsx eax, si
         movsx edx, di
         test eax, edx
-        je short loc_9FB85
+        je short .15
         movsx ebx, word [esp]
         movsx edx, word [byte esp+04h]
         movsx eax, cx
         call SbVoiceController
-loc_9FB85:
+.15:
         add esi, esi
         inc ecx
-loc_9FB88:
+.16:
         cmp cx, byte 4
-        jl short loc_9FB6A
+        jl short .14
         jmp near SbPopArgsReturn
 SbVoiceController:
         push ecx
         cmp dx, byte 7
-        jne short loc_9FBA8
+        jne short .1
         movsx edx, bx
         push edx
         cwde
         push eax
         call SbStreamSetVolume
         add esp, byte 8
-loc_9FBA8:
+.1:
         pop ecx
         ret
 SbSetVoiceOwner:
@@ -997,19 +986,19 @@ SbProgramChange:
         add esp, byte 4
         mov dword [byte esi+0Eh], eax
         test eax, eax
-        je short loc_9FC8C
+        je short .3
         mov eax, dword [byte eax+010h]
         mov dword [byte esi+0Ah], eax
         cmp di, byte 9
-        je short loc_9FC70
+        je short .1
         mov eax, dword [byte esi+0Eh]
         mov al, byte [byte eax+06h]
         xor ah, ah
         mov word [byte esi+08h], ax
-        jmp short loc_9FC76
-loc_9FC70:
+        jmp short .2
+.1:
         mov word [byte esi+08h], 4
-loc_9FC76:
+.2:
         mov eax, dword [byte esi+0Eh]
         mov ax, word [byte eax+02h]
         xor ah, ah
@@ -1017,7 +1006,7 @@ loc_9FC76:
         mov word [byte esi+04h], ax
         mov eax, dword [esp]
         mov word [byte esi+06h], ax
-loc_9FC8C:
+.3:
         add esp, byte 4
         pop edi
         pop esi

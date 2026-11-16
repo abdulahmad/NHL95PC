@@ -5,11 +5,9 @@ section s_8E3DC progbits alloc exec nowrite align=1
 extern __GETDS, __STOSD, _dos_getvect_, _dos_setvect_, str_AddtimerLISTFULL, FatalError, oldint8off, oldint8sel
 extern slowtickcount, strncmp_, strncpy_, FixedMulRound, DrawShapeStretched, AddExitHandler, bcopy, tickcount
 extern timercallbacks
-global ReturnPointerArg, StrCopyN, StrCompareN, MemCopyArgs, FileNamePart, loc_8E42F, loc_8E440, loc_8E443
-global loc_8E449, FileNameOnly, TimerISR, loc_8E473, loc_8E484, loc_8E4B0, loc_8E4B8, addtimer
-global loc_8E4CB, loc_8E4D6, loc_8E4E9, RemoveTimerCallback, loc_8E507, loc_8E511, loc_8E523
-global CountTimerCallbacks, loc_8E52C, loc_8E536, MaskTimerKbdIrq, RestoreTimer, loc_8E56A, loc_8E5A5, loc_8E5A8
-global InstallTimer, UnmaskTimerKbdIrq, DrawShapeScaled, DrawShapeScaledAtOwnPos, DrawShapeScaledHotspot, DrawShapeZoomedAtOwnPos, DrawShapeZoomedHotspot, DrawShapeZoomed
+global ReturnPointerArg, StrCopyN, StrCompareN, MemCopyArgs, FileNamePart, FileNameOnly, TimerISR, addtimer
+global RemoveTimerCallback, CountTimerCallbacks, MaskTimerKbdIrq, RestoreTimer, InstallTimer, UnmaskTimerKbdIrq, DrawShapeScaled, DrawShapeScaledAtOwnPos
+global DrawShapeScaledHotspot, DrawShapeZoomedAtOwnPos, DrawShapeZoomedHotspot, DrawShapeZoomed
 ReturnPointerArg:
         mov eax, dword [byte esp+04h]
         ret
@@ -40,22 +38,22 @@ FileNamePart:
         mov eax, dword [byte esp+04h]
         mov edx, eax
         cmp byte [eax], 0
-        je short loc_8E449
-loc_8E42F:
+        je short .4
+.1:
         mov cl, byte [eax]
         cmp cl, 5Ch
-        je short loc_8E440
+        je short .2
         cmp cl, 3Ah
-        je short loc_8E440
+        je short .2
         cmp cl, 2Fh
-        jne short loc_8E443
-loc_8E440:
+        jne short .3
+.2:
         lea edx, [byte eax+01h]
-loc_8E443:
+.3:
         inc eax
         cmp byte [eax], 0
-        jne short loc_8E42F
-loc_8E449:
+        jne short .1
+.4:
         mov eax, edx
         ret
 FileNameOnly:
@@ -76,31 +74,31 @@ TimerISR:
         call __GETDS
         inc dword [tickcount]
         xor edx, edx
-loc_8E473:
+.1:
         cmp dword [dword edx+timercallbacks], byte 0
-        je short loc_8E484
+        je short .2
         mov eax, edx
         call dword [dword eax+timercallbacks]
-loc_8E484:
+.2:
         add edx, byte 4
         cmp edx, byte 20h
-        jne short loc_8E473
+        jne short .1
         mov ebx, 5
         mov eax, dword [tickcount]
         mov edx, eax
         sar edx, 1Fh
         idiv ebx
         test edx, edx
-        jne short loc_8E4B0
+        jne short .3
         inc dword [slowtickcount]
         pushf
         call far [oldint8off]
-        jmp short loc_8E4B8
-loc_8E4B0:
+        jmp short .4
+.3:
         mov al, 20h
         mov edx, 20h
         out dx, al
-loc_8E4B8:
+.4:
         pop gs
         pop fs
         pop es
@@ -110,19 +108,19 @@ loc_8E4B8:
 addtimer:
         xor eax, eax
         cmp dword [timercallbacks], byte 0
-        jne short loc_8E4D6
-loc_8E4CB:
+        jne short .2
+.1:
         mov edx, dword [byte esp+04h]
         mov dword [dword eax+timercallbacks], edx
         ret
-loc_8E4D6:
+.2:
         add eax, byte 4
         cmp eax, byte 20h
-        jge short loc_8E4E9
+        jge short .3
         cmp dword [dword eax+timercallbacks], byte 0
-        je short loc_8E4CB
-        jmp short loc_8E4D6
-loc_8E4E9:
+        je short .1
+        jmp short .2
+.3:
         push str_AddtimerLISTFULL
         call FatalError
         add esp, byte 4
@@ -133,34 +131,34 @@ RemoveTimerCallback:
         mov edx, dword [byte esp+08h]
         xor eax, eax
         cmp edx, dword [timercallbacks]
-        jne short loc_8E511
-loc_8E507:
+        jne short .2
+.1:
         xor esi, esi
         mov dword [dword eax+timercallbacks], esi
         pop esi
         ret
-loc_8E511:
+.2:
         add eax, byte 4
         cmp eax, byte 20h
-        jge short loc_8E523
+        jge short .3
         cmp edx, dword [dword eax+timercallbacks]
-        je short loc_8E507
-        jmp short loc_8E511
-loc_8E523:
+        je short .1
+        jmp short .2
+.3:
         pop esi
         ret
         db 08Dh,040h,00h
 CountTimerCallbacks:
         xor edx, edx
         xor eax, eax
-loc_8E52C:
+.1:
         cmp dword [dword eax+timercallbacks], byte 0
-        je short loc_8E536
+        je short .2
         inc edx
-loc_8E536:
+.2:
         add eax, byte 4
         cmp eax, byte 20h
-        jne short loc_8E52C
+        jne short .1
         mov eax, edx
         ret
         db 08Dh,040h,00h
@@ -179,10 +177,10 @@ RestoreTimer:
         push ecx
         push edx
         cmp dword [oldint8off], byte 0
-        jne short loc_8E56A
+        jne short .1
         cmp word [oldint8sel], byte 0
-        je short loc_8E5A5
-loc_8E56A:
+        je short .2
+.1:
         call MaskTimerKbdIrq
         mov cx, word [oldint8sel]
         mov ebx, dword [oldint8off]
@@ -197,11 +195,10 @@ loc_8E56A:
         xor ebx, ebx
         mov dword [oldint8off], ebx
         call UnmaskTimerKbdIrq
-loc_8E5A5:
+.2:
         pop edx
         pop ecx
         pop ebx
-loc_8E5A8:
         ret
         db 08Dh,040h,00h
 InstallTimer:
@@ -210,9 +207,9 @@ InstallTimer:
         mov eax, timercallbacks
         call __STOSD
         cmp dword [oldint8off], byte 0
-        jne short loc_8E5A8
+        jne short RestoreTimer+054h
         cmp word [oldint8sel], byte 0
-        jne short loc_8E5A8
+        jne short RestoreTimer+054h
         call MaskTimerKbdIrq
         mov eax, 8
         call _dos_getvect_

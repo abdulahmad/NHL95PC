@@ -5,8 +5,7 @@ section s_9D090 progbits alloc exec nowrite align=1
 extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, dword_D2F84, ScreenWidth, dword_D30A8
 extern DrawRowBytes, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, AllocMemHandle, PushMemDescriptorLocked
 extern MemDescPtr, SetPalette, DrawShapeAtOwnPos, WriteFileQuiet, FindShape, SaveDrawState, RestoreDrawState, SetScreenTarget
-global SnapScreenToShape, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
-global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, SelectBitmap, loc_9D303
+global SnapScreenToShape, SelectBitmap
 SnapScreenToShape:
         push esi
         push edi
@@ -15,9 +14,9 @@ SnapScreenToShape:
         mov edi, dword [dword esp+0CCh]
         xor ebp, ebp
         cmp dword [dword_D2F84], byte 7
-        jne short loc_9D0B0
+        jne short .1
         mov ebp, 1
-loc_9D0B0:
+.1:
         mov eax, esp
         push eax
         call SaveDrawState
@@ -26,9 +25,9 @@ loc_9D0B0:
         mov eax, dword [DrawRowBytes]
         imul eax, dword [dword_D30A8]
         cmp dword [dword_D2F84], byte 7
-        jne short loc_9D0D7
+        jne short .2
         add eax, eax
-loc_9D0D7:
+.2:
         add eax, 340h
         mov dword [dword esp+0B8h], eax
         xor esi, esi
@@ -39,7 +38,7 @@ loc_9D0D7:
         add esp, byte 0Ch
         mov dword [dword esp+0B4h], eax
         test eax, eax
-        je near loc_9D2C8
+        je near .11
         push eax
         call MemDescPtr
         mov esi, eax
@@ -109,39 +108,39 @@ loc_9D0D7:
         mov esi, edi
         lea edi, [byte esp+060h]
         push edi
-loc_9D232:
+.3:
         mov al, byte [esi]
         mov byte [edi], al
         cmp al, 0
-        je short loc_9D24A
+        je short .4
         mov al, byte [byte esi+01h]
         add esi, byte 2
         mov byte [byte edi+01h], al
         add edi, byte 2
         cmp al, 0
-        jne short loc_9D232
-loc_9D24A:
+        jne short .3
+.4:
         pop edi
         mov dl, 2Eh
         lea esi, [byte esp+060h]
-loc_9D251:
+.5:
         mov al, byte [esi]
         LD cmp, al, dl
-        je short loc_9D269
+        je short .7
         cmp al, 0
-        je short loc_9D267
+        je short .6
         inc esi
         mov al, byte [esi]
         LD cmp, al, dl
-        je short loc_9D269
+        je short .7
         inc esi
         cmp al, 0
-        jne short loc_9D251
-loc_9D267:
+        jne short .5
+.6:
         LD sub, esi, esi
-loc_9D269:
+.7:
         test esi, esi
-        jne short loc_9D299
+        jne short .10
         mov esi, dword [dword ebp+off_D517C]
         lea edi, [byte esp+060h]
         push edi
@@ -150,20 +149,20 @@ loc_9D269:
         mov al, 0
         repne scasb
         dec edi
-loc_9D280:
+.8:
         mov al, byte [esi]
         mov byte [edi], al
         cmp al, 0
-        je short loc_9D298
+        je short .9
         mov al, byte [byte esi+01h]
         add esi, byte 2
         mov byte [byte edi+01h], al
         add edi, byte 2
         cmp al, 0
-        jne short loc_9D280
-loc_9D298:
+        jne short .8
+.9:
         pop edi
-loc_9D299:
+.10:
         mov esi, dword [dword esp+0B8h]
         push esi
         mov edi, dword [dword esp+0B4h]
@@ -177,7 +176,7 @@ loc_9D299:
         push ebp
         call PushMemDescriptorLocked
         add esp, byte 4
-loc_9D2C8:
+.11:
         mov eax, esp
         push eax
         call RestoreDrawState
@@ -194,7 +193,7 @@ SelectBitmap:
         mov esi, dword [byte esp+08h]
         mov esi, dword [esi]
         test esi, esi
-        je short loc_9D303
+        je short .1
         lea eax, [byte esi+030h]
         push eax
         call _os_handle
@@ -203,7 +202,7 @@ SelectBitmap:
         push esi
         call SetDrawBitmap
         add esp, byte 4
-loc_9D303:
+.1:
         mov eax, esi
         pop esi
         ret

@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_90C0F progbits alloc exec nowrite align=1
 extern _Extender
-global CopyDtaIn, loc_90C31
+global CopyDtaIn
 CopyDtaIn:
         cmp byte [_Extender], 9
-        jne short loc_90C31
+        jne short .1
         push eax
         push ebx
         push ecx
@@ -23,5 +23,5 @@ CopyDtaIn:
         pop ecx
         pop ebx
         pop eax
-loc_90C31:
+.1:
         ret

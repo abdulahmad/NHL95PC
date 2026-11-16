@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A1948 progbits alloc exec nowrite align=1
-global IntrLoadRegs, unk_A197C, __Slash_C_, loc_A1C88, loc_A1C96
+global IntrLoadRegs, unk_A197C, __Slash_C_
 IntrLoadRegs:
         and eax, 0FFh
         lea eax, [eax+eax*2]
@@ -76,10 +76,10 @@ __Slash_C_:
         push ebx
         mov ebx, eax
         test dl, dl
-        je short loc_A1C88
+        je short .1
         mov byte [eax], 2Fh
-        jmp short loc_A1C96
-loc_A1C88:
+        jmp short .2
+.1:
         push edx
         mov ah, 37h
         mov al, 0
@@ -88,7 +88,7 @@ loc_A1C88:
         mov ah, 0
         pop edx
         mov byte [ebx], al
-loc_A1C96:
+.2:
         mov byte [byte ebx+01h], 63h
         mov eax, ebx
         mov byte [byte ebx+02h], 0

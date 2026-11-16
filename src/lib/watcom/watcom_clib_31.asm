@@ -3,10 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9A874 progbits alloc exec nowrite align=1
 extern HeapList, HeapRover
-global __MemAllocator, loc_9A8A7, loc_9A8C3, loc_9A8C7, loc_9A8F5, loc_9A90A, loc_9A912, loc_9A917
-global __MemFree, loc_9A947, loc_9A95E, loc_9A975, loc_9A984, loc_9A9A1, loc_9A9A5, loc_9A9B9
-global loc_9A9C3, loc_9A9DA, loc_9A9F5, loc_9A9F9, loc_9AA0A, loc_9AA1A, loc_9AA22, __unlink_
-global loc_9AA3C, loc_9AA4F, loc_9AA5C, loc_9AA63
+global __MemAllocator, __MemFree, __MemFree, __unlink_
 __MemAllocator:
         push esi
         push edi
@@ -14,9 +11,9 @@ __MemAllocator:
         push ds
         mov ds, edx
         or eax, eax
-        je short loc_9A8C3
+        je short .2
         add eax, byte 7
-        jb short loc_9A8C3
+        jb short .2
         and al, 0FCh
         mov edx, 0Ch
         sub eax, edx
@@ -25,17 +22,17 @@ __MemAllocator:
         and eax, ecx
         add eax, edx
         cmp eax, dword [byte ebx+014h]
-        ja short loc_9A8C3
+        ja short .2
         mov esi, dword [byte ebx+0Ch]
         mov edi, dword [byte ebx+010h]
         cmp eax, edi
-        ja short loc_9A8A7
+        ja short .1
         mov esi, dword [byte ebx+028h]
         sub edi, edi
-loc_9A8A7:
+.1:
         mov edx, dword [esi]
         cmp eax, edx
-        jbe short loc_9A8C7
+        jbe short .3
         sub edi, edx
         cmc
         sbb ecx, ecx
@@ -44,18 +41,18 @@ loc_9A8A7:
         lea edx, [byte ebx+020h]
         mov esi, dword [byte esi+08h]
         cmp esi, edx
-        jne short loc_9A8A7
+        jne short .1
         mov dword [byte ebx+014h], edi
-loc_9A8C3:
+.2:
         sub eax, eax
-        jmp short loc_9A912
-loc_9A8C7:
+        jmp short .6
+.3:
         sub edx, eax
         mov dword [byte ebx+010h], edi
         inc dword [byte ebx+018h]
         mov ecx, dword [byte esi+08h]
         cmp edx, byte 0Ch
-        jb short loc_9A8F5
+        jb short .4
         mov edi, esi
         add edi, eax
         mov dword [byte ebx+0Ch], edi
@@ -67,8 +64,8 @@ loc_9A8C7:
         mov dword [byte ebx+08h], edi
         mov ebx, ecx
         mov dword [byte ebx+04h], edi
-        jmp short loc_9A90A
-loc_9A8F5:
+        jmp short .5
+.4:
         dec dword [byte ebx+01Ch]
         mov eax, esi
         mov edi, ecx
@@ -77,18 +74,17 @@ loc_9A8F5:
         mov dword [byte edi+04h], esi
         mov dword [byte ebx+0Ch], esi
         mov esi, eax
-loc_9A90A:
+.5:
         or dword [esi], byte 1
         mov eax, esi
         add eax, byte 4
-loc_9A912:
+.6:
         pop ds
         pop ecx
         pop edi
         pop esi
         ret
-loc_9A917:
-        jmp near loc_9AA22
+        jmp near __MemFree+0106h
 __MemFree:
         push esi
         push edi
@@ -96,21 +92,21 @@ __MemFree:
         push ds
         mov ds, edx
         or eax, eax
-        je short loc_9A917
+        je short __MemAllocator+0A3h
         mov esi, eax
         sub esi, byte 4
         mov eax, dword [esi]
         test al, 1
-        je short loc_9A917
+        je short __MemAllocator+0A3h
         and al, 0FEh
         mov edi, esi
         add edi, eax
         test dword [edi], 1
-        jne short loc_9A95E
+        jne short .2
         cmp edi, dword [byte ebx+0Ch]
-        jne short loc_9A947
+        jne short .1
         mov dword [byte ebx+0Ch], esi
-loc_9A947:
+.1:
         add eax, dword [edi]
         mov dword [esi], eax
         push ebx
@@ -120,26 +116,26 @@ loc_9A947:
         mov dword [byte edi+04h], ebx
         pop ebx
         dec dword [byte ebx+01Ch]
-        jmp short loc_9A9DA
-loc_9A95E:
+        jmp short .9
+.2:
         mov dword [esi], eax
         mov edi, dword [byte ebx+0Ch]
         cmp esi, edi
-        jae short loc_9A975
+        jae short .3
         cmp esi, dword [byte edi+04h]
-        ja short loc_9A9DA
+        ja short .9
         mov edi, dword [byte ebx+028h]
         cmp esi, edi
-        jb short loc_9A9DA
-        jmp short loc_9A984
-loc_9A975:
+        jb short .9
+        jmp short .4
+.3:
         mov edi, dword [byte edi+08h]
         cmp esi, edi
-        jb short loc_9A9DA
+        jb short .9
         lea edi, [byte ebx+020h]
         cmp esi, dword [byte ebx+024h]
-        ja short loc_9A9DA
-loc_9A984:
+        ja short .9
+.4:
         sub edx, edx
         mov eax, dword [byte ebx+018h]
         mov ecx, dword [byte ebx+01Ch]
@@ -147,77 +143,76 @@ loc_9A984:
         div ecx
         dec ecx
         cmp eax, ecx
-        jae short loc_9A9B9
+        jae short .7
         mov edx, dword [byte ebx+018h]
         sub edx, ecx
         add eax, eax
         cmp edx, ecx
-        ja short loc_9A9A1
+        ja short .5
         sub eax, eax
-loc_9A9A1:
+.5:
         mov edi, esi
         add edi, dword [esi]
-loc_9A9A5:
+.6:
         mov edx, dword [edi]
         test dl, 1
-        je short loc_9A9DA
+        je short .9
         cmp edx, byte 0FFFFFFFFh
-        je short loc_9A9B9
+        je short .7
         and dl, 0FEh
         add edi, edx
         dec eax
-        jne short loc_9A9A5
-loc_9A9B9:
+        jne short .6
+.7:
         mov edi, dword [byte ebx+0Ch]
         cmp esi, edi
-        jae short loc_9A9C3
+        jae short .8
         mov edi, dword [byte ebx+028h]
-loc_9A9C3:
+.8:
         cmp esi, edi
-        jb short loc_9A9DA
+        jb short .9
         mov edi, dword [byte edi+08h]
         cmp esi, edi
-        jb short loc_9A9DA
+        jb short .9
         mov edi, dword [byte edi+08h]
         cmp esi, edi
-        jb short loc_9A9DA
+        jb short .9
         mov edi, dword [byte edi+08h]
-        jmp short loc_9A9C3
-loc_9A9DA:
+        jmp short .8
+.9:
         mov edx, dword [byte edi+04h]
         mov ecx, dword [esi]
         db 087h,0FAh                            ; insn: xchg edi,edx
         mov eax, edi
         add eax, dword [edi]
         cmp eax, esi
-        jne short loc_9A9F9
+        jne short .11
         add ecx, dword [edi]
         mov dword [edi], ecx
         cmp esi, dword [byte ebx+0Ch]
-        jne short loc_9A9F5
+        jne short .10
         mov dword [byte ebx+0Ch], edi
-loc_9A9F5:
+.10:
         mov esi, edi
-        jmp short loc_9AA0A
-loc_9A9F9:
+        jmp short .12
+.11:
         inc dword [byte ebx+01Ch]
         mov dword [byte esi+08h], edx
         mov dword [byte esi+04h], edi
         mov dword [byte edi+08h], esi
         mov edi, edx
         mov dword [byte edi+04h], esi
-loc_9AA0A:
+.12:
         dec dword [byte ebx+018h]
         cmp esi, dword [byte ebx+0Ch]
-        jae short loc_9AA1A
+        jae short .13
         cmp ecx, dword [byte ebx+010h]
-        jbe short loc_9AA1A
+        jbe short .13
         mov dword [byte ebx+010h], ecx
-loc_9AA1A:
+.13:
         cmp ecx, dword [byte ebx+014h]
-        jbe short loc_9AA22
+        jbe short __MemFree+0106h
         mov dword [byte ebx+014h], ecx
-loc_9AA22:
         pop ds
         pop ecx
         pop edi
@@ -228,26 +223,26 @@ __unlink_:
         push edx
         mov edx, dword [HeapRover]
         cmp eax, edx
-        jne short loc_9AA3C
+        jne short .1
         mov edx, dword [byte edx+08h]
         mov dword [HeapRover], edx
-loc_9AA3C:
+.1:
         mov ebx, dword [HeapList]
         cmp eax, ebx
-        jne short loc_9AA4F
+        jne short .2
         mov edx, dword [byte ebx+08h]
         mov dword [HeapList], edx
-loc_9AA4F:
+.2:
         mov edx, dword [byte eax+04h]
         mov eax, dword [byte eax+08h]
         test edx, edx
-        je short loc_9AA5C
+        je short .3
         mov dword [byte edx+08h], eax
-loc_9AA5C:
+.3:
         test eax, eax
-        je short loc_9AA63
+        je short .4
         mov dword [byte eax+04h], edx
-loc_9AA63:
+.4:
         pop edx
         pop ebx
         ret

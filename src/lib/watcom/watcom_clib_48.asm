@@ -4,17 +4,7 @@ bits 32
 section s_B028E progbits alloc exec nowrite align=1
 extern __CHP, __cvt_, __Nan_Inf_, __set_ERANGE_, _Scale10V_, dword_C4CA0, dword_C4CA4, floor_
 extern memset_, DecimalToInt64
-global DoEFormat_, loc_B02A7, loc_B02AB, loc_B02CE, loc_B02DE, loc_B02EE, loc_B02F9, loc_B0329
-global loc_B032C, loc_B0333, DoFFormat_, loc_B034A, loc_B035B, loc_B035F, loc_B0368, loc_B0370
-global loc_B037C, loc_B0380, loc_B038D, AdjField_, loc_B03B8, loc_B03D5, loc_B03DF, loc_B03EF
-global loc_B03FB, _FtoS_, loc_B042F, loc_B0435, loc_B0437, loc_B0444, loc_B046A, loc_B0497
-global loc_B049D, loc_B04AD, loc_B04BE, loc_B04C8, loc_B04E0, loc_B04F4, loc_B0509, loc_B050E
-global loc_B0527, loc_B0545, loc_B0577, loc_B0580, loc_B0582, loc_B05B3, loc_B05C4, loc_B05CA
-global loc_B05DF, loc_B05F7, loc_B060A, loc_B061E, strtod_, loc_B0635, loc_B0646, loc_B0649
-global loc_B065A, loc_B065C, loc_B0662, loc_B0674, loc_B0684, loc_B0694, loc_B0695, loc_B069A
-global loc_B06B9, loc_B06D1, loc_B06D3, loc_B06D6, loc_B06F5, loc_B06FB, loc_B0702, loc_B070C
-global loc_B070D, loc_B0710, loc_B0721, loc_B0730, loc_B073F, loc_B076F, loc_B0781, loc_B0798
-global loc_B07AD, loc_B07B6, loc_B07C4
+global DoEFormat_, DoEFormat_, DoFFormat_, AdjField_, _FtoS_, strtod_
 DoEFormat_:
         push esi
         push edi
@@ -24,47 +14,47 @@ DoEFormat_:
         mov esi, edx
         mov eax, ebx
         test edx, edx
-        jge short loc_B02A7
+        jge short .1
         mov dh, 2Dh
         neg esi
         mov byte [esp], dh
-        jmp short loc_B02AB
-loc_B02A7:
+        jmp short .2
+.1:
         mov byte [esp], 2Bh
-loc_B02AB:
+.2:
         mov ebx, 64h
         mov edx, 3
         cmp esi, ebx
-        jge short loc_B02CE
+        jge short .3
         mov ebx, 0Ah
         mov edx, 2
         cmp esi, ebx
-        jge short loc_B02CE
+        jge short .3
         mov edx, 1
         mov ebx, edx
-loc_B02CE:
+.3:
         test eax, eax
-        jne short loc_B02DE
+        jne short .4
         mov eax, 2
         cmp edx, byte 3
-        jne short loc_B02DE
+        jne short .4
         mov eax, edx
-loc_B02DE:
+.4:
         lea ebp, [byte eax+01h]
         cmp ebp, ecx
-        jg short loc_B032C
+        jg short .8
         cmp edx, eax
-        jg short loc_B0329
+        jg short .7
         mov cl, byte [esp]
         mov byte [edi], cl
-loc_B02EE:
+.5:
         inc edi
         cmp eax, edx
-        jle short loc_B02F9
+        jle short .6
         dec eax
         mov byte [edi], 30h
-        jmp short loc_B02EE
-loc_B02F9:
+        jmp short .5
+.6:
         mov edx, esi
         mov eax, esi
         sar edx, 1Fh
@@ -84,83 +74,82 @@ loc_B02F9:
         inc edi
         mov ebx, eax
         test eax, eax
-        jne short loc_B02F9
-        jmp short loc_B032C
-loc_B0329:
+        jne short .6
+        jmp short .8
+.7:
         lea ebp, [byte edx+01h]
-loc_B032C:
+.8:
         mov eax, ebp
         add esp, byte 4
         pop ebp
         pop edi
-loc_B0333:
         pop esi
         ret
 DoFFormat_:
         push esi
         mov esi, ebx
         test ecx, ecx
-        jne short loc_B034A
+        jne short .1
         test ebx, ebx
-        jg short loc_B034A
+        jg short .1
         mov byte [eax], 30h
         inc eax
         mov byte [eax], 2Eh
         inc eax
         pop esi
         ret
-loc_B034A:
+.1:
         test esi, esi
-        jle short loc_B035B
+        jle short .2
         mov bl, byte [edx]
         test bl, bl
-        je short loc_B035B
+        je short .2
         inc edx
         dec esi
         mov byte [eax], bl
         inc eax
-        jmp short loc_B034A
-loc_B035B:
+        jmp short .1
+.2:
         test esi, esi
-        jle short loc_B0368
-loc_B035F:
+        jle short .4
+.3:
         dec esi
         mov byte [eax], 30h
         inc eax
         test esi, esi
-        jg short loc_B035F
-loc_B0368:
+        jg short .3
+.4:
         mov byte [eax], 2Eh
         inc eax
         test ecx, ecx
-        jle short loc_B037C
-loc_B0370:
+        jle short .6
+.5:
         test esi, esi
-        je short loc_B037C
+        je short .6
         inc esi
         mov byte [eax], 30h
         inc eax
         dec ecx
-        jne short loc_B0370
-loc_B037C:
+        jne short .5
+.6:
         test ecx, ecx
-        jle short loc_B0333
-loc_B0380:
+        jle short DoEFormat_+0A5h
+.7:
         mov bh, byte [edx]
         test bh, bh
-        je short loc_B038D
+        je short .8
         inc edx
         mov byte [eax], bh
         inc eax
         dec ecx
-        jne short loc_B0380
-loc_B038D:
+        jne short .7
+.8:
         test ecx, ecx
-        je short loc_B0333
+        je short DoEFormat_+0A5h
         dec ecx
         mov byte [eax], 30h
         inc eax
-        jmp short loc_B038D
+        jmp short .8
 AdjField_:
         push ebp
         mov ebp, esp
@@ -171,13 +160,13 @@ AdjField_:
         mov edi, eax
         mov esi, edx
         cmp edx, ebx
-        je short loc_B03FB
+        je short .5
         mov dword [byte ebp-014h], edi
         mov al, byte [byte eax+01h]
         lea edx, [ebx+edi]
         mov byte [byte ebp-010h], al
         lea eax, [esi+edi]
-loc_B03B8:
+.1:
         dec eax
         dec edx
         mov cl, byte [eax]
@@ -186,30 +175,30 @@ loc_B03B8:
         mov ecx, dword [byte ebp-014h]
         dec ebx
         cmp eax, ecx
-        jne short loc_B03B8
+        jne short .1
         mov ah, byte [edi]
         cmp ah, 2Eh
-        jne short loc_B03D5
+        jne short .2
         dec ebx
         mov byte [edi+ebx], 30h
-        jmp short loc_B03EF
-loc_B03D5:
+        jmp short .4
+.2:
         cmp ah, 2Bh
-        je short loc_B03DF
+        je short .3
         cmp ah, 2Dh
-        jne short loc_B03EF
-loc_B03DF:
+        jne short .4
+.3:
         cmp byte [byte ebp-010h], 2Eh
-        jne short loc_B03EF
+        jne short .4
         mov byte [edi+ebx], 30h
         dec ebx
         mov dl, byte [edi]
         mov byte [edi+ebx], dl
-loc_B03EF:
+.4:
         mov edx, 20h
         mov eax, edi
         call memset_
-loc_B03FB:
+.5:
         lea esp, [byte ebp-0Ch]
         pop edi
         pop esi
@@ -233,37 +222,37 @@ _FtoS_:
         push esi
         call __Nan_Inf_
         test eax, eax
-        je short loc_B0444
+        je short .4
         mov eax, dword [byte ebp-014h]
         xor esi, esi
-        jmp short loc_B0437
-loc_B042F:
+        jmp short .3
+.1:
         cmp esi, edi
-        jge short loc_B0435
+        jge short .2
         mov byte [eax], ch
-loc_B0435:
+.2:
         inc eax
         inc esi
-loc_B0437:
+.3:
         mov ch, byte [byte esi+ebp-044h]
         test ch, ch
-        jne short loc_B042F
-        jmp near loc_B060A
-loc_B0444:
+        jne short .1
+        jmp near .25
+.4:
         mov al, byte [byte ebp+018h]
         mov byte [byte ebp-0Ch], al
         cmp al, 47h
-        jne near loc_B04C8
+        jne near .10
         fld qword [edx]
         fabs
         fstp qword [byte ebp-030h]
         mov eax, dword [byte ebp-02Ch]
         mov ecx, dword [byte ebp-030h]
         test eax, 7FFFFFFFh
-        jne short loc_B046A
+        jne short .5
         test ecx, ecx
-        je short loc_B04BE
-loc_B046A:
+        je short .9
+.5:
         fld qword [byte ebp-030h]
         fldlg2
         fxch
@@ -278,79 +267,79 @@ loc_B046A:
         fistp dword [byte ebp-018h]
         mov esi, dword [byte ebp-018h]
         cmp esi, byte 0FFFFFFFCh
-        jl short loc_B0497
+        jl short .6
         cmp ebx, esi
-        jg short loc_B049D
-loc_B0497:
+        jg short .7
+.6:
         mov byte [byte ebp-0Ch], 45h
-        jmp short loc_B04C8
-loc_B049D:
+        jmp short .10
+.7:
         fldz
         fcomp qword [byte ebp-030h]
         fnstsw ax
         sahf
-        ja short loc_B04AD
+        ja short .8
         lea ecx, [byte esi+01h]
         mov dword [byte ebp-018h], ecx
-loc_B04AD:
+.8:
         mov esi, dword [byte ebp-018h]
         xor eax, eax
         mov ch, 46h
         mov dword [byte ebp+0Ch], eax
         mov byte [byte ebp-0Ch], ch
         sub ebx, esi
-        jmp short loc_B04C8
-loc_B04BE:
+        jmp short .10
+.9:
         xor esi, esi
         mov cl, 46h
         mov dword [byte ebp+0Ch], esi
         mov byte [byte ebp-0Ch], cl
-loc_B04C8:
+.10:
         cmp byte [byte ebp-0Ch], 45h
-        jne short loc_B04F4
+        jne short .12
         mov eax, ebx
         mov ecx, dword [byte ebp+0Ch]
         neg eax
         cmp eax, ecx
-        jge short loc_B04E0
+        jge short .11
         lea eax, [byte ebx+02h]
         cmp eax, ecx
-        jg short loc_B04F4
-loc_B04E0:
+        jg short .12
+.11:
         mov eax, dword [byte ebp-014h]
         mov edx, 2Ah
         mov ebx, edi
         call memset_
-        jmp near loc_B061E
-loc_B04F4:
+        jmp near .26
+.12:
         mov al, byte [byte ebp+018h]
         mov ecx, ebx
         cmp al, 45h
-        jne short loc_B050E
+        jne short .14
         mov eax, dword [byte ebp+0Ch]
         test eax, eax
-        jle short loc_B0509
+        jle short .13
         lea ecx, [byte ebx+01h]
-        jmp short loc_B050E
-loc_B0509:
-        jge short loc_B050E
+        jmp short .14
+.13:
+        jge short .14
         lea ecx, [eax+ebx]
-loc_B050E:
+.14:
         mov eax, dword [edx]
         mov dword [byte ebp-028h], eax
         mov eax, dword [byte edx+04h]
         mov edx, dword [byte ebp-028h]
         mov dword [byte ebp-024h], eax
         test eax, 7FFFFFFFh
-        jne short loc_B0527
+        jne short .15
         test edx, edx
-        je short loc_B0545
-loc_B0527:
+        je short .16
+.15:
         cmp byte [byte ebp-0Ch], 45h
-        je short loc_B0545
+        je short .16
         mov ebx, dword [byte ebp+0Ch]
         test ebx, ebx
-        je short loc_B0545
+        je short .16
         push ebx
         mov eax, dword [byte ebp-024h]
         push eax
@@ -358,7 +347,7 @@ loc_B0527:
         push edx
         call _Scale10V_
         fstp qword [byte ebp-028h]
-loc_B0545:
+.16:
         lea eax, [byte ebp-044h]
         push eax
         xor eax, eax
@@ -378,18 +367,18 @@ loc_B0545:
         mov ebx, dword [byte ebp-020h]
         lea eax, [byte edx+01h]
         test ebx, ebx
-        je short loc_B0577
+        je short .17
         mov byte [edx], 2Dh
-        jmp short loc_B0580
-loc_B0577:
+        jmp short .18
+.17:
         cmp byte [byte ebp-010h], 0
-        je short loc_B0582
+        je short .19
         mov byte [edx], 2Bh
-loc_B0580:
+.18:
         mov edx, eax
-loc_B0582:
+.19:
         cmp byte [byte ebp-0Ch], 45h
-        jne short loc_B05DF
+        jne short .23
         mov ebx, dword [byte ebp+0Ch]
         mov eax, edx
         lea edx, [byte ebp-044h]
@@ -402,23 +391,23 @@ loc_B0582:
         mov cl, byte [byte ebp+014h]
         mov edx, eax
         test cl, cl
-        je short loc_B05B3
+        je short .20
         cmp esi, edi
-        jge short loc_B05B3
+        jge short .20
         lea edx, [byte eax+01h]
         inc esi
         mov byte [eax], cl
-loc_B05B3:
+.20:
         mov eax, dword [byte ebp-024h]
         mov ebx, dword [byte ebp-028h]
         test eax, 7FFFFFFFh
-        jne short loc_B05C4
+        jne short .21
         test ebx, ebx
-        je short loc_B05CA
-loc_B05C4:
+        je short .22
+.21:
         mov eax, dword [byte ebp+0Ch]
         sub dword [byte ebp-01Ch], eax
-loc_B05CA:
+.22:
         mov ebx, dword [byte ebp+010h]
         mov ecx, edi
         mov eax, edx
@@ -426,8 +415,8 @@ loc_B05CA:
         sub ecx, esi
         call DoEFormat_
         add esi, eax
-        jmp short loc_B060A
-loc_B05DF:
+        jmp short .25
+.23:
         mov esi, dword [byte ebp-014h]
         mov eax, dword [byte ebp-01Ch]
         mov ebx, edx
@@ -436,10 +425,10 @@ loc_B05DF:
         add eax, ecx
         add eax, ebx
         cmp edi, eax
-        jge short loc_B05F7
+        jge short .24
         lea esi, [byte edi+01h]
-        jmp short loc_B060A
-loc_B05F7:
+        jmp short .25
+.24:
         mov ebx, dword [byte ebp-01Ch]
         mov eax, edx
         lea edx, [byte ebp-044h]
@@ -447,14 +436,14 @@ loc_B05F7:
         mov edx, esi
         mov esi, eax
         sub esi, edx
-loc_B060A:
+.25:
         cmp esi, edi
-        jg near loc_B04E0
+        jg near .11
         mov eax, dword [byte ebp-014h]
         mov edx, esi
         mov ebx, edi
         call AdjField_
-loc_B061E:
+.26:
         lea esp, [byte ebp-08h]
         pop edi
         pop esi
@@ -470,168 +459,168 @@ strtod_:
         sub esp, byte 24h
         push edx
         mov dword [byte ebp-014h], eax
-loc_B0635:
+.1:
         mov dl, byte [eax]
         cmp dl, 20h
-        je short loc_B0646
+        je short .2
         cmp dl, 9
-        jb short loc_B0649
+        jb short .3
         cmp dl, 0Dh
-        ja short loc_B0649
-loc_B0646:
+        ja short .3
+.2:
         inc eax
-        jmp short loc_B0635
-loc_B0649:
+        jmp short .1
+.3:
         lea ebx, [byte eax+01h]
         xor cl, cl
         cmp dl, 2Bh
-        je short loc_B065A
+        je short .4
         cmp dl, 2Dh
-        jne short loc_B065C
+        jne short .5
         mov cl, 1
-loc_B065A:
+.4:
         mov eax, ebx
-loc_B065C:
+.5:
         mov bl, 30h
         xor edx, edx
         xor esi, esi
-loc_B0662:
+.6:
         mov ch, byte [eax]
         inc eax
         cmp ch, 2Eh
-        jne short loc_B0674
+        jne short .7
         test cl, 8
-        jne short loc_B069A
+        jne short .11
         or cl, 8
-        jmp short loc_B0662
-loc_B0674:
+        jmp short .6
+.7:
         cmp ch, 30h
-        jb short loc_B069A
+        jb short .11
         cmp ch, 39h
-        ja short loc_B069A
+        ja short .11
         test cl, 8
-        je short loc_B0684
+        je short .8
         inc esi
-loc_B0684:
+.8:
         or bl, ch
         cmp bl, 30h
-        je short loc_B0695
+        je short .10
         cmp edx, byte 11h
-        jge short loc_B0694
+        jge short .9
         mov byte [byte edx+ebp-034h], ch
-loc_B0694:
+.9:
         inc edx
-loc_B0695:
+.10:
         or cl, 4
-        jmp short loc_B0662
-loc_B069A:
+        jmp short .6
+.11:
         xor ebx, ebx
         test cl, 4
-        je near loc_B0710
+        je near .21
         cmp ch, 65h
-        je short loc_B06B9
+        je short .12
         cmp ch, 45h
-        je short loc_B06B9
+        je short .12
         cmp ch, 64h
-        je short loc_B06B9
+        je short .12
         cmp ch, 44h
-        jne short loc_B070C
-loc_B06B9:
+        jne short .19
+.12:
         lea edi, [byte eax-01h]
         mov dword [byte ebp-018h], edi
         lea edi, [byte eax+01h]
         mov ch, byte [eax]
         cmp ch, 2Bh
-        je short loc_B06D1
+        je short .13
         cmp ch, 2Dh
-        jne short loc_B06D3
+        jne short .14
         or cl, 2
-loc_B06D1:
+.13:
         mov eax, edi
-loc_B06D3:
+.14:
         and cl, 0FBh
-loc_B06D6:
+.15:
         mov ch, byte [eax]
         cmp ch, 30h
-        jb short loc_B06FB
+        jb short .17
         cmp ch, 39h
-        ja short loc_B06FB
+        ja short .17
         cmp ebx, 3E8h
-        jge short loc_B06F5
+        jge short .16
         imul ebx, byte 0Ah
         movzx edi, ch
         add ebx, edi
         sub ebx, byte 30h
-loc_B06F5:
+.16:
         or cl, 4
         inc eax
-        jmp short loc_B06D6
-loc_B06FB:
+        jmp short .15
+.17:
         test cl, 2
-        je short loc_B0702
+        je short .18
         neg ebx
-loc_B0702:
+.18:
         test cl, 4
-        jne short loc_B070D
+        jne short .20
         mov eax, dword [byte ebp-018h]
-        jmp short loc_B070D
-loc_B070C:
+        jmp short .20
+.19:
         dec eax
-loc_B070D:
+.20:
         mov dword [byte ebp-014h], eax
-loc_B0710:
+.21:
         sub ebx, esi
         cmp edx, byte 11h
-        jle short loc_B0721
+        jle short .22
         sub edx, byte 11h
         add ebx, edx
         mov edx, 11h
-loc_B0721:
+.22:
         test edx, edx
-        jle short loc_B0730
+        jle short .23
         cmp byte [byte edx+ebp-035h], 30h
-        jne short loc_B0730
+        jne short .23
         inc ebx
         dec edx
-        jmp short loc_B0721
-loc_B0730:
+        jmp short .22
+.23:
         test edx, edx
-        jne short loc_B073F
+        jne short .24
         mov dword [byte ebp-020h], edx
         mov dword [byte ebp-01Ch], edx
-        jmp near loc_B07B6
-loc_B073F:
+        jmp near .29
+.24:
         xor ah, ah
         mov byte [byte edx+ebp-034h], ah
         lea eax, [byte ebp-034h]
         lea edx, [byte ebp-020h]
         call DecimalToInt64
         cmp ebx, 134h
-        jle short loc_B0781
+        jle short .26
         call __set_ERANGE_
         test cl, 1
-        je short loc_B076F
+        je short .25
         fld qword [dword_C4CA0]
         fchs
         fstp qword [byte ebp-020h]
-        jmp short loc_B07B6
-loc_B076F:
+        jmp short .29
+.25:
         mov eax, dword [dword_C4CA0]
         mov dword [byte ebp-020h], eax
         mov eax, dword [dword_C4CA4]
         mov dword [byte ebp-01Ch], eax
-        jmp short loc_B07B6
-loc_B0781:
+        jmp short .29
+.26:
         cmp ebx, 0FFFFFEBBh
-        jge short loc_B0798
+        jge short .27
         xor ebx, ebx
         call __set_ERANGE_
         mov dword [byte ebp-020h], ebx
         mov dword [byte ebp-01Ch], ebx
-        jmp short loc_B07B6
-loc_B0798:
+        jmp short .29
+.27:
         test ebx, ebx
-        je short loc_B07AD
+        je short .28
         push ebx
         mov eax, dword [byte ebp-01Ch]
         push eax
@@ -639,17 +628,17 @@ loc_B0798:
         push edx
         call _Scale10V_
         fstp qword [byte ebp-020h]
-loc_B07AD:
+.28:
         test cl, 1
-        je short loc_B07B6
+        je short .29
         xor byte [byte ebp-019h], 80h
-loc_B07B6:
+.29:
         cmp dword [byte ebp-038h], byte 0
-        je short loc_B07C4
+        je short .30
         mov edx, dword [byte ebp-038h]
         mov eax, dword [byte ebp-014h]
         mov dword [edx], eax
-loc_B07C4:
+.30:
         fld qword [byte ebp-020h]
         lea esp, [byte ebp-010h]
         pop edi

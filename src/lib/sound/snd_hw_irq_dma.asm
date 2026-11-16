@@ -4,26 +4,8 @@ bits 32
 section s_A9C9C progbits alloc exec nowrite align=1
 extern __GETDS, unk_A9C80, unk_A9C81, unk_A9C83, unk_A9C85, unk_A9C86, unk_A9C88, unk_A9C89
 extern unk_A9C8A, unk_A9C8E, unk_A9C8F, unk_A9C90, unk_A9C91, unk_A9C92, unk_A9C96, unk_A9C98
-global SbHookIrq, loc_A9CAC, loc_A9CD2, loc_A9CDD, loc_A9CDF, loc_A9CE3, loc_A9CE5, loc_A9CFD
-global loc_A9CFF, loc_A9D05, loc_A9D07, loc_A9D09, loc_A9D11, loc_A9D13, loc_A9D19, loc_A9D1B
-global SbUnhookIrq, loc_A9D30, loc_A9D4B, SbIrqHandler, loc_A9D61, loc_A9D63, loc_A9D7D
-global loc_A9D80, loc_A9D82, loc_A9D8E, loc_A9D90, loc_A9D91, loc_A9DA2, loc_A9DA5, loc_A9DA7
-global loc_A9DB3, loc_A9DB5, loc_A9DB6, loc_A9DC5, loc_A9DC8, loc_A9DCA, loc_A9DD6, loc_A9DD8
-global loc_A9DD9, loc_A9DDF, loc_A9DE1, loc_A9DE5, loc_A9DE7, SbDspWrite, loc_A9DFA, loc_A9DFD
-global loc_A9DFF, loc_A9E0B, loc_A9E0D, loc_A9E0E, SbDspRead, loc_A9E1E, loc_A9E21, loc_A9E23
-global loc_A9E30, loc_A9E32, loc_A9E33, SbCardClose, loc_A9E42, loc_A9E44, loc_A9E4D, loc_A9E4F
-global SbDspReset, loc_A9E62, loc_A9E64, loc_A9E73, loc_A9E75, loc_A9E7C, loc_A9E7E, loc_A9E80
-global loc_A9E8D, loc_A9E8F, loc_A9E91, loc_A9E9E, loc_A9EA0, loc_A9EA2, loc_A9EAD, loc_A9EAF
-global loc_A9EB6, loc_A9EB8, loc_A9EBA, loc_A9EC7, loc_A9EC9, loc_A9ECB, loc_A9ED8, loc_A9EDA
-global loc_A9EDC, loc_A9EE7, loc_A9EF7, loc_A9EFA, loc_A9EFC, loc_A9F09, loc_A9F0B, loc_A9F0C
-global loc_A9F15, SbDspVersion, loc_A9F28, loc_A9F2F, loc_A9F31, loc_A9F33, loc_A9F6C, loc_A9F7F
-global loc_A9F90, SbCardOpen, loc_A9FCD, loc_A9FF9, loc_AA001, loc_AA010, loc_AA05B, loc_AA05D
-global loc_AA068, loc_AA06A, loc_AA06E, loc_AA070, loc_AA081, loc_AA083, loc_AA088, loc_AA08A
-global loc_AA0A0, loc_AA0A2, loc_AA0B8, loc_AA0BA, loc_AA0BD, loc_AA0BF, loc_AA0C4, loc_AA0C6
-global loc_AA0CF, loc_AA0D1, loc_AA0E8, loc_AA0EF, loc_AA0F1, loc_AA0F3, loc_AA10B, loc_AA119
-global loc_AA120, loc_AA122, loc_AA124, loc_AA141, loc_AA148, SbStopDma, loc_AA163, loc_AA165
-global loc_AA172, loc_AA174, loc_AA1A8, loc_AA1B0, SbDmaCount, loc_AA1C1, loc_AA1C3, loc_AA1C8
-global loc_AA1CA, SbSetStereo, loc_AA1EB, loc_AA1ED, loc_AA1F9, loc_AA1FC, loc_AA1FE
+global SbHookIrq, SbUnhookIrq, SbIrqHandler, SbDspWrite, SbDspRead, SbCardClose, SbDspReset, SbDspVersion
+global SbCardOpen, SbStopDma, SbDmaCount, SbSetStereo
 SbHookIrq:
         pushf
         cli
@@ -31,9 +13,9 @@ SbHookIrq:
         mov byte [unk_A9C91], al
         add al, 8
         cmp al, 0Fh
-        jbe short loc_A9CAC
+        jbe short .1
         add al, 60h
-loc_A9CAC:
+.1:
         mov ah, 35h
         int 21h
         o16 mov word [unk_A9C96], es
@@ -45,70 +27,70 @@ loc_A9CAC:
         mov al, byte [unk_A9C91]
         add al, 8
         cmp al, 0Fh
-        jbe short loc_A9CD2
+        jbe short .2
         add al, 60h
-loc_A9CD2:
+.2:
         mov ah, 25h
         int 21h
         pop ds
         mov al, 20h
         out 20h, al
-        jmp short loc_A9CDD
-loc_A9CDD:
-        jmp short loc_A9CDF
-loc_A9CDF:
+        jmp short .3
+.3:
+        jmp short .4
+.4:
         out 0A0h, al
-        jmp short loc_A9CE3
-loc_A9CE3:
-        jmp short loc_A9CE5
-loc_A9CE5:
+        jmp short .5
+.5:
+        jmp short .6
+.6:
         mov cl, byte [unk_A9C91]
         mov ah, 1
         cmp cl, 8
-        jb short loc_A9D09
+        jb short .11
         sub cl, 8
         shl ah, cl
         not ah
         in al, 21h
-        jmp short loc_A9CFD
-loc_A9CFD:
-        jmp short loc_A9CFF
-loc_A9CFF:
+        jmp short .7
+.7:
+        jmp short .8
+.8:
         LD and, al, ah
         out 21h, al
-        jmp short loc_A9D05
-loc_A9D05:
-        jmp short loc_A9D07
-loc_A9D07:
+        jmp short .9
+.9:
+        jmp short .10
+.10:
         popf
         ret
-loc_A9D09:
+.11:
         shl ah, cl
         not ah
         in al, 21h
-        jmp short loc_A9D11
-loc_A9D11:
-        jmp short loc_A9D13
-loc_A9D13:
+        jmp short .12
+.12:
+        jmp short .13
+.13:
         LD and, al, ah
         out 21h, al
-        jmp short loc_A9D19
-loc_A9D19:
-        jmp short loc_A9D1B
-loc_A9D1B:
+        jmp short .14
+.14:
+        jmp short .15
+.15:
         popf
         ret
 SbUnhookIrq:
         mov al, byte [unk_A9C91]
         LD or, al, al
-        je short loc_A9D4B
+        je short .2
         pushf
         cli
         add al, 8
         cmp al, 0Fh
-        jbe short loc_A9D30
+        jbe short .1
         add al, 60h
-loc_A9D30:
+.1:
         push ds
         mov edx, dword [unk_A9C92]
         o16 mov ds, word [unk_A9C96]
@@ -118,7 +100,7 @@ loc_A9D30:
         LD xor, al, al
         mov byte [unk_A9C91], al
         popf
-loc_A9D4B:
+.2:
         ret
 SbIrqHandler:
         pushf
@@ -128,88 +110,88 @@ SbIrqHandler:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         in al, dx
-        jmp short loc_A9D61
-loc_A9D61:
-        jmp short loc_A9D63
-loc_A9D63:
+        jmp short .1
+.1:
+        jmp short .2
+.2:
         cmp byte [unk_A9C8E], 1
-        je short loc_A9DD9
+        je short .20
         mov ah, 14h
         movzx edx, word [unk_A9C86]
         add edx, byte 0Ch
         mov ecx, 3E8h
-loc_A9D7D:
+.3:
         in al, dx
-        jmp short loc_A9D80
-loc_A9D80:
-        jmp short loc_A9D82
-loc_A9D82:
+        jmp short .4
+.4:
+        jmp short .5
+.5:
         and al, 80h
-        loopne loc_A9D7D
+        loopne .3
         stc
-        jne short loc_A9D91
+        jne short .8
         LD mov, al, ah
         out dx, al
-        jmp short loc_A9D8E
-loc_A9D8E:
-        jmp short loc_A9D90
-loc_A9D90:
+        jmp short .6
+.6:
+        jmp short .7
+.7:
         clc
-loc_A9D91:
+.8:
         mov ah, 0FFh
         movzx edx, word [unk_A9C86]
         add edx, byte 0Ch
         mov ecx, 3E8h
-loc_A9DA2:
+.9:
         in al, dx
-        jmp short loc_A9DA5
-loc_A9DA5:
-        jmp short loc_A9DA7
-loc_A9DA7:
+        jmp short .10
+.10:
+        jmp short .11
+.11:
         and al, 80h
-        loopne loc_A9DA2
+        loopne .9
         stc
-        jne short loc_A9DB6
+        jne short .14
         LD mov, al, ah
         out dx, al
-        jmp short loc_A9DB3
-loc_A9DB3:
-        jmp short loc_A9DB5
-loc_A9DB5:
+        jmp short .12
+.12:
+        jmp short .13
+.13:
         clc
-loc_A9DB6:
+.14:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Ch
         mov ecx, 3E8h
-loc_A9DC5:
+.15:
         in al, dx
-        jmp short loc_A9DC8
-loc_A9DC8:
-        jmp short loc_A9DCA
-loc_A9DCA:
+        jmp short .16
+.16:
+        jmp short .17
+.17:
         and al, 80h
-        loopne loc_A9DC5
+        loopne .15
         stc
-        jne short loc_A9DD9
+        jne short .20
         LD mov, al, ah
         out dx, al
-        jmp short loc_A9DD6
-loc_A9DD6:
-        jmp short loc_A9DD8
-loc_A9DD8:
+        jmp short .18
+.18:
+        jmp short .19
+.19:
         clc
-loc_A9DD9:
+.20:
         mov al, 20h
         out 0A0h, al
-        jmp short loc_A9DDF
-loc_A9DDF:
-        jmp short loc_A9DE1
-loc_A9DE1:
+        jmp short .21
+.21:
+        jmp short .22
+.22:
         out 20h, al
-        jmp short loc_A9DE5
-loc_A9DE5:
-        jmp short loc_A9DE7
-loc_A9DE7:
+        jmp short .23
+.23:
+        jmp short .24
+.24:
         pop ds
         popa
         popf
@@ -218,195 +200,195 @@ SbDspWrite:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Ch
         mov ecx, 3E8h
-loc_A9DFA:
+.1:
         in al, dx
-        jmp short loc_A9DFD
-loc_A9DFD:
-        jmp short loc_A9DFF
-loc_A9DFF:
+        jmp short .2
+.2:
+        jmp short .3
+.3:
         and al, 80h
-        loopne loc_A9DFA
+        loopne .1
         stc
-        jne short loc_A9E0E
+        jne short .6
         LD mov, al, ah
         out dx, al
-        jmp short loc_A9E0B
-loc_A9E0B:
-        jmp short loc_A9E0D
-loc_A9E0D:
+        jmp short .4
+.4:
+        jmp short .5
+.5:
         clc
-loc_A9E0E:
+.6:
         ret
 SbDspRead:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         mov ecx, 3E8h
-loc_A9E1E:
+.1:
         in al, dx
-        jmp short loc_A9E21
-loc_A9E21:
-        jmp short loc_A9E23
-loc_A9E23:
+        jmp short .2
+.2:
+        jmp short .3
+.3:
         and al, 80h
-        loope loc_A9E1E
+        loope .1
         stc
-        je short loc_A9E33
+        je short .6
         sub edx, byte 4
         in al, dx
-        jmp short loc_A9E30
-loc_A9E30:
-        jmp short loc_A9E32
-loc_A9E32:
+        jmp short .4
+.4:
+        jmp short .5
+.5:
         clc
-loc_A9E33:
+.6:
         ret
 SbCardClose:
         call SbStopDma
         mov al, byte [unk_A9C8F]
         out 21h, al
-        jmp short loc_A9E42
-loc_A9E42:
-        jmp short loc_A9E44
-loc_A9E44:
+        jmp short .1
+.1:
+        jmp short .2
+.2:
         mov al, byte [unk_A9C90]
         out 0A1h, al
-        jmp short loc_A9E4D
-loc_A9E4D:
-        jmp short loc_A9E4F
-loc_A9E4F:
+        jmp short .3
+.3:
+        jmp short .4
+.4:
         call SbDspReset
         ret
 SbDspReset:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         in al, dx
-        jmp short loc_A9E62
-loc_A9E62:
-        jmp short loc_A9E64
-loc_A9E64:
+        jmp short .1
+.1:
+        jmp short .2
+.2:
         movzx edx, word [unk_A9C86]
         add edx, byte 6
         mov al, 1
         out dx, al
-        jmp short loc_A9E73
-loc_A9E73:
-        jmp short loc_A9E75
-loc_A9E75:
+        jmp short .3
+.3:
+        jmp short .4
+.4:
         pushf
         push ecx
         mov ecx, 14h
-loc_A9E7C:
-        jmp short loc_A9E7E
-loc_A9E7E:
-        jmp short loc_A9E80
-loc_A9E80:
+.5:
+        jmp short .6
+.6:
+        jmp short .7
+.7:
         push eax
         pop eax
-        loop loc_A9E7C
+        loop .5
         pop ecx
         popf
         pushf
         push ecx
         mov ecx, 14h
-loc_A9E8D:
-        jmp short loc_A9E8F
-loc_A9E8F:
-        jmp short loc_A9E91
-loc_A9E91:
+.8:
+        jmp short .9
+.9:
+        jmp short .10
+.10:
         push eax
         pop eax
-        loop loc_A9E8D
+        loop .8
         pop ecx
         popf
         pushf
         push ecx
         mov ecx, 14h
-loc_A9E9E:
-        jmp short loc_A9EA0
-loc_A9EA0:
-        jmp short loc_A9EA2
-loc_A9EA2:
+.11:
+        jmp short .12
+.12:
+        jmp short .13
+.13:
         push eax
         pop eax
-        loop loc_A9E9E
+        loop .11
         pop ecx
         popf
         dec al
         out dx, al
-        jmp short loc_A9EAD
-loc_A9EAD:
-        jmp short loc_A9EAF
-loc_A9EAF:
+        jmp short .14
+.14:
+        jmp short .15
+.15:
         pushf
         push ecx
         mov ecx, 14h
-loc_A9EB6:
-        jmp short loc_A9EB8
-loc_A9EB8:
-        jmp short loc_A9EBA
-loc_A9EBA:
+.16:
+        jmp short .17
+.17:
+        jmp short .18
+.18:
         push eax
         pop eax
-        loop loc_A9EB6
+        loop .16
         pop ecx
         popf
         pushf
         push ecx
         mov ecx, 14h
-loc_A9EC7:
-        jmp short loc_A9EC9
-loc_A9EC9:
-        jmp short loc_A9ECB
-loc_A9ECB:
+.19:
+        jmp short .20
+.20:
+        jmp short .21
+.21:
         push eax
         pop eax
-        loop loc_A9EC7
+        loop .19
         pop ecx
         popf
         pushf
         push ecx
         mov ecx, 14h
-loc_A9ED8:
-        jmp short loc_A9EDA
-loc_A9EDA:
-        jmp short loc_A9EDC
-loc_A9EDC:
+.22:
+        jmp short .23
+.23:
+        jmp short .24
+.24:
         push eax
         pop eax
-        loop loc_A9ED8
+        loop .22
         pop ecx
         popf
         mov ecx, 3E8h
-loc_A9EE7:
+.25:
         push ecx
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         mov ecx, 3E8h
-loc_A9EF7:
+.26:
         in al, dx
-        jmp short loc_A9EFA
-loc_A9EFA:
-        jmp short loc_A9EFC
-loc_A9EFC:
+        jmp short .27
+.27:
+        jmp short .28
+.28:
         and al, 80h
-        loope loc_A9EF7
+        loope .26
         stc
-        je short loc_A9F0C
+        je short .31
         sub edx, byte 4
         in al, dx
-        jmp short loc_A9F09
-loc_A9F09:
-        jmp short loc_A9F0B
-loc_A9F0B:
+        jmp short .29
+.29:
+        jmp short .30
+.30:
         clc
-loc_A9F0C:
+.31:
         pop ecx
         cmp al, 0AAh
-        loopne loc_A9EE7
+        loopne .25
         stc
-        jne short loc_A9F15
+        jne short .32
         clc
-loc_A9F15:
+.32:
         LD sbb, eax, eax
         rol eax, 1
         ret
@@ -416,44 +398,44 @@ SbDspVersion:
         mov ah, 0E1h
         call SbDspWrite
         mov ecx, 4E20h
-loc_A9F28:
+.1:
         pushf
         push ecx
         mov ecx, 14h
-loc_A9F2F:
-        jmp short loc_A9F31
-loc_A9F31:
-        jmp short loc_A9F33
-loc_A9F33:
+.2:
+        jmp short .3
+.3:
+        jmp short .4
+.4:
         push eax
         pop eax
-        loop loc_A9F2F
+        loop .2
         pop ecx
         popf
-        loop loc_A9F28
+        loop .1
         LD xor, eax, eax
         call SbDspRead
         LD mov, ah, al
         call SbDspRead
         LD mov, ebx, eax
         cmp eax, 201h
-        jb short loc_A9F7F
+        jb short .6
         cmp eax, 400h
-        jb short loc_A9F6C
+        jb short .5
         mov eax, 5622h
         mov dword [unk_A9C8A], eax
         mov byte [unk_A9C8E], 0
-        jmp short loc_A9F90
-loc_A9F6C:
+        jmp short .7
+.5:
         mov eax, 5622h
         mov dword [unk_A9C8A], eax
         mov byte [unk_A9C8E], 1
-        jmp short loc_A9F90
-loc_A9F7F:
+        jmp short .7
+.6:
         mov eax, 2B11h
         mov dword [unk_A9C8A], eax
         mov byte [unk_A9C8E], 0
-loc_A9F90:
+.7:
         pop ebx
         pop eax
         ret
@@ -473,14 +455,14 @@ SbCardOpen:
         mov eax, dword [byte ebp+010h]
         mov byte [unk_A9C89], al
         call SbDspReset
-        jae short loc_A9FCD
+        jae short .1
         leave
         ret
-loc_A9FCD:
+.1:
         call SbDspVersion
         mov ebx, dword [unk_A9C8A]
         LD or, ebx, ebx
-        je short loc_A9FF9
+        je short .2
         LD xor, edx, edx
         mov eax, 0F424000h
         div ebx
@@ -488,24 +470,24 @@ loc_A9FCD:
         LD mov, ebx, eax
         mov ah, 40h
         call SbDspWrite
-        jb short loc_A9FF9
+        jb short .2
         LD mov, ah, bh
         call SbDspWrite
-loc_A9FF9:
+.2:
         LD sbb, eax, eax
         rol eax, 1
-        jae short loc_AA001
+        jae short .3
         leave
         ret
-loc_AA001:
+.3:
         mov ah, 0D1h
         call SbDspWrite
         LD sbb, eax, eax
         rol eax, 1
-        jae short loc_AA010
+        jae short .4
         leave
         ret
-loc_AA010:
+.4:
         mov eax, dword [byte ebp+018h]
         mov word [unk_A9C83], ax
         mov eax, dword [byte ebp+014h]
@@ -514,7 +496,7 @@ loc_AA010:
         mov byte [unk_A9C80], al
         mov al, byte [unk_A9C85]
         LD or, al, al
-        jne near loc_AA148
+        jne near .35
         mov al, 1
         mov byte [unk_A9C85], al
         mov al, byte [unk_A9C88]
@@ -525,131 +507,131 @@ loc_AA010:
         mov al, byte [unk_A9C89]
         or al, 4
         out 0Ah, al
-        jmp short loc_AA05B
-loc_AA05B:
-        jmp short loc_AA05D
-loc_AA05D:
+        jmp short .5
+.5:
+        jmp short .6
+.6:
         mov al, byte [unk_A9C89]
         or al, 58h
         out 0Bh, al
-        jmp short loc_AA068
-loc_AA068:
-        jmp short loc_AA06A
-loc_AA06A:
+        jmp short .7
+.7:
+        jmp short .8
+.8:
         out 0Ch, al
-        jmp short loc_AA06E
-loc_AA06E:
-        jmp short loc_AA070
-loc_AA070:
+        jmp short .9
+.9:
+        jmp short .10
+.10:
         mov dl, byte [unk_A9C89]
         shl dl, 1
         mov ax, word [unk_A9C81]
         out dx, al
-        jmp short loc_AA081
-loc_AA081:
-        jmp short loc_AA083
-loc_AA083:
+        jmp short .11
+.11:
+        jmp short .12
+.12:
         LD mov, al, ah
         out dx, al
-        jmp short loc_AA088
-loc_AA088:
-        jmp short loc_AA08A
-loc_AA08A:
+        jmp short .13
+.13:
+        jmp short .14
+.14:
         LD xor, ebx, ebx
         mov bl, byte [unk_A9C89]
         mov dl, byte [dword ebx+unk_A9C98]
         mov al, byte [unk_A9C80]
         out dx, al
-        jmp short loc_AA0A0
-loc_AA0A0:
-        jmp short loc_AA0A2
-loc_AA0A2:
+        jmp short .15
+.15:
+        jmp short .16
+.16:
         mov dl, byte [unk_A9C89]
         shl dl, 1
         inc dl
         mov ax, word [unk_A9C83]
         dec ax
         out 0Ch, al
-        jmp short loc_AA0B8
-loc_AA0B8:
-        jmp short loc_AA0BA
-loc_AA0BA:
+        jmp short .17
+.17:
+        jmp short .18
+.18:
         out dx, al
-        jmp short loc_AA0BD
-loc_AA0BD:
-        jmp short loc_AA0BF
-loc_AA0BF:
+        jmp short .19
+.19:
+        jmp short .20
+.20:
         LD mov, al, ah
         out dx, al
-        jmp short loc_AA0C4
-loc_AA0C4:
-        jmp short loc_AA0C6
-loc_AA0C6:
+        jmp short .21
+.21:
+        jmp short .22
+.22:
         mov al, byte [unk_A9C89]
         out 0Ah, al
-        jmp short loc_AA0CF
-loc_AA0CF:
-        jmp short loc_AA0D1
-loc_AA0D1:
+        jmp short .23
+.23:
+        jmp short .24
+.24:
         cmp byte [unk_A9C8E], 1
-        je short loc_AA10B
+        je short .29
         mov ah, 14h
         call SbDspWrite
-        jb short loc_AA141
+        jb short .34
         mov ecx, 4E20h
-loc_AA0E8:
+.25:
         pushf
         push ecx
         mov ecx, 14h
-loc_AA0EF:
-        jmp short loc_AA0F1
-loc_AA0F1:
-        jmp short loc_AA0F3
-loc_AA0F3:
+.26:
+        jmp short .27
+.27:
+        jmp short .28
+.28:
         push eax
         pop eax
-        loop loc_AA0EF
+        loop .26
         pop ecx
         popf
-        loop loc_AA0E8
+        loop .25
         mov ah, 0FFh
         call SbDspWrite
-        jb short loc_AA141
+        jb short .34
         call SbDspWrite
-        jmp short loc_AA141
-loc_AA10B:
+        jmp short .34
+.29:
         mov ah, 48h
         call SbDspWrite
-        jb short loc_AA141
+        jb short .34
         mov ecx, 4E20h
-loc_AA119:
+.30:
         pushf
         push ecx
         mov ecx, 14h
-loc_AA120:
-        jmp short loc_AA122
-loc_AA122:
-        jmp short loc_AA124
-loc_AA124:
+.31:
+        jmp short .32
+.32:
+        jmp short .33
+.33:
         push eax
         pop eax
-        loop loc_AA120
+        loop .31
         pop ecx
         popf
-        loop loc_AA119
+        loop .30
         mov ah, 0FFh
         call SbDspWrite
-        jb short loc_AA141
+        jb short .34
         call SbDspWrite
         mov ah, 90h
         call SbDspWrite
-loc_AA141:
+.34:
         LD sbb, eax, eax
         rol eax, 1
         sti
         leave
         ret
-loc_AA148:
+.35:
         LD xor, eax, eax
         clc
         leave
@@ -657,46 +639,46 @@ loc_AA148:
 SbStopDma:
         cmp byte [unk_A9C85], 0
         clc
-        je short loc_AA1B0
+        je short .6
         cli
         mov al, byte [unk_A9C89]
         or al, 4
         out 0Ah, al
-        jmp short loc_AA163
-loc_AA163:
-        jmp short loc_AA165
-loc_AA165:
+        jmp short .1
+.1:
+        jmp short .2
+.2:
         movzx edx, word [unk_A9C86]
         add edx, byte 0Eh
         in al, dx
-        jmp short loc_AA172
-loc_AA172:
-        jmp short loc_AA174
-loc_AA174:
+        jmp short .3
+.3:
+        jmp short .4
+.4:
         LD xor, al, al
         mov byte [unk_A9C85], al
         mov al, byte [unk_A9C91]
         LD or, al, al
-        je short loc_AA1B0
+        je short .6
         call SbUnhookIrq
         mov cl, byte [unk_A9C88]
         cmp cl, 0FFh
-        je short loc_AA1B0
+        je short .6
         mov ah, 1
         cmp cl, 8
-        jb short loc_AA1A8
+        jb short .5
         sub cl, 8
         shl ah, cl
         in al, 0A1h
         LD or, al, ah
         out 0A1h, al
-        jmp short loc_AA1B0
-loc_AA1A8:
+        jmp short .6
+.5:
         shl ah, cl
         in al, 21h
         LD or, al, ah
         out 21h, al
-loc_AA1B0:
+.6:
         sti
         ret
 SbDmaCount:
@@ -705,16 +687,16 @@ SbDmaCount:
         shl edx, 1
         inc edx
         in al, dx
-        jmp short loc_AA1C1
-loc_AA1C1:
-        jmp short loc_AA1C3
-loc_AA1C3:
+        jmp short .1
+.1:
+        jmp short .2
+.2:
         LD mov, ah, al
         in al, dx
-        jmp short loc_AA1C8
-loc_AA1C8:
-        jmp short loc_AA1CA
-loc_AA1CA:
+        jmp short .3
+.3:
+        jmp short .4
+.4:
         db 086h,0C4h                            ; insn: xchg al,ah
         LD mov, ebx, eax
         movzx eax, word [unk_A9C83]
@@ -728,21 +710,21 @@ SbSetStereo:
         add edx, byte 4
         mov al, 0Eh
         out dx, al
-        jmp short loc_AA1EB
-loc_AA1EB:
-        jmp short loc_AA1ED
-loc_AA1ED:
+        jmp short .1
+.1:
+        jmp short .2
+.2:
         inc edx
         LD xor, eax, eax
         mov ebx, dword [byte ebp+08h]
         LD or, ebx, ebx
-        jne short loc_AA1F9
+        jne short .3
         mov al, 20h
-loc_AA1F9:
+.3:
         out dx, al
-        jmp short loc_AA1FC
-loc_AA1FC:
-        jmp short loc_AA1FE
-loc_AA1FE:
+        jmp short .4
+.4:
+        jmp short .5
+.5:
         leave
         ret

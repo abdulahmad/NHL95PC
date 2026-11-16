@@ -5,8 +5,7 @@ section s_8DCF8 progbits alloc exec nowrite align=1
 extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, MemLockHandle
 extern dword_EDAB4, FatalError, int386_, InitMemList, AddHighMemList, MemLargestFree, InitMemDescriptors, GrabLargestBlock
 extern MemLockHandleInit, MemUnlock, DetectCPU, unk_EDF04, MemLock
-global initmemman, loc_8DD2F, loc_8DD58, loc_8DD71, loc_8DDF4, loc_8DEAD, loc_8DED0, loc_8DF06
-global InitMemoryPoolDefault, SetupMemoryPool, SetupMemoryPoolReserve
+global initmemman, InitMemoryPoolDefault, SetupMemoryPool, SetupMemoryPoolReserve
 initmemman:
         push esi
         push edi
@@ -23,11 +22,11 @@ initmemman:
         call GrabLargestBlock
         mov edx, eax
         test esi, esi
-        jle short loc_8DD2F
+        jle short .1
         cmp eax, esi
-        jle short loc_8DD2F
+        jle short .1
         mov edx, esi
-loc_8DD2F:
+.1:
         and dl, 0F0h
         mov eax, edx
         call _nmalloc_
@@ -35,15 +34,15 @@ loc_8DD2F:
         add eax, edx
         mov dword [dword_D2F7C], eax
         cmp dword [dword_D2F60], byte 0
-        jne short loc_8DD58
+        jne short .2
         mov dword [dword_D2F60], unk_EDF04
-loc_8DD58:
+.2:
         cmp dword [dword_D2F5C], 0CCh
-        jge short loc_8DD71
+        jge short .3
         push str_InitmemmanINSUFFICIENTROW
         call FatalError
         add esp, byte 4
-loc_8DD71:
+.3:
         mov edx, dword [dword_D2F5C]
         shl edx, 2
         mov eax, dword [dword_D2F60]
@@ -75,11 +74,11 @@ loc_8DD71:
         call InitMemList
         add esp, byte 18h
         test esi, esi
-        jne near loc_8DF06
+        jne near .7
         cmp edi, 3E80h
-        jge short loc_8DDF4
+        jge short .4
         mov edi, 3E80h
-loc_8DDF4:
+.4:
         mov word [byte esp+01Ch], 100h
         mov word [byte esp+020h], 0A000h
         mov ebx, esp
@@ -94,7 +93,7 @@ loc_8DDF4:
         shl esi, 4
         sub esi, edi
         test esi, esi
-        jle near loc_8DEAD
+        jle near .5
         lea edx, [byte edi+0Fh]
         sar edx, 4
         sub eax, edx
@@ -111,7 +110,7 @@ loc_8DDF4:
         mov si, word [byte esp+020h]
         shl esi, 4
         test edi, edi
-        je short loc_8DEAD
+        je short .5
         mov word [byte esp+01Ch], cx
         mov word [byte esp+020h], 0A000h
         mov ebx, esp
@@ -128,11 +127,11 @@ loc_8DDF4:
         xor eax, eax
         mov ax, word [byte esp+0Ch]
         mov dword [byte esp+038h], eax
-loc_8DEAD:
+.5:
         call GrabLargestBlock
         mov edx, eax
         cmp eax, 2710h
-        jl short loc_8DED0
+        jl short .6
         call _nmalloc_
         add edx, eax
         push edx
@@ -140,10 +139,10 @@ loc_8DEAD:
         push byte 0
         call AddHighMemList
         add esp, byte 0Ch
-        jmp short loc_8DEAD
-loc_8DED0:
+        jmp short .5
+.6:
         test esi, esi
-        jle short loc_8DF06
+        jle short .7
         add esi, ebp
         push esi
         push ebp
@@ -151,7 +150,7 @@ loc_8DED0:
         call AddHighMemList
         add esp, byte 0Ch
         test edi, edi
-        je short loc_8DF06
+        je short .7
         mov word [byte esp+01Ch], 101h
         mov eax, dword [byte esp+038h]
         mov word [byte esp+028h], ax
@@ -159,7 +158,7 @@ loc_8DED0:
         lea edx, [byte esp+01Ch]
         mov eax, 31h
         call int386_
-loc_8DF06:
+.7:
         mov esi, dword [MemLockHandle]
         push esi
         call MemUnlock

@@ -3,8 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_986EF progbits alloc exec nowrite align=1
 extern __flush_, __ioalloc_, __prtf_, FpeHandler, fputc_, ErrnoPtr, __get_doserrno_ptr_
-global file_putc_, __fprtf_, loc_98723, loc_98741, loc_9876B, loc_98776, __set_EDOM_, __set_errno_
-global __set_ERANGE_, __set_EINVAL_, __set_doserrno_, CallFpeHandler
+global file_putc_, __fprtf_, __set_EDOM_, __set_errno_, __set_ERANGE_, __set_EINVAL_, __set_doserrno_, CallFpeHandler
 file_putc_:
         push ebx
         mov ebx, eax
@@ -27,14 +26,14 @@ __fprtf_:
         and ebp, byte 30h
         mov byte [byte esi+0Ch], ah
         test ecx, ecx
-        jne short loc_98723
+        jne short .1
         mov eax, esi
         call __ioalloc_
-loc_98723:
+.1:
         mov cl, byte [byte esi+0Dh]
         xor edi, edi
         test cl, 4
-        je short loc_98741
+        je short .2
         mov ch, cl
         and ch, 0FAh
         mov al, ch
@@ -42,13 +41,13 @@ loc_98723:
         or al, 1
         mov edi, 1
         mov byte [byte esi+0Dh], al
-loc_98741:
+.2:
         mov ecx, file_putc_
         mov eax, esi
         call __prtf_
         mov edx, eax
         test edi, edi
-        je short loc_9876B
+        je short .3
         mov ah, byte [byte esi+0Dh]
         and ah, 0FAh
         mov bl, ah
@@ -57,11 +56,11 @@ loc_98741:
         mov eax, esi
         mov byte [byte esi+0Dh], bl
         call __flush_
-loc_9876B:
+.3:
         test byte [byte esi+0Ch], 20h
-        je short loc_98776
+        je short .4
         mov edx, 0FFFFFFFFh
-loc_98776:
+.4:
         mov edi, dword [byte esi+0Ch]
         or edi, ebp
         mov eax, edx

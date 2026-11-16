@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8C94C progbits alloc exec nowrite align=1
 extern __fatal_runtime_error_, str_StackOverflow, _STACKLOW, saved_ss
-global __CHK, __GRO, __STK, loc_8C970, __STKOVF
+global __CHK, __GRO, __STK, __STKOVF
 __CHK:
         xchg eax, dword [byte esp+04h]
         call __STK
@@ -13,13 +13,13 @@ __GRO:
         ret 4
 __STK:
         cmp eax, esp
-        jae short loc_8C970
+        jae short .1
         sub eax, esp
         neg eax
         cmp eax, dword [_STACKLOW]
-        jbe short loc_8C970
+        jbe short .1
         ret
-loc_8C970:
+.1:
         mov ax, ss
         cmp ax, word [saved_ss]
         je short __STKOVF

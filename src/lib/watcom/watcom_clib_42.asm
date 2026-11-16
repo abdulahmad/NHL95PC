@@ -3,48 +3,48 @@ bits 32
 %include "hockey.inc"
 section s_A321C progbits alloc exec nowrite align=1
 extern strtod_
-global forcedecpt_, loc_A3226, loc_A3239, loc_A3249, loc_A3251, loc_A3257, loc_A3261, __cnvs2d_
+global forcedecpt_, __cnvs2d_
 forcedecpt_:
         push ebx
         push ecx
         mov ebx, edx
         test byte [byte edx+014h], 1
-        jne short loc_A3261
-loc_A3226:
+        jne short .6
+.1:
         mov dh, byte [eax]
         test dh, dh
-        je short loc_A3239
+        je short .2
         cmp dh, 65h
-        je short loc_A3239
+        je short .2
         cmp dh, 45h
-        je short loc_A3239
+        je short .2
         inc eax
-        jmp short loc_A3226
-loc_A3239:
+        jmp short .1
+.2:
         mov edx, eax
         mov cl, byte [byte ebx+015h]
         dec eax
         cmp cl, 47h
-        je short loc_A3249
+        je short .3
         cmp cl, 67h
-        jne short loc_A3251
-loc_A3249:
+        jne short .4
+.3:
         cmp byte [eax], 30h
-        jne short loc_A3251
+        jne short .4
         dec eax
-        jmp short loc_A3249
-loc_A3251:
+        jmp short .3
+.4:
         cmp byte [eax], 2Eh
-        je short loc_A3257
+        je short .5
         inc eax
-loc_A3257:
+.5:
         mov bl, byte [edx]
         inc edx
         mov byte [eax], bl
         inc eax
         test bl, bl
-        jne short loc_A3257
-loc_A3261:
+        jne short .5
+.6:
         pop ecx
         pop ebx
         ret

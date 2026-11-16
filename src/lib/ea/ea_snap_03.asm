@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9D521 progbits alloc exec nowrite align=1
 extern _Extender, FpuSystemFlags, OldFpuVectorOffset, OldFpuVectorSelector, FpuCr0Bits
-global EmuRestoreFpuVector, loc_9D548, loc_9D55B, EmuRestoreRealVector, __save_8087_, loc_9D582
+global EmuRestoreFpuVector, EmuRestoreRealVector, __save_8087_
 EmuRestoreFpuVector:
         mov cl, 7
         mov ax, 2504h
@@ -13,16 +13,16 @@ EmuRestoreFpuVector:
         int 21h
         pop ds
         cmp byte [_Extender], 3
-        jl short loc_9D548
+        jl short .1
         call EmuRestoreRealVector
-        jmp short loc_9D55B
-loc_9D548:
+        jmp short .2
+.1:
         mov ecx, cr0
         and ecx, byte 0FFFFFFF9h
         mov dx, word [FpuCr0Bits]
         or cx, dx
         mov cr0, ecx
-loc_9D55B:
+.2:
         ret
 EmuRestoreRealVector:
         xor ebx, ebx
@@ -40,7 +40,6 @@ __save_8087_:
         fnsave [eax]
         wait
         ret
-loc_9D582:
         frstor [eax]
         wait
         ret

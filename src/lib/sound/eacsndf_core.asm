@@ -2,19 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_96A60 progbits alloc exec nowrite align=1
-extern __GETDS, _os_handle_3, SndHandleType, sndhandlecount, SndTimerHandle
-extern SndDriverTable, MemDescPtr, MviRewind, bcopy, DosReadFile, SndHandleTable
-global MviGetWidth, MviGetFrame, MviAtEnd, MviSeekFrame, loc_96AA4, loc_96AB2, loc_96AC0, MviDecodeKeyFrame
-global loc_96B15, loc_96B38, loc_96B73, loc_96BA1, loc_96BC5, loc_96C15, loc_96C2B, loc_96C43
-global MviDecodeDeltaFrame, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E, loc_96D27, loc_96D5E
-global loc_96D8B, loc_96DA9, loc_96DC4, loc_96DF4, loc_96E09, loc_96E2D, loc_96E34, loc_96E47
-global loc_96E5B, loc_96E73, MviNextFrame, loc_96EFF, loc_96F3D, loc_96F77, loc_96F90, loc_96FC7
-global loc_9702F, loc_97059, loc_97066, loc_9706F, SndOpenDriver, loc_9708D, loc_97097, loc_9709B
-global loc_970AB, loc_970C2, loc_970CC, loc_970D1, loc_97153, loc_9715C, SndDriverHandle, loc_97175
-global SndHandleDetect, SndHandleOpen, loc_971A5, SndHandleInit, SndHandleClose, loc_971D7, SndHandleService, loc_971F4
-global SndDriverCall, SndHandleSetTrack, loc_9722C, SndHandleMidi, loc_9724A, loc_9724E, loc_97266, SndHandlePlayDigi
-global loc_972A5, NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery
-global NullDriverSetTrack, NullDriverMidi, NullDriverPlayDigi
+extern __GETDS, _os_handle_3, SndHandleType, sndhandlecount, SndTimerHandle, SndDriverTable, MemDescPtr, MviRewind
+extern bcopy, DosReadFile, SndHandleTable
+global MviGetWidth, MviGetFrame, MviAtEnd, MviSeekFrame, MviDecodeKeyFrame, MviDecodeDeltaFrame, MviNextFrame, SndOpenDriver
+global SndDriverHandle, SndHandleDetect, SndHandleOpen, SndHandleInit, SndHandleClose, SndHandleService, SndDriverCall, SndHandleSetTrack
+global SndHandleMidi, SndHandlePlayDigi, NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery, NullDriverSetTrack, NullDriverMidi
+global NullDriverPlayDigi
 MviGetWidth:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+0Ch]
@@ -44,21 +37,21 @@ MviSeekFrame:
         mov edi, dword [byte esp+010h]
         mov esi, dword [byte esp+0Ch]
         test edi, edi
-        jge short loc_96AA4
+        jge short .1
         xor edi, edi
-loc_96AA4:
+.1:
         push esi
         call MviRewind
         add esp, byte 4
         cmp edi, dword [byte esi+04h]
-        jle short loc_96AC0
-loc_96AB2:
+        jle short .3
+.2:
         push esi
         call MviNextFrame
         add esp, byte 4
         cmp edi, dword [byte esi+04h]
-        jg short loc_96AB2
-loc_96AC0:
+        jg short .2
+.3:
         pop edi
         pop esi
         ret
@@ -89,24 +82,24 @@ MviDecodeKeyFrame:
         mov dword [byte esp+01Ch], edx
         mov eax, dword [byte esp+0Ch]
         cmp dword [byte eax+010h], byte 0
-        jle near loc_96C43
-loc_96B15:
+        jle near .8
+.1:
         xor ebp, ebp
         mov dword [byte esp+028h], ebp
         test ecx, ecx
-        jle near loc_96C2B
+        jle near .7
         mov eax, dword [byte esp+01Ch]
         shl eax, 2
         mov edx, dword [byte esp+018h]
         add edx, eax
         mov dword [byte esp+020h], edx
         mov edi, dword [byte esp+08h]
-loc_96B38:
+.2:
         mov ah, byte [esi]
         cmp ah, 0FFh
-        jne short loc_96B73
+        jne short .3
         cmp ah, byte [ebx]
-        jne short loc_96B73
+        jne short .3
         mov eax, dword [byte esp+020h]
         mov eax, dword [eax]
         add eax, edi
@@ -126,11 +119,11 @@ loc_96B38:
         mov edx, dword [ebx]
         mov dword [ecx+eax], edx
         add ebx, byte 4
-        jmp near loc_96C15
-loc_96B73:
+        jmp near .6
+.3:
         mov dh, byte [esi]
         cmp dh, 0FFh
-        jne short loc_96BA1
+        jne short .4
         mov al, byte [ebx]
         and al, 0Fh
         and eax, 0FFh
@@ -144,8 +137,8 @@ loc_96B73:
         mov edx, dword [byte esp+014h]
         mov dword [esp], edx
         inc ebx
-        jmp short loc_96BC5
-loc_96BA1:
+        jmp short .5
+.4:
         mov al, dh
         and al, 0Fh
         and eax, 0FFh
@@ -158,7 +151,7 @@ loc_96BA1:
         mov dword [byte esp+024h], edx
         mov edx, dword [byte esp+010h]
         mov dword [esp], edx
-loc_96BC5:
+.5:
         inc esi
         mov edx, dword [byte esp+020h]
         mov edx, dword [edx]
@@ -188,21 +181,21 @@ loc_96BC5:
         mov dword [edx], ebp
         mov eax, dword [ecx+eax]
         mov dword [ecx+edx], eax
-loc_96C15:
+.6:
         add edi, byte 4
         mov eax, dword [byte esp+028h]
         add eax, byte 4
         mov dword [byte esp+028h], eax
         cmp ecx, eax
-        jg near loc_96B38
-loc_96C2B:
+        jg near .2
+.7:
         mov ebp, dword [byte esp+01Ch]
         add ebp, byte 4
         mov dword [byte esp+01Ch], ebp
         mov edx, dword [byte esp+0Ch]
         cmp ebp, dword [byte edx+010h]
-        jl near loc_96B15
-loc_96C43:
+        jl near .1
+.8:
         add esp, byte 2Ch
         pop ebp
         pop edi
@@ -238,41 +231,41 @@ MviDecodeDeltaFrame:
         xor ebx, ebx
         mov dword [byte esp+020h], ebx
         cmp dword [byte esp+04Ch], byte 0
-        jle near loc_96E73
-loc_96CA2:
+        jle near .17
+.1:
         xor eax, eax
         mov dword [esp], eax
         test edx, edx
-        jle near loc_96E5B
+        jle near .16
         mov eax, dword [byte esp+020h]
         mov esi, dword [byte esp+030h]
         add eax, esi
         mov dword [byte esp+02Ch], eax
-loc_96CBD:
+.2:
         mov eax, dword [byte esp+010h]
         mov bl, byte [eax]
         cmp bl, 0FFh
-        jne short loc_96D27
+        jne short .6
         cmp bl, byte [edi]
-        jne short loc_96D27
+        jne short .6
         mov eax, dword [byte esp+020h]
         mov dword [byte esp+034h], eax
         inc dword [byte esp+010h]
         inc edi
         cmp eax, dword [byte esp+02Ch]
-        jge near loc_96E47
+        jge near .15
         mov esi, dword [esp]
         add esi, dword [byte esp+030h]
         mov dword [byte esp+028h], edx
         mov ebp, eax
         imul ebp, edx
-loc_96CF3:
+.3:
         mov eax, dword [esp]
         cmp esi, eax
-        jle short loc_96D0E
+        jle short .5
         lea ebx, [eax+ebp]
         add ebx, dword [byte esp+0Ch]
-loc_96D01:
+.4:
         mov ecx, edi
         inc edi
         mov cl, byte [ecx]
@@ -280,20 +273,20 @@ loc_96D01:
         inc ebx
         inc eax
         cmp eax, esi
-        jl short loc_96D01
-loc_96D0E:
+        jl short .4
+.5:
         add ebp, dword [byte esp+028h]
         mov ebx, dword [byte esp+034h]
         inc ebx
         mov dword [byte esp+034h], ebx
         cmp ebx, dword [byte esp+02Ch]
-        jge near loc_96E47
-        jmp short loc_96CF3
-loc_96D27:
+        jge near .15
+        jmp short .3
+.6:
         mov eax, dword [byte esp+010h]
         mov cl, byte [eax]
         cmp cl, 0FFh
-        jne short loc_96D5E
+        jne short .7
         mov al, byte [edi]
         and al, 0Fh
         and eax, 0FFh
@@ -308,8 +301,8 @@ loc_96D27:
         mov eax, dword [byte esp+018h]
         mov dword [byte esp+03Ch], eax
         inc edi
-        jmp short loc_96D8B
-loc_96D5E:
+        jmp short .8
+.7:
         mov al, cl
         and al, 0Fh
         and eax, 0FFh
@@ -324,52 +317,52 @@ loc_96D5E:
         mov dword [byte esp+04h], eax
         mov eax, dword [byte esp+01Ch]
         mov dword [byte esp+03Ch], eax
-loc_96D8B:
+.8:
         inc dword [byte esp+010h]
         mov eax, dword [byte esp+030h]
         test eax, eax
-        jle near loc_96E47
+        jle near .15
         mov ebx, dword [byte esp+020h]
         mov dword [byte esp+038h], ebx
         add eax, ebx
         mov dword [byte esp+024h], eax
-loc_96DA9:
+.9:
         mov esi, dword [byte esp+030h]
         test esi, esi
-        jle near loc_96E34
+        jle near .14
         mov ebx, dword [byte esp+038h]
         mov ecx, dword [esp]
         mov eax, ecx
         add ecx, esi
         mov dword [byte esp+044h], ecx
-loc_96DC4:
+.10:
         mov dword [byte esp+08h], eax
         mov dword [byte esp+048h], ebx
         mov ebp, dword [byte esp+04Ch]
         cmp ebx, ebp
-        jge short loc_96E2D
+        jge short .13
         cmp eax, edx
-        jge short loc_96E2D
+        jge short .13
         mov ecx, dword [byte esp+040h]
         add ecx, eax
         mov esi, dword [byte esp+04h]
         add esi, ebx
         test esi, esi
-        jl short loc_96DF4
+        jl short .11
         cmp esi, ebp
-        jge short loc_96DF4
+        jge short .11
         test ecx, ecx
-        jl short loc_96DF4
+        jl short .11
         cmp ecx, edx
-        jl short loc_96E09
-loc_96DF4:
+        jl short .12
+.11:
         mov esi, dword [byte esp+0Ch]
         add esi, dword [byte esp+08h]
         mov ecx, dword [byte esp+048h]
         imul ecx, edx
         mov byte [ecx+esi], 0
-        jmp short loc_96E2D
-loc_96E09:
+        jmp short .13
+.12:
         mov ebp, dword [byte esp+03Ch]
         add ebp, ecx
         mov ecx, esi
@@ -383,31 +376,31 @@ loc_96E09:
         add esi, dword [byte esp+014h]
         mov cl, byte [ecx]
         mov byte [esi], cl
-loc_96E2D:
+.13:
         inc eax
         cmp eax, dword [byte esp+044h]
-        jl short loc_96DC4
-loc_96E34:
+        jl short .10
+.14:
         mov esi, dword [byte esp+038h]
         inc esi
         mov dword [byte esp+038h], esi
         cmp esi, dword [byte esp+024h]
-        jl near loc_96DA9
-loc_96E47:
+        jl near .9
+.15:
         mov eax, dword [byte esp+030h]
         mov ebx, dword [esp]
         add ebx, eax
         mov dword [esp], ebx
         cmp edx, ebx
-        jg near loc_96CBD
-loc_96E5B:
+        jg near .2
+.16:
         mov eax, dword [byte esp+030h]
         mov esi, dword [byte esp+020h]
         add esi, eax
         mov dword [byte esp+020h], esi
         cmp esi, dword [byte esp+04Ch]
-        jl near loc_96CA2
-loc_96E73:
+        jl near .1
+.17:
         add esp, byte 50h
         pop ebp
         pop edi
@@ -460,10 +453,10 @@ MviNextFrame:
         call MviAtEnd
         add esp, byte 4
         test eax, eax
-        je short loc_96EFF
+        je short .1
         mov eax, dword [byte ebp+034h]
-        jmp near loc_9706F
-loc_96EFF:
+        jmp near .9
+.1:
         mov edx, dword [byte ebp+03Ch]
         mov eax, dword [byte ebp+038h]
         mov dword [byte ebp+03Ch], eax
@@ -471,7 +464,7 @@ loc_96EFF:
         mov dword [byte ebp+038h], eax
         mov dword [byte ebp+034h], edx
         cmp dword [byte ebp+024h], byte 0
-        je short loc_96F3D
+        je short .2
         mov edx, dword [byte ebp+030h]
         push edx
         call MemDescPtr
@@ -486,18 +479,18 @@ loc_96EFF:
         push ebx
         call DosReadFile
         add esp, byte 0Ch
-loc_96F3D:
+.2:
         cmp byte [esi], 0
-        jne short loc_96F90
+        jne short .4
         cmp byte [byte esi+01h], 0
-        jne short loc_96F90
+        jne short .4
         mov eax, dword [byte esp+04h]
         imul eax, dword [byte esp+08h]
         add esi, byte 2
         lea ebp, [byte eax+02h]
         mov ecx, dword [byte edi+024h]
         test ecx, ecx
-        je short loc_96F77
+        je short .3
         push eax
         mov eax, dword [byte edi+034h]
         mov eax, dword [byte eax+02Ch]
@@ -506,8 +499,8 @@ loc_96F3D:
         push ecx
         call DosReadFile
         add esp, byte 0Ch
-        jmp near loc_97066
-loc_96F77:
+        jmp near .8
+.3:
         push eax
         mov eax, dword [byte edi+034h]
         mov eax, dword [byte eax+02Ch]
@@ -516,11 +509,11 @@ loc_96F77:
         push esi
         call bcopy
         add esp, byte 0Ch
-        jmp near loc_97066
-loc_96F90:
+        jmp near .8
+.4:
         mov ecx, dword [byte edi+024h]
         test ecx, ecx
-        jne short loc_96FC7
+        jne short .5
         add esi, byte 2
         xor eax, eax
         mov al, byte [byte esi+01h]
@@ -538,8 +531,8 @@ loc_96F90:
         lea ebp, [edx+eax]
         add esi, byte 4
         add dword [byte esp+014h], byte 6
-        jmp short loc_9702F
-loc_96FC7:
+        jmp short .6
+.5:
         push byte 4
         lea eax, [byte esp+04h]
         push eax
@@ -578,10 +571,10 @@ loc_96FC7:
         mov ecx, dword [byte esp+0Ch]
         add eax, ecx
         mov dword [byte esp+014h], eax
-loc_9702F:
+.6:
         add ebp, byte 6
         cmp dword [byte esp+010h], byte 4
-        jne short loc_97059
+        jne short .7
         mov ebx, dword [byte esp+014h]
         mov edx, esi
         mov eax, edi
@@ -595,16 +588,16 @@ loc_9702F:
         pop edi
         pop esi
         ret
-loc_97059:
+.7:
         mov ebx, dword [byte esp+014h]
         mov edx, esi
         mov eax, edi
         call MviDecodeDeltaFrame
-loc_97066:
+.8:
         inc dword [byte edi+04h]
         add dword [byte edi+02Ch], ebp
         mov eax, dword [byte edi+034h]
-loc_9706F:
+.9:
         mov eax, dword [byte eax+02Ch]
         add esp, byte 18h
         pop ebp
@@ -621,37 +614,37 @@ SndOpenDriver:
         sub esp, byte 4
         mov ebx, eax
         test eax, eax
-        jl short loc_9708D
+        jl short .1
         cmp eax, byte 6
-        jle short loc_97097
-loc_9708D:
+        jle short .2
+.1:
         mov eax, 0FFFFFFFFh
-        jmp near loc_9715C
-loc_97097:
+        jmp near .9
+.2:
         xor eax, eax
-        jmp short loc_970AB
-loc_9709B:
+        jmp short .4
+.3:
         imul edx, eax, byte 2Ch
         cmp ebx, dword [dword edx+SndHandleTable+028h]
-        je near loc_9715C
+        je near .9
         inc eax
-loc_970AB:
+.4:
         mov edx, dword [sndhandlecount]
         cmp eax, edx
-        jl short loc_9709B
+        jl short .3
         test edx, edx
-        jne short loc_970D1
+        jne short .7
         xor eax, eax
         mov edi, 0FFFFFFFFh
-        jmp short loc_970CC
-loc_970C2:
+        jmp short .6
+.5:
         imul edx, eax, byte 2Ch
         mov dword [dword edx+SndDriverTable+028h], edi
         inc eax
-loc_970CC:
+.6:
         cmp eax, byte 7
-        jb short loc_970C2
-loc_970D1:
+        jb short .5
+.7:
         mov eax, dword [sndhandlecount]
         mov dword [esp], eax
         imul esi, ebx, byte 2Ch
@@ -672,7 +665,7 @@ loc_970D1:
         call SndHandleOpen
         cwde
         test eax, eax
-        je near loc_9708D
+        je near .1
         mov edx, ecx
         mov eax, ebx
         call SndHandleInit
@@ -683,15 +676,15 @@ loc_970D1:
         mov eax, ebx
         call SndDriverCall
         test eax, eax
-        jle short loc_97153
+        jle short .8
         cmp eax, byte 64h
-        jge short loc_97153
+        jge short .8
         mov eax, dword [esp]
         mov dword [SndTimerHandle], eax
-loc_97153:
+.8:
         mov eax, dword [esp]
         inc dword [sndhandlecount]
-loc_9715C:
+.9:
         add esp, byte 4
         pop ebp
         pop edi
@@ -702,10 +695,10 @@ loc_9715C:
         ret
 SndDriverHandle:
         cmp dword [sndhandlecount], byte 0
-        jg short loc_97175
+        jg short .1
         mov eax, 0FFFFFFFFh
         ret
-loc_97175:
+.1:
         imul eax, byte 2Ch
         mov eax, dword [dword eax+SndDriverTable+028h]
         ret
@@ -727,7 +720,6 @@ SndHandleOpen:
         imul eax, byte 2Ch
         push edx
         call dword [dword eax+SndHandleTable+04h]
-loc_971A5:
         add esp, byte 4
         pop ecx
         pop ebx
@@ -739,17 +731,17 @@ SndHandleInit:
         imul eax, byte 2Ch
         push edx
         call dword [dword eax+SndHandleTable+08h]
-        jmp short loc_971A5
+        jmp short SndHandleOpen+011h
 SndHandleClose:
         push ebx
         push ecx
         push edx
         and eax, 0FFh
         cmp eax, dword [sndhandlecount]
-        jge short loc_971D7
+        jge short .1
         imul eax, byte 2Ch
         call dword [dword eax+SndHandleTable+0Ch]
-loc_971D7:
+.1:
         pop edx
         pop ecx
         pop ebx
@@ -760,10 +752,10 @@ SndHandleService:
         push edx
         and eax, 0FFh
         cmp eax, dword [sndhandlecount]
-        jge short loc_971F4
+        jge short .1
         imul eax, byte 2Ch
         call dword [dword eax+SndHandleTable+010h]
-loc_971F4:
+.1:
         pop edx
         pop ecx
         pop ebx
@@ -775,12 +767,12 @@ SndDriverCall:
         imul eax, byte 2Ch
         push edx
         call dword [dword eax+SndHandleTable+014h]
-        jmp short loc_971A5
+        jmp short SndHandleOpen+011h
 SndHandleSetTrack:
         push ecx
         and eax, 0FFh
         cmp eax, dword [sndhandlecount]
-        jge short loc_9722C
+        jge short .1
         imul eax, byte 2Ch
         push ebx
         xor ebx, ebx
@@ -788,7 +780,7 @@ SndHandleSetTrack:
         push ebx
         call dword [dword eax+SndHandleTable+018h]
         add esp, byte 8
-loc_9722C:
+.1:
         pop ecx
         ret
 SndHandleMidi:
@@ -796,16 +788,16 @@ SndHandleMidi:
         xor ecx, ecx
         mov cl, al
         cmp ecx, dword [sndhandlecount]
-        jge short loc_97266
+        jge short .3
         mov ah, byte [ebx]
         and ah, 0F0h
         cmp ah, 80h
-        je short loc_9724A
+        je short .1
         cmp ah, 90h
-        jne short loc_9724E
-loc_9724A:
+        jne short .2
+.1:
         add byte [byte ebx+01h], 18h
-loc_9724E:
+.2:
         and eax, 0FFh
         imul eax, byte 2Ch
         push ebx
@@ -814,7 +806,7 @@ loc_9724E:
         push ebx
         call dword [dword eax+SndHandleTable+01Ch]
         add esp, byte 8
-loc_97266:
+.3:
         pop ecx
         ret
 SndHandlePlayDigi:
@@ -823,7 +815,7 @@ SndHandlePlayDigi:
         push ebp
         and eax, 0FFh
         cmp eax, dword [sndhandlecount]
-        jge short loc_972A5
+        jge short .1
         imul eax, byte 2Ch
         mov edi, dword [byte esp+024h]
         push edi
@@ -842,7 +834,7 @@ SndHandlePlayDigi:
         push edx
         call dword [dword eax+SndHandleTable+020h]
         add esp, byte 24h
-loc_972A5:
+.1:
         pop ebp
         pop edi
         pop esi

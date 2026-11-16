@@ -13,34 +13,10 @@ extern GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetRate, Gu
 extern GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController, SetClipWindow, SetBitmapClip, unk_D5382, unk_D5408
 extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326
 extern word_F53B0, word_F53C2, word_F58D2, word_F58D4, word_F58D6
-global GusAllocDosBuffer, loc_A004D, GusFreeDosBuffer, GusLoadMidiPatch, loc_A00F7, loc_A0102, loc_A0107, loc_A0124
-global loc_A013D, loc_A014B, loc_A0200, loc_A020C, loc_A0215, loc_A021C, loc_A027D, loc_A027F
-global GusStartup, loc_A0301, loc_A0308, loc_A0340, loc_A0358, loc_A0396, loc_A03D6, loc_A03DE
-global loc_A03E3, loc_A0416, loc_A041D, loc_A0425, loc_A042A, loc_A0444, GusDriverClose, loc_A0477
-global loc_A0479, loc_A0482, loc_A0484, loc_A048D, loc_A048F, loc_A04B2, GusProbe, loc_A04FD
-global loc_A0507, loc_A0521, loc_A052B, loc_A0532, GusDetect, loc_A056E, loc_A0591
-global GusInitDigi, loc_A05CE, GusInitMusic, loc_A0606, GusCloseDigi
-global loc_A063E, GusCloseMusic, loc_A0676, GusService, loc_A06A4, loc_A06AC
-global loc_A06B4, loc_A06EB, loc_A0700, loc_A0707, loc_A0709, loc_A0710, loc_A0718, loc_A071D
-global loc_A0760, loc_A0762, GusQuery, loc_A07C2, loc_A07D2, loc_A07D4, loc_A07DD
-global loc_A07E7, loc_A07FB, loc_A080F, loc_A0833, loc_A083A, loc_A083C, loc_A0843, GusSetTrack
-global GusPlayDigi, loc_A08D2, GusProgramChange, loc_A0950, loc_A0959, loc_A0979
-global GusPitchBend, GusStopVoice, GusStartVoice, GusVoiceStartSample, GusVoiceSetVolume, loc_A0CDA, loc_A0CE1, GusSetVoiceOwner
-global GusVoiceController, loc_A0D92, GusMusicMidi, loc_A0DF7, loc_A0E03, loc_A0E0B, loc_A0E43
-global loc_A0E4A, loc_A0E62, loc_A0EC5, loc_A0ECA, loc_A0EE1, loc_A0EE6, loc_A0EFF, loc_A0F1E
-global loc_A0F5A, loc_A0F7B, loc_A0F7D, loc_A0F98, loc_A0FBC, loc_A0FBE, loc_A0FD7, loc_A0FDC
-global GusDigiMidi, loc_A1048, loc_A1054, loc_A105C, loc_A1094, loc_A109B, loc_A10B3
-global loc_A1116, loc_A111B, loc_A1132, loc_A1137, loc_A1151, loc_A1171, loc_A1191, loc_A1193
-global loc_A11B5, loc_A11CC, loc_A11EB, loc_A11F0, GusNoteOn, loc_A1245, loc_A124A, loc_A1269
-global loc_A126F, loc_A1283, loc_A1288, loc_A12A4, loc_A12B0, loc_A12B8, loc_A12F5, loc_A12F7
-global loc_A1307, loc_A132D, loc_A132F, loc_A133B, loc_A133D, loc_A135F, loc_A1364, loc_A1375
-global loc_A138D, loc_A13C8, loc_A13D1, loc_A13DB, loc_A13DD, loc_A1412, loc_A143D, loc_A1446
-global loc_A1450, loc_A1452, loc_A1484, loc_A14A8, GusNoteOff, loc_A14F6, loc_A1502, loc_A150A
-global loc_A1548, loc_A154A, loc_A155F, loc_A159B, loc_A159D, loc_A15A2, GusFreeVoice, GusController
-global loc_A1696, loc_A169B, loc_A16B5, loc_A16BA, loc_A16C8, loc_A16D6, loc_A16E4, loc_A1715
-global loc_A171E, loc_A1726, loc_A1753, loc_A1755, loc_A1757, loc_A176D, loc_A1776, loc_A1780
-global loc_A17A5, loc_A17A7, loc_A17BD, loc_A17C6, loc_A17D0, loc_A17F7, loc_A17F9, PrintStringCentered
-global ResetClipRect, ResetClipWindow
+global GusAllocDosBuffer, GusFreeDosBuffer, GusLoadMidiPatch, GusStartup, GusDriverClose, GusProbe, GusDetect, GusInitDigi
+global GusInitMusic, GusCloseDigi, GusCloseMusic, GusService, GusQuery, GusSetTrack, GusPlayDigi, GusProgramChange
+global GusPitchBend, GusStopVoice, GusStartVoice, GusVoiceStartSample, GusVoiceSetVolume, GusSetVoiceOwner, GusVoiceController, GusMusicMidi
+global GusDigiMidi, GusNoteOn, GusNoteOff, GusFreeVoice, GusController, PrintStringCentered, ResetClipRect, ResetClipWindow
 GusAllocDosBuffer:
         push dword 4Ch
         call __CHK
@@ -78,9 +54,9 @@ GusAllocDosBuffer:
         mov edx, dword [byte ebp-04h]
         xor dx, dx
         cmp edx, eax
-        je short loc_A004D
+        je short .1
         add dword [byte ebp-04h], 800h
-loc_A004D:
+.1:
         mov eax, dword [byte ebp-04h]
         add eax, 0FFFFh
         mov dword [byte ebp-08h], eax
@@ -142,33 +118,33 @@ GusLoadMidiPatch:
         mov eax, dword [dword_F55F4]
         mov dword [byte ebp-020h], eax
         mov dword [byte ebp-04h], 0
-loc_A00F7:
+.1:
         cmp dword [byte ebp-04h], 100h
-        jl short loc_A0107
-        jmp short loc_A0124
-loc_A0102:
+        jl short .3
+        jmp short .4
+.2:
         inc dword [byte ebp-04h]
-        jmp short loc_A00F7
-loc_A0107:
+        jmp short .1
+.3:
         imul eax, dword [byte ebp-04h], byte 1Ch
         mov word [dword eax+word_F371C], 0
         imul eax, dword [byte ebp-04h], byte 1Ch
         mov dword [dword eax+dword_F371E], 0
-        jmp short loc_A0102
-loc_A0124:
+        jmp short .2
+.4:
         mov cl, byte [dword_F55E4]
         mov eax, 1
         shl eax, cl
         test dword [dword_D543C], eax
-        jne short loc_A013D
+        jne short .5
         or byte [byte ebp-018h], 1
-loc_A013D:
+.5:
         mov dword [byte ebp-014h], unk_D5408
         mov dword [byte ebp-010h], 0
-loc_A014B:
+.6:
         mov eax, dword [byte ebp-014h]
         cmp dword [eax], byte 0FFFFFFFFh
-        je near loc_A0215
+        je near .9
         mov edx, str_CULTRASNDMIDI
         lea eax, [byte ebp-074h]
         call strcpy_
@@ -183,12 +159,12 @@ loc_A014B:
         lea eax, [byte ebp-074h]
         call GusReadPatchHeader
         test eax, eax
-        jne near loc_A020C
+        jne near .8
         xor eax, eax
         mov ax, word [dword ebp-0DFh]
         add eax, dword [byte ebp-010h]
         cmp eax, byte 0Ah
-        jge short loc_A0215
+        jge short .9
         mov eax, dword [byte ebp-014h]
         mov eax, dword [eax]
         mov dword [byte ebp-01Ch], eax
@@ -207,26 +183,26 @@ loc_A014B:
         lea eax, [byte ebp-074h]
         call GusLoadPatch
         test eax, eax
-        je short loc_A0200
+        je short .7
         imul eax, dword [byte ebp-01Ch], byte 1Ch
         mov word [dword eax+word_F371C], 0
         imul eax, dword [byte ebp-01Ch], byte 1Ch
         mov dword [dword eax+dword_F371E], 0
-        jmp short loc_A020C
-loc_A0200:
+        jmp short .8
+.7:
         xor eax, eax
         mov ax, word [dword ebp-0DFh]
         add dword [byte ebp-010h], eax
-loc_A020C:
+.8:
         add dword [byte ebp-014h], byte 0Eh
-        jmp near loc_A014B
-loc_A0215:
+        jmp near .6
+.9:
         mov dword [byte ebp-04h], 0
-loc_A021C:
+.10:
         mov eax, dword [byte ebp-04h]
         shl eax, 2
         cmp dword [dword eax+dword_D5424], byte 0FFFFFFFFh
-        je short loc_A027F
+        je short .12
         mov eax, dword [byte ebp-04h]
         inc dword [byte ebp-04h]
         shl eax, 2
@@ -239,7 +215,7 @@ loc_A021C:
         mov dword [byte ebp-0Ch], eax
         imul eax, dword [byte ebp-08h], byte 1Ch
         cmp word [dword eax+word_F371C], byte 0
-        jne short loc_A027D
+        jne short .11
         mov ebx, 1Ch
         imul edx, dword [byte ebp-0Ch], byte 1Ch
         mov eax, word_F371C
@@ -248,9 +224,9 @@ loc_A021C:
         mov ecx, word_F371C
         add eax, ecx
         call memcpy_
-loc_A027D:
-        jmp short loc_A021C
-loc_A027F:
+.11:
+        jmp short .10
+.12:
         mov esp, ebp
         pop ebp
         pop edi
@@ -271,46 +247,46 @@ GusStartup:
         mov ebp, esp
         sub esp, 10h
         cmp dword [dword_D53A8], byte 0
-        jne near loc_A0444
+        jne near .13
         push byte 0
         call GusProbe
         add esp, byte 4
         test ax, ax
-        je near loc_A0444
+        je near .13
         call GusAllocDosBuffer
         mov dword [dword_F55F4], eax
         mov word [word_F531C], 1Ch
         cmp byte [byte_F5320], 7
-        jbe short loc_A0308
+        jbe short .2
         cmp byte [byte_F5321], 7
-        ja short loc_A0301
+        ja short .1
         mov al, byte [byte_F5321]
         mov byte [byte ebp-04h], al
         mov al, byte [byte_F5320]
         mov byte [byte_F5321], al
         mov al, byte [byte ebp-04h]
         mov byte [byte_F5320], al
-        jmp short loc_A0308
-loc_A0301:
+        jmp short .2
+.1:
         mov byte [byte_F5320], 5
-loc_A0308:
+.2:
         mov eax, word_F531C
         call GusOpen
         test eax, eax
-        jne near loc_A0444
+        jne near .13
         mov eax, 7Fh
         call GusSetMasterVolume
         mov dword [dword_D53A8], 1
         mov dword [dword_F55E4], 0
         call GusDramFreeTotal
         mov dword [byte ebp-08h], eax
-loc_A0340:
+.3:
         cmp dword [byte ebp-08h], 40000h
-        jle short loc_A0358
+        jle short .4
         inc dword [dword_F55E4]
         sub dword [byte ebp-08h], 40000h
-        jmp short loc_A0340
-loc_A0358:
+        jmp short .3
+.4:
         mov eax, 801h
         call GusDramAlloc
         mov dword [dword_F55E8], eax
@@ -318,14 +294,14 @@ loc_A0358:
         call getenv_
         mov dword [byte ebp-010h], eax
         cmp dword [byte ebp-010h], byte 0
-        je short loc_A0396
+        je short .5
         mov edx, dword [byte ebp-010h]
         mov eax, str_CULTRASNDMIDI
         call strcpy_
         mov edx, str_MIDI
         mov eax, str_CULTRASNDMIDI
         call strcat_
-loc_A0396:
+.5:
         call GusLoadMidiPatch
         push dword 800h
         push dword [dword_F55E8]
@@ -336,14 +312,14 @@ loc_A0396:
         mov word [word_F58D6], 0
         mov word [word_F58D2], 0
         mov dword [byte ebp-0Ch], 0
-loc_A03D6:
+.6:
         cmp dword [byte ebp-0Ch], byte 4
-        jl short loc_A03E3
-        jmp short loc_A0416
-loc_A03DE:
+        jl short .8
+        jmp short .9
+.7:
         inc dword [byte ebp-0Ch]
-        jmp short loc_A03D6
-loc_A03E3:
+        jmp short .6
+.8:
         mov cl, byte [byte ebp-0Ch]
         mov eax, 1
         shl eax, cl
@@ -354,25 +330,25 @@ loc_A03E3:
         mov word [dword edx+word_F5326], ax
         imul edx, dword [byte ebp-0Ch], byte 22h
         mov dword [dword edx+dword_F5332], unk_D5382
-        jmp short loc_A03DE
-loc_A0416:
+        jmp short .7
+.9:
         mov dword [byte ebp-0Ch], 0
-loc_A041D:
+.10:
         cmp dword [byte ebp-0Ch], byte 10h
-        jl short loc_A042A
-        jmp short loc_A0444
-loc_A0425:
+        jl short .12
+        jmp short .13
+.11:
         inc dword [byte ebp-0Ch]
-        jmp short loc_A041D
-loc_A042A:
+        jmp short .10
+.12:
         imul esi, dword [byte ebp-0Ch], byte 1Eh
         mov ecx, 7
         lea edi, [dword esi+unk_F53AC]
         mov esi, unk_D5382
         rep movsd
         movsw
-        jmp short loc_A0425
-loc_A0444:
+        jmp short .11
+.13:
         mov esp, ebp
         pop ebp
         pop edi
@@ -393,28 +369,28 @@ GusDriverClose:
         mov ebp, esp
         sub esp, 0
         cmp dword [dword_D53A8], byte 0
-        je short loc_A0477
+        je short .1
         cmp dword [dword_D53B4], byte 0
-        je short loc_A0479
-loc_A0477:
-        jmp short loc_A0482
-loc_A0479:
+        je short .2
+.1:
+        jmp short .3
+.2:
         cmp dword [dword_D53B0], byte 0
-        je short loc_A0484
-loc_A0482:
-        jmp short loc_A048D
-loc_A0484:
+        je short .4
+.3:
+        jmp short .5
+.4:
         cmp dword [dword_D53AC], byte 0
-        je short loc_A048F
-loc_A048D:
-        jmp short loc_A04B2
-loc_A048F:
+        je short .6
+.5:
+        jmp short .7
+.6:
         call GusClose
         call GusFreeDosBuffer
         mov dword [dword_D53A4], 0
         mov dword [dword_D53A8], 0
         call GusStopStream
-loc_A04B2:
+.7:
         pop ebp
         pop edi
         pop esi
@@ -433,30 +409,30 @@ GusProbe:
         mov ebp, esp
         sub esp, 4
         cmp dword [dword_D53A4], byte 0
-        jne short loc_A052B
+        jne short .4
         cmp dword [dword_D53A0], byte 0
-        jne short loc_A0507
+        jne short .2
         mov eax, word_F531C
         call GusGetEnvConfig
         test eax, eax
-        jne short loc_A04FD
+        jne short .1
         mov dword [byte ebp-04h], 0
-        jmp short loc_A0532
-loc_A04FD:
+        jmp short .5
+.1:
         mov dword [dword_D53A0], 1
-loc_A0507:
+.2:
         xor eax, eax
         mov ax, word [word_F531E]
         call GusProbePort
         test eax, eax
-        jne short loc_A0521
+        jne short .3
         mov dword [byte ebp-04h], 0
-        jmp short loc_A0532
-loc_A0521:
+        jmp short .5
+.3:
         mov dword [dword_D53A4], 1
-loc_A052B:
+.4:
         mov dword [byte ebp-04h], 1
-loc_A0532:
+.5:
         mov eax, dword [byte ebp-04h]
         mov esp, ebp
         pop ebp
@@ -477,10 +453,10 @@ GusDetect:
         mov eax, word_F531C
         call GusGetEnvConfig
         test eax, eax
-        jne short loc_A056E
+        jne short .1
         mov dword [byte ebp-04h], 0
-        jmp short loc_A0591
-loc_A056E:
+        jmp short .2
+.1:
         mov dword [dword_D53A0], 1
         xor eax, eax
         mov al, byte [byte_F5320]
@@ -490,7 +466,7 @@ loc_A056E:
         mov ax, word [word_F531E]
         or edx, eax
         mov dword [byte ebp-04h], edx
-loc_A0591:
+.2:
         mov eax, dword [byte ebp-04h]
         mov esp, ebp
         pop ebp
@@ -509,10 +485,10 @@ GusInitDigi:
         mov ebp, esp
         sub esp, 0
         cmp dword [dword_D53B4], byte 0
-        jne short loc_A05CE
+        jne short .1
         call GusStartup
         mov dword [dword_D53B4], 1
-loc_A05CE:
+.1:
         pop ebp
         pop edi
         pop esi
@@ -529,10 +505,10 @@ GusInitMusic:
         mov ebp, esp
         sub esp, 0
         cmp dword [dword_D53B0], byte 0
-        jne short loc_A0606
+        jne short .1
         call GusStartup
         mov dword [dword_D53B0], 1
-loc_A0606:
+.1:
         pop ebp
         pop edi
         pop esi
@@ -549,10 +525,10 @@ GusCloseDigi:
         mov ebp, esp
         sub esp, 0
         cmp dword [dword_D53B4], byte 0
-        je short loc_A063E
+        je short .1
         mov dword [dword_D53B4], 0
         call GusDriverClose
-loc_A063E:
+.1:
         pop ebp
         pop edi
         pop esi
@@ -569,10 +545,10 @@ GusCloseMusic:
         mov ebp, esp
         sub esp, 0
         cmp dword [dword_D53B0], byte 0
-        je short loc_A0676
+        je short .1
         mov dword [dword_D53B0], 0
         call GusDriverClose
-loc_A0676:
+.1:
         pop ebp
         pop edi
         pop esi
@@ -590,15 +566,15 @@ GusService:
         sub esp, 14h
         mov dword [byte ebp-0Ch], 0
         mov dword [byte ebp-04h], 1
-loc_A06A4:
+.1:
         cmp dword [byte ebp-0Ch], byte 4
-        jl short loc_A06B4
-        jmp short loc_A0709
-loc_A06AC:
+        jl short .3
+        jmp short .7
+.2:
         inc dword [byte ebp-0Ch]
         shl dword [byte ebp-04h], 1
-        jmp short loc_A06A4
-loc_A06B4:
+        jmp short .1
+.3:
         imul eax, dword [byte ebp-0Ch], byte 22h
         mov edx, word_F5324
         add edx, eax
@@ -608,43 +584,43 @@ loc_A06B4:
         mov eax, dword [word_F58D2-2]
         sar eax, 10h
         test edx, eax
-        je short loc_A06EB
+        je short .4
         push dword [byte ebp-0Ch]
         call GusStreamIdle
         add esp, byte 4
         test eax, eax
-        je short loc_A06EB
+        je short .4
         mov eax, dword [byte ebp-08h]
         call GusFreeVoice
-loc_A06EB:
+.4:
         mov eax, dword [byte ebp-08h]
         cmp word [byte eax+06h], byte 1
-        jge short loc_A0700
+        jge short .5
         mov eax, dword [byte ebp-08h]
         mov word [byte eax+06h], 0
-        jmp short loc_A0707
-loc_A0700:
+        jmp short .6
+.5:
         mov eax, dword [byte ebp-08h]
         dec word [byte eax+06h]
-loc_A0707:
-        jmp short loc_A06AC
-loc_A0709:
+.6:
+        jmp short .2
+.7:
         mov dword [byte ebp-0Ch], 0
-loc_A0710:
+.8:
         cmp dword [byte ebp-0Ch], byte 4
-        jl short loc_A071D
-        jmp short loc_A0762
-loc_A0718:
+        jl short .10
+        jmp short .12
+.9:
         inc dword [byte ebp-0Ch]
-        jmp short loc_A0710
-loc_A071D:
+        jmp short .8
+.10:
         imul eax, dword [byte ebp-0Ch], byte 16h
         mov edx, dword_F558C
         add edx, eax
         mov dword [byte ebp-010h], edx
         mov eax, dword [byte ebp-010h]
         cmp word [byte eax+0Ah], byte 0
-        je short loc_A0760
+        je short .11
         mov eax, dword [byte ebp-010h]
         mov eax, dword [eax]
         mov dword [byte ebp-014h], eax
@@ -661,9 +637,9 @@ loc_A071D:
         push dword [byte ebp-0Ch]
         call GusStreamApplyBend
         add esp, byte 14h
-loc_A0760:
-        jmp short loc_A0718
-loc_A0762:
+.11:
+        jmp short .9
+.12:
         call GusServiceStream
         mov esp, ebp
         pop ebp
@@ -682,51 +658,51 @@ GusQuery:
         mov ebp, esp
         sub esp, 0Ch
         cmp dword [dword_D53A8], byte 0
-        je near loc_A083C
+        je near .10
         mov eax, dword [byte ebp+014h]
         mov dword [byte ebp-0Ch], eax
         cmp word [byte ebp-0Ch], byte 9
-        jb short loc_A07C2
+        jb short .1
         cmp word [byte ebp-0Ch], byte 9
-        jbe short loc_A07E7
+        jbe short .5
         cmp word [byte ebp-0Ch], byte 0Ah
-        jbe short loc_A07FB
+        jbe short .6
         cmp word [byte ebp-0Ch], byte 32h
-        je short loc_A080F
-        jmp near loc_A0833
-        jmp near loc_A0833
-loc_A07C2:
+        je short .7
+        jmp near .8
+        jmp near .8
+.1:
         cmp word [byte ebp-0Ch], byte 7
-        jb short loc_A07D2
+        jb short .2
         cmp word [byte ebp-0Ch], byte 7
-        jbe short loc_A07D4
-        jmp short loc_A07DD
-loc_A07D2:
-        jmp short loc_A0833
-loc_A07D4:
+        jbe short .3
+        jmp short .4
+.2:
+        jmp short .8
+.3:
         mov dword [byte ebp-04h], 56h
-        jmp short loc_A083A
-loc_A07DD:
+        jmp short .9
+.4:
         call GusStreamBusy
         mov dword [byte ebp-04h], eax
-        jmp short loc_A083A
-loc_A07E7:
+        jmp short .9
+.5:
         mov eax, dword [byte ebp+014h]
         sar eax, 10h
         push eax
         call GusStreamIdle
         add esp, byte 4
         mov dword [byte ebp-04h], eax
-        jmp short loc_A083A
-loc_A07FB:
+        jmp short .9
+.6:
         mov eax, dword [byte ebp+014h]
         sar eax, 10h
         push eax
         call GusStreamGetVolume
         add esp, byte 4
         mov dword [byte ebp-04h], eax
-        jmp short loc_A083A
-loc_A080F:
+        jmp short .9
+.7:
         mov eax, dword [byte ebp+014h]
         sar eax, 10h
         and eax, 0FFh
@@ -737,14 +713,14 @@ loc_A080F:
         call GusStreamSetVolume
         add esp, byte 8
         mov dword [byte ebp-04h], 0FFFFFFFFh
-        jmp short loc_A083A
-loc_A0833:
+        jmp short .9
+.8:
         mov dword [byte ebp-04h], 0FFFFFFFFh
-loc_A083A:
-        jmp short loc_A0843
-loc_A083C:
+.9:
+        jmp short .11
+.10:
         mov dword [byte ebp-04h], 0FFFFFFFFh
-loc_A0843:
+.11:
         mov eax, dword [byte ebp-04h]
         mov dword [byte ebp-08h], eax
         mov eax, dword [byte ebp-08h]
@@ -785,7 +761,7 @@ GusPlayDigi:
         mov ebp, esp
         sub esp, 0
         cmp dword [dword_D53A8], byte 0
-        je short loc_A08D2
+        je short .1
         push dword [byte ebp+034h]
         push dword [byte ebp+030h]
         push dword [byte ebp+02Ch]
@@ -800,7 +776,7 @@ GusPlayDigi:
         push eax
         call GusStreamStart
         add esp, byte 20h
-loc_A08D2:
+.1:
         pop ebp
         pop edi
         pop esi
@@ -834,25 +810,25 @@ GusProgramChange:
         mov dword [byte eax+0Eh], edx
         mov eax, dword [byte ebp-0Ch]
         cmp dword [byte eax+0Eh], byte 0
-        je short loc_A0979
+        je short .3
         mov eax, dword [byte ebp-0Ch]
         mov eax, dword [byte eax+0Eh]
         mov edx, dword [byte eax+010h]
         mov eax, dword [byte ebp-0Ch]
         mov dword [byte eax+0Ah], edx
         cmp word [byte ebp-08h], byte 9
-        je short loc_A0950
+        je short .1
         mov eax, dword [byte ebp-0Ch]
         mov eax, dword [byte eax+0Eh]
         xor edx, edx
         mov dl, byte [byte eax+06h]
         mov eax, dword [byte ebp-0Ch]
         mov word [byte eax+08h], dx
-        jmp short loc_A0959
-loc_A0950:
+        jmp short .2
+.1:
         mov eax, dword [byte ebp-0Ch]
         mov word [byte eax+08h], 4
-loc_A0959:
+.2:
         mov edx, dword [byte ebp-0Ch]
         mov eax, dword [byte edx+0Eh]
         mov ax, word [byte eax+02h]
@@ -862,7 +838,7 @@ loc_A0959:
         mov eax, dword [byte ebp-04h]
         mov edx, dword [byte ebp-0Ch]
         mov word [byte edx+06h], ax
-loc_A0979:
+.3:
         mov esp, ebp
         pop ebp
         pop edi
@@ -1155,7 +1131,7 @@ GusVoiceSetVolume:
         sar edx, 10h
         add eax, edx
         cmp eax, byte 7Fh
-        jge short loc_A0CDA
+        jge short .1
         mov eax, dword [byte ebp-014h]
         mov eax, dword [byte eax+012h]
         sar eax, 10h
@@ -1163,10 +1139,10 @@ GusVoiceSetVolume:
         sar edx, 10h
         add edx, eax
         mov dword [byte ebp-018h], edx
-        jmp short loc_A0CE1
-loc_A0CDA:
+        jmp short .2
+.1:
         mov dword [byte ebp-018h], 7Fh
-loc_A0CE1:
+.2:
         mov eax, dword [byte ebp-018h]
         mov word [byte ebp-08h], ax
         mov eax, dword [byte ebp-0Ah]
@@ -1229,7 +1205,7 @@ GusVoiceController:
         add edx, eax
         mov dword [byte ebp-010h], edx
         cmp word [byte ebp-04h], byte 7
-        jne short loc_A0D92
+        jne short .1
         mov eax, dword [byte ebp-0Ah]
         sar eax, 10h
         push eax
@@ -1238,7 +1214,7 @@ GusVoiceController:
         push eax
         call GusStreamSetVolume
         add esp, byte 8
-loc_A0D92:
+.1:
         mov esp, ebp
         pop ebp
         pop edi
@@ -1267,24 +1243,24 @@ GusMusicMidi:
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
         cmp dword [dword_D53A8], byte 0
-        je near loc_A0FDC
+        je near .20
         mov eax, dword [byte ebp+018h]
         mov dword [byte ebp-018h], eax
-loc_A0DF7:
+.1:
         cmp word [byte ebp+014h], byte 0
-        jg short loc_A0E0B
-        jmp near loc_A0FDC
-loc_A0E03:
+        jg short .3
+        jmp near .20
+.2:
         dec dword [byte ebp+014h]
         inc dword [byte ebp-018h]
-        jmp short loc_A0DF7
-loc_A0E0B:
+        jmp short .1
+.3:
         xor ah, ah
         mov edx, dword [byte ebp-018h]
         mov al, byte [edx]
         mov word [byte ebp-010h], ax
         test byte [byte ebp-010h], 80h
-        je short loc_A0E62
+        je short .6
         mov al, byte [byte ebp-010h]
         and al, 0F0h
         mov byte [byte ebp-0Ch], al
@@ -1294,19 +1270,19 @@ loc_A0E0B:
         mov eax, dword [byte ebp-010h]
         and eax, 0F0h
         cmp ax, 0C0h
-        jne short loc_A0E43
+        jne short .4
         mov dword [byte ebp-024h], 1
-        jmp short loc_A0E4A
-loc_A0E43:
+        jmp short .5
+.4:
         mov dword [byte ebp-024h], 2
-loc_A0E4A:
+.5:
         mov al, byte [byte ebp-024h]
         mov byte [byte ebp-08h], al
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
-        jmp near loc_A0FD7
-loc_A0E62:
+        jmp near .19
+.6:
         mov al, byte [byte ebp-010h]
         mov edx, dword [byte ebp-01Ch]
         mov byte [edx], al
@@ -1317,57 +1293,57 @@ loc_A0E62:
         xor edx, edx
         mov dl, byte [byte ebp-08h]
         cmp eax, edx
-        jne near loc_A0FD7
+        jne near .19
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
         mov al, byte [byte ebp-0Ch]
         mov byte [byte ebp-028h], al
         cmp byte [byte ebp-028h], 0B0h
-        jb short loc_A0ECA
+        jb short .8
         cmp byte [byte ebp-028h], 0B0h
-        jbe near loc_A0F7D
+        jbe near .15
         cmp byte [byte ebp-028h], 0C0h
-        jb short loc_A0EC5
+        jb short .7
         cmp byte [byte ebp-028h], 0C0h
-        jbe near loc_A0F98
+        jbe near .16
         cmp byte [byte ebp-028h], 0E0h
-        je near loc_A0FBE
-        jmp near loc_A0FD7
-loc_A0EC5:
-        jmp near loc_A0FD7
-loc_A0ECA:
+        je near .18
+        jmp near .19
+.7:
+        jmp near .19
+.8:
         cmp byte [byte ebp-028h], 80h
-        jb short loc_A0EE1
+        jb short .9
         cmp byte [byte ebp-028h], 80h
-        jbe short loc_A0EE6
+        jbe short .10
         cmp byte [byte ebp-028h], 90h
-        je short loc_A0EFF
-        jmp near loc_A0FD7
-loc_A0EE1:
-        jmp near loc_A0FD7
-loc_A0EE6:
+        je short .11
+        jmp near .19
+.9:
+        jmp near .19
+.10:
         xor edx, edx
         mov dl, byte [byte ebp-04h]
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         and eax, 0FFh
         call GusMidiNoteOff
-        jmp near loc_A0FD7
-loc_A0EFF:
+        jmp near .19
+.11:
         mov eax, dword [byte ebp-020h]
         cmp byte [byte eax+01h], 0
-        jne short loc_A0F1E
+        jne short .12
         xor edx, edx
         mov dl, byte [byte ebp-04h]
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         and eax, 0FFh
         call GusMidiNoteOff
-        jmp short loc_A0F7B
-loc_A0F1E:
+        jmp short .14
+.12:
         cmp byte [byte ebp-04h], 9
-        jne short loc_A0F5A
+        jne short .13
         push byte 9
         mov eax, dword [byte ebp-020h]
         xor ecx, ecx
@@ -1384,8 +1360,8 @@ loc_A0F1E:
         mov eax, word_F371C
         add eax, esi
         call GusMidiNoteOn
-        jmp short loc_A0F7B
-loc_A0F5A:
+        jmp short .14
+.13:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         push eax
@@ -1398,9 +1374,9 @@ loc_A0F5A:
         mov edx, 1
         xor eax, eax
         call GusMidiNoteOn
-loc_A0F7B:
-        jmp short loc_A0FD7
-loc_A0F7D:
+.14:
+        jmp short .19
+.15:
         mov eax, dword [byte ebp-020h]
         xor ebx, ebx
         mov bl, byte [byte eax+01h]
@@ -1410,10 +1386,10 @@ loc_A0F7D:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         call GusMidiController
-        jmp short loc_A0FD7
-loc_A0F98:
+        jmp short .19
+.16:
         cmp byte [byte ebp-04h], 9
-        je short loc_A0FBC
+        je short .17
         xor edx, edx
         mov dl, byte [byte ebp-04h]
         mov eax, dword [byte ebp-020h]
@@ -1423,9 +1399,9 @@ loc_A0F98:
         mov eax, word_F371C
         add eax, ebx
         call GusSetChannelPatch
-loc_A0FBC:
-        jmp short loc_A0FD7
-loc_A0FBE:
+.17:
+        jmp short .19
+.18:
         mov eax, dword [byte ebp-020h]
         xor ebx, ebx
         mov bl, byte [byte eax+01h]
@@ -1435,9 +1411,9 @@ loc_A0FBE:
         xor eax, eax
         mov al, byte [byte ebp-04h]
         call GusMidiPitchBend
-loc_A0FD7:
-        jmp near loc_A0E03
-loc_A0FDC:
+.19:
+        jmp near .2
+.20:
         sub dword [dword_D4F9A], byte 4
         mov esp, ebp
         pop ebp
@@ -1467,24 +1443,24 @@ GusDigiMidi:
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
         cmp dword [dword_D53A8], byte 0
-        je near loc_A11F0
+        je near .18
         mov eax, dword [byte ebp+018h]
         mov dword [byte ebp-018h], eax
-loc_A1048:
+.1:
         cmp word [byte ebp+014h], byte 0
-        jg short loc_A105C
-        jmp near loc_A11F0
-loc_A1054:
+        jg short .3
+        jmp near .18
+.2:
         dec dword [byte ebp+014h]
         inc dword [byte ebp-018h]
-        jmp short loc_A1048
-loc_A105C:
+        jmp short .1
+.3:
         xor ah, ah
         mov edx, dword [byte ebp-018h]
         mov al, byte [edx]
         mov word [byte ebp-010h], ax
         test byte [byte ebp-010h], 80h
-        je short loc_A10B3
+        je short .6
         mov al, byte [byte ebp-010h]
         and al, 0F0h
         mov byte [byte ebp-0Ch], al
@@ -1494,19 +1470,19 @@ loc_A105C:
         mov eax, dword [byte ebp-010h]
         and eax, 0F0h
         cmp ax, 0C0h
-        jne short loc_A1094
+        jne short .4
         mov dword [byte ebp-024h], 1
-        jmp short loc_A109B
-loc_A1094:
+        jmp short .5
+.4:
         mov dword [byte ebp-024h], 2
-loc_A109B:
+.5:
         mov al, byte [byte ebp-024h]
         mov byte [byte ebp-08h], al
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
-        jmp near loc_A11EB
-loc_A10B3:
+        jmp near .17
+.6:
         mov al, byte [byte ebp-010h]
         mov edx, dword [byte ebp-01Ch]
         mov byte [edx], al
@@ -1517,36 +1493,36 @@ loc_A10B3:
         xor edx, edx
         mov dl, byte [byte ebp-08h]
         cmp eax, edx
-        jne near loc_A11EB
+        jne near .17
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-01Ch], eax
         mov al, byte [byte ebp-0Ch]
         mov byte [byte ebp-028h], al
         cmp byte [byte ebp-028h], 0B0h
-        jb short loc_A111B
+        jb short .8
         cmp byte [byte ebp-028h], 0B0h
-        jbe near loc_A1193
+        jbe near .14
         cmp byte [byte ebp-028h], 0C0h
-        jb short loc_A1116
+        jb short .7
         cmp byte [byte ebp-028h], 0C0h
-        jbe near loc_A11B5
+        jbe near .15
         cmp byte [byte ebp-028h], 0E0h
-        je near loc_A11CC
-        jmp near loc_A11EB
-loc_A1116:
-        jmp near loc_A11EB
-loc_A111B:
+        je near .16
+        jmp near .17
+.7:
+        jmp near .17
+.8:
         cmp byte [byte ebp-028h], 80h
-        jb short loc_A1132
+        jb short .9
         cmp byte [byte ebp-028h], 80h
-        jbe short loc_A1137
+        jbe short .10
         cmp byte [byte ebp-028h], 90h
-        je short loc_A1151
-        jmp near loc_A11EB
-loc_A1132:
-        jmp near loc_A11EB
-loc_A1137:
+        je short .11
+        jmp near .17
+.9:
+        jmp near .17
+.10:
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         xor ah, ah
@@ -1555,11 +1531,11 @@ loc_A1137:
         mov al, byte [byte ebp-04h]
         cwde
         call GusNoteOff
-        jmp near loc_A11EB
-loc_A1151:
+        jmp near .17
+.11:
         mov eax, dword [byte ebp-020h]
         cmp byte [byte eax+01h], 0
-        jne short loc_A1171
+        jne short .12
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         xor ah, ah
@@ -1568,8 +1544,8 @@ loc_A1151:
         mov al, byte [byte ebp-04h]
         cwde
         call GusNoteOff
-        jmp short loc_A1191
-loc_A1171:
+        jmp short .13
+.12:
         mov eax, dword [byte ebp-020h]
         mov al, byte [byte eax+01h]
         xor ah, ah
@@ -1582,9 +1558,9 @@ loc_A1171:
         mov al, byte [byte ebp-04h]
         cwde
         call GusNoteOn
-loc_A1191:
-        jmp short loc_A11EB
-loc_A1193:
+.13:
+        jmp short .17
+.14:
         mov eax, dword [byte ebp-020h]
         mov al, byte [byte eax+01h]
         xor ah, ah
@@ -1597,8 +1573,8 @@ loc_A1193:
         mov al, byte [byte ebp-04h]
         cwde
         call GusController
-        jmp short loc_A11EB
-loc_A11B5:
+        jmp short .17
+.15:
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         xor ah, ah
@@ -1607,8 +1583,8 @@ loc_A11B5:
         mov al, byte [byte ebp-04h]
         cwde
         call GusProgramChange
-        jmp short loc_A11EB
-loc_A11CC:
+        jmp short .17
+.16:
         mov eax, dword [byte ebp-020h]
         mov al, byte [byte eax+01h]
         xor ah, ah
@@ -1619,9 +1595,9 @@ loc_A11CC:
         mov al, byte [byte ebp-04h]
         cwde
         call GusPitchBend
-loc_A11EB:
-        jmp near loc_A1054
-loc_A11F0:
+.17:
+        jmp near .2
+.18:
         sub dword [dword_D4F9A], byte 4
         mov esp, ebp
         pop ebp
@@ -1648,14 +1624,14 @@ GusNoteOn:
         add edx, eax
         mov dword [byte ebp-030h], edx
         cmp word [byte ebp-024h], byte 9
-        jne short loc_A1269
+        jne short .3
         cmp word [byte ebp-020h], byte 24h
-        jl short loc_A1245
+        jl short .1
         cmp word [byte ebp-020h], byte 64h
-        jl short loc_A124A
-loc_A1245:
-        jmp near loc_A14A8
-loc_A124A:
+        jl short .2
+.1:
+        jmp near .31
+.2:
         mov eax, dword [byte ebp-020h]
         add eax, 5Ch
         movsx edx, ax
@@ -1663,33 +1639,33 @@ loc_A124A:
         sar eax, 10h
         call GusProgramChange
         mov dword [byte ebp-04h], 3Ch
-        jmp short loc_A126F
-loc_A1269:
+        jmp short .4
+.3:
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-04h], eax
-loc_A126F:
+.4:
         mov eax, dword [byte ebp-030h]
         cmp word [byte eax+04h], byte 0
-        je short loc_A1283
+        je short .5
         mov eax, dword [byte ebp-030h]
         cmp word [byte eax+08h], byte 0
-        jne short loc_A1288
-loc_A1283:
-        jmp near loc_A14A8
-loc_A1288:
+        jne short .6
+.5:
+        jmp near .31
+.6:
         mov dword [byte ebp-08h], 7D00h
         mov dword [byte ebp-02Ch], word_F5324
         mov dword [byte ebp-010h], 0
         mov dword [byte ebp-014h], 1
-loc_A12A4:
+.7:
         cmp word [byte ebp-010h], byte 4
-        jl short loc_A12B8
-        jmp near loc_A1364
-loc_A12B0:
+        jl short .9
+        jmp near .18
+.8:
         inc dword [byte ebp-010h]
         shl dword [byte ebp-014h], 1
-        jmp short loc_A12A4
-loc_A12B8:
+        jmp short .7
+.9:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         imul eax, byte 22h
@@ -1705,20 +1681,20 @@ loc_A12B8:
         mov eax, dword [byte eax+02h]
         sar eax, 10h
         test edx, eax
-        je short loc_A12F5
+        je short .10
         mov eax, dword [byte ebp-034h]
         mov ax, word [byte eax+06h]
         cmp ax, word [byte ebp-08h]
-        jl short loc_A12F7
-loc_A12F5:
-        jmp short loc_A1307
-loc_A12F7:
+        jl short .11
+.10:
+        jmp short .12
+.11:
         mov eax, dword [byte ebp-034h]
         mov ax, word [byte eax+06h]
         mov dword [byte ebp-08h], eax
         mov eax, dword [byte ebp-034h]
         mov dword [byte ebp-02Ch], eax
-loc_A1307:
+.12:
         mov eax, dword [byte ebp-030h]
         movsx eax, word [eax]
         mov edx, dword [byte ebp-016h]
@@ -1728,21 +1704,21 @@ loc_A1307:
         mov eax, dword [byte eax+02h]
         sar eax, 10h
         test edx, eax
-        je short loc_A132D
+        je short .13
         mov eax, dword [byte ebp-030h]
         mov edx, dword [byte ebp-034h]
         cmp eax, dword [byte edx+0Eh]
-        je short loc_A132F
-loc_A132D:
-        jmp short loc_A133B
-loc_A132F:
+        je short .14
+.13:
+        jmp short .15
+.14:
         mov eax, dword [byte ebp-020h]
         mov edx, dword [byte ebp-034h]
         cmp ax, word [byte edx+08h]
-        je short loc_A133D
-loc_A133B:
-        jmp short loc_A135F
-loc_A133D:
+        je short .16
+.15:
+        jmp short .17
+.16:
         push dword [byte ebp-034h]
         mov ecx, dword [byte ebp-030h]
         mov ebx, dword [byte ebp-02Ah]
@@ -1752,51 +1728,51 @@ loc_A133D:
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         call GusStartVoice
-        jmp near loc_A14A8
-loc_A135F:
-        jmp near loc_A12B0
-loc_A1364:
+        jmp near .31
+.17:
+        jmp near .8
+.18:
         mov dword [byte ebp-0Ch], 0
         mov eax, dword [byte ebp-030h]
         mov ax, word [eax]
         mov word [byte ebp-014h], ax
-loc_A1375:
+.19:
         cmp word [byte ebp-014h], byte 0
-        je short loc_A138D
+        je short .20
         inc dword [byte ebp-0Ch]
         mov eax, dword [byte ebp-014h]
         neg eax
         and eax, dword [byte ebp-014h]
         xor word [byte ebp-014h], ax
-        jmp short loc_A1375
-loc_A138D:
+        jmp short .19
+.20:
         mov eax, dword [byte ebp-0Ch]
         mov edx, dword [byte ebp-030h]
         cmp ax, word [byte edx+08h]
-        jge near loc_A1412
+        jge near .25
         mov ax, word [word_F58D4]
         mov edx, dword [byte ebp-030h]
         and ax, word [byte edx+04h]
         mov dword [byte ebp-018h], eax
         cmp word [byte ebp-018h], byte 0
-        je short loc_A1412
+        je short .25
         mov eax, dword [byte ebp-018h]
         neg eax
         mov edx, dword [byte ebp-018h]
         and edx, eax
         mov word [byte ebp-014h], dx
         mov word [byte ebp-010h], 0FFFFh
-loc_A13C8:
+.21:
         cmp word [byte ebp-014h], byte 0
-        jne short loc_A13DB
-        jmp short loc_A13DD
-loc_A13D1:
+        jne short .23
+        jmp short .24
+.22:
         inc word [byte ebp-010h]
         sar word [byte ebp-014h], 1
-        jmp short loc_A13C8
-loc_A13DB:
-        jmp short loc_A13D1
-loc_A13DD:
+        jmp short .21
+.23:
+        jmp short .22
+.24:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         imul eax, byte 22h
@@ -1812,31 +1788,31 @@ loc_A13DD:
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         call GusStartVoice
-        jmp near loc_A14A8
-loc_A1412:
+        jmp near .31
+.25:
         mov ax, word [word_F58D2]
         mov edx, dword [byte ebp-030h]
         and ax, word [byte edx+04h]
         mov dword [byte ebp-01Ch], eax
         cmp word [byte ebp-01Ch], byte 0
-        je short loc_A1484
+        je short .30
         mov eax, dword [byte ebp-01Ch]
         neg eax
         mov edx, dword [byte ebp-01Ch]
         and edx, eax
         mov word [byte ebp-014h], dx
         mov word [byte ebp-010h], 0FFFFh
-loc_A143D:
+.26:
         cmp word [byte ebp-014h], byte 0
-        jne short loc_A1450
-        jmp short loc_A1452
-loc_A1446:
+        jne short .28
+        jmp short .29
+.27:
         inc word [byte ebp-010h]
         sar word [byte ebp-014h], 1
-        jmp short loc_A143D
-loc_A1450:
-        jmp short loc_A1446
-loc_A1452:
+        jmp short .26
+.28:
+        jmp short .27
+.29:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         imul eax, byte 22h
@@ -1852,8 +1828,8 @@ loc_A1452:
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         call GusStartVoice
-        jmp short loc_A14A8
-loc_A1484:
+        jmp short .31
+.30:
         push dword [byte ebp-02Ch]
         mov ecx, dword [byte ebp-030h]
         mov ebx, dword [byte ebp-02Ah]
@@ -1864,7 +1840,7 @@ loc_A1484:
         sar eax, 10h
         call GusStartVoice
         mov dword [byte ebp-02Ch], 0
-loc_A14A8:
+.31:
         mov esp, ebp
         pop ebp
         pop edi
@@ -1894,21 +1870,21 @@ GusNoteOff:
         mov dword [byte ebp-08h], eax
         mov dword [byte ebp-04h], 0
         mov dword [byte ebp-010h], 1
-loc_A14F6:
+.1:
         cmp word [byte ebp-04h], byte 4
-        jl short loc_A150A
-        jmp near loc_A15A2
-loc_A1502:
+        jl short .3
+        jmp near .9
+.2:
         inc dword [byte ebp-04h]
         shl dword [byte ebp-010h], 1
-        jmp short loc_A14F6
-loc_A150A:
+        jmp short .1
+.3:
         mov edx, dword [byte ebp-012h]
         sar edx, 10h
         mov eax, dword [byte ebp-0Ah]
         sar eax, 10h
         test edx, eax
-        je near loc_A159D
+        je near .8
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         imul eax, byte 22h
@@ -1918,22 +1894,22 @@ loc_A150A:
         mov eax, dword [byte ebp-020h]
         mov edx, dword [byte ebp-01Ch]
         cmp eax, dword [byte edx+0Eh]
-        jne short loc_A1548
+        jne short .4
         mov eax, dword [byte ebp-0Ch]
         mov edx, dword [byte ebp-01Ch]
         cmp ax, word [byte edx+08h]
-        je short loc_A154A
-loc_A1548:
-        jmp short loc_A159D
-loc_A154A:
+        je short .5
+.4:
+        jmp short .8
+.5:
         mov eax, dword [byte ebp-020h]
         cmp byte [byte eax+014h], 0
-        je short loc_A155F
+        je short .6
         mov eax, dword [byte ebp-010h]
         mov edx, dword [byte ebp-020h]
         or word [byte edx+02h], ax
-        jmp short loc_A159B
-loc_A155F:
+        jmp short .7
+.6:
         mov eax, dword [byte ebp-010h]
         or word [word_F58D2], ax
         mov eax, dword [byte ebp-01Ch]
@@ -1951,11 +1927,11 @@ loc_A155F:
         push eax
         call GusStreamRelease
         add esp, byte 4
-loc_A159B:
-        jmp short loc_A15A2
-loc_A159D:
-        jmp near loc_A1502
-loc_A15A2:
+.7:
+        jmp short .9
+.8:
+        jmp near .2
+.9:
         mov esp, ebp
         pop ebp
         pop edi
@@ -2033,49 +2009,49 @@ GusController:
         mov eax, dword [byte ebp-018h]
         mov dword [byte ebp-020h], eax
         cmp word [byte ebp-020h], byte 0Ah
-        jb short loc_A169B
+        jb short .2
         cmp word [byte ebp-020h], byte 0Ah
-        jbe short loc_A16D6
+        jbe short .6
         cmp word [byte ebp-020h], byte 40h
-        jb short loc_A1696
+        jb short .1
         cmp word [byte ebp-020h], byte 40h
-        jbe short loc_A16E4
+        jbe short .7
         cmp word [byte ebp-020h], byte 7Bh
-        je near loc_A1757
-        jmp near loc_A17A7
-loc_A1696:
-        jmp near loc_A17A7
-loc_A169B:
+        je near .13
+        jmp near .18
+.1:
+        jmp near .18
+.2:
         cmp word [byte ebp-020h], byte 1
-        jb short loc_A16B5
+        jb short .3
         cmp word [byte ebp-020h], byte 1
-        jbe short loc_A16BA
+        jbe short .4
         cmp word [byte ebp-020h], byte 7
-        je short loc_A16C8
-        jmp near loc_A17A7
-loc_A16B5:
-        jmp near loc_A17A7
-loc_A16BA:
+        je short .5
+        jmp near .18
+.3:
+        jmp near .18
+.4:
         mov al, byte [byte ebp-014h]
         mov edx, dword [byte ebp-01Ch]
         mov byte [byte edx+015h], al
-        jmp near loc_A17A7
-loc_A16C8:
+        jmp near .18
+.5:
         mov al, byte [byte ebp-014h]
         mov edx, dword [byte ebp-01Ch]
         mov byte [byte edx+012h], al
-        jmp near loc_A17A7
-loc_A16D6:
+        jmp near .18
+.6:
         mov al, byte [byte ebp-014h]
         mov edx, dword [byte ebp-01Ch]
         mov byte [byte edx+013h], al
-        jmp near loc_A17A7
-loc_A16E4:
+        jmp near .18
+.7:
         mov al, byte [byte ebp-014h]
         mov edx, dword [byte ebp-01Ch]
         mov byte [byte edx+014h], al
         cmp word [byte ebp-014h], byte 0
-        jne short loc_A1755
+        jne short .12
         mov eax, dword [byte ebp-01Ch]
         mov ax, word [byte eax+02h]
         mov dword [byte ebp-04h], eax
@@ -2083,21 +2059,21 @@ loc_A16E4:
         mov word [byte eax+02h], 0
         mov dword [byte ebp-08h], 0
         mov dword [byte ebp-0Ch], 1
-loc_A1715:
+.8:
         cmp word [byte ebp-08h], byte 4
-        jl short loc_A1726
-        jmp short loc_A1755
-loc_A171E:
+        jl short .10
+        jmp short .12
+.9:
         inc dword [byte ebp-08h]
         shl dword [byte ebp-0Ch], 1
-        jmp short loc_A1715
-loc_A1726:
+        jmp short .8
+.10:
         mov edx, dword [byte ebp-0Eh]
         sar edx, 10h
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         test edx, eax
-        je short loc_A1753
+        je short .11
         mov edx, dword [byte ebp-0Ah]
         sar edx, 10h
         imul edx, byte 22h
@@ -2106,60 +2082,60 @@ loc_A1726:
         mov eax, dword [byte ebp-012h]
         sar eax, 10h
         call GusNoteOff
-loc_A1753:
-        jmp short loc_A171E
-loc_A1755:
-        jmp short loc_A17A7
-loc_A1757:
+.11:
+        jmp short .9
+.12:
+        jmp short .18
+.13:
         mov eax, dword [byte ebp-01Ch]
         mov ax, word [eax]
         mov word [byte ebp-04h], ax
         mov word [byte ebp-08h], 0
         mov word [byte ebp-0Ch], 1
-loc_A176D:
+.14:
         cmp word [byte ebp-08h], byte 4
-        jl short loc_A1780
-        jmp short loc_A17A7
-loc_A1776:
+        jl short .16
+        jmp short .18
+.15:
         inc word [byte ebp-08h]
         shl word [byte ebp-0Ch], 1
-        jmp short loc_A176D
-loc_A1780:
+        jmp short .14
+.16:
         mov edx, dword [byte ebp-0Eh]
         sar edx, 10h
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         test edx, eax
-        je short loc_A17A5
+        je short .17
         mov eax, dword [byte ebp-0Ah]
         sar eax, 10h
         imul edx, eax, byte 22h
         mov eax, word_F5324
         add eax, edx
         call GusFreeVoice
-loc_A17A5:
-        jmp short loc_A1776
-loc_A17A7:
+.17:
+        jmp short .15
+.18:
         mov eax, dword [byte ebp-01Ch]
         mov ax, word [eax]
         mov word [byte ebp-04h], ax
         mov word [byte ebp-08h], 0
         mov word [byte ebp-0Ch], 1
-loc_A17BD:
+.19:
         cmp word [byte ebp-08h], byte 4
-        jl short loc_A17D0
-        jmp short loc_A17F9
-loc_A17C6:
+        jl short .21
+        jmp short .23
+.20:
         inc word [byte ebp-08h]
         shl word [byte ebp-0Ch], 1
-        jmp short loc_A17BD
-loc_A17D0:
+        jmp short .19
+.21:
         mov edx, dword [byte ebp-0Eh]
         sar edx, 10h
         mov eax, dword [byte ebp-06h]
         sar eax, 10h
         test edx, eax
-        je short loc_A17F7
+        je short .22
         mov ebx, dword [byte ebp-016h]
         sar ebx, 10h
         mov edx, dword [byte ebp-01Ah]
@@ -2167,9 +2143,9 @@ loc_A17D0:
         mov eax, dword [byte ebp-0Ah]
         sar eax, 10h
         call GusVoiceController
-loc_A17F7:
-        jmp short loc_A17C6
-loc_A17F9:
+.22:
+        jmp short .20
+.23:
         mov esp, ebp
         pop ebp
         pop edi

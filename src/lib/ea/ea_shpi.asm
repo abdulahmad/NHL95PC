@@ -6,14 +6,8 @@ extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect
 extern ScaledRowBuffer, strncpy_, strrchr_, AllocMemBlockEx, ResizeMemBlock, FindCachedFile, UnpackedSize, unpack
 extern DosFileInfo, GetBytesLE, PutBytesLE, bcopy, DosOpenFile, DosCloseFile, DosReadFile, DosSeekFile
 extern SetBlitSource, CopyRowKeyFF
-global DrawShapeQuad, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
-global loc_A220B, loc_A22A7, loc_A22DC, loc_A22E5, loc_A2338, loc_A2358, loc_A237C, loc_A23A6
-global loc_A23C4, loc_A23C6, loc_A2404, loc_A242C, loc_A249C, loc_A253F, loc_A254A, loc_A257E
-global loc_A2598, loc_A259A, loc_A25D8, loc_A25FB, SplitFileExt, loc_A261E, loc_A2636, loc_A2666
-global loc_A2679, loc_A2682, loc_A26A5, loc_A26A8, loc_A26AA, ReadFileRange, loc_A26E9, loc_A26FF
-global loc_A2704, loc_A2727, LoadPackedAlloc, LoadPackedAllocQuiet, LoadPackedAllocFlag, loc_A2791, LoadPackedHandle, LoadPackedHandleQuiet
-global LoadPackedCore, loc_A280B, loc_A283C, loc_A2846, loc_A287A, loc_A28DF, ConvertShapeBank, loc_A29C6
-global loc_A2AAA, ConvertShapeBankInPlace
+global DrawShapeQuad, SplitFileExt, ReadFileRange, LoadPackedAlloc, LoadPackedAllocQuiet, LoadPackedAllocFlag, LoadPackedHandle, LoadPackedHandleQuiet
+global LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace
 DrawShapeQuad:
         push esi
         push edi
@@ -40,27 +34,27 @@ DrawShapeQuad:
         mov eax, 1
         mov edx, dword [dword esp+084h]
         add edx, byte 8
-loc_A2057:
+.1:
         mov ebx, dword [byte edx+04h]
         cmp ebx, dword [byte esp+05Ch]
-        jle short loc_A206E
+        jle short .2
         mov dword [byte esp+05Ch], ebx
         mov ebx, dword [edx]
         mov dword [byte esp+020h], ebx
         mov esi, eax
-        jmp short loc_A207C
-loc_A206E:
+        jmp short .3
+.2:
         cmp ebx, ecx
-        jge short loc_A207C
+        jge short .3
         mov ecx, ebx
         mov ebx, dword [edx]
         mov dword [byte esp+03Ch], ebx
         mov edi, eax
-loc_A207C:
+.3:
         inc eax
         add edx, byte 8
         cmp eax, byte 3
-        jl short loc_A2057
+        jl short .1
         mov eax, dword [byte esp+020h]
         mov edx, dword [byte esp+03Ch]
         sub eax, edx
@@ -68,7 +62,7 @@ loc_A207C:
         mov eax, dword [byte esp+05Ch]
         sub eax, ecx
         mov dword [byte esp+018h], eax
-        je near loc_A25FB
+        je near .27
         mov ebp, edi
         or ebp, esi
         mov eax, 3
@@ -90,18 +84,18 @@ loc_A207C:
         mov ebx, dword [byte esp+08h]
         sub ebx, eax
         test ebx, ebx
-        jge short loc_A20F3
+        jge short .4
         neg ebx
         mov dword [byte esp+0Ch], 1
-        jmp short loc_A20F9
-loc_A20F3:
+        jmp short .5
+.4:
         xor eax, eax
         mov dword [byte esp+0Ch], eax
-loc_A20F9:
+.5:
         test ebx, ebx
-        je near loc_A25FB
+        je near .27
         cmp ebx, 600h
-        jge near loc_A25FB
+        jge near .27
         shl ebp, 3
         add ebx, byte 2
         mov eax, dword [dword esp+080h]
@@ -160,18 +154,18 @@ loc_A20F9:
         idiv ebx
         mov dword [byte esp+024h], eax
         cmp dword [byte esp+0Ch], byte 0
-        je short loc_A21D1
+        je short .6
         neg dword [byte esp+028h]
         neg eax
         mov dword [byte esp+024h], eax
-loc_A21D1:
+.6:
         mov eax, ScaledRowBuffer
         mov edx, 8000h
         mov esi, edx
-loc_A21DD:
+.7:
         dec ebx
         cmp ebx, byte 0FFFFFFFFh
-        je short loc_A220B
+        je short .8
         mov edi, edx
         sar edi, 10h
         mov dword [byte esp+044h], edi
@@ -184,8 +178,8 @@ loc_A21DD:
         add eax, byte 4
         add edx, dword [byte esp+028h]
         add esi, dword [byte esp+024h]
-        jmp short loc_A21DD
-loc_A220B:
+        jmp short .7
+.8:
         mov esi, ecx
         mov edi, dword [byte esp+03Ch]
         shl edi, 10h
@@ -205,10 +199,10 @@ loc_A220B:
         mov dword [byte esp+048h], eax
         mov dword [byte esp+04Ch], eax
         cmp dword [byte esp+0Ch], byte 0
-        je short loc_A22A7
+        je short .9
         mov ebx, ecx
         sub ebx, dword [byte esp+040h]
-        je near loc_A22E5
+        je near .11
         mov eax, dword [byte esp+014h]
         mov eax, dword [eax]
         mov dword [byte esp+068h], eax
@@ -230,11 +224,11 @@ loc_A220B:
         sub edx, eax
         shl edx, 10h
         mov eax, edx
-        jmp short loc_A22DC
-loc_A22A7:
+        jmp short .10
+.9:
         mov ebx, ecx
         sub ebx, dword [byte esp+05Ch]
-        je short loc_A22E5
+        je short .11
         mov eax, dword [byte esp+014h]
         mov eax, dword [eax]
         mov edx, dword [byte esp+01Ch]
@@ -250,16 +244,16 @@ loc_A22A7:
         sub eax, dword [byte edx+04h]
         shl eax, 10h
         mov edx, eax
-loc_A22DC:
+.10:
         sar edx, 1Fh
         idiv ebx
         mov dword [byte esp+048h], eax
-loc_A22E5:
+.11:
         xor ebx, ebx
         mov dword [byte esp+02Ch], ebx
         mov dword [byte esp+038h], ebx
         cmp esi, dword [byte esp+040h]
-        je near loc_A242C
+        je near .19
         mov edx, dword [byte esp+03Ch]
         sub edx, dword [byte esp+08h]
         sub ecx, dword [byte esp+040h]
@@ -267,9 +261,9 @@ loc_A22E5:
         shl ebx, 10h
         shl edx, 10h
         cmp dword [byte esp+0Ch], byte 0
-        jne short loc_A2338
+        jne short .12
         test ecx, ecx
-        je short loc_A2358
+        je short .13
         mov eax, edx
         sar edx, 1Fh
         idiv ecx
@@ -280,10 +274,10 @@ loc_A22E5:
         mov ecx, dword [byte esp+018h]
         idiv ecx
         mov dword [byte esp+02Ch], eax
-        jmp short loc_A2358
-loc_A2338:
+        jmp short .13
+.12:
         test ecx, ecx
-        je short loc_A2358
+        je short .13
         mov eax, edx
         sar edx, 1Fh
         idiv ecx
@@ -294,7 +288,7 @@ loc_A2338:
         mov ebx, dword [byte esp+018h]
         idiv ebx
         mov dword [byte esp+038h], eax
-loc_A2358:
+.13:
         mov eax, dword [byte esp+038h]
         mov edx, eax
         sar edx, 1Fh
@@ -302,12 +296,12 @@ loc_A2358:
         sar eax, 1
         add edi, eax
         cmp esi, dword [byte esp+040h]
-        jge near loc_A242C
+        jge near .19
         lea eax, [nosplit esi*4+00h]
         mov dword [byte esp+058h], eax
-loc_A237C:
+.14:
         cmp esi, dword [cliprect_y1]
-        jge near loc_A25FB
+        jge near .27
         mov ebx, dword [byte esp+064h]
         sar ebx, 10h
         mov eax, edi
@@ -317,25 +311,25 @@ loc_A237C:
         lea edx, [ebx+eax]
         sub edx, dword [cliprect_x1]
         test edx, edx
-        jle short loc_A23A6
+        jle short .15
         sub eax, edx
-loc_A23A6:
+.15:
         mov edx, dword [cliprect_x0]
         sub edx, ebx
         test edx, edx
-        jle short loc_A23C4
+        jle short .16
         sub eax, edx
         add ebx, edx
         cmp edx, 600h
-        jg near loc_A25FB
-        jmp short loc_A23C6
-loc_A23C4:
+        jg near .27
+        jmp short .17
+.16:
         xor edx, edx
-loc_A23C6:
+.17:
         test eax, eax
-        jle short loc_A2404
+        jle short .18
         cmp esi, dword [cliprect_y0]
-        jle short loc_A2404
+        jle short .18
         push eax
         mov eax, dword [byte esp+064h]
         sar eax, 10h
@@ -352,7 +346,7 @@ loc_A23C6:
         push ebx
         call CopyRowKeyFF
         add esp, byte 0Ch
-loc_A2404:
+.18:
         add ebp, dword [byte esp+04Ch]
         mov eax, dword [byte esp+048h]
         add dword [byte esp+060h], eax
@@ -362,11 +356,11 @@ loc_A2404:
         add dword [byte esp+058h], byte 4
         inc esi
         cmp esi, dword [byte esp+040h]
-        jl near loc_A237C
-loc_A242C:
+        jl near .14
+.19:
         mov eax, dword [byte esp+05Ch]
         cmp esi, eax
-        je near loc_A25FB
+        je near .27
         mov edx, dword [byte esp+08h]
         sub edx, dword [byte esp+020h]
         mov ecx, dword [byte esp+040h]
@@ -379,11 +373,11 @@ loc_A242C:
         shl edx, 10h
         mov eax, dword [byte esp+0Ch]
         test eax, eax
-        jne short loc_A249C
+        jne short .20
         mov dword [byte esp+034h], eax
         mov dword [byte esp+030h], eax
         test ecx, ecx
-        je near loc_A253F
+        je near .21
         mov eax, edx
         sar edx, 1Fh
         idiv ecx
@@ -396,15 +390,15 @@ loc_A242C:
         mov dword [byte esp+034h], eax
         mov edi, dword [esp]
         add edi, 100h
-        jmp near loc_A253F
-loc_A249C:
+        jmp near .21
+.20:
         xor eax, eax
         mov dword [byte esp+048h], eax
         mov dword [byte esp+04Ch], eax
         mov dword [byte esp+034h], eax
         mov dword [byte esp+030h], eax
         test ecx, ecx
-        je near loc_A253F
+        je near .21
         mov eax, edx
         sar edx, 1Fh
         idiv ecx
@@ -449,14 +443,14 @@ loc_A249C:
         sar edx, 1Fh
         idiv ecx
         mov dword [byte esp+048h], eax
-loc_A253F:
+.21:
         lea eax, [nosplit esi*4+00h]
         mov dword [byte esp+050h], eax
-loc_A254A:
+.22:
         cmp esi, dword [byte esp+05Ch]
-        jge near loc_A25FB
+        jge near .27
         cmp esi, dword [cliprect_y1]
-        jge near loc_A25FB
+        jge near .27
         mov edx, dword [byte esp+064h]
         sar edx, 10h
         mov eax, edi
@@ -466,25 +460,25 @@ loc_A254A:
         lea ebx, [edx+eax]
         sub ebx, dword [cliprect_x1]
         test ebx, ebx
-        jle short loc_A257E
+        jle short .23
         sub eax, ebx
-loc_A257E:
+.23:
         mov ebx, dword [cliprect_x0]
         sub ebx, edx
         test ebx, ebx
-        jle short loc_A2598
+        jle short .24
         sub eax, ebx
         add edx, ebx
         cmp ebx, 600h
-        jg short loc_A25FB
-        jmp short loc_A259A
-loc_A2598:
+        jg short .27
+        jmp short .25
+.24:
         xor ebx, ebx
-loc_A259A:
+.25:
         test eax, eax
-        jle short loc_A25D8
+        jle short .26
         cmp esi, dword [cliprect_y0]
-        jl short loc_A25D8
+        jl short .26
         push eax
         mov eax, dword [byte esp+064h]
         sar eax, 10h
@@ -501,7 +495,7 @@ loc_A259A:
         push edx
         call CopyRowKeyFF
         add esp, byte 0Ch
-loc_A25D8:
+.26:
         add ebp, dword [byte esp+04Ch]
         mov eax, dword [byte esp+048h]
         add dword [byte esp+060h], eax
@@ -510,8 +504,8 @@ loc_A25D8:
         add edi, dword [byte esp+030h]
         add dword [byte esp+050h], byte 4
         inc esi
-        jmp near loc_A254A
-loc_A25FB:
+        jmp near .22
+.27:
         add esp, byte 6Ch
         pop ebp
         pop edi
@@ -526,24 +520,24 @@ SplitFileExt:
         mov ebp, dword [byte esp+014h]
         mov edi, ebp
         push edi
-loc_A261E:
+.1:
         mov al, byte [esi]
         mov byte [edi], al
         cmp al, 0
-        je short loc_A2636
+        je short .2
         mov al, byte [byte esi+01h]
         add esi, byte 2
         mov byte [byte edi+01h], al
         add edi, byte 2
         cmp al, 0
-        jne short loc_A261E
-loc_A2636:
+        jne short .1
+.2:
         pop edi
         mov edx, 2Eh
         mov eax, ebp
         call strrchr_
         test eax, eax
-        jne short loc_A26AA
+        jne short .8
         sub ecx, ecx
         dec ecx
         xor eax, eax
@@ -554,21 +548,21 @@ loc_A2636:
         mov byte [byte edi+04h], 0
         mov ecx, dword [byte esp+018h]
         cmp byte [ecx], 0
-        je short loc_A2679
+        je short .4
         mov esi, 4
-loc_A2666:
+.3:
         mov ebx, esi
         mov edx, ecx
         mov eax, edi
         call strncpy_
         add ecx, byte 4
         cmp byte [ecx], 0
-        jne short loc_A2666
-loc_A2679:
+        jne short .3
+.4:
         mov esi, dword [byte esp+018h]
         cmp byte [esi], 0
-        je short loc_A26A5
-loc_A2682:
+        je short .6
+.5:
         mov ebx, 4
         mov edx, esi
         mov eax, edi
@@ -577,15 +571,15 @@ loc_A2682:
         call DosFileInfo
         add esp, byte 4
         test eax, eax
-        jne short loc_A26A8
+        jne short .7
         add esi, byte 4
         cmp byte [esi], 0
-        jne short loc_A2682
-loc_A26A5:
+        jne short .5
+.6:
         mov byte [edi], 0
-loc_A26A8:
+.7:
         mov eax, edi
-loc_A26AA:
+.8:
         pop ebp
         pop edi
         pop esi
@@ -606,19 +600,19 @@ ReadFileRange:
         add esp, byte 8
         lea eax, [byte ebp-08h]
         cmp eax, 100h
-        jl short loc_A26E9
+        jl short .1
         mov eax, 100h
-loc_A26E9:
+.1:
         cmp eax, byte 8
-        jle short loc_A26FF
+        jle short .2
         lea eax, [byte ebp-08h]
         cmp eax, 100h
-        jl short loc_A2704
+        jl short .3
         mov eax, 100h
-        jmp short loc_A2704
-loc_A26FF:
+        jmp short .3
+.2:
         mov eax, 8
-loc_A2704:
+.3:
         push eax
         lea eax, [byte esp+04h]
         push eax
@@ -626,14 +620,14 @@ loc_A2704:
         call DosReadFile
         add esp, byte 0Ch
         test eax, eax
-        je short loc_A2727
+        je short .4
         push ebp
         lea eax, [byte esp+04h]
         push eax
         call UnpackedSize
         mov esi, eax
         add esp, byte 8
-loc_A2727:
+.4:
         mov ebx, dword [dword esp+0114h]
         push ebx
         push edi
@@ -675,9 +669,9 @@ LoadPackedAllocFlag:
         call LoadPackedCore
         add esp, byte 0Ch
         test eax, eax
-        je short loc_A2791
+        je short .1
         mov eax, dword [eax]
-loc_A2791:
+.1:
         ret
         db 08Bh,0C0h
 LoadPackedHandle:
@@ -711,7 +705,7 @@ LoadPackedCore:
         call FindCachedFile
         add esp, byte 4
         test eax, eax
-        jne near loc_A28DF
+        jne near .5
         push edi
         lea eax, [byte esp+0Ch]
         push eax
@@ -724,10 +718,10 @@ LoadPackedCore:
         add esp, byte 14h
         mov edx, dword [byte esp+08h]
         test edx, edx
-        jne short loc_A280B
+        jne short .1
         xor eax, eax
-        jmp near loc_A28DF
-loc_A280B:
+        jmp near .5
+.1:
         push edi
         push edx
         mov ecx, dword [byte esp+0Ch]
@@ -738,7 +732,7 @@ loc_A280B:
         add esp, byte 10h
         mov dword [byte esp+0Ch], eax
         test eax, eax
-        jne short loc_A283C
+        jne short .2
         mov eax, dword [esp]
         push eax
         call DosCloseFile
@@ -749,12 +743,12 @@ loc_A280B:
         pop edi
         pop esi
         ret
-loc_A283C:
+.2:
         mov edx, dword [byte esp+08h]
         cmp eax, edx
-        jg short loc_A2846
+        jg short .3
         mov eax, edx
-loc_A2846:
+.3:
         add eax, 3EBh
         and al, 0FCh
         mov ebp, eax
@@ -767,7 +761,7 @@ loc_A2846:
         mov esi, eax
         add esp, byte 10h
         test eax, eax
-        jne short loc_A287A
+        jne short .4
         mov ebp, dword [esp]
         push ebp
         call DosCloseFile
@@ -778,7 +772,7 @@ loc_A2846:
         pop edi
         pop esi
         ret
-loc_A287A:
+.4:
         mov ecx, dword [eax]
         push ecx
         call _os_handle_0
@@ -818,7 +812,7 @@ loc_A287A:
         call DosCloseFile
         add esp, byte 4
         mov eax, esi
-loc_A28DF:
+.5:
         add esp, byte 10h
         pop ebp
         pop edi
@@ -849,7 +843,7 @@ ConvertShapeBank:
         mov dword [byte esp+024h], eax
         mov ebx, dword [byte esp+040h]
         test ebx, ebx
-        je near loc_A2AAA
+        je near .2
         push byte 10h
         push ebx
         push str_SHPI2
@@ -888,7 +882,7 @@ ConvertShapeBank:
         xor eax, eax
         mov dword [byte esp+01Ch], eax
         test esi, esi
-        jle near loc_A2AAA
+        jle near .2
         mov dword [byte esp+014h], edi
         mov edi, dword [byte esp+040h]
         add edi, byte 14h
@@ -897,7 +891,7 @@ ConvertShapeBank:
         shl esi, 2
         add esi, eax
         mov dword [byte esp+018h], esi
-loc_A29C6:
+.1:
         push byte 4
         mov edx, dword [byte esp+01Ch]
         push edx
@@ -968,8 +962,8 @@ loc_A29C6:
         inc edx
         mov dword [byte esp+01Ch], edx
         cmp edx, dword [byte esp+010h]
-        jl near loc_A29C6
-loc_A2AAA:
+        jl near .1
+.2:
         mov eax, dword [byte esp+024h]
         add esp, byte 2Ch
         pop ebp

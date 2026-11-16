@@ -4,7 +4,7 @@ bits 32
 section s_9A7A0 progbits alloc exec nowrite align=1
 extern _os_handle, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLOCK, str_WindowdefadrOUTOFROW, FatalError, AllocMemHandleLocked, FillRowTable
 extern ZeroMem
-global CreateMcgaWindow, loc_9A7DB, loc_9A7EF, loc_9A868
+global CreateMcgaWindow
 CreateMcgaWindow:
         push esi
         push edi
@@ -22,18 +22,18 @@ CreateMcgaWindow:
         add esp, byte 0Ch
         mov ebp, eax
         test eax, eax
-        jne short loc_9A7DB
+        jne short .1
         push str_WindowdefOUTOFMEMORY
         call FatalError
         add esp, byte 4
-loc_9A7DB:
+.1:
         mov esi, dword [byte ebp+00h]
         test esi, esi
-        jne short loc_9A7EF
+        jne short .2
         push str_WindowdefBADBLOCK
         call FatalError
         add esp, byte 4
-loc_9A7EF:
+.2:
         lea eax, [byte esi+030h]
         push eax
         call _os_handle
@@ -64,7 +64,7 @@ loc_9A7EF:
         call FillRowTable
         mov dword [byte esi+028h], eax
         test eax, eax
-        jne short loc_9A868
+        jne short .3
         mov esi, dword [byte esp+018h]
         push esi
         mov edi, dword [byte esp+018h]
@@ -72,7 +72,7 @@ loc_9A7EF:
         push str_WindowdefadrOUTOFROW
         call FatalError
         add esp, byte 0Ch
-loc_9A868:
+.3:
         mov eax, ebp
         add esp, byte 4
         pop ebp

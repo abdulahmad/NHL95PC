@@ -4,11 +4,8 @@ bits 32
 section s_9B710 progbits alloc exec nowrite align=1
 extern __flushall_, __ioalloc_, __qread_, __set_errno_, byte_C4C70, dword_D500C, dword_D5060, getche_
 extern memset_
-global isatty_, __IOMode_, loc_9B741, loc_9B777, __SetIOMode_, __fsetbits_, loc_9B7C1, loc_9B7E6
-global __setbits_, loc_9B80A, loc_9B829, fgetc_, loc_9B859, loc_9B86D, loc_9B879, loc_9B898
-global loc_9B8A4, loc_9B8B7, __filbuf_, loc_9B8D3, __fill_buffer_, loc_9B8FC, loc_9B913, loc_9B953
-global loc_9B960, loc_9B963, loc_9B970, loc_9B97F, loc_9B98E, ungetc_, loc_9B9AA, loc_9B9B1
-global loc_9B9C4, loc_9B9E3, loc_9BA04, loc_9BA06, loc_9BA12
+global isatty_, __IOMode_, __SetIOMode_, __fsetbits_, __setbits_, fgetc_, __filbuf_, __fill_buffer_
+global ungetc_
 isatty_:
         push ebx
         push ecx
@@ -32,32 +29,32 @@ __IOMode_:
         push edx
         mov edx, eax
         cmp eax, dword [dword_D500C]
-        jb short loc_9B741
+        jb short .1
         xor eax, eax
         pop edx
         pop ecx
         pop ebx
         ret
-loc_9B741:
+.1:
         cmp eax, byte 5
-        jg short loc_9B777
+        jg short .2
         mov ebx, eax
         mov eax, dword [dword_D5060]
         shl ebx, 2
         add eax, ebx
         mov cl, byte [byte eax+01h]
         test cl, 40h
-        jne short loc_9B777
+        jne short .2
         mov ch, cl
         or ch, 40h
         mov byte [byte eax+01h], ch
         mov eax, edx
         call isatty_
         test eax, eax
-        je short loc_9B777
+        je short .2
         mov eax, dword [dword_D5060]
         or byte [byte ebx+eax+01h], 20h
-loc_9B777:
+.2:
         mov eax, dword [dword_D5060]
         mov eax, dword [eax+edx*4]
         pop edx
@@ -96,8 +93,8 @@ __fsetbits_:
         repne stosb
         pop edi
         pop es
-        jmp short loc_9B7E6
-loc_9B7C1:
+        jmp short .2
+.1:
         xor eax, eax
         mov ecx, gs
         mov al, dl
@@ -110,10 +107,10 @@ loc_9B7C1:
         or dh, dl
         inc ebx
         mov byte [fs:esi+eax], dh
-loc_9B7E6:
+.2:
         mov dl, byte [es:ebx]
         test dl, dl
-        jne short loc_9B7C1
+        jne short .1
         pop gs
         pop fs
         pop es
@@ -129,8 +126,8 @@ __setbits_:
         mov ebx, 20h
         xor edx, edx
         call memset_
-        jmp short loc_9B829
-loc_9B80A:
+        jmp short .2
+.1:
         xor eax, eax
         mov al, dl
         sar eax, 3
@@ -141,10 +138,10 @@ loc_9B80A:
         or dh, dl
         inc ecx
         mov byte [esi+eax], dh
-loc_9B829:
+.2:
         mov dl, byte [ecx]
         test dl, dl
-        jne short loc_9B80A
+        jne short .1
         pop esi
         pop ecx
         pop ebx
@@ -156,56 +153,56 @@ fgetc_:
         push esi
         mov edx, eax
         test byte [byte eax+0Ch], 1
-        jne short loc_9B859
+        jne short .1
         mov eax, 4
         call __set_errno_
         mov bl, byte [byte edx+0Ch]
         or bl, 20h
         mov eax, 0FFFFFFFFh
         mov byte [byte edx+0Ch], bl
-        jmp short loc_9B879
-loc_9B859:
+        jmp short .3
+.1:
         mov ebx, dword [byte edx+04h]
         dec ebx
         mov dword [byte edx+04h], ebx
         test ebx, ebx
-        jge short loc_9B86D
+        jge short .2
         mov eax, edx
         call __filbuf_
-        jmp short loc_9B879
-loc_9B86D:
+        jmp short .3
+.2:
         mov ebx, dword [edx]
         mov al, byte [ebx]
         inc ebx
         and eax, 0FFh
         mov dword [edx], ebx
-loc_9B879:
+.3:
         test byte [byte edx+0Ch], 40h
-        jne short loc_9B8B7
+        jne short .6
         cmp eax, byte 0Dh
-        jne short loc_9B8A4
+        jne short .5
         mov esi, dword [byte edx+04h]
         dec esi
         mov dword [byte edx+04h], esi
         test esi, esi
-        jge short loc_9B898
+        jge short .4
         mov eax, edx
         call __filbuf_
-        jmp short loc_9B8A4
-loc_9B898:
+        jmp short .5
+.4:
         mov ebx, dword [edx]
         mov al, byte [ebx]
         inc ebx
         and eax, 0FFh
         mov dword [edx], ebx
-loc_9B8A4:
+.5:
         cmp eax, byte 1Ah
-        jne short loc_9B8B7
+        jne short .6
         mov cl, byte [byte edx+0Ch]
         or cl, 10h
         mov eax, 0FFFFFFFFh
         mov byte [byte edx+0Ch], cl
-loc_9B8B7:
+.6:
         pop esi
         pop edx
         pop ecx
@@ -218,13 +215,13 @@ __filbuf_:
         mov edx, eax
         call __fill_buffer_
         test eax, eax
-        jne short loc_9B8D3
+        jne short .1
         mov eax, 0FFFFFFFFh
         pop edx
         pop ecx
         pop ebx
         ret
-loc_9B8D3:
+.1:
         mov ebx, dword [byte edx+04h]
         mov ecx, dword [edx]
         dec ebx
@@ -244,17 +241,17 @@ __fill_buffer_:
         push esi
         mov ecx, eax
         cmp dword [byte eax+08h], byte 0
-        jne short loc_9B8FC
+        jne short .1
         call __ioalloc_
-loc_9B8FC:
+.1:
         mov ah, byte [byte ecx+0Dh]
         test ah, 20h
-        je short loc_9B913
+        je short .2
         test ah, 6
-        je short loc_9B913
+        je short .2
         mov eax, 2000h
         call __flushall_
-loc_9B913:
+.2:
         mov edx, dword [byte ecx+0Ch]
         mov bl, byte [byte ecx+0Ch]
         mov eax, dword [byte ecx+08h]
@@ -263,43 +260,43 @@ loc_9B913:
         and edx, 2400h
         mov byte [byte ecx+0Ch], bl
         cmp edx, 2400h
-        jne short loc_9B953
+        jne short .3
         mov ebx, dword [byte ecx+010h]
         test ebx, ebx
-        jne short loc_9B953
+        jne short .3
         mov dword [byte ecx+04h], ebx
         call getche_
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9B970
+        je short .6
         mov ebx, dword [ecx]
         mov byte [ebx], al
         mov dword [byte ecx+04h], 1
-        jmp short loc_9B970
-loc_9B953:
+        jmp short .6
+.3:
         test byte [byte ecx+0Dh], 4
-        je short loc_9B960
+        je short .4
         mov ebx, 1
-        jmp short loc_9B963
-loc_9B960:
+        jmp short .5
+.4:
         mov ebx, dword [byte ecx+014h]
-loc_9B963:
+.5:
         mov edx, dword [ecx]
         mov eax, dword [byte ecx+010h]
         call __qread_
         mov dword [byte ecx+04h], eax
-loc_9B970:
+.6:
         mov esi, dword [byte ecx+04h]
         test esi, esi
-        jg short loc_9B98E
-        jne short loc_9B97F
+        jg short .8
+        jne short .7
         or byte [byte ecx+0Ch], 10h
-        jmp short loc_9B98E
-loc_9B97F:
+        jmp short .8
+.7:
         mov al, byte [byte ecx+0Ch]
         mov dword [byte ecx+04h], 0
         or al, 20h
         mov byte [byte ecx+0Ch], al
-loc_9B98E:
+.8:
         mov eax, dword [byte ecx+04h]
         pop esi
         pop edx
@@ -312,23 +309,23 @@ ungetc_:
         push ebp
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9BA12
+        je near .7
         test byte [byte edx+0Dh], 10h
-        je short loc_9B9B1
-loc_9B9AA:
+        je short .2
+.1:
         mov ebx, 0FFFFFFFFh
-        jmp short loc_9BA12
-loc_9B9B1:
+        jmp short .7
+.2:
         test byte [byte edx+0Ch], 1
-        je short loc_9B9AA
+        je short .1
         cmp dword [byte edx+08h], byte 0
-        jne short loc_9B9C4
+        jne short .3
         mov eax, edx
         call __ioalloc_
-loc_9B9C4:
+.3:
         mov esi, dword [byte edx+04h]
         test esi, esi
-        jne short loc_9B9E3
+        jne short .4
         mov eax, dword [byte edx+08h]
         add eax, dword [byte edx+014h]
         dec eax
@@ -336,11 +333,11 @@ loc_9B9C4:
         or byte [byte edx+0Ch], 4
         mov eax, dword [edx]
         mov dword [byte edx+04h], 1
-        jmp short loc_9BA06
-loc_9B9E3:
+        jmp short .6
+.4:
         mov eax, dword [edx]
         cmp eax, dword [byte edx+08h]
-        je short loc_9B9AA
+        je short .1
         mov eax, dword [edx]
         lea ebp, [byte esi+01h]
         dec eax
@@ -349,15 +346,15 @@ loc_9B9E3:
         mov al, byte [eax]
         and eax, 0FFh
         cmp eax, ebx
-        je short loc_9BA04
+        je short .5
         or byte [byte edx+0Ch], 4
-loc_9BA04:
+.5:
         mov eax, dword [edx]
-loc_9BA06:
+.6:
         mov byte [eax], bl
         and byte [byte edx+0Ch], 0EFh
         and ebx, 0FFh
-loc_9BA12:
+.7:
         mov eax, ebx
         pop ebp
         pop esi

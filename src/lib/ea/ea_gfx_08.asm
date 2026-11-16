@@ -3,20 +3,20 @@ bits 32
 %include "hockey.inc"
 section s_91FE0 progbits alloc exec nowrite align=1
 extern KeyedDraw, RowCopyFunc, PutBlock, RemapRowKeyed, bcopy, BlitArtKeyColour
-global DrawArtKeyColour, loc_92001, DrawArtKeyColourAtOwnPos
+global DrawArtKeyColour, DrawArtKeyColourAtOwnPos
 DrawArtKeyColour:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_92001
+        jne short .1
         push eax
         push ebx
         push edx
         call BlitArtKeyColour
         add esp, byte 0Ch
         ret
-loc_92001:
+.1:
         mov dword [RowCopyFunc], RemapRowKeyed
         push eax
         push ebx

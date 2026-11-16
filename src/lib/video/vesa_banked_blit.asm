@@ -5,85 +5,52 @@ section s_B5D80 progbits alloc exec nowrite align=1
 extern ColourRemap, VesaBankShift, byte_D89E4, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30BC
 extern dword_D30C0, DrawRowBytes, KeyedDraw, DrawDestBuffer, DrawVideoBase, ScreenRowTable, dword_D4F4C, dword_D4F50
 extern BlitColumnOffsets, BlitSourcePtr
-global PutPixel, loc_B5DAC, PlotPixel, loc_B5DBC, loc_B5DD8, loc_B5DE0, VesaSetBankArg, VesaSetBank
-global jpt_B5E1F, loc_B5E2B, loc_B5E49, loc_B5E4A, loc_B5E76, VesaSetMode, VgaSetModeTwice, VesaSetDisplayStart
-global BlitBlockHot, BlitBlock, loc_B5F41, loc_B5F63, loc_B5F67, loc_B5F94, loc_B5FC2, loc_B5FE5
-global loc_B5FEB, loc_B6024, loc_B6037, loc_B603B, loc_B603D, loc_B6055, BlitBlockXorHot, BlitBlockXor
-global loc_B60BD, loc_B60DF, loc_B60E3, loc_B6110, loc_B613E, loc_B6161, loc_B6167, loc_B61A3
-global loc_B61A6, loc_B61B8, loc_B61BC, loc_B61C2, loc_B61C5, loc_B61DE, loc_B61DF, BlitBlockAndHot
-global BlitBlockAnd, loc_B6249, loc_B626B, loc_B626F, loc_B629C, loc_B62CA, loc_B62ED, loc_B62F3
-global loc_B632F, loc_B6332, loc_B6344, loc_B6348, loc_B634E, loc_B6351, loc_B636A, loc_B636B
-global AndPixelClipped, loc_B63A8, AndPixel, loc_B63B8, loc_B63D4, loc_B63DC, BlitBlockOrHot, BlitBlockOr
-global loc_B6455, loc_B6477, loc_B647B, loc_B64A8, loc_B64D6, loc_B64F9, loc_B64FF, loc_B653B
-global loc_B653E, loc_B6550, loc_B6554, loc_B655A, loc_B655D, loc_B6576, loc_B6577, OrPixelClipped
-global loc_B65B4, OrPixel, loc_B65C4, loc_B65E0, loc_B65E8, FillRectClippedCore, loc_B6621, loc_B6634
-global loc_B664B, loc_B6662, FillRectCore, loc_B6669, jpt_B66B3, loc_B66C3, loc_B66D0, loc_B66D6
-global loc_B66E4, loc_B66F3, loc_B6703, loc_B670E, loc_B6710, loc_B671A, XorRectClippedCore, loc_B6739
-global loc_B674C, loc_B6763, loc_B677A, XorRectCore, loc_B6781, jpt_B67CB, loc_B67DB, loc_B67E0
-global loc_B67E7, loc_B67EF, loc_B67F6, loc_B67FB, loc_B6802, loc_B680C, loc_B680F, loc_B6814
-global loc_B681B, loc_B6826, loc_B6829, loc_B682E, loc_B6835, loc_B6843, loc_B684E, loc_B6850
-global loc_B685A, BlitArtOpaqueHot, BlitArtOpaque, loc_B68B9, loc_B68EC, loc_B68F6, loc_B68FA, loc_B68FC
-global loc_B690B, BlitArtKeyFFHot, BlitArtKeyFF, loc_B6970, loc_B69A3, loc_B69A6, loc_B69B0, loc_B69B3
-global BlitArtHot, BlitArt, loc_B6A18, loc_B6A3A, loc_B6A3F, loc_B6A6C, loc_B6A9A, loc_B6ABD
-global loc_B6AC3, loc_B6AF6, loc_B6AF9, loc_B6B03, loc_B6B06, loc_B6B10, BlitShapeFastHot, BlitShapeFast
-global loc_B6B79, loc_B6B94, loc_B6BA2, loc_B6BAE, BlitArtKeyColourHot, BlitArtKeyColour, loc_B6C1B, loc_B6C3D
-global loc_B6C43, loc_B6C70, loc_B6C9E, loc_B6CC1, loc_B6CC7, loc_B6CFA, loc_B6CFD, loc_B6D0F
-global loc_B6D12, loc_B6D1C, BlitArtMaskedHot, BlitArtMasked, loc_B6D79, loc_B6DAC, loc_B6DAF, loc_B6DBF
-global loc_B6DC2, BlitShapeClippedHot, BlitShapeClipped, loc_B6E31, loc_B6E53, loc_B6E57, loc_B6E84, loc_B6EB2
-global loc_B6ED5, loc_B6EDB, loc_B6F1E, loc_B6F2E, loc_B6F39, loc_B6F46, loc_B6F4B, loc_B6F57
-global loc_B6F68, loc_B6F78, SetBitmapClip, loc_B6FB7, ShapeWidth, ShapeHeight, ShapeDataSize, loc_B7027
-global loc_B702C, loc_B7037, loc_B7045, FillRectSpansCore, jpt_B708F, loc_B70B7, loc_B70CF, loc_B70FC
-global loc_B710B, loc_B7111, loc_B712E, loc_B7139, loc_B7142, loc_B7146, loc_B714F, loc_B7158
-global loc_B7179, loc_B7185, loc_B71A8, loc_B71B4, loc_B71D2, loc_B71DB, loc_B71DF, loc_B71E5
-global loc_B7203, loc_B720C, loc_B7210, UnpackArtRle, loc_B7239, loc_B725D, loc_B7260, loc_B726C
-global loc_B7271, loc_B7277, loc_B7280, loc_B7296, loc_B72A1, loc_B72A4, loc_B72B2, loc_B72B8
-global loc_B72BA, loc_B72CB, loc_B72CF, SetBlitSource, CopyRowKeyFF, loc_B7309, loc_B7314, CopyRowRemapKeyed
-global loc_B7340, loc_B7379, loc_B738A, loc_B73B6, loc_B73CB, loc_B73CD, loc_B73F9, loc_B7414
-global loc_B7416, CopyRowFast, loc_B7445, loc_B7456, loc_B7482, unk_B74AA, loc_B74EA, loc_B74F3
-global loc_B7501, loc_B7511, loc_B7521, loc_B7531, loc_B7541, loc_B7551, loc_B7561, loc_B7571
-global loc_B7581, loc_B7591, loc_B75A1, loc_B75B1, loc_B75C1, loc_B75D1, loc_B75E1, loc_B7603
-global BlitBlockShadowHot, BlitBlockShadow, loc_B766D, loc_B768F, loc_B7693, loc_B76C0, loc_B76EE, loc_B7711
-global loc_B7717, loc_B7748, loc_B774B, loc_B7757, loc_B7764, loc_B7767, loc_B7771, SetRemapTable
-global BlitBlockRemapKeyedHot, BlitBlockRemapKeyed, loc_B7828, loc_B7860, loc_B7863, loc_B786F, loc_B7877, loc_B787A
+global PutPixel, PlotPixel, VesaSetBankArg, VesaSetBank, jpt_B5E1F, VesaSetMode, VgaSetModeTwice, VesaSetDisplayStart
+global BlitBlockHot, BlitBlock, BlitBlockXorHot, BlitBlockXor, BlitBlockXor, BlitBlockAndHot, BlitBlockAnd, AndPixelClipped
+global AndPixel, BlitBlockOrHot, BlitBlockOr, BlitBlockOr, OrPixelClipped, OrPixel, FillRectClippedCore, FillRectClippedCore
+global FillRectCore, jpt_B66B3, XorRectClippedCore, XorRectClippedCore, XorRectCore, jpt_B67CB, BlitArtOpaqueHot, BlitArtOpaque
+global BlitArtKeyFFHot, BlitArtKeyFF, BlitArtHot, BlitArt, BlitShapeFastHot, BlitShapeFast, BlitShapeFast, BlitArtKeyColourHot
+global BlitArtKeyColour, BlitArtMaskedHot, BlitArtMasked, BlitShapeClippedHot, BlitShapeClipped, SetBitmapClip, ShapeWidth, ShapeHeight
+global ShapeDataSize, FillRectSpansCore, jpt_B708F, UnpackArtRle, SetBlitSource, CopyRowKeyFF, CopyRowRemapKeyed, CopyRowFast
+global unk_B74AA, BlitBlockShadowHot, BlitBlockShadow, SetRemapTable, BlitBlockRemapKeyedHot, BlitBlockRemapKeyed
 PutPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         cmp eax, dword [dword_D30BC]
-        jl short loc_B5DAC
+        jl short .1
         cmp eax, dword [dword_D30C0]
-        jge short loc_B5DAC
+        jge short .1
         cmp edx, dword [cliprect_y0]
-        jl short loc_B5DAC
+        jl short .1
         cmp edx, dword [cliprect_y1]
-        jl short loc_B5DBC
-loc_B5DAC:
+        jl short PlotPixel+0Ch
+.1:
         ret
         db 02Eh,0C0h,08Bh
 PlotPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
-loc_B5DBC:
         cmp dword [KeyedDraw], byte 0
-        jne short loc_B5DE0
+        jne short .2
         mov ecx, dword [DrawDestBuffer]
         add eax, dword [ecx+edx*4]
         add eax, dword [DrawVideoBase]
         mov byte [eax], bl
         ret
         db 090h
-loc_B5DD8:
+.1:
         call VesaSetBank
         mov byte [edx], bl
         ret
-loc_B5DE0:
+.2:
         add eax, dword [nosplit edx*4+ScreenRowTable]
         movzx edx, ax
         add edx, dword [DrawVideoBase]
         shr eax, 10h
         cmp al, byte [VesaBankShift]
-        jne short loc_B5DD8
+        jne short .1
         mov byte [edx], bl
         ret
         db 00h,00h
@@ -91,16 +58,16 @@ VesaSetBankArg:
         mov eax, dword [byte esp+04h]
 VesaSetBank:
         cmp al, byte [VesaBankShift]
-        je short loc_B5E49
+        je short jpt_B5E1F+02Ah
         mov byte [VesaBankShift], al
         push edx
         mov edx, dword [dword_D4F4C]
         jmp dword [nosplit edx*4+jpt_B5E1F]
 jpt_B5E1F:
-        dd loc_B5E2B
-        dd loc_B5E4A
-        dd loc_B5E76
-loc_B5E2B:
+        dd .1
+        dd .2
+        dd .3
+.1:
         push ebx
         push ecx
         push ebp
@@ -118,9 +85,8 @@ loc_B5E2B:
         pop ecx
         pop ebx
         pop edx
-loc_B5E49:
         ret
-loc_B5E4A:
+.2:
         push ebx
         push ecx
         push ebp
@@ -144,7 +110,7 @@ loc_B5E4A:
         pop ebx
         pop edx
         ret
-loc_B5E76:
+.3:
         mov dx, 1CEh
         mov al, 0BEh
         out dx, al
@@ -221,7 +187,7 @@ BlitBlockHot:
         sub ax, word [byte esi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B5F41
+        jmp short BlitBlock+032h
 BlitBlock:
         push ebp
         LD mov, ebp, esp
@@ -233,7 +199,7 @@ BlitBlock:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B5F41
+        jmp short BlitBlock+032h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE4h
@@ -244,28 +210,27 @@ BlitBlock:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B5F41:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte esi+06h]
         lea edx, [byte esi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B5F67
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B5F94
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B5F94
-loc_B5F63:
+        jg short .3
+.1:
         pop edi
         pop esi
         leave
         ret
-loc_B5F67:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B5F63
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-010h], edx
@@ -276,10 +241,10 @@ loc_B5F67:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B5F94
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B5F63
-loc_B5F94:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -288,35 +253,35 @@ loc_B5F94:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         cmp eax, dword [dword_D30BC]
-        jl short loc_B5FC2
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [dword_D30C0]
-        jl short loc_B5FEB
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B5F63
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B5FEB
-loc_B5FC2:
+        jmp short .6
+.4:
         mov ebx, dword [dword_D30BC]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B5F63
+        jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-018h], esi
         mov esi, dword [dword_D30C0]
         LD sub, esi, ebx
-        jle short loc_B5F63
+        jle short .1
         LD cmp, eax, esi
-        jl short loc_B5FE5
+        jl short .5
         LD mov, eax, esi
-loc_B5FE5:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B5FEB:
+.6:
         LD or, ecx, ecx
-        jle short loc_B6037
+        jle short .8
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -332,8 +297,8 @@ loc_B5FEB:
         sub ebx, dword [byte ebp-0Ch]
         mov eax, dword [byte ebp-0Ch]
         shr eax, 1
-        jb short loc_B603B
-loc_B6024:
+        jb short .9
+.7:
         LD mov, ecx, eax
         shr ecx, 1
         rep movsd
@@ -342,15 +307,15 @@ loc_B6024:
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B6024
-loc_B6037:
+        jg short .7
+.8:
         pop edi
         pop esi
         leave
         ret
-loc_B603B:
-        je short loc_B6055
-loc_B603D:
+.9:
+        je short .11
+.10:
         LD mov, ecx, eax
         shr ecx, 1
         rep movsd
@@ -360,17 +325,17 @@ loc_B603D:
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B603D
+        jg short .10
         pop edi
         pop esi
         leave
         ret
-loc_B6055:
+.11:
         movsb
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B6055
+        jg short .11
         pop edi
         pop esi
         leave
@@ -391,7 +356,7 @@ BlitBlockXorHot:
         sub ax, word [byte esi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B60BD
+        jmp short BlitBlockXor+032h
 BlitBlockXor:
         push ebp
         LD mov, ebp, esp
@@ -403,7 +368,7 @@ BlitBlockXor:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B60BD
+        jmp short BlitBlockXor+032h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE4h
@@ -414,28 +379,27 @@ BlitBlockXor:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B60BD:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte esi+06h]
         lea edx, [byte esi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B60E3
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6110
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B6110
-loc_B60DF:
+        jg short .3
+.1:
         pop edi
         pop esi
         leave
         ret
-loc_B60E3:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B60DF
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-010h], edx
@@ -446,10 +410,10 @@ loc_B60E3:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6110
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B60DF
-loc_B6110:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -458,35 +422,35 @@ loc_B6110:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         cmp eax, dword [dword_D30BC]
-        jl short loc_B613E
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [dword_D30C0]
-        jl short loc_B6167
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B60DF
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B6167
-loc_B613E:
+        jmp short .6
+.4:
         mov ebx, dword [dword_D30BC]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B60DF
+        jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-018h], esi
         mov esi, dword [dword_D30C0]
         LD sub, esi, ebx
-        jle short loc_B60DF
+        jle short .1
         LD cmp, eax, esi
-        jl short loc_B6161
+        jl short .5
         LD mov, eax, esi
-loc_B6161:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B6167:
+.6:
         LD or, ecx, ecx
-        jle short loc_B61B8
+        jle short .9
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -502,54 +466,54 @@ loc_B6167:
         sub ebx, dword [byte ebp-0Ch]
         mov eax, dword [byte ebp-0Ch]
         shr eax, 1
-        jb short loc_B61BC
+        jb short .10
         mov dword [byte ebp-01Ch], eax
-loc_B61A3:
+.7:
         mov ecx, dword [byte ebp-01Ch]
-loc_B61A6:
+.8:
         lodsw
         xor word [edi], ax
         add edi, byte 2
-        loop loc_B61A6
+        loop .8
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B61A3
-loc_B61B8:
+        jg short .7
+.9:
         pop edi
         pop esi
         leave
         ret
-loc_B61BC:
-        je short loc_B61DE
+.10:
+        je short .13
         mov dword [byte ebp-01Ch], eax
         inc ebx
-loc_B61C2:
+.11:
         mov ecx, dword [byte ebp-01Ch]
-loc_B61C5:
+.12:
         lodsw
         xor word [edi], ax
         add edi, byte 2
-        loop loc_B61C5
+        loop .12
         lodsb
         xor byte [edi], al
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B61C2
+        jg short .11
         pop edi
         pop esi
         leave
         ret
-loc_B61DE:
+.13:
         inc ebx
-loc_B61DF:
+.14:
         lodsb
         xor byte [edi], al
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B61DF
+        jg short .14
         pop edi
         pop esi
         leave
@@ -570,7 +534,7 @@ BlitBlockAndHot:
         sub ax, word [byte esi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6249
+        jmp short BlitBlockAnd+032h
 BlitBlockAnd:
         push ebp
         LD mov, ebp, esp
@@ -582,7 +546,7 @@ BlitBlockAnd:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6249
+        jmp short BlitBlockAnd+032h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE4h
@@ -593,28 +557,27 @@ BlitBlockAnd:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6249:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte esi+06h]
         lea edx, [byte esi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B626F
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B629C
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B629C
-loc_B626B:
+        jg short .3
+.1:
         pop edi
         pop esi
         leave
         ret
-loc_B626F:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B626B
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-010h], edx
@@ -625,10 +588,10 @@ loc_B626F:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B629C
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B626B
-loc_B629C:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -637,35 +600,35 @@ loc_B629C:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         cmp eax, dword [dword_D30BC]
-        jl short loc_B62CA
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [dword_D30C0]
-        jl short loc_B62F3
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B626B
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B62F3
-loc_B62CA:
+        jmp short .6
+.4:
         mov ebx, dword [dword_D30BC]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B626B
+        jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-018h], esi
         mov esi, dword [dword_D30C0]
         LD sub, esi, ebx
-        jle short loc_B626B
+        jle short .1
         LD cmp, eax, esi
-        jl short loc_B62ED
+        jl short .5
         LD mov, eax, esi
-loc_B62ED:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B62F3:
+.6:
         LD or, ecx, ecx
-        jle short loc_B6344
+        jle short .9
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -681,54 +644,54 @@ loc_B62F3:
         sub ebx, dword [byte ebp-0Ch]
         mov eax, dword [byte ebp-0Ch]
         shr eax, 1
-        jb short loc_B6348
+        jb short .10
         mov dword [byte ebp-01Ch], eax
-loc_B632F:
+.7:
         mov ecx, dword [byte ebp-01Ch]
-loc_B6332:
+.8:
         lodsw
         and word [edi], ax
         add edi, byte 2
-        loop loc_B6332
+        loop .8
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B632F
-loc_B6344:
+        jg short .7
+.9:
         pop edi
         pop esi
         leave
         ret
-loc_B6348:
-        je short loc_B636A
+.10:
+        je short .13
         mov dword [byte ebp-01Ch], eax
         inc ebx
-loc_B634E:
+.11:
         mov ecx, dword [byte ebp-01Ch]
-loc_B6351:
+.12:
         lodsw
         and word [edi], ax
         add edi, byte 2
-        loop loc_B6351
+        loop .12
         lodsb
         and byte [edi], al
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B634E
+        jg short .11
         pop edi
         pop esi
         leave
         ret
-loc_B636A:
+.13:
         inc ebx
-loc_B636B:
+.14:
         lodsb
         and byte [edi], al
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B636B
+        jg short .14
         pop edi
         pop esi
         leave
@@ -739,40 +702,39 @@ AndPixelClipped:
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         cmp eax, dword [dword_D30BC]
-        jl short loc_B63A8
+        jl short .1
         cmp eax, dword [dword_D30C0]
-        jge short loc_B63A8
+        jge short .1
         cmp edx, dword [cliprect_y0]
-        jl short loc_B63A8
+        jl short .1
         cmp edx, dword [cliprect_y1]
-        jl short loc_B63B8
-loc_B63A8:
+        jl short AndPixel+0Ch
+.1:
         ret
         db 02Eh,0C0h,08Bh
 AndPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
-loc_B63B8:
         cmp dword [KeyedDraw], byte 0
-        jne short loc_B63DC
+        jne short .2
         mov ecx, dword [DrawDestBuffer]
         add eax, dword [ecx+edx*4]
         add eax, dword [DrawVideoBase]
         and byte [eax], bl
         ret
         db 090h
-loc_B63D4:
+.1:
         call VesaSetBank
         and byte [edx], bl
         ret
-loc_B63DC:
+.2:
         add eax, dword [nosplit edx*4+ScreenRowTable]
         movzx edx, ax
         add edx, dword [DrawVideoBase]
         shr eax, 10h
         cmp al, byte [VesaBankShift]
-        jne short loc_B63D4
+        jne short .1
         and byte [edx], bl
         ret
         db 00h,00h
@@ -791,7 +753,7 @@ BlitBlockOrHot:
         sub ax, word [byte esi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6455
+        jmp short BlitBlockOr+032h
 BlitBlockOr:
         push ebp
         LD mov, ebp, esp
@@ -803,7 +765,7 @@ BlitBlockOr:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6455
+        jmp short BlitBlockOr+032h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE4h
@@ -814,28 +776,27 @@ BlitBlockOr:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6455:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte esi+06h]
         lea edx, [byte esi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B647B
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B64A8
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B64A8
-loc_B6477:
+        jg short .3
+.1:
         pop edi
         pop esi
         leave
         ret
-loc_B647B:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6477
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-010h], edx
@@ -846,10 +807,10 @@ loc_B647B:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B64A8
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B6477
-loc_B64A8:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -858,35 +819,35 @@ loc_B64A8:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         cmp eax, dword [dword_D30BC]
-        jl short loc_B64D6
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [dword_D30C0]
-        jl short loc_B64FF
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B6477
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B64FF
-loc_B64D6:
+        jmp short .6
+.4:
         mov ebx, dword [dword_D30BC]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6477
+        jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-018h], esi
         mov esi, dword [dword_D30C0]
         LD sub, esi, ebx
-        jle short loc_B6477
+        jle short .1
         LD cmp, eax, esi
-        jl short loc_B64F9
+        jl short .5
         LD mov, eax, esi
-loc_B64F9:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B64FF:
+.6:
         LD or, ecx, ecx
-        jle short loc_B6550
+        jle short .9
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -902,54 +863,54 @@ loc_B64FF:
         sub ebx, dword [byte ebp-0Ch]
         mov eax, dword [byte ebp-0Ch]
         shr eax, 1
-        jb short loc_B6554
+        jb short .10
         mov dword [byte ebp-01Ch], eax
-loc_B653B:
+.7:
         mov ecx, dword [byte ebp-01Ch]
-loc_B653E:
+.8:
         lodsw
         or word [edi], ax
         add edi, byte 2
-        loop loc_B653E
+        loop .8
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B653B
-loc_B6550:
+        jg short .7
+.9:
         pop edi
         pop esi
         leave
         ret
-loc_B6554:
-        je short loc_B6576
+.10:
+        je short .13
         mov dword [byte ebp-01Ch], eax
         inc ebx
-loc_B655A:
+.11:
         mov ecx, dword [byte ebp-01Ch]
-loc_B655D:
+.12:
         lodsw
         or word [edi], ax
         add edi, byte 2
-        loop loc_B655D
+        loop .12
         lodsb
         or byte [edi], al
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B655A
+        jg short .11
         pop edi
         pop esi
         leave
         ret
-loc_B6576:
+.13:
         inc ebx
-loc_B6577:
+.14:
         lodsb
         or byte [edi], al
         add esi, dword [byte ebp-010h]
         LD add, edi, ebx
         dec edx
-        jg short loc_B6577
+        jg short .14
         pop edi
         pop esi
         leave
@@ -960,40 +921,39 @@ OrPixelClipped:
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         cmp eax, dword [dword_D30BC]
-        jl short loc_B65B4
+        jl short .1
         cmp eax, dword [dword_D30C0]
-        jge short loc_B65B4
+        jge short .1
         cmp edx, dword [cliprect_y0]
-        jl short loc_B65B4
+        jl short .1
         cmp edx, dword [cliprect_y1]
-        jl short loc_B65C4
-loc_B65B4:
+        jl short OrPixel+0Ch
+.1:
         ret
         db 02Eh,0C0h,08Bh
 OrPixel:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
-loc_B65C4:
         cmp dword [KeyedDraw], byte 0
-        jne short loc_B65E8
+        jne short .2
         mov ecx, dword [DrawDestBuffer]
         add eax, dword [ecx+edx*4]
         add eax, dword [DrawVideoBase]
         or byte [eax], bl
         ret
         db 090h
-loc_B65E0:
+.1:
         call VesaSetBank
         or byte [edx], bl
         ret
-loc_B65E8:
+.2:
         add eax, dword [nosplit edx*4+ScreenRowTable]
         movzx edx, ax
         add edx, dword [DrawVideoBase]
         shr eax, 10h
         cmp al, byte [VesaBankShift]
-        jne short loc_B65E0
+        jne short .1
         or byte [edx], bl
         ret
         db 00h,00h
@@ -1004,35 +964,34 @@ FillRectClippedCore:
         mov edx, dword [cliprect_x0]
         LD mov, eax, edx
         sub eax, dword [byte ebp+08h]
-        jle short loc_B6621
+        jle short .1
         mov dword [byte ebp+08h], edx
         sub dword [byte ebp+010h], eax
-        jle short loc_B6662
-loc_B6621:
+        jle short FillRectClippedCore+05Ah
+.1:
         mov eax, dword [byte ebp+08h]
         add eax, dword [byte ebp+010h]
         sub eax, dword [cliprect_x1]
-        jle short loc_B6634
+        jle short .2
         sub dword [byte ebp+010h], eax
-        jle short loc_B6662
-loc_B6634:
+        jle short FillRectClippedCore+05Ah
+.2:
         mov eax, dword [cliprect_y0]
         sub eax, dword [byte ebp+0Ch]
-        jle short loc_B664B
+        jle short .3
         sub dword [byte ebp+014h], eax
-        jle short loc_B6662
+        jle short FillRectClippedCore+05Ah
         mov eax, dword [cliprect_y0]
         mov dword [byte ebp+0Ch], eax
-loc_B664B:
+.3:
         mov eax, dword [byte ebp+0Ch]
         add eax, dword [byte ebp+014h]
         mov ebx, dword [cliprect_y1]
         LD sub, eax, ebx
-        jle short loc_B6669
+        jle short FillRectCore+04h
         sub dword [byte ebp+014h], eax
-        jle short loc_B6662
-        jmp short loc_B6669
-loc_B6662:
+        jle short FillRectClippedCore+05Ah
+        jmp short FillRectCore+04h
         pop edi
         leave
         ret
@@ -1040,12 +999,11 @@ FillRectCore:
         push ebp
         LD mov, ebp, esp
         push edi
-loc_B6669:
         cld
         cmp dword [byte ebp+010h], byte 0
-        jle short loc_B6662
+        jle short FillRectClippedCore+05Ah
         cmp dword [byte ebp+014h], byte 0
-        jle short loc_B6662
+        jle short FillRectClippedCore+05Ah
         mov dl, byte [byte ebp+018h]
         LD mov, dh, dl
         shrd eax, edx, 10h
@@ -1063,68 +1021,68 @@ loc_B6669:
         and ecx, byte 3
         jmp dword [nosplit ecx*4+jpt_B66B3]
 jpt_B66B3:
-        dd loc_B66C3
-        dd loc_B66D0
-        dd loc_B66E4
-        dd loc_B66F3
-loc_B66C3:
+        dd .1
+        dd .2
+        dd .4
+        dd .5
+.1:
         mov ecx, dword [byte ebp+010h]
         rep stosd
         LD add, edi, edx
         dec ebx
-        jg short loc_B66C3
+        jg short .1
         pop edi
         leave
         ret
-loc_B66D0:
+.2:
         cmp dword [byte ebp+010h], byte 0
-        je short loc_B6703
-loc_B66D6:
+        je short .6
+.3:
         mov ecx, dword [byte ebp+010h]
         rep stosd
         stosb
         LD add, edi, edx
         dec ebx
-        jg short loc_B66D6
+        jg short .3
         pop edi
         leave
         ret
-loc_B66E4:
+.4:
         mov ecx, dword [byte ebp+010h]
         rep stosd
         stosw
         LD add, edi, edx
         dec ebx
-        jg short loc_B66E4
+        jg short .4
         pop edi
         leave
         ret
-loc_B66F3:
+.5:
         mov ecx, dword [byte ebp+010h]
         rep stosd
         stosw
         stosb
         LD add, edi, edx
         dec ebx
-        jg short loc_B66F3
+        jg short .5
         pop edi
         leave
         ret
-loc_B6703:
+.6:
         inc edx
         LD mov, ecx, ebx
         shr ecx, 1
-        jae short loc_B670E
+        jae short .7
         mov byte [edi], al
         LD add, edi, edx
-loc_B670E:
-        jecxz loc_B671A
-loc_B6710:
+.7:
+        jecxz .9
+.8:
         mov byte [edi], al
         mov byte [edx+edi], al
         lea edi, [edi+edx*2]
-        loop loc_B6710
-loc_B671A:
+        loop .8
+.9:
         pop edi
         leave
         ret
@@ -1136,35 +1094,34 @@ XorRectClippedCore:
         mov edx, dword [cliprect_x0]
         LD mov, eax, edx
         sub eax, dword [byte ebp+08h]
-        jle short loc_B6739
+        jle short .1
         mov dword [byte ebp+08h], edx
         sub dword [byte ebp+010h], eax
-        jle short loc_B677A
-loc_B6739:
+        jle short XorRectClippedCore+05Ah
+.1:
         mov eax, dword [byte ebp+08h]
         add eax, dword [byte ebp+010h]
         sub eax, dword [cliprect_x1]
-        jle short loc_B674C
+        jle short .2
         sub dword [byte ebp+010h], eax
-        jle short loc_B677A
-loc_B674C:
+        jle short XorRectClippedCore+05Ah
+.2:
         mov eax, dword [cliprect_y0]
         sub eax, dword [byte ebp+0Ch]
-        jle short loc_B6763
+        jle short .3
         sub dword [byte ebp+014h], eax
-        jle short loc_B677A
+        jle short XorRectClippedCore+05Ah
         mov eax, dword [cliprect_y0]
         mov dword [byte ebp+0Ch], eax
-loc_B6763:
+.3:
         mov eax, dword [byte ebp+0Ch]
         add eax, dword [byte ebp+014h]
         mov ebx, dword [cliprect_y1]
         LD sub, eax, ebx
-        jle short loc_B6781
+        jle short XorRectCore+04h
         sub dword [byte ebp+014h], eax
-        jle short loc_B677A
-        jmp short loc_B6781
-loc_B677A:
+        jle short XorRectClippedCore+05Ah
+        jmp short XorRectCore+04h
         pop edi
         leave
         ret
@@ -1172,12 +1129,11 @@ XorRectCore:
         push ebp
         LD mov, ebp, esp
         push edi
-loc_B6781:
         cld
         cmp dword [byte ebp+010h], byte 0
-        jle short loc_B677A
+        jle short XorRectClippedCore+05Ah
         cmp dword [byte ebp+014h], byte 0
-        jle short loc_B677A
+        jle short XorRectClippedCore+05Ah
         mov dl, byte [byte ebp+018h]
         LD mov, dh, dl
         shrd eax, edx, 10h
@@ -1195,93 +1151,93 @@ loc_B6781:
         and ecx, byte 3
         jmp dword [nosplit ecx*4+jpt_B67CB]
 jpt_B67CB:
-        dd loc_B67DB
-        dd loc_B67EF
-        dd loc_B680C
-        dd loc_B6826
-loc_B67DB:
+        dd .1
+        dd .4
+        dd .8
+        dd .12
+.1:
         mov ecx, dword [byte ebp+010h]
-        jecxz loc_B67E7
-loc_B67E0:
+        jecxz .3
+.2:
         xor dword [edi], eax
         add edi, byte 4
-        loop loc_B67E0
-loc_B67E7:
+        loop .2
+.3:
         LD add, edi, edx
         dec ebx
-        jg short loc_B67DB
+        jg short .1
         pop edi
         leave
         ret
-loc_B67EF:
+.4:
         cmp dword [byte ebp+010h], byte 0
-        je short loc_B6843
+        je short .16
         inc edx
-loc_B67F6:
+.5:
         mov ecx, dword [byte ebp+010h]
-        jecxz loc_B6802
-loc_B67FB:
+        jecxz .7
+.6:
         xor dword [edi], eax
         add edi, byte 4
-        loop loc_B67FB
-loc_B6802:
+        loop .6
+.7:
         xor byte [edi], al
         LD add, edi, edx
         dec ebx
-        jg short loc_B67F6
+        jg short .5
         pop edi
         leave
         ret
-loc_B680C:
+.8:
         add edx, byte 2
-loc_B680F:
+.9:
         mov ecx, dword [byte ebp+010h]
-        jecxz loc_B681B
-loc_B6814:
+        jecxz .11
+.10:
         xor dword [edi], eax
         add edi, byte 4
-        loop loc_B6814
-loc_B681B:
+        loop .10
+.11:
         xor word [edi], ax
         LD add, edi, edx
         dec ebx
-        jg short loc_B680F
+        jg short .9
         pop edi
         leave
         ret
-loc_B6826:
+.12:
         add edx, byte 3
-loc_B6829:
+.13:
         mov ecx, dword [byte ebp+010h]
-        jecxz loc_B6835
-loc_B682E:
+        jecxz .15
+.14:
         xor dword [edi], eax
         add edi, byte 4
-        loop loc_B682E
-loc_B6835:
+        loop .14
+.15:
         xor word [edi], ax
         xor byte [byte edi+02h], al
         LD add, edi, edx
         dec ebx
-        jg short loc_B6829
+        jg short .13
         pop edi
         leave
         ret
-loc_B6843:
+.16:
         inc edx
         LD mov, ecx, ebx
         shr ecx, 1
-        jae short loc_B684E
+        jae short .17
         xor byte [edi], al
         LD add, edi, edx
-loc_B684E:
-        jecxz loc_B685A
-loc_B6850:
+.17:
+        jecxz .19
+.18:
         xor byte [edi], al
         xor byte [edx+edi], al
         lea edi, [edi+edx*2]
-        loop loc_B6850
-loc_B685A:
+        loop .18
+.19:
         pop edi
         leave
         ret
@@ -1301,7 +1257,7 @@ BlitArtOpaqueHot:
         sub ax, word [byte esi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B68B9
+        jmp short BlitArtOpaque+032h
 BlitArtOpaque:
         push ebp
         LD mov, ebp, esp
@@ -1313,7 +1269,7 @@ BlitArtOpaque:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B68B9
+        jmp short BlitArtOpaque+032h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE4h
@@ -1324,7 +1280,6 @@ BlitArtOpaque:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B68B9:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
         add ebx, dword [DrawDestBuffer]
@@ -1334,42 +1289,42 @@ loc_B68B9:
         cld
         movsx edx, word [byte esi+06h]
         LD or, edx, edx
-        je short loc_B68F6
+        je short .2
         mov ebx, dword [DrawRowBytes]
         movsx eax, word [byte esi+04h]
         LD sub, ebx, eax
         add esi, byte 10h
         shr eax, 1
-        jb short loc_B68FA
-loc_B68EC:
+        jb short .3
+.1:
         LD mov, ecx, eax
         db 0F3h,066h,0A5h                       ; insn: rep movsw (nasm 3 emits 66h F3h)
         LD add, edi, ebx
         dec edx
-        jg short loc_B68EC
-loc_B68F6:
+        jg short .1
+.2:
         pop edi
         pop esi
         leave
         ret
-loc_B68FA:
-        je short loc_B690B
-loc_B68FC:
+.3:
+        je short .5
+.4:
         LD mov, ecx, eax
         db 0F3h,066h,0A5h                       ; insn: rep movsw (nasm 3 emits 66h F3h)
         movsb
         LD add, edi, ebx
         dec edx
-        jg short loc_B68FC
+        jg short .4
         pop edi
         pop esi
         leave
         ret
-loc_B690B:
+.5:
         movsb
         LD add, edi, ebx
         dec edx
-        jg short loc_B690B
+        jg short .5
         pop edi
         pop esi
         leave
@@ -1391,7 +1346,7 @@ BlitArtKeyFFHot:
         sub ax, word [byte esi+0Ah]
         cwde
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6970
+        jmp short BlitArtKeyFF+034h
 BlitArtKeyFF:
         push ebp
         LD mov, ebp, esp
@@ -1404,7 +1359,7 @@ BlitArtKeyFF:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6970
+        jmp short BlitArtKeyFF+034h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFECh
@@ -1416,7 +1371,6 @@ BlitArtKeyFF:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6970:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
         add ebx, dword [DrawDestBuffer]
@@ -1432,22 +1386,22 @@ loc_B6970:
         cld
         add esi, byte 10h
         LD xor, ebx, ebx
-loc_B69A3:
+.1:
         mov ecx, dword [byte ebp-0Ch]
-loc_B69A6:
+.2:
         lodsb
         cmp al, 0FFh
-        je short loc_B69B0
+        je short .3
         stosb
-        loop loc_B69A6
-        jmp short loc_B69B3
-loc_B69B0:
+        loop .2
+        jmp short .4
+.3:
         inc edi
-        loop loc_B69A6
-loc_B69B3:
+        loop .2
+.4:
         LD add, edi, edx
         dec dword [byte ebp-010h]
-        jg short loc_B69A3
+        jg short .1
         pop edi
         pop esi
         pop ds
@@ -1470,7 +1424,7 @@ BlitArtHot:
         sub ax, word [byte esi+0Ah]
         cwde
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6A18
+        jmp short BlitArt+034h
 BlitArt:
         push ebp
         LD mov, ebp, esp
@@ -1483,7 +1437,7 @@ BlitArt:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6A18
+        jmp short BlitArt+034h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE8h
@@ -1495,29 +1449,28 @@ BlitArt:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6A18:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte esi+06h]
         lea edx, [byte esi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B6A3F
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6A6C
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B6A6C
-loc_B6A3A:
+        jg short .3
+.1:
         pop edi
         pop esi
         pop ds
         leave
         ret
-loc_B6A3F:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6A3A
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-018h], edx
@@ -1528,10 +1481,10 @@ loc_B6A3F:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6A6C
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B6A3A
-loc_B6A6C:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -1540,35 +1493,35 @@ loc_B6A6C:
         mov eax, dword [byte ebp-04h]
         LD mov, ebx, eax
         cmp eax, dword [dword_D30BC]
-        jl short loc_B6A9A
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [dword_D30C0]
-        jl short loc_B6AC3
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B6A3A
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B6AC3
-loc_B6A9A:
+        jmp short .6
+.4:
         mov ebx, dword [dword_D30BC]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6A3A
+        jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-018h], esi
         mov esi, dword [dword_D30C0]
         LD sub, esi, ebx
-        jle short loc_B6A3A
+        jle short .1
         LD cmp, eax, esi
-        jl short loc_B6ABD
+        jl short .5
         LD mov, eax, esi
-loc_B6ABD:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B6AC3:
+.6:
         LD or, ecx, ecx
-        jle short loc_B6B10
+        jle short .11
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -1583,24 +1536,24 @@ loc_B6AC3:
         sub edx, dword [byte ebp-0Ch]
         LD xor, bh, bh
         mov ah, 0FFh
-loc_B6AF6:
+.7:
         mov ecx, dword [byte ebp-0Ch]
-loc_B6AF9:
+.8:
         lodsb
         LD cmp, al, ah
-        je short loc_B6B03
+        je short .9
         stosb
-        loop loc_B6AF9
-        jmp short loc_B6B06
-loc_B6B03:
+        loop .8
+        jmp short .10
+.9:
         inc edi
-        loop loc_B6AF9
-loc_B6B06:
+        loop .8
+.10:
         add esi, dword [byte ebp-010h]
         LD add, edi, edx
         dec dword [byte ebp-014h]
-        jg short loc_B6AF6
-loc_B6B10:
+        jg short .7
+.11:
         cwde
         pop edi
         pop esi
@@ -1623,7 +1576,7 @@ BlitShapeFastHot:
         sub ax, word [byte edi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6B79
+        jmp short BlitShapeFast+03Ah
 BlitShapeFast:
         push ebp
         LD mov, ebp, esp
@@ -1637,7 +1590,7 @@ BlitShapeFast:
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
         mov word [byte edi+0Eh], ax
-        jmp short loc_B6B79
+        jmp short BlitShapeFast+03Ah
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF4h
@@ -1648,7 +1601,6 @@ BlitShapeFast:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte edi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6B79:
         movsx eax, word [byte edi+04h]
         mov dword [byte ebp-0Ch], eax
         movsx edx, word [byte edi+06h]
@@ -1657,23 +1609,23 @@ loc_B6B79:
         add ebx, dword [DrawDestBuffer]
         add edi, byte 10h
         cld
-loc_B6B94:
+.1:
         mov esi, dword [ebx]
         add esi, dword [DrawVideoBase]
         add esi, dword [byte ebp-04h]
         mov ecx, dword [byte ebp-0Ch]
-loc_B6BA2:
+.2:
         test ecx, 3
-        je short loc_B6BAE
+        je short .3
         movsb
         dec ecx
-        jmp short loc_B6BA2
-loc_B6BAE:
+        jmp short .2
+.3:
         shr ecx, 2
         rep movsd
         add ebx, byte 4
         dec edx
-        jg short loc_B6B94
+        jg short .1
         pop edi
         pop esi
         leave
@@ -1696,7 +1648,7 @@ BlitArtKeyColourHot:
         sub ax, word [byte esi+0Ah]
         cwde
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6C1B
+        jmp short BlitArtKeyColour+036h
 BlitArtKeyColour:
         push ebp
         LD mov, ebp, esp
@@ -1710,7 +1662,7 @@ BlitArtKeyColour:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6C1B
+        jmp short BlitArtKeyColour+036h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE8h
@@ -1723,30 +1675,29 @@ BlitArtKeyColour:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6C1B:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte esi+06h]
         lea edx, [byte esi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B6C43
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6C70
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B6C70
-loc_B6C3D:
+        jg short .3
+.1:
         pop edi
         pop esi
         pop ds
         pop es
         leave
         ret
-loc_B6C43:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6C3D
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-018h], edx
@@ -1757,10 +1708,10 @@ loc_B6C43:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6C70
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B6C3D
-loc_B6C70:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -1769,35 +1720,35 @@ loc_B6C70:
         mov eax, dword [byte ebp-04h]
         LD mov, ebx, eax
         cmp eax, dword [dword_D30BC]
-        jl short loc_B6C9E
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [dword_D30C0]
-        jl short loc_B6CC7
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B6C3D
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B6CC7
-loc_B6C9E:
+        jmp short .6
+.4:
         mov ebx, dword [dword_D30BC]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6C3D
+        jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-018h], esi
         mov esi, dword [dword_D30C0]
         LD sub, esi, ebx
-        jle short loc_B6C3D
+        jle short .1
         LD cmp, eax, esi
-        jl short loc_B6CC1
+        jl short .5
         LD mov, eax, esi
-loc_B6CC1:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B6CC7:
+.6:
         LD or, ecx, ecx
-        jle short loc_B6D1C
+        jle short .11
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -1812,26 +1763,26 @@ loc_B6CC7:
         sub edx, dword [byte ebp-0Ch]
         LD xor, bh, bh
         mov ah, 0FFh
-loc_B6CFA:
+.7:
         mov ecx, dword [byte ebp-0Ch]
-loc_B6CFD:
+.8:
         lodsb
         LD mov, bl, al
         mov al, byte [dword ebx+ColourRemap]
         LD cmp, al, ah
-        je short loc_B6D0F
+        je short .9
         stosb
-        loop loc_B6CFD
-        jmp short loc_B6D12
-loc_B6D0F:
+        loop .8
+        jmp short .10
+.9:
         inc edi
-        loop loc_B6CFD
-loc_B6D12:
+        loop .8
+.10:
         add esi, dword [byte ebp-010h]
         LD add, edi, edx
         dec dword [byte ebp-014h]
-        jg short loc_B6CFA
-loc_B6D1C:
+        jg short .7
+.11:
         cwde
         pop edi
         pop esi
@@ -1855,7 +1806,7 @@ BlitArtMaskedHot:
         sub ax, word [byte esi+0Ah]
         cwde
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6D79
+        jmp short BlitArtMasked+032h
 BlitArtMasked:
         push ebp
         LD mov, ebp, esp
@@ -1867,7 +1818,7 @@ BlitArtMasked:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6D79
+        jmp short BlitArtMasked+032h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFECh
@@ -1878,7 +1829,6 @@ BlitArtMasked:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6D79:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
         add ebx, dword [DrawDestBuffer]
@@ -1894,23 +1844,23 @@ loc_B6D79:
         cld
         add esi, byte 10h
         LD xor, eax, eax
-loc_B6DAC:
+.1:
         mov ecx, dword [byte ebp-0Ch]
-loc_B6DAF:
+.2:
         lodsb
         mov al, byte [dword eax+ColourRemap]
         cmp al, 0FFh
-        je short loc_B6DBF
+        je short .3
         stosb
-        loop loc_B6DAF
-        jmp short loc_B6DC2
-loc_B6DBF:
+        loop .2
+        jmp short .4
+.3:
         inc edi
-        loop loc_B6DAF
-loc_B6DC2:
+        loop .2
+.4:
         LD add, edi, edx
         dec dword [byte ebp-010h]
-        jg short loc_B6DAC
+        jg short .1
         pop edi
         pop esi
         leave
@@ -1931,7 +1881,7 @@ BlitShapeClippedHot:
         sub ax, word [byte edi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B6E31
+        jmp short BlitShapeClipped+03Ah
 BlitShapeClipped:
         push ebp
         LD mov, ebp, esp
@@ -1945,7 +1895,7 @@ BlitShapeClipped:
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
         mov word [byte edi+0Eh], ax
-        jmp short loc_B6E31
+        jmp short BlitShapeClipped+03Ah
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE4h
@@ -1956,28 +1906,27 @@ BlitShapeClipped:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte edi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B6E31:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte edi+06h]
         lea edx, [byte edi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B6E57
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6E84
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B6E84
-loc_B6E53:
+        jg short .3
+.1:
         pop esi
         pop edi
         leave
         ret
-loc_B6E57:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6E53
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-010h], edx
@@ -1988,10 +1937,10 @@ loc_B6E57:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B6E84
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B6E53
-loc_B6E84:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -2000,35 +1949,35 @@ loc_B6E84:
         mov ebx, dword [byte ebp-04h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_x0]
-        jl short loc_B6EB2
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [cliprect_x1]
-        jl short loc_B6EDB
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B6E53
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B6EDB
-loc_B6EB2:
+        jmp short .6
+.4:
         mov ebx, dword [cliprect_x0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B6E53
+        jle short .1
         LD mov, edi, ecx
         LD sub, edi, eax
         add dword [byte ebp-018h], edi
         mov edi, dword [cliprect_x1]
         LD sub, edi, ebx
-        jle short loc_B6E53
+        jle short .1
         LD cmp, eax, edi
-        jl short loc_B6ED5
+        jl short .5
         LD mov, eax, edi
-loc_B6ED5:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B6EDB:
+.6:
         LD or, ecx, ecx
-        jle short loc_B6F46
+        jle short .10
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -2044,64 +1993,64 @@ loc_B6EDB:
         mov ebx, dword [DrawRowBytes]
         sub ebx, dword [byte ebp-0Ch]
         cmp dword [byte ebp-010h], byte 0
-        je short loc_B6F4B
+        je short .11
         mov eax, dword [byte ebp-0Ch]
         shr eax, 1
-        jae short loc_B6F39
-        je short loc_B6F2E
-loc_B6F1E:
+        jae short .9
+        je short .8
+.7:
         LD mov, ecx, eax
         db 0F3h,066h,0A5h                       ; insn: rep movsw (nasm 3 emits 66h F3h)
         movsb
         add edi, dword [byte ebp-010h]
         LD add, esi, ebx
         dec edx
-        jg short loc_B6F1E
-        jmp short loc_B6F46
-loc_B6F2E:
+        jg short .7
+        jmp short .10
+.8:
         movsb
         add edi, dword [byte ebp-010h]
         LD add, esi, ebx
         dec edx
-        jg short loc_B6F2E
-        jmp short loc_B6F46
-loc_B6F39:
+        jg short .8
+        jmp short .10
+.9:
         LD mov, ecx, eax
         db 0F3h,066h,0A5h                       ; insn: rep movsw (nasm 3 emits 66h F3h)
         add edi, dword [byte ebp-010h]
         LD add, esi, ebx
         dec edx
-        jg short loc_B6F39
-loc_B6F46:
-        jmp near loc_B6E53
-loc_B6F4B:
+        jg short .9
+.10:
+        jmp near .1
+.11:
         mov eax, dword [byte ebp-0Ch]
         shr eax, 1
         mov dword [byte ebp-01Ch], eax
-        jae short loc_B6F68
-        je short loc_B6F78
-loc_B6F57:
+        jae short .13
+        je short .14
+.12:
         mov ecx, dword [byte ebp-01Ch]
         db 0F3h,066h,0A5h                       ; insn: rep movsw (nasm 3 emits 66h F3h)
         movsb
         LD add, esi, ebx
         dec edx
-        jg short loc_B6F57
-        jmp near loc_B6E53
-loc_B6F68:
+        jg short .12
+        jmp near .1
+.13:
         mov ecx, dword [byte ebp-01Ch]
         db 0F3h,066h,0A5h                       ; insn: rep movsw (nasm 3 emits 66h F3h)
         LD add, esi, ebx
         dec edx
-        jg short loc_B6F68
-        jmp near loc_B6E53
-loc_B6F78:
+        jg short .13
+        jmp near .1
+.14:
         movsb
         LD add, esi, ebx
         inc ebx
         dec edx
-        jg short loc_B6F78
-        jmp near loc_B6E53
+        jg short .14
+        jmp near .1
 SetBitmapClip:
         push ebp
         LD mov, ebp, esp
@@ -2109,7 +2058,7 @@ SetBitmapClip:
         mov esi, dword [byte ebp+08h]
         mov eax, dword [byte esi+02Ch]
         cmp dword [DrawVideoBase], eax
-        je short loc_B6FB7
+        je short .1
         mov eax, dword [byte ebp+0Ch]
         mov edx, dword [byte ebp+010h]
         mov ecx, dword [byte ebp+014h]
@@ -2123,7 +2072,7 @@ SetBitmapClip:
         pop esi
         leave
         ret
-loc_B6FB7:
+.1:
         mov eax, dword [byte ebp+0Ch]
         mov edx, dword [byte ebp+010h]
         mov ecx, dword [byte ebp+014h]
@@ -2156,29 +2105,29 @@ ShapeDataSize:
         mov ebx, dword [byte esp+04h]
         mov al, byte [ebx]
         LD or, al, al
-        js short loc_B7027
+        js short .1
         movsx eax, word [byte ebx+04h]
         movsx ebx, word [byte ebx+06h]
         imul eax, ebx
         add eax, byte 10h
         ret
-loc_B7027:
+.1:
         LD mov, edx, ebx
         add ebx, byte 0Eh
-loc_B702C:
+.2:
         add ebx, byte 2
         LD xor, ecx, ecx
         or cl, byte [ebx]
-        je short loc_B7045
-        jns short loc_B702C
-loc_B7037:
+        je short .4
+        jns short .2
+.3:
         neg cl
         lea ebx, [byte ebx+ecx+01h]
         LD xor, ecx, ecx
         or cl, byte [ebx]
-        js short loc_B7037
-        jne short loc_B702C
-loc_B7045:
+        js short .3
+        jne short .2
+.4:
         neg edx
         lea eax, [byte ebx+edx+01h]
         ret
@@ -2206,17 +2155,17 @@ FillRectSpansCore:
         mov ebx, dword [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+jpt_B708F]
 jpt_B708F:
-        dd loc_B70CF
-        dd loc_B70CF
-        dd loc_B710B
-        dd loc_B714F
-        dd loc_B7146
-        dd loc_B7185
-        dd loc_B7158
-        dd loc_B71E5
-        dd loc_B71B4
-        dd loc_B70B7
-loc_B70B7:
+        dd .2
+        dd .2
+        dd .4
+        dd .10
+        dd .9
+        dd .13
+        dd .11
+        dd .19
+        dd .15
+        dd .1
+.1:
         mov edi, dword [DrawDestBuffer]
         mov edi, dword [edi+edx*4]
         add edi, dword [DrawVideoBase]
@@ -2226,13 +2175,13 @@ loc_B70B7:
         pop esi
         leave
         ret
-loc_B70CF:
+.2:
         mov edi, dword [DrawDestBuffer]
         mov edi, dword [edi+edx*4]
         add edi, dword [DrawVideoBase]
         add edi, dword [byte ebp-08h]
         test ecx, 3
-        jne short loc_B70FC
+        jne short .3
         shr ecx, 2
         LD mov, ah, al
         LD mov, edx, eax
@@ -2243,7 +2192,7 @@ loc_B70CF:
         pop esi
         leave
         ret
-loc_B70FC:
+.3:
         LD mov, ah, al
         shr ecx, 1
         db 0F3h,066h,0ABh                       ; insn: rep stosw (nasm 3 emits 66h F3h)
@@ -2253,41 +2202,41 @@ loc_B70FC:
         pop esi
         leave
         ret
-loc_B710B:
+.4:
         mov ebx, dword [DrawRowBytes]
-loc_B7111:
+.5:
         mov edx, dword [byte esi+0Ch]
         mov edi, dword [DrawDestBuffer]
         mov edi, dword [edi+edx*4]
         add edi, dword [DrawVideoBase]
         add edi, dword [byte ebp-08h]
         shr ecx, 1
-        jae short loc_B712E
+        jae short .6
         mov byte [edi], al
         LD add, edi, ebx
-loc_B712E:
+.6:
         LD or, ecx, ecx
-        je short loc_B7142
+        je short .8
         lea edx, [nosplit ebx*2+00h]
-loc_B7139:
+.7:
         mov byte [edi], al
         mov byte [ebx+edi], al
         LD add, edi, edx
-        loop loc_B7139
-loc_B7142:
+        loop .7
+.8:
         pop edi
         pop esi
         leave
         ret
-loc_B7146:
+.9:
         mov ebx, dword [DrawRowBytes]
         inc ebx
-        jmp short loc_B7111
-loc_B714F:
+        jmp short .5
+.10:
         mov ebx, dword [DrawRowBytes]
         dec ebx
-        jmp short loc_B7111
-loc_B7158:
+        jmp short .5
+.11:
         mov edx, dword [byte esi+0Ch]
         mov edi, dword [DrawDestBuffer]
         mov edi, dword [edi+edx*4]
@@ -2296,16 +2245,16 @@ loc_B7158:
         mov edx, dword [byte esi+030h]
         mov esi, dword [DrawRowBytes]
         mov ebx, dword [byte ebp-04h]
-loc_B7179:
+.12:
         mov byte [edi], al
         LD add, ebx, edx
         LD adc, edi, esi
-        loop loc_B7179
+        loop .12
         pop edi
         pop esi
         leave
         ret
-loc_B7185:
+.13:
         mov edx, dword [byte esi+0Ch]
         mov edi, dword [DrawDestBuffer]
         mov edi, dword [edi+edx*4]
@@ -2315,16 +2264,16 @@ loc_B7185:
         mov esi, dword [DrawRowBytes]
         neg esi
         mov ebx, dword [byte ebp-04h]
-loc_B71A8:
+.14:
         mov byte [edi], al
         LD add, ebx, edx
         LD sbb, edi, esi
-        loop loc_B71A8
+        loop .14
         pop edi
         pop esi
         leave
         ret
-loc_B71B4:
+.15:
         mov edi, dword [DrawDestBuffer]
         mov edi, dword [edi+edx*4]
         add edi, dword [DrawVideoBase]
@@ -2332,22 +2281,22 @@ loc_B71B4:
         mov edx, dword [byte esi+030h]
         mov esi, dword [DrawRowBytes]
         mov ebx, dword [byte ebp-0Ch]
-loc_B71D2:
+.16:
         mov byte [edi], al
         inc edi
         LD add, ebx, edx
-        jb short loc_B71DF
-        loop loc_B71D2
-loc_B71DB:
+        jb short .18
+        loop .16
+.17:
         pop edi
         pop esi
         leave
         ret
-loc_B71DF:
+.18:
         LD add, edi, esi
-        loop loc_B71D2
-        jmp short loc_B71DB
-loc_B71E5:
+        loop .16
+        jmp short .17
+.19:
         mov edi, dword [DrawDestBuffer]
         mov edi, dword [edi+edx*4]
         add edi, dword [DrawVideoBase]
@@ -2355,21 +2304,21 @@ loc_B71E5:
         mov edx, dword [byte esi+030h]
         mov esi, dword [DrawRowBytes]
         mov ebx, dword [byte ebp-0Ch]
-loc_B7203:
+.20:
         mov byte [edi], al
         dec edi
         LD add, ebx, edx
-        jb short loc_B7210
-        loop loc_B7203
-loc_B720C:
+        jb short .22
+        loop .20
+.21:
         pop edi
         pop esi
         leave
         ret
-loc_B7210:
+.22:
         LD add, edi, esi
-        loop loc_B7203
-        jmp short loc_B720C
+        loop .20
+        jmp short .21
         db 00h,00h
 UnpackArtRle:
         push ebp
@@ -2383,10 +2332,10 @@ UnpackArtRle:
         mov ecx, 4
         rep movsd
         cmp dword [byte ebp+010h], byte 0
-        jne short loc_B7280
+        jne short .7
         LD xor, ecx, ecx
-        jmp short loc_B7271
-loc_B7239:
+        jmp short .5
+.1:
         add esi, byte 2
         mov al, byte [byte esi-01h]
         push ecx
@@ -2401,32 +2350,32 @@ loc_B7239:
         and ecx, byte 3
         rep stosb
         or cl, byte [esi]
-        je short loc_B7277
-        jns short loc_B7239
-loc_B725D:
+        je short .6
+        jns short .1
+.2:
         inc esi
         neg cl
-loc_B7260:
+.3:
         test ecx, 3
-        je short loc_B726C
+        je short .4
         movsb
         dec ecx
-        jmp short loc_B7260
-loc_B726C:
+        jmp short .3
+.4:
         shr ecx, 2
         rep movsd
-loc_B7271:
+.5:
         or cl, byte [esi]
-        js short loc_B725D
-        jne short loc_B7239
-loc_B7277:
+        js short .2
+        jne short .1
+.6:
         LD mov, eax, edx
         and byte [eax], 7Fh
         pop edi
         pop esi
         leave
         ret
-loc_B7280:
+.7:
         mov eax, dword [byte edi-0Ch]
         sub eax, dword [byte edi-08h]
         mov dword [byte edi-08h], eax
@@ -2436,50 +2385,50 @@ loc_B7280:
         LD add, edi, edx
         dec edi
         LD xor, ecx, ecx
-loc_B7296:
+.8:
         mov cl, byte [esi]
         inc esi
         LD or, cl, cl
-        jg short loc_B72A1
-        jl short loc_B72B8
-        jmp short loc_B72CF
-loc_B72A1:
+        jg short .9
+        jl short .12
+        jmp short .15
+.9:
         mov al, byte [esi]
         std
-loc_B72A4:
+.10:
         stosb
         dec edx
-        jne short loc_B72B2
+        jne short .11
         mov edx, dword [byte ebp-04h]
         LD add, ebx, edx
         LD mov, edi, ebx
         LD add, edi, edx
         dec edi
-loc_B72B2:
-        loop loc_B72A4
+.11:
+        loop .10
         cld
         inc esi
-        jmp short loc_B7296
-loc_B72B8:
+        jmp short .8
+.12:
         neg cl
-loc_B72BA:
+.13:
         lodsb
         std
         stosb
         cld
         dec edx
-        jne short loc_B72CB
+        jne short .14
         mov edx, dword [byte ebp-04h]
         LD add, ebx, edx
         LD mov, edi, ebx
         LD add, edi, edx
         dec edi
-loc_B72CB:
-        loop loc_B72BA
-        jmp short loc_B7296
-loc_B72CF:
+.14:
+        loop .13
+        jmp short .8
+.15:
         mov edx, dword [byte ebp+0Ch]
-        jmp short loc_B7277
+        jmp short .6
 SetBlitSource:
         push ebp
         LD mov, ebp, esp
@@ -2500,16 +2449,16 @@ CopyRowKeyFF:
         add esi, dword [BlitSourcePtr]
         add edi, dword [DrawVideoBase]
         mov edx, dword [BlitColumnOffsets]
-loc_B7309:
+.1:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         cmp al, 0FFh
-        je short loc_B7314
+        je short .2
         mov byte [edi], al
-loc_B7314:
+.2:
         add edx, byte 4
         inc edi
-        loop loc_B7309
+        loop .1
         pop edi
         pop esi
         leave
@@ -2526,14 +2475,14 @@ CopyRowRemapKeyed:
         add edi, dword [DrawVideoBase]
         mov edx, dword [BlitColumnOffsets]
         LD xor, eax, eax
-loc_B7340:
+.1:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         mov al, byte [dword eax+ColourRemap]
         mov byte [edi], al
         add edx, byte 4
         inc edi
-        loop loc_B7340
+        loop .1
         pop edi
         pop esi
         leave
@@ -2549,17 +2498,17 @@ loc_B7340:
         add edi, dword [DrawVideoBase]
         mov edx, dword [BlitColumnOffsets]
         LD xor, eax, eax
-loc_B7379:
+.2:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         mov al, byte [dword eax+ColourRemap]
         cmp al, 0FFh
-        je short loc_B738A
+        je short .3
         mov byte [edi], al
-loc_B738A:
+.3:
         add edx, byte 4
         inc edi
-        loop loc_B7379
+        loop .2
         pop edi
         pop esi
         leave
@@ -2575,21 +2524,21 @@ loc_B738A:
         add edi, dword [DrawVideoBase]
         mov edx, dword [BlitColumnOffsets]
         LD xor, eax, eax
-loc_B73B6:
+.4:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         cmp al, 0FFh
-        je short loc_B73CD
+        je short .6
         cmp al, 0FEh
-        jne short loc_B73CB
+        jne short .5
         mov al, byte [edi]
         mov al, byte [dword eax+byte_D89E4]
-loc_B73CB:
+.5:
         mov byte [edi], al
-loc_B73CD:
+.6:
         add edx, byte 4
         inc edi
-        loop loc_B73B6
+        loop .4
         pop edi
         pop esi
         leave
@@ -2605,22 +2554,22 @@ loc_B73CD:
         add edi, dword [DrawVideoBase]
         mov edx, dword [BlitColumnOffsets]
         LD xor, eax, eax
-loc_B73F9:
+.7:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         mov al, byte [dword eax+ColourRemap]
         cmp al, 0FFh
-        je short loc_B7416
+        je short .9
         cmp al, 0FEh
-        jne short loc_B7414
+        jne short .8
         mov al, byte [edi]
         mov al, byte [dword eax+byte_D89E4]
-loc_B7414:
+.8:
         mov byte [edi], al
-loc_B7416:
+.9:
         add edx, byte 4
         inc edi
-        loop loc_B73F9
+        loop .7
         pop edi
         pop esi
         leave
@@ -2637,19 +2586,19 @@ CopyRowFast:
         add edi, dword [DrawVideoBase]
         mov edx, dword [BlitColumnOffsets]
         cmp ecx, byte 8
-        jg short loc_B7482
-loc_B7445:
+        jg short .3
+.1:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         mov byte [edi], al
         add edx, byte 4
         inc edi
-        loop loc_B7445
+        loop .1
         pop edi
         pop esi
         leave
         ret
-loc_B7456:
+.2:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         mov byte [edi], al
@@ -2668,9 +2617,9 @@ loc_B7456:
         LD sub, edx, ebx
         LD sub, edx, ebx
         jmp dword [nosplit ebx*2+unk_B74AA]
-loc_B7482:
+.3:
         test edi, 1
-        jne short loc_B7456
+        jne short .2
         LD mov, ebx, ecx
         and ebx, byte 0FFFFFFFEh
         neg ebx
@@ -2684,130 +2633,130 @@ loc_B7482:
         LD sub, edx, ebx
         jmp dword [nosplit ebx*2+unk_B74AA]
 unk_B74AA:
-        dd loc_B74F3
-        dd loc_B7501
-        dd loc_B7511
-        dd loc_B7521
-        dd loc_B7531
-        dd loc_B7541
-        dd loc_B7551
-        dd loc_B7561
-        dd loc_B7571
-        dd loc_B7581
-        dd loc_B7591
-        dd loc_B75A1
-        dd loc_B75B1
-        dd loc_B75C1
-        dd loc_B75D1
-        dd loc_B75E1
-loc_B74EA:
+        dd .2
+        dd .3
+        dd .4
+        dd .5
+        dd .6
+        dd .7
+        dd .8
+        dd .9
+        dd .10
+        dd .11
+        dd .12
+        dd .13
+        dd .14
+        dd .15
+        dd .16
+        dd .17
+.1:
         add edi, byte 20h
         add edx, 80h
-loc_B74F3:
+.2:
         mov ebx, dword [edx]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+04h]
         mov ah, byte [ebx+esi]
         mov word [edi], ax
-loc_B7501:
+.3:
         mov ebx, dword [byte edx+08h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+0Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+02h], ax
-loc_B7511:
+.4:
         mov ebx, dword [byte edx+010h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+014h]
         mov ah, byte [ebx+esi]
         mov word [byte edi+04h], ax
-loc_B7521:
+.5:
         mov ebx, dword [byte edx+018h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+01Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+06h], ax
-loc_B7531:
+.6:
         mov ebx, dword [byte edx+020h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+024h]
         mov ah, byte [ebx+esi]
         mov word [byte edi+08h], ax
-loc_B7541:
+.7:
         mov ebx, dword [byte edx+028h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+02Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+0Ah], ax
-loc_B7551:
+.8:
         mov ebx, dword [byte edx+030h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+034h]
         mov ah, byte [ebx+esi]
         mov word [byte edi+0Ch], ax
-loc_B7561:
+.9:
         mov ebx, dword [byte edx+038h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+03Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+0Eh], ax
-loc_B7571:
+.10:
         mov ebx, dword [byte edx+040h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+044h]
         mov ah, byte [ebx+esi]
         mov word [byte edi+010h], ax
-loc_B7581:
+.11:
         mov ebx, dword [byte edx+048h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+04Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+012h], ax
-loc_B7591:
+.12:
         mov ebx, dword [byte edx+050h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+054h]
         mov ah, byte [ebx+esi]
         mov word [byte edi+014h], ax
-loc_B75A1:
+.13:
         mov ebx, dword [byte edx+058h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+05Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+016h], ax
-loc_B75B1:
+.14:
         mov ebx, dword [byte edx+060h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+064h]
         mov ah, byte [ebx+esi]
         mov word [byte edi+018h], ax
-loc_B75C1:
+.15:
         mov ebx, dword [byte edx+068h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+06Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+01Ah], ax
-loc_B75D1:
+.16:
         mov ebx, dword [byte edx+070h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+074h]
         mov ah, byte [ebx+esi]
         mov word [byte edi+01Ch], ax
-loc_B75E1:
+.17:
         mov ebx, dword [byte edx+078h]
         mov al, byte [ebx+esi]
         mov ebx, dword [byte edx+07Ch]
         mov ah, byte [ebx+esi]
         mov word [byte edi+01Eh], ax
         sub ecx, byte 20h
-        jns near loc_B74EA
+        jns near .1
         and ecx, byte 1
-        jne short loc_B7603
+        jne short .18
         pop edi
         pop esi
         leave
         ret
-loc_B7603:
+.18:
         mov ebx, dword [dword edx+080h]
         mov al, byte [ebx+esi]
         mov byte [byte edi+020h], al
@@ -2831,7 +2780,7 @@ BlitBlockShadowHot:
         sub ax, word [byte esi+0Ah]
         movsx eax, ax
         mov dword [byte ebp-08h], eax
-        jmp short loc_B766D
+        jmp short BlitBlockShadow+032h
 BlitBlockShadow:
         push ebp
         LD mov, ebp, esp
@@ -2843,7 +2792,7 @@ BlitBlockShadow:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B766D
+        jmp short BlitBlockShadow+032h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFE8h
@@ -2854,28 +2803,27 @@ BlitBlockShadow:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B766D:
         mov ebx, dword [byte ebp-08h]
         movsx ecx, word [byte esi+06h]
         lea edx, [byte esi+010h]
         LD mov, eax, ebx
         cmp eax, dword [cliprect_y0]
-        jl short loc_B7693
+        jl short .2
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B76C0
+        jle short .3
         LD sub, ecx, eax
-        jg short loc_B76C0
-loc_B768F:
+        jg short .3
+.1:
         pop edi
         pop esi
         leave
         ret
-loc_B7693:
+.2:
         mov ebx, dword [cliprect_y0]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B768F
+        jle short .1
         xchg ecx, eax
         LD sub, eax, ecx
         mov dword [byte ebp-018h], edx
@@ -2886,10 +2834,10 @@ loc_B7693:
         LD mov, eax, ebx
         LD add, eax, ecx
         sub eax, dword [cliprect_y1]
-        jle short loc_B76C0
+        jle short .3
         LD sub, ecx, eax
-        jle short loc_B768F
-loc_B76C0:
+        jle short .1
+.3:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ecx
         mov dword [byte ebp-08h], ebx
@@ -2898,35 +2846,35 @@ loc_B76C0:
         mov eax, dword [byte ebp-04h]
         LD mov, ebx, eax
         cmp eax, dword [dword_D30BC]
-        jl short loc_B76EE
+        jl short .4
         LD add, eax, ecx
         sub eax, dword [dword_D30C0]
-        jl short loc_B7717
+        jl short .6
         LD sub, ecx, eax
-        jle short loc_B768F
+        jle short .1
         LD mov, edx, eax
-        jmp short loc_B7717
-loc_B76EE:
+        jmp short .6
+.4:
         mov ebx, dword [dword_D30BC]
         LD add, eax, ecx
         LD sub, eax, ebx
-        jle short loc_B768F
+        jle short .1
         LD mov, esi, ecx
         LD sub, esi, eax
         add dword [byte ebp-018h], esi
         mov esi, dword [dword_D30C0]
         LD sub, esi, ebx
-        jle short loc_B768F
+        jle short .1
         LD cmp, eax, esi
-        jl short loc_B7711
+        jl short .5
         LD mov, eax, esi
-loc_B7711:
+.5:
         db 087h,0CAh                            ; insn: xchg ecx,edx
         LD sub, edx, eax
         LD add, ecx, eax
-loc_B7717:
+.6:
         LD or, ecx, ecx
-        jle short loc_B7771
+        jle short .12
         mov dword [byte ebp-0Ch], ecx
         mov dword [byte ebp-010h], edx
         mov dword [byte ebp-04h], ebx
@@ -2940,31 +2888,31 @@ loc_B7717:
         mov edx, dword [DrawRowBytes]
         sub edx, dword [byte ebp-0Ch]
         LD xor, eax, eax
-loc_B7748:
+.7:
         mov ecx, dword [byte ebp-0Ch]
-loc_B774B:
+.8:
         lodsb
         cmp al, 0FEh
-        ja short loc_B7764
-        je short loc_B7757
+        ja short .10
+        je short .9
         stosb
-        loop loc_B774B
-        jmp short loc_B7767
-loc_B7757:
+        loop .8
+        jmp short .11
+.9:
         mov al, byte [edi]
         mov al, byte [dword eax+byte_D89E4]
         stosb
-        loop loc_B774B
-        jmp short loc_B7767
-loc_B7764:
+        loop .8
+        jmp short .11
+.10:
         inc edi
-        loop loc_B774B
-loc_B7767:
+        loop .8
+.11:
         add esi, dword [byte ebp-010h]
         LD add, edi, edx
         dec dword [byte ebp-014h]
-        jg short loc_B7748
-loc_B7771:
+        jg short .7
+.12:
         pop edi
         pop esi
         leave
@@ -3030,7 +2978,7 @@ BlitBlockRemapKeyedHot:
         sub ax, word [byte esi+0Ah]
         cwde
         mov dword [byte ebp-08h], eax
-        jmp short loc_B7828
+        jmp short BlitBlockRemapKeyed+034h
 BlitBlockRemapKeyed:
         push ebp
         LD mov, ebp, esp
@@ -3043,7 +2991,7 @@ BlitBlockRemapKeyed:
         mov dword [byte ebp-04h], eax
         mov eax, dword [byte ebp+010h]
         mov dword [byte ebp-08h], eax
-        jmp short loc_B7828
+        jmp short BlitBlockRemapKeyed+034h
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFECh
@@ -3055,7 +3003,6 @@ BlitBlockRemapKeyed:
         mov dword [byte ebp-04h], eax
         movsx eax, word [byte esi+0Eh]
         mov dword [byte ebp-08h], eax
-loc_B7828:
         mov ebx, dword [byte ebp-08h]
         shl ebx, 2
         add ebx, dword [DrawDestBuffer]
@@ -3072,29 +3019,29 @@ loc_B7828:
         add esi, byte 10h
         mov ah, 0FEh
         mov ebx, byte_D89E4
-loc_B7860:
+.1:
         mov ecx, dword [byte ebp-0Ch]
-loc_B7863:
+.2:
         lodsb
         LD cmp, al, ah
-        ja short loc_B7877
-        je short loc_B786F
+        ja short .4
+        je short .3
         stosb
-        loop loc_B7863
-        jmp short loc_B787A
-loc_B786F:
+        loop .2
+        jmp short .5
+.3:
         mov al, byte [edi]
         xlatb
         stosb
-        loop loc_B7863
-        jmp short loc_B787A
-loc_B7877:
+        loop .2
+        jmp short .5
+.4:
         inc edi
-        loop loc_B7863
-loc_B787A:
+        loop .2
+.5:
         LD add, edi, edx
         dec dword [byte ebp-010h]
-        jg short loc_B7860
+        jg short .1
         pop edi
         pop esi
         pop ds

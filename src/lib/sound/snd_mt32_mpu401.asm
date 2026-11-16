@@ -4,11 +4,8 @@ bits 32
 section s_9FD94 progbits alloc exec nowrite align=1
 extern __GETDS, byte_D5279, byte_D527A, dword_D5260, dword_D5264, dword_D5268, dword_D526C, dword_D5270
 extern dword_D5274
-global Mpu401Detect, Mpu401Open, Mpu401Init, Mpu401Close, loc_9FE46, Mpu401Reset, Mpu401Command, loc_9FEBE
-global loc_9FECC, loc_9FED3, loc_9FEDE, loc_9FEEC, loc_9FF00, loc_9FF02, Mpu401Delay, loc_9FF11
-global loc_9FF17, loc_9FF1D, loc_9FF23, loc_9FF27, loc_9FF2B, loc_9FF31, loc_9FF35, loc_9FF3B
-global loc_9FF3F, loc_9FF4B, loc_9FF51, Mpu401ReadData, loc_9FF60, loc_9FF6E, loc_9FF77, Mpu401WriteData
-global loc_9FF86, loc_9FF94, loc_9FF9E, Mpu401Midi, loc_9FFB2, loc_9FFC1
+global Mpu401Detect, Mpu401Open, Mpu401Init, Mpu401Close, Mpu401Reset, Mpu401Command, Mpu401Delay, Mpu401ReadData
+global Mpu401WriteData, Mpu401Midi
 Mpu401Detect:
         mov eax, 70330h
         ret
@@ -67,7 +64,7 @@ Mpu401Close:
         pusha
         mov ebx, 0B0h
         mov ecx, 10h
-loc_9FE46:
+.1:
         db 051h                                 ; insn: push ecx
         db 053h                                 ; insn: push ebx
         call Mpu401WriteData
@@ -78,7 +75,7 @@ loc_9FE46:
         add esp, byte 0Ch
         pop ecx
         inc ebx
-        loop loc_9FE46
+        loop .1
         push dword 0FFh
         call Mpu401Command
         push byte 9
@@ -106,39 +103,39 @@ Mpu401Command:
         LD mov, ebp, esp
         mov edx, dword [dword_D5264]
         mov ecx, 0FFh
-loc_9FEBE:
+.1:
         in al, dx
         test al, 40h
-        je short loc_9FECC
-        loop loc_9FEBE
+        je short .2
+        loop .1
         mov eax, 0FFFFFFFFh
-        jmp short loc_9FF02
-loc_9FECC:
+        jmp short .7
+.2:
         pushfw
         cli
         mov eax, dword [byte ebp+08h]
         out dx, al
-loc_9FED3:
+.3:
         mov edx, dword [dword_D5264]
         mov ecx, 0FFh
-loc_9FEDE:
+.4:
         in al, dx
         LD or, al, al
-        jge short loc_9FEEC
-        loop loc_9FEDE
+        jge short .5
+        loop .4
         mov eax, 0FFFFFFFFh
-        jmp short loc_9FF00
-loc_9FEEC:
+        jmp short .6
+.5:
         mov edx, dword [dword_D5260]
         in al, dx
         cmp al, 0FEh
         mov eax, 0
-        je short loc_9FF00
+        je short .6
         int 0Ah
-        jmp short loc_9FED3
-loc_9FF00:
+        jmp short .3
+.6:
         popfw
-loc_9FF02:
+.7:
         leave
         ret
 Mpu401Delay:
@@ -148,87 +145,87 @@ Mpu401Delay:
         pushfw
         cli
         in al, 61h
-        jmp short loc_9FF11
-loc_9FF11:
+        jmp short .1
+.1:
         and al, 0FEh
         out 61h, al
-        jmp short loc_9FF17
-loc_9FF17:
+        jmp short .2
+.2:
         mov al, 0B6h
         out 43h, al
-        jmp short loc_9FF1D
-loc_9FF1D:
+        jmp short .3
+.3:
         LD xor, al, al
         out 42h, al
-        jmp short loc_9FF23
-loc_9FF23:
+        jmp short .4
+.4:
         out 42h, al
-        jmp short loc_9FF27
-loc_9FF27:
+        jmp short .5
+.5:
         in al, 61h
-        jmp short loc_9FF2B
-loc_9FF2B:
+        jmp short .6
+.6:
         or al, 1
         out 61h, al
-        jmp short loc_9FF31
-loc_9FF31:
+        jmp short .7
+.7:
         in al, 42h
-        jmp short loc_9FF35
-loc_9FF35:
-        in al, 42h
-        LD or, al, al
-        js short loc_9FF31
-loc_9FF3B:
-        in al, 42h
-        jmp short loc_9FF3F
-loc_9FF3F:
+        jmp short .8
+.8:
         in al, 42h
         LD or, al, al
-        jns short loc_9FF3B
-        loop loc_9FF31
+        js short .7
+.9:
+        in al, 42h
+        jmp short .10
+.10:
+        in al, 42h
+        LD or, al, al
+        jns short .9
+        loop .7
         in al, 61h
-        jmp short loc_9FF4B
-loc_9FF4B:
+        jmp short .11
+.11:
         and al, 0FEh
         out 61h, al
-        jmp short loc_9FF51
-loc_9FF51:
+        jmp short .12
+.12:
         popfw
         leave
         ret
 Mpu401ReadData:
         mov edx, dword [dword_D5264]
         mov ecx, 0FFh
-loc_9FF60:
+.1:
         in al, dx
         LD or, al, al
-        jge short loc_9FF6E
-        loop loc_9FF60
+        jge short .2
+        loop .1
         mov eax, 0FFFFFFFFh
-        jmp short loc_9FF77
-loc_9FF6E:
+        jmp short .3
+.2:
         mov edx, dword [dword_D5260]
         LD xor, eax, eax
         in al, dx
-loc_9FF77:
+.3:
         ret
 Mpu401WriteData:
         push ebp
         LD mov, ebp, esp
         mov edx, dword [dword_D5264]
         mov ecx, 0FFh
-loc_9FF86:
+.1:
         in al, dx
         test al, 40h
-        je short loc_9FF94
-        loop loc_9FF86
+        je short .2
+        loop .1
         mov eax, 0FFFFFFFFh
-        jmp short loc_9FF9E
-loc_9FF94:
+        jmp short .3
+.2:
         mov edx, dword [dword_D5260]
         mov eax, dword [byte ebp+08h]
         out dx, al
-loc_9FF9E:
+.3:
         leave
         ret
 Mpu401Midi:
@@ -238,8 +235,8 @@ Mpu401Midi:
         push edi
         mov edi, dword [byte esp+010h]
         mov esi, dword [byte esp+014h]
-        jmp short loc_9FFC1
-loc_9FFB2:
+        jmp short .2
+.1:
         xor eax, eax
         mov al, byte [esi]
         push eax
@@ -247,9 +244,9 @@ loc_9FFB2:
         add esp, byte 4
         dec edi
         inc esi
-loc_9FFC1:
+.2:
         test di, di
-        ja short loc_9FFB2
+        ja short .1
         pop edi
         pop esi
         pop ds

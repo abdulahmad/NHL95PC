@@ -7,16 +7,9 @@ extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, ovlartbank, FatalError,
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
 extern MemLargestFree, TextSetFont, FixedMulRound, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
-global CdStreamCreate, CdStreamClose, loc_1B1B7, CdStreamOpen, CdStreamSeek, CdStreamCreateSecondary, loc_1B218, loc_1B225
-global jpt_1B283, CdStreamService, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
-global loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D, loc_1B4BC, loc_1B534
-global loc_1B588, loc_1B5EB, loc_1B681, loc_1B721, loc_1B789, loc_1B799, loc_1B80C, CdStreamTimer
-global CdStreamSkipReleased, loc_1B84F, loc_1B856, loc_1B859, loc_1B868, loc_1B86A, CdStreamSpace, CdStreamFilled
-global loc_1B8A7, CdStreamNextChunk, loc_1B8D0, loc_1B8E9, loc_1B8F9, loc_1B904, loc_1B908, loc_1B920
-global loc_1B926, loc_1B92B, loc_1B92C, CdStreamReleaseChunk, loc_1B94C, loc_1B963, loc_1B972, loc_1B977
-global FreeGameMemory, loc_1B9C4, loc_1B9E4, loc_1B9FE, loc_1BA19, loc_1BA34, loc_1BA54, loc_1BA7E
-global loc_1BA7F, FreePhotoBankF, loc_1BAA5, FreePhotoBanks, loc_1BACC, loc_1BAEC, loc_1BAED, EnsureFreeMemory
-global loc_1BB0E, loc_1BB18, loc_1BB33, loc_1BB71, loc_1BB86, loc_1BBB3, loc_1BBB4
+global CdStreamCreate, CdStreamClose, CdStreamOpen, CdStreamSeek, CdStreamCreateSecondary, jpt_1B283, CdStreamService, CdStreamService
+global CdStreamService, CdStreamTimer, CdStreamSkipReleased, CdStreamSpace, CdStreamFilled, CdStreamNextChunk, CdStreamNextChunk, CdStreamReleaseChunk
+global FreeGameMemory, FreeGameMemory, FreePhotoBankF, FreePhotoBanks, EnsureFreeMemory
 CdStreamCreate:
         push dword 14h
         call __CHK
@@ -72,11 +65,11 @@ CdStreamClose:
         add esp, byte 4
         mov edx, dword [byte esi+018h]
         test edx, edx
-        je short loc_1B1B7
+        je short .1
         push edx
         call DosCloseFile
         add esp, byte 4
-loc_1B1B7:
+.1:
         push esi
         call FreeMemBlock
         add esp, byte 4
@@ -105,14 +98,14 @@ CdStreamCreateSecondary:
         call __CHK
         mov edx, dword [byte esp+04h]
         test edx, edx
-        jl short loc_1B218
+        jl short .1
         cmp edx, byte 9
-        jle short loc_1B225
-loc_1B218:
+        jle short .2
+.1:
         push str_IllegalSecondaryStreamNumber
         call FatalError
         add esp, byte 4
-loc_1B225:
+.2:
         mov ecx, dword [byte esp+0Ch]
         push ecx
         mov eax, dword [byte esp+0Ch]
@@ -140,45 +133,42 @@ loc_1B225:
         mov dword [nosplit edx*4+dword_DC8A0], eax
         ret
 jpt_1B283:
-        dd loc_1B2E0
-        dd loc_1B334
-        dd loc_1B3AE
-        dd loc_1B4BC
-        dd loc_1B5EB
-        dd loc_1B681
-        dd loc_1B2D5
-        dd loc_1B2B4
-        dd loc_1B799
+        dd CdStreamService+039h
+        dd CdStreamService+08Dh
+        dd CdStreamService+0107h
+        dd CdStreamService+0215h
+        dd CdStreamService+0344h
+        dd CdStreamService+03DAh
+        dd CdStreamService+02Eh
+        dd CdStreamService+0Dh
+        dd CdStreamService+04F2h
 CdStreamService:
         push dword 20h
         call __CHK
         push esi
         push edi
         push ebp
-loc_1B2B4:
         mov edx, dword [dword_DC8A0]
         cmp dword [byte edx+04Ch], byte 0
-        jg near loc_1B2DC
+        jg near .1
         mov eax, dword [byte edx+01Ch]
         dec eax
         cmp eax, byte 8
-        ja short loc_1B2B4
+        ja short CdStreamService+0Dh
         jmp dword [nosplit cs:eax*4+jpt_1B283]
-loc_1B2D5:
         mov dword [byte edx+04Ch], 0
-loc_1B2DC:
+.1:
         pop ebp
         pop edi
         pop esi
         ret
-loc_1B2E0:
         mov esi, dword [byte edx+018h]
         test esi, esi
-        je short loc_1B2F0
+        je short .2
         push esi
         call DosCloseFile
         add esp, byte 4
-loc_1B2F0:
+.2:
         mov eax, dword [dword_DC8A0]
         lea edx, [byte eax+03Ch]
         push edx
@@ -200,12 +190,11 @@ loc_1B2F0:
         mov dword [byte eax+038h], edx
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+01Ch], 2
-loc_1B334:
         mov edx, dword [dword_DC8A0]
         mov eax, edx
         call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
-        jl short loc_1B2DC
+        jl short .1
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+01Ch], 3
         mov eax, dword [dword_DC8A0]
@@ -236,13 +225,12 @@ loc_1B334:
         pop edi
         pop esi
         ret
-loc_1B3AE:
         cmp dword [byte edx+030h], byte 8
-        jae short loc_1B42A
+        jae short .3
         mov eax, edx
         call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
-        jl near loc_1B2DC
+        jl near .1
         mov eax, dword [dword_DC8A0]
         mov esi, dword [byte eax+04Ch]
         mov edi, dword [byte eax+024h]
@@ -273,7 +261,7 @@ loc_1B3AE:
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+024h]
         add dword [byte eax+030h], edx
-loc_1B42A:
+.3:
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+0Ch]
         mov edx, dword [byte edx+04h]
@@ -288,28 +276,28 @@ loc_1B42A:
         movsx eax, byte [eax]
         sub eax, byte 30h
         test eax, eax
-        jle short loc_1B468
+        jle short .4
         cmp eax, byte 9
-        jge short loc_1B468
+        jge short .4
         mov eax, dword [nosplit eax*4+dword_DC8A0]
-        jmp short loc_1B46D
-loc_1B468:
+        jmp short .5
+.4:
         mov eax, dword [dword_DC8A0]
-loc_1B46D:
+.5:
         mov dword [dword_DC8C8], eax
         cmp dword [dword_DC8C8], byte 0
-        jne short loc_1B485
+        jne short .6
         mov eax, dword [dword_DC8A0]
         mov dword [dword_DC8C8], eax
-loc_1B485:
+.6:
         mov eax, dword [dword_DC8A0]
         mov esi, dword [byte eax+02Ch]
         cmp esi, byte 8
-        jb short loc_1B49D
+        jb short .7
         mov edx, dword [dword_DC8C8]
         cmp esi, dword [byte edx+020h]
-        jle short loc_1B4BC
-loc_1B49D:
+        jle short CdStreamService+0215h
+.7:
         mov eax, dword [dword_DC8C8]
         mov ebp, dword [byte eax+020h]
         push ebp
@@ -319,11 +307,10 @@ loc_1B49D:
         push str_IllegalChunkSizeD
         call FatalError
         add esp, byte 0Ch
-loc_1B4BC:
         mov eax, dword [dword_DC8C8]
         mov ebx, dword [dword_DC8A0]
         cmp eax, ebx
-        je near loc_1B5EB
+        je near CdStreamService+0344h
         mov dword [byte ebx+01Ch], 4
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+024h]
@@ -331,7 +318,7 @@ loc_1B4BC:
         mov eax, dword [dword_DC8C8]
         call CdStreamSkipReleased
         cmp eax, edx
-        jb near loc_1B2DC
+        jb near .1
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+02Ch]
         add edx, dword [byte eax+024h]
@@ -339,7 +326,7 @@ loc_1B4BC:
         call CdStreamSpace
         add edx, byte 8
         cmp eax, edx
-        jae short loc_1B534
+        jae short .8
         mov eax, dword [dword_DC8C8]
         mov eax, dword [byte eax+0Ch]
         mov dword [eax], 0FFFFFFFFh
@@ -348,11 +335,11 @@ loc_1B4BC:
         mov dword [byte eax+0Ch], edx
         mov eax, dword [dword_DC8C8]
         mov dword [byte eax+08h], edx
-        jmp near loc_1B2B4
-loc_1B534:
+        jmp near CdStreamService+0Dh
+.8:
         mov eax, dword [dword_DC8A0]
         cmp dword [byte eax+028h], byte 0
-        jl short loc_1B588
+        jl short .9
         mov edx, dword [byte eax+030h]
         push edx
         mov edx, dword [dword_DC8C8]
@@ -373,8 +360,8 @@ loc_1B534:
         mov dword [byte eax+08h], edx
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+030h], 0
-        jmp short loc_1B5EB
-loc_1B588:
+        jmp short CdStreamService+0344h
+.9:
         mov edi, dword [byte eax+02Ch]
         push edi
         mov edx, dword [dword_DC8C8]
@@ -407,25 +394,24 @@ loc_1B588:
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+02Ch]
         sub dword [byte eax+08h], edx
-loc_1B5EB:
         mov eax, dword [dword_DC8A0]
         mov edi, dword [byte eax+028h]
         test edi, edi
-        jle near loc_1B681
+        jle near CdStreamService+03DAh
         mov ebp, dword [byte eax+024h]
         lea edx, [edi+ebp]
         mov eax, dword [dword_DC8C8]
         call CdStreamSpace
         add edx, byte 8
         cmp eax, edx
-        jae short loc_1B681
+        jae short CdStreamService+03DAh
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+01Ch], 5
         mov edx, dword [dword_DC8A0]
         mov eax, dword [dword_DC8C8]
         call CdStreamFilled
         cmp eax, dword [byte edx+030h]
-        jl near loc_1B2DC
+        jl near .1
         mov eax, dword [dword_DC8A0]
         mov ecx, dword [byte eax+030h]
         push ecx
@@ -448,16 +434,15 @@ loc_1B5EB:
         mov eax, dword [dword_DC8C8]
         mov edx, dword [eax]
         mov dword [byte eax+0Ch], edx
-loc_1B681:
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+01Ch], 6
         mov edx, dword [dword_DC8A0]
         cmp dword [byte edx+028h], byte 0
-        jle near loc_1B721
+        jle near .10
         mov eax, dword [dword_DC8C8]
         call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
-        jl near loc_1B2DC
+        jl near .1
         mov eax, dword [dword_DC8A0]
         mov esi, dword [byte eax+04Ch]
         mov edi, dword [byte eax+024h]
@@ -493,17 +478,17 @@ loc_1B681:
         pop edi
         pop esi
         ret
-loc_1B721:
+.10:
         mov eax, dword [dword_DC8C8]
         mov edx, dword [byte edx+02Ch]
         add dword [byte eax+0Ch], edx
         mov eax, dword [dword_DC8C8]
         mov ecx, dword [dword_DC8A0]
         cmp eax, ecx
-        je short loc_1B789
+        je short .11
         mov edx, ecx
         cmp dword [byte ecx+030h], byte 0
-        jne short loc_1B799
+        jne short CdStreamService+04F2h
         mov ebx, dword [byte eax+08h]
         mov ebp, dword [byte eax+0Ch]
         sub ebx, ebp
@@ -526,26 +511,25 @@ loc_1B721:
         mov esi, dword [byte eax+030h]
         add edx, esi
         mov dword [byte eax+08h], edx
-        jmp short loc_1B799
-loc_1B789:
+        jmp short CdStreamService+04F2h
+.11:
         mov eax, dword [dword_DC8C8]
         mov edx, dword [byte eax+08h]
         mov esi, dword [byte eax+0Ch]
         sub edx, esi
         mov dword [byte ecx+030h], edx
-loc_1B799:
         mov edx, dword [dword_DC8A0]
         mov eax, dword [byte edx+040h]
         sub eax, dword [byte edx+030h]
         cmp eax, dword [byte edx+038h]
-        jl short loc_1B80C
+        jl short .12
         mov dword [byte edx+01Ch], 9
         mov edx, dword [dword_DC8A0]
         mov eax, edx
         call CdStreamSkipReleased
         add eax, dword [byte edx+030h]
         cmp eax, byte 8
-        jb near loc_1B2DC
+        jb near .1
         mov eax, dword [dword_DC8A0]
         mov eax, dword [byte eax+0Ch]
         mov dword [eax], 0FFFFFFFDh
@@ -559,10 +543,10 @@ loc_1B799:
         mov dword [byte eax+08h], edx
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+01Ch], 7
-        jmp near loc_1B2B4
-loc_1B80C:
+        jmp near CdStreamService+0Dh
+.12:
         mov dword [byte edx+01Ch], 3
-        jmp near loc_1B2B4
+        jmp near CdStreamService+0Dh
 CdStreamTimer:
         push dword 4
         call __CHK
@@ -578,29 +562,29 @@ CdStreamSkipReleased:
         push edi
         mov edx, dword [byte eax+014h]
         cmp edx, dword [byte eax+010h]
-        je short loc_1B859
+        je short .3
         mov ecx, dword [edx]
         cmp ecx, byte 0FFFFFFFEh
-        jne short loc_1B84F
+        jne short .1
         mov ebx, dword [byte edx+04h]
         add edx, ebx
-        jmp short loc_1B856
-loc_1B84F:
+        jmp short .2
+.1:
         cmp ecx, byte 0FFFFFFFFh
-        jne short loc_1B859
+        jne short .3
         mov edx, dword [eax]
-loc_1B856:
+.2:
         mov dword [byte eax+014h], edx
-loc_1B859:
+.3:
         mov edx, dword [byte eax+014h]
         mov edi, dword [byte eax+08h]
         cmp edx, edi
-        ja short loc_1B868
+        ja short .4
         mov eax, dword [byte eax+04h]
-        jmp short loc_1B86A
-loc_1B868:
+        jmp short .5
+.4:
         mov eax, edx
-loc_1B86A:
+.5:
         sub eax, edi
         pop edi
         pop edx
@@ -626,14 +610,14 @@ CdStreamFilled:
         push edx
         mov edx, dword [byte eax+014h]
         cmp edx, dword [byte eax+08h]
-        ja short loc_1B8A7
+        ja short .1
         mov ecx, dword [eax]
         mov eax, edx
         sub eax, ecx
         pop edx
         pop ecx
         ret
-loc_1B8A7:
+.1:
         xor eax, eax
         pop edx
         pop ecx
@@ -648,59 +632,58 @@ CdStreamNextChunk:
         mov eax, dword [byte esi+0Ch]
         mov edx, dword [byte esi+010h]
         cmp eax, edx
-        jne short loc_1B8D0
+        jne short .1
         xor eax, edx
         pop edi
         pop esi
         ret
-loc_1B8D0:
+.1:
         cmp dword [edx], byte 0FFFFFFFFh
-        jne short loc_1B8E9
+        jne short .2
         mov eax, dword [esi]
         mov dword [byte esi+010h], eax
         mov eax, dword [byte esi+0Ch]
         mov ecx, dword [byte esi+010h]
         cmp eax, ecx
-        jne short loc_1B8E9
+        jne short .2
         xor eax, ecx
         pop edi
         pop esi
         ret
-loc_1B8E9:
+.2:
         mov eax, dword [byte esi+010h]
         mov edx, dword [byte eax+04h]
         mov edi, dword [byte esi+0Ch]
         cmp eax, edi
-        jbe short loc_1B904
+        jbe short .4
         mov ebx, dword [byte esi+04h]
-loc_1B8F9:
+.3:
         sub ebx, eax
         cmp ebx, edx
-        jge short loc_1B908
+        jge short .5
         xor eax, eax
         pop edi
         pop esi
         ret
-loc_1B904:
+.4:
         mov ebx, edi
-        jmp short loc_1B8F9
-loc_1B908:
+        jmp short .3
+.5:
         mov eax, dword [byte esi+010h]
         lea ebx, [eax+edx]
         mov dword [byte esi+010h], ebx
         cmp dword [eax], byte 0FFFFFFFDh
-        jne short loc_1B92B
+        jne short .8
         cmp eax, dword [byte esi+014h]
-        jne short loc_1B920
+        jne short .6
         mov dword [byte esi+014h], ebx
-        jmp short loc_1B926
-loc_1B920:
+        jmp short .7
+.6:
         mov dword [eax], 0FFFFFFFEh
-loc_1B926:
+.7:
         mov eax, 0FFFFFFFFh
-loc_1B92B:
+.8:
         pop edi
-loc_1B92C:
         pop esi
         ret
 CdStreamReleaseChunk:
@@ -711,32 +694,32 @@ CdStreamReleaseChunk:
         mov edx, dword [byte esp+0Ch]
         mov dword [edx], 0FFFFFFFEh
         cmp edx, dword [byte eax+014h]
-        jne short loc_1B92C
-loc_1B94C:
+        jne short CdStreamNextChunk+080h
+.1:
         mov ebx, dword [byte eax+014h]
         cmp ebx, dword [byte eax+0Ch]
-        je short loc_1B92C
+        je short CdStreamNextChunk+080h
         mov esi, dword [edx]
         cmp esi, byte 0FFFFFFFEh
-        jne short loc_1B963
+        jne short .2
         mov ebx, dword [byte edx+04h]
         add dword [byte eax+014h], ebx
-        jmp short loc_1B977
-loc_1B963:
+        jmp short .4
+.2:
         cmp esi, byte 0FFFFFFFFh
-        jne short loc_1B92C
+        jne short CdStreamNextChunk+080h
         cmp ebx, dword [byte eax+010h]
-        jne short loc_1B972
+        jne short .3
         mov ebx, dword [eax]
         mov dword [byte eax+010h], ebx
-loc_1B972:
+.3:
         mov ebx, dword [eax]
         mov dword [byte eax+014h], ebx
-loc_1B977:
+.4:
         cmp dword [byte edx+04h], byte 0
-        je short loc_1B92C
+        je short CdStreamNextChunk+080h
         mov edx, dword [byte eax+014h]
-        jmp short loc_1B94C
+        jmp short .1
 FreeGameMemory:
         push dword 20h
         call __CHK
@@ -751,63 +734,63 @@ FreeGameMemory:
         mov eax, dword [ovlseq-2]
         sar eax, 10h
         cmp eax, byte 0FFFFFFFFh
-        je short loc_1B9C4
+        je short .1
         mov edx, dword [ovlartbank]
         test edx, edx
-        je short loc_1B9C4
+        je short .1
         push edx
         call FreeMemBlock
         add esp, byte 4
         xor ecx, ecx
         mov dword [ovlartbank], ecx
-loc_1B9C4:
+.1:
         call FreePhotoBanks
         mov esi, dword [rinkendbank]
         test esi, esi
-        je short loc_1B9E4
+        je short .2
         push esi
         call FreeMemBlock
         add esp, byte 4
         xor ebp, ebp
         mov dword [rinkendbank], ebp
-loc_1B9E4:
+.2:
         mov eax, dword [numshpbank]
         test eax, eax
-        je short loc_1B9FE
+        je short .3
         push eax
         call FreeMemBlock
         add esp, byte 4
         xor ebx, ebx
         mov dword [numshpbank], ebx
-loc_1B9FE:
+.3:
         mov ecx, dword [scrbrdshapes]
         test ecx, ecx
-        je short loc_1BA19
+        je short .4
         push ecx
         call FreeMemBlock
         add esp, byte 4
         xor edi, edi
         mov dword [scrbrdshapes], edi
-loc_1BA19:
+.4:
         mov ebp, dword [hilightfont]
         test ebp, ebp
-        je short loc_1BA34
+        je short .5
         push ebp
         call FreeMemBlock
         add esp, byte 4
         xor edx, edx
         mov dword [hilightfont], edx
-loc_1BA34:
+.5:
         call FreeRockMusic
         mov ebx, dword [cupseries]
         test ebx, ebx
-        je short loc_1BA54
+        je short .6
         push ebx
         call FreeMemBlock
         add esp, byte 4
         xor esi, esi
         mov dword [cupseries], esi
-loc_1BA54:
+.6:
         xor edi, edi
         mov dword [joysampling], edi
         call joyq_flush
@@ -817,9 +800,7 @@ loc_1BA54:
         add esp, byte 4
         mov word [scrpitch], 50h
         call FreeRinkGfx
-loc_1BA7E:
         pop ebp
-loc_1BA7F:
         pop edi
         pop esi
         pop edx
@@ -834,11 +815,11 @@ FreePhotoBankF:
         push edx
         mov edx, dword [photobankf]
         test edx, edx
-        je short loc_1BAA5
+        je short .1
         push edx
         call FreeMemBlock
         add esp, byte 4
-loc_1BAA5:
+.1:
         xor ecx, ecx
         mov dword [photobankf], ecx
         pop edx
@@ -855,24 +836,24 @@ FreePhotoBanks:
         push edi
         call FreePhotoBankF
         mov edi, 16h
-        jmp short loc_1BAED
-loc_1BACC:
+        jmp short .3
+.1:
         mov esi, edi
         shl esi, 2
         mov edx, dword [dword esi+photobanks]
         test edx, edx
-        je short loc_1BAEC
+        je short .2
         push edx
         call FreeMemBlock
         add esp, byte 4
         xor ecx, ecx
         mov dword [dword esi+photobanks], ecx
-loc_1BAEC:
+.2:
         dec edi
-loc_1BAED:
+.3:
         test edi, edi
-        jge short loc_1BACC
-        jmp short loc_1BA7F
+        jge short .1
+        jmp short FreeGameMemory+0FDh
 EnsureFreeMemory:
         push dword 20h
         call __CHK
@@ -885,67 +866,67 @@ EnsureFreeMemory:
         mov ebp, eax
         call MemLargestFree
         cmp eax, ebp
-        jl short loc_1BB18
-loc_1BB0E:
+        jl short .2
+.1:
         mov eax, 1
-        jmp near loc_1BA7E
-loc_1BB18:
+        jmp near FreeGameMemory+0FCh
+.2:
         mov edx, dword [rinkbm]
         test edx, edx
-        je short loc_1BB33
+        je short .3
         push edx
         call FreeMemBlock
         add esp, byte 4
         xor ecx, ecx
         mov dword [rinkbm], ecx
-loc_1BB33:
+.3:
         call MemLargestFree
         cmp eax, ebp
-        jge short loc_1BB0E
+        jge short .1
         call FreeRinkGfx
         call MemLargestFree
         cmp eax, ebp
-        jge short loc_1BB0E
+        jge short .1
         mov eax, dword [ovlseq-2]
         sar eax, 10h
         cmp eax, byte 0FFFFFFFFh
-        je short loc_1BB71
+        je short .4
         mov esi, dword [ovlartbank]
         test esi, esi
-        je short loc_1BB71
+        je short .4
         push esi
         call FreeMemBlock
         add esp, byte 4
         xor eax, eax
         mov dword [ovlartbank], eax
-loc_1BB71:
+.4:
         call MemLargestFree
         cmp eax, ebp
-        jge short loc_1BB0E
+        jge short .1
         call FreePhotoBankF
         mov edi, 16h
-        jmp short loc_1BBB4
-loc_1BB86:
+        jmp short .7
+.5:
         call MemLargestFree
         cmp eax, ebp
-        jge near loc_1BB0E
+        jge near .1
         mov esi, edi
         shl esi, 2
         mov edx, dword [dword esi+photobanks]
         test edx, edx
-        je short loc_1BBB3
+        je short .6
         push edx
         call FreeMemBlock
         add esp, byte 4
         xor ecx, ecx
         mov dword [dword esi+photobanks], ecx
-loc_1BBB3:
+.6:
         dec edi
-loc_1BBB4:
+.7:
         test edi, edi
-        jge short loc_1BB86
+        jge short .5
         call MemLargestFree
         cmp eax, ebp
-        jge near loc_1BB0E
+        jge near .1
         xor eax, eax
-        jmp near loc_1BA7E
+        jmp near FreeGameMemory+0FCh

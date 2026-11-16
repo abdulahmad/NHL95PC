@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_93170 progbits alloc exec nowrite align=1
 extern ColourRemap, KeyedDraw, RowCopyFunc, DrawArtOpaque, TextPrintAt, bcopy, BlitArtMasked, vsprintf_
-global PrintBoxedText, RemapRowKeyed, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, DrawArtMaskedAtOwnPos
+global PrintBoxedText, RemapRowKeyed, DrawArtMasked, DrawArtMaskedAtOwnPos
 PrintBoxedText:
         sub esp, 104h
         lea eax, [dword esp+0114h]
@@ -31,35 +31,35 @@ RemapRowKeyed:
         mov edx, dword [byte esp+04h]
         mov eax, ebx
         test ecx, ecx
-        je short loc_931FB
+        je short .3
         add ecx, ebx
-loc_931E4:
+.1:
         xor ebx, ebx
         mov bl, byte [edx]
         mov bl, byte [dword ebx+ColourRemap]
         inc edx
         cmp bl, 0FFh
-        je short loc_931F6
+        je short .2
         mov byte [eax], bl
-loc_931F6:
+.2:
         inc eax
         cmp eax, ecx
-        jb short loc_931E4
-loc_931FB:
+        jb short .1
+.3:
         ret
 DrawArtMasked:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_9321D
+        jne short .1
         push eax
         push ebx
         push edx
         call BlitArtMasked
         add esp, byte 0Ch
         ret
-loc_9321D:
+.1:
         mov dword [RowCopyFunc], RemapRowKeyed
         push eax
         push ebx

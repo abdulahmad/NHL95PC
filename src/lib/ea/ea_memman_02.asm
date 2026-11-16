@@ -4,18 +4,11 @@ bits 32
 section s_8D2F0 progbits alloc exec nowrite align=1
 extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, dword_EDAAC, MemLockHandle, dword_EDAB4, FatalError, findmemblock
 extern memlist1, reservemem, StrCompareN, FileNameOnly, MemUnlock, bcopy, MemLock
-global PushMemDescriptorLocked, UnlinkMemBlockLocked, loc_8D340, FreeMemBlocksAfter, FreeBlocksAfter, loc_8D379, loc_8D38E, MergeFreeSpaceLocked
-global MergeFreeSpace, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, MarkBlockPurgeable, MarkDescPurgeable
-global SetMemBlockPurgeLevel, SetMemBlockPurge, FindNamedBlock, loc_8D521, loc_8D53A, loc_8D542, FindMemBlockNamed, FindNamedBlockNext
-global loc_8D591, loc_8D5B0, loc_8D5B8, FindMemBlockNamedNext, FindFreeSpaceLocked, FindFreeSpace, loc_8D640, loc_8D653
-global loc_8D670, loc_8D683, loc_8D697, loc_8D6AA, loc_8D6D8, loc_8D708, loc_8D70A, FindCachedFileData
-global loc_8D727, FindCachedFile, loc_8D78F, loc_8D79E, loc_8D7EA, loc_8D803, CompactDownLocked, CompactMemListDown
-global loc_8D85F, loc_8D861, loc_8D874, loc_8D87F, loc_8D88C, loc_8D898, loc_8D8AB, loc_8D8EC
-global loc_8D93F, loc_8D946, loc_8D94E, CompactUpLocked, CompactMemListUp, loc_8D9A6, loc_8D9AC, loc_8D9C0
-global loc_8D9CA, loc_8D9D6, loc_8D9E6, loc_8DA16, loc_8DA6E, loc_8DA8F, MemTrackLargestFree, loc_8DAAD
-global MemLargestFree, MemLargestFreeOfList, loc_8DB05, loc_8DB12, MemLargestFreeParas, MemFreeSize, loc_8DB39, loc_8DB42
-global loc_8DB49, InitMemDescriptors, loc_8DB60, loc_8DB6D, PushMemDescriptor, getmemblock, loc_8DBB1, MemPtrSize
-global MemDescPtr, MemDescSize
+global PushMemDescriptorLocked, UnlinkMemBlockLocked, FreeMemBlocksAfter, FreeBlocksAfter, MergeFreeSpaceLocked, MergeFreeSpace, MarkBlockPurgeable, MarkDescPurgeable
+global SetMemBlockPurgeLevel, SetMemBlockPurge, FindNamedBlock, FindMemBlockNamed, FindNamedBlockNext, FindMemBlockNamedNext, FindFreeSpaceLocked, FindFreeSpace
+global FindCachedFileData, FindCachedFile, CompactDownLocked, CompactMemListDown, CompactUpLocked, CompactMemListUp, MemTrackLargestFree, MemLargestFree
+global MemLargestFreeOfList, MemLargestFreeParas, MemFreeSize, InitMemDescriptors, PushMemDescriptor, getmemblock, MemPtrSize, MemDescPtr
+global MemDescSize
 PushMemDescriptorLocked:
         mov edx, dword [MemLockHandle]
         push edx
@@ -33,7 +26,7 @@ PushMemDescriptorLocked:
 UnlinkMemBlockLocked:
         mov eax, dword [byte esp+04h]
         test byte [byte eax+019h], 80h
-        jne short loc_8D340
+        jne short .1
         mov ebx, dword [byte eax+024h]
         mov edx, dword [byte eax+020h]
         mov dword [byte ebx+020h], edx
@@ -43,7 +36,7 @@ UnlinkMemBlockLocked:
         push eax
         call PushMemDescriptor
         add esp, byte 4
-loc_8D340:
+.1:
         ret
         db 08Dh,040h,00h
 FreeMemBlocksAfter:
@@ -65,16 +58,16 @@ FreeBlocksAfter:
         mov esi, dword [byte esp+08h]
         mov esi, dword [byte esi+020h]
         test byte [byte esi+018h], 20h
-        jne short loc_8D38E
-loc_8D379:
+        jne short .2
+.1:
         mov esi, dword [byte esi+020h]
         mov ebx, dword [byte esi+024h]
         push ebx
         call UnlinkMemBlockLocked
         add esp, byte 4
         test byte [byte esi+018h], 20h
-        je short loc_8D379
-loc_8D38E:
+        je short .1
+.2:
         mov ecx, dword [MemLockHandle]
         push ecx
         call MemUnlock
@@ -120,19 +113,19 @@ MergeFreeSpace:
         xor ecx, ecx
         mov eax, dword [byte ebp+00h]
         mov eax, dword [byte eax+020h]
-loc_8D40C:
+.1:
         test byte [byte eax+018h], 8
-        je short loc_8D438
+        je short .3
         mov edx, dword [byte eax+018h]
         and edx, byte 7
         cmp edx, ebx
-        ja short loc_8D427
-        jne short loc_8D438
+        ja short .2
+        jne short .3
         mov edx, esi
         sub edx, dword [byte eax+01Ch]
         cmp edx, ecx
-        jl short loc_8D438
-loc_8D427:
+        jl short .3
+.2:
         mov edi, eax
         mov ebx, dword [byte eax+018h]
         and ebx, byte 7
@@ -140,22 +133,22 @@ loc_8D427:
         mov ecx, dword [byte eax+01Ch]
         sub edx, ecx
         mov ecx, edx
-loc_8D438:
+.3:
         mov eax, dword [byte eax+020h]
         mov edx, dword [byte ebp+04h]
         cmp eax, edx
-        jne short loc_8D40C
+        jne short .1
         mov dword [FreeSpaceList], esi
         test edi, edi
-        je short loc_8D45C
+        je short .4
         push edi
         call UnlinkMemBlockLocked
         add esp, byte 4
         mov eax, 1
-        jmp short loc_8D45E
-loc_8D45C:
+        jmp short .5
+.4:
         xor eax, edx
-loc_8D45E:
+.5:
         mov esi, dword [FreeSpaceList]
         pop ebp
         pop edi
@@ -230,8 +223,8 @@ FindNamedBlock:
         mov ebp, eax
         mov esi, dword [edi]
         cmp esi, dword [byte edi+04h]
-        je short loc_8D542
-loc_8D521:
+        je short .3
+.1:
         push byte 0Ch
         lea eax, [byte esi+04h]
         push eax
@@ -239,17 +232,17 @@ loc_8D521:
         call StrCompareN
         add esp, byte 0Ch
         test eax, eax
-        jne short loc_8D53A
+        jne short .2
         mov eax, esi
         pop ebp
         pop edi
         pop esi
         ret
-loc_8D53A:
+.2:
         mov esi, dword [byte esi+020h]
         cmp esi, dword [byte edi+04h]
-        jne short loc_8D521
-loc_8D542:
+        jne short .1
+.3:
         xor eax, eax
         pop ebp
         pop edi
@@ -281,8 +274,8 @@ FindNamedBlockNext:
         mov ebp, eax
         mov esi, dword [edi]
         cmp esi, dword [byte edi+04h]
-        je short loc_8D5B8
-loc_8D591:
+        je short .3
+.1:
         push byte 0Ch
         lea eax, [byte esi+04h]
         push eax
@@ -290,19 +283,19 @@ loc_8D591:
         call StrCompareN
         add esp, byte 0Ch
         test eax, eax
-        jne short loc_8D5B0
+        jne short .2
         test byte [byte esi+018h], 8
-        je short loc_8D5B0
+        je short .2
         mov eax, esi
         pop ebp
         pop edi
         pop esi
         ret
-loc_8D5B0:
+.2:
         mov esi, dword [byte esi+020h]
         cmp esi, dword [byte edi+04h]
-        jne short loc_8D591
-loc_8D5B8:
+        jne short .1
+.3:
         xor eax, eax
         pop ebp
         pop edi
@@ -350,12 +343,12 @@ FindFreeSpace:
         mov ebx, memlist1
         add ebx, eax
         cmp dword [byte ebx+010h], byte 0
-        jne short loc_8D640
+        jne short .1
         push esi
         call MergeFreeSpace
         add esp, byte 4
-        jmp near loc_8D70A
-loc_8D640:
+        jmp near .9
+.1:
         mov edi, esi
         and edi, byte 7
         xor ebp, ebp
@@ -363,19 +356,19 @@ loc_8D640:
         mov esi, dword [ebx]
         mov esi, dword [byte esi+020h]
         mov ecx, 7
-loc_8D653:
+.2:
         test byte [byte esi+018h], 8
-        je short loc_8D683
+        je short .4
         mov eax, dword [byte esi+018h]
         and eax, ecx
         cmp eax, edi
-        ja short loc_8D670
-        jne short loc_8D683
+        ja short .3
+        jne short .4
         mov eax, dword [FreeSpaceList]
         sub eax, dword [byte esi+01Ch]
         cmp eax, edx
-        jl short loc_8D683
-loc_8D670:
+        jl short .4
+.3:
         mov ebp, esi
         mov edi, dword [byte esi+018h]
         and edi, ecx
@@ -383,24 +376,24 @@ loc_8D670:
         mov edx, dword [byte esi+01Ch]
         sub eax, edx
         mov edx, eax
-loc_8D683:
+.4:
         mov esi, dword [byte esi+020h]
         cmp esi, dword [byte ebx+04h]
-        jne short loc_8D653
+        jne short .2
         test ebp, ebp
-        je near loc_8D708
+        je near .8
         xor eax, eax
         mov edx, esi
-loc_8D697:
+.5:
         mov bl, byte [byte edx+04h]
         mov byte [esp+eax], bl
         inc edx
         inc eax
         cmp eax, byte 0Ch
-        jl short loc_8D697
+        jl short .5
         xor dl, dl
         mov byte [byte esp+0Ch], dl
-loc_8D6AA:
+.6:
         push byte 0
         mov eax, dword [byte esi+018h]
         or al, 8
@@ -413,16 +406,16 @@ loc_8D6AA:
         add esp, byte 10h
         mov dword [byte esp+010h], eax
         test eax, eax
-        jne short loc_8D6D8
+        jne short .7
         push edi
         call FindFreeSpace
         add esp, byte 4
         test eax, eax
-        jne short loc_8D6AA
-loc_8D6D8:
+        jne short .6
+.7:
         mov ebx, dword [byte esp+010h]
         test ebx, ebx
-        je short loc_8D708
+        je short .8
         mov ecx, dword [byte ebp+014h]
         push ecx
         mov esi, dword [ebx]
@@ -440,9 +433,9 @@ loc_8D6D8:
         pop edi
         pop esi
         ret
-loc_8D708:
+.8:
         xor eax, eax
-loc_8D70A:
+.9:
         add esp, byte 14h
         pop ebp
         pop edi
@@ -455,9 +448,9 @@ FindCachedFileData:
         call FindCachedFile
         add esp, byte 4
         test eax, eax
-        je short loc_8D727
+        je short .1
         mov eax, dword [eax]
-loc_8D727:
+.1:
         ret
 FindCachedFile:
         push esi
@@ -470,12 +463,12 @@ FindCachedFile:
         mov edi, eax
         add esp, byte 4
         test eax, eax
-        je short loc_8D78F
+        je short .1
         mov ah, byte [byte eax+018h]
         and ah, 0F7h
         mov byte [byte edi+018h], ah
         test ah, 10h
-        jne near loc_8D803
+        jne near .4
         push byte 0
         mov edx, dword [byte edi+018h]
         push edx
@@ -486,7 +479,7 @@ FindCachedFile:
         mov esi, eax
         add esp, byte 10h
         test eax, eax
-        je near loc_8D803
+        je near .4
         mov ecx, dword [byte edi+014h]
         push ecx
         mov ebp, dword [eax]
@@ -499,20 +492,20 @@ FindCachedFile:
         call PushMemDescriptorLocked
         add esp, byte 4
         mov edi, esi
-        jmp short loc_8D803
-loc_8D78F:
+        jmp short .4
+.1:
         mov esi, dword [memblocklist]
         mov esi, dword [byte esi+010h]
         mov edi, dword [byte eax+018h]
         mov dword [esp], edi
-loc_8D79E:
+.2:
         push esi
         push ebp
         call FindNamedBlockNext
         mov edi, eax
         add esp, byte 8
         test eax, eax
-        je short loc_8D7EA
+        je short .3
         and byte [byte eax+018h], 0F7h
         push byte 0
         mov edx, dword [byte eax+018h]
@@ -540,15 +533,15 @@ loc_8D79E:
         pop edi
         pop esi
         ret
-loc_8D7EA:
+.3:
         and esi, 700h
         sar esi, 8
         imul esi, byte 14h
         add esi, memlist1
         mov esi, dword [byte esi+010h]
         test esi, esi
-        jne short loc_8D79E
-loc_8D803:
+        jne short .2
+.4:
         mov eax, edi
         add esp, byte 4
         pop ebp
@@ -587,45 +580,45 @@ CompactMemListDown:
         mov eax, dword [esi]
         mov edi, dword [byte esi+024h]
         mov esi, edi
-loc_8D85F:
+.1:
         xor ecx, ecx
-loc_8D861:
+.2:
         mov edx, dword [edi]
         mov ebx, dword [byte edi+010h]
         add ebx, edx
         cmp ebx, eax
-        jae short loc_8D874
+        jae short .3
         mov ecx, eax
         sub ecx, ebx
         mov eax, ebx
-        jmp short loc_8D87F
-loc_8D874:
+        jmp short .4
+.3:
         cmp edi, ebp
-        je short loc_8D87F
+        je short .4
         mov eax, edx
         mov edi, dword [byte edi+024h]
-        jmp short loc_8D861
-loc_8D87F:
+        jmp short .2
+.4:
         test ecx, ecx
-        jne short loc_8D88C
+        jne short .5
         mov eax, dword [byte esp+08h]
-        jmp near loc_8D94E
-loc_8D88C:
+        jmp near .11
+.5:
         test byte [byte esi+018h], 18h
-        je short loc_8D898
+        je short .6
         mov ebx, dword [esi]
         cmp eax, ebx
-        jae short loc_8D8AB
-loc_8D898:
+        jae short .7
+.6:
         cmp esi, ebp
-        jne near loc_8D946
+        jne near .10
         mov eax, dword [byte esp+08h]
         add esp, byte 10h
         pop ebp
         pop edi
         pop esi
         ret
-loc_8D8AB:
+.7:
         mov edx, ebx
         mov ebx, dword [byte esi+010h]
         add ebx, edx
@@ -633,7 +626,7 @@ loc_8D8AB:
         lea ebx, [eax+ecx]
         mov dword [byte esp+0Ch], ebx
         cmp eax, dword [byte esp+04h]
-        jne short loc_8D8EC
+        jne short .8
         mov eax, dword [byte esp+0Ch]
         mov ebx, dword [byte esi+010h]
         sub eax, ebx
@@ -646,10 +639,10 @@ loc_8D8AB:
         mov eax, dword [esp]
         mov dword [esi], eax
         mov dword [byte esp+08h], 1
-        jmp near loc_8D85F
-loc_8D8EC:
+        jmp near .1
+.8:
         cmp ecx, dword [byte esi+010h]
-        jl short loc_8D93F
+        jl short .9
         mov eax, dword [byte esp+0Ch]
         mov ebx, dword [byte esi+010h]
         sub eax, ebx
@@ -675,14 +668,14 @@ loc_8D8EC:
         mov dword [byte edi+020h], esi
         mov eax, dword [esi]
         mov dword [byte esp+08h], 1
-        jmp near loc_8D85F
-loc_8D93F:
+        jmp near .1
+.9:
         mov eax, dword [edi]
-        jmp near loc_8D85F
-loc_8D946:
+        jmp near .1
+.10:
         mov esi, dword [byte esi+024h]
-        jmp near loc_8D88C
-loc_8D94E:
+        jmp near .5
+.11:
         add esp, byte 10h
         pop ebp
         pop edi
@@ -720,45 +713,45 @@ CompactMemListUp:
         mov edi, esi
         xor eax, eax
         cmp ebp, dword [esi]
-        jae short loc_8D9AC
-loc_8D9A6:
+        jae short .2
+.1:
         mov eax, dword [esi]
         sub eax, ebp
-        jmp short loc_8D9C0
-loc_8D9AC:
+        jmp short .3
+.2:
         cmp esi, dword [byte esp+014h]
-        je short loc_8D9C0
+        je short .3
         mov ebp, dword [esi]
         add ebp, dword [byte esi+010h]
         mov esi, dword [byte esi+020h]
         cmp ebp, dword [esi]
-        jb short loc_8D9A6
-        jmp short loc_8D9AC
-loc_8D9C0:
+        jb short .1
+        jmp short .2
+.3:
         test eax, eax
-        jne short loc_8D9CA
+        jne short .4
         mov eax, edx
         pop ebp
         pop edi
         pop esi
         ret
-loc_8D9CA:
+.4:
         test byte [byte edi+018h], 18h
-        je short loc_8D9D6
+        je short .5
         mov ebx, dword [edi]
         cmp ebp, ebx
-        jbe short loc_8D9E6
-loc_8D9D6:
+        jbe short .6
+.5:
         cmp edi, dword [byte esp+014h]
-        jne near loc_8DA8F
+        jne near .9
         mov eax, edx
         pop ebp
         pop edi
         pop esi
         ret
-loc_8D9E6:
+.6:
         cmp edi, esi
-        jne short loc_8DA16
+        jne short .7
         mov ecx, dword [byte esi+010h]
         push ecx
         push ebp
@@ -770,20 +763,20 @@ loc_8D9E6:
         mov edx, 1
         xor eax, eax
         cmp ebp, dword [esi]
-        jae short loc_8D9AC
+        jae short .2
         mov eax, dword [esi]
         sub eax, ebp
         test eax, eax
-        jne short loc_8D9CA
+        jne short .4
         mov eax, edx
         pop ebp
         pop edi
         pop esi
         ret
-loc_8DA16:
+.7:
         mov ecx, dword [byte edi+010h]
         cmp eax, ecx
-        jl short loc_8DA6E
+        jl short .8
         push ecx
         push ebp
         push ebx
@@ -805,34 +798,34 @@ loc_8DA16:
         mov edx, 1
         xor eax, eax
         cmp ebp, dword [esi]
-        jae near loc_8D9AC
+        jae near .2
         mov eax, dword [esi]
         sub eax, ebp
         test eax, eax
-        jne near loc_8D9CA
+        jne near .4
         mov eax, edx
         pop ebp
         pop edi
         pop esi
         ret
-loc_8DA6E:
+.8:
         mov ebp, dword [esi]
         add ebp, dword [byte esi+010h]
         xor eax, eax
         cmp ebp, dword [esi]
-        jae near loc_8D9AC
+        jae near .2
         mov eax, dword [esi]
         sub eax, ebp
         test eax, eax
-        jne near loc_8D9CA
+        jne near .4
         mov eax, edx
         pop ebp
         pop edi
         pop esi
         ret
-loc_8DA8F:
+.9:
         mov edi, dword [byte edi+020h]
-        jmp near loc_8D9CA
+        jmp near .4
         db 090h
 MemTrackLargestFree:
         push ebx
@@ -840,9 +833,9 @@ MemTrackLargestFree:
         push edx
         call MemLargestFreeOfList
         cmp eax, dword [dword_EDAB4]
-        jge short loc_8DAAD
+        jge short .1
         mov dword [dword_EDAB4], eax
-loc_8DAAD:
+.1:
         mov eax, dword [dword_EDAB4]
         pop edx
         pop ecx
@@ -877,18 +870,18 @@ MemLargestFreeOfList:
         mov ebx, dword [ebx]
         mov eax, dword [byte ebx+020h]
         xor ecx, ecx
-loc_8DB05:
+.1:
         mov edx, dword [eax]
         sub edx, dword [ebx]
         sub edx, dword [byte ebx+010h]
         cmp edx, ecx
-        jle short loc_8DB12
+        jle short .2
         mov ecx, edx
-loc_8DB12:
+.2:
         mov ebx, eax
         mov eax, dword [byte eax+020h]
         test eax, eax
-        jne short loc_8DB05
+        jne short .1
         mov eax, ecx
         ret
         db 08Bh,0C0h
@@ -902,16 +895,16 @@ MemFreeSize:
         mov eax, dword [eax]
         xor edx, edx
         test eax, eax
-        je short loc_8DB49
-loc_8DB39:
+        je short .3
+.1:
         test byte [byte eax+018h], 18h
-        jne short loc_8DB42
+        jne short .2
         add edx, dword [byte eax+010h]
-loc_8DB42:
+.2:
         mov eax, dword [byte eax+020h]
         test eax, eax
-        jne short loc_8DB39
-loc_8DB49:
+        jne short .1
+.3:
         mov eax, edx
         ret
 InitMemDescriptors:
@@ -921,15 +914,15 @@ InitMemDescriptors:
         mov ebx, dword [byte esp+08h]
         dec ebx
         test ebx, ebx
-        jle short loc_8DB6D
-loc_8DB60:
+        jle short .2
+.1:
         lea ecx, [byte eax+028h]
         mov dword [byte eax+020h], ecx
         mov eax, ecx
         inc edx
         cmp edx, ebx
-        jl short loc_8DB60
-loc_8DB6D:
+        jl short .1
+.2:
         mov dword [byte eax+020h], 0
         ret
         db 08Dh,040h,00h
@@ -942,7 +935,7 @@ PushMemDescriptor:
         db 090h
 getmemblock:
         cmp dword [dword_EDAAC], byte 0
-        jne short loc_8DBB1
+        jne short .1
         mov ebx, dword [MemLockHandle]
         push ebx
         call MemUnlock
@@ -950,7 +943,7 @@ getmemblock:
         push str_GetmemblockNOMEMORYBLOCKS
         call FatalError
         add esp, byte 4
-loc_8DBB1:
+.1:
         mov eax, dword [dword_EDAAC]
         mov edx, dword [byte eax+020h]
         mov dword [dword_EDAAC], edx

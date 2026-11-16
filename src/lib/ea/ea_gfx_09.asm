@@ -6,12 +6,7 @@ extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, 
 extern dword_D30A8, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8, dword_D42CC, dword_D42D0
 extern dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, fontcolor, off_D42A4, TextSetCursor, PutBlock
 extern FillRectClipped, SetClipWindow, PutPixel
-global TextPrint, loc_92901, loc_92930, loc_92936, loc_92951, loc_92957, loc_9296F, loc_9297A
-global loc_92993, loc_92995, loc_929B9, loc_929BB, loc_92A3D, loc_92A6A, loc_92A9A, loc_92ABC
-global loc_92AC5, loc_92AD9, loc_92AED, loc_92B02, loc_92B17, loc_92B2C, loc_92B41, loc_92B56
-global loc_92B6B, loc_92B80, loc_92B95, loc_92B9B, loc_92BBF, loc_92BE1, loc_92BE7, loc_92BF7
-global loc_92C0D, loc_92C29, loc_92C3A, loc_92C3D, loc_92C56, loc_92C74, loc_92C7A, loc_92C86
-global loc_92CA5, loc_92CAC, loc_92CAF, loc_92CB9, loc_92CC6, TextPrintAt, TextPutCharAt
+global TextPrint, TextPrintAt, TextPutCharAt
 TextPrint:
         push esi
         push edi
@@ -42,8 +37,8 @@ TextPrint:
         mov dword [esp], eax
         mov eax, dword [byte esp+050h]
         cmp byte [eax], 0
-        je near loc_92CC6
-loc_92901:
+        je near .44
+.1:
         mov eax, dword [byte esp+050h]
         lea ebx, [byte eax+01h]
         mov dword [byte esp+050h], ebx
@@ -51,73 +46,73 @@ loc_92901:
         sub al, byte [byte_D42C0]
         movzx esi, al
         cmp esi, dword [byte esp+014h]
-        jge near loc_92CB9
+        jge near .43
         mov edi, dword [dword_D42C8]
         test edi, edi
-        je short loc_92930
+        je short .2
         mov ah, byte [edi+esi]
-        jmp short loc_92936
-loc_92930:
+        jmp short .3
+.2:
         mov ah, byte [byte_D42C2]
-loc_92936:
+.3:
         movzx esi, ah
         mov dword [byte esp+038h], esi
         mov ebp, dword [dword_D42CC]
         test ebp, ebp
-        je short loc_92951
+        je short .4
         movzx esi, al
         mov edi, ebp
         mov ah, byte [edi+esi]
-        jmp short loc_92957
-loc_92951:
+        jmp short .5
+.4:
         mov ah, byte [byte_D42C3]
-loc_92957:
+.5:
         movzx esi, ah
         mov edx, dword [dword_D42D0]
         test edx, edx
-        je short loc_9296F
+        je short .6
         movzx edi, al
         mov ebp, edx
         movzx edi, byte [edi+ebp]
-        jmp short loc_9297A
-loc_9296F:
+        jmp short .7
+.6:
         movzx edi, byte [byte_D42C4]
         add edi, dword [byte esp+038h]
-loc_9297A:
+.7:
         mov dword [byte esp+08h], edi
         mov ecx, dword [dword_D42D4]
         test ecx, ecx
-        je short loc_92993
+        je short .8
         movzx edi, al
         mov ebp, ecx
         movzx edi, byte [edi+ebp]
-        jmp short loc_92995
-loc_92993:
+        jmp short .9
+.8:
         xor edi, edi
-loc_92995:
+.9:
         mov ebp, dword [dword_D42B0]
         add ebp, edi
         mov dword [byte esp+01Ch], ebp
         cmp dword [dword_D42D8], byte 0
-        je short loc_929B9
+        je short .10
         movzx edi, al
         mov ebp, dword [dword_D42D8]
         movzx ebp, byte [edi+ebp]
-        jmp short loc_929BB
-loc_929B9:
+        jmp short .11
+.10:
         xor ebp, ebp
-loc_929BB:
+.11:
         add ebp, dword [dword_D42B4]
         and eax, 0FFh
         lea edi, [nosplit eax*4+00h]
         mov eax, dword [dword_D42E0]
         mov edi, dword [edi+eax]
         cmp dword [byte esp+04h], byte 0
-        je short loc_92A3D
+        je short .12
         cmp dword [byte esp+038h], byte 0
-        jle near loc_92CAF
+        jle near .42
         test esi, esi
-        jle near loc_92CAF
+        jle near .42
         add esi, ebp
         push esi
         push ebp
@@ -144,22 +139,22 @@ loc_929BB:
         push byte 0
         call SetClipWindow
         add esp, byte 10h
-        jmp near loc_92CAF
-loc_92A3D:
+        jmp near .42
+.12:
         test edi, edi
-        je near loc_92CAF
+        je near .42
         add edi, dword [byte esp+02Ch]
         mov dword [byte esp+020h], esi
         mov eax, dword [byte esp+010h]
         cmp eax, byte 4
-        jb short loc_92A6A
-        jbe near loc_92B9B
+        jb short .13
+        jbe near .27
         cmp eax, byte 8
-        je near loc_92C3D
-        jmp near loc_92CAF
-loc_92A6A:
+        je near .35
+        jmp near .42
+.13:
         cmp eax, byte 1
-        jne near loc_92CAF
+        jne near .42
         mov edx, dword [byte esp+0Ch]
         push edx
         push esi
@@ -174,116 +169,116 @@ loc_92A6A:
         add eax, byte 7
         sar eax, 3
         mov dword [byte esp+018h], eax
-loc_92A9A:
+.14:
         mov edx, dword [byte esp+020h]
         dec edx
         mov dword [byte esp+020h], edx
         cmp edx, byte 0FFFFFFFFh
-        je near loc_92CAF
+        je near .42
         cmp ebp, dword [cliprect_y0]
-        jl short loc_92ABC
+        jl short .15
         cmp ebp, dword [cliprect_y1]
-        jl short loc_92AC5
-loc_92ABC:
+        jl short .16
+.15:
         add edi, dword [byte esp+018h]
-        jmp near loc_92B95
-loc_92AC5:
+        jmp near .26
+.16:
         mov esi, dword [byte esp+01Ch]
         mov eax, dword [byte esp+038h]
         mov dword [byte esp+030h], eax
         test eax, eax
-        jle near loc_92B95
-loc_92AD9:
+        jle near .26
+.17:
         test byte [edi], 80h
-        je short loc_92AED
+        je short .18
         mov eax, dword [byte esp+03Ch]
         push eax
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92AED:
+.18:
         inc esi
         test byte [edi], 40h
-        je short loc_92B02
+        je short .19
         mov edx, dword [byte esp+03Ch]
         push edx
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92B02:
+.19:
         inc esi
         test byte [edi], 20h
-        je short loc_92B17
+        je short .20
         mov ebx, dword [byte esp+03Ch]
         push ebx
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92B17:
+.20:
         inc esi
         test byte [edi], 10h
-        je short loc_92B2C
+        je short .21
         mov ecx, dword [byte esp+03Ch]
         push ecx
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92B2C:
+.21:
         inc esi
         test byte [edi], 8
-        je short loc_92B41
+        je short .22
         mov eax, dword [byte esp+03Ch]
         push eax
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92B41:
+.22:
         inc esi
         test byte [edi], 4
-        je short loc_92B56
+        je short .23
         mov edx, dword [byte esp+03Ch]
         push edx
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92B56:
+.23:
         inc esi
         test byte [edi], 2
-        je short loc_92B6B
+        je short .24
         mov ebx, dword [byte esp+03Ch]
         push ebx
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92B6B:
+.24:
         inc esi
         test byte [edi], 1
-        je short loc_92B80
+        je short .25
         mov ecx, dword [byte esp+03Ch]
         push ecx
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92B80:
+.25:
         inc esi
         mov ebx, dword [byte esp+030h]
         sub ebx, byte 8
         mov dword [byte esp+030h], ebx
         inc edi
         test ebx, ebx
-        jg near loc_92AD9
-loc_92B95:
+        jg near .17
+.26:
         inc ebp
-        jmp near loc_92A9A
-loc_92B9B:
+        jmp near .14
+.27:
         mov edx, dword [byte esp+0Ch]
         push edx
         push esi
@@ -298,41 +293,41 @@ loc_92B9B:
         inc eax
         sar eax, 1
         mov dword [byte esp+034h], eax
-loc_92BBF:
+.28:
         mov ebx, dword [byte esp+020h]
         dec ebx
         mov dword [byte esp+020h], ebx
         cmp ebx, byte 0FFFFFFFFh
-        je near loc_92CAF
+        je near .42
         cmp ebp, dword [cliprect_y0]
-        jl short loc_92BE1
+        jl short .29
         cmp ebp, dword [cliprect_y1]
-        jl short loc_92BE7
-loc_92BE1:
+        jl short .30
+.29:
         add edi, dword [byte esp+034h]
-        jmp short loc_92C3A
-loc_92BE7:
+        jmp short .34
+.30:
         mov esi, dword [byte esp+01Ch]
         mov eax, dword [byte esp+038h]
         mov dword [byte esp+024h], eax
         test eax, eax
-        jle short loc_92C3A
-loc_92BF7:
+        jle short .34
+.31:
         xor eax, eax
         mov al, byte [edi]
         sar eax, 4
         test eax, eax
-        je short loc_92C0D
+        je short .32
         push eax
         push ebp
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92C0D:
+.32:
         inc esi
         mov cl, byte [edi]
         test cl, 0Fh
-        je short loc_92C29
+        je short .33
         mov al, cl
         and al, 0Fh
         and eax, 0FFh
@@ -341,18 +336,18 @@ loc_92C0D:
         push esi
         call PutPixel
         add esp, byte 0Ch
-loc_92C29:
+.33:
         inc esi
         mov ecx, dword [byte esp+024h]
         sub ecx, byte 2
         mov dword [byte esp+024h], ecx
         inc edi
         test ecx, ecx
-        jg short loc_92BF7
-loc_92C3A:
+        jg short .31
+.34:
         inc ebp
-        jmp short loc_92BBF
-loc_92C3D:
+        jmp short .28
+.35:
         mov ecx, dword [byte esp+0Ch]
         push ecx
         push esi
@@ -363,30 +358,30 @@ loc_92C3D:
         push eax
         call FillRectClipped
         add esp, byte 14h
-loc_92C56:
+.36:
         mov eax, dword [byte esp+020h]
         dec eax
         mov dword [byte esp+020h], eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_92CAF
+        je short .42
         cmp ebp, dword [cliprect_y0]
-        jl short loc_92C74
+        jl short .37
         cmp ebp, dword [cliprect_y1]
-        jl short loc_92C7A
-loc_92C74:
+        jl short .38
+.37:
         add edi, dword [byte esp+038h]
-        jmp short loc_92CAC
-loc_92C7A:
+        jmp short .41
+.38:
         mov eax, dword [byte esp+01Ch]
         mov dword [byte esp+028h], eax
         mov esi, dword [byte esp+038h]
-loc_92C86:
+.39:
         dec esi
         cmp esi, byte 0FFFFFFFFh
-        je short loc_92CAC
+        je short .41
         mov bh, byte [edi]
         test bh, bh
-        je short loc_92CA5
+        je short .40
         xor eax, eax
         mov al, bh
         push eax
@@ -395,21 +390,21 @@ loc_92C86:
         push eax
         call PutPixel
         add esp, byte 0Ch
-loc_92CA5:
+.40:
         inc dword [byte esp+028h]
         inc edi
-        jmp short loc_92C86
-loc_92CAC:
+        jmp short .39
+.41:
         inc ebp
-        jmp short loc_92C56
-loc_92CAF:
+        jmp short .36
+.42:
         mov eax, dword [byte esp+08h]
         add dword [dword_D42B0], eax
-loc_92CB9:
+.43:
         mov eax, dword [byte esp+050h]
         cmp byte [eax], 0
-        jne near loc_92901
-loc_92CC6:
+        jne near .1
+.44:
         add esp, byte 40h
         pop ebp
         pop edi

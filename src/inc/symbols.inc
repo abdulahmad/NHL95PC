@@ -897,7 +897,7 @@
 ;  8FE4F  MidiNoteOff                              lib/ea/ea_sound_hl_01.asm                    1
 ;  8FE83  SetSoundByteOrder                        lib/ea/ea_sound_hl_01.asm                    1
 ;  8FFB0  SetPalette                               lib/ea/ea_sound_hl_01.asm                    31
-;  90265  loc_90265                                lib/watcom/watcom_clib_07.asm                1
+;  90048  __saved_DS                               lib/watcom/watcom_clib_07.asm                1
 ;  90267  WriteConsoleMessage                      lib/watcom/watcom_clib_07.asm                2
 ;  902A0  __GETDS                                  lib/watcom/watcom_clib_07.asm                13
 ;  902B0  __STOSB                                  lib/watcom/watcom_clib_07.asm                12
@@ -935,7 +935,7 @@
 ;  910B0  ClearScreenColour                        lib/ea/ea_gfx_05.asm                         2
 ;  910E0  DrawArtOpaque                            lib/ea/ea_gfx_05.asm                         12
 ;  9121C  DrawArtOpaqueAtOwnPos                    lib/ea/ea_gfx_05.asm                         9
-;  91260  loc_91260                                lib/ea/ea_gfx_05.asm                         1
+;  91238  DrawArtOpaqueHotspot                     lib/ea/ea_gfx_05.asm                         1
 ;  91284  DrawArtKeyFF                             lib/ea/ea_gfx_05.asm                         9
 ;  912C8  DrawArtKeyFFAtOwnPos                     lib/ea/ea_gfx_05.asm                         3
 ;  9132C  FreeBitmap                               lib/ea/ea_gfx_05.asm                         4
@@ -1080,8 +1080,7 @@
 ;  9AFAD  McgaNoWindow                             lib/ea/ea_mcga_window_02.asm                 1
 ;  9AFB0  tolower_                                 lib/watcom/watcom_clib_32.asm                3
 ;  9AFBE  __allocfp_                               lib/watcom/watcom_clib_32.asm                1
-;  9B066  __freefp_                                lib/watcom/watcom_clib_32.asm                2
-;  9B09F  loc_9B09F                                lib/watcom/watcom_clib_32.asm                1
+;  9B066  __freefp_                                lib/watcom/watcom_clib_32.asm                3
 ;  9B0FF  fseek_                                   lib/watcom/watcom_clib_32.asm                1
 ;  9B1FB  __chktty_                                lib/watcom/watcom_clib_32.asm                1
 ;  9B22C  GetPsp                                   lib/watcom/watcom_clib_32.asm                1
@@ -1091,16 +1090,7 @@
 ;  9B353  __ioalloc_                               lib/watcom/watcom_clib_32.asm                3
 ;  9B3CA  fputc_                                   lib/watcom/watcom_clib_32.asm                3
 ;  9B470  unk_9B470                                lib/watcom/watcom_clib_32.asm                1
-;  9B498  FillRectSpans                            lib/ea/ea_misc_01.asm                        1
-;  9B544  loc_9B544                                lib/ea/ea_misc_01.asm                        1
-;  9B565  loc_9B565                                lib/ea/ea_misc_01.asm                        1
-;  9B589  loc_9B589                                lib/ea/ea_misc_01.asm                        1
-;  9B5A9  loc_9B5A9                                lib/ea/ea_misc_01.asm                        1
-;  9B5C9  loc_9B5C9                                lib/ea/ea_misc_01.asm                        1
-;  9B61A  loc_9B61A                                lib/ea/ea_misc_01.asm                        1
-;  9B66B  loc_9B66B                                lib/ea/ea_misc_01.asm                        1
-;  9B6B3  loc_9B6B3                                lib/ea/ea_misc_01.asm                        1
-;  9B6F7  loc_9B6F7                                lib/ea/ea_misc_01.asm                        1
+;  9B498  FillRectSpans                            lib/ea/ea_misc_01.asm                        2
 ;  9B710  isatty_                                  lib/watcom/watcom_clib_33.asm                2
 ;  9B72E  __IOMode_                                lib/watcom/watcom_clib_33.asm                3
 ;  9B783  __SetIOMode_                             lib/watcom/watcom_clib_33.asm                2
@@ -1126,7 +1116,6 @@
 ;  9D521  EmuRestoreFpuVector                      lib/ea/ea_snap_03.asm                        1
 ;  9D55C  EmuRestoreRealVector                     lib/ea/ea_snap_03.asm                        1
 ;  9D57D  __save_8087_                             lib/ea/ea_snap_03.asm                        1
-;  9D582  loc_9D582                                lib/ea/ea_snap_03.asm                        1
 ;  9D5C1  __chk8087_                               lib/watcom/watcom_clib_37.asm                1
 ;  9D601  __delay_init_                            lib/watcom/watcom_clib_37.asm                1
 ;  9D633  __delay_                                 lib/watcom/watcom_clib_37.asm                1
@@ -1208,7 +1197,7 @@
 ;  A2FD0  FlipArtHorizontal                        lib/ea/ea_unpack_helpers.asm                 1
 ;  A3050  FlipArtVertical                          lib/ea/ea_unpack_helpers.asm                 1
 ;  A30D0  RemapArt                                 lib/ea/ea_unpack_helpers.asm                 1
-;  A313F  loc_A313F                                lib/ea/ea_unpack_helpers.asm                 1
+;  A30F8  RemapShapeBank                           lib/ea/ea_unpack_helpers.asm                 1
 ;  A321C  forcedecpt_                              lib/watcom/watcom_clib_42.asm                1
 ;  A3264  __cnvs2d_                                lib/watcom/watcom_clib_42.asm                1
 ;  A35EC  __int7_pl3                               lib/watcom/watcom_emu387.asm                 1
@@ -1439,8 +1428,7 @@
 ;  B4C61  WaitRetraceStart                         lib/video/video_bios_vga.asm                 3
 ;  B4C84  WaitRetraceEnd                           lib/video/video_bios_vga.asm                 3
 ;  B4CD8  VgaBlitKeyed                             lib/video/vga_blitters.asm                   6
-;  B4CF2  VgaBlitKeyedAtOwnPos                     lib/video/vga_blitters.asm                   3
-;  B4D0C  loc_B4D0C                                lib/video/vga_blitters.asm                   1
+;  B4CF2  VgaBlitKeyedAtOwnPos                     lib/video/vga_blitters.asm                   4
 ;  B4DD4  SetColorRemap                            lib/video/vga_blitters.asm                   14
 ;  B4E50  VgaBlitRemap                             lib/video/vga_blitters.asm                   4
 ;  B4F70  SetDrawBitmap                            lib/video/vga_blitters.asm                   13

@@ -4,10 +4,8 @@ bits 32
 section s_96185 progbits alloc exec nowrite align=1
 extern __delay_, __fprtf_, __IOMode_, __set_errno_, __set_errno_dos_, __sys_fini_387_emulator, __sys_init_387_emulator, fputc_
 extern fputs_, strerror_, __STKOVF, ErrnoPtr, CMainHook, unk_C472C, unk_D4D4C
-global fprintf_, strupr_, loc_961B4, loc_961C7, loc_961CA, __CHP, j___sys_init_387_emulator, j___sys_fini_387_emulator
-global strlwr_, loc_961FC, loc_9620F, loc_96212, j___delay_, perror_, loc_96240, write_
-global loc_96286, loc_96295, loc_962A0, loc_962C7, loc_962D7, loc_96312, loc_96325, loc_96337
-global loc_96351, loc_96391, loc_963A5, loc_963AD, loc_963F8, loc_9642E, loc_96431
+global fprintf_, strupr_, __CHP, j___sys_init_387_emulator, j___sys_fini_387_emulator, strlwr_, j___delay_, perror_
+global write_
 fprintf_:
         push ebx
         push edx
@@ -27,19 +25,19 @@ strupr_:
         push ebx
         push edx
         mov ebx, eax
-loc_961B4:
+.1:
         mov dl, byte [eax]
         test dl, dl
-        je short loc_961CA
+        je short .3
         sub dl, 61h
         cmp dl, 19h
-        ja short loc_961C7
+        ja short .2
         add dl, 41h
         mov byte [eax], dl
-loc_961C7:
+.2:
         inc eax
-        jmp short loc_961B4
-loc_961CA:
+        jmp short .1
+.3:
         mov eax, ebx
         pop edx
         pop ebx
@@ -67,19 +65,19 @@ strlwr_:
         push ebx
         push edx
         mov ebx, eax
-loc_961FC:
+.1:
         mov dl, byte [eax]
         test dl, dl
-        je short loc_96212
+        je short .3
         sub dl, 41h
         cmp dl, 19h
-        ja short loc_9620F
+        ja short .2
         add dl, 61h
         mov byte [eax], dl
-loc_9620F:
+.2:
         inc eax
-        jmp short loc_961FC
-loc_96212:
+        jmp short .1
+.3:
         mov eax, ebx
         pop edx
         pop ebx
@@ -90,15 +88,15 @@ j___delay_:
 perror_:
         push edx
         test eax, eax
-        je short loc_96240
+        je short .1
         cmp byte [eax], 0
-        je short loc_96240
+        je short .1
         mov edx, unk_D4D4C
         call fputs_
         mov eax, unk_C472C
         mov edx, unk_D4D4C
         call fputs_
-loc_96240:
+.1:
         call ErrnoPtr
         mov eax, dword [eax]
         mov edx, unk_D4D4C
@@ -123,20 +121,20 @@ write_:
         mov edx, eax
         mov dword [byte ebp-018h], eax
         test eax, eax
-        jne short loc_96295
+        jne short .2
         mov eax, 4
-loc_96286:
+.1:
         call __set_errno_
         mov eax, 0FFFFFFFFh
-        jmp near loc_96431
-loc_96295:
+        jmp near .15
+.2:
         test al, 2
-        jne short loc_962A0
+        jne short .3
         mov eax, 6
-        jmp short loc_96286
-loc_962A0:
+        jmp short .1
+.3:
         test al, 80h
-        je short loc_962D7
+        je short .5
         mov ebx, dword [byte ebp-01Ch]
         xor edx, eax
         mov al, 2
@@ -150,15 +148,15 @@ loc_962A0:
         mov dx, ax
         mov dword [byte ebp-010h], edx
         test edx, edx
-        jge short loc_962D7
-loc_962C7:
+        jge short .5
+.4:
         xor eax, eax
         mov ax, word [byte ebp-010h]
         call __set_errno_dos_
-        jmp near loc_96431
-loc_962D7:
+        jmp near .15
+.5:
         test byte [byte ebp-018h], 40h
-        je short loc_96312
+        je short .6
         mov ebx, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-020h]
         mov ecx, dword [byte ebp-024h]
@@ -169,25 +167,25 @@ loc_962D7:
         mov edx, eax
         mov dword [byte ebp-010h], eax
         test eax, eax
-        jl short loc_962C7
+        jl short .4
         cmp eax, dword [byte ebp-024h]
-        je near loc_9642E
+        je near .14
         mov eax, 0Ch
         call __set_errno_
         mov dword [byte ebp-024h], edx
-        jmp near loc_9642E
-loc_96312:
+        jmp near .14
+.6:
         call CMainHook
         mov edx, eax
         cmp eax, 0B0h
-        jae short loc_96325
+        jae short .7
         call __STKOVF
-loc_96325:
+.7:
         mov edi, 200h
         cmp edx, 230h
-        jae short loc_96337
+        jae short .8
         mov edi, 80h
-loc_96337:
+.8:
         lea eax, [byte edi+03h]
         xor edx, edx
         and al, 0FCh
@@ -198,18 +196,18 @@ loc_96337:
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-08h], esp
         mov dword [byte ebp-0Ch], eax
-loc_96351:
+.9:
         mov eax, dword [byte ebp-04h]
         cmp eax, dword [byte ebp-024h]
-        jae near loc_963F8
+        jae near .13
         mov eax, dword [byte ebp-0Ch]
         cmp byte [eax], 0Ah
-        jne short loc_963AD
+        jne short .12
         mov eax, dword [byte ebp-08h]
         mov byte [esi+eax], 0Dh
         inc esi
         cmp esi, edi
-        jne short loc_963AD
+        jne short .12
         mov ebx, dword [byte ebp-01Ch]
         mov edx, eax
         mov ecx, edi
@@ -220,20 +218,20 @@ loc_96351:
         mov esi, eax
         mov dword [byte ebp-010h], eax
         test eax, eax
-        jl near loc_962C7
+        jl near .4
         cmp eax, edi
-        je short loc_963A5
-loc_96391:
+        je short .11
+.10:
         mov eax, 0Ch
         call __set_errno_
         mov eax, dword [byte ebp-014h]
         add eax, esi
-        jmp near loc_96431
-loc_963A5:
+        jmp near .15
+.11:
         mov eax, dword [byte ebp-04h]
         xor esi, edi
         mov dword [byte ebp-014h], eax
-loc_963AD:
+.12:
         mov eax, dword [byte ebp-08h]
         mov edx, dword [byte ebp-0Ch]
         mov ebx, dword [byte ebp-0Ch]
@@ -246,7 +244,7 @@ loc_963AD:
         inc esi
         mov dword [byte ebp-04h], ecx
         cmp esi, edi
-        jne short loc_96351
+        jne short .9
         mov ebx, dword [byte ebp-01Ch]
         mov edx, eax
         mov ecx, edi
@@ -257,16 +255,16 @@ loc_963AD:
         mov esi, eax
         mov dword [byte ebp-010h], eax
         test eax, eax
-        jl near loc_962C7
+        jl near .4
         cmp eax, edi
-        jne short loc_96391
+        jne short .10
         mov eax, dword [byte ebp-04h]
         xor esi, edi
         mov dword [byte ebp-014h], eax
-        jmp near loc_96351
-loc_963F8:
+        jmp near .9
+.13:
         test esi, esi
-        je short loc_9642E
+        je short .14
         mov ebx, dword [byte ebp-01Ch]
         mov edx, dword [byte ebp-08h]
         mov ecx, esi
@@ -277,17 +275,17 @@ loc_963F8:
         mov edx, eax
         mov dword [byte ebp-010h], eax
         test eax, eax
-        jl near loc_962C7
+        jl near .4
         cmp eax, esi
-        je short loc_9642E
+        je short .14
         mov eax, 0Ch
         call __set_errno_
         mov eax, dword [byte ebp-014h]
         add eax, edx
-        jmp short loc_96431
-loc_9642E:
+        jmp short .15
+.14:
         mov eax, dword [byte ebp-024h]
-loc_96431:
+.15:
         mov esp, ebp
         pop ebp
         pop edi

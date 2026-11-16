@@ -4,11 +4,8 @@ bits 32
 section s_1AC25 progbits alloc exec nowrite align=1
 extern __CHK, str_CmvMemBlock, str_CmvPalette, FreeMemBlock, AllocMemBlock, AllocMemBlockUnlocked, FreeBitmap, bcopy
 extern CreateBitmap
-global CmvCreate, loc_1AC96, CmvFreeBuffers, loc_1ACBB, loc_1ACCB, loc_1ACDB, loc_1ACEB, CmvDestroy
-global loc_1AD12, CmvReadHeader, loc_1ADE0, loc_1ADF0, loc_1AE3B, loc_1AE65, CmvDecodeBlocks, loc_1AEE2
-global loc_1AEEF, loc_1AF62, loc_1AFB8, loc_1AFD3, loc_1AFDB, loc_1AFEF, CmvDecodeFrame, loc_1B029
-global loc_1B05A, loc_1B087, loc_1B08A, CmvFrameCount, CmvWidth, CmvHeight, CmvFrameRate, CmvPaletteFirst
-global CmvPaletteCount, CmvPalette
+global CmvCreate, CmvFreeBuffers, CmvDestroy, CmvReadHeader, CmvDecodeBlocks, CmvDecodeFrame, CmvFrameCount, CmvWidth
+global CmvHeight, CmvFrameRate, CmvPaletteFirst, CmvPaletteCount, CmvPalette
 CmvCreate:
         push dword 1Ch
         call __CHK
@@ -21,7 +18,7 @@ CmvCreate:
         call AllocMemBlockUnlocked
         add esp, byte 0Ch
         test eax, eax
-        je short loc_1AC96
+        je short .1
         mov dword [eax], 0
         mov dword [byte eax+04h], 0
         mov dword [byte eax+08h], 0
@@ -33,7 +30,7 @@ CmvCreate:
         mov dword [byte eax+020h], 0
         mov dword [byte eax+024h], 0
         mov dword [byte eax+028h], 0
-loc_1AC96:
+.1:
         pop edx
         pop ecx
         pop ebx
@@ -49,32 +46,32 @@ CmvFreeBuffers:
         mov esi, eax
         mov edx, dword [byte eax+01Ch]
         test edx, edx
-        je short loc_1ACBB
+        je short .1
         push edx
         call FreeMemBlock
         add esp, byte 4
-loc_1ACBB:
+.1:
         mov ecx, dword [byte esi+020h]
         test ecx, ecx
-        je short loc_1ACCB
+        je short .2
         push ecx
         call FreeBitmap
         add esp, byte 4
-loc_1ACCB:
+.2:
         mov ebp, dword [byte esi+024h]
         test ebp, ebp
-        je short loc_1ACDB
+        je short .3
         push ebp
         call FreeBitmap
         add esp, byte 4
-loc_1ACDB:
+.3:
         mov edx, dword [byte esi+028h]
         test edx, edx
-        je short loc_1ACEB
+        je short .4
         push edx
         call FreeBitmap
         add esp, byte 4
-loc_1ACEB:
+.4:
         pop ebp
         pop esi
         pop edx
@@ -89,12 +86,12 @@ CmvDestroy:
         push edx
         mov edx, eax
         test eax, eax
-        je short loc_1AD12
+        je short .1
         call CmvFreeBuffers
         push edx
         call FreeMemBlock
         add esp, byte 4
-loc_1AD12:
+.1:
         pop edx
         pop ecx
         pop ebx
@@ -189,8 +186,8 @@ CmvReadHeader:
         mov dword [byte edi+01Ch], eax
         xor eax, eax
         mov ecx, dword [esp]
-        jmp short loc_1ADF0
-loc_1ADE0:
+        jmp short .2
+.1:
         movzx edi, byte [esi]
         mov edx, edi
         sar edx, 2
@@ -198,9 +195,9 @@ loc_1ADE0:
         inc esi
         mov byte [edi+eax], dl
         inc eax
-loc_1ADF0:
+.2:
         cmp eax, ecx
-        jl short loc_1ADE0
+        jl short .1
         push byte 0
         mov esi, dword [byte ebp+08h]
         push esi
@@ -228,7 +225,7 @@ loc_1ADF0:
         mov edx, dword [byte ebp+020h]
         mov edx, dword [byte edx+020h]
         xor esi, esi
-loc_1AE3B:
+.3:
         mov edi, esi
         and edi, byte 0Fh
         sub edi, byte 7
@@ -242,9 +239,8 @@ loc_1AE3B:
         mov dword [byte ebp+eax*4+02Ch], edi
         inc esi
         cmp esi, 0FFh
-        jle short loc_1AE3B
+        jle short .3
         add esp, byte 4
-loc_1AE65:
         pop ebp
         pop edi
         pop esi
@@ -291,12 +287,12 @@ CmvDecodeBlocks:
         lea eax, [edx+edi]
         mov edx, dword [byte esi+08h]
         mov dword [byte esp+0Ch], edx
-        jmp near loc_1AFEF
-loc_1AEE2:
+        jmp near .7
+.1:
         mov edx, dword [byte esp+030h]
         mov dword [byte esp+02Ch], edx
-        jmp near loc_1AFDB
-loc_1AEEF:
+        jmp near .6
+.2:
         lea edx, [byte ecx+01h]
         mov dword [byte esp+034h], edx
         mov ebp, dword [byte esp+024h]
@@ -310,7 +306,7 @@ loc_1AEEF:
         mov dword [byte esp+020h], edx
         mov dl, byte [ecx]
         cmp dl, 0FFh
-        je short loc_1AF62
+        je short .3
         mov cl, dl
         and ecx, 0FFh
         shl ecx, 2
@@ -335,12 +331,12 @@ loc_1AEEF:
         mov edx, dword [edx]
         mov dword [byte ebp+00h], edx
         mov ecx, dword [byte esp+034h]
-        jmp short loc_1AFD3
-loc_1AF62:
+        jmp short .5
+.3:
         lea edx, [byte ebx+01h]
         mov cl, byte [ebx]
         cmp cl, 0FFh
-        je short loc_1AFB8
+        je short .4
         mov bl, cl
         and ebx, 0FFh
         shl ebx, 2
@@ -365,8 +361,8 @@ loc_1AF62:
         mov dword [byte ebp+00h], ebx
         mov ecx, dword [byte esp+034h]
         mov ebx, edx
-        jmp short loc_1AFD3
-loc_1AFB8:
+        jmp short .5
+.4:
         mov ecx, dword [byte esp+034h]
         mov ebx, dword [edx]
         mov dword [eax], ebx
@@ -377,17 +373,17 @@ loc_1AFB8:
         mov ebx, dword [byte edx+0Ch]
         mov dword [byte ebp+00h], ebx
         lea ebx, [byte edx+010h]
-loc_1AFD3:
+.5:
         add eax, byte 4
         sub dword [byte esp+02Ch], byte 4
-loc_1AFDB:
+.6:
         cmp dword [byte esp+02Ch], byte 0
-        jg near loc_1AEEF
+        jg near .2
         add eax, dword [byte esp+08h]
         sub dword [byte esp+0Ch], byte 4
-loc_1AFEF:
+.7:
         cmp dword [byte esp+0Ch], byte 0
-        jg near loc_1AEE2
+        jg near .1
         add esp, byte 38h
         pop ebp
         pop edi
@@ -409,10 +405,10 @@ CmvDecodeFrame:
         mov ebx, dword [byte eax+08h]
         lea eax, [byte esi+08h]
         test esi, esi
-        jne short loc_1B029
+        jne short .1
         mov eax, dword [byte ecx+020h]
-        jmp short loc_1B08A
-loc_1B029:
+        jmp short .4
+.1:
         mov ebp, dword [byte ecx+028h]
         mov esi, dword [byte ecx+024h]
         mov dword [byte ecx+028h], esi
@@ -421,7 +417,7 @@ loc_1B029:
         mov dword [byte ecx+020h], ebp
         lea esi, [byte eax+02h]
         cmp word [eax], byte 0
-        jne short loc_1B05A
+        jne short .2
         imul edx, ebx
         push edx
         mov eax, dword [byte ebp+02Ch]
@@ -430,8 +426,8 @@ loc_1B029:
         push esi
         call bcopy
         add esp, byte 0Ch
-        jmp short loc_1B087
-loc_1B05A:
+        jmp short .3
+.2:
         mov eax, edx
         sar edx, 1Fh
         shl edx, 2
@@ -449,11 +445,11 @@ loc_1B05A:
         mov edx, esi
         mov eax, ecx
         call CmvDecodeBlocks
-loc_1B087:
+.3:
         mov eax, dword [byte edi+020h]
-loc_1B08A:
+.4:
         mov eax, dword [byte eax+02Ch]
-        jmp near loc_1AE65
+        jmp near CmvReadHeader+014Fh
 CmvFrameCount:
         push dword 4
         call __CHK

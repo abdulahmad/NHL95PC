@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_B195C progbits alloc exec nowrite align=1
 extern kaufmfont, GusInitTable
-global GusRunInitTable, loc_B196D, loc_B197D, loc_B1986, loc_B199F, loc_B19A4, loc_B19BF, loc_B19C1
+global GusRunInitTable
 GusRunInitTable:
         push ebx
         push ecx
@@ -13,40 +13,40 @@ GusRunInitTable:
         mov esi, GusInitTable
         mov edi, kaufmfont
         LD mov, ebx, esi
-loc_B196D:
+.1:
         LD cmp, ebx, edi
-        je short loc_B197D
+        je short .2
         nop
         nop
         nop
         nop
         and byte [ebx], 1
         add ebx, byte 6
-        jmp short loc_B196D
-loc_B197D:
+        jmp short .1
+.2:
         mov eax, 100h
         LD mov, edx, edi
         LD mov, ebx, esi
-loc_B1986:
+.3:
         LD cmp, ebx, edi
-        je short loc_B19A4
+        je short .5
         nop
         nop
         nop
         nop
         test byte [ebx], 2
-        jne short loc_B199F
+        jne short .4
         movzx ecx, byte [byte ebx+01h]
         LD cmp, ecx, eax
-        jae short loc_B199F
+        jae short .4
         LD mov, eax, ecx
         LD mov, edx, ebx
-loc_B199F:
+.4:
         add ebx, byte 6
-        jmp short loc_B1986
-loc_B19A4:
+        jmp short .3
+.5:
         LD cmp, edx, edi
-        je short loc_B19BF
+        je short .6
         nop
         nop
         nop
@@ -55,15 +55,15 @@ loc_B19A4:
         or byte [ebx], 2
         call dword [byte ebx+02h]
         cmp eax, byte 0
-        jne short loc_B19C1
+        jne short .7
         nop
         nop
         nop
         nop
-        jmp short loc_B197D
-loc_B19BF:
+        jmp short .2
+.6:
         LD xor, eax, eax
-loc_B19C1:
+.7:
         pop edi
         pop esi
         pop edx

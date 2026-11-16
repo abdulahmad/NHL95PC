@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90A40 progbits alloc exec nowrite align=1
 extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C4, dword_D42C8, dword_D42D0
-global TextWidthN, loc_90A6C, loc_90A97, loc_90AA3, loc_90AAA, loc_90AB4, loc_90AB6, loc_90ABD
+global TextWidthN
 TextWidthN:
         push esi
         push edi
@@ -17,42 +17,42 @@ TextWidthN:
         sub esi, ebx
         lea edi, [byte esi+01h]
         cmp byte [edx], 0
-        je short loc_90ABD
+        je short .7
         mov ebp, dword [dword_D42C8]
-loc_90A6C:
+.1:
         test ecx, ecx
-        je short loc_90ABD
+        je short .7
         mov bl, byte [edx]
         sub bl, byte [byte_D42C0]
         and ebx, 0FFh
         cmp ebx, edi
-        jge short loc_90AB6
+        jge short .6
         mov esi, dword [dword_D42D0]
         test esi, esi
-        je short loc_90A97
+        je short .2
         mov bl, byte [esi+ebx]
         and ebx, 0FFh
-        jmp short loc_90AB4
-loc_90A97:
+        jmp short .5
+.2:
         test ebp, ebp
-        je short loc_90AA3
+        je short .3
         mov esi, ebp
         movzx esi, byte [esi+ebx]
-        jmp short loc_90AAA
-loc_90AA3:
+        jmp short .4
+.3:
         movzx esi, byte [byte_D42C2]
-loc_90AAA:
+.4:
         xor ebx, ebx
         mov bl, byte [byte_D42C4]
         add ebx, esi
-loc_90AB4:
+.5:
         add eax, ebx
-loc_90AB6:
+.6:
         inc edx
         dec ecx
         cmp byte [edx], 0
-        jne short loc_90A6C
-loc_90ABD:
+        jne short .1
+.7:
         pop ebp
         pop edi
         pop esi

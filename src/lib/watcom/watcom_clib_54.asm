@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B297E progbits alloc exec nowrite align=1
-global BigIntNullHook, frexp_, loc_B29A7, loc_B29DC
+global BigIntNullHook, frexp_
 BigIntNullHook:
         pop edi
         ret
@@ -19,10 +19,10 @@ frexp_:
         xor edx, edx
         mov dword [byte esp+04h], eax
         test eax, 7FFFFFFFh
-        jne short loc_B29A7
+        jne short .1
         test ecx, ecx
-        je short loc_B29DC
-loc_B29A7:
+        je short .2
+.1:
         mov edx, dword [byte esp+06h]
         and edx, 7FF0h
         mov ebx, dword [byte esp+06h]
@@ -34,7 +34,7 @@ loc_B29A7:
         or ecx, 3FE0h
         sub edx, 3FEh
         mov word [byte esp+06h], cx
-loc_B29DC:
+.2:
         mov eax, dword [byte esp+024h]
         fld qword [esp]
         mov dword [eax], edx

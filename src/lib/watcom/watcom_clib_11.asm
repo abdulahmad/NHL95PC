@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90BB0 progbits alloc exec nowrite align=1
 extern __doserror_, _Extender, CopyDtaIn
-global _dos_findfirst_, _dos_findnext_, _dos_findclose_, CopyDtaOut, loc_90C0E
+global _dos_findfirst_, _dos_findnext_, _dos_findclose_, CopyDtaOut
 _dos_findfirst_:	;IDA: unknown_libname_1
         push ecx
         push eax
@@ -37,7 +37,7 @@ _dos_findclose_:
         ret
 CopyDtaOut:
         cmp byte [_Extender], 9
-        jne short loc_90C0E
+        jne short .1
         push eax
         push ebx
         push ecx
@@ -54,5 +54,5 @@ CopyDtaOut:
         pop ecx
         pop ebx
         pop eax
-loc_90C0E:
+.1:
         ret

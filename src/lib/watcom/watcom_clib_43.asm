@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_A6B87 progbits alloc exec nowrite align=1
 extern _environ, strnicmp_
-global getenv_, loc_A6BB3, loc_A6BCF, loc_A6BD2, loc_A6BD8, loc_A6BDA
+global getenv_
 getenv_:
         push ebx
         push ecx
@@ -14,9 +14,9 @@ getenv_:
         mov ebp, eax
         mov esi, dword [_environ]
         test esi, esi
-        je short loc_A6BD8
+        je short .4
         test eax, eax
-        je short loc_A6BD8
+        je short .4
         mov edi, eax
         push es
         mov eax, ds
@@ -29,28 +29,28 @@ getenv_:
         dec ecx
         pop es
         mov edi, ecx
-        jmp short loc_A6BD2
-loc_A6BB3:
+        jmp short .3
+.1:
         mov eax, ecx
         mov edx, ebp
         mov ebx, edi
         call strnicmp_
         test eax, eax
-        jne short loc_A6BCF
+        jne short .2
         cmp byte [ecx+edi], 3Dh
-        jne short loc_A6BCF
+        jne short .2
         lea eax, [byte edi+01h]
         add eax, ecx
-        jmp short loc_A6BDA
-loc_A6BCF:
+        jmp short .5
+.2:
         add esi, byte 4
-loc_A6BD2:
+.3:
         mov ecx, dword [esi]
         test ecx, ecx
-        jne short loc_A6BB3
-loc_A6BD8:
+        jne short .1
+.4:
         xor eax, eax
-loc_A6BDA:
+.5:
         pop ebp
         pop edi
         pop esi

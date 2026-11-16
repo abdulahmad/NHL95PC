@@ -7,10 +7,7 @@ extern cliprect_y0, cliprect_y1, DebugPrintf, ScreenWidth, KeyedDraw, DrawVideoB
 extern AllocMemHandleLocked, AllocMemBlock, AllocMemBlockUnlocked, PushMemDescriptorLocked, MemDescPtr, LoadDataFileErr, FreeBitmap, SaveDrawState
 extern RestoreDrawState, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile, SetScreenTarget, SetClipWindow
 extern CreateBitmap, VesaSetBankArg, BlitShapeClipped
-global DrawShapeClippedKeyed, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
-global loc_965A4, loc_965CB, loc_965D4, DrawShapeClippedKeyedAtOwnPos, MviPrintInfo, MviLoadPalette, loc_967AE, loc_967C3
-global MviOpen, loc_9687D, loc_968A8, loc_968CD, loc_968D4, loc_96915, loc_96988, loc_9699E
-global loc_969C4, loc_969D4, loc_96A0D, MviRewind, loc_96A29, MviGetPalette
+global DrawShapeClippedKeyed, DrawShapeClippedKeyedAtOwnPos, MviPrintInfo, MviLoadPalette, MviOpen, MviRewind, MviGetPalette
 DrawShapeClippedKeyed:
         push esi
         push edi
@@ -20,14 +17,14 @@ DrawShapeClippedKeyed:
         mov edi, dword [byte esp+030h]
         mov eax, dword [byte esp+034h]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_9646B
+        jne short .1
         push eax
         push edi
         push edx
         call BlitShapeClipped
         add esp, byte 0Ch
-        jmp near loc_965D4
-loc_9646B:
+        jmp near .10
+.1:
         mov word [byte edx+0Ch], di
         mov word [byte edx+0Eh], ax
         lea esi, [byte edx+010h]
@@ -43,35 +40,35 @@ loc_9646B:
         mov edx, dword [cliprect_y0]
         sub edx, eax
         test edx, edx
-        jle short loc_964AB
+        jle short .2
         imul ebx, edx
         add esi, ebx
         sub ebp, edx
         add eax, edx
-loc_964AB:
+.2:
         lea edx, [eax+ebp]
         sub edx, dword [cliprect_y1]
         test edx, edx
-        jle short loc_964BA
+        jle short .3
         sub ebp, edx
-loc_964BA:
+.3:
         mov edx, dword [cliprect_x0]
         sub edx, edi
         test edx, edx
-        jle short loc_964D2
+        jle short .4
         add esi, edx
         sub dword [byte esp+010h], edx
         add edi, edx
         add dword [byte esp+04h], edx
-loc_964D2:
+.4:
         mov edx, dword [byte esp+010h]
         add edx, edi
         sub edx, dword [cliprect_x1]
         test edx, edx
-        jle short loc_964EA
+        jle short .5
         add dword [byte esp+04h], edx
         sub dword [byte esp+010h], edx
-loc_964EA:
+.5:
         add edi, dword [nosplit eax*4+ScreenRowTable]
         mov eax, dword [ScreenWidth]
         mov ebx, dword [byte esp+010h]
@@ -86,17 +83,17 @@ loc_964EA:
         and edi, 0FFFFh
         mov dword [byte esp+0Ch], ebp
         cmp dword [byte esp+010h], byte 0
-        jle near loc_965D4
-loc_96526:
+        jle near .10
+.6:
         cmp dword [byte esp+0Ch], byte 0
-        jle near loc_965D4
+        jle near .10
         mov eax, dword [byte esp+010h]
         add eax, edi
         mov dword [byte esp+014h], eax
         mov eax, dword [byte esp+08h]
         add eax, edi
         test byte [byte esp+016h], 1
-        je short loc_9658D
+        je short .7
         mov ebp, 10000h
         sub ebp, edi
         push ebp
@@ -121,8 +118,8 @@ loc_96526:
         add esp, byte 0Ch
         mov edi, ebp
         add esi, ebp
-        jmp short loc_965A4
-loc_9658D:
+        jmp short .8
+.7:
         mov edx, dword [byte esp+010h]
         push edx
         push esi
@@ -131,11 +128,11 @@ loc_9658D:
         add esp, byte 0Ch
         mov edi, dword [byte esp+014h]
         add esi, dword [byte esp+010h]
-loc_965A4:
+.8:
         add edi, dword [esp]
         add esi, dword [byte esp+04h]
         test edi, 10000h
-        je short loc_965CB
+        je short .9
         and edi, 0FFFFh
         mov ecx, dword [byte esp+018h]
         inc ecx
@@ -143,10 +140,10 @@ loc_965A4:
         push ecx
         call VesaSetBankArg
         add esp, byte 4
-loc_965CB:
+.9:
         dec dword [byte esp+0Ch]
-        jmp near loc_96526
-loc_965D4:
+        jmp near .6
+.10:
         add esp, byte 1Ch
         pop ebp
         pop edi
@@ -347,8 +344,8 @@ MviLoadPalette:
         xor eax, eax
         mov ecx, dword [esp]
         test ecx, ecx
-        jle short loc_967C3
-loc_967AE:
+        jle short .2
+.1:
         xor edx, edx
         mov dl, byte [esi]
         sar edx, 2
@@ -358,8 +355,8 @@ loc_967AE:
         mov byte [edx+eax], bl
         inc eax
         cmp eax, ecx
-        jl short loc_967AE
-loc_967C3:
+        jl short .1
+.2:
         mov eax, dword [byte esp+010h]
         mov dword [byte edi+014h], eax
         mov eax, dword [byte esp+014h]
@@ -420,28 +417,28 @@ MviOpen:
         add esp, byte 0Ch
         mov edi, eax
         test eax, eax
-        je near loc_9699E
+        je near .7
         mov edx, dword [dword esp+0330h]
         cmp edx, byte 1
-        je short loc_9687D
+        je short .1
         test edx, edx
-        jne short loc_968D4
-loc_9687D:
+        jne short .4
+.1:
         push byte 0
         push ebp
         call LoadDataFileErr
         mov esi, eax
         add esp, byte 8
         test eax, eax
-        jne short loc_968A8
+        jne short .2
         cmp dword [dword esp+0330h], byte 0
-        je short loc_968CD
+        je short .3
         push edi
         call FreeMemBlock
         add esp, byte 4
         xor eax, eax
-        jmp near loc_9699E
-loc_968A8:
+        jmp near .7
+.2:
         push eax
         call MemDescPtr
         add esp, byte 4
@@ -453,10 +450,10 @@ loc_968A8:
         call MviLoadPalette
         mov dword [byte edi+030h], esi
         mov dword [byte edi+024h], 0
-loc_968CD:
+.3:
         mov eax, edi
-        jmp near loc_9699E
-loc_968D4:
+        jmp near .7
+.4:
         lea eax, [dword esp+0310h]
         push eax
         lea eax, [dword esp+0318h]
@@ -468,7 +465,7 @@ loc_968D4:
         add esp, byte 10h
         mov ecx, dword [dword esp+0318h]
         test ecx, ecx
-        jne short loc_96915
+        jne short .5
         push esi
         call FreeMemBlock
         add esp, byte 4
@@ -478,7 +475,7 @@ loc_968D4:
         pop edi
         pop esi
         ret
-loc_96915:
+.5:
         push dword 310h
         lea eax, [byte esp+04h]
         push eax
@@ -501,7 +498,7 @@ loc_96915:
         add esp, byte 0Ch
         mov dword [byte esi+030h], eax
         test eax, eax
-        jne short loc_96988
+        jne short .6
         mov ebp, dword [dword esp+0318h]
         push ebp
         call DosCloseFile
@@ -515,7 +512,7 @@ loc_96915:
         pop edi
         pop esi
         ret
-loc_96988:
+.6:
         mov ecx, dword [byte esi+028h]
         push ecx
         mov edi, dword [dword esp+031Ch]
@@ -523,7 +520,7 @@ loc_96988:
         call DosSeekFile
         add esp, byte 8
         mov eax, esi
-loc_9699E:
+.7:
         add esp, 31Ch
         pop ebp
         pop edi
@@ -534,21 +531,21 @@ loc_9699E:
         mov eax, dword [byte esp+0Ch]
         mov esi, eax
         test eax, eax
-        je short loc_96A0D
+        je short .10
         mov edx, dword [byte eax+024h]
         test edx, edx
-        je short loc_969C4
+        je short .8
         push edx
         call DosCloseFile
         add esp, byte 4
-loc_969C4:
+.8:
         mov ecx, dword [byte esi+030h]
         test ecx, ecx
-        je short loc_969D4
+        je short .9
         push ecx
         call PushMemDescriptorLocked
         add esp, byte 4
-loc_969D4:
+.9:
         mov ebp, dword [byte esi+034h]
         push ebp
         call FreeBitmap
@@ -568,7 +565,7 @@ loc_969D4:
         push esi
         call FreeMemBlock
         add esp, byte 4
-loc_96A0D:
+.10:
         pop ebp
         pop esi
         ret
@@ -577,11 +574,11 @@ MviRewind:
         mov dword [byte eax+04h], 1
         mov edx, dword [byte eax+024h]
         test edx, edx
-        jne short loc_96A29
+        jne short .1
         mov edx, dword [byte eax+028h]
         mov dword [byte eax+02Ch], edx
         ret
-loc_96A29:
+.1:
         mov ebx, dword [byte eax+028h]
         push ebx
         push edx

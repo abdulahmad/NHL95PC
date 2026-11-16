@@ -6,33 +6,14 @@ extern cpuinfo_b0, cpuinfo_b1, SavedTextMode, SavedTextPage, SavedTextRows, byte
 extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, GraphicsReady, cpuinfo_d0, cpuinfo_d1
 extern ScreenWidth, dword_D30A8, dword_D30BC, dword_D30C0, BackBufferWidth, dword_D429C, PrintfSavedEbx, PrintfSavedEcx
 extern PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
-extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, loc_B4D0C
+extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, VgaBlitKeyedAtOwnPos
 extern mousepollfn, off_D567C, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
 extern SavedTextColumns, word_D4FE4, word_D4FE6, word_D4FE9
-global PrintfSaveRegs, SaveTextMode, loc_B3ED7, RestoreTextMode, loc_B3F23, loc_B3F3D, loc_B3F4B, DetectCPU
-global loc_B3FAC, FillMem, ZeroMem, loc_B3FC8, ResetHotkeyState, KbdGetKeyQuiet, loc_B401F, loc_B402B
-global loc_B4030, loc_B403F, loc_B4049, loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0
-global PollHotkeys, loc_B40D1, SetupRectFillBlend, SetupRectFill, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
-global loc_B415E, loc_B4165, loc_B4173, loc_B417A, loc_B4190, loc_B4197, loc_B41A1, loc_B41A8
-global loc_B41B3, loc_B41C3, loc_B41C8, loc_B41DC, loc_B41E8, loc_B41EA, loc_B4204, loc_B4211
-global loc_B421C, loc_B4222, loc_B4228, loc_B4238, loc_B423E, loc_B4242, loc_B4246, jpt_B4253
-global loc_B4293, loc_B4299, jpt_B42B2, loc_B42D6, loc_B42DE, loc_B42E9, loc_B42F4, loc_B4306
-global loc_B4318, loc_B4341, loc_B435B, loc_B4384, jpt_B439E, loc_B43C2, loc_B43CA, loc_B43D5
-global loc_B43E0, loc_B4408, loc_B442B, loc_B4441, loc_B4452, loc_B4456, loc_B447D, jpt_B4488
-global loc_B44AC, loc_B44C8, loc_B44E4, loc_B4503, loc_B451A, loc_B4521, loc_B4558, loc_B455A
-global loc_B458F, loc_B45CD, loc_B45D2, loc_B45F9, loc_B460F, loc_B4621, loc_B463E, loc_B4658
-global loc_B465B, loc_B4662, jpt_B466E, loc_B4692, loc_B469C, loc_B46B8, loc_B46D5, loc_B4705
-global loc_B4740, loc_B4780, loc_B47B3, loc_B47C1, loc_B47D1, loc_B47E7, loc_B47F5, loc_B4800
-global loc_B480B, loc_B481A, loc_B4828, loc_B482D, loc_B4839, loc_B4847, loc_B485F, loc_B4870
-global loc_B487B, loc_B488F, loc_B48AD, loc_B48C3, loc_B48D4, loc_B48E7, loc_B48EC, loc_B4908
-global loc_B4911, loc_B4929, loc_B4935, loc_B4945, loc_B4948, loc_B494D, loc_B497F, loc_B499A
-global loc_B49A7, loc_B49B7, loc_B49BA, AngleFromDelta, loc_B49D4, loc_B49DD, loc_B49E8, loc_B4A00
-global unk_B4A0C, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E, loc_B4A45, loc_B4A49, loc_B4A50
-global loc_B4A57, TableSin, TableCos, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, DispatchHotkey
-global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, RegisterHotkey, loc_B4B0D, loc_B4B1E, loc_B4B20
-global loc_B4B27, loc_B4B39, loc_B4B3B, SetTextMode, VgaSetPalette, loc_B4BA0, SetScreenTarget, SetClipWindow
-global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, ResetRetraceTimeout, WaitRetrace, loc_B4C48, loc_B4C4F
-global loc_B4C56, WaitRetraceStart, loc_B4C6B, loc_B4C72, WaitRetraceEnd, loc_B4C8E, loc_B4C95, InRetrace
+global PrintfSaveRegs, SaveTextMode, RestoreTextMode, DetectCPU, FillMem, ZeroMem, ResetHotkeyState, KbdGetKeyQuiet
+global PollHotkeys, SetupRectFillBlend, SetupRectFill, SetupRectFill, jpt_B4253, jpt_B4253, jpt_B42B2, jpt_B42B2
+global jpt_B439E, jpt_B439E, jpt_B4488, jpt_B4488, jpt_B4488, jpt_B466E, jpt_B466E, jpt_B466E
+global jpt_B466E, AngleFromDelta, unk_B4A0C, TableSin, TableCos, DispatchHotkey, RegisterHotkey, SetTextMode
+global VgaSetPalette, SetScreenTarget, SetClipWindow, ResetRetraceTimeout, WaitRetrace, WaitRetraceStart, WaitRetraceEnd, InRetrace
 global VgaBlitKeyedHot
 PrintfSaveRegs:
         mov dword [PrintfSavedEbx], ebx
@@ -51,7 +32,7 @@ PrintfSaveRegs:
         ret
 SaveTextMode:
         cmp byte [SavedTextMode], 0
-        jne short loc_B3ED7
+        jne short .1
         mov ah, 0Fh
         int 10h
         mov byte [SavedTextMode], al
@@ -64,43 +45,43 @@ SaveTextMode:
         push RestoreTextMode
         call AddExitHandler
         add esp, byte 4
-loc_B3ED7:
+.1:
         ret
 RestoreTextMode:
         pusha
         cmp byte [SavedTextMode], 0
-        je short loc_B3F4B
+        je short .3
         mov al, byte [SavedTextPage]
         mov byte [0410h], al
         LD xor, ah, ah
         mov al, byte [SavedTextMode]
         int 10h
         cmp byte [SavedTextMode], 3
-        jne short loc_B3F23
+        jne short .1
         cmp word [SavedTextColumns], byte 50h
-        jne short loc_B3F23
+        jne short .1
         cmp byte [SavedTextRows], 2Ah
-        jb short loc_B3F23
+        jb short .1
         cmp byte [SavedTextRows], 32h
-        ja short loc_B3F23
+        ja short .1
         mov ax, 1112h
         LD xor, bx, bx
         int 10h
-loc_B3F23:
+.1:
         mov al, byte [SavedTextPage]
         mov byte [0410h], al
         and al, 30h
         cmp al, 30h
-        jne short loc_B3F3D
+        jne short .2
         push byte 0
         call ClearScreenColour
         add esp, byte 4
-loc_B3F3D:
+.2:
         mov ah, 0Bh
         LD xor, bx, bx
         int 10h
         mov byte [SavedTextMode], 0
-loc_B3F4B:
+.3:
         popa
         ret
         db 00h,00h,00h
@@ -115,7 +96,7 @@ DetectCPU:
         pushfw
         pop bx
         and bx, 7000h
-        je short loc_B3FAC
+        je short .1
         mov dword [cpuinfo_d1], 1
         smsw eax
         and ax, byte 1
@@ -135,7 +116,7 @@ DetectCPU:
         and ax, byte 1
         mov byte [cpuinfo_b0], al
         LD mov, esp, edx
-loc_B3FAC:
+.1:
         popfw
         ret
         db 00h
@@ -147,13 +128,12 @@ FillMem:
         LD mov, dh, dl
         shrd eax, edx, 10h
         LD mov, ax, dx
-        jmp short loc_B3FC8
+        jmp short ZeroMem+06h
 ZeroMem:
         push ebp
         LD mov, ebp, esp
         push edi
         LD xor, eax, eax
-loc_B3FC8:
         cld
         mov edi, dword [byte ebp+08h]
         mov ecx, dword [byte ebp+0Ch]
@@ -173,79 +153,79 @@ ResetHotkeyState:
 KbdGetKeyQuiet:
         call KbdGetKey
         LD or, ax, ax
-        je short loc_B402B
+        je short .2
         ret
         call KbdGetKey
         LD or, ax, ax
-        je short loc_B402B
+        je short .2
         push eax
         call DispatchHotkey
         add esp, byte 4
         ret
         call KbdGetKey
         LD or, ax, ax
-        je short loc_B401F
+        je short .1
         push eax
         call DispatchHotkey
         add esp, byte 4
         ret
-loc_B401F:
+.1:
         call dword [mousepollfn]
         shl ax, 4
-        jne short loc_B4030
-loc_B402B:
+        jne short .3
+.2:
         call ReadJoystickPorts
-loc_B4030:
+.3:
         LD mov, bx, ax
         test ax, 30h
-        je short loc_B403F
+        je short .4
         mov ax, 0Dh
-        jmp short loc_B4049
-loc_B403F:
+        jmp short .5
+.4:
         and ebx, byte 0Fh
         mov eax, dword [nosplit ebx*2+dword_D4FA4]
-loc_B4049:
+.5:
         cmp ax, word [word_D4FE4]
-        jne short loc_B407E
+        jne short .8
         LD or, ax, ax
-        jne short loc_B405B
-loc_B4057:
+        jne short .7
+.6:
         LD xor, ax, ax
         ret
-loc_B405B:
+.7:
         push dword [dword_D4FEB]
         call TicksSince
         add esp, byte 4
         cmp ax, word [word_D4FE9]
-        jl short loc_B4057
+        jl short .6
         mov ax, 0Fh
         mov word [word_D4FE9], ax
-        jmp short loc_B409F
-loc_B407E:
+        jmp short .9
+.8:
         cmp ax, word [word_D4FE6]
-        jne short loc_B40B0
+        jne short .10
         dec byte [byte_D4FE8]
-        jg short loc_B4057
+        jg short .6
         mov word [word_D4FE4], ax
         mov ax, 46h
         mov word [word_D4FE9], ax
-loc_B409F:
+.9:
         call GetTicks
         mov dword [dword_D4FEB], eax
         mov ax, word [word_D4FE4]
         ret
-loc_B40B0:
+.10:
         mov byte [byte_D4FE8], 3
         mov word [word_D4FE6], ax
-        jmp short loc_B4057
+        jmp short .6
 PollHotkeys:
         call KbdGetKey
         LD or, eax, eax
-        je short loc_B40D1
+        je short .1
         push eax
         call DispatchHotkey
         add esp, byte 4
-loc_B40D1:
+.1:
         ret
         db 00h,00h
 SetupRectFillBlend:
@@ -255,7 +235,7 @@ SetupRectFillBlend:
         push esi
         push edi
         mov byte [byte ebp-05h], 1
-        jmp short loc_B40EE
+        jmp short SetupRectFill+0Ch
 SetupRectFill:
         push ebp
         LD mov, ebp, esp
@@ -263,7 +243,6 @@ SetupRectFill:
         push esi
         push edi
         mov byte [byte ebp-05h], 0
-loc_B40EE:
         mov esi, dword [byte ebp+018h]
         mov dword [byte esi+034h], 0FFh
         LD xor, eax, eax
@@ -278,167 +257,164 @@ loc_B40EE:
         mov ecx, dword [byte ebp+08h]
         mov edx, dword [byte ebp+010h]
         LD cmp, eax, ebx
-        jg short loc_B4129
+        jg short .1
         mov dword [byte esi+04h], ecx
         mov dword [byte esi+0Ch], eax
         mov dword [byte esi+010h], edx
         mov dword [byte esi+014h], ebx
-        jmp short loc_B4135
-loc_B4129:
+        jmp short .2
+.1:
         mov dword [byte esi+04h], edx
         mov dword [byte esi+0Ch], ebx
         mov dword [byte esi+010h], ecx
         mov dword [byte esi+014h], eax
-loc_B4135:
-        jne short loc_B413C
-        jmp near loc_B482D
-loc_B413C:
+.2:
+        jne short SetupRectFill+05Ah
+        jmp near jpt_B466E+01BFh
         LD xor, edx, edx
         cmp byte [byte ebp-05h], 0
-        jne short loc_B41B3
+        jne short .11
         mov eax, dword [byte esi+0Ch]
         mov ebx, dword [cliprect_y0]
         mov ecx, dword [cliprect_y1]
         LD cmp, eax, ecx
-        jl short loc_B415E
+        jl short .3
         mov dl, 8
-        jmp near loc_B45D2
-loc_B415E:
+        jmp near jpt_B4488+014Ah
+.3:
         LD cmp, eax, ebx
-        jge short loc_B4165
+        jge short .4
         or dh, 4
-loc_B4165:
+.4:
         mov eax, dword [byte esi+014h]
         LD cmp, eax, ebx
-        jge short loc_B4173
+        jge short .5
         mov dl, 4
-        jmp near loc_B45D2
-loc_B4173:
+        jmp near jpt_B4488+014Ah
+.5:
         LD cmp, eax, ecx
-        jl short loc_B417A
+        jl short .6
         or dl, 8
-loc_B417A:
+.6:
         mov ebx, dword [cliprect_x0]
         mov ecx, dword [cliprect_x1]
         mov eax, dword [byte esi+04h]
         LD cmp, eax, ebx
-        jge short loc_B4190
+        jge short .7
         or dh, 2
-loc_B4190:
+.7:
         LD cmp, eax, ecx
-        jl short loc_B4197
+        jl short .8
         or dh, 1
-loc_B4197:
+.8:
         mov eax, dword [byte esi+010h]
         LD cmp, eax, ebx
-        jge short loc_B41A1
+        jge short .9
         or dl, 2
-loc_B41A1:
+.9:
         LD cmp, eax, ecx
-        jl short loc_B41A8
+        jl short .10
         or dl, 1
-loc_B41A8:
+.10:
         test dh, dl
-        je short loc_B41B3
+        je short .11
         LD and, dl, dh
-        jmp near loc_B45D2
-loc_B41B3:
+        jmp near jpt_B4488+014Ah
+.11:
         LD or, dl, dh
         movzx edx, dl
         mov dword [byte ebp-04h], edx
         mov ecx, dword [byte esi+014h]
         sub ecx, dword [byte esi+0Ch]
-        jno short loc_B41C8
-loc_B41C3:
-        jmp near loc_B48EC
-loc_B41C8:
+        jno short .13
+.12:
+        jmp near jpt_B466E+027Eh
+.13:
         mov edx, dword [byte esi+010h]
         sub edx, dword [byte esi+04h]
-        jo short loc_B41C3
-        jne short loc_B41DC
+        jo short .12
+        jne short .14
         inc ecx
         mov dword [byte esi+018h], ecx
         mov byte [byte esi+034h], 2
-        jmp short loc_B4246
-loc_B41DC:
-        jl short loc_B4228
+        jmp short SetupRectFill+0164h
+.14:
+        jl short .21
         LD cmp, edx, ecx
-        jb short loc_B421C
-        je short loc_B4222
+        jb short .19
+        je short .20
         mov byte [byte esi+034h], 8
-loc_B41E8:
+.15:
         db 087h,0CAh                            ; insn: xchg ecx,edx
-loc_B41EA:
+.16:
         cmp ecx, dword [dword_D5678]
-        jge short loc_B4204
+        jge short .17
         LD mov, ebx, ecx
         mov ebx, dword [nosplit ebx*4+off_D567C]
         mov ax, word [ebx+edx*2]
         shl eax, 10h
-        jmp short loc_B4211
-loc_B4204:
+        jmp short .18
+.17:
         LD xor, eax, eax
         div ecx
         LD mov, ebx, ecx
         shr ebx, 1
         LD sub, ebx, edx
         adc eax, byte 0
-loc_B4211:
+.18:
         mov dword [byte esi+030h], eax
         inc ecx
-        jo short loc_B41C3
+        jo short .12
         mov dword [byte esi+018h], ecx
-        jmp short loc_B4246
-loc_B421C:
+        jmp short SetupRectFill+0164h
+.19:
         mov byte [byte esi+034h], 6
-        jmp short loc_B41EA
-loc_B4222:
+        jmp short .16
+.20:
         mov byte [byte esi+034h], 4
-        jmp short loc_B4242
-loc_B4228:
+        jmp short .24
+.21:
         neg edx
-        jo short loc_B41C3
+        jo short .12
         LD cmp, edx, ecx
-        jb short loc_B4238
-        je short loc_B423E
+        jb short .22
+        je short .23
         mov byte [byte esi+034h], 7
-        jmp short loc_B41E8
-loc_B4238:
+        jmp short .15
+.22:
         mov byte [byte esi+034h], 5
-        jmp short loc_B41EA
-loc_B423E:
+        jmp short .16
+.23:
         mov byte [byte esi+034h], 3
-loc_B4242:
+.24:
         inc ecx
         mov dword [byte esi+018h], ecx
-loc_B4246:
         mov ebx, dword [byte ebp-04h]
-        je short loc_B4293
+        je short jpt_B4253+040h
         jmp dword [nosplit cs:ebx*4+jpt_B4253]
 jpt_B4253:
-        dd loc_B4293
-        dd loc_B4662
-        dd loc_B447D
-        dd loc_B447D
-        dd loc_B4299
-        dd loc_B4299
-        dd loc_B4299
-        dd loc_B4299
-        dd loc_B4384
-        dd loc_B4384
-        dd loc_B4384
-        dd loc_B4384
-        dd loc_B4299
-        dd loc_B4299
-        dd loc_B4299
-        dd loc_B4299
-loc_B4293:
+        dd jpt_B4253+040h
+        dd jpt_B4488+01DAh
+        dd jpt_B439E+0DFh
+        dd jpt_B439E+0DFh
+        dd .1
+        dd .1
+        dd .1
+        dd .1
+        dd jpt_B42B2+0D2h
+        dd jpt_B42B2+0D2h
+        dd jpt_B42B2+0D2h
+        dd jpt_B42B2+0D2h
+        dd .1
+        dd .1
+        dd .1
+        dd .1
         LD xor, eax, eax
         pop edi
         pop esi
         leave
         ret
-loc_B4299:
+.1:
         mov eax, dword [byte esi+0Ch]
         mov ecx, dword [cliprect_y0]
         mov dword [byte esi+0Ch], ecx
@@ -447,39 +423,39 @@ loc_B4299:
         jmp dword [nosplit cs:ebx*4+jpt_B42B2]
 jpt_B42B2:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-        dd loc_B42D6
-        dd loc_B42DE
-        dd loc_B42E9
-        dd loc_B42F4
-        dd loc_B4306
-        dd loc_B4318
-        dd loc_B435B
-loc_B42D6:
+        dd .1
+        dd .2
+        dd .3
+        dd .4
+        dd .5
+        dd .6
+        dd .8
+.1:
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47B3
-loc_B42DE:
+        jmp near jpt_B466E+0145h
+.2:
         sub dword [byte esi+04h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47B3
-loc_B42E9:
+        jmp near jpt_B466E+0145h
+.3:
         add dword [byte esi+04h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47B3
-loc_B42F4:
+        jmp near jpt_B466E+0145h
+.4:
         mov eax, dword [byte esi+030h]
         mul ecx
         sub dword [esi], eax
         sbb dword [byte esi+04h], edx
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47B3
-loc_B4306:
+        jmp near jpt_B466E+0145h
+.5:
         mov eax, dword [byte esi+030h]
         mul ecx
         add dword [esi], eax
         adc dword [byte esi+04h], edx
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47B3
-loc_B4318:
+        jmp near jpt_B466E+0145h
+.6:
         mov dword [byte esi+0Ch], eax
         LD mov, edx, ecx
         LD xor, eax, eax
@@ -490,19 +466,19 @@ loc_B4318:
         adc eax, byte 0
         sub dword [byte esi+04h], eax
         sub dword [byte esi+018h], eax
-        jle short loc_B4341
+        jle short .7
         mul dword [byte esi+030h]
         add dword [byte esi+08h], eax
         adc dword [byte esi+0Ch], edx
-        jmp near loc_B47B3
-loc_B4341:
+        jmp near jpt_B466E+0145h
+.7:
         mov dword [byte esi+018h], 1
         mov eax, dword [cliprect_y0]
         mov dword [byte esi+0Ch], eax
         mov eax, dword [byte esi+010h]
         mov dword [byte esi+04h], eax
-        jmp near loc_B47B3
-loc_B435B:
+        jmp near jpt_B466E+0145h
+.8:
         mov dword [byte esi+0Ch], eax
         LD mov, edx, ecx
         LD xor, eax, eax
@@ -513,12 +489,11 @@ loc_B435B:
         adc eax, byte 0
         add dword [byte esi+04h], eax
         sub dword [byte esi+018h], eax
-        jle short loc_B4341
+        jle short .7
         mul dword [byte esi+030h]
         add dword [byte esi+08h], eax
         adc dword [byte esi+0Ch], edx
-        jmp near loc_B47B3
-loc_B4384:
+        jmp near jpt_B466E+0145h
         mov ecx, dword [byte esi+014h]
         mov edx, dword [cliprect_y1]
         dec edx
@@ -528,25 +503,25 @@ loc_B4384:
         jmp dword [nosplit cs:ebx*4+jpt_B439E]
 jpt_B439E:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-        dd loc_B43C2
-        dd loc_B43CA
-        dd loc_B43D5
-        dd loc_B43E0
-        dd loc_B4408
-        dd loc_B442B
-        dd loc_B4456
-loc_B43C2:
+        dd .1
+        dd .2
+        dd .3
+        dd .4
+        dd .5
+        dd .6
+        dd .9
+.1:
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47C1
-loc_B43CA:
+        jmp near jpt_B466E+0153h
+.2:
         add dword [byte esi+010h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47C1
-loc_B43D5:
+        jmp near jpt_B466E+0153h
+.3:
         sub dword [byte esi+010h], ecx
         sub dword [byte esi+018h], ecx
-        jmp near loc_B47C1
-loc_B43E0:
+        jmp near jpt_B466E+0153h
+.4:
         mov edx, dword [byte esi+018h]
         LD sub, edx, ecx
         mov dword [byte esi+018h], edx
@@ -560,8 +535,8 @@ loc_B43E0:
         add ebx, 80000000h
         adc ecx, byte 0
         mov dword [byte esi+010h], ecx
-        jmp near loc_B47C1
-loc_B4408:
+        jmp near jpt_B466E+0153h
+.5:
         mov edx, dword [byte esi+018h]
         LD sub, edx, ecx
         mov dword [byte esi+018h], edx
@@ -573,32 +548,32 @@ loc_B4408:
         add eax, 80000000h
         adc edx, byte 0
         mov dword [byte esi+010h], edx
-        jmp near loc_B47C1
-loc_B442B:
+        jmp near jpt_B466E+0153h
+.6:
         LD xor, eax, eax
         sub eax, dword [byte esi+08h]
         sbb edx, dword [byte esi+0Ch]
-        jl short loc_B4452
+        jl short .8
         mov ecx, dword [byte esi+030h]
         div ecx
         shr ecx, 1
         LD sub, ecx, edx
         adc eax, byte 0
-loc_B4441:
+.7:
         mov edx, dword [byte esi+04h]
         LD sub, edx, eax
         mov dword [byte esi+010h], edx
         inc eax
         mov dword [byte esi+018h], eax
-        jmp near loc_B47C1
-loc_B4452:
+        jmp near jpt_B466E+0153h
+.8:
         LD xor, eax, eax
-        jmp short loc_B4441
-loc_B4456:
+        jmp short .7
+.9:
         LD xor, eax, eax
         sub eax, dword [byte esi+08h]
         sbb edx, dword [byte esi+0Ch]
-        jl short loc_B4452
+        jl short .8
         mov ecx, dword [byte esi+030h]
         div ecx
         shr ecx, 1
@@ -609,20 +584,19 @@ loc_B4456:
         mov dword [byte esi+010h], edx
         inc eax
         mov dword [byte esi+018h], eax
-        jmp near loc_B47C1
-loc_B447D:
+        jmp near jpt_B466E+0153h
         mov bl, byte [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+jpt_B4488]
 jpt_B4488:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-        dd loc_B45CD
-        dd loc_B44AC
-        dd loc_B44C8
-        dd loc_B44E4
-        dd loc_B4521
-        dd loc_B455A
-        dd loc_B458F
-loc_B44AC:
+        dd .10
+        dd .1
+        dd .2
+        dd .3
+        dd .6
+        dd .8
+        dd .9
+.1:
         mov ecx, dword [cliprect_x0]
         mov eax, dword [byte esi+010h]
         mov dword [byte esi+010h], ecx
@@ -630,8 +604,8 @@ loc_B44AC:
         add dword [byte esi+024h], ecx
         sub dword [byte esi+018h], ecx
         sub dword [byte esi+014h], ecx
-        jmp near loc_B481A
-loc_B44C8:
+        jmp near jpt_B466E+01ACh
+.2:
         mov eax, dword [byte esi+04h]
         mov ecx, dword [cliprect_x0]
         mov dword [byte esi+04h], ecx
@@ -639,21 +613,21 @@ loc_B44C8:
         add dword [byte esi+020h], ecx
         add dword [byte esi+0Ch], ecx
         sub dword [byte esi+018h], ecx
-        jmp near loc_B481A
-loc_B44E4:
+        jmp near jpt_B466E+01ACh
+.3:
         mov eax, dword [esi]
         mov edx, dword [byte esi+04h]
         mov ecx, dword [cliprect_x0]
         mov dword [byte esi+010h], ecx
         LD sub, edx, ecx
-        jl short loc_B451A
+        jl short .5
         mov ecx, dword [byte esi+030h]
         div ecx
         shr ecx, 1
         LD sub, ecx, edx
         adc eax, byte 0
         inc eax
-loc_B4503:
+.4:
         mov ecx, dword [byte esi+018h]
         mov dword [byte esi+018h], eax
         LD sub, ecx, eax
@@ -661,16 +635,16 @@ loc_B4503:
         dec eax
         add eax, dword [byte esi+0Ch]
         mov dword [byte esi+014h], eax
-        jmp near loc_B481A
-loc_B451A:
+        jmp near jpt_B466E+01ACh
+.5:
         mov eax, 1
-        jmp short loc_B4503
-loc_B4521:
+        jmp short .4
+.6:
         mov edx, dword [cliprect_x0]
         LD xor, eax, eax
         sub eax, dword [esi]
         sbb edx, dword [byte esi+04h]
-        jl short loc_B4558
+        jl short .7
         mov ecx, dword [byte esi+030h]
         div ecx
         shr ecx, 1
@@ -679,14 +653,14 @@ loc_B4521:
         add dword [byte esi+0Ch], eax
         add dword [byte esi+020h], eax
         sub dword [byte esi+018h], eax
-        jle near loc_B45CD
+        jle near .10
         mul dword [byte esi+030h]
         add dword [esi], eax
         adc dword [byte esi+04h], edx
-        jmp near loc_B481A
-loc_B4558:
-        jmp short loc_B45CD
-loc_B455A:
+        jmp near jpt_B466E+01ACh
+.7:
+        jmp short .10
+.8:
         mov eax, dword [byte esi+04h]
         mov edx, dword [cliprect_x0]
         mov dword [byte esi+010h], edx
@@ -703,8 +677,8 @@ loc_B455A:
         LD sub, eax, edx
         mov dword [byte esi+014h], edx
         add dword [byte esi+024h], eax
-        jmp near loc_B481A
-loc_B458F:
+        jmp near jpt_B466E+01ACh
+.9:
         mov ecx, dword [byte esi+04h]
         mov eax, dword [cliprect_x0]
         mov dword [byte esi+04h], eax
@@ -723,43 +697,42 @@ loc_B458F:
         adc edx, byte 0
         LD sub, edx, ecx
         add dword [byte esi+020h], edx
-        jmp near loc_B481A
-loc_B45CD:
+        jmp near jpt_B466E+01ACh
+.10:
         mov edx, 2
-loc_B45D2:
         mov byte [byte esi+035h], dl
         mov dword [byte esi+018h], 0
         mov al, byte [byte esi+035h]
         test al, 4
-        je short loc_B45F9
+        je short .11
         mov ebx, dword [cliprect_y0]
         mov dword [byte esi+0Ch], ebx
         mov dword [byte esi+08h], 0
         dec ebx
         mov dword [byte esi+014h], ebx
-        jmp short loc_B465B
-loc_B45F9:
+        jmp short .16
+.11:
         test al, 8
-        je short loc_B460F
+        je short .12
         mov ebx, dword [cliprect_y1]
         mov dword [byte esi+0Ch], ebx
         mov dword [byte esi+08h], 0
-        jmp short loc_B465B
-loc_B460F:
+        jmp short .16
+.12:
         mov ecx, dword [byte esi+014h]
         cmp ecx, dword [cliprect_y1]
-        jl short loc_B4621
+        jl short .13
         mov ecx, dword [cliprect_y1]
         dec ecx
-loc_B4621:
+.13:
         mov edx, dword [byte esi+0Ch]
         mov ebx, dword [byte esi+08h]
         add ebx, 80000000h
         adc edx, byte 0
         cmp edx, dword [cliprect_y0]
-        jge short loc_B463E
+        jge short .14
         mov edx, dword [cliprect_y0]
-loc_B463E:
+.14:
         mov dword [byte esi+0Ch], edx
         mov dword [byte esi+08h], 0
         LD sub, ecx, edx
@@ -767,33 +740,32 @@ loc_B463E:
         inc ecx
         mov dword [byte esi+014h], edx
         test al, 2
-        je short loc_B4658
+        je short .15
         add dword [byte esi+024h], ecx
-        jmp short loc_B465B
-loc_B4658:
+        jmp short .16
+.15:
         add dword [byte esi+02Ch], ecx
-loc_B465B:
+.16:
         movzx eax, al
         pop edi
         pop esi
         leave
         ret
-loc_B4662:
         movzx ebx, byte [byte esi+034h]
         jmp dword [nosplit cs:ebx*4+jpt_B466E]
 jpt_B466E:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-        dd loc_B4692
-        dd loc_B469C
-        dd loc_B46B8
-        dd loc_B46D5
-        dd loc_B4705
-        dd loc_B4740
-        dd loc_B4780
-loc_B4692:
+        dd .1
+        dd .2
+        dd .3
+        dd .4
+        dd .5
+        dd .6
+        dd .7
+.1:
         mov edx, 1
-        jmp near loc_B45D2
-loc_B469C:
+        jmp near jpt_B4488+014Ah
+.2:
         mov ecx, dword [byte esi+04h]
         mov eax, dword [cliprect_x1]
         dec eax
@@ -802,8 +774,8 @@ loc_B469C:
         add dword [byte esi+0Ch], ecx
         sub dword [byte esi+018h], ecx
         add dword [byte esi+028h], ecx
-        jmp near loc_B4293
-loc_B46B8:
+        jmp near jpt_B4253+040h
+.3:
         mov ecx, dword [cliprect_x1]
         dec ecx
         mov eax, dword [byte esi+010h]
@@ -812,8 +784,8 @@ loc_B46B8:
         add dword [byte esi+02Ch], eax
         sub dword [byte esi+018h], eax
         sub dword [byte esi+014h], eax
-        jmp near loc_B4293
-loc_B46D5:
+        jmp near jpt_B4253+040h
+.4:
         mov eax, dword [esi]
         mov edx, dword [byte esi+04h]
         sub edx, dword [cliprect_x1]
@@ -824,21 +796,21 @@ loc_B46D5:
         LD sub, ecx, edx
         adc eax, byte 0
         sub dword [byte esi+018h], eax
-        jle short loc_B4692
+        jle short .1
         add dword [byte esi+0Ch], eax
         add dword [byte esi+028h], eax
         mul dword [byte esi+030h]
         sub dword [esi], eax
         sbb dword [byte esi+04h], edx
-        jmp near loc_B4293
-loc_B4705:
+        jmp near jpt_B4253+040h
+.5:
         mov edx, dword [cliprect_x1]
         dec edx
         mov dword [byte esi+010h], edx
         LD xor, eax, eax
         sub eax, dword [esi]
         sbb edx, dword [byte esi+04h]
-        jl near loc_B4692
+        jl near .1
         mov ecx, dword [byte esi+030h]
         div ecx
         shr ecx, 1
@@ -852,8 +824,8 @@ loc_B4705:
         dec eax
         add eax, dword [byte esi+0Ch]
         mov dword [byte esi+014h], eax
-        jmp near loc_B4293
-loc_B4740:
+        jmp near jpt_B4253+040h
+.6:
         mov eax, dword [byte esi+04h]
         mov ecx, dword [cliprect_x1]
         dec ecx
@@ -873,8 +845,8 @@ loc_B4740:
         adc edx, byte 0
         LD sub, edx, ecx
         add dword [byte esi+028h], edx
-        jmp near loc_B4293
-loc_B4780:
+        jmp near jpt_B4253+040h
+.7:
         mov eax, dword [cliprect_x1]
         LD mov, ecx, eax
         dec ecx
@@ -891,71 +863,67 @@ loc_B4780:
         LD sub, eax, edx
         mov dword [byte esi+014h], edx
         add dword [byte esi+02Ch], eax
-        jmp near loc_B4293
-loc_B47B3:
+        jmp near jpt_B4253+040h
         test dword [byte ebp-04h], 8
-        je short loc_B47C1
-        jmp near loc_B4384
-loc_B47C1:
+        je short jpt_B466E+0153h
+        jmp near jpt_B42B2+0D2h
         LD xor, edx, edx
         mov eax, dword [byte esi+04h]
         cmp eax, dword [cliprect_x0]
-        jge short loc_B47D1
+        jge short .8
         or dh, 2
-loc_B47D1:
+.8:
         mov ebx, dword [esi]
         add ebx, 80000000h
         adc eax, byte 0
         cmp eax, dword [cliprect_x1]
-        jl short loc_B47E7
+        jl short .9
         or dh, 1
-loc_B47E7:
+.9:
         mov eax, dword [byte esi+010h]
         cmp eax, dword [cliprect_x0]
-        jge short loc_B47F5
+        jge short .10
         or dl, 2
-loc_B47F5:
+.10:
         cmp eax, dword [cliprect_x1]
-        jl short loc_B4800
+        jl short .11
         or dl, 1
-loc_B4800:
+.11:
         test dh, dl
-        je short loc_B480B
+        je short .12
         LD and, dl, dh
-        jmp near loc_B45D2
-loc_B480B:
+        jmp near jpt_B4488+014Ah
+.12:
         LD or, dl, dh
-        je short loc_B4828
+        je short .13
         movzx edx, dl
         mov dword [byte ebp-04h], edx
-        jmp near loc_B4246
-loc_B481A:
+        jmp near SetupRectFill+0164h
         test dword [byte ebp-04h], 1
-        je short loc_B4828
-        jmp near loc_B4662
-loc_B4828:
-        jmp near loc_B4293
-loc_B482D:
+        je short .13
+        jmp near jpt_B4488+01DAh
+.13:
+        jmp near jpt_B4253+040h
         mov byte [byte esi+034h], 1
         LD cmp, ecx, edx
-        jne short loc_B4839
+        jne short .14
         mov byte [byte esi+034h], 9
-loc_B4839:
-        jle short loc_B4847
+.14:
+        jle short .15
         mov byte [byte esi+034h], 0
         mov dword [byte esi+04h], edx
         mov dword [byte esi+010h], ecx
         db 087h,0CAh                            ; insn: xchg ecx,edx
-loc_B4847:
+.15:
         cmp byte [byte ebp-05h], 0
-        jne short loc_B4870
+        jne short .17
         mov ebx, dword [cliprect_y0]
         LD cmp, eax, ebx
-        jge short loc_B487B
+        jge short .18
         mov al, 4
         mov dword [byte esi+0Ch], ebx
         mov dword [byte esi+014h], ebx
-loc_B485F:
+.16:
         mov byte [byte esi+035h], al
         mov dword [byte esi+018h], 0
         movzx eax, al
@@ -963,55 +931,54 @@ loc_B485F:
         pop esi
         leave
         ret
-loc_B4870:
+.17:
         LD sub, edx, ecx
         inc edx
         mov dword [byte esi+018h], edx
-        jmp near loc_B4293
-loc_B487B:
+        jmp near jpt_B4253+040h
+.18:
         mov ebx, dword [cliprect_y1]
         LD cmp, eax, ebx
-        jl short loc_B488F
+        jl short .19
         mov al, 8
         mov dword [byte esi+0Ch], ebx
         mov dword [byte esi+014h], ebx
-        jmp short loc_B485F
-loc_B488F:
+        jmp short .16
+.19:
         LD mov, eax, edx
         LD sub, eax, ecx
         inc eax
         mov dword [byte esi+018h], eax
         cmp edx, dword [cliprect_x0]
-        jge short loc_B48AD
+        jge short .20
         dec dword [byte esi+014h]
         mov dword [byte esi+024h], 1
         mov al, 2
-        jmp short loc_B485F
-loc_B48AD:
+        jmp short .16
+.20:
         cmp ecx, dword [cliprect_x1]
-        jl short loc_B48C3
+        jl short .21
         dec dword [byte esi+014h]
         mov dword [byte esi+02Ch], 1
         mov al, 1
-        jmp short loc_B485F
-loc_B48C3:
+        jmp short .16
+.21:
         mov eax, dword [cliprect_x0]
         LD mov, ebx, eax
         LD sub, eax, ecx
-        jle short loc_B48D4
+        jle short .22
         mov dword [byte esi+04h], ebx
         sub dword [byte esi+018h], eax
-loc_B48D4:
+.22:
         LD mov, eax, edx
         mov ebx, dword [cliprect_x1]
         dec ebx
         LD sub, eax, ebx
-        jle short loc_B48E7
+        jle short .23
         sub dword [byte esi+018h], eax
         mov dword [byte esi+010h], ebx
-loc_B48E7:
-        jmp near loc_B4293
-loc_B48EC:
+.23:
+        jmp near jpt_B4253+040h
         mov ecx, dword [byte esi+014h]
         sar ecx, 1
         mov eax, dword [byte esi+0Ch]
@@ -1024,76 +991,76 @@ loc_B48EC:
         sar eax, 1
         LD sub, edx, eax
         sar edx, 1
-loc_B4908:
+.24:
         cmp dword [byte esi+0Ch], 0FFFFC180h
-        jg short loc_B494D
-loc_B4911:
+        jg short .30
+.25:
         mov eax, dword [byte esi+0Ch]
         LD add, eax, ecx
         mov dword [byte esi+0Ch], eax
         LD mov, ebx, eax
         sub eax, dword [cliprect_y0]
-        jle short loc_B4948
+        jle short .29
         LD cmp, eax, ecx
-        jle short loc_B4929
+        jle short .26
         LD mov, eax, ecx
-loc_B4929:
+.26:
         sub ebx, dword [cliprect_y1]
-        jle short loc_B4935
+        jle short .27
         LD sub, eax, ebx
-        jle short loc_B4948
-loc_B4935:
+        jle short .29
+.27:
         mov ebx, dword [byte esi+04h]
         cmp ebx, dword [cliprect_x0]
-        jge short loc_B4945
+        jge short .28
         add dword [byte esi+020h], eax
-        jmp short loc_B4948
-loc_B4945:
+        jmp short .29
+.28:
         add dword [byte esi+028h], eax
-loc_B4948:
+.29:
         add dword [byte esi+04h], edx
-        jmp short loc_B4908
-loc_B494D:
+        jmp short .24
+.30:
         cmp dword [byte esi+014h], 3E80h
-        jge short loc_B497F
+        jge short .31
         cmp dword [byte esi+04h], 0FFFFC180h
-        jle short loc_B4911
+        jle short .25
         cmp dword [byte esi+04h], 3E80h
-        jge short loc_B4911
+        jge short .25
         cmp dword [byte esi+010h], 0FFFFC180h
-        jle short loc_B497F
+        jle short .31
         cmp dword [byte esi+010h], 3E80h
-        jge short loc_B497F
-        jmp near loc_B413C
-loc_B497F:
+        jge short .31
+        jmp near SetupRectFill+05Ah
+.31:
         mov eax, dword [byte esi+014h]
         LD sub, eax, ecx
         mov dword [byte esi+014h], eax
         LD mov, ebx, eax
         sub eax, dword [cliprect_y1]
         inc eax
-        jge short loc_B49BA
+        jge short .35
         neg eax
         LD cmp, eax, ecx
-        jle short loc_B499A
+        jle short .32
         LD mov, eax, ecx
-loc_B499A:
+.32:
         sub ebx, dword [cliprect_y0]
         inc ebx
-        jge short loc_B49A7
+        jge short .33
         LD add, eax, ebx
-        jle short loc_B49BA
-loc_B49A7:
+        jle short .35
+.33:
         mov ebx, dword [byte esi+010h]
         cmp ebx, dword [cliprect_x0]
-        jge short loc_B49B7
+        jge short .34
         add dword [byte esi+024h], eax
-        jmp short loc_B49BA
-loc_B49B7:
+        jmp short .35
+.34:
         add dword [byte esi+02Ch], eax
-loc_B49BA:
+.35:
         sub dword [byte esi+010h], edx
-        jmp short loc_B494D
+        jmp short .30
         db 00h
 AngleFromDelta:
         push ebp
@@ -1102,95 +1069,94 @@ AngleFromDelta:
         mov ecx, dword [byte ebp+0Ch]
         mov edx, dword [byte ebp+08h]
         LD or, ecx, ecx
-        jge short loc_B49D4
+        jge short .1
         or ebx, byte 8
         neg ecx
-loc_B49D4:
+.1:
         LD or, edx, edx
-        jge short loc_B49DD
+        jge short .2
         or ebx, byte 10h
         neg edx
-loc_B49DD:
+.2:
         LD cmp, edx, ecx
-        jl short loc_B49E8
-        je short loc_B4A00
+        jl short .3
+        je short .4
         db 087h,0CAh                            ; insn: xchg ecx,edx
         or ebx, byte 4
-loc_B49E8:
+.3:
         LD xor, eax, eax
         div ecx
         shr eax, 18h
         adc eax, byte 0
         movzx eax, byte [dword eax+byte_D6074]
         jmp dword [dword cs:ebx+unk_B4A0C]
-loc_B4A00:
+.4:
         mov eax, 80h
         jmp dword [dword cs:ebx+unk_B4A0C]
 unk_B4A0C:
-        dd loc_B4A33
-        dd loc_B4A2C
-        dd loc_B4A35
-        dd loc_B4A3E
-        dd loc_B4A45
-        dd loc_B4A49
-        dd loc_B4A50
-        dd loc_B4A57
-loc_B4A2C:
+        dd .2
+        dd .1
+        dd .3
+        dd .4
+        dd .5
+        dd .6
+        dd .7
+        dd .8
+.1:
         neg eax
         add eax, 100h
-loc_B4A33:
+.2:
         leave
         ret
-loc_B4A35:
+.3:
         neg eax
         add eax, 200h
         leave
         ret
-loc_B4A3E:
+.4:
         add eax, 100h
         leave
         ret
-loc_B4A45:
+.5:
         neg eax
         leave
         ret
-loc_B4A49:
+.6:
         sub eax, 100h
         leave
         ret
-loc_B4A50:
+.7:
         sub eax, 200h
         leave
         ret
-loc_B4A57:
+.8:
         neg eax
         sub eax, 100h
         leave
         ret
 TableSin:
         mov eax, dword [byte esp+04h]
-        jmp short loc_B4A6C
+        jmp short TableCos+06h
 TableCos:
         mov eax, dword [byte esp+04h]
         inc ah
-loc_B4A6C:
         movzx eax, ax
         and ah, 3
-        jnp short loc_B4A7E
-        jne short loc_B4A96
+        jnp short .1
+        jne short .3
         mov eax, dword [nosplit eax*4+dword_D6178]
         ret
-loc_B4A7E:
+.1:
         dec ah
-        jne short loc_B4A8C
+        jne short .2
         neg eax
         mov eax, dword [nosplit eax*4+dword_D6578]
         ret
-loc_B4A8C:
+.2:
         mov eax, dword [nosplit eax*4+dword_D5D78]
         neg eax
         ret
-loc_B4A96:
+.3:
         neg eax
         mov eax, dword [nosplit eax*4+dword_D7178]
         neg eax
@@ -1200,16 +1166,16 @@ DispatchHotkey:
         push ebp
         LD mov, ebp, esp
         dec dword [dword_D5562]
-        jne short loc_B4AF2
+        jne short .4
         mov ebx, dword [byte ebp+08h]
         LD or, bl, bl
-        je short loc_B4ADA
+        je short .2
         and ebx, byte 7Fh
         mov dword [byte ebp+08h], ebx
         mov bl, byte [dword ebx+byte_D545C]
-loc_B4AC2:
+.1:
         dec ebx
-        jl short loc_B4AF2
+        jl short .4
         push edi
         push esi
         call dword [nosplit ebx*4+dword_D5566]
@@ -1219,15 +1185,15 @@ loc_B4AC2:
         inc dword [dword_D5562]
         leave
         ret
-loc_B4ADA:
+.2:
         movzx ebx, bh
         cmp ebx, 84h
-        jl short loc_B4AEA
+        jl short .3
         mov ebx, 84h
-loc_B4AEA:
+.3:
         mov bl, byte [dword ebx+byte_D54DC]
-        jmp short loc_B4AC2
-loc_B4AF2:
+        jmp short .1
+.4:
         mov eax, dword [byte ebp+08h]
         inc dword [dword_D5562]
         leave
@@ -1238,41 +1204,41 @@ RegisterHotkey:
         mov eax, dword [byte ebp+0Ch]
         mov ecx, 40h
         mov ebx, dword_D5566
-loc_B4B0D:
+.1:
         cmp dword [ebx], eax
-        je short loc_B4B20
+        je short .3
         cmp word [ebx], byte 0
-        je short loc_B4B1E
+        je short .2
         add ebx, byte 4
-        loop loc_B4B0D
+        loop .1
         leave
         ret
-loc_B4B1E:
+.2:
         mov dword [ebx], eax
-loc_B4B20:
+.3:
         mov eax, 41h
         LD sub, eax, ecx
-loc_B4B27:
+.4:
         mov ebx, dword [byte ebp+08h]
         LD or, bl, bl
-        je short loc_B4B3B
+        je short .6
         cmp ebx, byte 7Fh
-        jg short loc_B4B39
+        jg short .5
         mov byte [dword ebx+byte_D545C], al
-loc_B4B39:
+.5:
         leave
         ret
-loc_B4B3B:
+.6:
         movzx ebx, bh
         cmp ebx, 84h
-        jg short loc_B4B39
+        jg short .5
         mov byte [dword ebx+byte_D54DC], al
         leave
         ret
         push ebp
         LD mov, ebp, esp
         LD xor, eax, eax
-        jmp short loc_B4B27
+        jmp short .4
         db 00h,00h,00h
 SetTextMode:
         push byte 0
@@ -1299,10 +1265,10 @@ VgaSetPalette:
         inc edx
         cld
         lea ecx, [ebx+ebx*2]
-loc_B4BA0:
+.1:
         lodsb
         out dx, al
-        loop loc_B4BA0
+        loop .1
         pop esi
         leave
         ret
@@ -1324,21 +1290,21 @@ SetClipWindow:
         mov ecx, dword [byte esp+0Ch]
         mov ebx, dword [byte esp+010h]
         cmp eax, byte 0
-        jge short loc_B4BDE
+        jge short .1
         mov eax, 0
-loc_B4BDE:
+.1:
         cmp ecx, byte 0
-        jge short loc_B4BE8
+        jge short .2
         mov ecx, 0
-loc_B4BE8:
+.2:
         cmp edx, dword [ScreenWidth]
-        jle short loc_B4BF6
+        jle short .3
         mov edx, dword [ScreenWidth]
-loc_B4BF6:
+.3:
         cmp ebx, dword [dword_D30A8]
-        jle short loc_B4C04
+        jle short .4
         mov ebx, dword [dword_D30A8]
-loc_B4C04:
+.4:
         mov dword [cliprect_x0], eax
         mov dword [cliprect_y0], ecx
         mov dword [cliprect_x1], edx
@@ -1354,48 +1320,48 @@ WaitRetrace:
         mov dx, 3DAh
         mov ecx, dword [dword_D429C]
         cmp dword [dword_D4FA0], byte 1
-        jg short loc_B4C56
-        je short loc_B4C4F
-loc_B4C48:
+        jg short .3
+        je short .2
+.1:
         in al, dx
         test al, 8
-        loopne loc_B4C48
+        loopne .1
         jecxz ResetRetraceTimeout
-loc_B4C4F:
+.2:
         in al, dx
         test al, 8
-        loope loc_B4C4F
+        loope .2
         jecxz ResetRetraceTimeout
-loc_B4C56:
+.3:
         mov dword [dword_D429C], 186A0h
         ret
 WaitRetraceStart:
         mov dx, 3DAh
         mov ecx, dword [dword_D429C]
-loc_B4C6B:
+.1:
         in al, dx
         test al, 8
-        loopne loc_B4C6B
+        loopne .1
         jecxz ResetRetraceTimeout
-loc_B4C72:
+.2:
         in al, dx
         test al, 8
-        loope loc_B4C72
+        loope .2
         jecxz ResetRetraceTimeout
         mov dword [dword_D429C], 186A0h
         ret
 WaitRetraceEnd:
         mov dx, 3DAh
         mov ecx, dword [dword_D429C]
-loc_B4C8E:
+.1:
         in al, dx
         test al, 8
-        loope loc_B4C8E
+        loope .1
         jecxz ResetRetraceTimeout
-loc_B4C95:
+.2:
         in al, dx
         test al, 8
-        loopne loc_B4C95
+        loopne .2
         jecxz ResetRetraceTimeout
         mov dword [dword_D429C], 186A0h
         ret
@@ -1421,4 +1387,4 @@ VgaBlitKeyedHot:
         sub ax, word [byte esi+0Ah]
         cwde
         mov dword [byte ebp-08h], eax
-        jmp short loc_B4D0C
+        jmp short VgaBlitKeyedAtOwnPos+01Ah

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_90354 progbits alloc exec nowrite align=1
-global ShapeBankCount, ShapeBankEntry, loc_90370, ShapeBankEntryId, loc_9038D
+global ShapeBankCount, ShapeBankEntry, ShapeBankEntryId
 ShapeBankCount:
         mov ebx, dword [byte esp+04h]
         mov eax, dword [byte ebx+08h]
@@ -12,10 +12,10 @@ ShapeBankEntry:
         mov ebx, dword [byte esp+08h]
         mov ecx, dword [byte eax+08h]
         LD cmp, ebx, ecx
-        jae short loc_90370
+        jae short .1
         add eax, dword [byte eax+ebx*8+014h]
         ret
-loc_90370:
+.1:
         LD xor, eax, eax
         ret
 ShapeBankEntryId:
@@ -24,11 +24,11 @@ ShapeBankEntryId:
         mov edx, dword [byte esp+0Ch]
         mov ecx, dword [byte ebx+08h]
         LD cmp, eax, ecx
-        jae short loc_9038D
+        jae short .1
         mov eax, dword [byte ebx+eax*8+010h]
         mov dword [edx], eax
         ret
-loc_9038D:
+.1:
         LD xor, eax, eax
         mov dword [edx], eax
         ret

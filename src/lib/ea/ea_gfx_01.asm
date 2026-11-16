@@ -5,12 +5,8 @@ section s_903F0 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable
 extern dword_D4108, RowCopyFunc, bcopy, VesaSetBankArg, BlitBlock, BlitBlockXor, BlitBlockAnd, AndPixel
 extern BlitBlockOr, OrPixel
-global PutBlock, loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512
-global loc_9051E, loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, DrawBitmap
-global PutBlockHotspot, loc_9065F, loc_90660, loc_9066F, loc_90681, loc_90688, DrawArtXor, loc_906B9
-global DrawArtXorAtOwnPos, DrawArtAnd, loc_9074B, loc_9078C, loc_907A8, loc_907C6, loc_907E5, loc_907F3
-global loc_90808, loc_90825, DrawArtAndAtOwnPos, DrawArtOr, loc_908A9, loc_908EA, loc_90906
-global loc_90924, loc_90943, loc_90959, loc_90972, loc_9098F, DrawArtOrAtOwnPos
+global PutBlock, DrawBitmap, PutBlockHotspot, DrawArtXor, DrawArtXorAtOwnPos, DrawArtAnd, DrawArtAndAtOwnPos, DrawArtOr
+global DrawArtOrAtOwnPos
 PutBlock:
         push esi
         push edi
@@ -19,15 +15,15 @@ PutBlock:
         mov eax, dword [byte esp+034h]
         mov esi, dword [byte esp+038h]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_9041B
+        jne short .1
         mov ebx, dword [byte esp+03Ch]
         push ebx
         push esi
         push eax
         call BlitBlock
         add esp, byte 0Ch
-        jmp near loc_90614
-loc_9041B:
+        jmp near .14
+.1:
         lea edi, [byte eax+010h]
         mov edx, dword [byte eax+02h]
         sar edx, 10h
@@ -42,37 +38,37 @@ loc_9041B:
         mov ecx, dword [byte esp+03Ch]
         sub eax, ecx
         test eax, eax
-        jle short loc_9045A
+        jle short .2
         imul edx, eax
         add edi, edx
         sub ebp, eax
         lea edx, [ecx+eax]
         mov dword [byte esp+03Ch], edx
-loc_9045A:
+.2:
         mov eax, dword [byte esp+03Ch]
         add eax, ebp
         sub eax, dword [cliprect_y1]
         test eax, eax
-        jle short loc_9046C
+        jle short .3
         sub ebp, eax
-loc_9046C:
+.3:
         mov eax, dword [cliprect_x0]
         sub eax, esi
         test eax, eax
-        jle short loc_90483
+        jle short .4
         add edi, eax
         sub dword [byte esp+020h], eax
         add esi, eax
         add dword [byte esp+04h], eax
-loc_90483:
+.4:
         mov eax, dword [byte esp+020h]
         add eax, esi
         sub eax, dword [cliprect_x1]
         test eax, eax
-        jle short loc_9049B
+        jle short .5
         add dword [byte esp+04h], eax
         sub dword [byte esp+020h], eax
-loc_9049B:
+.5:
         mov eax, dword [byte esp+03Ch]
         add esi, dword [nosplit eax*4+ScreenRowTable]
         mov eax, dword [ScreenWidth]
@@ -89,29 +85,29 @@ loc_9049B:
         mov dword [byte esp+0Ch], ebp
         mov edx, dword [byte esp+020h]
         test edx, edx
-        jle near loc_90614
+        jle near .14
         mov ecx, dword [esp]
         lea eax, [edx+ecx]
         mov dword [byte esp+014h], eax
         mov ebp, dword [byte esp+04h]
         lea eax, [edx+ebp]
         mov dword [byte esp+018h], eax
-loc_904F1:
+.6:
         mov eax, dword [byte esp+0Ch]
         test eax, eax
-        jle near loc_90614
+        jle near .14
         mov ebp, dword [byte esp+010h]
         mov ebp, dword [nosplit ebp*4+dword_D4108]
         sub ebp, dword [byte esp+03Ch]
         cmp ebp, eax
-        jle short loc_90512
+        jle short .7
         mov ebp, eax
-loc_90512:
+.7:
         test ebp, ebp
-        je short loc_9053F
+        je short .9
         add dword [byte esp+03Ch], ebp
         sub dword [byte esp+0Ch], ebp
-loc_9051E:
+.8:
         mov edx, dword [byte esp+020h]
         push edx
         mov eax, dword [byte esp+020h]
@@ -123,12 +119,12 @@ loc_9051E:
         add esi, dword [byte esp+014h]
         add edi, dword [byte esp+018h]
         dec ebp
-        jne short loc_9051E
-loc_9053F:
+        jne short .8
+.9:
         cmp dword [byte esp+0Ch], byte 0
-        je short loc_904F1
+        je short .6
         test esi, 10000h
-        je short loc_90566
+        je short .10
         and esi, 0FFFFh
         mov eax, dword [byte esp+010h]
         inc eax
@@ -136,7 +132,7 @@ loc_9053F:
         push eax
         call VesaSetBankArg
         add esp, byte 4
-loc_90566:
+.10:
         mov eax, dword [byte esp+020h]
         add eax, esi
         mov dword [byte esp+08h], eax
@@ -144,7 +140,7 @@ loc_90566:
         mov eax, dword [byte esp+01Ch]
         add eax, esi
         test ebp, 10000h
-        je short loc_905C8
+        je short .11
         mov ebp, 10000h
         sub ebp, esi
         push ebp
@@ -169,8 +165,8 @@ loc_90566:
         add esp, byte 0Ch
         mov esi, ebp
         add edi, ebp
-        jmp short loc_905E0
-loc_905C8:
+        jmp short .12
+.11:
         mov ebx, dword [byte esp+020h]
         push ebx
         push eax
@@ -179,11 +175,11 @@ loc_905C8:
         add esp, byte 0Ch
         mov esi, dword [byte esp+08h]
         add edi, dword [byte esp+020h]
-loc_905E0:
+.12:
         add esi, dword [esp]
         add edi, dword [byte esp+04h]
         test esi, 10000h
-        je short loc_90607
+        je short .13
         and esi, 0FFFFh
         mov ebp, dword [byte esp+010h]
         inc ebp
@@ -191,11 +187,11 @@ loc_905E0:
         push ebp
         call VesaSetBankArg
         add esp, byte 4
-loc_90607:
+.13:
         dec dword [byte esp+0Ch]
         inc dword [byte esp+03Ch]
-        jmp near loc_904F1
-loc_90614:
+        jmp near .6
+.14:
         add esp, byte 24h
         pop ebp
         pop edi
@@ -229,49 +225,48 @@ PutBlockHotspot:
         push edx
         call PutBlock
         add esp, byte 0Ch
-loc_9065F:
+.1:
         ret
-loc_90660:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         sar ebx, 2
-loc_9066F:
+.2:
         dec ebx
         cmp ebx, byte 0FFFFFFFFh
-        je short loc_90681
+        je short .3
         mov ecx, dword [edx]
         xor dword [eax], ecx
         add eax, byte 4
         add edx, byte 4
-        jmp short loc_9066F
-loc_90681:
+        jmp short .2
+.3:
         mov ebx, dword [byte esp+0Ch]
         and ebx, byte 3
-loc_90688:
+.4:
         dec ebx
         cmp ebx, byte 0FFFFFFFFh
-        je short loc_9065F
+        je short .1
         mov cl, byte [edx]
         xor byte [eax], cl
         inc eax
         inc edx
-        jmp short loc_90688
+        jmp short .4
         db 08Bh,0C0h
 DrawArtXor:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_906B9
+        jne short .1
         push eax
         push ebx
         push edx
         call BlitBlockXor
         add esp, byte 0Ch
         ret
-loc_906B9:
-        mov dword [RowCopyFunc], loc_90660
+.1:
+        mov dword [RowCopyFunc], PutBlockHotspot+028h
         push eax
         push ebx
         push edx
@@ -315,7 +310,7 @@ DrawArtAnd:
         mov eax, dword [byte esp+020h]
         mov edi, dword [byte esp+024h]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_9074B
+        jne short .1
         mov esi, dword [byte esp+028h]
         push esi
         push edi
@@ -323,7 +318,7 @@ DrawArtAnd:
         call BlitBlockAnd
         add esp, byte 0Ch
         jmp near DrawArtAnd+010Fh
-loc_9074B:
+.1:
         lea esi, [byte eax+010h]
         mov ebp, dword [byte eax+02h]
         sar ebp, 10h
@@ -338,51 +333,51 @@ loc_9074B:
         mov ecx, dword [byte esp+028h]
         sub eax, ecx
         test eax, eax
-        jle short loc_9078C
+        jle short .2
         mov edi, ebp
         imul edi, eax
         add esi, edi
         sub dword [byte esp+0Ch], eax
         lea ebp, [ecx+eax]
         mov dword [byte esp+028h], ebp
-loc_9078C:
+.2:
         mov eax, dword [byte esp+028h]
         mov edx, dword [byte esp+0Ch]
         add eax, edx
         sub eax, dword [cliprect_y1]
         test eax, eax
-        jle short loc_907A8
+        jle short .3
         mov ecx, edx
         sub ecx, eax
         mov dword [byte esp+0Ch], ecx
-loc_907A8:
+.3:
         mov eax, dword [cliprect_x0]
         mov edi, dword [esp]
         sub eax, edi
         test eax, eax
-        jle short loc_907C6
+        jle short .4
         add esi, eax
         sub dword [byte esp+08h], eax
         lea edx, [edi+eax]
         mov dword [esp], edx
         add dword [byte esp+04h], eax
-loc_907C6:
+.4:
         mov eax, dword [esp]
         mov ecx, dword [byte esp+08h]
         add eax, ecx
         sub eax, dword [cliprect_x1]
         test eax, eax
-        jle short loc_907E5
+        jle short .5
         add dword [byte esp+04h], eax
         mov edx, ecx
         sub edx, eax
         mov dword [byte esp+08h], edx
-loc_907E5:
+.5:
         cmp dword [byte esp+08h], byte 0
         jle short DrawArtAnd+010Fh
         cmp dword [byte esp+0Ch], byte 0
         jle short DrawArtAnd+010Fh
-loc_907F3:
+.6:
         mov edi, dword [byte esp+0Ch]
         dec edi
         mov dword [byte esp+0Ch], edi
@@ -390,10 +385,10 @@ loc_907F3:
         je short DrawArtAnd+010Fh
         mov ebp, dword [esp]
         mov edi, dword [byte esp+08h]
-loc_90808:
+.7:
         dec edi
         cmp edi, byte 0FFFFFFFFh
-        je short loc_90825
+        je short .8
         xor eax, eax
         mov al, byte [esi]
         push eax
@@ -404,11 +399,11 @@ loc_90808:
         inc ebp
         call AndPixel
         add esp, byte 0Ch
-        jmp short loc_90808
-loc_90825:
+        jmp short .7
+.8:
         inc dword [byte esp+028h]
         add esi, dword [byte esp+04h]
-        jmp short loc_907F3
+        jmp short .6
         add esp, byte 10h
         pop ebp
         pop edi
@@ -450,7 +445,7 @@ DrawArtOr:
         mov eax, dword [byte esp+020h]
         mov edi, dword [byte esp+024h]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_908A9
+        jne short .1
         mov esi, dword [byte esp+028h]
         push esi
         push edi
@@ -462,7 +457,7 @@ DrawArtOr:
         pop edi
         pop esi
         ret
-loc_908A9:
+.1:
         lea esi, [byte eax+010h]
         mov ebp, dword [byte eax+02h]
         sar ebp, 10h
@@ -477,51 +472,51 @@ loc_908A9:
         mov ecx, dword [byte esp+028h]
         sub eax, ecx
         test eax, eax
-        jle short loc_908EA
+        jle short .2
         mov edi, ebp
         imul edi, eax
         add esi, edi
         sub dword [byte esp+0Ch], eax
         lea ebp, [ecx+eax]
         mov dword [byte esp+028h], ebp
-loc_908EA:
+.2:
         mov eax, dword [byte esp+028h]
         mov edx, dword [byte esp+0Ch]
         add eax, edx
         sub eax, dword [cliprect_y1]
         test eax, eax
-        jle short loc_90906
+        jle short .3
         mov ecx, edx
         sub ecx, eax
         mov dword [byte esp+0Ch], ecx
-loc_90906:
+.3:
         mov eax, dword [cliprect_x0]
         mov edi, dword [esp]
         sub eax, edi
         test eax, eax
-        jle short loc_90924
+        jle short .4
         add esi, eax
         sub dword [byte esp+08h], eax
         lea edx, [edi+eax]
         mov dword [esp], edx
         add dword [byte esp+04h], eax
-loc_90924:
+.4:
         mov eax, dword [esp]
         mov ecx, dword [byte esp+08h]
         add eax, ecx
         sub eax, dword [cliprect_x1]
         test eax, eax
-        jle short loc_90943
+        jle short .5
         add dword [byte esp+04h], eax
         mov edx, ecx
         sub edx, eax
         mov dword [byte esp+08h], edx
-loc_90943:
+.5:
         cmp dword [byte esp+08h], byte 0
         jle near DrawArtAnd+010Fh
         cmp dword [byte esp+0Ch], byte 0
         jle near DrawArtAnd+010Fh
-loc_90959:
+.6:
         mov edi, dword [byte esp+0Ch]
         dec edi
         mov dword [byte esp+0Ch], edi
@@ -529,10 +524,10 @@ loc_90959:
         je near DrawArtAnd+010Fh
         mov ebp, dword [esp]
         mov edi, dword [byte esp+08h]
-loc_90972:
+.7:
         dec edi
         cmp edi, byte 0FFFFFFFFh
-        je short loc_9098F
+        je short .8
         xor eax, eax
         mov al, byte [esi]
         push eax
@@ -543,11 +538,11 @@ loc_90972:
         inc ebp
         call OrPixel
         add esp, byte 0Ch
-        jmp short loc_90972
-loc_9098F:
+        jmp short .7
+.8:
         inc dword [byte esp+028h]
         add esi, dword [byte esp+04h]
-        jmp short loc_90959
+        jmp short .6
         db 08Dh,040h,00h
 DrawArtOrAtOwnPos:
         mov edx, dword [byte esp+04h]

@@ -27,45 +27,12 @@ extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_M
 extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
 extern MemViewStrings, str_X_DebugSprintf, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, str_W_DumpMemoryMap
 extern str_Un, unk_C46C0, DefaultFont, vsprintf_, WaitTickDeadline
-global DebugLogOpen, loc_93955, loc_9396D, loc_9399A, loc_939AA, loc_939C2, loc_93A2E, loc_93A33
-global DebugLogClose, loc_93A9B, DebugLog, loc_93AD3, DebugLogPrintf, loc_93B26, loc_93B2D, FindWildcardDigits
-global loc_93B49, loc_93B55, loc_93B66, loc_93B6A, loc_93B6C, loc_93BA5, loc_93BC5, loc_93BCA
-global FormatDateStamp, unk_93C50, unk_93C54, DebugWaitKey, DebugGetKey, MemViewerGetMode, MemViewer, loc_93D22
-global loc_93DA5, loc_93DE2, loc_93E09, loc_93E26, loc_93E28, MemViewerStart, MemViewerListHead, loc_93E70
-global MemViewerDrawRows, loc_93E88, loc_93E9A, loc_93EB1, loc_93EBF, loc_93EC1, loc_93EDC, loc_93EE1
-global loc_93EF1, loc_93F0D, loc_93F21, loc_93F2E, loc_93F3A, loc_93F56, loc_93F60, loc_93F6A
-global loc_93F6F, loc_93F8E, loc_93FB0, loc_93FBA, loc_93FCB, loc_93FE1, loc_93FEE, loc_93FFB
-global loc_9401B, loc_9405B, loc_9406D, loc_94075, loc_94082, loc_940BA, MemViewerCountBlocks, loc_94105
-global loc_9410D, MemViewerSelectRow, loc_94124, loc_9412C, loc_9416D, loc_94181, MemViewerDrawList, loc_941DF
-global loc_941E4, loc_9420D, loc_94212, loc_94316, loc_9439B, loc_943EE, loc_943FC, loc_94488
-global loc_9448D, loc_944D4, loc_944ED, loc_944F2, loc_94534, loc_94551, loc_94552, loc_94594
-global loc_945D3, loc_945D8, loc_94624, loc_94649, loc_9464E, loc_946A0, loc_946C0, loc_946CB
-global loc_946FB, loc_94710, loc_94729, loc_94753, loc_9476E, MemPoolTotals, loc_947A7, loc_947B9
-global loc_947C1, loc_947CA, MemViewerDrawTitle, loc_9485F, loc_948B7, loc_948B9, loc_948C7, DebugSprintf
-global MemViewerBlockInfo, loc_94987, loc_949A4, loc_949BF, loc_94A1D, loc_94A54, loc_94A5E, loc_94A86
-global loc_94A8D, loc_94AC6, loc_94ACD, loc_94AFA, loc_94B20, loc_94B57, loc_94B62, MemViewerHexDump
-global loc_94B85, loc_94B9A, loc_94BBC, loc_94BD3, loc_94BDE, loc_94C1A, loc_94C49, loc_94C51
-global loc_94C61, loc_94C6F, loc_94C71, loc_94C89, loc_94C95, loc_94CA5, loc_94CA7, loc_94CB1
-global loc_94CC1, loc_94CC9, loc_94CCF, loc_94CE3, loc_94CF3, loc_94D00, loc_94D1F, loc_94D2C
-global loc_94D44, loc_94D5C, loc_94D91, loc_94DA8, loc_94DC1, loc_94DD6, loc_94DE5, loc_94DEC
-global loc_94DFC, loc_94E06, loc_94E18, loc_94E1E, loc_94E29, HexDumpRow, loc_94E68, loc_94E7C
-global loc_94E91, loc_94ECB, loc_94EDF, loc_94EF9, loc_94F16, loc_94F31, loc_94F40, loc_94F91
-global loc_94F98, loc_94FB0, WriteMemMap, loc_9506F, loc_95074, loc_950A3, DumpMemoryMap, loc_950ED
-global loc_9511A, loc_95122, loc_9513E, ShapeViewerFindShape, ShapeViewer, loc_951B1, loc_951FD, loc_95210
-global loc_95228, loc_95245, loc_95249, loc_95250, loc_9528A, loc_95297, loc_9529E, loc_952A5
-global loc_952B4, loc_95384, loc_95391, loc_953A0, loc_953A6, loc_953A9, loc_953B3, loc_953CC
-global loc_95401, loc_9540C, loc_9541E, loc_95427, loc_95436, loc_9544E, loc_9545B, loc_95464
-global loc_95476, loc_9547F, loc_95493, loc_9549D, loc_954AB, loc_954B5, loc_954C0, ReadShapeFileHeader
-global ShapeInfo, loc_9559A, loc_9559F, loc_955C0, loc_955C5, loc_95665, loc_956AC, loc_956B3
-global loc_956B8, DumpShapesList, loc_9576B, loc_9585D, loc_9590C, loc_95911, loc_95937, loc_95955
-global loc_9595F, PaletteViewer, loc_959D4, loc_959E7, loc_95A92, loc_95AD4, loc_95AE3, loc_95B03
-global loc_95B05, loc_95B17, loc_95B35, loc_95B47, loc_95B67, loc_95B69, loc_95B7B, loc_95B97
-global loc_95B99, loc_95BAB, loc_95BC7, loc_95BC9, loc_95BDB, loc_95BF5, loc_95C07, loc_95C11
-global loc_95C16, loc_95C26, loc_95C28, loc_95C3C, loc_95C3E, loc_95C51, loc_95C62, loc_95C75
-global loc_95C86, loc_95C91, loc_95C98, loc_95CA3, loc_95CAA, loc_95CF0, loc_95D5D, PaletteViewerLabel
-global loc_95EF1, SaveScreenshot, MemViewerShowArt, loc_95FE7, loc_95FF4, loc_96000, loc_96006, loc_96009
-global loc_96010, loc_96026, loc_9602A, FormatDateTime, NextFreeFileName, loc_960BF, loc_960C6, loc_960CA
-global loc_9610C, loc_9611D, DebugGetKeyUpper, DebugPressAnyKey, DebugKbdFlush, DebugFlushAndWait, loc_96178
+global DebugLogOpen, DebugLogClose, DebugLog, DebugLogPrintf, FindWildcardDigits, FormatDateStamp, unk_93C50, unk_93C54
+global DebugWaitKey, DebugGetKey, MemViewerGetMode, MemViewer, MemViewer, MemViewerStart, MemViewerListHead, MemViewerDrawRows
+global MemViewerCountBlocks, MemViewerSelectRow, MemViewerDrawList, MemPoolTotals, MemViewerDrawTitle, DebugSprintf, MemViewerBlockInfo, MemViewerHexDump
+global HexDumpRow, WriteMemMap, DumpMemoryMap, ShapeViewerFindShape, ShapeViewer, ReadShapeFileHeader, ShapeInfo, DumpShapesList
+global PaletteViewer, PaletteViewerLabel, SaveScreenshot, MemViewerShowArt, FormatDateTime, NextFreeFileName, DebugGetKeyUpper, DebugPressAnyKey
+global DebugKbdFlush, DebugFlushAndWait
 DebugLogOpen:
         push ebx
         push ecx
@@ -74,22 +41,22 @@ DebugLogOpen:
         push edi
         sub esp, 0B0h
         cmp dword [DebugLogOn], byte 0
-        jne near loc_93A33
+        jne near .7
         mov esi, eax
         mov edi, esp
         push edi
-loc_93955:
+.1:
         mov al, byte [esi]
         mov byte [edi], al
         cmp al, 0
-        je short loc_9396D
+        je short .2
         mov al, byte [byte esi+01h]
         add esi, byte 2
         mov byte [byte edi+01h], al
         add edi, byte 2
         cmp al, 0
-        jne short loc_93955
-loc_9396D:
+        jne short .1
+.2:
         pop edi
         mov edi, esp
         sub ecx, ecx
@@ -99,17 +66,17 @@ loc_9396D:
         not ecx
         dec ecx
         test cx, cx
-        jle short loc_9399A
+        jle short .3
         movsx eax, cx
         mov dl, byte [byte esp+eax-01h]
         cmp dl, 5Ch
-        je short loc_9399A
+        je short .3
         cmp dl, 3Ah
-        je short loc_9399A
+        je short .3
         mov byte [esp+eax], 5Ch
         xor bh, bh
         mov byte [byte esp+eax+01h], bh
-loc_9399A:
+.3:
         mov esi, str_DBUGTXT
         mov edi, esp
         push edi
@@ -118,18 +85,18 @@ loc_9399A:
         mov al, 0
         repne scasb
         dec edi
-loc_939AA:
+.4:
         mov al, byte [esi]
         mov byte [edi], al
         cmp al, 0
-        je short loc_939C2
+        je short .5
         mov al, byte [byte esi+01h]
         add esi, byte 2
         mov byte [byte edi+01h], al
         add edi, byte 2
         cmp al, 0
-        jne short loc_939AA
-loc_939C2:
+        jne short .4
+.5:
         pop edi
         mov eax, esp
         call FindWildcardDigits
@@ -138,7 +105,7 @@ loc_939C2:
         call fopen_
         mov dword [DebugLogOn], eax
         test eax, eax
-        je short loc_93A2E
+        je short .6
         lea edx, [dword esp+09Ch]
         lea eax, [dword esp+088h]
         call FormatDateStamp
@@ -157,10 +124,10 @@ loc_939C2:
         push str_TIMES
         call DebugLog
         add esp, byte 8
-        jmp short loc_93A33
-loc_93A2E:
+        jmp short .7
+.6:
         call fclose_
-loc_93A33:
+.7:
         add esp, 0B0h
         pop edi
         pop esi
@@ -175,7 +142,7 @@ DebugLogClose:
         push edx
         sub esp, byte 28h
         cmp dword [DebugLogOn], byte 0
-        je short loc_93A9B
+        je short .1
         mov edx, esp
         lea eax, [byte esp+014h]
         call FormatDateStamp
@@ -196,7 +163,7 @@ DebugLogClose:
         call fclose_
         xor ebx, ebx
         mov dword [DebugLogOn], ebx
-loc_93A9B:
+.1:
         add esp, byte 28h
         pop edx
         pop ecx
@@ -206,10 +173,10 @@ loc_93A9B:
 DebugLog:
         sub esp, byte 4
         cmp dword [DebugMode], byte 2
-        jl short loc_93AD3
+        jl short .1
         mov ebx, dword [DebugLogOn]
         test ebx, ebx
-        je short loc_93AD3
+        je short .1
         lea eax, [byte esp+0Ch]
         mov dword [esp], eax
         mov eax, ebx
@@ -218,14 +185,14 @@ DebugLog:
         call j___fprtf_
         xor ecx, ecx
         mov dword [esp], ecx
-loc_93AD3:
+.1:
         add esp, byte 4
         ret
         db 090h
 DebugLogPrintf:
         sub esp, 104h
         cmp dword [DebugMode], byte 2
-        jl short loc_93B2D
+        jl short .2
         lea eax, [dword esp+010Ch]
         mov dword [dword esp+0100h], eax
         lea ebx, [dword esp+0100h]
@@ -236,14 +203,14 @@ DebugLogPrintf:
         mov dword [dword esp+0100h], ebx
         mov ecx, dword [DebugLogOn]
         test ecx, ecx
-        je short loc_93B26
+        je short .1
         mov edx, ecx
         mov eax, esp
         call fputs_
-loc_93B26:
+.1:
         mov eax, esp
         call DebugShowLines
-loc_93B2D:
+.2:
         add esp, 104h
         ret
 FindWildcardDigits:
@@ -258,27 +225,27 @@ FindWildcardDigits:
         xor edi, edi
         mov esi, eax
         cmp byte [eax], 3Fh
-        je short loc_93B55
-loc_93B49:
+        je short .2
+.1:
         cmp byte [esi], 0
-        je short loc_93B55
+        je short .2
         inc esi
         inc edi
         cmp byte [esi], 3Fh
-        jne short loc_93B49
-loc_93B55:
+        jne short .1
+.2:
         mov ebp, dword [esp]
         add ebp, edi
         cmp byte [byte ebp+00h], 0
-        je short loc_93B66
+        je short .3
         cmp byte [byte ebp+01h], 3Fh
-        je short loc_93B6A
-loc_93B66:
+        je short .4
+.3:
         xor eax, eax
-        jmp short loc_93BCA
-loc_93B6A:
+        jmp short .8
+.4:
         xor esi, esi
-loc_93B6C:
+.5:
         mov eax, esi
         mov edx, esi
         sar edx, 1Fh
@@ -297,13 +264,13 @@ loc_93B6C:
         call FindFirstFile
         add esp, byte 4
         test eax, eax
-        je short loc_93BA5
+        je short .6
         inc esi
         cmp esi, byte 64h
-        jl short loc_93B6C
-loc_93BA5:
+        jl short .5
+.6:
         cmp esi, byte 64h
-        jl short loc_93BC5
+        jl short .7
         add edi, dword [esp]
         mov byte [byte edi+01h], 78h
         mov al, byte [byte edi+01h]
@@ -317,9 +284,9 @@ loc_93BA5:
         pop ecx
         pop ebx
         ret
-loc_93BC5:
+.7:
         mov eax, 1
-loc_93BCA:
+.8:
         add esp, byte 4
         pop ebp
         pop edi
@@ -447,9 +414,9 @@ MemViewer:
         call DebugSetRow
         add esp, byte 4
         cmp dword [GraphicsReady], byte 0
-        jne short loc_93D22
+        jne short .1
         mov dword [dword esp+0B8h], 1
-loc_93D22:
+.1:
         push byte 0
         call FindNearestColor
         add esp, byte 4
@@ -478,21 +445,20 @@ loc_93D22:
         mov dword [dword esp+0B0h], eax
         xor esi, esi
         mov dword [dword esp+0BCh], esi
-loc_93DA5:
         mov eax, dword [dword_D4594]
         mov ebx, dword [dword esp+0B8h]
         cmp eax, ebx
-        je short loc_93DE2
+        je short .2
         mov dword [dword_D459C], ebp
         mov dword [dword_D45A0], edi
         mov dword [dword_D4594], ebx
         cmp dword [dword esp+0B0h], byte 0
-        jne short loc_93DE2
+        jne short .2
         test ebx, ebx
         sete al
         and eax, 0FFh
         mov dword [dword esp+0B0h], eax
-loc_93DE2:
+.2:
         call MemViewerCountBlocks
         mov ecx, dword [dword esp+0B8h]
         mov ebx, eax
@@ -502,29 +468,29 @@ loc_93DE2:
         mov dword [dword esp+0B4h], eax
         lea edx, [byte ebp+014h]
         cmp edx, eax
-        jle short loc_93E09
+        jle short .3
         mov edx, eax
-loc_93E09:
+.3:
         call DebugWaitKey
         mov esi, eax
         test eax, eax
-        je short loc_93E09
+        je short .3
         cmp eax, 4900h
-        jne short loc_93E28
+        jne short .5
         cmp edi, ebp
-        jne short loc_93E26
+        jne short .4
         test ebp, ebp
-        jle short loc_93E26
+        jle short .4
         sub ebp, byte 15h
-loc_93E26:
+.4:
         mov edi, ebp
-loc_93E28:
+.5:
         cmp esi, 5100h
-        jne short loc_93E88
+        jne short MemViewerDrawRows+0Fh
         cmp edi, edx
         je short MemViewerDrawRows
         mov edi, edx
-        jmp short loc_93E88
+        jmp short MemViewerDrawRows+0Fh
 MemViewerStart:
         mov edx, 1
         mov dword [dword_D4594], edx
@@ -540,160 +506,159 @@ MemViewerListHead:
         add eax, edx
         shl eax, 2
         cmp ebx, byte 1
-        jne short loc_93E70
+        jne short .1
         mov eax, dword [dword eax+memlist1]
         pop edx
         pop ebx
         ret
-loc_93E70:
+.1:
         mov eax, dword [dword eax+memlist0]
         pop edx
         pop ebx
         ret
 MemViewerDrawRows:
         cmp edx, dword [dword esp+0B4h]
-        jge short loc_93E88
+        jge short MemViewerDrawRows+0Fh
         add ebp, byte 15h
         lea edi, [byte edx+015h]
-loc_93E88:
         cmp esi, 4800h
-        jne short loc_93E9A
+        jne short .1
         test edi, edi
-        jle short loc_93E9A
+        jle short .1
         dec edi
         cmp edi, ebp
-        jge short loc_93E9A
+        jge short .1
         dec ebp
-loc_93E9A:
+.1:
         cmp esi, 5000h
-        jne short loc_93EB1
+        jne short .2
         cmp edi, dword [dword esp+0B4h]
-        jge short loc_93EB1
+        jge short .2
         inc edi
         cmp edi, edx
-        jle short loc_93EB1
+        jle short .2
         inc ebp
-loc_93EB1:
+.2:
         cmp esi, 4700h
-        jne short loc_93EC1
+        jne short .4
         cmp edi, ebp
-        jne short loc_93EBF
+        jne short .3
         xor ebp, ebp
-loc_93EBF:
+.3:
         mov edi, ebp
-loc_93EC1:
+.4:
         cmp esi, 4F00h
-        jne short loc_93EE1
+        jne short .6
         mov ecx, dword [dword esp+0B4h]
         cmp edi, ecx
-        je short loc_93EE1
+        je short .6
         cmp edi, edx
-        je short loc_93EDC
+        je short .5
         mov edi, edx
-        jmp short loc_93EE1
-loc_93EDC:
+        jmp short .6
+.5:
         lea ebp, [byte ecx-014h]
         mov edi, ecx
-loc_93EE1:
+.6:
         cmp esi, byte 1Bh
-        jne short loc_93EF1
+        jne short .7
         mov dword [dword esp+0BCh], 1
-loc_93EF1:
+.7:
         cmp esi, byte 0Dh
-        jne short loc_93F0D
+        jne short .8
         mov edx, dword [dword_EDE84]
         mov eax, dword [dword_EDE68]
         mov ebx, dword [dword esp+0B8h]
         call MemViewerHexDump
-loc_93F0D:
+.8:
         cmp esi, byte 43h
-        jne short loc_93F21
+        jne short .9
         call SetScreenTarget
         mov eax, dword [MemViewBlack]
         call DebugGetKey
-loc_93F21:
+.9:
         cmp esi, byte 46h
-        jne short loc_93F2E
+        jne short .10
         xor edx, edx
         mov dword [dword_EDAB4], edx
-loc_93F2E:
+.10:
         cmp esi, byte 44h
-        jne short loc_93F3A
+        jne short .11
         xor byte [MemViewShowDetail], 1
-loc_93F3A:
+.11:
         cmp esi, byte 42h
-        jne short loc_93F56
+        jne short .12
         mov edx, dword [dword_EDE78]
         mov eax, dword [dword_EDE7C]
         mov ebx, dword [dword esp+0B8h]
         call MemViewerBlockInfo
-loc_93F56:
+.12:
         cmp esi, byte 4Dh
-        jne short loc_93F60
+        jne short .13
         call DebugClearScreen
-loc_93F60:
+.13:
         cmp esi, byte 50h
-        je short loc_93F6A
+        je short .14
         cmp esi, byte 20h
-        jne short loc_93F6F
-loc_93F6A:
+        jne short .15
+.14:
         call DumpMemoryMap
-loc_93F6F:
+.15:
         cmp esi, byte 53h
-        je short loc_93F8E
+        je short .16
         cmp esi, byte 5Bh
-        je short loc_93F8E
+        je short .16
         cmp esi, byte 5Dh
-        je short loc_93F8E
+        je short .16
         cmp esi, 4B00h
-        je short loc_93F8E
+        je short .16
         cmp esi, 4D00h
-        jne short loc_93FB0
-loc_93F8E:
+        jne short .17
+.16:
         test byte [byte_EDE7D], 80h
-        jne short loc_93FB0
+        jne short .17
         mov edx, dword [dword_EDE84]
         mov eax, dword [dword_EDE68]
         mov ecx, esi
         mov ebx, dword [dword esp+0B8h]
         call ShapeViewer
-loc_93FB0:
+.17:
         cmp esi, byte 56h
-        jne short loc_93FBA
+        jne short .18
         call SaveScreenshot
-loc_93FBA:
+.18:
         cmp esi, byte 54h
-        jne short loc_93FCB
+        jne short .19
         mov eax, dword [dword esp+0B8h]
         call PaletteViewer
-loc_93FCB:
+.19:
         cmp esi, byte 57h
-        jne short loc_93FE1
+        jne short .20
         mov eax, dword [dword_EDE68]
         mov edx, dword [dword esp+0B8h]
         call MemViewerShowArt
-loc_93FE1:
+.20:
         cmp esi, byte 41h
-        jne short loc_93FEE
+        jne short .21
         xor byte [dword esp+0B8h], 1
-loc_93FEE:
+.21:
         cmp esi, byte 9
-        jne short loc_93FFB
+        jne short .22
         xor byte [dword esp+0B8h], 1
-loc_93FFB:
+.22:
         cmp esi, 5300h
-        jne short loc_9401B
+        jne short .23
         test byte [byte_EDE7D], 80h
-        jne short loc_9401B
+        jne short .23
         mov ebx, dword [MemViewMode]
         push ebx
         call PushMemDescriptorLocked
         add esp, byte 4
-loc_9401B:
+.23:
         cmp esi, 5200h
-        jne short loc_9405B
+        jne short .24
         test byte [byte_EDE7D], 80h
-        jne short loc_9405B
+        jne short .24
         mov edx, dword [MemViewCount]
         mov ebx, 0Ch
         lea eax, [dword esp+0A0h]
@@ -704,35 +669,35 @@ loc_9401B:
         push ecx
         call MarkDescPurgeable
         add esp, byte 4
-loc_9405B:
+.24:
         mov esi, dword [dword esp+0B4h]
         cmp ebp, esi
-        jle short loc_9406D
+        jle short .25
         mov edi, esi
         sub ebp, byte 15h
-        jmp short loc_94075
-loc_9406D:
+        jmp short .26
+.25:
         test ebp, ebp
-        jge short loc_94075
+        jge short .26
         xor ebp, ebp
         xor edi, edi
-loc_94075:
+.26:
         mov eax, dword [dword esp+0B4h]
         cmp edi, eax
-        jle short loc_94082
+        jle short .27
         mov edi, eax
-loc_94082:
+.27:
         cmp dword [dword esp+0BCh], byte 0
-        je near loc_93DA5
+        je near MemViewer+0E5h
         mov dword [dword_D459C], ebp
         mov dword [dword_D45A0], edi
         call DebugKbdFlush
         cmp dword [dword esp+0B0h], byte 0
-        je short loc_940BA
+        je short .28
         call SetScreenTarget
         mov eax, dword [MemViewBlack]
         call DebugGetKey
-loc_940BA:
+.28:
         xor eax, eax
         mov al, byte [dword esp+0C0h]
         push eax
@@ -761,31 +726,31 @@ MemViewerCountBlocks:
         mov eax, 1
         call MemViewerListHead
         test eax, eax
-        je short loc_9410D
-loc_94105:
+        je short .2
+.1:
         mov eax, dword [byte eax+020h]
         inc edx
         test eax, eax
-        jne short loc_94105
-loc_9410D:
+        jne short .1
+.2:
         lea eax, [byte edx+01h]
         pop edx
         ret
         db 08Bh,0C0h
 MemViewerSelectRow:
         cmp edx, byte 2
-        je short loc_94181
+        je short .4
         cmp eax, ebx
-        jl short loc_94124
+        jl short .1
         add ebx, byte 15h
         cmp eax, ebx
-        jl short loc_9412C
-loc_94124:
+        jl short .2
+.1:
         mov eax, 1
         ret 10h
-loc_9412C:
+.2:
         cmp eax, ecx
-        jne short loc_9416D
+        jne short .3
         mov eax, dword [MemViewWhite]
         mov dword [MemViewRow], eax
         mov dword [MemViewTop], 70h
@@ -799,11 +764,11 @@ loc_9412C:
         mov dword [dword_EDE78], eax
         xor eax, eax
         ret 10h
-loc_9416D:
+.3:
         mov eax, dword [MemViewBlack]
         mov dword [MemViewRow], eax
         mov dword [MemViewTop], 7
-loc_94181:
+.4:
         xor eax, eax
         ret 10h
         db 08Bh,0C0h
@@ -832,12 +797,12 @@ MemViewerDrawList:
         mov esi, dword [dword_D2F78]
         push esi
         cmp dword [MemViewShowDetail], byte 0
-        je short loc_941DF
+        je short .1
         mov eax, str_CS44xDS
-        jmp short loc_941E4
-loc_941DF:
+        jmp short .2
+.1:
         mov eax, str_CS44xDS2
-loc_941E4:
+.2:
         push eax
         lea eax, [byte ebp-02Eh]
         push eax
@@ -850,19 +815,19 @@ loc_941E4:
         mov ebx, dword [byte ebp+066h]
         push ebx
         cmp dword [MemViewShowDetail], byte 0
-        je short loc_9420D
+        je short .3
         mov eax, str_Used66xFree
-        jmp short loc_94212
-loc_9420D:
+        jmp short .4
+.3:
         mov eax, str_Used7uFree7u
-loc_94212:
+.4:
         push eax
         lea eax, [dword ebp-082h]
         push eax
         call sprintf_
         add esp, byte 14h
         cmp dword [byte ebp+07Eh], byte 0
-        jne near loc_94316
+        jne near .5
         mov ecx, 0Ah
         lea edi, [dword ebp-0D6h]
         mov esi, str_NAMESIZEADREND
@@ -932,15 +897,15 @@ loc_94212:
         call FillRect
         add esp, byte 14h
         call ReturnFalse
-        jmp near loc_943EE
-loc_94316:
+        jmp near .7
+.5:
         mov ecx, 0Bh
         lea edi, [dword ebp-0D6h]
         mov esi, str_IDXNAMESIZEADR
         rep movsd
         mov edi, dword [byte ebp+07Eh]
         cmp edi, byte 1
-        jne short loc_9439B
+        jne short .6
         push byte 0Bh
         push unk_C41F0
         call DebugPrintf
@@ -972,10 +937,10 @@ loc_94316:
         push byte 0
         call DebugSetLine
         add esp, byte 10h
-        jmp short loc_943EE
-loc_9439B:
+        jmp short .7
+.6:
         cmp edi, byte 2
-        jne short loc_943EE
+        jne short .7
         lea eax, [byte ebp-02Eh]
         push eax
         push asc_C4200
@@ -997,12 +962,12 @@ loc_9439B:
         push ecx
         call fprintf_
         add esp, byte 0Ch
-loc_943EE:
+.7:
         xor esi, esi
         xor edi, edi
         cmp dword [byte ebp+06Eh], byte 0
-        jle near loc_946CB
-loc_943FC:
+        jle near .25
+.8:
         lea eax, [byte ebp+056h]
         push eax
         lea eax, [byte ebp+042h]
@@ -1019,7 +984,7 @@ loc_943FC:
         mov eax, dword [byte ebp+03Eh]
         mov ecx, dword [byte ebp+056h]
         cmp eax, ecx
-        je near loc_94552
+        je near .16
         push byte 0
         push dword 0A000h
         sub eax, ecx
@@ -1031,7 +996,7 @@ loc_943FC:
         mov eax, esi
         call MemViewerSelectRow
         test eax, eax
-        jne near loc_94551
+        jne near .15
         lea edx, [byte ebp+032h]
         mov eax, dword [byte ebp+056h]
         call DebugSprintf
@@ -1041,19 +1006,19 @@ loc_943FC:
         mov eax, dword [byte ebp+03Eh]
         sub eax, dword [byte ebp+056h]
         cmp dword [byte ebp+07Eh], byte 0
-        jne short loc_944D4
+        jne short .11
         lea edx, [byte ebp+026h]
         push edx
         lea edx, [byte ebp+032h]
         push edx
         push eax
         cmp dword [MemViewShowDetail], byte 0
-        je short loc_94488
+        je short .9
         mov eax, str_SPACE9x8s8s
-        jmp short loc_9448D
-loc_94488:
+        jmp short .10
+.9:
         mov eax, str_SPACE9d8s8s
-loc_9448D:
+.10:
         push eax
         lea eax, [byte ebp-02Eh]
         push eax
@@ -1076,20 +1041,20 @@ loc_9448D:
         call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
-        jmp near loc_94551
-loc_944D4:
+        jmp near .15
+.11:
         lea edx, [byte ebp+026h]
         push edx
         lea edx, [byte ebp+032h]
         push edx
         push eax
         cmp dword [MemViewShowDetail], byte 0
-        je short loc_944ED
+        je short .12
         mov eax, str_SPACE66x6
-        jmp short loc_944F2
-loc_944ED:
+        jmp short .13
+.12:
         mov eax, str_SPACE7d66s
-loc_944F2:
+.13:
         push eax
         lea eax, [byte ebp-02Eh]
         push eax
@@ -1097,7 +1062,7 @@ loc_944F2:
         add esp, byte 14h
         mov ecx, dword [byte ebp+07Eh]
         cmp ecx, byte 1
-        jne short loc_94534
+        jne short .14
         mov ebx, dword [MemViewTop]
         push ebx
         call DebugSetAttr
@@ -1112,10 +1077,10 @@ loc_944F2:
         push byte 0
         call DebugSetLine
         add esp, byte 10h
-        jmp short loc_94551
-loc_94534:
+        jmp short .15
+.14:
         cmp ecx, byte 2
-        jne short loc_94551
+        jne short .15
         lea eax, [byte ebp-02Eh]
         push eax
         push asc_C4200
@@ -1123,9 +1088,9 @@ loc_94534:
         push edx
         call fprintf_
         add esp, byte 0Ch
-loc_94551:
+.15:
         inc esi
-loc_94552:
+.16:
         mov eax, dword [byte ebp+042h]
         push eax
         mov edx, dword [byte ebp+046h]
@@ -1140,15 +1105,15 @@ loc_94552:
         mov eax, esi
         call MemViewerSelectRow
         test eax, eax
-        jne near loc_946C0
+        jne near .24
         cmp esi, dword [byte ebp+076h]
-        jne short loc_94594
+        jne short .17
         mov eax, dword [MemViewTitle]
         mov eax, dword [byte eax+024h]
         mov dword [MemViewMode], eax
         add eax, byte 4
         mov dword [MemViewCount], eax
-loc_94594:
+.17:
         lea edx, [byte ebp+032h]
         mov eax, dword [byte ebp+03Eh]
         call DebugSprintf
@@ -1157,7 +1122,7 @@ loc_94594:
         lea edx, [byte ebp+026h]
         call DebugSprintf
         cmp dword [byte ebp+07Eh], byte 0
-        jne short loc_94624
+        jne short .20
         lea eax, [byte ebp+026h]
         push eax
         lea eax, [byte ebp+032h]
@@ -1167,12 +1132,12 @@ loc_94594:
         mov edx, dword [byte ebp+052h]
         push edx
         cmp dword [MemViewShowDetail], byte 0
-        je short loc_945D3
+        je short .18
         mov eax, asc_C428C
-        jmp short loc_945D8
-loc_945D3:
+        jmp short .19
+.18:
         mov eax, str_1212s9d8s8s
-loc_945D8:
+.19:
         push eax
         lea eax, [dword ebp-082h]
         push eax
@@ -1195,8 +1160,8 @@ loc_945D8:
         call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
-        jmp near loc_946C0
-loc_94624:
+        jmp near .24
+.20:
         mov ecx, dword [byte ebp+046h]
         push ecx
         lea eax, [byte ebp+026h]
@@ -1209,12 +1174,12 @@ loc_94624:
         push edx
         push edi
         cmp dword [MemViewShowDetail], byte 0
-        je short loc_94649
+        je short .21
         mov eax, str_33d1212s66x66s66s44x
-        jmp short loc_9464E
-loc_94649:
+        jmp short .22
+.21:
         mov eax, asc_C42E4
-loc_9464E:
+.22:
         push eax
         lea eax, [dword ebp-082h]
         push eax
@@ -1222,7 +1187,7 @@ loc_9464E:
         add esp, byte 20h
         mov ecx, dword [byte ebp+07Eh]
         cmp ecx, byte 1
-        jne short loc_946A0
+        jne short .23
         mov ebx, dword [MemViewTop]
         push ebx
         call DebugSetAttr
@@ -1240,10 +1205,10 @@ loc_9464E:
         push byte 7
         call DebugSetAttr
         add esp, byte 4
-        jmp short loc_946C0
-loc_946A0:
+        jmp short .24
+.23:
         cmp ecx, byte 2
-        jne short loc_946C0
+        jne short .24
         lea eax, [dword ebp-082h]
         push eax
         push asc_C4200
@@ -1251,20 +1216,20 @@ loc_946A0:
         push edx
         call fprintf_
         add esp, byte 0Ch
-loc_946C0:
+.24:
         inc esi
         inc edi
         cmp edi, dword [byte ebp+06Eh]
-        jl near loc_943FC
-loc_946CB:
+        jl near .8
+.25:
         mov eax, dword [byte ebp+07Ah]
         add eax, byte 15h
         mov dword [byte ebp+06Ah], eax
         mov edi, dword [byte ebp+07Eh]
         test edi, edi
-        jne short loc_94729
+        jne short .28
         cmp esi, eax
-        jge short loc_946FB
+        jge short .26
         mov eax, dword [dword_D3048]
         push eax
         mov eax, esi
@@ -1275,24 +1240,24 @@ loc_946CB:
         mov ebx, dword [dword_D3044]
         push ebx
         push edi
-        jmp short loc_94710
-loc_946FB:
+        jmp short .27
+.26:
         mov ecx, dword [dword_D3048]
         push ecx
         push dword 0C4h
         mov edi, dword [dword_D3044]
         push edi
         push byte 0
-loc_94710:
+.27:
         call SetClipWindow
         add esp, byte 10h
         mov eax, dword [MemViewBlack]
         call DebugGetKey
         call SetScreenTarget
-        jmp short loc_9476E
-loc_94729:
+        jmp short .30
+.28:
         cmp edi, byte 1
-        jne short loc_9476E
+        jne short .30
         push byte 7
         call DebugSetAttr
         add esp, byte 4
@@ -1306,8 +1271,8 @@ loc_94729:
         add edx, ebx
         mov dword [byte ebp+072h], edx
         cmp eax, edx
-        jge short loc_9476E
-loc_94753:
+        jge short .30
+.29:
         push MemViewStrings
         push str_80s
         push edi
@@ -1316,8 +1281,8 @@ loc_94753:
         add esp, byte 10h
         inc edi
         cmp edi, dword [byte ebp+072h]
-        jl short loc_94753
-loc_9476E:
+        jl short .29
+.30:
         lea eax, [byte esi-01h]
         lea esp, [dword ebp+082h]
         pop ebp
@@ -1342,26 +1307,26 @@ MemPoolTotals:
         mov dword [edi], edx
         mov dword [byte ebp+00h], edx
         test eax, eax
-        je short loc_947CA
-loc_947A7:
+        je short .4
+.1:
         mov edx, dword [eax]
         sub edx, dword [ebx]
         sub edx, dword [byte ebx+010h]
         test byte [byte eax+019h], 80h
-        jne short loc_947B9
+        jne short .2
         mov ebx, dword [byte eax+010h]
         add dword [edi], ebx
-loc_947B9:
+.2:
         add dword [esi], edx
         cmp edx, dword [ecx]
-        jbe short loc_947C1
+        jbe short .3
         mov dword [ecx], edx
-loc_947C1:
+.3:
         mov ebx, eax
         mov eax, dword [byte eax+020h]
         test eax, eax
-        jne short loc_947A7
-loc_947CA:
+        jne short .1
+.4:
         mov eax, dword [edi]
         mov ecx, dword [esi]
         add eax, ecx
@@ -1380,7 +1345,7 @@ MemViewerDrawTitle:
         mov esi, ebx
         mov edi, ecx
         test ebp, ebp
-        jne short loc_9485F
+        jne short .1
         mov dword [edx], str_MEMMANAGER
         mov ebp, dword [dword_D2F80]
         push ebp
@@ -1411,8 +1376,8 @@ MemViewerDrawTitle:
         lea eax, [nosplit edx*4+00h]
         add eax, edx
         mov eax, dword [nosplit eax*4+memlist1]
-        jmp short loc_948C7
-loc_9485F:
+        jmp short .4
+.1:
         mov edx, dword [MemViewTitle]
         lea ebx, [byte edx+04h]
         mov dword [eax], ebx
@@ -1433,7 +1398,7 @@ loc_9485F:
         mov edx, dword [byte esp+018h]
         mov dword [edx], 0
         cmp ebp, byte 1
-        jle short loc_948B7
+        jle short .2
         mov esi, dword [byte eax+024h]
         mov ecx, dword [esi]
         push ecx
@@ -1441,15 +1406,15 @@ loc_9485F:
         add esp, byte 4
         mov edx, dword [byte esi+010h]
         add eax, edx
-        jmp short loc_948B9
-loc_948B7:
+        jmp short .3
+.2:
         mov eax, dword [esi]
-loc_948B9:
+.3:
         mov edx, dword [byte esp+01Ch]
         mov dword [edx], eax
         mov eax, dword [MemViewTitle]
         mov eax, dword [byte eax+020h]
-loc_948C7:
+.4:
         mov dword [MemViewTitle], eax
         pop ebp
         pop edi
@@ -1513,16 +1478,16 @@ MemViewerBlockInfo:
         call ReturnFalse
         mov edi, 0F8h
         xor esi, esi
-loc_94987:
+.1:
         test ebp, 1
-        je short loc_949A4
+        je short .2
         push byte 3Dh
         push edi
         push unk_C433C
         call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
-loc_949A4:
+.2:
         sar ebp, 1
         mov eax, esi
         mov edx, esi
@@ -1531,12 +1496,12 @@ loc_949A4:
         idiv ebx
         sub edi, byte 8
         cmp edx, byte 3
-        jne short loc_949BF
+        jne short .3
         sub edi, byte 8
-loc_949BF:
+.3:
         inc esi
         cmp esi, byte 10h
-        jl short loc_94987
+        jl short .1
         mov eax, dword [MemViewRed]
         push eax
         mov edx, dword [MemViewBlack]
@@ -1546,7 +1511,7 @@ loc_949BF:
         mov edi, 50h
         mov esi, 4Dh
         test byte [byte esp+09h], 80h
-        je short loc_94A1D
+        je short .4
         mov ebx, dword [MemViewRed]
         push ebx
         push byte 4Ch
@@ -1562,9 +1527,9 @@ loc_949BF:
         add esp, byte 0Ch
         call ReturnFalse
         mov esi, 55h
-loc_94A1D:
+.4:
         test byte [byte esp+09h], 20h
-        je short loc_94A54
+        je short .5
         mov ecx, dword [MemViewRed]
         push ecx
         lea edx, [byte esi-01h]
@@ -1582,11 +1547,11 @@ loc_94A1D:
         add esp, byte 0Ch
         call ReturnFalse
         add esi, byte 8
-loc_94A54:
+.5:
         test byte [byte esp+09h], 0A0h
-        je short loc_94A5E
+        je short .6
         add esi, byte 8
-loc_94A5E:
+.6:
         mov ebp, dword [MemViewBlack]
         push ebp
         mov eax, dword [MemViewWhite]
@@ -1595,16 +1560,16 @@ loc_94A5E:
         add esp, byte 8
         lea ebp, [byte esi+0Ah]
         test byte [byte esp+08h], 20h
-        je short loc_94A86
+        je short .7
         push esi
         push edi
         push str_HIGHMemoryBlock
-        jmp short loc_94A8D
-loc_94A86:
+        jmp short .8
+.7:
         push esi
         push edi
         push str_LOWMemoryBlock
-loc_94A8D:
+.8:
         call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
@@ -1618,22 +1583,22 @@ loc_94A8D:
         lea ebp, [byte esi+014h]
         add esi, byte 0Ah
         test byte [byte esp+08h], 10h
-        je short loc_94AC6
+        je short .9
         push esi
         push edi
         push str_RelocatableBlock
-        jmp short loc_94ACD
-loc_94AC6:
+        jmp short .10
+.9:
         push esi
         push edi
         push str_NonRelocatableBlock
-loc_94ACD:
+.10:
         call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
         mov esi, ebp
         test byte [byte esp+08h], 40h
-        je short loc_94AFA
+        je short .11
         push esi
         push edi
         push str_ALIGNFlagIsSet
@@ -1641,9 +1606,9 @@ loc_94ACD:
         add esp, byte 0Ch
         call ReturnFalse
         add esi, byte 0Ah
-loc_94AFA:
+.11:
         test byte [byte esp+08h], 0Fh
-        je short loc_94B20
+        je short .12
         mov edx, dword [byte esp+08h]
         and edx, byte 7
         push edx
@@ -1654,7 +1619,7 @@ loc_94AFA:
         add esp, byte 10h
         call ReturnFalse
         add esi, byte 0Ah
-loc_94B20:
+.12:
         mov edx, dword [byte esp+04h]
         push edx
         push str_SequenceD
@@ -1665,18 +1630,18 @@ loc_94B20:
         call ReturnFalse
         add esi, byte 0Ah
         test byte [byte esp+08h], 8
-        je short loc_94B57
+        je short .13
         push esi
         push edi
         push str_BlockIsPURGABLE
         call TextPrintAt
         add esp, byte 0Ch
         call ReturnFalse
-loc_94B57:
+.13:
         cmp dword [esp], byte 0
-        jne short loc_94B62
+        jne short .14
         call DebugPressAnyKey
-loc_94B62:
+.14:
         add esp, byte 0Ch
         pop ebp
         pop edi
@@ -1692,18 +1657,18 @@ MemViewerHexDump:
         sub esp, byte 34h
         mov dword [byte esp+08h], eax
         test edx, edx
-        jne short loc_94B85
+        jne short .1
         call DebugClearScreen
-        jmp near loc_94E29
-loc_94B85:
+        jmp near .37
+.1:
         mov eax, edx
         shr eax, 4
         mov dword [byte esp+024h], eax
         test dl, 0Fh
-        je short loc_94B9A
+        je short .2
         lea edx, [byte eax+01h]
         mov dword [byte esp+024h], edx
-loc_94B9A:
+.2:
         xor esi, esi
         cmp dword [byte esp+024h], byte 19h
         xor ebp, ebp
@@ -1714,19 +1679,19 @@ loc_94B9A:
         mov eax, dword [byte esp+024h]
         sub eax, byte 19h
         mov dword [byte esp+04h], eax
-loc_94BBC:
+.3:
         mov eax, dword [byte esp+024h]
         sub eax, esi
         mov dword [byte esp+02Ch], eax
         cmp eax, byte 19h
-        jle short loc_94BD3
+        jle short .4
         mov dword [byte esp+02Ch], 19h
-loc_94BD3:
+.4:
         mov eax, dword [byte esp+02Ch]
         cmp edi, eax
-        jl short loc_94BDE
+        jl short .5
         lea edi, [byte eax-01h]
-loc_94BDE:
+.5:
         mov eax, esi
         shl eax, 4
         add eax, dword [byte esp+08h]
@@ -1746,7 +1711,7 @@ loc_94BDE:
         mov dword [byte esp+010h], edi
         mov dword [byte esp+0Ch], esi
         call ReturnFalse
-loc_94C1A:
+.6:
         call KbdGetKey
         mov dword [byte esp+030h], eax
         push eax
@@ -1754,96 +1719,96 @@ loc_94C1A:
         add esp, byte 4
         mov edx, eax
         test eax, eax
-        je short loc_94C1A
+        je short .6
         xor ebx, ebx
         mov dword [esp], ebx
         cmp eax, byte 1Bh
-        jne short loc_94C51
+        jne short .8
         cmp dword [byte esp+028h], byte 0
-        je short loc_94C49
+        je short .7
         mov dword [byte esp+028h], ebx
-        jmp short loc_94C51
-loc_94C49:
+        jmp short .8
+.7:
         mov dword [byte esp+018h], 1
-loc_94C51:
+.8:
         cmp edx, 4900h
-        jne short loc_94C71
+        jne short .11
         test edi, edi
-        je short loc_94C61
+        je short .9
         xor edi, edi
-        jmp short loc_94C71
-loc_94C61:
+        jmp short .11
+.9:
         test esi, esi
-        jbe short loc_94C71
+        jbe short .11
         cmp esi, byte 19h
-        jbe short loc_94C6F
+        jbe short .10
         sub esi, byte 19h
-        jmp short loc_94C71
-loc_94C6F:
+        jmp short .11
+.10:
         xor esi, esi
-loc_94C71:
+.11:
         cmp edx, 5100h
-        jne short loc_94C95
+        jne short .13
         mov eax, dword [byte esp+02Ch]
         dec eax
         cmp edi, eax
-        je short loc_94C89
+        je short .12
         mov edi, 18h
-        jmp short loc_94C95
-loc_94C89:
+        jmp short .13
+.12:
         lea eax, [byte esi+019h]
         cmp eax, dword [byte esp+024h]
-        jae short loc_94C95
+        jae short .13
         add esi, byte 19h
-loc_94C95:
+.13:
         cmp edx, 4800h
-        je short loc_94CA5
+        je short .14
         cmp edx, 5000h
-        jne short loc_94CA7
-loc_94CA5:
+        jne short .15
+.14:
         mov ebx, edx
-loc_94CA7:
+.15:
         cmp edx, byte 8
-        jne short loc_94CB1
+        jne short .16
         mov ebx, 4B00h
-loc_94CB1:
+.16:
         cmp edx, 4700h
-        jne short loc_94CCF
+        jne short .19
         test ebp, ebp
-        je short loc_94CC1
+        je short .17
         xor ebp, ebp
-        jmp short loc_94CCF
-loc_94CC1:
+        jmp short .19
+.17:
         test edi, edi
-        je short loc_94CC9
+        je short .18
         xor edi, edi
-        jmp short loc_94CCF
-loc_94CC9:
+        jmp short .19
+.18:
         test esi, esi
-        je short loc_94CCF
+        je short .19
         xor esi, esi
-loc_94CCF:
+.19:
         cmp edx, 4F00h
-        jne short loc_94D00
+        jne short .22
         cmp ebp, byte 0Fh
-        je short loc_94CE3
+        je short .20
         mov ebp, 0Fh
-        jmp short loc_94D00
-loc_94CE3:
+        jmp short .22
+.20:
         mov eax, dword [byte esp+02Ch]
         dec eax
         cmp edi, eax
-        je short loc_94CF3
+        je short .21
         mov edi, 18h
-        jmp short loc_94D00
-loc_94CF3:
+        jmp short .22
+.21:
         lea eax, [byte esi+018h]
         cmp eax, dword [byte esp+024h]
-        jae short loc_94D00
+        jae short .22
         mov esi, dword [byte esp+04h]
-loc_94D00:
+.22:
         cmp dword [byte esp+028h], byte 1
-        jne short loc_94D1F
+        jne short .23
         mov ebx, dword [byte esp+01Ch]
         add ebx, ebp
         mov eax, edi
@@ -1852,29 +1817,29 @@ loc_94D00:
         mov bl, byte [byte esp+030h]
         mov byte [eax], bl
         mov ebx, 4D00h
-loc_94D1F:
+.23:
         cmp edx, byte 4Dh
-        jne short loc_94D2C
+        jne short .24
         mov dword [byte esp+028h], 1
-loc_94D2C:
+.24:
         cmp edx, byte 30h
-        jl short loc_94D44
+        jl short .25
         cmp edx, byte 39h
-        jg short loc_94D44
+        jg short .25
         lea eax, [byte edx-030h]
         mov dword [byte esp+030h], eax
         mov dword [esp], 1
-loc_94D44:
+.25:
         cmp edx, byte 41h
-        jl short loc_94D5C
+        jl short .26
         cmp edx, byte 46h
-        jg short loc_94D5C
+        jg short .26
         sub edx, byte 37h
         mov dword [byte esp+030h], edx
         mov dword [esp], 1
-loc_94D5C:
+.26:
         cmp dword [esp], byte 0
-        je short loc_94DA8
+        je short .28
         mov eax, dword [byte esp+01Ch]
         add eax, ebp
         mov edx, edi
@@ -1882,7 +1847,7 @@ loc_94D5C:
         add eax, edx
         mov edx, dword [byte esp+020h]
         test edx, edx
-        jne short loc_94D91
+        jne short .27
         mov dh, byte [eax]
         and dh, 0Fh
         mov dl, byte [byte esp+030h]
@@ -1890,71 +1855,71 @@ loc_94D5C:
         add dh, dl
         mov byte [eax], dh
         mov dword [byte esp+020h], 1
-        jmp short loc_94DA8
-loc_94D91:
+        jmp short .28
+.27:
         cmp edx, byte 1
-        jne short loc_94DA8
+        jne short .28
         mov dl, byte [eax]
         and dl, 0F0h
         mov dh, byte [byte esp+030h]
         add dh, dl
         mov byte [eax], dh
         mov ebx, 4D00h
-loc_94DA8:
+.28:
         cmp ebx, 4B00h
-        jne short loc_94DC1
+        jne short .29
         dec ebp
         test ebp, ebp
-        jge short loc_94DD6
+        jge short .30
         mov ebp, 0Fh
         mov ebx, 4800h
-        jmp short loc_94DD6
-loc_94DC1:
+        jmp short .30
+.29:
         cmp ebx, 4D00h
-        jne short loc_94DD6
+        jne short .30
         inc ebp
         cmp ebp, byte 0Fh
-        jle short loc_94DD6
+        jle short .30
         xor ebp, ebp
         mov ebx, 5000h
-loc_94DD6:
+.30:
         cmp ebx, 4800h
-        jne short loc_94DEC
+        jne short .32
         test edi, edi
-        jle short loc_94DE5
+        jle short .31
         dec edi
-        jmp short loc_94E06
-loc_94DE5:
+        jmp short .34
+.31:
         test esi, esi
-        jbe short loc_94E06
+        jbe short .34
         dec esi
-        jmp short loc_94E06
-loc_94DEC:
+        jmp short .34
+.32:
         cmp ebx, 5000h
-        jne short loc_94E06
+        jne short .34
         cmp edi, byte 18h
-        jge short loc_94DFC
+        jge short .33
         inc edi
-        jmp short loc_94E06
-loc_94DFC:
+        jmp short .34
+.33:
         lea eax, [byte esi+019h]
         cmp eax, dword [byte esp+024h]
-        jae short loc_94E06
+        jae short .34
         inc esi
-loc_94E06:
+.34:
         cmp ebp, dword [byte esp+014h]
-        jne short loc_94E18
+        jne short .35
         cmp edi, dword [byte esp+010h]
-        jne short loc_94E18
+        jne short .35
         cmp esi, dword [byte esp+0Ch]
-        je short loc_94E1E
-loc_94E18:
+        je short .36
+.35:
         xor edx, edx
         mov dword [byte esp+020h], edx
-loc_94E1E:
+.36:
         cmp dword [byte esp+018h], byte 0
-        je near loc_94BBC
-loc_94E29:
+        je near .3
+.37:
         add esp, byte 34h
         pop ebp
         pop edi
@@ -1979,23 +1944,23 @@ HexDumpRow:
         mov dword [byte esp+08h], edi
         xor ebp, ebp
         cmp dword [byte esp+04h], byte 0
-        jle near loc_94F91
-loc_94E68:
+        jle near .10
+.1:
         mov edi, dword [byte esp+08h]
         push edi
         push str_04x2
         call DebugPrintf
         add esp, byte 8
         xor edi, edi
-loc_94E7C:
+.2:
         cmp edi, dword [esp]
-        jne short loc_94E91
+        jne short .3
         cmp ebp, dword [byte esp+020h]
-        jne short loc_94E91
+        jne short .3
         push byte 70h
         call DebugSetAttr
         add esp, byte 4
-loc_94E91:
+.3:
         xor eax, eax
         mov al, byte [esi]
         push eax
@@ -2003,55 +1968,55 @@ loc_94E91:
         call DebugPrintf
         add esp, byte 8
         cmp edi, dword [esp]
-        jne short loc_94ECB
+        jne short .4
         cmp ebp, dword [byte esp+020h]
-        jne short loc_94ECB
+        jne short .4
         cmp dword [byte esp+024h], byte 0
-        je short loc_94ECB
+        je short .4
         push unk_C4414
         call DebugPrintf
         add esp, byte 4
         push byte 7
         call DebugSetAttr
-        jmp short loc_94EDF
-loc_94ECB:
+        jmp short .5
+.4:
         push byte 7
         call DebugSetAttr
         add esp, byte 4
         push unk_C4418
         call DebugPrintf
-loc_94EDF:
+.5:
         add esp, byte 4
         mov eax, edi
         and eax, byte 3
         cmp eax, byte 3
-        jne short loc_94EF9
+        jne short .6
         push unk_C4418
         call DebugPrintf
         add esp, byte 4
-loc_94EF9:
+.6:
         inc esi
         inc edi
         cmp edi, byte 10h
-        jl near loc_94E7C
+        jl near .2
         push unk_C4418
         call DebugPrintf
         add esp, byte 4
         xor edi, edi
         sub esi, byte 10h
-loc_94F16:
+.7:
         mov al, byte [esi]
         and al, 7Fh
         mov byte [byte esp+0Ch], al
         mov dword [MemViewTop], 7
         cmp al, 20h
-        jae short loc_94F31
+        jae short .8
         mov byte [byte esp+0Ch], 2Eh
-loc_94F31:
+.8:
         test byte [esi], 80h
-        je short loc_94F40
+        je short .9
         mov dword [MemViewTop], 70h
-loc_94F40:
+.9:
         mov ecx, dword [MemViewTop]
         push ecx
         call DebugSetAttr
@@ -2065,7 +2030,7 @@ loc_94F40:
         inc esi
         inc edi
         cmp edi, byte 10h
-        jl short loc_94F16
+        jl short .7
         push byte 7
         call DebugSetAttr
         add esp, byte 4
@@ -2075,20 +2040,20 @@ loc_94F40:
         add dword [byte esp+08h], byte 10h
         inc ebp
         cmp ebp, dword [byte esp+04h]
-        jl near loc_94E68
-loc_94F91:
+        jl near .1
+.10:
         mov edi, ebp
         cmp ebp, byte 19h
-        jge short loc_94FB0
-loc_94F98:
+        jge short .12
+.11:
         push MemViewStrings
         push str_80s
         call DebugPrintf
         add esp, byte 8
         inc edi
         cmp edi, byte 19h
-        jl short loc_94F98
-loc_94FB0:
+        jl short .11
+.12:
         add esp, byte 10h
         pop ebp
         pop edi
@@ -2103,7 +2068,7 @@ WriteMemMap:
         mov edx, dword [byte esp+038h]
         xor eax, eax
         test edx, edx
-        je near loc_950A3
+        je near .3
         mov dword [MemViewList], edx
         mov edx, esp
         lea eax, [byte esp+014h]
@@ -2144,12 +2109,12 @@ WriteMemMap:
         call fprintf_
         add esp, byte 0Ch
         cmp dword [MemViewShowDetail], byte 0
-        je short loc_9506F
+        je short .1
         mov eax, unk_C4448
-        jmp short loc_95074
-loc_9506F:
+        jmp short .2
+.1:
         mov eax, str_FF
-loc_95074:
+.2:
         push eax
         push str_HexmemdspOS
         mov ecx, dword [MemViewList]
@@ -2163,7 +2128,7 @@ loc_95074:
         xor eax, eax
         call MemViewerDrawList
         mov eax, 1
-loc_950A3:
+.3:
         add esp, byte 28h
         pop ebp
         pop edi
@@ -2189,29 +2154,29 @@ DumpMemoryMap:
         call NextFreeFileName
         mov esi, dword [dword_EDAB4]
         cmp dword [GraphicsReady], byte 0
-        je short loc_950ED
+        je short .1
         push byte 14h
         lea eax, [byte esp+04h]
         push eax
         call ShowMessageBox
         add esp, byte 8
-loc_950ED:
+.1:
         mov edx, str_W_DumpMemoryMap
         mov eax, esp
         call fopen_
         mov dword [MemViewList], eax
         test eax, eax
-        jne short loc_95122
+        jne short .3
         cmp dword [GraphicsReady], byte 0
-        je short loc_9511A
+        je short .2
         push byte 14h
         push str_ErrorDumpingMemoryMap
         call ShowMessageBox
         add esp, byte 8
-loc_9511A:
+.2:
         mov dword [dword_EDAB4], esi
-        jmp short loc_9513E
-loc_95122:
+        jmp short .4
+.3:
         mov dword [dword_EDAB4], esi
         mov esi, esp
         push esi
@@ -2220,7 +2185,7 @@ loc_95122:
         add esp, byte 8
         mov eax, dword [MemViewList]
         call fclose_
-loc_9513E:
+.4:
         add esp, byte 40h
         pop edi
         pop esi
@@ -2267,11 +2232,11 @@ ShapeViewer:
         mov byte [byte esp+04h], ah
         mov eax, dword [byte esp+020h]
         cmp dword [eax], byte 0
-        jl short loc_951B1
+        jl short .1
         mov eax, dword [byte esp+01Ch]
         cmp dword [eax], byte 0
-        jge short loc_951FD
-loc_951B1:
+        jge short .2
+.1:
         call SetScreenTarget
         mov eax, dword [MemViewBlack]
         call DebugGetKey
@@ -2289,15 +2254,15 @@ loc_951B1:
         call ReturnFalse
         call DebugPressAnyKey
         cmp eax, byte 59h
-        jne near loc_954C0
-loc_951FD:
+        jne near .34
+.2:
         xor edi, edi
         mov dword [byte esp+08h], edi
         mov dword [byte esp+02Ch], edi
         xor esi, esi
         cmp dword [byte esp+030h], byte 0
-        jle short loc_95250
-loc_95210:
+        jle short .7
+.3:
         mov eax, esp
         push eax
         push esi
@@ -2306,9 +2271,9 @@ loc_95210:
         call ShapeBankEntryId
         add esp, byte 0Ch
         cmp byte [esp], 21h
-        jne short loc_95228
+        jne short .4
         inc edi
-loc_95228:
+.4:
         mov edx, esp
         mov eax, dword [byte esp+024h]
         call ShapeViewerFindShape
@@ -2316,16 +2281,16 @@ loc_95228:
         shl eax, 18h
         sar eax, 18h
         test al, 80h
-        je short loc_95245
+        je short .5
         inc dword [byte esp+08h]
-        jmp short loc_95249
-loc_95245:
+        jmp short .6
+.5:
         inc dword [byte esp+02Ch]
-loc_95249:
+.6:
         inc esi
         cmp esi, dword [byte esp+030h]
-        jl short loc_95210
-loc_95250:
+        jl short .3
+.7:
         call DebugClearScreen
         push edi
         mov ecx, dword [byte esp+030h]
@@ -2338,30 +2303,30 @@ loc_95250:
         call DebugPrintf
         add esp, byte 14h
         cmp edi, dword [byte esp+030h]
-        jne short loc_9528A
+        jne short .8
         push str_ThereAreNoShapes
         call DebugPrintf
         add esp, byte 4
-        jmp near loc_954C0
-loc_9528A:
+        jmp near .34
+.8:
         cmp ebp, byte 5Bh
-        je short loc_95297
+        je short .9
         cmp ebp, 4B00h
-        jne short loc_9529E
-loc_95297:
+        jne short .10
+.9:
         mov edi, dword [byte esp+030h]
         dec edi
-        jmp short loc_952A5
-loc_9529E:
+        jmp short .11
+.10:
         xor edi, edi
         mov ebp, 5Dh
-loc_952A5:
+.11:
         xor ebx, ebx
         mov dword [byte esp+028h], ebx
         mov eax, dword [byte esp+030h]
         dec eax
         mov dword [byte esp+0Ch], eax
-loc_952B4:
+.12:
         mov eax, esp
         push eax
         push edi
@@ -2405,12 +2370,12 @@ loc_952B4:
         add esp, byte 14h
         call ReturnFalse
         cmp byte [esp], 21h
-        je near loc_953CC
+        je near .19
         mov eax, esi
         call ShapeInfo
         mov dword [byte esp+03Ch], eax
         test eax, eax
-        je short loc_953B3
+        je short .18
         mov eax, dword [esi]
         shl eax, 18h
         sar eax, 18h
@@ -2418,45 +2383,45 @@ loc_952B4:
         mov dword [byte esp+038h], eax
         call SetScreenTarget
         cmp dword [byte esp+03Ch], byte 2
-        jne short loc_95391
+        jne short .14
         mov ebx, dword [byte esp+038h]
         test ebx, ebx
-        je short loc_95384
+        je short .13
         push byte 0
         push byte 0
         push esi
         call DrawArtAnyFormatAt
         add esp, byte 0Ch
-        jmp short loc_953A9
-loc_95384:
+        jmp short .17
+.13:
         push ebx
         push ebx
         push esi
         call PutBlock
         add esp, byte 0Ch
-        jmp short loc_953A9
-loc_95391:
+        jmp short .17
+.14:
         cmp dword [byte esp+038h], byte 0
-        je short loc_953A0
+        je short .15
         push esi
         call DrawArtAnyFormatOwnPos
-        jmp short loc_953A6
-loc_953A0:
+        jmp short .16
+.15:
         push esi
         call DrawBitmap
-loc_953A6:
+.16:
         add esp, byte 4
-loc_953A9:
+.17:
         call ReturnFalse
-        jmp near loc_95427
-loc_953B3:
+        jmp near .23
+.18:
         push str_Bad
         call DebugPrintf
         add esp, byte 4
         mov eax, dword [MemViewBlack]
         call DebugGetKey
-        jmp short loc_95427
-loc_953CC:
+        jmp short .23
+.19:
         mov eax, dword [byte esi+08h]
         sar eax, 10h
         push eax
@@ -2470,84 +2435,84 @@ loc_953CC:
         call DebugPrintf
         add esp, byte 4
         cmp ebp, byte 5Bh
-        je short loc_95401
+        je short .20
         cmp ebp, 4B00h
-        jne short loc_9540C
-loc_95401:
+        jne short .21
+.20:
         dec edi
         test edi, edi
-        jge short loc_95427
+        jge short .23
         mov edi, dword [byte esp+0Ch]
-        jmp short loc_95427
-loc_9540C:
+        jmp short .23
+.21:
         cmp ebp, byte 5Dh
-        je short loc_9541E
+        je short .22
         cmp ebp, byte 53h
-        je short loc_9541E
+        je short .22
         cmp ebp, 4D00h
-        jne short loc_95427
-loc_9541E:
+        jne short .23
+.22:
         inc edi
         cmp edi, dword [byte esp+030h]
-        jl short loc_95427
+        jl short .23
         xor edi, edi
-loc_95427:
+.23:
         cmp byte [esp], 21h
-        je near loc_952B4
+        je near .12
         call ReturnFalse
-loc_95436:
+.24:
         call DebugWaitKey
         mov ebp, eax
         test eax, eax
-        je short loc_95436
+        je short .24
         cmp eax, byte 1Bh
-        jne short loc_9544E
+        jne short .25
         mov dword [byte esp+028h], 1
-loc_9544E:
+.25:
         cmp ebp, byte 5Bh
-        je short loc_9545B
+        je short .26
         cmp ebp, 4B00h
-        jne short loc_95464
-loc_9545B:
+        jne short .27
+.26:
         dec edi
         test edi, edi
-        jge short loc_95464
+        jge short .27
         mov edi, dword [byte esp+0Ch]
-loc_95464:
+.27:
         cmp ebp, byte 5Dh
-        je short loc_95476
+        je short .28
         cmp ebp, byte 53h
-        je short loc_95476
+        je short .28
         cmp ebp, 4D00h
-        jne short loc_9547F
-loc_95476:
+        jne short .29
+.28:
         inc edi
         cmp edi, dword [byte esp+030h]
-        jl short loc_9547F
+        jl short .29
         xor edi, edi
-loc_9547F:
+.29:
         cmp ebp, byte 43h
-        jne short loc_95493
+        jne short .30
         call SetScreenTarget
         mov eax, dword [MemViewBlack]
         call DebugGetKey
-loc_95493:
+.30:
         cmp ebp, byte 4Dh
-        jne short loc_9549D
+        jne short .31
         call DebugClearScreen
-loc_9549D:
+.31:
         cmp ebp, byte 50h
-        jne short loc_954AB
+        jne short .32
         mov eax, dword [byte esp+034h]
         call DumpShapesList
-loc_954AB:
+.32:
         cmp ebp, byte 56h
-        jne short loc_954B5
+        jne short .33
         call SaveScreenshot
-loc_954B5:
+.33:
         cmp dword [byte esp+028h], byte 0
-        je near loc_952B4
-loc_954C0:
+        je near .12
+.34:
         add esp, byte 40h
         pop ebp
         pop edi
@@ -2639,12 +2604,12 @@ ShapeInfo:
         shl eax, 18h
         sar eax, 18h
         test al, 80h
-        je short loc_9559A
+        je short .1
         mov eax, MemViewStrings
-        jmp short loc_9559F
-loc_9559A:
+        jmp short .2
+.1:
         mov eax, str_Un
-loc_9559F:
+.2:
         push eax
         push str_Spacked
         call DebugPrintf
@@ -2653,12 +2618,12 @@ loc_9559F:
         shl eax, 18h
         sar eax, 18h
         test al, 80h
-        je short loc_955C0
+        je short .3
         mov eax, str_Packed
-        jmp short loc_955C5
-loc_955C0:
+        jmp short .4
+.3:
         mov eax, str_Unpacked
-loc_955C5:
+.4:
         push eax
         mov eax, dword [byte esi+0Ch]
         sar eax, 10h
@@ -2679,37 +2644,37 @@ loc_955C5:
         add esp, byte 20h
         call ReturnFalse
         cmp word [byte esi+04h], byte 0
-        jl near loc_95665
+        jl near .5
         mov edx, dword [byte esi+02h]
         sar edx, 10h
         cmp edx, dword [dword_D3044]
-        jg short loc_95665
+        jg short .5
         cmp word [byte esi+06h], byte 0
-        jl short loc_95665
+        jl short .5
         mov eax, dword [byte esi+04h]
         sar eax, 10h
         cmp eax, dword [dword_D3048]
-        jg short loc_95665
+        jg short .5
         cmp word [byte esi+0Ch], byte 0
-        jl short loc_95665
+        jl short .5
         mov ebx, dword [byte esi+0Ah]
         sar ebx, 10h
         cmp ebx, dword [dword_D3044]
-        jg short loc_95665
+        jg short .5
         cmp word [byte esi+0Eh], byte 0
-        jl short loc_95665
+        jl short .5
         mov esi, dword [byte esi+0Ch]
         sar esi, 10h
         mov ebp, dword [dword_D3048]
         cmp esi, ebp
-        jg short loc_95665
+        jg short .5
         add edx, ebx
         cmp edx, dword [dword_D3044]
-        jg short loc_95665
+        jg short .5
         add eax, esi
         cmp eax, ebp
-        jle short loc_956B3
-loc_95665:
+        jle short .7
+.5:
         call SetScreenTarget
         mov eax, dword [MemViewBlack]
         call DebugGetKey
@@ -2726,15 +2691,15 @@ loc_95665:
         call ReturnFalse
         call DebugPressAnyKey
         cmp eax, byte 59h
-        je short loc_956AC
+        je short .6
         xor eax, eax
-        jmp short loc_956B8
-loc_956AC:
+        jmp short .8
+.6:
         mov eax, 2
-        jmp short loc_956B8
-loc_956B3:
+        jmp short .8
+.7:
         mov eax, 1
-loc_956B8:
+.8:
         pop ebp
         pop edi
         pop esi
@@ -2786,15 +2751,15 @@ DumpShapesList:
         call fopen_
         mov dword [MemViewList], eax
         test eax, eax
-        jne short loc_9576B
+        jne short .1
         push byte 14h
         push str_ErrorDumpingShapesList
         call ShowMessageBox
         add esp, byte 8
         call ReturnFalse
         mov dword [dword_EDAB4], esi
-        jmp near loc_9595F
-loc_9576B:
+        jmp near .7
+.1:
         mov dword [dword_EDAB4], esi
         lea edx, [byte esp+040h]
         lea eax, [byte esp+054h]
@@ -2858,9 +2823,9 @@ loc_9576B:
         add esp, byte 0Ch
         xor esi, esi
         test edi, edi
-        jle near loc_95937
+        jle near .5
         xor edi, edi
-loc_9585D:
+.2:
         lea eax, [byte esp+068h]
         push eax
         push esi
@@ -2916,12 +2881,12 @@ loc_9585D:
         shl eax, 18h
         sar eax, 18h
         test al, 80h
-        je short loc_9590C
+        je short .3
         mov eax, MemViewStrings
-        jmp short loc_95911
-loc_9590C:
+        jmp short .4
+.3:
         mov eax, str_Un
-loc_95911:
+.4:
         push eax
         push str_Spacked
         mov edx, dword [MemViewList]
@@ -2931,19 +2896,19 @@ loc_95911:
         add edi, byte 4
         inc esi
         cmp esi, dword [dword esp+088h]
-        jl near loc_9585D
-loc_95937:
+        jl near .2
+.5:
         cmp dword [dword esp+088h], byte 0
-        je short loc_95955
+        je short .6
         push unk_C46C0
         mov esi, dword [MemViewList]
         push esi
         call fprintf_
         add esp, byte 8
-loc_95955:
+.6:
         mov eax, dword [MemViewList]
         call fclose_
-loc_9595F:
+.7:
         add esp, 8Ch
         pop ebp
         pop edi
@@ -2982,11 +2947,11 @@ PaletteViewer:
         mov dword [dword esp+0308h], 19h
         xor ebx, ebx
         mov dword [dword esp+0310h], ebx
-loc_959D4:
+.1:
         mov ebp, dword [dword esp+0308h]
         mov esi, 1Dh
         mov edi, dword [dword esp+0310h]
-loc_959E7:
+.2:
         push edi
         push byte 7
         push byte 8
@@ -2997,13 +2962,13 @@ loc_959E7:
         add esi, byte 12h
         inc edi
         cmp esi, 13Dh
-        jne short loc_959E7
+        jne short .2
         add dword [dword esp+0308h], byte 0Ah
         mov edi, dword [dword esp+0310h]
         add edi, byte 10h
         mov dword [dword esp+0310h], edi
         cmp edi, 100h
-        jne short loc_959D4
+        jne short .1
         call ReturnFalse
         xor esi, esi
         xor edi, edi
@@ -3031,7 +2996,7 @@ loc_959E7:
         xor eax, eax
         mov al, byte [byte esp+02h]
         mov dword [dword esp+0324h], eax
-loc_95A92:
+.3:
         push byte 0Ah
         call SetTickDeadline
         add esp, byte 4
@@ -3044,176 +3009,176 @@ loc_95A92:
         call KbdGetKey
         mov ebp, eax
         cmp eax, byte 30h
-        jne short loc_95AD4
+        jne short .4
         xor eax, eax
         call PaletteViewerLabel
-loc_95AD4:
+.4:
         cmp ebp, byte 31h
-        jne short loc_95AE3
+        jne short .5
         mov eax, 1
         call PaletteViewerLabel
-loc_95AE3:
+.5:
         cmp ebp, byte 52h
-        jne short loc_95B17
+        jne short .8
         mov edx, dword [dword esp+032Ch]
         inc edx
         mov dword [dword esp+032Ch], edx
         cmp edx, byte 3Fh
-        jle short loc_95B03
+        jle short .6
         mov eax, 3Fh
-        jmp short loc_95B05
-loc_95B03:
+        jmp short .7
+.6:
         mov eax, edx
-loc_95B05:
+.7:
         mov dword [dword esp+032Ch], eax
         mov dword [dword esp+0320h], 1
-loc_95B17:
+.8:
         cmp ebp, byte 47h
-        jne short loc_95B47
+        jne short .10
         mov eax, dword [dword esp+0328h]
         inc eax
         mov dword [dword esp+0328h], eax
         cmp eax, byte 3Fh
-        jle short loc_95B35
+        jle short .9
         mov eax, 3Fh
-loc_95B35:
+.9:
         mov dword [dword esp+0328h], eax
         mov dword [dword esp+0320h], 1
-loc_95B47:
+.10:
         cmp ebp, byte 42h
-        jne short loc_95B7B
+        jne short .13
         mov ecx, dword [dword esp+0324h]
         inc ecx
         mov dword [dword esp+0324h], ecx
         cmp ecx, byte 3Fh
-        jle short loc_95B67
+        jle short .11
         mov eax, 3Fh
-        jmp short loc_95B69
-loc_95B67:
+        jmp short .12
+.11:
         mov eax, ecx
-loc_95B69:
+.12:
         mov dword [dword esp+0324h], eax
         mov dword [dword esp+0320h], 1
-loc_95B7B:
+.13:
         cmp ebp, byte 72h
-        jne short loc_95BAB
+        jne short .16
         mov ebx, dword [dword esp+032Ch]
         dec ebx
         mov dword [dword esp+032Ch], ebx
         test ebx, ebx
-        jge short loc_95B97
+        jge short .14
         xor eax, eax
-        jmp short loc_95B99
-loc_95B97:
+        jmp short .15
+.14:
         mov eax, ebx
-loc_95B99:
+.15:
         mov dword [dword esp+032Ch], eax
         mov dword [dword esp+0320h], 1
-loc_95BAB:
+.16:
         cmp ebp, byte 67h
-        jne short loc_95BDB
+        jne short .19
         mov edx, dword [dword esp+0328h]
         dec edx
         mov dword [dword esp+0328h], edx
         test edx, edx
-        jge short loc_95BC7
+        jge short .17
         xor eax, eax
-        jmp short loc_95BC9
-loc_95BC7:
+        jmp short .18
+.17:
         mov eax, edx
-loc_95BC9:
+.18:
         mov dword [dword esp+0328h], eax
         mov dword [dword esp+0320h], 1
-loc_95BDB:
+.19:
         cmp ebp, byte 62h
-        jne short loc_95C07
+        jne short .21
         mov eax, dword [dword esp+0324h]
         dec eax
         mov dword [dword esp+0324h], eax
         test eax, eax
-        jge short loc_95BF5
+        jge short .20
         xor eax, eax
-loc_95BF5:
+.20:
         mov dword [dword esp+0324h], eax
         mov dword [dword esp+0320h], 1
-loc_95C07:
+.21:
         cmp ebp, byte 56h
-        je short loc_95C11
+        je short .22
         cmp ebp, byte 76h
-        jne short loc_95C16
-loc_95C11:
+        jne short .23
+.22:
         call SaveScreenshot
-loc_95C16:
+.23:
         cmp ebp, 4700h
-        jne short loc_95C28
+        jne short .25
         test esi, esi
-        je short loc_95C26
+        je short .24
         xor esi, esi
-        jmp short loc_95C28
-loc_95C26:
+        jmp short .25
+.24:
         xor edi, edi
-loc_95C28:
+.25:
         cmp ebp, 4F00h
-        jne short loc_95C3E
+        jne short .27
         cmp esi, byte 0Fh
-        je short loc_95C3C
+        je short .26
         mov esi, 0Fh
-        jmp short loc_95C3E
-loc_95C3C:
+        jmp short .27
+.26:
         mov edi, esi
-loc_95C3E:
+.27:
         cmp ebp, 4800h
-        jne short loc_95C51
+        jne short .28
         dec edi
         test edi, edi
-        jge short loc_95C51
+        jge short .28
         mov edi, 0Fh
         dec esi
-loc_95C51:
+.28:
         cmp ebp, 5000h
-        jne short loc_95C62
+        jne short .29
         inc edi
         cmp edi, byte 10h
-        jl short loc_95C62
+        jl short .29
         xor edi, edi
         inc esi
-loc_95C62:
+.29:
         cmp ebp, 4B00h
-        jne short loc_95C75
+        jne short .30
         dec esi
         test esi, esi
-        jge short loc_95C75
+        jge short .30
         mov esi, 0Fh
         dec edi
-loc_95C75:
+.30:
         cmp ebp, 4D00h
-        jne short loc_95C86
+        jne short .31
         inc esi
         cmp esi, byte 10h
-        jl short loc_95C86
+        jl short .31
         xor esi, esi
         inc edi
-loc_95C86:
+.31:
         test esi, esi
-        jge short loc_95C91
+        jge short .32
         mov esi, 0Fh
-        jmp short loc_95C98
-loc_95C91:
+        jmp short .33
+.32:
         cmp esi, byte 10h
-        jl short loc_95C98
+        jl short .33
         xor esi, esi
-loc_95C98:
+.33:
         test edi, edi
-        jge short loc_95CA3
+        jge short .34
         mov edi, 0Fh
-        jmp short loc_95CAA
-loc_95CA3:
+        jmp short .35
+.34:
         cmp edi, byte 10h
-        jl short loc_95CAA
+        jl short .35
         xor edi, edi
-loc_95CAA:
+.35:
         cmp dword [dword esp+0320h], byte 0
-        je short loc_95CF0
+        je short .36
         mov eax, dword [dword esp+0318h]
         lea eax, [eax+eax*2]
         mov dl, byte [dword esp+032Ch]
@@ -3228,7 +3193,7 @@ loc_95CAA:
         push byte 0
         call VgaSetPalette
         add esp, byte 0Ch
-loc_95CF0:
+.36:
         imul eax, esi, byte 12h
         add eax, byte 1Bh
         mov dword [dword esp+0314h], eax
@@ -3254,9 +3219,9 @@ loc_95CF0:
         inc eax
         mov dword [dword esp+031Ch], eax
         cmp eax, byte 3
-        jb short loc_95D5D
+        jb short .37
         xor eax, eax
-loc_95D5D:
+.37:
         mov dword [dword esp+031Ch], eax
         mov ebx, dword [nosplit eax*4+dword_D45A4]
         push ebx
@@ -3343,7 +3308,7 @@ loc_95D5D:
         call ReturnFalse
         call WaitTickDeadline
         cmp ebp, byte 1Bh
-        jne near loc_95A92
+        jne near .3
         add esp, 330h
         pop ebp
         pop edi
@@ -3369,7 +3334,7 @@ PaletteViewerLabel:
         add esp, byte 8
         mov ebp, 19h
         mov esi, ebp
-loc_95EF1:
+.1:
         push edi
         push asc_C46F8
         push byte 0Dh
@@ -3387,7 +3352,7 @@ loc_95EF1:
         add esi, byte 12h
         inc edi
         cmp esi, 139h
-        jne short loc_95EF1
+        jne short .1
         pop ebp
         pop edi
         pop esi
@@ -3446,53 +3411,53 @@ MemViewerShowArt:
         mov eax, esi
         call ShapeInfo
         test eax, eax
-        je near loc_9602A
+        je near .8
         mov edx, dword [esi]
         shl edx, 18h
         sar edx, 18h
         and edx, 80h
         cmp eax, byte 2
-        jne short loc_95FF4
+        jne short .2
         test edx, edx
-        je short loc_95FE7
+        je short .1
         push byte 0
         push byte 0
         push esi
         call DrawArtAnyFormatAt
         add esp, byte 0Ch
-        jmp short loc_96009
-loc_95FE7:
+        jmp short .5
+.1:
         push edx
         push edx
         push esi
         call PutBlock
         add esp, byte 0Ch
-        jmp short loc_96009
-loc_95FF4:
+        jmp short .5
+.2:
         test edx, edx
-        je short loc_96000
+        je short .3
         push esi
         call DrawArtAnyFormatOwnPos
-        jmp short loc_96006
-loc_96000:
+        jmp short .4
+.3:
         push esi
         call DrawBitmap
-loc_96006:
+.4:
         add esp, byte 4
-loc_96009:
+.5:
         call ReturnFalse
         xor esi, esi
-loc_96010:
+.6:
         call DebugPressAnyKey
         mov edx, 1
         cmp eax, byte 56h
-        jne short loc_96026
+        jne short .7
         call SaveScreenshot
         mov edx, esi
-loc_96026:
+.7:
         test edx, edx
-        je short loc_96010
-loc_9602A:
+        je short .6
+.8:
         pop esi
         pop ecx
         pop ebx
@@ -3557,16 +3522,16 @@ NextFreeFileName:
         mov dword [esp], eax
         xor edi, edi
         cmp byte [eax], 3Fh
-        je short loc_960C6
-loc_960BF:
+        je short .2
+.1:
         inc eax
         inc edi
         cmp byte [eax], 3Fh
-        jne short loc_960BF
-loc_960C6:
+        jne short .1
+.2:
         xor esi, esi
         mov ebp, eax
-loc_960CA:
+.3:
         mov eax, esi
         mov edx, esi
         sar edx, 1Fh
@@ -3588,18 +3553,18 @@ loc_960CA:
         call FindFirstFile
         add esp, byte 4
         test eax, eax
-        je short loc_9610C
+        je short .4
         inc esi
         cmp esi, byte 64h
-        jl short loc_960CA
-loc_9610C:
+        jl short .3
+.4:
         cmp esi, byte 64h
-        jl short loc_9611D
+        jl short .5
         add edi, dword [esp]
         mov byte [byte edi+01h], 78h
         mov al, byte [byte edi+01h]
         mov byte [edi], al
-loc_9611D:
+.5:
         mov eax, 1
         add esp, byte 4
         pop ebp
@@ -3650,10 +3615,10 @@ DebugFlushAndWait:
         push ecx
         push edx
         call KbdFlush
-loc_96178:
+.1:
         call DebugGetKeyUpper
         test eax, eax
-        je short loc_96178
+        je short .1
         pop edx
         pop ecx
         pop ebx

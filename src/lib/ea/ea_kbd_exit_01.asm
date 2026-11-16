@@ -7,8 +7,8 @@ extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveSt
 extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, DrawFrameClipped, ReturnFalse, FindNearestColor
 extern PrintStringCentered, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
 extern SetBitmapClip, DefaultFont
-global EnableInterrupts, SaveBoxBackground, RestoreBoxBackground, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
-global AskExitToDos, loc_984CF, ShowMessageBox, PauseUntilKey, DosGetVector, DosSetVector, ConsoleMessageThunk
+global EnableInterrupts, SaveBoxBackground, RestoreBoxBackground, ShowPromptBox, AskExitToDos, ShowMessageBox, PauseUntilKey, DosGetVector
+global DosSetVector, ConsoleMessageThunk
 EnableInterrupts:
         sti
         ret
@@ -166,11 +166,11 @@ ShowPromptBox:
         push BackBufferWidth
         call ResetClipRect
         add esp, byte 4
-loc_983B1:
+.1:
         call dword [mousepollfn]
         test eax, ebp
-        jne short loc_983B1
-loc_983BB:
+        jne short .1
+.2:
         call KbdGetKey
         mov esi, eax
         mov dword [dword esp+0BCh], eax
@@ -178,17 +178,17 @@ loc_983BB:
         mov edi, eax
         and edi, ebp
         test esi, esi
-        jne short loc_983DB
+        jne short .3
         test edi, edi
-        je short loc_983BB
-loc_983DB:
+        je short .2
+.3:
         and edi, byte 1
         mov eax, dword [dword esp+0BCh]
         or al, 20h
         cmp eax, byte 79h
-        jne short loc_983F1
+        jne short .4
         mov edi, 1
-loc_983F1:
+.4:
         mov eax, dword [dword esp+0B8h]
         add eax, dword [dword esp+0D0h]
         push eax
@@ -243,9 +243,9 @@ AskExitToDos:
         mov eax, str_EXITTODOSY
         call ShowPromptBox
         test eax, eax
-        je short loc_984CF
+        je short .1
         call dword [bailout_vec]
-loc_984CF:
+.1:
         ret
 ShowMessageBox:
         push esi

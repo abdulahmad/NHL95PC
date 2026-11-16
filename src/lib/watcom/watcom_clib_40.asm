@@ -3,13 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_A2AC8 progbits alloc exec nowrite align=1
 extern __fatal_runtime_error_, str_FloatingPointSupportNot, __heap_enabled, dword_D5674
-global abs_, loc_A2ACE, __CommonInit_, NoFloatSupport, unk_A2AEE, ultoa_, loc_A2B28, loc_A2B48
-global ltoa_, loc_A2B6E, toupper_, loc_A2B84, _heapenable_
+global abs_, __CommonInit_, NoFloatSupport, unk_A2AEE, ultoa_, ltoa_, toupper_, _heapenable_
 abs_:
         test eax, eax
-        jge short loc_A2ACE
+        jge short .1
         neg eax
-loc_A2ACE:
+.1:
         ret
 __CommonInit_:
         mov dword [dword_D5674], 8000h
@@ -37,7 +36,7 @@ ultoa_:
         xor dl, dl
         lea ecx, [byte esp+05h]
         mov byte [byte esp+04h], dl
-loc_A2B28:
+.1:
         lea ebx, [byte esp+028h]
         mov dword [byte esp+028h], ebp
         xor edx, edx
@@ -48,14 +47,14 @@ loc_A2B28:
         mov byte [ecx], dl
         inc ecx
         test eax, eax
-        jne short loc_A2B28
-loc_A2B48:
+        jne short .1
+.2:
         dec ecx
         mov al, byte [ecx]
         mov byte [esi], al
         inc esi
         test al, al
-        jne short loc_A2B48
+        jne short .2
         mov eax, dword [esp]
         add esp, byte 2Ch
         pop ebp
@@ -66,24 +65,24 @@ ltoa_:
         push ecx
         mov ecx, edx
         cmp ebx, byte 0Ah
-        jne short loc_A2B6E
+        jne short .1
         test eax, eax
-        jge short loc_A2B6E
+        jge short .1
         neg eax
         mov byte [edx], 2Dh
         inc edx
-loc_A2B6E:
+.1:
         call ultoa_
         mov eax, ecx
         pop ecx
         ret
 toupper_:
         cmp eax, byte 61h
-        jl short loc_A2B84
+        jl short .1
         cmp eax, byte 7Ah
-        jg short loc_A2B84
+        jg short .1
         sub eax, byte 20h
-loc_A2B84:
+.1:
         ret
 _heapenable_:
         push edx

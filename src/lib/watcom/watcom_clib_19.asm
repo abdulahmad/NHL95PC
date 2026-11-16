@@ -3,8 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_930A7 progbits alloc exec nowrite align=1
 extern __set_errno_dos_, fgetc_, ScanFormat, ungetc_
-global mkdir_, loc_930C2, cget_file_, loc_930E8, loc_930F2, loc_93103, loc_9310E, uncget_file_
-global vfscanf_, fscanf_
+global mkdir_, cget_file_, uncget_file_, vfscanf_, fscanf_
 mkdir_:
         push edx
         mov edx, eax
@@ -13,12 +12,12 @@ mkdir_:
         rcl eax, 1
         ror eax, 1
         test eax, eax
-        jge short loc_930C2
+        jge short .1
         and eax, 0FFFFh
         call __set_errno_dos_
         pop edx
         ret
-loc_930C2:
+.1:
         xor eax, eax
         pop edx
         ret
@@ -29,20 +28,20 @@ cget_file_:
         mov edx, eax
         mov eax, dword [byte eax+08h]
         cmp dword [byte eax+04h], byte 0
-        jle short loc_930E8
+        jle short .1
         test byte [byte eax+0Ch], 4
-        jne short loc_930E8
+        jne short .1
         mov ebx, dword [eax]
         mov cl, byte [ebx]
         cmp cl, 0Dh
-        je short loc_930E8
+        je short .1
         cmp cl, 1Ah
-        jne short loc_930F2
-loc_930E8:
+        jne short .2
+.1:
         mov eax, dword [byte edx+08h]
         call fgetc_
-        jmp short loc_93103
-loc_930F2:
+        jmp short .3
+.2:
         dec dword [byte eax+04h]
         mov eax, dword [byte edx+08h]
         mov ebx, dword [eax]
@@ -50,12 +49,12 @@ loc_930F2:
         mov dword [eax], ecx
         xor eax, eax
         mov al, byte [ebx]
-loc_93103:
+.3:
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_9310E
+        jne short .4
         or byte [byte edx+010h], 2
-loc_9310E:
+.4:
         mov eax, ebx
         pop edx
         pop ecx

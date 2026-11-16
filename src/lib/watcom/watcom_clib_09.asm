@@ -2,39 +2,39 @@
 bits 32
 %include "hockey.inc"
 section s_909E0 progbits alloc exec nowrite align=1
-global strnicmp_, loc_909E4, loc_909E8, loc_909EF, loc_90A03, loc_90A16, loc_90A2E
+global strnicmp_
 strnicmp_:
         push ecx
         sub esp, byte 4
-loc_909E4:
+.1:
         test ebx, ebx
-        jne short loc_909EF
-loc_909E8:
+        jne short .3
+.2:
         xor eax, eax
         add esp, byte 4
         pop ecx
         ret
-loc_909EF:
+.3:
         mov ch, byte [edx]
         mov cl, byte [eax]
         mov byte [esp], ch
         cmp cl, 41h
-        jb short loc_90A03
+        jb short .4
         cmp cl, 5Ah
-        ja short loc_90A03
+        ja short .4
         add cl, 20h
-loc_90A03:
+.4:
         mov ch, byte [esp]
         cmp ch, 41h
-        jb short loc_90A16
+        jb short .5
         cmp ch, 5Ah
-        ja short loc_90A16
+        ja short .5
         add ch, 20h
         mov byte [esp], ch
-loc_90A16:
+.5:
         mov ch, byte [esp]
         cmp cl, ch
-        je short loc_90A2E
+        je short .6
         xor edx, edx
         xor eax, eax
         mov dl, cl
@@ -44,11 +44,11 @@ loc_90A16:
         add esp, byte 4
         pop ecx
         ret
-loc_90A2E:
+.6:
         test ch, ch
-        je short loc_909E8
+        je short .2
         inc eax
         inc edx
         dec ebx
-        jmp short loc_909E4
+        jmp short .1
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h

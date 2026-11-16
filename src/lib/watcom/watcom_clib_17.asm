@@ -3,33 +3,32 @@ bits 32
 %include "hockey.inc"
 section s_92D21 progbits alloc exec nowrite align=1
 extern __set_errno_dos_, byte_C4B6C
-global stricmp_, loc_92D22, loc_92D33, loc_92D40, loc_92D4C, unlink_, loc_92D75, atoi_
-global loc_92D7F, loc_92D95, loc_92DA1, loc_92DA2, loc_92DA4, loc_92DC6, loc_92DCD
+global stricmp_, unlink_, atoi_
 stricmp_:
         push ebx
-loc_92D22:
+.1:
         mov bl, byte [eax]
         mov bh, byte [edx]
         cmp bl, 41h
-        jb short loc_92D33
+        jb short .2
         cmp bl, 5Ah
-        ja short loc_92D33
+        ja short .2
         add bl, 20h
-loc_92D33:
+.2:
         cmp bh, 41h
-        jb short loc_92D40
+        jb short .3
         cmp bh, 5Ah
-        ja short loc_92D40
+        ja short .3
         add bh, 20h
-loc_92D40:
+.3:
         cmp bl, bh
-        jne short loc_92D4C
+        jne short .4
         test bh, bh
-        je short loc_92D4C
+        je short .4
         inc eax
         inc edx
-        jmp short loc_92D22
-loc_92D4C:
+        jmp short .1
+.4:
         xor edx, edx
         xor eax, eax
         mov dl, bl
@@ -46,12 +45,12 @@ unlink_:
         rcl eax, 1
         ror eax, 1
         test eax, eax
-        jge short loc_92D75
+        jge short .1
         and eax, 0FFFFh
         call __set_errno_dos_
         pop edx
         ret
-loc_92D75:
+.1:
         xor eax, eax
         pop edx
         ret
@@ -60,42 +59,42 @@ atoi_:	;IDA: unknown_libname_4
         push ebx
         push ecx
         push edx
-loc_92D7F:
+.1:
         mov dl, byte [eax]
         inc dl
         and edx, 0FFh
         test byte [dword edx+byte_C4B6C], 2
-        je short loc_92D95
+        je short .2
         inc eax
-        jmp short loc_92D7F
-loc_92D95:
+        jmp short .1
+.2:
         mov cl, byte [eax]
         cmp cl, 2Bh
-        je short loc_92DA1
+        je short .3
         cmp cl, 2Dh
-        jne short loc_92DA2
-loc_92DA1:
+        jne short .4
+.3:
         inc eax
-loc_92DA2:
+.4:
         xor ebx, ebx
-loc_92DA4:
+.5:
         mov dl, byte [eax]
         inc dl
         and edx, 0FFh
         test byte [dword edx+byte_C4B6C], 20h
-        je short loc_92DC6
+        je short .6
         imul ebx, byte 0Ah
         xor edx, edx
         mov dl, byte [eax]
         add ebx, edx
         inc eax
         sub ebx, byte 30h
-        jmp short loc_92DA4
-loc_92DC6:
+        jmp short .5
+.6:
         cmp cl, 2Dh
-        jne short loc_92DCD
+        jne short .7
         neg ebx
-loc_92DCD:
+.7:
         mov eax, ebx
         pop edx
         pop ecx

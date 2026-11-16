@@ -7,10 +7,8 @@ extern byte_D42C6, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42
 extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, FatalError, fontcolor, off_D42A4
 extern AllocMemBlock, AllocMemBlockEx, FindCachedFile, FillRowTable, LoadFileCached, DosOpenFile, DosCloseFile, DosReadFile
 extern ZeroMem
-global subwindowdefadr, loc_8E816, LoadFileCachedQuiet, loc_8E82B, LoadBank, loc_8E853, loc_8E868, LoadFileCachedFlag
-global str_LocateshapeSHAPENOTFOUND, OpenArtArchiveErr, OpenArtArchive, OpenArtArchiveFlag, loc_8E8ED, LoadDataFileErr, LoadFileAllocQuiet, LoadDataFileExt
-global loc_8E963, loc_8E991, loc_8E9B4, TextSetColors, TextSetCursor, TextSaveState, TextRestoreState, TextSetFont
-global loc_8EA81, loc_8EA83, loc_8EA98, loc_8EAAA, loc_8EABF, loc_8EAD1
+global subwindowdefadr, LoadFileCachedQuiet, LoadBank, LoadFileCachedFlag, str_LocateshapeSHAPENOTFOUND, OpenArtArchiveErr, OpenArtArchive, OpenArtArchiveFlag
+global LoadDataFileErr, LoadFileAllocQuiet, LoadDataFileExt, TextSetColors, TextSetCursor, TextSaveState, TextRestoreState, TextSetFont
 subwindowdefadr:
         push esi
         push edi
@@ -47,11 +45,11 @@ subwindowdefadr:
         call FillRowTable
         mov dword [byte esi+028h], eax
         test eax, eax
-        jne short loc_8E816
+        jne short .1
         push str_SubwindowdefadrOUTOFROW
         call FatalError
         add esp, byte 4
-loc_8E816:
+.1:
         mov eax, edi
         pop ebp
         pop edi
@@ -61,11 +59,11 @@ LoadFileCachedQuiet:
         push ebp
         LD mov, ebp, esp
         LD xor, eax, eax
-        jmp short loc_8E82B
+        jmp short .1
         push ebp
         LD mov, ebp, esp
         mov eax, 1
-loc_8E82B:
+.1:
         push eax
         push dword [byte ebp+0Ch]
         db 0FFh,075h,08h                        ; insn: push dword [ebp+8]
@@ -78,24 +76,24 @@ LoadBank:
         push ebp
         LD mov, ebp, esp
         mov eax, 1
-        jmp short loc_8E853
+        jmp short .1
         push ebp
         LD mov, ebp, esp
         LD xor, eax, eax
-        jmp short loc_8E853
+        jmp short .1
         push ebp
         LD mov, ebp, esp
         mov eax, dword [byte ebp+010h]
-loc_8E853:
+.1:
         push eax
         push dword [byte ebp+0Ch]
         push dword [byte ebp+08h]
         call LoadFileCached
         add esp, byte 0Ch
         LD or, eax, eax
-        je short loc_8E868
+        je short .2
         mov eax, dword [eax]
-loc_8E868:
+.2:
         leave
         ret
 LoadFileCachedFlag:
@@ -135,9 +133,9 @@ OpenArtArchiveFlag:
         call LoadDataFileExt
         add esp, byte 0Ch
         test eax, eax
-        je short loc_8E8ED
+        je short .1
         mov eax, dword [eax]
-loc_8E8ED:
+.1:
         ret
         db 08Bh,0C0h
 LoadDataFileErr:
@@ -169,7 +167,7 @@ LoadDataFileExt:
         call FindCachedFile
         add esp, byte 4
         test eax, eax
-        jne near loc_8E9B4
+        jne near .3
         mov edx, dword [byte esp+020h]
         push edx
         lea eax, [byte esp+0Ch]
@@ -183,10 +181,10 @@ LoadDataFileExt:
         add esp, byte 14h
         mov ebx, dword [byte esp+08h]
         test ebx, ebx
-        jne short loc_8E963
+        jne short .1
         xor eax, eax
-        jmp short loc_8E9B4
-loc_8E963:
+        jmp short .3
+.1:
         mov ecx, dword [byte esp+020h]
         push ecx
         mov edi, dword [byte esp+020h]
@@ -197,7 +195,7 @@ loc_8E963:
         mov esi, eax
         add esp, byte 10h
         test eax, eax
-        jne short loc_8E991
+        jne short .2
         mov esi, dword [esp]
         push esi
         call DosCloseFile
@@ -207,7 +205,7 @@ loc_8E963:
         pop edi
         pop esi
         ret
-loc_8E991:
+.2:
         mov eax, dword [byte esp+08h]
         push eax
         mov edx, dword [esi]
@@ -221,7 +219,7 @@ loc_8E991:
         call DosCloseFile
         add esp, byte 4
         mov eax, esi
-loc_8E9B4:
+.3:
         add esp, byte 0Ch
         pop edi
         pop esi
@@ -288,42 +286,42 @@ TextSetFont:
         mov ebx, dword [byte edx+010h]
         sar ebx, 10h
         test ebx, ebx
-        je short loc_8EA81
+        je short .1
         add edx, ebx
-        jmp short loc_8EA83
-loc_8EA81:
+        jmp short .2
+.1:
         xor edx, edx
-loc_8EA83:
+.2:
         mov dword [dword_D42C8], edx
         mov edx, dword [byte eax+014h]
         shl edx, 10h
         sar edx, 10h
         test edx, edx
-        je short loc_8EA98
+        je short .3
         add edx, eax
-loc_8EA98:
+.3:
         mov dword [dword_D42CC], edx
         mov edx, dword [byte eax+014h]
         sar edx, 10h
         test edx, edx
-        je short loc_8EAAA
+        je short .4
         add edx, eax
-loc_8EAAA:
+.4:
         mov dword [dword_D42D0], edx
         mov edx, dword [byte eax+018h]
         shl edx, 10h
         sar edx, 10h
         test edx, edx
-        je short loc_8EABF
+        je short .5
         add edx, eax
-loc_8EABF:
+.5:
         mov dword [dword_D42D4], edx
         mov edx, dword [byte eax+018h]
         sar edx, 10h
         test edx, edx
-        je short loc_8EAD1
+        je short .6
         add edx, eax
-loc_8EAD1:
+.6:
         mov dword [dword_D42D8], edx
         mov edx, dword [byte eax+01Ch]
         lea ebx, [eax+edx]

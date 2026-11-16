@@ -6,17 +6,8 @@ extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD
 extern dword_D4F9A, dword_F27F6, GetPatchTimbre, SbNoteOff, SbNoteOn, SbController, SbProgramChange, SbPitchBend
 extern PcSpkHwInit, PcSpkHwClose, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, unk_F21FC, unk_F24D8
 extern unk_F27D8
-global CMainHook, PcSpkInit, loc_9D6A2, loc_9D6B8, loc_9D6C4, loc_9D6D9, PcSpkClose
-global PcSpkService, PcSpkNoteOn, loc_9D723, loc_9D73E, loc_9D802, PcSpkNoteOff
-global loc_9D81C, loc_9D82B, loc_9D82C, loc_9D832, loc_9D852, loc_9D856, PcSpkProgramChange, PcSpkUpdateVoices
-global loc_9D897, loc_9D8D4, loc_9D8D8, loc_9D8FE, loc_9D90F, loc_9D951, loc_9D970, loc_9D98A
-global loc_9D9C8, loc_9D9D0, loc_9D9FC, loc_9DA03, loc_9DA1B, loc_9DA3B, loc_9DA59, loc_9DA70
-global loc_9DA76, PcSpkTimbreUsable, loc_9DAA6, PcSpkMidi, loc_9DAF3, loc_9DAFE, loc_9DB06
-global loc_9DB36, loc_9DB3D, loc_9DB55, loc_9DBB8, loc_9DBBD, loc_9DBD4, loc_9DBD9, loc_9DBF7
-global loc_9DC1B, loc_9DC40, loc_9DC42, loc_9DC44, loc_9DC5F, loc_9DC8C, loc_9DC91, SbMidi
-global loc_9DCE6, loc_9DCF2, loc_9DCFA, loc_9DD32, loc_9DD39, loc_9DD51, loc_9DDB4
-global loc_9DDB9, loc_9DDD0, loc_9DDD5, loc_9DDEF, loc_9DE0F, loc_9DE2F, loc_9DE31, loc_9DE53
-global loc_9DE6A, loc_9DE89, loc_9DE8E
+global CMainHook, PcSpkInit, PcSpkClose, PcSpkService, PcSpkNoteOn, PcSpkNoteOff, PcSpkProgramChange, PcSpkUpdateVoices
+global PcSpkTimbreUsable, PcSpkMidi, SbMidi
 CMainHook:
         mov eax, esp
         sub eax, dword [_STACKLOW]
@@ -26,8 +17,8 @@ PcSpkInit:
         push ds
         call __GETDS
         xor eax, eax
-        jmp short loc_9D6B8
-loc_9D6A2:
+        jmp short .2
+.1:
         movsx ebx, ax
         mov edx, ebx
         shl edx, 2
@@ -36,22 +27,22 @@ loc_9D6A2:
         xor bl, bl
         mov byte [dword edx+byte_F24D9], bl
         inc eax
-loc_9D6B8:
+.2:
         cmp ax, 10h
-        jl short loc_9D6A2
+        jl short .1
         xor eax, eax
         mov cl, 10h
-        jmp short loc_9D6D9
-loc_9D6C4:
+        jmp short .4
+.3:
         movsx edx, ax
         imul edx, byte 4Eh
         xor bh, bh
         mov byte [dword edx+byte_F27EE], bh
         mov byte [dword edx+byte_F27EF], cl
         inc eax
-loc_9D6D9:
+.4:
         cmp ax, 18h
-        jl short loc_9D6C4
+        jl short .3
         call PcSpkHwInit
         pop ds
         ret
@@ -77,10 +68,10 @@ PcSpkNoteOn:
         mov esi, unk_F27D8
         add esi, eax
         cmp byte [byte esp+0Ch], 9
-        je short loc_9D723
+        je short .1
         mov edx, dword [byte esi+01Eh]
-        jmp short loc_9D73E
-loc_9D723:
+        jmp short .2
+.1:
         mov al, byte [byte esp+010h]
         add al, 5Ch
         and eax, 0FFh
@@ -89,15 +80,15 @@ loc_9D723:
         add esp, byte 4
         mov edx, eax
         mov byte [byte esp+010h], 3Ch
-loc_9D73E:
+.2:
         test edx, edx
-        je near loc_9D802
+        je near .3
         mov eax, edx
         call PcSpkTimbreUsable
         mov ecx, eax
         cwde
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9D802
+        je near .3
         mov ebx, eax
         shl eax, 2
         sub eax, ebx
@@ -146,7 +137,7 @@ loc_9D73E:
         push eax
         call PcSpkVoiceNote
         add esp, byte 0Ch
-loc_9D802:
+.3:
         pop esi
         pop ds
         ret
@@ -157,34 +148,34 @@ PcSpkNoteOff:
         mov bl, byte [byte esp+0Ch]
         mov eax, unk_F24D8
         xor edx, edx
-        jmp short loc_9D82C
-loc_9D81C:
+        jmp short .3
+.1:
         cmp byte [byte eax+01h], 0
-        je short loc_9D82B
+        je short .2
         cmp bl, byte [byte eax+03h]
-        jne short loc_9D82B
+        jne short .2
         cmp bh, byte [eax]
-        je short loc_9D832
-loc_9D82B:
+        je short .4
+.2:
         inc edx
-loc_9D82C:
+.3:
         cmp dx, byte 10h
-        jl short loc_9D81C
-loc_9D832:
+        jl short .1
+.4:
         cmp dx, byte 10h
-        jge short loc_9D856
+        jge short .6
         mov byte [byte eax+01h], 2
         xor edx, edx
         mov dl, byte [eax]
         imul edx, byte 4Eh
         cmp byte [dword edx+byte_F27FD], 0
-        je short loc_9D852
+        je short .5
         mov byte [byte eax+016h], 3
         pop ds
         ret
-loc_9D852:
+.5:
         mov byte [byte eax+016h], 4
-loc_9D856:
+.6:
         pop ds
         ret
 PcSpkProgramChange:
@@ -212,55 +203,55 @@ PcSpkUpdateVoices:
         mov esi, unk_F24D8
         xor edx, edx
         mov dword [esp], edx
-        jmp near loc_9DA76
-loc_9D897:
+        jmp near .17
+.1:
         cmp byte [byte esi+01h], 0
-        je near loc_9DA70
+        je near .16
         inc dword [byte esi+08h]
         mov edi, dword [byte esi+010h]
         cmp byte [byte esi+016h], 1
-        jne short loc_9D8D8
+        jne short .3
         mov ax, word [byte edi+020h]
         mov bx, word [byte esi+014h]
         add ebx, eax
         mov word [byte esi+014h], bx
         mov cx, word [byte edi+01Eh]
         cmp bx, cx
-        jl short loc_9D8D8
+        jl short .3
         mov word [byte esi+014h], cx
         cmp cx, word [byte edi+024h]
-        jg short loc_9D8D4
+        jg short .2
         mov byte [byte esi+016h], 3
-        jmp short loc_9D8D8
-loc_9D8D4:
+        jmp short .3
+.2:
         mov byte [byte esi+016h], 2
-loc_9D8D8:
+.3:
         cmp byte [byte esi+016h], 2
-        jne short loc_9D8FE
+        jne short .4
         mov ax, word [byte edi+022h]
         mov bx, word [byte esi+014h]
         sub ebx, eax
         mov word [byte esi+014h], bx
         cmp bx, word [byte edi+024h]
-        jg short loc_9D8FE
+        jg short .4
         mov byte [byte esi+016h], 3
         mov ax, word [byte edi+024h]
         mov word [byte esi+014h], ax
-loc_9D8FE:
+.4:
         cmp byte [byte esi+016h], 3
-        jne short loc_9D90F
+        jne short .5
         cmp word [byte edi+024h], byte 0
-        jne short loc_9D90F
+        jne short .5
         mov byte [byte esi+016h], 4
-loc_9D90F:
+.5:
         cmp byte [byte esi+016h], 4
-        jne short loc_9D951
+        jne short .6
         mov ax, word [byte edi+026h]
         mov dx, word [byte esi+014h]
         sub edx, eax
         mov word [byte esi+014h], dx
         test dx, dx
-        jg short loc_9D951
+        jg short .6
         mov word [byte esi+014h], 0
         mov byte [byte esi+016h], 0
         mov byte [byte esi+01h], 0
@@ -273,33 +264,33 @@ loc_9D90F:
         push eax
         call PcSpkVoiceOff
         add esp, byte 4
-loc_9D951:
+.6:
         cmp byte [byte edi+028h], 0
-        je near loc_9DA03
+        je near .12
         mov cx, word [byte esi+018h]
         test cx, cx
-        je short loc_9D970
+        je short .7
         mov ebx, ecx
         dec ebx
         mov word [byte esi+018h], bx
-        jmp near loc_9DA03
-loc_9D970:
+        jmp near .12
+.7:
         mov ax, word [byte esi+01Ah]
         test ax, ax
-        je near loc_9DA03
+        je near .12
         cmp ax, 7FFFh
-        je short loc_9D98A
+        je short .8
         mov ebx, eax
         dec ebx
         mov word [byte esi+01Ah], bx
-loc_9D98A:
+.8:
         mov al, byte [byte esi+027h]
         test al, al
-        jne near loc_9D9FC
+        jne near .11
         mov al, byte [byte edi+029h]
         mov byte [byte esi+027h], al
         cmp byte [byte esi+026h], 2
-        jne short loc_9D9D0
+        jne short .10
         mov ax, word [byte esi+024h]
         sub word [byte esi+01Ch], ax
         xor edx, edx
@@ -307,15 +298,15 @@ loc_9D98A:
         movsx eax, word [byte esi+01Ch]
         call abs_
         cmp eax, edx
-        jl short loc_9DA03
+        jl short .12
         test byte [byte edi+034h], 1
-        je short loc_9D9C8
+        je short .9
         mov byte [byte esi+026h], 1
-        jmp short loc_9DA03
-loc_9D9C8:
+        jmp short .12
+.9:
         mov word [byte esi+01Ch], 0
-        jmp short loc_9DA03
-loc_9D9D0:
+        jmp short .12
+.10:
         mov ax, word [byte esi+024h]
         mov cx, word [byte esi+01Ch]
         add ecx, eax
@@ -325,40 +316,40 @@ loc_9D9D0:
         movsx eax, cx
         call abs_
         cmp eax, edx
-        jl short loc_9DA03
+        jl short .12
         test byte [byte edi+034h], 2
-        je short loc_9D9C8
+        je short .9
         mov byte [byte esi+026h], 2
-        jmp short loc_9DA03
-loc_9D9FC:
+        jmp short .12
+.11:
         mov ah, al
         dec ah
         mov byte [byte esi+027h], ah
-loc_9DA03:
+.12:
         cmp byte [byte edi+035h], 0
-        je short loc_9DA59
+        je short .15
         mov cx, word [byte esi+01Eh]
         test cx, cx
-        je short loc_9DA1B
+        je short .13
         mov ebx, ecx
         dec ebx
         mov word [byte esi+01Eh], bx
-        jmp short loc_9DA59
-loc_9DA1B:
+        jmp short .15
+.13:
         mov ax, word [byte esi+020h]
         test ax, ax
-        je short loc_9DA59
+        je short .15
         mov edx, eax
         dec edx
         mov word [byte esi+020h], dx
         mov cl, byte [byte esi+028h]
         test cl, cl
-        je short loc_9DA3B
+        je short .14
         mov ch, cl
         dec ch
         mov byte [byte esi+028h], ch
-        jmp short loc_9DA59
-loc_9DA3B:
+        jmp short .15
+.14:
         mov al, byte [byte edi+03Ah]
         mov byte [byte esi+028h], al
         mov al, byte [byte esi+029h]
@@ -370,7 +361,7 @@ loc_9DA3B:
         mov byte [byte esi+029h], al
         mov al, byte [byte edx+edi+03Bh]
         mov byte [byte esi+022h], al
-loc_9DA59:
+.15:
         mov ebx, dword [byte esi+010h]
         push ebx
         mov ecx, dword [byte esi+02Ah]
@@ -381,16 +372,16 @@ loc_9DA59:
         push eax
         call PcSpkVoiceUpdate
         add esp, byte 10h
-loc_9DA70:
+.16:
         add esi, byte 30h
         inc dword [esp]
-loc_9DA76:
+.17:
         xor edx, edx
         mov dx, word [esp]
         xor eax, eax
         mov al, byte [byte_D5224]
         cmp edx, eax
-        jl near loc_9D897
+        jl near .1
         call PcSpkOutput
         add esp, byte 4
         pop edi
@@ -401,10 +392,10 @@ loc_9DA76:
         ret
 PcSpkTimbreUsable:
         cmp word [byte eax+0Ch], byte 0
-        jne short loc_9DAA6
+        jne short .1
         mov eax, 0FFFFFFFFh
         ret
-loc_9DAA6:
+.1:
         mov eax, 1
         ret
 PcSpkMidi:
@@ -428,20 +419,20 @@ PcSpkMidi:
         mov dword [byte ebp-02Ch], eax
         mov eax, dword [byte ebp+018h]
         mov dword [byte ebp-024h], eax
-loc_9DAF3:
+.1:
         cmp dword [byte ebp+014h], byte 0
-        jg short loc_9DB06
-        jmp near loc_9DC91
-loc_9DAFE:
+        jg short .3
+        jmp near .18
+.2:
         dec dword [byte ebp+014h]
         inc dword [byte ebp-024h]
-        jmp short loc_9DAF3
-loc_9DB06:
+        jmp short .1
+.3:
         mov eax, dword [byte ebp-024h]
         mov al, byte [eax]
         mov byte [byte ebp-08h], al
         test byte [byte ebp-08h], 80h
-        je short loc_9DB55
+        je short .6
         mov al, byte [byte ebp-08h]
         and al, 0F0h
         mov byte [byte ebp-0Ch], al
@@ -451,19 +442,19 @@ loc_9DB06:
         mov al, byte [byte ebp-08h]
         and al, 0F0h
         cmp al, 0C0h
-        jne short loc_9DB36
+        jne short .4
         mov dword [byte ebp-030h], 1
-        jmp short loc_9DB3D
-loc_9DB36:
+        jmp short .5
+.4:
         mov dword [byte ebp-030h], 2
-loc_9DB3D:
+.5:
         mov al, byte [byte ebp-030h]
         mov byte [byte ebp-010h], al
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-028h]
         mov dword [byte ebp-02Ch], eax
-        jmp near loc_9DC8C
-loc_9DB55:
+        jmp near .17
+.6:
         mov al, byte [byte ebp-08h]
         mov edx, dword [byte ebp-02Ch]
         mov byte [edx], al
@@ -474,36 +465,36 @@ loc_9DB55:
         xor edx, edx
         mov dl, byte [byte ebp-010h]
         cmp eax, edx
-        jne near loc_9DC8C
+        jne near .17
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-028h]
         mov dword [byte ebp-02Ch], eax
         mov al, byte [byte ebp-0Ch]
         mov byte [byte ebp-034h], al
         cmp byte [byte ebp-034h], 0B0h
-        jb short loc_9DBBD
+        jb short .8
         cmp byte [byte ebp-034h], 0B0h
-        jbe near loc_9DC42
+        jbe near .14
         cmp byte [byte ebp-034h], 0C0h
-        jb short loc_9DBB8
+        jb short .7
         cmp byte [byte ebp-034h], 0C0h
-        jbe near loc_9DC44
+        jbe near .15
         cmp byte [byte ebp-034h], 0E0h
-        je near loc_9DC5F
-        jmp near loc_9DC8C
-loc_9DBB8:
-        jmp near loc_9DC8C
-loc_9DBBD:
+        je near .16
+        jmp near .17
+.7:
+        jmp near .17
+.8:
         cmp byte [byte ebp-034h], 80h
-        jb short loc_9DBD4
+        jb short .9
         cmp byte [byte ebp-034h], 80h
-        jbe short loc_9DBD9
+        jbe short .10
         cmp byte [byte ebp-034h], 90h
-        je short loc_9DBF7
-        jmp near loc_9DC8C
-loc_9DBD4:
-        jmp near loc_9DC8C
-loc_9DBD9:
+        je short .11
+        jmp near .17
+.9:
+        jmp near .17
+.10:
         mov eax, dword [byte ebp-028h]
         mov al, byte [eax]
         and eax, 0FFh
@@ -513,11 +504,11 @@ loc_9DBD9:
         push eax
         call PcSpkNoteOff
         add esp, byte 8
-        jmp near loc_9DC8C
-loc_9DBF7:
+        jmp near .17
+.11:
         mov eax, dword [byte ebp-028h]
         cmp byte [byte eax+01h], 0
-        jne short loc_9DC1B
+        jne short .12
         mov eax, dword [byte ebp-028h]
         mov al, byte [eax]
         and eax, 0FFh
@@ -527,8 +518,8 @@ loc_9DBF7:
         push eax
         call PcSpkNoteOff
         add esp, byte 8
-        jmp short loc_9DC40
-loc_9DC1B:
+        jmp short .13
+.12:
         mov eax, dword [byte ebp-028h]
         mov al, byte [byte eax+01h]
         and eax, 0FFh
@@ -542,11 +533,11 @@ loc_9DC1B:
         push eax
         call PcSpkNoteOn
         add esp, byte 0Ch
-loc_9DC40:
-        jmp short loc_9DC8C
-loc_9DC42:
-        jmp short loc_9DC8C
-loc_9DC44:
+.13:
+        jmp short .17
+.14:
+        jmp short .17
+.15:
         mov eax, dword [byte ebp-028h]
         mov al, byte [eax]
         and eax, 0FFh
@@ -556,8 +547,8 @@ loc_9DC44:
         push eax
         call PcSpkProgramChange
         add esp, byte 8
-        jmp short loc_9DC8C
-loc_9DC5F:
+        jmp short .17
+.16:
         xor ah, ah
         mov edx, dword [byte ebp-028h]
         mov al, byte [edx]
@@ -573,9 +564,9 @@ loc_9DC5F:
         mov dword [byte ebp-01Ch], edx
         sub dword [byte ebp-01Ch], 2000h
         shl dword [byte ebp-01Ch], 1
-loc_9DC8C:
-        jmp near loc_9DAFE
-loc_9DC91:
+.17:
+        jmp near .2
+.18:
         sub dword [dword_D4F9A], byte 4
         mov esp, ebp
         pop ebp
@@ -604,21 +595,21 @@ SbMidi:
         mov dword [byte ebp-018h], eax
         mov eax, dword [byte ebp+018h]
         mov dword [byte ebp-01Ch], eax
-loc_9DCE6:
+.1:
         cmp word [byte ebp+014h], byte 0
-        jg short loc_9DCFA
-        jmp near loc_9DE8E
-loc_9DCF2:
+        jg short .3
+        jmp near .18
+.2:
         dec dword [byte ebp+014h]
         inc dword [byte ebp-01Ch]
-        jmp short loc_9DCE6
-loc_9DCFA:
+        jmp short .1
+.3:
         xor ah, ah
         mov edx, dword [byte ebp-01Ch]
         mov al, byte [edx]
         mov word [byte ebp-010h], ax
         test byte [byte ebp-010h], 80h
-        je short loc_9DD51
+        je short .6
         mov al, byte [byte ebp-010h]
         and al, 0F0h
         mov byte [byte ebp-04h], al
@@ -628,19 +619,19 @@ loc_9DCFA:
         mov eax, dword [byte ebp-010h]
         and eax, 0F0h
         cmp ax, 0C0h
-        jne short loc_9DD32
+        jne short .4
         mov dword [byte ebp-024h], 1
-        jmp short loc_9DD39
-loc_9DD32:
+        jmp short .5
+.4:
         mov dword [byte ebp-024h], 2
-loc_9DD39:
+.5:
         mov al, byte [byte ebp-024h]
         mov byte [byte ebp-08h], al
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-018h], eax
-        jmp near loc_9DE89
-loc_9DD51:
+        jmp near .17
+.6:
         mov al, byte [byte ebp-010h]
         mov edx, dword [byte ebp-018h]
         mov byte [edx], al
@@ -651,36 +642,36 @@ loc_9DD51:
         xor edx, edx
         mov dl, byte [byte ebp-08h]
         cmp eax, edx
-        jne near loc_9DE89
+        jne near .17
         mov dword [byte ebp-014h], 0
         mov eax, dword [byte ebp-020h]
         mov dword [byte ebp-018h], eax
         mov al, byte [byte ebp-04h]
         mov byte [byte ebp-028h], al
         cmp byte [byte ebp-028h], 0B0h
-        jb short loc_9DDB9
+        jb short .8
         cmp byte [byte ebp-028h], 0B0h
-        jbe near loc_9DE31
+        jbe near .14
         cmp byte [byte ebp-028h], 0C0h
-        jb short loc_9DDB4
+        jb short .7
         cmp byte [byte ebp-028h], 0C0h
-        jbe near loc_9DE53
+        jbe near .15
         cmp byte [byte ebp-028h], 0E0h
-        je near loc_9DE6A
-        jmp near loc_9DE89
-loc_9DDB4:
-        jmp near loc_9DE89
-loc_9DDB9:
+        je near .16
+        jmp near .17
+.7:
+        jmp near .17
+.8:
         cmp byte [byte ebp-028h], 80h
-        jb short loc_9DDD0
+        jb short .9
         cmp byte [byte ebp-028h], 80h
-        jbe short loc_9DDD5
+        jbe short .10
         cmp byte [byte ebp-028h], 90h
-        je short loc_9DDEF
-        jmp near loc_9DE89
-loc_9DDD0:
-        jmp near loc_9DE89
-loc_9DDD5:
+        je short .11
+        jmp near .17
+.9:
+        jmp near .17
+.10:
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         xor ah, ah
@@ -689,11 +680,11 @@ loc_9DDD5:
         mov al, byte [byte ebp-0Ch]
         cwde
         call SbNoteOff
-        jmp near loc_9DE89
-loc_9DDEF:
+        jmp near .17
+.11:
         mov eax, dword [byte ebp-020h]
         cmp byte [byte eax+01h], 0
-        jne short loc_9DE0F
+        jne short .12
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         xor ah, ah
@@ -702,8 +693,8 @@ loc_9DDEF:
         mov al, byte [byte ebp-0Ch]
         cwde
         call SbNoteOff
-        jmp short loc_9DE2F
-loc_9DE0F:
+        jmp short .13
+.12:
         mov eax, dword [byte ebp-020h]
         mov al, byte [byte eax+01h]
         xor ah, ah
@@ -716,9 +707,9 @@ loc_9DE0F:
         mov al, byte [byte ebp-0Ch]
         cwde
         call SbNoteOn
-loc_9DE2F:
-        jmp short loc_9DE89
-loc_9DE31:
+.13:
+        jmp short .17
+.14:
         mov eax, dword [byte ebp-020h]
         mov al, byte [byte eax+01h]
         xor ah, ah
@@ -731,8 +722,8 @@ loc_9DE31:
         mov al, byte [byte ebp-0Ch]
         cwde
         call SbController
-        jmp short loc_9DE89
-loc_9DE53:
+        jmp short .17
+.15:
         mov eax, dword [byte ebp-020h]
         mov al, byte [eax]
         xor ah, ah
@@ -741,8 +732,8 @@ loc_9DE53:
         mov al, byte [byte ebp-0Ch]
         cwde
         call SbProgramChange
-        jmp short loc_9DE89
-loc_9DE6A:
+        jmp short .17
+.16:
         mov eax, dword [byte ebp-020h]
         mov al, byte [byte eax+01h]
         xor ah, ah
@@ -753,9 +744,9 @@ loc_9DE6A:
         mov al, byte [byte ebp-0Ch]
         cwde
         call SbPitchBend
-loc_9DE89:
-        jmp near loc_9DCF2
-loc_9DE8E:
+.17:
+        jmp near .2
+.18:
         sub dword [dword_D4F9A], byte 4
         mov esp, ebp
         pop ebp

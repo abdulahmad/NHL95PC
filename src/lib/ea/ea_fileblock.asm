@@ -4,13 +4,9 @@ bits 32
 section s_93308 progbits alloc exec nowrite align=1
 extern str_SavefileblockaOPENFAILEDFOR, DebugRow, byte_D4545, DebugTabWidth, DebugMode, DebugScreenBase, DebugLineWidth, FatalError
 extern MemDescPtr, MemDescSize, bcopy, CreateHandle, DosCloseFile, DosWriteFile, ZeroMem, vsprintf_
-global SaveDataFile, SaveFileBlockErr, SaveFileBlockQuiet, savefileblocka, loc_933C7, loc_933CB, loc_933E8, imul32
-global umul32, IntSqrt, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
-global SortIndices, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, DebugPrintf
-global loc_93622, DebugSetLine, loc_93671, loc_936A4, DebugShowLinesJumpTable, DebugShowLines, loc_936E8, loc_93705
-global loc_9374E, loc_9377C, loc_937A8, loc_937E5, loc_9380C, loc_93818, loc_9382A, loc_9382F
-global loc_93839, DebugScrollUp, loc_938C1, DebugClearScreen, loc_938D9, loc_938EA, DebugSetRow, loc_93906
-global DebugSetAttr, DebugSetTabWidth, loc_93922, DebugSetPage
+global SaveDataFile, SaveFileBlockErr, SaveFileBlockQuiet, savefileblocka, imul32, umul32, IntSqrt, SortIndices
+global DebugPrintf, DebugSetLine, DebugShowLinesJumpTable, DebugShowLines, DebugShowLines, DebugScrollUp, DebugClearScreen, DebugSetRow
+global DebugSetAttr, DebugSetTabWidth, DebugSetPage
 SaveDataFile:
         sub esp, byte 28h
         mov eax, dword [byte esp+030h]
@@ -76,18 +72,18 @@ savefileblocka:
         add esp, byte 10h
         mov ebx, dword [byte esp+08h]
         test ebx, ebx
-        jne short loc_933CB
+        jne short .2
         cmp dword [byte esp+024h], byte 0
-        je short loc_933C7
+        je short .1
         mov ebp, dword [byte esp+01Ch]
         push ebp
         push str_SavefileblockaOPENFAILEDFOR
         call FatalError
         add esp, byte 8
-loc_933C7:
+.1:
         xor eax, eax
-        jmp short loc_933E8
-loc_933CB:
+        jmp short .3
+.2:
         push edi
         push esi
         push ebx
@@ -98,7 +94,7 @@ loc_933CB:
         call DosCloseFile
         add esp, byte 4
         mov eax, 1
-loc_933E8:
+.3:
         add esp, byte 0Ch
         pop ebp
         pop edi
@@ -157,46 +153,46 @@ umul32:
 IntSqrt:
         mov eax, dword [byte esp+04h]
         cmp eax, 10000h
-        jae short loc_934F2
+        jae short .6
         cmp eax, 930h
-        ja short loc_934C1
+        ja short .4
         LD mov, edx, eax
         shr edx, 1
-        je short loc_934C0
+        je short .3
         mov eax, 0FFFFFFFAh
-loc_9348D:
+.1:
         add eax, byte 10h
         LD sub, edx, eax
-        js short loc_934A9
+        js short .2
         add eax, byte 10h
         LD sub, edx, eax
-        js short loc_934A9
+        js short .2
         add eax, byte 10h
         LD sub, edx, eax
-        js short loc_934A9
+        js short .2
         add eax, byte 10h
         LD sub, edx, eax
-        jns short loc_9348D
-loc_934A9:
+        jns short .1
+.2:
         LD add, edx, eax
         sub eax, byte 6
         shr eax, 2
         LD sub, edx, eax
-        js short loc_934C0
+        js short .3
         inc eax
         LD sub, edx, eax
-        js short loc_934C0
+        js short .3
         inc eax
         LD sub, edx, eax
-        js short loc_934C0
+        js short .3
         inc eax
-loc_934C0:
+.3:
         ret
-loc_934C1:
+.4:
         LD mov, ecx, eax
         LD mov, bl, ah
         add bl, 30h
-        jb short loc_934DC
+        jb short .5
         div bl
         LD add, bl, al
         LD mov, ax, cx
@@ -206,7 +202,7 @@ loc_934C1:
         rcr al, 1
         LD xor, ah, ah
         ret
-loc_934DC:
+.5:
         LD mov, ebx, eax
         shr ebx, 9
         add bx, 80h
@@ -215,7 +211,7 @@ loc_934DC:
         LD add, ax, bx
         rcr ax, 1
         ret
-loc_934F2:
+.6:
         push edi
         LD mov, edi, eax
         shr edi, 10h
@@ -254,18 +250,18 @@ SortIndices:
         sar eax, 1
         mov dword [byte esp+04h], eax
         test eax, eax
-        jle near loc_935CF
-loc_93558:
+        jle near .6
+.1:
         mov eax, dword [byte esp+04h]
         mov dword [esp], eax
         cmp eax, dword [byte esp+018h]
-        jge short loc_935C1
-loc_93565:
+        jge short .5
+.2:
         mov eax, dword [esp]
         sub eax, dword [byte esp+04h]
         test eax, eax
-        jl short loc_935B4
-loc_93570:
+        jl short .4
+.3:
         mov edi, dword [byte esp+04h]
         add edi, eax
         shl edi, 2
@@ -276,7 +272,7 @@ loc_93570:
         add edx, esi
         mov ecx, dword [edx]
         cmp ecx, dword [ebx]
-        jge short loc_935B4
+        jge short .4
         mov ecx, dword [edx]
         mov ebp, dword [ebx]
         mov dword [edx], ebp
@@ -290,20 +286,20 @@ loc_93570:
         mov dword [edx+edi], ecx
         sub eax, dword [byte esp+04h]
         test eax, eax
-        jge short loc_93570
-loc_935B4:
+        jge short .3
+.4:
         mov edi, dword [esp]
         inc edi
         mov dword [esp], edi
         cmp edi, dword [byte esp+018h]
-        jl short loc_93565
-loc_935C1:
+        jl short .2
+.5:
         mov ebx, dword [byte esp+04h]
         sar ebx, 1
         mov dword [byte esp+04h], ebx
         test ebx, ebx
-        jg short loc_93558
-loc_935CF:
+        jg short .1
+.6:
         add esp, byte 8
         pop ebp
         pop edi
@@ -313,7 +309,7 @@ loc_935CF:
 DebugPrintf:
         sub esp, 104h
         cmp dword [DebugMode], byte 2
-        jl short loc_93622
+        jl short .1
         lea eax, [dword esp+010Ch]
         mov dword [dword esp+0100h], eax
         lea ebx, [dword esp+0100h]
@@ -324,7 +320,7 @@ DebugPrintf:
         mov dword [dword esp+0100h], ebx
         mov eax, esp
         call DebugShowLines
-loc_93622:
+.1:
         add esp, 104h
         ret
         db 08Dh,040h,00h
@@ -334,22 +330,22 @@ DebugSetLine:
         mov ebx, dword [dword esp+010Ch]
         mov edx, dword [dword esp+0110h]
         cmp dword [DebugMode], byte 2
-        jl short loc_936A4
+        jl short .2
         test ebx, ebx
-        jl short loc_93671
+        jl short .1
         cmp ebx, byte 50h
-        jge short loc_93671
+        jge short .1
         test edx, edx
-        jl short loc_93671
+        jl short .1
         cmp edx, byte 19h
-        jge short loc_93671
+        jge short .1
         lea eax, [nosplit edx*4+00h]
         add eax, edx
         shl eax, 4
         add eax, ebx
         add eax, eax
         mov dword [DebugLineWidth], eax
-loc_93671:
+.1:
         lea eax, [dword esp+0118h]
         mov dword [dword esp+0100h], eax
         lea ebx, [dword esp+0100h]
@@ -360,16 +356,16 @@ loc_93671:
         mov dword [dword esp+0100h], esi
         mov eax, esp
         call DebugShowLines
-loc_936A4:
+.2:
         add esp, 104h
         pop esi
         ret
 DebugShowLinesJumpTable:
-        dd loc_9377C
-        dd loc_937A8
-        dd loc_937E5
-        dd loc_9380C
-        dd loc_93818
+        dd DebugShowLines+0BCh
+        dd DebugShowLines+0E8h
+        dd DebugShowLines+0125h
+        dd DebugShowLines+014Ch
+        dd DebugShowLines+0158h
 DebugShowLines:
         push ebx
         push ecx
@@ -391,10 +387,10 @@ DebugShowLines:
         mov byte [esp], ah
         xor edi, edi
         test ecx, ecx
-        jle near loc_93839
-loc_936E8:
+        jle near .6
+.1:
         cmp byte [esp], 0Eh
-        jne short loc_93705
+        jne short .2
         xor eax, eax
         mov al, byte [esi]
         push eax
@@ -402,12 +398,12 @@ loc_936E8:
         add esp, byte 4
         xor bh, bh
         mov byte [esp], bh
-        jmp near loc_9382F
-loc_93705:
+        jmp near .5
+.2:
         mov al, byte [esi]
         mov byte [esp], al
         cmp al, 20h
-        jb short loc_9374E
+        jb short .3
         call DebugScrollUp
         xor dh, dh
         mov dl, byte [byte_D4545]
@@ -424,7 +420,7 @@ loc_93705:
         inc esi
         inc edi
         cmp edi, ebp
-        jl short loc_936E8
+        jl short .1
         add esp, byte 4
         pop ebp
         pop edi
@@ -433,10 +429,10 @@ loc_93705:
         pop ecx
         pop ebx
         ret
-loc_9374E:
+.3:
         sub al, 8
         cmp al, 4
-        ja near loc_9382F
+        ja near .5
         and eax, 0FFh
         lea ebx, [nosplit eax*4+00h]
         mov eax, dword [DebugLineWidth]
@@ -445,16 +441,15 @@ loc_9374E:
         mov ecx, 0A0h
         idiv ecx
         jmp dword [dword cs:ebx+DebugShowLinesJumpTable]
-loc_9377C:
         mov ebx, dword [DebugLineWidth]
         cmp ebx, byte 2
-        jl near loc_9382F
+        jl near .5
         lea ecx, [byte ebx-02h]
         mov dword [DebugLineWidth], ecx
         inc esi
         inc edi
         cmp edi, ebp
-        jl near loc_936E8
+        jl near .1
         add esp, byte 4
         pop ebp
         pop edi
@@ -463,9 +458,8 @@ loc_9377C:
         pop ecx
         pop ebx
         ret
-loc_937A8:
         cmp byte [DebugTabWidth], 1
-        jbe near loc_9382F
+        jbe near .5
         imul ebx, eax, dword 0A0h
         mov edx, dword [DebugLineWidth]
         sub edx, ebx
@@ -482,8 +476,7 @@ loc_937A8:
         imul eax, ecx
         add eax, eax
         add eax, ebx
-        jmp short loc_9382A
-loc_937E5:
+        jmp short .4
         inc eax
         mov dword [DebugLineWidth], eax
         imul eax, ecx
@@ -492,7 +485,7 @@ loc_937E5:
         inc esi
         inc edi
         cmp edi, ebp
-        jl near loc_936E8
+        jl near .1
         add esp, byte 4
         pop ebp
         pop edi
@@ -501,24 +494,22 @@ loc_937E5:
         pop ecx
         pop ebx
         ret
-loc_9380C:
         xor eax, eax
         mov al, byte [DebugRow]
         imul eax, ecx
-        jmp short loc_9382A
-loc_93818:
+        jmp short .4
         call DebugClearScreen
         xor eax, eax
         mov al, byte [DebugRow]
         imul eax, dword 0A0h
-loc_9382A:
+.4:
         mov dword [DebugLineWidth], eax
-loc_9382F:
+.5:
         inc esi
         inc edi
         cmp edi, ebp
-        jl near loc_936E8
-loc_93839:
+        jl near .1
+.6:
         add esp, byte 4
         pop ebp
         pop edi
@@ -533,7 +524,7 @@ DebugScrollUp:
         push ecx
         push edx
         cmp dword [DebugLineWidth], 0FA0h
-        jl short loc_938C1
+        jl short .1
         xor edx, edx
         mov dl, byte [DebugRow]
         mov eax, 19h
@@ -564,7 +555,7 @@ DebugScrollUp:
         call ZeroMem
         add esp, byte 8
         mov dword [DebugLineWidth], 0F00h
-loc_938C1:
+.1:
         pop edx
         pop ecx
         pop ebx
@@ -573,25 +564,25 @@ loc_938C1:
 DebugClearScreen:
         mov ebx, dword [DebugScreenBase]
         cmp dword [DebugMode], byte 2
-        jl short loc_938EA
+        jl short .2
         xor eax, eax
-loc_938D9:
+.1:
         mov dword [ebx+eax], 0
         add eax, byte 4
         cmp eax, 0FA0h
-        jl short loc_938D9
-loc_938EA:
+        jl short .1
+.2:
         mov dword [DebugScreenBase], ebx
         ret
         db 08Dh,040h,00h
 DebugSetRow:
         mov eax, dword [byte esp+04h]
         test eax, eax
-        jl short loc_93906
+        jl short .1
         cmp eax, byte 18h
-        jg short loc_93906
+        jg short .1
         mov byte [DebugRow], al
-loc_93906:
+.1:
         ret
         db 090h
 DebugSetAttr:
@@ -602,9 +593,9 @@ DebugSetAttr:
 DebugSetTabWidth:
         mov eax, dword [byte esp+04h]
         cmp eax, byte 1
-        jl short loc_93922
+        jl short .1
         mov byte [DebugTabWidth], al
-loc_93922:
+.1:
         ret
         db 090h
 DebugSetPage:

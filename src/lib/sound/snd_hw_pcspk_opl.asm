@@ -7,15 +7,9 @@ extern byte_D6787, byte_D6788, byte_D6789, byte_D678C, byte_D678D, byte_D678E, b
 extern byte_D679A, byte_D67A8, dword_D67A0, dword_D67A4, unk_D67B4, unk_D68FC, unk_D691C, unk_D699C
 extern unk_D69B9, unk_D69FF, unk_D6A1F, unk_D6A9F, unk_D6ABC, word_D6608, word_D677B, word_D677D
 extern word_D677F, word_D6781, word_D6783, word_D679C, word_D67F4, word_D683C, word_D687C
-global PcSpkHwInit, PcSpkHwClose, PcSpkSilence, PcSpkVoiceNote, loc_A6664, loc_A6670, PcSpkVoiceOff, PcSpkVoiceUpdate
-global loc_A6692, loc_A66BA, loc_A66C9, loc_A66E0, loc_A6715, loc_A6745, loc_A6754, loc_A6763
-global PcSpkOutput, loc_A678D, loc_A67A6, loc_A67AF, loc_A67FD, loc_A680A, loc_A6812, loc_A6830
-global loc_A6836, loc_A6844, loc_A684A, OplWrite, loc_A6861, loc_A6877, OplReset, loc_A6888
-global loc_A68A9, loc_A68B8, OplFlush, loc_A68DD, loc_A68EA, loc_A6900, loc_A690D, loc_A6923
-global loc_A6935, loc_A694D, OplSetReg, loc_A697D, loc_A6982, OplGetReg, loc_A699B, OplLoadVoice
-global loc_A69B0, loc_A69C0, loc_A69D5, OplHwInit, OplHwClose, OplDetect, OplOpen, loc_A6A40
-global OplProbe, loc_A6A89, loc_A6A92, loc_A6ABB, OplCalibrate, loc_A6AEC, loc_A6B14, loc_A6B29
-global OplNoteFNum, OplVolumeLevel, OplVelocityLevel
+global PcSpkHwInit, PcSpkHwClose, PcSpkSilence, PcSpkVoiceNote, PcSpkVoiceOff, PcSpkVoiceUpdate, PcSpkOutput, OplWrite
+global OplReset, OplFlush, OplSetReg, OplGetReg, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
+global OplOpen, OplProbe, OplCalibrate, OplNoteFNum, OplVolumeLevel, OplVelocityLevel
 PcSpkHwInit:
         mov al, 0B6h
         out 43h, al
@@ -45,26 +39,26 @@ PcSpkVoiceNote:
         push ebp
         LD mov, ebp, esp
         cmp dword [byte ebp+08h], byte 0
-        je short loc_A6670
+        je short .2
         push esi
         LD xor, eax, eax
         mov al, byte [byte ebp+010h]
         mov ebx, dword [byte ebp+0Ch]
         mov byte [byte ebx+03h], al
         cmp al, 0FFh
-        je short loc_A6664
+        je short .1
         shl eax, 1
         LD mov, esi, eax
         mov ax, word [dword esi+word_D6608]
         mov ebx, dword [byte ebp+0Ch]
         mov word [byte ebx+04h], ax
         mov word [byte ebx+06h], ax
-loc_A6664:
+.1:
         mov esi, dword [byte ebp+08h]
         mov al, 0FFh
         mov byte [dword esi+byte_D6774], al
         pop esi
-loc_A6670:
+.2:
         leave
         ret
 PcSpkVoiceOff:
@@ -82,15 +76,15 @@ PcSpkVoiceUpdate:
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+0Ch]
         cmp byte [byte ebx+01h], 0
-        jne short loc_A6692
+        jne short .1
         leave
         ret
-loc_A6692:
+.1:
         push esi
         push ecx
         mov ebx, dword [byte ebp+014h]
         cmp byte [byte ebx+035h], 1
-        jne short loc_A66BA
+        jne short .2
         mov ebx, dword [byte ebp+0Ch]
         LD xor, eax, eax
         mov al, byte [byte ebx+022h]
@@ -99,23 +93,23 @@ loc_A6692:
         shl eax, 1
         LD mov, esi, eax
         movzx ecx, word [dword esi+word_D6608]
-        jmp short loc_A66C9
-loc_A66BA:
+        jmp short .3
+.2:
         mov ebx, dword [byte ebp+0Ch]
         movzx ecx, word [byte ebx+04h]
         mov al, byte [byte ebx+03h]
         mov byte [byte_D6770], al
-loc_A66C9:
+.3:
         mov ebx, dword [byte ebp+014h]
         movsx eax, byte [byte ebx+011h]
         neg eax
         LD add, ecx, eax
         mov ebx, dword [byte ebp+010h]
         cmp word [byte ebx+026h], byte 0
-        jne short loc_A66E0
-        jmp short loc_A6745
-loc_A66E0:
-        jl short loc_A6715
+        jne short .4
+        jmp short .6
+.4:
+        jl short .5
         LD xor, eax, eax
         mov al, byte [byte_D6770]
         mov ebx, dword [byte ebp+014h]
@@ -133,8 +127,8 @@ loc_A66E0:
         div ebx
         pop ebx
         LD sub, ecx, eax
-        jmp short loc_A6745
-loc_A6715:
+        jmp short .6
+.5:
         LD xor, eax, eax
         mov al, byte [byte_D6770]
         mov ebx, dword [byte ebp+014h]
@@ -152,19 +146,19 @@ loc_A6715:
         div ebx
         pop ebx
         LD add, ecx, eax
-loc_A6745:
+.6:
         mov ebx, dword [byte ebp+014h]
         cmp byte [byte ebx+028h], 2
-        jne short loc_A6754
+        jne short .7
         mov ebx, dword [byte ebp+0Ch]
         add ecx, dword [byte ebx+01Ch]
-loc_A6754:
+.7:
         mov ebx, dword [byte ebp+014h]
         cmp byte [byte ebx+019h], 2
-        jne short loc_A6763
+        jne short .8
         mov ebx, dword [byte ebp+0Ch]
         add ecx, dword [byte ebx+014h]
-loc_A6763:
+.8:
         mov eax, dword [byte ebp+08h]
         shl eax, 1
         LD mov, esi, eax
@@ -181,71 +175,71 @@ PcSpkOutput:
         push esi
         mov ecx, 4
         LD mov, esi, ecx
-loc_A678D:
+.1:
         cmp byte [dword esi+byte_D6785], 0
-        je short loc_A67A6
+        je short .2
         mov al, byte [nosplit esi*1+byte_D6774]
         mov byte [nosplit esi*1+byte_D678C], al
-        jmp short loc_A67AF
-loc_A67A6:
+        jmp short .3
+.2:
         LD xor, al, al
         mov byte [nosplit esi*1+byte_D678C], al
-loc_A67AF:
+.3:
         dec esi
-        loop loc_A678D
+        loop .1
         pop esi
         mov al, byte [byte_D678C]
         cmp al, 0
-        jne near loc_A684A
+        jne near .10
         mov bl, byte [byte_D678F]
         mov cl, byte [byte_D6790]
         LD xor, al, al
         LD or, al, bl
         LD or, al, cl
-        je short loc_A6812
+        je short .6
         mov al, byte [byte_D679A]
         and al, 2
-        je short loc_A67FD
+        je short .4
         mov bl, byte [byte_D678D]
         mov cl, byte [byte_D678E]
         LD xor, al, al
         LD or, al, bl
         LD or, al, cl
-        jne short loc_A6812
+        jne short .6
         mov bl, byte [byte_D678F]
         mov cl, byte [byte_D6790]
-loc_A67FD:
+.4:
         cmp bl, 0
-        je short loc_A680A
+        je short .5
         mov ax, word [word_D6781]
-        jmp short loc_A6836
-loc_A680A:
+        jmp short .8
+.5:
         mov ax, word [word_D6783]
-        jmp short loc_A6836
-loc_A6812:
+        jmp short .8
+.6:
         mov bl, byte [byte_D678D]
         cmp bl, 0
-        jne short loc_A6830
+        jne short .7
         mov cl, byte [byte_D678E]
         cmp cl, 0
-        je short loc_A6844
+        je short .9
         mov ax, word [word_D677F]
-        jmp short loc_A6836
-loc_A6830:
+        jmp short .8
+.7:
         mov ax, word [word_D677D]
-loc_A6836:
+.8:
         out 42h, al
         LD mov, al, ah
         out 42h, al
         in al, 61h
         or al, 3
         out 61h, al
-        jmp short loc_A684A
-loc_A6844:
+        jmp short .10
+.9:
         in al, 61h
         and al, 0FEh
         out 61h, al
-loc_A684A:
+.10:
         mov al, byte [byte_D679A]
         inc al
         mov byte [byte_D679A], al
@@ -256,9 +250,9 @@ OplWrite:
         push eax
         push ecx
         mov ecx, dword [dword_D67A0]
-loc_A6861:
+.1:
         in al, dx
-        loop loc_A6861
+        loop .1
         pop ecx
         pop eax
         inc dx
@@ -269,9 +263,9 @@ loc_A6861:
         push eax
         push ecx
         mov ecx, dword [dword_D67A4]
-loc_A6877:
+.2:
         in al, dx
-        loop loc_A6877
+        loop .2
         pop ecx
         pop eax
         ret
@@ -279,11 +273,11 @@ OplReset:
         LD xor, eax, eax
         mov al, 1
         mov dx, word [word_D679C]
-loc_A6888:
+.1:
         call OplWrite
         inc al
         cmp al, 0F6h
-        jne short loc_A6888
+        jne short .1
         mov al, 1
         mov ah, 20h
         call OplWrite
@@ -291,21 +285,21 @@ loc_A6888:
         LD xor, eax, eax
         mov ebx, unk_D68FC
         mov esi, unk_D69FF
-loc_A68A9:
+.2:
         mov byte [ebx], ah
         mov byte [esi], ah
         inc ebx
         inc esi
         inc al
-        jne short loc_A68A9
+        jne short .2
         pop esi
         mov al, 80h
         mov ah, 0Eh
-loc_A68B8:
+.3:
         call OplSetReg
         inc al
         cmp al, 95h
-        jle short loc_A68B8
+        jle short .3
         call OplFlush
         ret
 OplFlush:
@@ -314,48 +308,48 @@ OplFlush:
         mov al, 20h
         mov ebx, unk_D691C
         mov esi, unk_D6A1F
-loc_A68DD:
+.1:
         mov ah, byte [ebx]
         mov cl, byte [esi]
         LD cmp, ah, cl
-        je short loc_A68EA
+        je short .2
         call OplWrite
-loc_A68EA:
+.2:
         mov byte [esi], ah
         inc ebx
         inc esi
         inc al
         cmp al, 96h
-        jne short loc_A68DD
+        jne short .1
         mov al, 0BDh
         mov ebx, unk_D69B9
         mov esi, unk_D6ABC
-loc_A6900:
+.3:
         mov ah, byte [ebx]
         mov cl, byte [esi]
         LD cmp, ah, cl
-        je short loc_A690D
+        je short .4
         call OplWrite
-loc_A690D:
+.4:
         mov byte [esi], ah
         inc ebx
         inc esi
         inc al
         cmp al, 0F6h
-        jne short loc_A6900
+        jne short .3
         mov al, 0A0h
         mov ebx, unk_D699C
         mov esi, unk_D6A9F
-loc_A6923:
+.5:
         mov ah, byte [ebx]
         mov cl, byte [esi]
         LD cmp, ah, cl
-        jne short loc_A6935
+        jne short .6
         mov ah, byte [byte ebx+010h]
         mov cl, byte [byte esi+010h]
         LD cmp, ah, cl
-        je short loc_A694D
-loc_A6935:
+        je short .7
+.6:
         add al, 10h
         mov ah, byte [byte ebx+010h]
         call OplWrite
@@ -364,20 +358,20 @@ loc_A6935:
         mov ah, byte [ebx]
         call OplWrite
         mov byte [esi], ah
-loc_A694D:
+.7:
         inc ebx
         inc esi
         inc al
         cmp al, 0A9h
-        jne short loc_A6923
+        jne short .5
         pop esi
         ret
 OplSetReg:
         mov dx, word [word_D679C]
         cmp al, 20h
-        jb short loc_A697D
+        jb short .1
         cmp al, 0F5h
-        ja short loc_A697D
+        ja short .1
         push eax
         push ebx
         push ecx
@@ -390,24 +384,24 @@ OplSetReg:
         pop ecx
         pop ebx
         pop eax
-        jmp short loc_A6982
-loc_A697D:
+        jmp short .2
+.1:
         call OplWrite
-loc_A6982:
+.2:
         ret
 OplGetReg:
         push ecx
         cmp al, 20h
-        jb short loc_A699B
+        jb short .1
         cmp al, 0F5h
-        ja short loc_A699B
+        ja short .1
         LD mov, ecx, eax
         LD xor, eax, eax
         LD mov, al, cl
         mov ebx, unk_D68FC
         LD add, ebx, eax
         mov al, byte [ebx]
-loc_A699B:
+.1:
         pop ecx
         ret
 OplLoadVoice:
@@ -417,33 +411,33 @@ OplLoadVoice:
         cld
         movzx ebx, word [byte ebp+08h]
         cmp ebx, byte 9
-        jl short loc_A69B0
+        jl short .1
         pop si
         leave
         ret
-loc_A69B0:
+.1:
         mov cl, byte [dword ebx+byte_D67A8]
         mov esi, unk_D67B4
         mov ebx, dword [byte ebp+0Ch]
         mov ch, 0Ah
-loc_A69C0:
+.2:
         mov ah, byte [ebx]
         inc ebx
         lodsb
         LD add, al, cl
         call OplSetReg
         dec ch
-        jne short loc_A69C0
+        jne short .2
         movzx ecx, word [byte ebp+08h]
         mov ch, 3
-loc_A69D5:
+.3:
         mov ah, byte [ebx]
         inc ebx
         lodsb
         LD add, al, cl
         call OplSetReg
         dec ch
-        jne short loc_A69D5
+        jne short .3
         pop si
         leave
         ret
@@ -473,11 +467,11 @@ OplOpen:
         mov dword [dword_D67A4], eax
         call OplProbe
         mov eax, 0
-        jb short loc_A6A40
+        jb short .1
         call OplCalibrate
         mov eax, 1
         clc
-loc_A6A40:
+.1:
         leave
         ret
 OplProbe:
@@ -498,13 +492,13 @@ OplProbe:
         mov eax, 2104h
         call OplWrite
         mov ecx, 0C350h
-loc_A6A89:
+.1:
         in al, dx
         and al, 0E0h
         cmp al, 0C0h
-        je short loc_A6A92
-        loop loc_A6A89
-loc_A6A92:
+        je short .2
+        loop .1
+.2:
         LD mov, ecx, eax
         mov eax, 6004h
         call OplWrite
@@ -513,13 +507,13 @@ loc_A6A92:
         and bl, 0E0h
         cmp bl, 0
         stc
-        jne short loc_A6ABB
+        jne short .3
         and cl, 0E0h
         cmp cl, 0C0h
         stc
-        jne short loc_A6ABB
+        jne short .3
         clc
-loc_A6ABB:
+.3:
         pop dx
         pop cx
         pop ax
@@ -542,9 +536,9 @@ OplCalibrate:
         mov ecx, 3E8h
         mov dx, word [word_D679C]
         LD xor, eax, eax
-loc_A6AEC:
+.1:
         in al, dx
-        loop loc_A6AEC
+        loop .1
         in al, 61h
         and al, 0FEh
         out 61h, al
@@ -558,17 +552,17 @@ loc_A6AEC:
         mov eax, 0EA60h
         div ecx
         cmp eax, byte 0
-        jne short loc_A6B14
+        jne short .2
         mov eax, 1
-loc_A6B14:
+.2:
         shl eax, 1
         LD xor, edx, edx
         mov eax, 7530h
         div ecx
         cmp eax, byte 0
-        jne short loc_A6B29
+        jne short .3
         mov eax, 1
-loc_A6B29:
+.3:
         shl eax, 1
         pop dx
         pop cx

@@ -5,23 +5,22 @@ section s_B2D38 progbits alloc exec nowrite align=1
 extern mouseminx, mouseminy, mousemaxx, mousemaxy, dword_D2FFC, MouseButtonState, dword_D301C, MousePresent
 extern PointerCount, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollfn, mousex, mousey
 extern off_D306C, off_D3070, off_D3074, AddExitHandler, word_D3004, word_D3006, word_D3008
-global MouseReadButtons, loc_B2D57, loc_B2D5E, MouseSetSensitivity, loc_B2D92, MouseSetSensitivityDefault, loc_B2DB2, MouseSetPos
-global MouseRead, MouseSetXRange, SetViewRect, MouseReadMotion, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
-global loc_B2EEA, PointerCountUp, PointerCountDown, MouseRestoreSensitivity, InitMouse, loc_B2F7C, loc_B3006
+global MouseReadButtons, MouseSetSensitivity, MouseSetSensitivityDefault, MouseSetPos, MouseRead, MouseSetXRange, SetViewRect, MouseReadMotion
+global PointerCountUp, PointerCountDown, MouseRestoreSensitivity, InitMouse
 MouseReadButtons:
         LD xor, eax, eax
         dec dword [MouseButtonState]
-        jne short loc_B2D57
+        jne short .1
         cmp dword [MousePresent], byte 1
-        jb short loc_B2D57
-        ja short loc_B2D5E
+        jb short .1
+        ja short .2
         mov eax, 3
         int 33h
         movsx eax, bx
-loc_B2D57:
+.1:
         inc dword [MouseButtonState]
         ret
-loc_B2D5E:
+.2:
         mov eax, 3
         int 33h
         and eax, byte 1
@@ -33,26 +32,26 @@ MouseSetSensitivity:
         push ebp
         LD mov, ebp, esp
         cmp dword [MousePresent], byte 0
-        je short loc_B2D92
+        je short .1
         mov ax, 1Ah
         mov bx, word [byte ebp+08h]
         mov cx, word [byte ebp+0Ch]
         mov dx, word [byte ebp+010h]
         int 33h
-loc_B2D92:
+.1:
         leave
         ret
 MouseSetSensitivityDefault:
         push ebp
         LD mov, ebp, esp
         cmp dword [MousePresent], byte 0
-        je short loc_B2DB2
+        je short .1
         mov ax, 1Ah
         mov bx, word [byte ebp+08h]
         mov cx, word [byte ebp+0Ch]
         mov dx, 40h
         int 33h
-loc_B2DB2:
+.1:
         leave
         ret
 MouseSetPos:
@@ -110,10 +109,10 @@ SetViewRect:
         ret
 MouseReadMotion:
         dec dword [MouseButtonState]
-        jne near loc_B2EEA
+        jne near .5
         mov eax, dword [MousePresent]
         LD or, eax, eax
-        je near loc_B2EEA
+        je near .5
         mov eax, 0Bh
         int 33h
         movsx ecx, cx
@@ -127,25 +126,25 @@ MouseReadMotion:
         rcr ebx, 1
         add edx, dword [mousey]
         cmp ecx, dword [mouseminx]
-        jge short loc_B2E94
+        jge short .1
         mov ecx, dword [mouseminx]
         LD xor, ebx, ebx
-loc_B2E94:
+.1:
         cmp ecx, dword [mousemaxx]
-        jl short loc_B2EA5
+        jl short .2
         mov ecx, dword [mousemaxx]
         dec ecx
         LD xor, ebx, ebx
-loc_B2EA5:
+.2:
         cmp edx, dword [mouseminy]
-        jge short loc_B2EB3
+        jge short .3
         mov edx, dword [mouseminy]
-loc_B2EB3:
+.3:
         cmp edx, dword [mousemaxy]
-        jl short loc_B2EC2
+        jl short .4
         mov edx, dword [mousemaxy]
         dec edx
-loc_B2EC2:
+.4:
         mov dword [dword_D2FFC], ebx
         mov dword [mousex], ecx
         mov dword [mousey], edx
@@ -153,7 +152,7 @@ loc_B2EC2:
         call MouseReadButtons
         dec dword [MouseButtonState]
         mov dword [mousebtns], eax
-loc_B2EEA:
+.5:
         mov eax, dword [mousebtns]
         inc dword [MouseButtonState]
         ret
@@ -179,17 +178,17 @@ InitMouse:
         LD xor, eax, eax
         int 33h
         LD or, ax, ax
-        je near loc_B3006
+        je near .2
         inc dword [MousePresent]
         cmp dword [dword_D301C], byte 0
-        je short loc_B2F7C
+        je short .1
         mov dword [dword_D303C], 2
         mov eax, 3
         int 33h
         LD or, ax, ax
-        jne short loc_B2F7C
+        jne short .1
         mov dword [MousePresent], 2
-loc_B2F7C:
+.1:
         push dword [dword_D3048]
         push dword [dword_D3044]
         push byte 0
@@ -217,6 +216,6 @@ loc_B2F7C:
         push MouseRestoreSensitivity
         call AddExitHandler
         add esp, byte 20h
-loc_B3006:
+.2:
         mov eax, dword [MousePresent]
         ret

@@ -4,14 +4,7 @@ bits 32
 section s_B2220 progbits alloc exec nowrite align=1
 extern __Bin2String, __CmpBigInt, __Rnd2Int, str_Inf, str_Nan, DblMaxLow, DblMaxHigh, DblMinusMaxLow
 extern DblMinusMaxHigh, frexp_, modf_, F64_neg1_floor_, F64_Scale10Max, F64_Scale10Min, Pow10Table, Scale10Count
-global __Nan_Inf_, loc_B2258, loc_B228B, loc_B2291, loc_B229A, loc_B229C, floor_, loc_B22D3
-global _Scale_, loc_B2306, _Scale10V_, loc_B234C, loc_B2369, loc_B236D, loc_B2394, loc_B23AE
-global loc_B23B2, loc_B23C0, loc_B23D2, loc_B23E1, loc_B23EE, loc_B23F5, __cvt_, loc_B2444
-global loc_B246E, loc_B2487, loc_B249F, loc_B24BF, loc_B24CB, loc_B24DD, loc_B2507, loc_B2531
-global loc_B2533, loc_B253F, loc_B2549, loc_B2567, loc_B259B, loc_B25A7, loc_B25B1, loc_B25C3
-global loc_B25DF, loc_B25E2, ModfCore, loc_B2619, loc_B2627, loc_B264C, loc_B264E, loc_B2672
-global DecimalToInt64, loc_B268C, loc_B26B0, NormalizeDouble, loc_B26D9, loc_B26ED, loc_B26F5, loc_B2711
-global loc_B2719
+global __Nan_Inf_, floor_, _Scale_, _Scale10V_, __cvt_, ModfCore, DecimalToInt64, NormalizeDouble
 __Nan_Inf_:
         push ebx
         push edx
@@ -24,14 +17,14 @@ __Nan_Inf_:
         mov eax, dword [byte esp+06h]
         and eax, 7FF0h
         cmp ax, 7FF0h
-        jne short loc_B229A
+        jne short .4
         mov bl, byte [byte esp+07h]
         mov eax, edx
         test bl, 80h
-        je short loc_B2258
+        je short .1
         lea eax, [byte edx+01h]
         mov byte [edx], 2Dh
-loc_B2258:
+.1:
         xor ebx, ebx
         xor edx, edx
         mov bx, word [byte esp+02h]
@@ -45,18 +38,18 @@ loc_B2258:
         xor bh, bh
         and ebx, 0FFFFh
         or edx, ebx
-        jne short loc_B228B
+        jne short .2
         mov edx, dword [str_Inf]
-        jmp short loc_B2291
-loc_B228B:
+        jmp short .3
+.2:
         mov edx, dword [str_Nan]
-loc_B2291:
+.3:
         mov dword [eax], edx
         mov eax, 1
-        jmp short loc_B229C
-loc_B229A:
+        jmp short .5
+.4:
         xor eax, eax
-loc_B229C:
+.5:
         add esp, byte 8
         pop edx
         pop ebx
@@ -79,11 +72,11 @@ floor_:
         fcompp
         fnstsw ax
         sahf
-        jbe short loc_B22D3
+        jbe short .1
         fld qword [byte ebp-014h]
         fadd qword [F64_neg1_floor_]
         fstp qword [byte ebp-014h]
-loc_B22D3:
+.1:
         fld qword [byte ebp-014h]
         lea esp, [byte ebp-0Ch]
         pop edx
@@ -101,7 +94,7 @@ _Scale_:
         mov ecx, dword [byte ebp+010h]
         mov ebx, dword [byte ebp+014h]
         cmp eax, ecx
-        je short loc_B2306
+        je short .1
         mov edx, ecx
         sub edx, eax
         push edx
@@ -111,7 +104,7 @@ _Scale_:
         push esi
         call _Scale10V_
         fstp qword [byte ebp+08h]
-loc_B2306:
+.1:
         lea eax, [byte ebp+08h]
         mov edx, ebx
         call __Rnd2Int
@@ -136,73 +129,73 @@ _Scale10V_:
         fcomp qword [F64_Scale10Max]
         fnstsw ax
         sahf
-        jne short loc_B234C
+        jne short .1
         mov eax, dword [DblMaxLow]
         mov dword [byte esp+020h], eax
         mov eax, dword [DblMaxHigh]
-        jmp short loc_B2369
-loc_B234C:
+        jmp short .2
+.1:
         fld qword [byte esp+020h]
         fcomp qword [F64_Scale10Min]
         fnstsw ax
         sahf
-        jne short loc_B236D
+        jne short .3
         mov eax, dword [DblMinusMaxLow]
         mov dword [byte esp+020h], eax
         mov eax, dword [DblMinusMaxHigh]
-loc_B2369:
+.2:
         mov dword [byte esp+024h], eax
-loc_B236D:
+.3:
         mov eax, Scale10Count
         test ecx, ecx
-        jge short loc_B2394
+        jge short .4
         mov edx, ecx
         neg edx
         cmp edx, 134h
-        jle short loc_B23B2
+        jle short .6
         fld qword [byte esp+020h]
         fdiv qword [Pow10Table]
         sub edx, 0D8h
-        jmp short loc_B23AE
-loc_B2394:
+        jmp short .5
+.4:
         mov edx, ecx
         cmp ecx, 134h
-        jle short loc_B23B2
+        jle short .6
         fld qword [byte esp+020h]
         fmul qword [Pow10Table]
         lea edx, [dword ecx-0D8h]
-loc_B23AE:
+.5:
         fstp qword [byte esp+020h]
-loc_B23B2:
+.6:
         xor ebx, ebx
         mov esi, 3FF00000h
         mov dword [esp], ebx
         mov dword [byte esp+04h], esi
-loc_B23C0:
+.7:
         movsx ebx, word [eax]
         cmp edx, ebx
-        jl short loc_B23D2
+        jl short .8
         fld qword [esp]
         fmul qword [byte eax+02h]
         sub edx, ebx
         fstp qword [esp]
-loc_B23D2:
+.8:
         test edx, edx
-        je short loc_B23E1
+        je short .9
         cmp word [eax], byte 1
-        je short loc_B23C0
+        je short .7
         add eax, byte 0Ah
-        jmp short loc_B23C0
-loc_B23E1:
+        jmp short .7
+.9:
         test ecx, ecx
-        jge short loc_B23EE
+        jge short .10
         fld qword [byte esp+020h]
         fdiv qword [esp]
-        jmp short loc_B23F5
-loc_B23EE:
+        jmp short .11
+.10:
         fld qword [byte esp+020h]
         fmul qword [esp]
-loc_B23F5:
+.11:
         fstp qword [byte esp+020h]
         fld qword [byte esp+020h]
         add esp, byte 8
@@ -234,10 +227,10 @@ __cvt_:
         mov dword [ecx], 0
         call __Nan_Inf_
         test eax, eax
-        je short loc_B2444
+        je short .1
         mov eax, edx
-        jmp near loc_B25E2
-loc_B2444:
+        jmp near .19
+.1:
         xor edx, edx
         xor esi, esi
         mov word [byte ebp-02Ch], dx
@@ -247,20 +240,20 @@ loc_B2444:
         mov edx, dword [byte ebp+0Ch]
         mov esi, dword [byte ebp+08h]
         test edx, 7FFFFFFFh
-        jne short loc_B246E
+        jne short .2
         test esi, esi
-        je near loc_B259B
-loc_B246E:
+        je near .14
+.2:
         fldz
         fcomp qword [byte ebp+08h]
         fnstsw ax
         sahf
-        jbe short loc_B2487
+        jbe short .3
         mov ah, byte [byte ebp+0Fh]
         xor ah, 80h
         mov dword [edi], 0FFFFFFFFh
         mov byte [byte ebp+0Fh], ah
-loc_B2487:
+.3:
         push ecx
         mov eax, dword [byte ebp+0Ch]
         push eax
@@ -270,9 +263,9 @@ loc_B2487:
         mov edx, dword [ecx]
         fstp st0
         test edx, edx
-        jge short loc_B249F
+        jge short .4
         neg edx
-loc_B249F:
+.4:
         mov eax, edx
         shl edx, 2
         sub edx, eax
@@ -284,21 +277,21 @@ loc_B249F:
         mov esi, dword [ecx]
         mov edx, eax
         test esi, esi
-        jge short loc_B24BF
+        jge short .5
         neg edx
-loc_B24BF:
+.5:
         mov eax, dword [byte ebp+01Ch]
         mov dword [ecx], edx
         cmp eax, byte 46h
-        jne short loc_B24CB
+        jne short .6
         add ebx, edx
-loc_B24CB:
+.6:
         test ebx, ebx
-        jl near loc_B2567
+        jl near .13
         cmp ebx, byte 10h
-        jle short loc_B24DD
+        jle short .7
         mov ebx, 10h
-loc_B24DD:
+.7:
         xor al, al
         mov byte [byte ebp-018h], al
         lea eax, [byte ebp-024h]
@@ -312,13 +305,13 @@ loc_B24DD:
         fcompp
         fnstsw ax
         sahf
-        jne short loc_B2507
+        jne short .8
         cmp ebx, edx
-        jle short loc_B2507
+        jle short .8
         mov ah, 1
         mov ebx, edx
         mov byte [byte ebp-018h], ah
-loc_B2507:
+.8:
         lea eax, [byte ebp-02Ch]
         push eax
         push ebx
@@ -330,25 +323,25 @@ loc_B2507:
         call _Scale_
         mov esi, eax
         test eax, eax
-        je short loc_B2567
+        je short .13
         mov esi, dword [byte ebp+01Ch]
         add dword [ecx], eax
         cmp esi, byte 46h
-        je short loc_B2531
+        je short .9
         cmp byte [byte ebp-018h], 0
-        je short loc_B2533
-loc_B2531:
+        je short .10
+.9:
         add ebx, eax
-loc_B2533:
+.10:
         cmp ebx, byte 1
-        jge short loc_B253F
+        jge short .11
         mov ebx, 1
-        jmp short loc_B2549
-loc_B253F:
+        jmp short .12
+.11:
         cmp ebx, byte 10h
-        jle short loc_B2549
+        jle short .12
         mov ebx, 10h
-loc_B2549:
+.12:
         lea eax, [byte ebp-02Ch]
         push eax
         push ebx
@@ -359,12 +352,12 @@ loc_B2549:
         mov eax, dword [ecx]
         call _Scale_
         test eax, eax
-        jle short loc_B2567
+        jle short .13
         mov eax, dword [ecx]
         inc eax
         inc ebx
         mov dword [ecx], eax
-loc_B2567:
+.13:
         mov eax, dword [byte ebp-02Ch]
         sar eax, 10h
         mov dword [byte ebp-01Ch], eax
@@ -378,44 +371,44 @@ loc_B2567:
         mov esi, dword [byte ebp-028h]
         sar esi, 10h
         or eax, esi
-        jne short loc_B259B
+        jne short .14
         mov dword [edi], eax
         mov edi, dword [byte ebp+01Ch]
         mov dword [ecx], eax
         cmp edi, byte 46h
-        jne short loc_B259B
+        jne short .14
         sub ebx, edx
-loc_B259B:
+.14:
         cmp ebx, byte 1
-        jge short loc_B25A7
+        jge short .15
         mov ebx, 1
-        jmp short loc_B25B1
-loc_B25A7:
+        jmp short .16
+.15:
         cmp ebx, byte 11h
-        jle short loc_B25B1
+        jle short .16
         mov ebx, 11h
-loc_B25B1:
+.16:
         lea eax, [byte ebp-02Ch]
         lea edx, [byte ebp-040h]
         mov edi, dword [byte ebp+020h]
         lea esi, [byte ebp-040h]
         call __Bin2String
         push edi
-loc_B25C3:
+.17:
         mov al, byte [esi]
         mov byte [edi], al
         cmp al, 0
-        je near loc_B25DF
+        je near .18
         mov al, byte [byte esi+01h]
         add esi, byte 2
         mov byte [byte edi+01h], al
         add edi, byte 2
         cmp al, 0
-        jne short loc_B25C3
-loc_B25DF:
+        jne short .17
+.18:
         pop edi
         mov eax, edi
-loc_B25E2:
+.19:
         lea esp, [byte ebp-014h]
         pop edi
         pop esi
@@ -439,11 +432,11 @@ ModfCore:	;IDA: unknown_libname_5
         mov dword [byte ebp+04h], edx
         mov ecx, edx
         and ecx, 7FF00000h
-        je short loc_B2619
+        je short .1
         cmp ecx, 43300000h
-        jb short loc_B2627
+        jb short .2
         db 087h,0F5h                            ; insn: xchg esi,ebp
-loc_B2619:
+.1:
         sub eax, eax
         mov dword [byte ebp+04h], eax
         mov dword [byte ebp+00h], eax
@@ -453,24 +446,24 @@ loc_B2619:
         pop esi
         pop ebp
         ret
-loc_B2627:
+.2:
         mov edi, ecx
         shr ecx, 14h
         sub cx, 3FFh
-        jb short loc_B2619
+        jb short .1
         push edx
         sub eax, eax
         mov edx, 0FFF00000h
         cmp cl, 14h
-        jbe short loc_B264C
+        jbe short .3
         sar edx, 15h
         rcr eax, 1
         sub cl, 15h
         sar eax, cl
-        jmp short loc_B264E
-loc_B264C:
+        jmp short .4
+.3:
         sar edx, cl
-loc_B264E:
+.4:
         and dword [byte ebp+04h], edx
         and dword [byte ebp+00h], eax
         not edx
@@ -481,10 +474,10 @@ loc_B264E:
         call NormalizeDouble
         pop esi
         or edx, edx
-        je short loc_B2672
+        je short .5
         and esi, 80000000h
         or edx, esi
-loc_B2672:
+.5:
         mov dword [byte ebp+04h], edx
         mov dword [byte ebp+00h], eax
         pop ebx
@@ -504,10 +497,10 @@ DecimalToInt64:	;IDA: unknown_libname_6
         sub edx, edx
         sub ecx, ecx
         sub eax, eax
-loc_B268C:
+.1:
         mov al, byte [esi]
         cmp al, 0
-        je short loc_B26B0
+        je short .2
         mov edi, edx
         mov ebx, ecx
         add ecx, ecx
@@ -522,8 +515,8 @@ loc_B268C:
         add ecx, eax
         adc edx, byte 0
         inc esi
-        jmp short loc_B268C
-loc_B26B0:
+        jmp short .1
+.2:
         mov eax, ecx
         mov edi, 43300000h
         call NormalizeDouble
@@ -540,32 +533,32 @@ NormalizeDouble:
         sub esi, esi
         or esi, eax
         or esi, edx
-        je short loc_B2719
+        je short .5
         test edx, 0FFF00000h
-        jne short loc_B26ED
-loc_B26D9:
+        jne short .2
+.1:
         sub edi, 100000h
         add eax, eax
         adc edx, edx
         test edx, 0FFF00000h
-        je short loc_B26D9
-        jmp short loc_B2711
-loc_B26ED:
+        je short .1
+        jmp short .4
+.2:
         test edx, 0FFE00000h
-        je short loc_B2711
-loc_B26F5:
+        je short .4
+.3:
         add edi, 100000h
         shr edx, 1
         rcr eax, 1
         rcr esi, 1
         test edx, 0FFE00000h
-        jne short loc_B26F5
+        jne short .3
         adc esi, esi
         adc eax, byte 0
         adc edx, byte 0
-loc_B2711:
+.4:
         and edx, 0FFFFFh
         or edx, edi
-loc_B2719:
+.5:
         ret
         db 00h,00h,00h,00h,00h,00h

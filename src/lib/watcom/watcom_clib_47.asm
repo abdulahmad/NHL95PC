@@ -2,22 +2,22 @@
 bits 32
 %include "hockey.inc"
 section s_B00E4 progbits alloc exec nowrite align=1
-global strrchr_, loc_B00EA, loc_B00F0
+global strrchr_
 strrchr_:
         push ebx
         push ecx
         mov cl, dl
         xor ebx, ebx
-loc_B00EA:
+.1:
         cmp cl, byte [eax]
-        jne short loc_B00F0
+        jne short .2
         mov ebx, eax
-loc_B00F0:
+.2:
         mov edx, eax
         mov ch, byte [edx]
         inc eax
         test ch, ch
-        jne short loc_B00EA
+        jne short .1
         mov eax, ebx
         pop ecx
         pop ebx

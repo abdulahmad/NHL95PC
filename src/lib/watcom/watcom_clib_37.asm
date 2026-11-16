@@ -2,21 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_9D586 progbits alloc exec nowrite align=1
-extern __init_80x87, str_UnknownError, __8087, FpuType, delaycount, loc_9D582, off_D51E4, off_D6600
+extern __init_80x87, str_UnknownError, __8087, FpuType, delaycount, __save_8087_, off_D51E4, off_D6600
 extern off_D6604, __save_8087_, unk_F24D0, unk_F24D4, __no87, DefaultControlWord
-global __init_8087_, loc_9D5A7, _fpreset_, __chk8087_, loc_9D5EA, loc_9D5FF, __delay_init_, loc_9D60F
-global loc_9D61F, __delay_, loc_9D659, loc_9D65D, loc_9D666, ErrnoPtr, __get_doserrno_ptr_, strerror_
-global loc_9D680, loc_9D686
+global __init_8087_, _fpreset_, __chk8087_, __delay_init_, __delay_, ErrnoPtr, __get_doserrno_ptr_, strerror_
 __init_8087_:
         push ebx
         push edx
         cmp byte [FpuType], 0
-        je short loc_9D5A7
+        je short .1
         mov edx, __save_8087_
-        mov ebx, loc_9D582
+        mov ebx, __save_8087_+05h
         mov dword [off_D6600], edx
         mov dword [off_D6604], ebx
-loc_9D5A7:
+.1:
         xor eax, eax
         mov ax, word [DefaultControlWord]
         call __init_80x87
@@ -31,7 +29,7 @@ __chk8087_:
         push edx
         mov ah, byte [__8087]
         test ah, ah
-        jne short loc_9D5FF
+        jne short .2
         mov byte [FpuType], ah
         LD sub, eax, eax
         push eax
@@ -41,15 +39,15 @@ __chk8087_:
         LD mov, al, ah
         xor dl, dl
         cmp al, 3
-        jne short loc_9D5EA
+        jne short .1
         call __init_8087_
         mov dl, al
-loc_9D5EA:
+.1:
         cmp byte [__no87], 0
-        jne short loc_9D5FF
+        jne short .2
         mov byte [__8087], dl
         mov byte [FpuType], dl
-loc_9D5FF:
+.2:
         pop edx
         ret
 __delay_init_:
@@ -62,21 +60,21 @@ __delay_init_:
         xor eax, eax
         mov al, dh
         mov ebx, eax
-loc_9D60F:
+.1:
         mov ah, 2Ch
         int 21h
         xor eax, eax
         db 088h,0F0h                            ; insn: mov al,dh
         db 039h,0C3h                            ; insn: cmp ebx,eax
-        db 074h, loc_9D60F-($+2)
+        db 074h, .1-($+2)
         db 031h,0F6h                            ; insn: xor esi,esi
         mov bl, al
-loc_9D61F:
+.2:
         mov ah, 2Ch
         int 21h
         inc esi
         cmp bl, dh
-        je short loc_9D61F
+        je short .2
         mov dword [delaycount], esi
         pop esi
         pop edx
@@ -89,7 +87,7 @@ __delay_:
         push edx
         push esi
         test eax, eax
-        je short loc_9D666
+        je short .3
         imul eax, dword [delaycount]
         mov esi, 3E8h
         add eax, 1F4h
@@ -97,18 +95,18 @@ __delay_:
         div esi
         mov esi, eax
         test eax, eax
-        jne short loc_9D659
+        jne short .1
         lea esi, [byte eax+01h]
-loc_9D659:
+.1:
         xor eax, eax
         mov bl, al
-loc_9D65D:
+.2:
         mov ah, 2Ch
         int 21h
         cmp bl, dh
         dec esi
-        jne short loc_9D65D
-loc_9D666:
+        jne short .2
+.3:
         pop esi
         pop edx
         pop ecx
@@ -122,12 +120,12 @@ __get_doserrno_ptr_:
         ret
 strerror_:
         test eax, eax
-        jl short loc_9D680
+        jl short .1
         cmp eax, byte 0Fh
-        jle short loc_9D686
-loc_9D680:
+        jle short .2
+.1:
         mov eax, str_UnknownError
         ret
-loc_9D686:
+.2:
         mov eax, dword [nosplit eax*4+off_D51E4]
         ret

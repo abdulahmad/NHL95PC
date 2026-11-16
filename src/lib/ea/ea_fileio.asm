@@ -5,11 +5,9 @@ section s_B3B00 progbits alloc exec nowrite align=1
 extern str_OpenhandleSFILEERROR, ResourceArchiveName, ArchiveHandle, ArchiveOpenFn, ArchiveCount, ResourceArchive, dword_D44AC, SlowDeadline
 extern PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi, PrintfSavedEdi, PrintfSavedReturn, FatalError, slowtickcount
 extern sprintf_, AngleFromDelta, TableSin, TableCos, unk_D4448, unk_D44B0, unk_D44CE
-global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, loc_B3B6E, loc_B3BB9, loc_B3BEE
-global loc_B3C2B, loc_B3C53, DosCloseFile, loc_B3C6E, DosWriteFile, DosReadFile, loc_B3C76, loc_B3C85
-global loc_B3C9C, loc_B3CAF, loc_B3CB1, DosSeekFile, FindFirstFile, loc_B3CF4, loc_B3D02, loc_B3D08
-global loc_B3D0A, loc_B3D22, loc_B3D26, FindNextFile, SetSlowDeadline, WaitSlowDeadline, SlowDeadlinePassed, DebugLineCount
-global loc_B3D85, vecdist, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, SprintfSaveRegs
+global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, DosCloseFile, DosWriteFile, DosReadFile
+global DosSeekFile, FindFirstFile, FindFirstFile, FindNextFile, SetSlowDeadline, WaitSlowDeadline, SlowDeadlinePassed, DebugLineCount
+global vecdist, SprintfSaveRegs
 DosCallSplitDx:
         push ecx
         push edx
@@ -32,42 +30,41 @@ DosOpenFile:
         mov eax, dword [byte ebp+018h]
         mov dword [byte ebp-04h], eax
         mov dword [byte ebp-08h], 3D00h
-        jmp short loc_B3B6E
+        jmp short openhandle+014h
 DosOpenReadOnly:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
         mov dword [byte ebp-04h], 0
         mov dword [byte ebp-08h], 3D00h
-        jmp short loc_B3B6E
+        jmp short openhandle+014h
 CreateHandle:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
         mov dword [byte ebp-04h], 0
         mov dword [byte ebp-08h], 3C00h
-        jmp short loc_B3B6E
+        jmp short openhandle+014h
 openhandle:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
         mov dword [byte ebp-04h], 1
         mov dword [byte ebp-08h], 3D00h
-loc_B3B6E:
         mov ebx, dword [byte ebp+0Ch]
         mov dword [ebx], 0
         mov edx, dword [byte ebp+08h]
         mov eax, dword [byte ebp-08h]
         LD xor, ecx, ecx
         int 21h
-        jb short loc_B3BB9
+        jb short .1
         mov ebx, dword [byte ebp+0Ch]
         mov dword [ebx], eax
         LD mov, ebx, eax
         db 0B8h,02h,042h,00h,00h                ; insn: mov eax,4202h
         LD xor, edx, edx
         call DosCallSplitDx
-        jb short loc_B3BB9
+        jb short .1
         db 08Bh,05Dh,014h                       ; insn: mov ebx,[ebp+14h]
         db 089h,03h                             ; insn: mov [ebx],eax
         mov ebx, dword [byte ebp+0Ch]
@@ -75,37 +72,37 @@ loc_B3B6E:
         mov eax, 4200h
         LD xor, edx, edx
         call DosCallSplitDx
-        jb short loc_B3BB9
+        jb short .1
         mov ebx, dword [byte ebp+010h]
         LD xor, eax, eax
         mov dword [ebx], eax
         leave
         ret
-loc_B3BB9:
+.1:
         cmp byte [ResourceArchiveName], 0
-        je short loc_B3C2B
+        je short .3
         mov edx, ResourceArchiveName
         mov eax, dword [byte ebp-08h]
         LD xor, ecx, ecx
         int 21h
-        jb short loc_B3C2B
+        jb short .3
         mov ebx, dword [byte ebp+0Ch]
         mov dword [ebx], eax
         LD mov, ebx, eax
         mov edx, dword [ArchiveHandle]
         cmp byte [edx], 0
-        jne short loc_B3BEE
+        jne short .2
         mov ecx, dword [ResourceArchive]
         mov ah, 3Fh
         int 21h
-        jb short loc_B3C2B
-loc_B3BEE:
+        jb short .3
+.2:
         push dword [byte ebp+08h]
         push dword [ArchiveHandle]
         call dword [ArchiveOpenFn]
         add esp, byte 8
         LD or, eax, eax
-        je short loc_B3C2B
+        je short .3
         mov ebx, dword [byte ebp+010h]
         mov dword [ebx], eax
         mov ebx, dword [ArchiveCount]
@@ -117,10 +114,10 @@ loc_B3BEE:
         mov ebx, dword [byte ebp+0Ch]
         mov ebx, dword [ebx]
         call DosCallSplitDx
-        jb short loc_B3C2B
+        jb short .3
         leave
         ret
-loc_B3C2B:
+.3:
         mov ebx, dword [byte ebp+0Ch]
         mov eax, dword [ebx]
         mov dword [ebx], 0
@@ -128,7 +125,7 @@ loc_B3C2B:
         call DosCloseFile
         add esp, byte 4
         cmp dword [byte ebp-04h], byte 0
-        jne short loc_B3C53
+        jne short .4
         mov ebx, dword [byte ebp+014h]
         LD xor, eax, eax
         mov dword [ebx], eax
@@ -136,7 +133,7 @@ loc_B3C2B:
         mov dword [ebx], eax
         leave
         ret
-loc_B3C53:
+.4:
         push dword [byte ebp+08h]
         push str_OpenhandleSFILEERROR
         call FatalError
@@ -145,42 +142,41 @@ DosCloseFile:
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+08h]
         LD or, ebx, ebx
-        je short loc_B3C6E
+        je short .1
         mov ah, 3Eh
         int 21h
-loc_B3C6E:
+.1:
         leave
         ret
 DosWriteFile:
         mov ah, 40h
-        jmp short loc_B3C76
+        jmp short DosReadFile+02h
 DosReadFile:
         mov ah, 3Fh
-loc_B3C76:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
         mov dword [byte ebp-08h], eax
         mov eax, dword [byte ebp+0Ch]
         mov dword [byte ebp-04h], eax
-loc_B3C85:
+.1:
         mov eax, 1
         mov edx, dword [byte ebp-04h]
         mov ecx, 4000h
         sub dword [byte ebp+010h], ecx
-        jge short loc_B3C9C
+        jge short .2
         add ecx, dword [byte ebp+010h]
-        jle short loc_B3CB1
-loc_B3C9C:
+        jle short .4
+.2:
         mov ebx, dword [byte ebp+08h]
         mov eax, dword [byte ebp-08h]
         int 21h
-        jb short loc_B3CAF
+        jb short .3
         add dword [byte ebp-04h], 4000h
-        jmp short loc_B3C85
-loc_B3CAF:
+        jmp short .1
+.3:
         LD xor, eax, eax
-loc_B3CB1:
+.4:
         leave
         ret
 DosSeekFile:
@@ -204,39 +200,37 @@ FindFirstFile:
         mov cl, 6
         mov ah, 4Eh
         int 21h
-        jb short loc_B3D26
+        jb short FindFirstFile+05Eh
         mov edi, unk_D4448
         mov dword [dword_D44AC], edi
         mov esi, dword [byte ebp+08h]
         mov ecx, 57h
-loc_B3CF4:
+.1:
         lodsb
         stosb
         cmp al, 0
-        je short loc_B3D0A
+        je short FindFirstFile+042h
         cmp al, 3Ah
-        je short loc_B3D02
+        je short .2
         cmp al, 5Ch
-        jne short loc_B3D08
-loc_B3D02:
+        jne short .3
+.2:
         mov dword [dword_D44AC], edi
-loc_B3D08:
-        loop loc_B3CF4
-loc_B3D0A:
+.3:
+        loop .1
         mov esi, unk_D44CE
         mov edi, dword [dword_D44AC]
         mov ecx, 0Dh
         cld
         rep movsb
         mov eax, unk_D4448
-loc_B3D22:
+.4:
         pop edi
         pop esi
         leave
         ret
-loc_B3D26:
         LD xor, eax, eax
-        jmp short loc_B3D22
+        jmp short .4
 FindNextFile:
         push ebp
         LD mov, ebp, esp
@@ -247,8 +241,8 @@ FindNextFile:
         int 21h
         mov ah, 4Fh
         int 21h
-        jb short loc_B3D26
-        jmp short loc_B3D0A
+        jb short FindFirstFile+05Eh
+        jmp short FindFirstFile+042h
         mov eax, dword [slowtickcount]
         ret
 SetSlowDeadline:
@@ -274,10 +268,10 @@ DebugLineCount:
         mov eax, dword [slowtickcount]
         add eax, dword [byte ebp+08h]
         mov dword [byte ebp-04h], eax
-loc_B3D85:
+.1:
         mov eax, dword [slowtickcount]
         sub eax, dword [byte ebp-04h]
-        js short loc_B3D85
+        js short .1
         leave
         ret
         db 00h,00h,00h
@@ -289,40 +283,40 @@ vecdist:
         call AngleFromDelta
         add esp, byte 8
         LD or, eax, eax
-        jge short loc_B3DAB
+        jge short .1
         neg eax
-loc_B3DAB:
+.1:
         cmp eax, 100h
-        jle short loc_B3DB9
+        jle short .2
         neg eax
         add eax, 200h
-loc_B3DB9:
+.2:
         cmp eax, 80h
-        jg short loc_B3DDD
+        jg short .4
         push eax
         call TableCos
         add esp, byte 4
         LD mov, ebx, eax
         mov eax, dword [byte ebp+08h]
         LD or, eax, eax
-        jge short loc_B3DD4
+        jge short .3
         neg eax
-loc_B3DD4:
+.3:
         LD xor, edx, edx
         shl eax, 10h
         div ebx
         leave
         ret
-loc_B3DDD:
+.4:
         push eax
         call TableSin
         add esp, byte 4
         LD mov, ebx, eax
         mov eax, dword [byte ebp+0Ch]
         LD or, eax, eax
-        jge short loc_B3DF1
+        jge short .5
         neg eax
-loc_B3DF1:
+.5:
         LD xor, edx, edx
         shl eax, 10h
         div ebx

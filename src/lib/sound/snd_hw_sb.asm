@@ -44,29 +44,12 @@ extern word_D73D8, word_D73DA, word_D73DC, word_D73DE, word_D73E0, word_D73E2, w
 extern word_D73E8, word_D73EA, word_D73EC, word_D73EE, word_D73F0, word_D73F2, word_D73F4, word_D73F6
 extern word_D73F8, word_D73FA, word_D73FC, word_D73FE, word_D7400, word_D7402, word_D7404, word_D7406
 extern word_D7408, word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, word_D7414
-global StrToLong, loc_A6BF7, loc_A6BF9, loc_A6C0E, loc_A6C1C, loc_A6C1D, loc_A6C31, loc_A6C38
-global loc_A6C44, loc_A6C49, loc_A6C53, loc_A6C64, loc_A6C7B, loc_A6C7E, loc_A6C89, loc_A6CA6
-global loc_A6CA9, loc_A6CB0, loc_A6CB6, loc_A6CCE, loc_A6CD3, loc_A6CF3, loc_A6D01, loc_A6D08
-global loc_A6D11, loc_A6D13, strtol_, loc_A6D1D, strtoul_, DigitValue, loc_A6D40, loc_A6D5D
-global loc_A6D67, loc_A6D70, loc_A6D7A, SbStreamCheck, loc_A6D8B, SbMixRateDiv, SbMixerOpen, loc_A6DB2
-global loc_A6DE5, SbMixerClose, SbStreamStopAll, loc_A6E02, SbStreamPlayNote, loc_A6E54, loc_A6E66, loc_A6E78
-global SbStreamRelease, loc_A6E9F, SbStreamStop, loc_A6EC0, SbStreamSetVolume, loc_A6F08, loc_A6F17, SbStreamSetBend
-global loc_A6F39, SbStreamSetRate, loc_A6F90, loc_A6F97, loc_A6F9C, loc_A6F9F, SbStreamSetSample, loc_A6FDE
-global SbStreamStart, loc_A7013, loc_A7065, loc_A707D, loc_A708F, SbStreamIdle, loc_A70AF, loc_A70B7
-global SbStreamGetVolume, loc_A70D8, SbStreamApplyBend, loc_A712E, loc_A713C, loc_A714A, loc_A7158, SbMixAdd8Vol
-global SbMixAdd8, SbMixChannels, loc_A906C, loc_A90FB, loc_A9105, loc_A911C, loc_A9123, loc_A915C
-global loc_A9197, loc_A91CE, loc_A91DA, loc_A91F6, loc_A9208, loc_A921A, loc_A9269, loc_A92A6
-global loc_A92D0, loc_A92E6, loc_A9327, loc_A9333, loc_A933A, loc_A93C2, loc_A93CC, loc_A93E3
-global loc_A93EA, loc_A9423, loc_A945E, loc_A9495, loc_A94A1, loc_A94BD, loc_A94CF, loc_A94E1
-global loc_A9530, loc_A956D, loc_A9597, loc_A95AD, loc_A95EE, loc_A95FA, loc_A9601, loc_A9689
-global loc_A9693, loc_A96AA, loc_A96B1, loc_A96EA, loc_A9725, loc_A975C, loc_A9768, loc_A9784
-global loc_A9796, loc_A97A8, loc_A97F7, loc_A9834, loc_A985E, loc_A9874, loc_A98B5, loc_A98C1
-global loc_A98C8, loc_A9950, loc_A995A, loc_A9971, loc_A9978, loc_A99B1, loc_A99EC, loc_A9A23
-global loc_A9A2F, loc_A9A4B, loc_A9A5D, loc_A9A6F, loc_A9ABE, loc_A9AFB, loc_A9B25, loc_A9B3B
-global loc_A9B7C, loc_A9B88, loc_A9B8F, SbDmaHalfReady, loc_A9BB5, loc_A9BBA, loc_A9BCA, SbDmaStart
-global loc_A9C08, SbDmaStop, loc_A9C33, SbMixPause, SbConvertMix, loc_A9C60, unk_A9C80, unk_A9C81
-global unk_A9C83, unk_A9C85, unk_A9C86, unk_A9C88, unk_A9C89, unk_A9C8A, unk_A9C8E, unk_A9C8F
-global unk_A9C90, unk_A9C91, unk_A9C92, unk_A9C96, unk_A9C98
+global StrToLong, strtol_, strtoul_, DigitValue, SbStreamCheck, SbMixRateDiv, SbMixerOpen, SbMixerClose
+global SbStreamStopAll, SbStreamPlayNote, SbStreamRelease, SbStreamStop, SbStreamSetVolume, SbStreamSetBend, SbStreamSetRate, SbStreamSetSample
+global SbStreamStart, SbStreamIdle, SbStreamGetVolume, SbStreamApplyBend, SbMixAdd8Vol, SbMixAdd8, SbMixChannels, SbDmaHalfReady
+global SbDmaStart, SbDmaStop, SbMixPause, SbConvertMix, unk_A9C80, unk_A9C81, unk_A9C83, unk_A9C85
+global unk_A9C86, unk_A9C88, unk_A9C89, unk_A9C8A, unk_A9C8E, unk_A9C8F, unk_A9C90, unk_A9C91
+global unk_A9C92, unk_A9C96, unk_A9C98
 StrToLong:
         push esi
         push edi
@@ -77,132 +60,132 @@ StrToLong:
         mov esi, ebx
         mov dword [byte esp+04h], ecx
         test edx, edx
-        je short loc_A6BF7
+        je short .1
         mov dword [edx], eax
-loc_A6BF7:
+.1:
         mov edx, ebp
-loc_A6BF9:
+.2:
         mov al, byte [edx]
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 2
-        je short loc_A6C0E
+        je short .3
         inc edx
-        jmp short loc_A6BF9
-loc_A6C0E:
+        jmp short .2
+.3:
         mov al, byte [edx]
         mov byte [byte esp+0Ch], al
         cmp al, 2Bh
-        je short loc_A6C1C
+        je short .4
         cmp al, 2Dh
-        jne short loc_A6C1D
-loc_A6C1C:
+        jne short .5
+.4:
         inc edx
-loc_A6C1D:
+.5:
         test esi, esi
-        jne short loc_A6C49
+        jne short .9
         cmp byte [edx], 30h
-        jne short loc_A6C38
+        jne short .7
         mov al, byte [byte edx+01h]
         cmp al, 78h
-        je short loc_A6C31
+        je short .6
         cmp al, 58h
-        jne short loc_A6C38
-loc_A6C31:
+        jne short .7
+.6:
         mov esi, 10h
-        jmp short loc_A6C49
-loc_A6C38:
+        jmp short .9
+.7:
         cmp byte [edx], 30h
-        jne short loc_A6C44
+        jne short .8
         mov esi, 8
-        jmp short loc_A6C49
-loc_A6C44:
+        jmp short .9
+.8:
         mov esi, 0Ah
-loc_A6C49:
+.9:
         cmp esi, byte 2
-        jl short loc_A6C53
+        jl short .10
         cmp esi, byte 24h
-        jle short loc_A6C64
-loc_A6C53:
+        jle short .11
+.10:
         mov eax, 0Dh
         call __set_errno_
         xor eax, eax
-        jmp near loc_A6D13
-loc_A6C64:
+        jmp near .25
+.11:
         cmp esi, byte 10h
-        jne short loc_A6C7E
+        jne short .13
         cmp byte [edx], 30h
-        jne short loc_A6C7E
+        jne short .13
         mov cl, byte [byte edx+01h]
         cmp cl, 78h
-        je short loc_A6C7B
+        je short .12
         cmp cl, 58h
-        jne short loc_A6C7E
-loc_A6C7B:
+        jne short .13
+.12:
         add edx, byte 2
-loc_A6C7E:
+.13:
         mov dword [esp], edx
         xor al, al
         xor ebx, ebx
         mov byte [byte esp+08h], al
-loc_A6C89:
+.14:
         xor eax, eax
         mov al, byte [edx]
         call DigitValue
         cmp eax, esi
-        jge short loc_A6CA9
+        jge short .16
         mov ecx, ebx
         imul ebx, esi
         add ebx, eax
         cmp ebx, ecx
-        jae short loc_A6CA6
+        jae short .15
         mov byte [byte esp+08h], 1
-loc_A6CA6:
+.15:
         inc edx
-        jmp short loc_A6C89
-loc_A6CA9:
+        jmp short .14
+.16:
         cmp edx, dword [esp]
-        jne short loc_A6CB0
+        jne short .17
         mov edx, ebp
-loc_A6CB0:
+.17:
         test edi, edi
-        je short loc_A6CB6
+        je short .18
         mov dword [edi], edx
-loc_A6CB6:
+.18:
         cmp dword [byte esp+04h], byte 1
-        jne short loc_A6CD3
+        jne short .20
         cmp ebx, 80000000h
-        jb short loc_A6CD3
-        jne short loc_A6CCE
+        jb short .20
+        jne short .19
         cmp byte [byte esp+0Ch], 2Dh
-        je short loc_A6CD3
-loc_A6CCE:
+        je short .20
+.19:
         mov byte [byte esp+08h], 1
-loc_A6CD3:
+.20:
         cmp byte [byte esp+08h], 0
-        je short loc_A6D08
+        je short .23
         mov eax, 0Eh
         mov edi, dword [byte esp+04h]
         call __set_errno_
         test edi, edi
-        jne short loc_A6CF3
+        jne short .21
         mov eax, 0FFFFFFFFh
-        jmp short loc_A6D13
-loc_A6CF3:
+        jmp short .25
+.21:
         cmp byte [byte esp+0Ch], 2Dh
-        jne short loc_A6D01
+        jne short .22
         mov eax, 80000000h
-        jmp short loc_A6D13
-loc_A6D01:
+        jmp short .25
+.22:
         mov eax, 7FFFFFFFh
-        jmp short loc_A6D13
-loc_A6D08:
+        jmp short .25
+.23:
         cmp byte [byte esp+0Ch], 2Dh
-        jne short loc_A6D11
+        jne short .24
         neg ebx
-loc_A6D11:
+.24:
         mov eax, ebx
-loc_A6D13:
+.25:
         add esp, byte 10h
         pop ebp
         pop edi
@@ -211,66 +194,65 @@ loc_A6D13:
 strtol_:
         push ecx
         xor ecx, ecx
-loc_A6D1D:
         call StrToLong
         pop ecx
         ret
 strtoul_:
         push ecx
         mov ecx, 1
-        jmp short loc_A6D1D
+        jmp short strtol_+03h
 DigitValue:
         push edx
         mov dl, al
         cmp al, 30h
-        jb short loc_A6D40
+        jb short .1
         cmp al, 39h
-        ja short loc_A6D40
+        ja short .1
         xor eax, eax
         mov al, dl
         sub eax, byte 30h
         pop edx
         ret
-loc_A6D40:
+.1:
         xor eax, eax
         mov al, dl
         call tolower_
         mov dl, al
         cmp al, 61h
-        jb short loc_A6D5D
+        jb short .2
         cmp al, 69h
-        ja short loc_A6D5D
+        ja short .2
         and eax, 0FFh
         sub eax, byte 57h
         pop edx
         ret
-loc_A6D5D:
+.2:
         cmp dl, 6Ah
-        jb short loc_A6D70
+        jb short .4
         cmp dl, 72h
-        ja short loc_A6D70
-loc_A6D67:
+        ja short .4
+.3:
         xor eax, eax
         mov al, dl
         sub eax, byte 57h
         pop edx
         ret
-loc_A6D70:
+.4:
         cmp dl, 73h
-        jb short loc_A6D7A
+        jb short .5
         cmp dl, 7Ah
-        jbe short loc_A6D67
-loc_A6D7A:
+        jbe short .3
+.5:
         mov eax, 25h
         pop edx
         ret
         db 00h,00h,00h
 SbStreamCheck:
         cmp esi, byte 4
-        jb short loc_A6D8B
+        jb short .1
         stc
         ret
-loc_A6D8B:
+.1:
         clc
         ret
 SbMixRateDiv:
@@ -291,11 +273,11 @@ SbMixerOpen:
         mov ecx, 4
         mov al, 0FFh
         LD xor, esi, esi
-loc_A6DB2:
+.1:
         mov ebx, dword [nosplit esi*4+off_D71F0]
         mov byte [byte ebx+01h], al
         inc esi
-        loop loc_A6DB2
+        loop .1
         push dword [byte ebp+014h]
         push dword [byte ebp+010h]
         push dword [byte ebp+0Ch]
@@ -304,12 +286,12 @@ loc_A6DB2:
         call SbDmaStart
         add esp, byte 0Ch
         cmp eax, byte 0FFFFFFFFh
-        je short loc_A6DE5
+        je short .2
         mov eax, 44h
         pop esi
         leave
         ret
-loc_A6DE5:
+.2:
         mov eax, 0FFFFFFFFh
         pop esi
         leave
@@ -323,11 +305,11 @@ SbStreamStopAll:
         mov ecx, 4
         mov al, 0
         LD xor, esi, esi
-loc_A6E02:
+.1:
         mov ebx, dword [nosplit esi*4+off_D71F0]
         mov byte [ebx], al
         inc esi
-        loop loc_A6E02
+        loop .1
         pop esi
         ret
 SbStreamPlayNote:
@@ -337,12 +319,12 @@ SbStreamPlayNote:
         mov eax, dword [byte ebp+010h]
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A6E78
+        jb short .3
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov bl, byte [byte ebp+0Ch]
         mov byte [byte esi+02h], bl
         cmp bl, 0FFh
-        je short loc_A6E54
+        je short .1
         mov eax, dword [nosplit ebx*4+dword_D6B00]
         mul dword [byte esi+020h]
         and eax, 0FFFF0000h
@@ -351,14 +333,14 @@ SbStreamPlayNote:
         mov dword [byte esi+038h], eax
         mov dword [byte esi+024h], edx
         mov dword [byte esi+028h], eax
-loc_A6E54:
+.1:
         mov eax, dword [byte esi+0Ch]
         mov dword [byte esi+018h], eax
         mov eax, dword [byte esi+010h]
         cmp dword [byte esi+04h], byte 0
-        jne short loc_A6E66
+        jne short .2
         mov eax, dword [byte esi+014h]
-loc_A6E66:
+.2:
         mov dword [byte esi+01Ch], eax
         mov eax, dword [byte esi+08h]
         mov dword [byte esi+02Ch], eax
@@ -366,7 +348,7 @@ loc_A6E66:
         mov dword [byte esi+030h], eax
         mov al, 1
         mov byte [esi], al
-loc_A6E78:
+.3:
         pop esi
         leave
         ret
@@ -376,15 +358,15 @@ SbStreamRelease:
         push esi
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A6E9F
+        jb short .1
         cmp esi, byte 1
-        jle short loc_A6E9F
+        jle short .1
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov eax, dword [byte esi+010h]
         mov dword [byte esi+01Ch], eax
         mov al, 0
         mov byte [esi], al
-loc_A6E9F:
+.1:
         pop esi
         leave
         ret
@@ -394,13 +376,13 @@ SbStreamStop:
         push esi
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A6EC0
+        jb short .1
         cmp esi, byte 1
-        jle short loc_A6EC0
+        jle short .1
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov al, 0
         mov byte [esi], al
-loc_A6EC0:
+.1:
         pop esi
         leave
         ret
@@ -411,11 +393,11 @@ SbStreamSetVolume:
         push edi
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A6F17
+        jb short .2
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov al, byte [byte ebp+0Ch]
         cmp al, byte [byte esi+01h]
-        je short loc_A6F17
+        je short .2
         mov byte [byte esi+01h], al
         shl al, 1
         and eax, 0FFh
@@ -429,14 +411,14 @@ SbStreamSetVolume:
         mov byte [dword edi+080h], bh
         inc edi
         mov ecx, 7Fh
-loc_A6F08:
+.1:
         LD add, eax, esi
         mov byte [edi], ah
         LD add, ebx, esi
         mov byte [dword edi+080h], bh
         inc edi
-        loop loc_A6F08
-loc_A6F17:
+        loop .1
+.2:
         pop edi
         pop esi
         leave
@@ -447,11 +429,11 @@ SbStreamSetBend:
         push esi
         movzx esi, word [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A6F39
+        jb short .1
         mov esi, dword [nosplit esi*4+off_D71F0]
         movsx eax, word [byte ebp+0Ch]
         mov word [byte esi+03Ch], ax
-loc_A6F39:
+.1:
         pop esi
         leave
         ret
@@ -461,7 +443,7 @@ SbStreamSetRate:
         push esi
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A6F9F
+        jb short .4
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov ecx, dword [unk_A9C8A]
         LD xor, edx, edx
@@ -480,18 +462,18 @@ SbStreamSetRate:
         mov dword [byte esi+020h], eax
         mov eax, dword [byte esi+020h]
         cmp eax, 10000h
-        je short loc_A6F90
-        ja short loc_A6F97
+        je short .1
+        ja short .2
         mov eax, 40h
-        jmp short loc_A6F9C
-loc_A6F90:
+        jmp short .3
+.1:
         mov eax, 80h
-        jmp short loc_A6F9C
-loc_A6F97:
+        jmp short .3
+.2:
         mov eax, 100h
-loc_A6F9C:
+.3:
         mov dword [byte esi+040h], eax
-loc_A6F9F:
+.4:
         pop esi
         leave
         ret
@@ -501,7 +483,7 @@ SbStreamSetSample:
         push esi
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A6FDE
+        jb short .1
         mov esi, dword [nosplit esi*4+off_D71F0]
         LD xor, eax, eax
         mov byte [byte esi+03h], al
@@ -517,7 +499,7 @@ SbStreamSetSample:
         mov dword [byte esi+010h], ebx
         mov eax, dword [byte ebp+018h]
         mov dword [byte esi+04h], eax
-loc_A6FDE:
+.1:
         pop esi
         leave
         ret
@@ -530,11 +512,11 @@ SbStreamStart:
         cli
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb near loc_A708F
+        jb near .4
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov eax, dword [byte ebp+01Ch]
         cmp eax, byte 0
-        jne short loc_A7013
+        jne short .1
         push dword [byte ebp+08h]
         call SbStreamRelease
         pop eax
@@ -543,7 +525,7 @@ SbStreamStart:
         pop esi
         leave
         ret
-loc_A7013:
+.1:
         push eax
         push dword [byte ebp+08h]
         call SbStreamSetRate
@@ -565,14 +547,14 @@ loc_A7013:
         mov eax, dword [byte ebp+024h]
         mov byte [byte esi+03h], al
         LD or, eax, eax
-        je short loc_A707D
+        je short .3
         cmp dword [byte ebp+014h], byte 0
-        je short loc_A707D
+        je short .3
         mov edi, dword [byte ebp+0Ch]
         LD xor, edx, edx
         LD xor, ecx, ecx
         LD xor, eax, eax
-loc_A7065:
+.2:
         mov al, byte [edi]
         mov bx, word [nosplit eax*2+word_D7414]
         inc edi
@@ -580,15 +562,15 @@ loc_A7065:
         LD add, dl, bh
         inc ecx
         cmp ecx, dword [byte ebp+014h]
-        jb short loc_A7065
+        jb short .2
         mov byte [byte esi+03Fh], dl
-loc_A707D:
+.3:
         push byte 7Fh
         push dword 0FFh
         push dword [byte ebp+08h]
         call SbStreamPlayNote
         add esp, byte 0Ch
-loc_A708F:
+.4:
         popf
         pop edi
         pop esi
@@ -600,17 +582,17 @@ SbStreamIdle:
         push esi
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A70AF
+        jb short .1
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov al, byte [esi]
         cmp al, 0
-        jne short loc_A70B7
-loc_A70AF:
+        jne short .2
+.1:
         mov eax, 1
         pop esi
         leave
         ret
-loc_A70B7:
+.2:
         LD xor, eax, eax
         pop esi
         leave
@@ -621,13 +603,13 @@ SbStreamGetVolume:
         push esi
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A70D8
+        jb short .1
         mov esi, dword [nosplit esi*4+off_D71F0]
         movzx eax, byte [byte esi+01h]
         pop esi
         leave
         ret
-loc_A70D8:
+.1:
         LD xor, eax, eax
         pop esi
         leave
@@ -640,14 +622,14 @@ SbStreamApplyBend:
         mov eax, dword [byte ebp+0Ch]
         mov esi, dword [byte ebp+08h]
         call SbStreamCheck
-        jb short loc_A7158
+        jb short .4
         mov esi, dword [nosplit esi*4+off_D71F0]
         mov edi, dword [byte esi+028h]
         or edi, dword [byte esi+024h]
         ror edi, 10h
         add edi, dword [byte ebp+010h]
         cmp dword [byte ebp+014h], byte 0
-        je short loc_A714A
+        je short .3
         LD xor, ebx, ebx
         mov bl, byte [byte esi+02h]
         add bl, byte [byte ebp+018h]
@@ -659,29 +641,29 @@ SbStreamApplyBend:
         LD sub, eax, edi
         mov edx, dword [byte ebp+014h]
         cmp edx, byte 0
-        jg short loc_A712E
-        jl short loc_A713C
-loc_A712E:
+        jg short .1
+        jl short .2
+.1:
         mul edx
         shr eax, 0Eh
         shl edx, 12h
         LD or, eax, edx
         LD add, edi, eax
-        jmp short loc_A714A
-loc_A713C:
+        jmp short .3
+.2:
         neg edx
         mul edx
         shr eax, 0Eh
         shl edx, 12h
         LD or, eax, edx
         LD sub, edi, eax
-loc_A714A:
+.3:
         LD mov, ecx, edi
         shl edi, 10h
         mov dword [byte esi+038h], edi
         shr ecx, 10h
         mov dword [byte esi+034h], ecx
-loc_A7158:
+.4:
         pop edi
         pop esi
         leave
@@ -3512,14 +3494,14 @@ SbMixChannels:
         mov ecx, 80h
         LD xor, eax, eax
         mov edi, word_D7214
-loc_A906C:
+.1:
         mov dword [edi], eax
         add edi, byte 4
-        loop loc_A906C
+        loop .1
         cmp byte [byte_D6CE0], 0
-        je near loc_A933A
+        je near .19
         cmp byte [byte_D6CE3], 0
-        jne near loc_A91DA
+        jne near .9
         mov edx, dword [dword_D6D14]
         mov eax, dword [dword_D6D18]
         shl eax, 1
@@ -3541,7 +3523,7 @@ loc_A906C:
         add eax, dword [dword_D6D10]
         adc edx, dword [dword_D6D0C]
         cmp edx, dword [dword_D6CFC]
-        jae short loc_A911C
+        jae short .4
         mov eax, dword [dword_D6D0C]
         LD mov, esi, eax
         mov dword [dword_D7200], esi
@@ -3549,21 +3531,21 @@ loc_A906C:
         mov edi, dword [dword_D6D14]
         mov edx, dword [dword_D6D18]
         cmp byte [byte_D6CE1], 7Fh
-        jb short loc_A90FB
+        jb short .2
         call SbMixAdd8
-        jmp short loc_A9105
-loc_A90FB:
+        jmp short .3
+.2:
         mov ebx, byte_D6D24
         call SbMixAdd8Vol
-loc_A9105:
+.3:
         mov dword [dword_D6D10], ecx
         sub esi, dword [dword_D7200]
         add dword [dword_D6D0C], esi
-        jmp near loc_A933A
-loc_A911C:
+        jmp near .19
+.4:
         LD xor, eax, eax
         mov dword [dword_D720C], eax
-loc_A9123:
+.5:
         mov eax, dword [dword_D6D0C]
         mov ebx, dword [dword_D6CFC]
         LD sub, ebx, eax
@@ -3576,7 +3558,7 @@ loc_A9123:
         mov edi, dword [dword_D6D14]
         mov edx, dword [dword_D6D18]
         LD xor, eax, eax
-loc_A915C:
+.6:
         mov al, byte [esi]
         mov ebx, byte_D6D24
         xlatb
@@ -3587,46 +3569,46 @@ loc_A915C:
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [dword_D7208]
-        jae short loc_A9197
+        jae short .7
         cmp dword [dword_D720C], 100h
-        jne short loc_A915C
-        jmp near loc_A9105
-loc_A9197:
+        jne short .6
+        jmp near .3
+.7:
         mov al, byte [byte_D6CE0]
         cmp al, 1
-        jne short loc_A91CE
+        jne short .8
         mov eax, dword [dword_D6CE4]
         LD or, eax, eax
-        je short loc_A91CE
+        je short .8
         mov eax, dword [dword_D6CF8]
         mov dword [dword_D6D10], ecx
         mov dword [dword_D6D0C], eax
         cmp dword [dword_D720C], 100h
-        jne near loc_A9123
-        jmp near loc_A933A
-loc_A91CE:
+        jne near .5
+        jmp near .19
+.8:
         mov al, 0
         mov byte [byte_D6CE0], al
-        jmp near loc_A933A
-loc_A91DA:
+        jmp near .19
+.9:
         mov esi, dword [dword_D6D0C]
         mov ecx, dword [dword_D6CFC]
         LD sub, ecx, esi
         cmp ecx, dword [dword_D6D20]
-        jbe short loc_A91F6
+        jbe short .10
         mov ecx, dword [dword_D6D20]
-loc_A91F6:
+.10:
         LD add, ecx, esi
         mov dword [dword_D720C], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
         mov dl, byte [byte_D6D1E]
-loc_A9208:
+.11:
         mov eax, dword [dword_D6D00]
         cmp eax, 10000h
-        je short loc_A9269
-        ja near loc_A92A6
-loc_A921A:
+        je short .13
+        ja near .14
+.12:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -3644,9 +3626,9 @@ loc_A921A:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A921A
-        jmp short loc_A92D0
-loc_A9269:
+        jb short .12
+        jmp short .15
+.13:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -3660,9 +3642,9 @@ loc_A9269:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A9269
-        jmp short loc_A92D0
-loc_A92A6:
+        jb short .13
+        jmp short .15
+.14:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -3673,43 +3655,43 @@ loc_A92A6:
         LD add, dl, bh
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A92A6
-loc_A92D0:
+        jb short .14
+.15:
         cmp esi, dword [dword_D6CFC]
-        je short loc_A92E6
+        je short .16
         mov byte [byte_D6D1E], dl
         mov dword [dword_D6D0C], esi
-        jmp short loc_A933A
-loc_A92E6:
+        jmp short .19
+.16:
         mov al, byte [byte_D6CE0]
         cmp al, 1
-        jne short loc_A9333
+        jne short .18
         mov eax, dword [dword_D6CE4]
         LD or, eax, eax
-        je short loc_A9333
+        je short .18
         mov dl, byte [byte_D6D1F]
         mov byte [byte_D6D1E], dl
         mov eax, dword [dword_D6D0C]
         add eax, dword [dword_D6D20]
         LD sub, eax, esi
         LD or, eax, eax
-        je short loc_A9327
+        je short .17
         mov esi, dword [dword_D6CF8]
         LD add, eax, esi
         mov dword [dword_D720C], eax
-        jmp near loc_A9208
-loc_A9327:
+        jmp near .11
+.17:
         mov eax, dword [dword_D6CF8]
         mov dword [dword_D6D0C], eax
-        jmp short loc_A933A
-loc_A9333:
+        jmp short .19
+.18:
         mov al, 0
         mov byte [byte_D6CE0], al
-loc_A933A:
+.19:
         cmp byte [byte_D6E24], 0
-        je near loc_A9601
+        je near .37
         cmp byte [byte_D6E27], 0
-        jne near loc_A94A1
+        jne near .27
         mov edx, dword [dword_D6E58]
         mov eax, dword [dword_D6E5C]
         shl eax, 1
@@ -3731,7 +3713,7 @@ loc_A933A:
         add eax, dword [dword_D6E54]
         adc edx, dword [dword_D6E50]
         cmp edx, dword [dword_D6E40]
-        jae short loc_A93E3
+        jae short .22
         mov eax, dword [dword_D6E50]
         LD mov, esi, eax
         mov dword [dword_D7200], esi
@@ -3739,21 +3721,21 @@ loc_A933A:
         mov edi, dword [dword_D6E58]
         mov edx, dword [dword_D6E5C]
         cmp byte [byte_D6E25], 7Fh
-        jb short loc_A93C2
+        jb short .20
         call SbMixAdd8
-        jmp short loc_A93CC
-loc_A93C2:
+        jmp short .21
+.20:
         mov ebx, byte_D6E68
         call SbMixAdd8Vol
-loc_A93CC:
+.21:
         mov dword [dword_D6E54], ecx
         sub esi, dword [dword_D7200]
         add dword [dword_D6E50], esi
-        jmp near loc_A9601
-loc_A93E3:
+        jmp near .37
+.22:
         LD xor, eax, eax
         mov dword [dword_D720C], eax
-loc_A93EA:
+.23:
         mov eax, dword [dword_D6E50]
         mov ebx, dword [dword_D6E40]
         LD sub, ebx, eax
@@ -3766,7 +3748,7 @@ loc_A93EA:
         mov edi, dword [dword_D6E58]
         mov edx, dword [dword_D6E5C]
         LD xor, eax, eax
-loc_A9423:
+.24:
         mov al, byte [esi]
         mov ebx, byte_D6E68
         xlatb
@@ -3777,46 +3759,46 @@ loc_A9423:
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [dword_D7208]
-        jae short loc_A945E
+        jae short .25
         cmp dword [dword_D720C], 100h
-        jne short loc_A9423
-        jmp near loc_A93CC
-loc_A945E:
+        jne short .24
+        jmp near .21
+.25:
         mov al, byte [byte_D6E24]
         cmp al, 1
-        jne short loc_A9495
+        jne short .26
         mov eax, dword [dword_D6E28]
         LD or, eax, eax
-        je short loc_A9495
+        je short .26
         mov eax, dword [dword_D6E3C]
         mov dword [dword_D6E54], ecx
         mov dword [dword_D6E50], eax
         cmp dword [dword_D720C], 100h
-        jne near loc_A93EA
-        jmp near loc_A9601
-loc_A9495:
+        jne near .23
+        jmp near .37
+.26:
         mov al, 0
         mov byte [byte_D6E24], al
-        jmp near loc_A9601
-loc_A94A1:
+        jmp near .37
+.27:
         mov esi, dword [dword_D6E50]
         mov ecx, dword [dword_D6E40]
         LD sub, ecx, esi
         cmp ecx, dword [dword_D6E64]
-        jbe short loc_A94BD
+        jbe short .28
         mov ecx, dword [dword_D6E64]
-loc_A94BD:
+.28:
         LD add, ecx, esi
         mov dword [dword_D720C], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
         mov dl, byte [byte_D6E62]
-loc_A94CF:
+.29:
         mov eax, dword [dword_D6E44]
         cmp eax, 10000h
-        je short loc_A9530
-        ja near loc_A956D
-loc_A94E1:
+        je short .31
+        ja near .32
+.30:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -3834,9 +3816,9 @@ loc_A94E1:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A94E1
-        jmp short loc_A9597
-loc_A9530:
+        jb short .30
+        jmp short .33
+.31:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -3850,9 +3832,9 @@ loc_A9530:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A9530
-        jmp short loc_A9597
-loc_A956D:
+        jb short .31
+        jmp short .33
+.32:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -3863,43 +3845,43 @@ loc_A956D:
         LD add, dl, bh
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A956D
-loc_A9597:
+        jb short .32
+.33:
         cmp esi, dword [dword_D6E40]
-        je short loc_A95AD
+        je short .34
         mov byte [byte_D6E62], dl
         mov dword [dword_D6E50], esi
-        jmp short loc_A9601
-loc_A95AD:
+        jmp short .37
+.34:
         mov al, byte [byte_D6E24]
         cmp al, 1
-        jne short loc_A95FA
+        jne short .36
         mov eax, dword [dword_D6E28]
         LD or, eax, eax
-        je short loc_A95FA
+        je short .36
         mov dl, byte [byte_D6E63]
         mov byte [byte_D6E62], dl
         mov eax, dword [dword_D6E50]
         add eax, dword [dword_D6E64]
         LD sub, eax, esi
         LD or, eax, eax
-        je short loc_A95EE
+        je short .35
         mov esi, dword [dword_D6E3C]
         LD add, eax, esi
         mov dword [dword_D720C], eax
-        jmp near loc_A94CF
-loc_A95EE:
+        jmp near .29
+.35:
         mov eax, dword [dword_D6E3C]
         mov dword [dword_D6E50], eax
-        jmp short loc_A9601
-loc_A95FA:
+        jmp short .37
+.36:
         mov al, 0
         mov byte [byte_D6E24], al
-loc_A9601:
+.37:
         cmp byte [byte_D6F68], 0
-        je near loc_A98C8
+        je near .55
         cmp byte [byte_D6F6B], 0
-        jne near loc_A9768
+        jne near .45
         mov edx, dword [dword_D6F9C]
         mov eax, dword [dword_D6FA0]
         shl eax, 1
@@ -3921,7 +3903,7 @@ loc_A9601:
         add eax, dword [dword_D6F98]
         adc edx, dword [dword_D6F94]
         cmp edx, dword [dword_D6F84]
-        jae short loc_A96AA
+        jae short .40
         mov eax, dword [dword_D6F94]
         LD mov, esi, eax
         mov dword [dword_D7200], esi
@@ -3929,21 +3911,21 @@ loc_A9601:
         mov edi, dword [dword_D6F9C]
         mov edx, dword [dword_D6FA0]
         cmp byte [byte_D6F69], 7Fh
-        jb short loc_A9689
+        jb short .38
         call SbMixAdd8
-        jmp short loc_A9693
-loc_A9689:
+        jmp short .39
+.38:
         mov ebx, byte_D6FAC
         call SbMixAdd8Vol
-loc_A9693:
+.39:
         mov dword [dword_D6F98], ecx
         sub esi, dword [dword_D7200]
         add dword [dword_D6F94], esi
-        jmp near loc_A98C8
-loc_A96AA:
+        jmp near .55
+.40:
         LD xor, eax, eax
         mov dword [dword_D720C], eax
-loc_A96B1:
+.41:
         mov eax, dword [dword_D6F94]
         mov ebx, dword [dword_D6F84]
         LD sub, ebx, eax
@@ -3956,7 +3938,7 @@ loc_A96B1:
         mov edi, dword [dword_D6F9C]
         mov edx, dword [dword_D6FA0]
         LD xor, eax, eax
-loc_A96EA:
+.42:
         mov al, byte [esi]
         mov ebx, byte_D6FAC
         xlatb
@@ -3967,46 +3949,46 @@ loc_A96EA:
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [dword_D7208]
-        jae short loc_A9725
+        jae short .43
         cmp dword [dword_D720C], 100h
-        jne short loc_A96EA
-        jmp near loc_A9693
-loc_A9725:
+        jne short .42
+        jmp near .39
+.43:
         mov al, byte [byte_D6F68]
         cmp al, 1
-        jne short loc_A975C
+        jne short .44
         mov eax, dword [dword_D6F6C]
         LD or, eax, eax
-        je short loc_A975C
+        je short .44
         mov eax, dword [dword_D6F80]
         mov dword [dword_D6F98], ecx
         mov dword [dword_D6F94], eax
         cmp dword [dword_D720C], 100h
-        jne near loc_A96B1
-        jmp near loc_A98C8
-loc_A975C:
+        jne near .41
+        jmp near .55
+.44:
         mov al, 0
         mov byte [byte_D6F68], al
-        jmp near loc_A98C8
-loc_A9768:
+        jmp near .55
+.45:
         mov esi, dword [dword_D6F94]
         mov ecx, dword [dword_D6F84]
         LD sub, ecx, esi
         cmp ecx, dword [dword_D6FA8]
-        jbe short loc_A9784
+        jbe short .46
         mov ecx, dword [dword_D6FA8]
-loc_A9784:
+.46:
         LD add, ecx, esi
         mov dword [dword_D720C], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
         mov dl, byte [byte_D6FA6]
-loc_A9796:
+.47:
         mov eax, dword [dword_D6F88]
         cmp eax, 10000h
-        je short loc_A97F7
-        ja near loc_A9834
-loc_A97A8:
+        je short .49
+        ja near .50
+.48:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -4024,9 +4006,9 @@ loc_A97A8:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A97A8
-        jmp short loc_A985E
-loc_A97F7:
+        jb short .48
+        jmp short .51
+.49:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -4040,9 +4022,9 @@ loc_A97F7:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A97F7
-        jmp short loc_A985E
-loc_A9834:
+        jb short .49
+        jmp short .51
+.50:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -4053,43 +4035,43 @@ loc_A9834:
         LD add, dl, bh
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A9834
-loc_A985E:
+        jb short .50
+.51:
         cmp esi, dword [dword_D6F84]
-        je short loc_A9874
+        je short .52
         mov byte [byte_D6FA6], dl
         mov dword [dword_D6F94], esi
-        jmp short loc_A98C8
-loc_A9874:
+        jmp short .55
+.52:
         mov al, byte [byte_D6F68]
         cmp al, 1
-        jne short loc_A98C1
+        jne short .54
         mov eax, dword [dword_D6F6C]
         LD or, eax, eax
-        je short loc_A98C1
+        je short .54
         mov dl, byte [byte_D6FA7]
         mov byte [byte_D6FA6], dl
         mov eax, dword [dword_D6F94]
         add eax, dword [dword_D6FA8]
         LD sub, eax, esi
         LD or, eax, eax
-        je short loc_A98B5
+        je short .53
         mov esi, dword [dword_D6F80]
         LD add, eax, esi
         mov dword [dword_D720C], eax
-        jmp near loc_A9796
-loc_A98B5:
+        jmp near .47
+.53:
         mov eax, dword [dword_D6F80]
         mov dword [dword_D6F94], eax
-        jmp short loc_A98C8
-loc_A98C1:
+        jmp short .55
+.54:
         mov al, 0
         mov byte [byte_D6F68], al
-loc_A98C8:
+.55:
         cmp byte [byte_D70AC], 0
-        je near loc_A9B8F
+        je near .73
         cmp byte [byte_D70AF], 0
-        jne near loc_A9A2F
+        jne near .63
         mov edx, dword [dword_D70E0]
         mov eax, dword [dword_D70E4]
         shl eax, 1
@@ -4111,7 +4093,7 @@ loc_A98C8:
         add eax, dword [dword_D70DC]
         adc edx, dword [dword_D70D8]
         cmp edx, dword [dword_D70C8]
-        jae short loc_A9971
+        jae short .58
         mov eax, dword [dword_D70D8]
         LD mov, esi, eax
         mov dword [dword_D7200], esi
@@ -4119,21 +4101,21 @@ loc_A98C8:
         mov edi, dword [dword_D70E0]
         mov edx, dword [dword_D70E4]
         cmp byte [byte_D70AD], 7Fh
-        jb short loc_A9950
+        jb short .56
         call SbMixAdd8
-        jmp short loc_A995A
-loc_A9950:
+        jmp short .57
+.56:
         mov ebx, byte_D70F0
         call SbMixAdd8Vol
-loc_A995A:
+.57:
         mov dword [dword_D70DC], ecx
         sub esi, dword [dword_D7200]
         add dword [dword_D70D8], esi
-        jmp near loc_A9B8F
-loc_A9971:
+        jmp near .73
+.58:
         LD xor, eax, eax
         mov dword [dword_D720C], eax
-loc_A9978:
+.59:
         mov eax, dword [dword_D70D8]
         mov ebx, dword [dword_D70C8]
         LD sub, ebx, eax
@@ -4146,7 +4128,7 @@ loc_A9978:
         mov edi, dword [dword_D70E0]
         mov edx, dword [dword_D70E4]
         LD xor, eax, eax
-loc_A99B1:
+.60:
         mov al, byte [esi]
         mov ebx, byte_D70F0
         xlatb
@@ -4157,46 +4139,46 @@ loc_A99B1:
         LD add, ecx, edx
         LD adc, esi, edi
         cmp esi, dword [dword_D7208]
-        jae short loc_A99EC
+        jae short .61
         cmp dword [dword_D720C], 100h
-        jne short loc_A99B1
-        jmp near loc_A995A
-loc_A99EC:
+        jne short .60
+        jmp near .57
+.61:
         mov al, byte [byte_D70AC]
         cmp al, 1
-        jne short loc_A9A23
+        jne short .62
         mov eax, dword [dword_D70B0]
         LD or, eax, eax
-        je short loc_A9A23
+        je short .62
         mov eax, dword [dword_D70C4]
         mov dword [dword_D70DC], ecx
         mov dword [dword_D70D8], eax
         cmp dword [dword_D720C], 100h
-        jne near loc_A9978
-        jmp near loc_A9B8F
-loc_A9A23:
+        jne near .59
+        jmp near .73
+.62:
         mov al, 0
         mov byte [byte_D70AC], al
-        jmp near loc_A9B8F
-loc_A9A2F:
+        jmp near .73
+.63:
         mov esi, dword [dword_D70D8]
         mov ecx, dword [dword_D70C8]
         LD sub, ecx, esi
         cmp ecx, dword [dword_D70EC]
-        jbe short loc_A9A4B
+        jbe short .64
         mov ecx, dword [dword_D70EC]
-loc_A9A4B:
+.64:
         LD add, ecx, esi
         mov dword [dword_D720C], ecx
         LD xor, ecx, ecx
         LD xor, edx, edx
         mov dl, byte [byte_D70EA]
-loc_A9A5D:
+.65:
         mov eax, dword [dword_D70CC]
         cmp eax, 10000h
-        je short loc_A9ABE
-        ja near loc_A9AFB
-loc_A9A6F:
+        je short .67
+        ja near .68
+.66:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -4214,9 +4196,9 @@ loc_A9A6F:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A9A6F
-        jmp short loc_A9B25
-loc_A9ABE:
+        jb short .66
+        jmp short .69
+.67:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -4230,9 +4212,9 @@ loc_A9ABE:
         inc ecx
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A9ABE
-        jmp short loc_A9B25
-loc_A9AFB:
+        jb short .67
+        jmp short .69
+.68:
         LD xor, ebx, ebx
         mov bl, byte [esi]
         mov bx, word [nosplit ebx*2+word_D7414]
@@ -4243,39 +4225,39 @@ loc_A9AFB:
         LD add, dl, bh
         inc esi
         cmp esi, dword [dword_D720C]
-        jb short loc_A9AFB
-loc_A9B25:
+        jb short .68
+.69:
         cmp esi, dword [dword_D70C8]
-        je short loc_A9B3B
+        je short .70
         mov byte [byte_D70EA], dl
         mov dword [dword_D70D8], esi
-        jmp short loc_A9B8F
-loc_A9B3B:
+        jmp short .73
+.70:
         mov al, byte [byte_D70AC]
         cmp al, 1
-        jne short loc_A9B88
+        jne short .72
         mov eax, dword [dword_D70B0]
         LD or, eax, eax
-        je short loc_A9B88
+        je short .72
         mov dl, byte [byte_D70EB]
         mov byte [byte_D70EA], dl
         mov eax, dword [dword_D70D8]
         add eax, dword [dword_D70EC]
         LD sub, eax, esi
         LD or, eax, eax
-        je short loc_A9B7C
+        je short .71
         mov esi, dword [dword_D70C4]
         LD add, eax, esi
         mov dword [dword_D720C], eax
-        jmp near loc_A9A5D
-loc_A9B7C:
+        jmp near .65
+.71:
         mov eax, dword [dword_D70C4]
         mov dword [dword_D70D8], eax
-        jmp short loc_A9B8F
-loc_A9B88:
+        jmp short .73
+.72:
         mov al, 0
         mov byte [byte_D70AC], al
-loc_A9B8F:
+.73:
         mov ecx, 100h
         mov esi, word_D7214
         call SbConvertMix
@@ -4286,18 +4268,18 @@ loc_A9B8F:
 SbDmaHalfReady:
         call SbDmaCount
         cmp eax, dword [dword_D7A1E]
-        jge short loc_A9BB5
+        jge short .1
         LD xor, eax, eax
-        jmp short loc_A9BBA
-loc_A9BB5:
+        jmp short .2
+.1:
         mov eax, dword [dword_D7A1E]
-loc_A9BBA:
+.2:
         mov ebx, dword [dword_D7614]
         LD cmp, eax, ebx
-        je short loc_A9BCA
+        je short .3
         mov eax, 1
         ret
-loc_A9BCA:
+.3:
         mov eax, 0
         ret
 SbDmaStart:
@@ -4316,13 +4298,13 @@ SbDmaStart:
         call SbCardOpen
         add esp, byte 14h
         cmp eax, byte 0FFFFFFFFh
-        je short loc_A9C08
+        je short .1
         mov al, 1
         mov byte [byte_D7618], al
         LD xor, eax, eax
         leave
         ret
-loc_A9C08:
+.1:
         LD xor, eax, eax
         mov byte [byte_D7618], al
         call SbCardClose
@@ -4333,11 +4315,11 @@ SbDmaStop:
         push esi
         pushfw
         cmp byte [byte_D7618], 0
-        je short loc_A9C33
+        je short .1
         LD xor, eax, eax
         mov byte [byte_D7618], al
         call SbCardClose
-loc_A9C33:
+.1:
         popfw
         pop esi
         ret
@@ -4356,13 +4338,13 @@ SbConvertMix:
         mov eax, dword [dword_D7614]
         mov edi, dword [dword_D7A22]
         LD add, edi, eax
-loc_A9C60:
+.1:
         movsx ebx, word [esi]
         mov al, byte [dword ebx+byte_D781C]
         mov byte [edi], al
         add esi, byte 2
         inc edi
-        loop loc_A9C60
+        loop .1
         mov eax, dword [dword_D7A1E]
         xor dword [dword_D7614], eax
         pop edi

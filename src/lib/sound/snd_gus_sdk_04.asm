@@ -3,9 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_B0100 progbits alloc exec nowrite align=1
 extern byte_D89E4, KeyedDraw, RowCopyFunc, DmaDefaultMode, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
-global GetBytesLE, loc_B010E, loc_B0123, GetBytesBE, loc_B0132, loc_B0144, PutBytesLE, loc_B015B
-global loc_B016A, PutBytesBE, loc_B018F, loc_B01A3, CopyRowShadowKeyed, loc_B01BD, loc_B01CE, loc_B01DC
-global loc_B01E1, DrawArtKeyedRemap, loc_B0205, DrawArtKeyedRemapOwnPos, RemapBytes, loc_B027D, loc_B0285, SetDmaDefaultMode
+global GetBytesLE, GetBytesBE, PutBytesLE, PutBytesBE, CopyRowShadowKeyed, DrawArtKeyedRemap, DrawArtKeyedRemapOwnPos, RemapBytes
+global SetDmaDefaultMode
 GetBytesLE:
         push esi
         push edi
@@ -13,18 +12,18 @@ GetBytesLE:
         mov ebx, dword [byte esp+010h]
         xor esi, esi
         xor eax, eax
-loc_B010E:
+.1:
         dec ebx
         cmp ebx, byte 0FFFFFFFFh
-        je short loc_B0123
+        je short .2
         movzx edi, byte [edx]
         mov cl, al
         shl edi, cl
         inc edx
         add esi, edi
         add eax, byte 8
-        jmp short loc_B010E
-loc_B0123:
+        jmp short .1
+.2:
         mov eax, esi
         pop edi
         pop esi
@@ -33,17 +32,17 @@ GetBytesBE:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         xor ebx, ebx
-loc_B0132:
+.1:
         dec edx
         cmp edx, byte 0FFFFFFFFh
-        je short loc_B0144
+        je short .2
         xor ecx, ecx
         mov cl, byte [eax]
         shl ebx, 8
         inc eax
         add ebx, ecx
-        jmp short loc_B0132
-loc_B0144:
+        jmp short .1
+.2:
         mov eax, ebx
         ret
         db 090h
@@ -53,16 +52,16 @@ PutBytesLE:
         mov ebx, dword [byte esp+0Ch]
         mov edx, dword [byte esp+010h]
         test edx, edx
-        je short loc_B016A
-loc_B015B:
+        je short .2
+.1:
         mov dword [esp], ebx
         mov cl, byte [esp]
         mov byte [eax], cl
         shr ebx, 8
         inc eax
         dec edx
-        jne short loc_B015B
-loc_B016A:
+        jne short .1
+.2:
         add esp, byte 4
         ret
         db 08Bh,0C0h
@@ -76,8 +75,8 @@ PutBytesBE:
         shl ecx, 3
         shl ebx, cl
         test eax, eax
-        je short loc_B01A3
-loc_B018F:
+        je short .2
+.1:
         mov ecx, ebx
         shr ecx, 18h
         mov dword [esp], ecx
@@ -86,8 +85,8 @@ loc_B018F:
         shl ebx, 8
         inc edx
         dec eax
-        jne short loc_B018F
-loc_B01A3:
+        jne short .1
+.2:
         mov eax, edx
         add esp, byte 4
         ret
@@ -97,26 +96,26 @@ CopyRowShadowKeyed:
         mov ecx, dword [byte esp+010h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
-loc_B01BD:
+.1:
         dec ecx
         cmp ecx, byte 0FFFFFFFFh
-        je short loc_B01E1
+        je short .4
         mov dl, byte [ebx]
         inc ebx
         cmp dl, 0FFh
-        jne short loc_B01CE
+        jne short .2
         inc eax
-        jmp short loc_B01BD
-loc_B01CE:
+        jmp short .1
+.2:
         cmp dl, 0FEh
-        jne short loc_B01DC
+        jne short .3
         movzx esi, byte [eax]
         mov dl, byte [dword esi+byte_D89E4]
-loc_B01DC:
+.3:
         mov byte [eax], dl
         inc eax
-        jmp short loc_B01BD
-loc_B01E1:
+        jmp short .1
+.4:
         pop esi
         ret
         db 090h
@@ -125,14 +124,14 @@ DrawArtKeyedRemap:
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_B0205
+        jne short .1
         push eax
         push ebx
         push edx
         call BlitBlockRemapKeyed
         add esp, byte 0Ch
         ret
-loc_B0205:
+.1:
         mov dword [RowCopyFunc], CopyRowShadowKeyed
         push eax
         push ebx
@@ -177,13 +176,13 @@ RemapBytes:
         mov ebx, dword [byte ebp+0Ch]
         mov ecx, dword [byte ebp+010h]
         LD xor, eax, eax
-        jecxz loc_B0285
-loc_B027D:
+        jecxz .2
+.1:
         mov al, byte [edi]
         mov al, byte [ebx+eax]
         stosb
-        loop loc_B027D
-loc_B0285:
+        loop .1
+.2:
         pop edi
         leave
         ret

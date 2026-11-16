@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_92EF9 progbits alloc exec nowrite align=1
 extern __fsetbits_, byte_C4C70
-global _fstrcspn_, loc_92F0F, loc_92F31, loc_92F3A
+global _fstrcspn_
 _fstrcspn_:
         push esi
         push es
@@ -14,8 +14,8 @@ _fstrcspn_:
         mov edx, ds
         call __fsetbits_
         xor ebx, ebx
-        jmp short loc_92F31
-loc_92F0F:
+        jmp short .2
+.1:
         mov edx, eax
         shr edx, 3
         mov dl, byte [esp+edx]
@@ -24,15 +24,15 @@ loc_92F0F:
         mov al, byte [dword eax+byte_C4C70]
         and eax, 0FFh
         test edx, eax
-        jne short loc_92F3A
+        jne short .3
         inc ebx
         inc esi
-loc_92F31:
+.2:
         xor eax, eax
         mov al, byte [es:esi]
         test eax, eax
-        jne short loc_92F0F
-loc_92F3A:
+        jne short .1
+.3:
         mov eax, ebx
         add esp, byte 20h
         pop es

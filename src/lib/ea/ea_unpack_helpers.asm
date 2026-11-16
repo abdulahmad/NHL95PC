@@ -4,23 +4,20 @@ bits 32
 section s_A2F40 progbits alloc exec nowrite align=1
 extern _FtoS_, ColourRemap, KeyedDraw, RowCopyFunc, forcedecpt_, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId
 extern PutBlock, CopyRowShadowKeyed, RemapBytes, bcopy, BlitBlockShadow
-global DrawArtShadow, loc_A2F61, DrawArtShadowOwnPos, FlipArtHorizontal, loc_A3006, loc_A3015, loc_A3024, loc_A302C
-global FlipArtVertical, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, RemapArt, RemapShapeBank, loc_A3105
-global loc_A312B, loc_A312C, loc_A313F, loc_A3172, loc_A317C, loc_A3189, loc_A3196, loc_A3199
-global loc_A319E, loc_A31BF, loc_A31EE, loc_A31F2, loc_A31FA, loc_A3210
+global DrawArtShadow, DrawArtShadowOwnPos, FlipArtHorizontal, FlipArtVertical, RemapArt, RemapShapeBank, RemapShapeBank
 DrawArtShadow:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
         cmp dword [KeyedDraw], byte 0
-        jne short loc_A2F61
+        jne short .1
         push eax
         push ebx
         push edx
         call BlitBlockShadow
         add esp, byte 0Ch
         ret
-loc_A2F61:
+.1:
         mov dword [RowCopyFunc], CopyRowShadowKeyed
         push eax
         push ebx
@@ -75,17 +72,17 @@ FlipArtHorizontal:
         add eax, byte 10h
         xor edi, edi
         cmp dword [esp], byte 0
-        jle short loc_A302C
+        jle short .4
         mov esi, dword [byte esp+04h]
         sar esi, 1
-loc_A3006:
+.1:
         mov ebp, dword [byte esp+04h]
         add ebp, eax
         lea edx, [byte ebp-01h]
         xor ebx, ebx
         test esi, esi
-        jle short loc_A3024
-loc_A3015:
+        jle short .3
+.2:
         mov cl, byte [eax]
         mov ch, byte [edx]
         mov byte [eax], ch
@@ -94,13 +91,13 @@ loc_A3015:
         dec edx
         inc ebx
         cmp ebx, esi
-        jl short loc_A3015
-loc_A3024:
+        jl short .2
+.3:
         mov eax, ebp
         inc edi
         cmp edi, dword [esp]
-        jl short loc_A3006
-loc_A302C:
+        jl short .1
+.4:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+018h]
         mov bx, word [byte edx+08h]
@@ -135,12 +132,12 @@ FlipArtVertical:
         mov ebp, dword [esp]
         sar ebp, 1
         test ebp, ebp
-        jle short loc_A30AA
-loc_A308C:
+        jle short .4
+.1:
         xor ebx, ebx
         test esi, esi
-        jle short loc_A30A1
-loc_A3092:
+        jle short .3
+.2:
         mov cl, byte [edx]
         mov ch, byte [eax]
         mov byte [edx], ch
@@ -149,13 +146,13 @@ loc_A3092:
         inc eax
         inc ebx
         cmp ebx, esi
-        jl short loc_A3092
-loc_A30A1:
+        jl short .2
+.3:
         sub eax, dword [byte esp+04h]
         inc edi
         cmp edi, ebp
-        jl short loc_A308C
-loc_A30AA:
+        jl short .1
+.4:
         mov eax, dword [esp]
         mov edx, dword [byte esp+018h]
         mov bx, word [byte edx+0Ah]
@@ -188,8 +185,8 @@ RemapShapeBank:
         sub esp, byte 8
         mov edi, dword [byte esp+014h]
         xor esi, esi
-        jmp short loc_A312C
-loc_A3105:
+        jmp short .3
+.1:
         mov eax, esp
         push eax
         push esi
@@ -197,7 +194,7 @@ loc_A3105:
         call ShapeBankEntryId
         add esp, byte 0Ch
         cmp byte [esp], 21h
-        je short loc_A312B
+        je short .2
         push esi
         push edi
         call ShapeBankEntry
@@ -205,19 +202,18 @@ loc_A3105:
         push eax
         call RemapArt
         add esp, byte 4
-loc_A312B:
+.2:
         inc esi
-loc_A312C:
+.3:
         push edi
         call ShapeBankCount
         add esp, byte 4
         cmp esi, eax
-        jl short loc_A3105
+        jl short .1
         add esp, byte 8
         pop edi
         pop esi
         ret
-loc_A313F:
         push ecx
         push esi
         push edi
@@ -230,32 +226,32 @@ loc_A313F:
         mov cl, byte [byte edi+015h]
         xor ebx, ebx
         cmp cl, 47h
-        jb short loc_A317C
-        jbe short loc_A3189
+        jb short .5
+        jbe short .6
         cmp cl, 66h
-        jb short loc_A3172
-        jbe short loc_A319E
+        jb short .4
+        jbe short .9
         cmp cl, 67h
-        je short loc_A3189
-        jmp near loc_A3210
-loc_A3172:
+        je short .6
+        jmp near .14
+.4:
         cmp cl, 65h
-        je short loc_A3199
-        jmp near loc_A3210
-loc_A317C:
+        je short .8
+        jmp near .14
+.5:
         cmp cl, 45h
-        jb near loc_A3210
-        jbe short loc_A3199
-        jmp short loc_A319E
-loc_A3189:
+        jb near .14
+        jbe short .8
+        jmp short .9
+.6:
         cmp dword [byte edi+08h], byte 0
-        jne short loc_A3196
+        jne short .7
         mov dword [byte edi+08h], 1
-loc_A3196:
+.7:
         sub cl, 2
-loc_A3199:
+.8:
         mov ebx, 1
-loc_A319E:
+.9:
         mov ebp, dword [edx]
         add ebp, byte 8
         mov dword [edx], ebp
@@ -264,9 +260,9 @@ loc_A319E:
         mov eax, dword [byte ebp-04h]
         mov dword [byte esp+04h], eax
         cmp dword [byte edi+08h], byte 0FFFFFFFFh
-        jne short loc_A31BF
+        jne short .10
         mov dword [byte edi+08h], 6
-loc_A31BF:
+.10:
         mov al, byte [byte edi+015h]
         and al, 5Fh
         and eax, 0FFh
@@ -284,23 +280,23 @@ loc_A31BF:
         call _FtoS_
         mov ah, byte [esi]
         cmp ah, 2Ah
-        jne short loc_A31EE
+        jne short .11
         mov byte [byte edi+016h], ah
-loc_A31EE:
+.11:
         mov byte [byte esi+027h], 0
-loc_A31F2:
+.12:
         cmp byte [esi], 20h
-        jne short loc_A31FA
+        jne short .13
         inc esi
-        jmp short loc_A31F2
-loc_A31FA:
+        jmp short .12
+.13:
         mov eax, esi
         mov edx, edi
         call forcedecpt_
         mov word [byte esp+08h], ds
         mov eax, esi
         mov dword [byte edi+08h], 0FFFFFFFFh
-loc_A3210:
+.14:
         mov edx, dword [byte esp+08h]
         add esp, byte 0Ch
         pop ebp

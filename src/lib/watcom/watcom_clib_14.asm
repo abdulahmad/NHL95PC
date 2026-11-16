@@ -5,14 +5,7 @@ section s_91984 progbits alloc exec nowrite align=1
 extern __allocfp_, __chktty_, __doclose_, __ExpandDGROUP_, __freefp_, __MemAllocator, __MemFree, __set_errno_
 extern byte_F24C5, HeapList, HeapRover, HeapLargestFree, dword_D4F21, dword_EDF00, dword_F24C8, fseek_
 extern sopen_, McgaNoWindow, tolower_
-global _nmalloc_, loc_9199D, loc_919A4, loc_919B7, loc_919C3, loc_919D5, loc_919E3, loc_919E7
-global loc_91A18, loc_91A1B, loc_91A30, loc_91A45, loc_91A4E, loc_91A58, _nfree_, loc_91A75
-global loc_91A7D, loc_91A80, loc_91A87, loc_91AB8, strlen_, __open_flags_, loc_91B11, loc_91B38
-global loc_91B3A, loc_91B3E, loc_91B57, loc_91B63, loc_91B6F, loc_91B71, loc_91B7D, loc_91B86
-global loc_91B89, loc_91B8B, __doopen_, loc_91BC7, loc_91BD2, loc_91BD5, loc_91BD9, loc_91BF1
-global loc_91BF3, loc_91BFE, loc_91C01, loc_91C06, loc_91C26, loc_91C4E, _fsopen_, loc_91C72
-global fopen_, close_file_, loc_91C89, loc_91CA6, loc_91CAC, loc_91CB0, loc_91CB5, loc_91CD3
-global loc_91CD7
+global _nmalloc_, _nfree_, strlen_, __open_flags_, __doopen_, _fsopen_, fopen_, close_file_
 _nmalloc_:
         push ebx
         push ecx
@@ -26,38 +19,38 @@ _nmalloc_:
         sub esp, byte 4
         mov esi, eax
         test eax, eax
-        je short loc_9199D
+        je short .1
         cmp eax, byte 0FFFFFFD4h
-        jbe short loc_919A4
-loc_9199D:
+        jbe short .2
+.1:
         xor eax, eax
-        jmp near loc_91A58
-loc_919A4:
+        jmp near .13
+.2:
         mov ebp, HeapList
         lea edi, [byte esi+03h]
         xor ah, ah
         xor ebx, ebx
         mov byte [esp], ah
         and di, byte 0FFFCh
-loc_919B7:
+.3:
         mov eax, edi
         cmp edi, byte 0Ch
-        jae short loc_919C3
+        jae short .4
         mov eax, 0Ch
-loc_919C3:
+.4:
         cmp eax, dword [HeapLargestFree]
-        jbe short loc_919E3
+        jbe short .6
         mov ecx, dword [HeapRover]
         test ecx, ecx
-        jne short loc_91A1B
-loc_919D5:
+        jne short .9
+.5:
         mov dword [HeapLargestFree], ecx
         mov ecx, dword [HeapList]
-        jmp short loc_91A1B
-loc_919E3:
+        jmp short .9
+.6:
         xor ecx, ecx
-        jmp short loc_919D5
-loc_919E7:
+        jmp short .5
+.7:
         mov edx, ds
         mov eax, ebp
         mov dword [HeapRover], ecx
@@ -67,39 +60,39 @@ loc_919E7:
         call __MemAllocator
         mov ebx, eax
         test eax, eax
-        jne short loc_91A4E
+        jne short .12
         mov eax, dword [HeapLargestFree]
         mov edx, dword [byte ecx+014h]
         cmp edx, eax
-        jbe short loc_91A18
+        jbe short .8
         mov dword [HeapLargestFree], edx
-loc_91A18:
+.8:
         mov ecx, dword [byte ecx+08h]
-loc_91A1B:
+.9:
         test ecx, ecx
-        jne short loc_919E7
+        jne short .7
         cmp byte [esp], 0
-        jne short loc_91A30
+        jne short .10
         mov eax, esi
         call __ExpandDGROUP_
         test eax, eax
-        jne short loc_91A45
-loc_91A30:
+        jne short .11
+.10:
         mov eax, esi
         call McgaNoWindow
         test eax, eax
-        je short loc_91A4E
+        je short .12
         xor cl, cl
         mov byte [esp], cl
-        jmp near loc_919B7
-loc_91A45:
+        jmp near .3
+.11:
         mov byte [esp], 1
-        jmp near loc_919B7
-loc_91A4E:
+        jmp near .3
+.12:
         xor ch, ch
         mov eax, ebx
         mov byte [byte_F24C5], ch
-loc_91A58:
+.13:
         add esp, byte 4
         pop ebp
         pop gs
@@ -118,19 +111,19 @@ _nfree_:
         push ebp
         mov ebx, eax
         mov ecx, dword [HeapList]
-        jmp short loc_91A80
-loc_91A75:
+        jmp short .3
+.1:
         cmp ecx, ebx
-        ja short loc_91A7D
+        ja short .2
         cmp ebx, edx
-        jb short loc_91A87
-loc_91A7D:
+        jb short .4
+.2:
         mov ecx, dword [byte ecx+08h]
-loc_91A80:
+.3:
         mov edx, dword [byte ecx+08h]
         test edx, edx
-        jne short loc_91A75
-loc_91A87:
+        jne short .1
+.4:
         mov eax, HeapList
         mov edx, ds
         and edx, 0FFFFh
@@ -138,13 +131,13 @@ loc_91A87:
         mov ebx, ecx
         call __MemFree
         cmp ecx, dword [HeapRover]
-        je short loc_91AB8
+        je short .5
         mov ebp, dword [HeapLargestFree]
         mov edx, dword [byte ecx+014h]
         cmp edx, ebp
-        jbe short loc_91AB8
+        jbe short .5
         mov dword [HeapLargestFree], edx
-loc_91AB8:
+.5:
         xor ah, ah
         mov byte [byte_F24C5], ah
         pop ebp
@@ -182,71 +175,71 @@ __open_flags_:
         call tolower_
         mov byte [esp], al
         cmp al, 72h
-        je short loc_91B11
+        je short .1
         cmp al, 77h
-        je short loc_91B11
+        je short .1
         cmp al, 61h
-        je short loc_91B11
+        je short .1
         mov eax, 9
         call __set_errno_
         xor eax, eax
-        jmp near loc_91B8B
-loc_91B11:
+        jmp near .12
+.1:
         mov eax, ebx
         mov cl, byte [byte edx+01h]
         or al, 3
         cmp cl, 2Bh
-        jne short loc_91B3E
+        jne short .4
         mov ebx, eax
         mov cl, byte [byte edx+02h]
         or al, 40h
         cmp cl, 62h
-        je short loc_91B3A
+        je short .3
         cmp cl, 74h
-        je short loc_91B71
+        je short .8
         cmp dword [dword_D4F21], 200h
-loc_91B38:
-        jne short loc_91B71
-loc_91B3A:
+.2:
+        jne short .8
+.3:
         mov ebx, eax
-        jmp short loc_91B71
-loc_91B3E:
+        jmp short .8
+.4:
         mov ecx, ebx
         or cl, 40h
         cmp byte [byte edx+01h], 62h
-        jne short loc_91B57
+        jne short .5
         mov al, byte [byte edx+02h]
         mov ebx, ecx
         cmp al, 2Bh
-        jne short loc_91B71
+        jne short .8
         or cl, 3
-        jmp short loc_91B6F
-loc_91B57:
+        jmp short .7
+.5:
         cmp byte [byte edx+01h], 74h
-        jne short loc_91B63
+        jne short .6
         cmp byte [byte edx+02h], 2Bh
-        jmp short loc_91B38
-loc_91B63:
+        jmp short .2
+.6:
         cmp dword [dword_D4F21], 200h
-        jne short loc_91B71
-loc_91B6F:
+        jne short .8
+.7:
         mov ebx, ecx
-loc_91B71:
+.8:
         mov al, byte [esp]
         cmp al, 77h
-        jne short loc_91B7D
+        jne short .9
         or bl, 2
-        jmp short loc_91B89
-loc_91B7D:
+        jmp short .11
+.9:
         cmp al, 61h
-        jne short loc_91B86
+        jne short .10
         or bl, 82h
-        jmp short loc_91B89
-loc_91B86:
+        jmp short .11
+.10:
         or bl, 1
-loc_91B89:
+.11:
         mov eax, ebx
-loc_91B8B:
+.12:
         add esp, byte 4
         pop edx
         pop ecx
@@ -267,43 +260,43 @@ __doopen_:
         call tolower_
         mov dl, al
         cmp al, 72h
-        jne short loc_91BD9
+        jne short .4
         mov dh, byte [byte ecx+0Ch]
         xor eax, eax
         test dh, 2
-        je short loc_91BC7
+        je short .1
         mov eax, 2
-loc_91BC7:
+.1:
         test byte [byte ecx+0Ch], 40h
-        je short loc_91BD2
+        je short .2
         or ah, 2
-        jmp short loc_91BD5
-loc_91BD2:
+        jmp short .3
+.2:
         or ah, 1
-loc_91BD5:
+.3:
         push byte 0
-        jmp short loc_91C06
-loc_91BD9:
+        jmp short .9
+.4:
         test byte [byte ecx+0Ch], 1
         setne al
         and eax, 0FFh
         add eax, byte 21h
         cmp dl, 61h
-        jne short loc_91BF1
+        jne short .5
         or al, 10h
-        jmp short loc_91BF3
-loc_91BF1:
+        jmp short .6
+.5:
         or al, 40h
-loc_91BF3:
+.6:
         test byte [byte ecx+0Ch], 40h
-        je short loc_91BFE
+        je short .7
         or ah, 2
-        jmp short loc_91C01
-loc_91BFE:
+        jmp short .8
+.7:
         or ah, 1
-loc_91C01:
+.8:
         push dword 180h
-loc_91C06:
+.9:
         push ebx
         push eax
         push esi
@@ -311,24 +304,24 @@ loc_91C06:
         add esp, byte 10h
         mov dword [byte ecx+010h], eax
         cmp dword [byte ecx+010h], byte 0FFFFFFFFh
-        jne short loc_91C26
+        jne short .10
         mov eax, ecx
         call __freefp_
         xor eax, eax
         pop edi
         pop esi
         ret
-loc_91C26:
+.10:
         mov dword [byte ecx+04h], 0
         mov dword [byte ecx+08h], 0
         mov dword [byte ecx+014h], 0
         cmp dl, 61h
-        jne short loc_91C4E
+        jne short .11
         mov ebx, 2
         mov eax, ecx
         xor edx, edx
         call fseek_
-loc_91C4E:
+.11:
         mov eax, ecx
         call __chktty_
         mov eax, ecx
@@ -343,10 +336,10 @@ _fsopen_:
         call __allocfp_
         mov ecx, eax
         test eax, eax
-        je short loc_91C72
+        je short .1
         mov eax, esi
         call __doopen_
-loc_91C72:
+.1:
         pop esi
         pop ecx
         ret
@@ -362,44 +355,44 @@ close_file_:
         push edx
         mov ebx, eax
         mov eax, dword [dword_F24C8]
-loc_91C89:
+.1:
         test eax, eax
-        je short loc_91CB0
+        je short .4
         mov edx, dword [byte eax+04h]
         cmp ebx, edx
-        jne short loc_91CAC
+        jne short .3
         test byte [byte edx+0Ch], 3
-        je short loc_91CA6
+        je short .2
         mov eax, edx
         mov edx, 1
         call __doclose_
-loc_91CA6:
+.2:
         mov eax, ebx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_91CAC:
+.3:
         mov eax, dword [eax]
-        jmp short loc_91C89
-loc_91CB0:
+        jmp short .1
+.4:
         mov edx, dword_EDF00
-loc_91CB5:
+.5:
         mov eax, dword [edx]
         test eax, eax
-        je short loc_91CD7
+        je short .7
         cmp ebx, dword [byte eax+04h]
-        jne short loc_91CD3
+        jne short .6
         mov ecx, dword [eax]
         mov dword [edx], ecx
         mov edx, dword [dword_F24C8]
         mov dword [dword_F24C8], eax
         mov dword [eax], edx
-        jmp short loc_91CA6
-loc_91CD3:
+        jmp short .2
+.6:
         mov edx, eax
-        jmp short loc_91CB5
-loc_91CD7:
+        jmp short .5
+.7:
         mov eax, 4
         call __set_errno_
         xor eax, eax

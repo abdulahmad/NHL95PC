@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_98683 progbits alloc exec nowrite align=1
 extern __EnterWVIDEO_, MemLockHandleStore, WriteConsoleMessage
-global __fatal_runtime_error_, loc_9869D, DefaultFpeHandler, MemLockHandleInit, MemLock
+global __fatal_runtime_error_, DefaultFpeHandler, MemLockHandleInit, MemLock
 __fatal_runtime_error_:
         push ebx
         push ecx
@@ -12,11 +12,11 @@ __fatal_runtime_error_:
         mov edx, ds
         call __EnterWVIDEO_
         test eax, eax
-        jne short loc_9869D
+        jne short .1
         mov eax, ebx
         mov edx, ecx
         call WriteConsoleMessage
-loc_9869D:
+.1:
         pop ecx
         pop ebx
         ret

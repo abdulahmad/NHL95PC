@@ -5,12 +5,8 @@ section s_B19E0 progbits alloc exec nowrite align=1
 extern byte_D8B0E, byte_D8B10, GusVoiceIrqBits, byte_F79E8, dword_D89DC, dword_F79F8, dword_F79FC, dword_F7A00
 extern GusVoiceAllocMask, inp_, outp_, outpw_, GusEnterCritical, GusLeaveCritical, GusSetVoiceCallbacks, word_D8764
 extern word_D8766, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort, GusActiveVoices
-global GusResetTimers, GusStartTimer2, loc_B1A35, loc_B1ABF, GusStartTimer1, loc_B1AF9, loc_B1B83, GusStopTimer1
-global GusStopTimer2, GusResetVoiceAlloc, loc_B1C8A, loc_B1CA9, GusAllocVoice, loc_B1CE9, loc_B1D46, loc_B1D71
-global loc_B1D8B, loc_B1DA5, loc_B1DA6, loc_B1DD7, loc_B1E19, loc_B1E22, GusReleaseVoice, GusAddVoicePriority
-global GusPeek, GusPoke, GusPokeFill, loc_B1FC4, loc_B1FC6, loc_B1FD1, loc_B2000, loc_B203D
-global loc_B2043, loc_B2045, loc_B2067, GusTestDramBank, loc_B20C5, loc_B20F1, loc_B211D, loc_B2149
-global loc_B2175, loc_B2181, loc_B21E7, loc_B21F4, loc_B21FA, loc_B2214
+global GusResetTimers, GusStartTimer2, GusStartTimer1, GusStopTimer1, GusStopTimer2, GusResetVoiceAlloc, GusAllocVoice, GusReleaseVoice
+global GusAddVoicePriority, GusPeek, GusPoke, GusPokeFill, GusTestDramBank
 GusResetTimers:
         push ebp
         mov ebp, esp
@@ -41,12 +37,12 @@ GusStartTimer2:
         call GusSetVoiceCallbacks
         mov ebx, eax
         test eax, eax
-        je short loc_B1A35
+        je short .1
         call GusLeaveCritical
         popfw
         mov eax, ebx
-        jmp near loc_B1ABF
-loc_B1A35:
+        jmp near .2
+.1:
         mov edx, 47h
         mov ax, word [GusRegSelectPort]
         call outp_
@@ -78,7 +74,7 @@ loc_B1A35:
         call GusLeaveCritical
         popfw
         xor eax, eax
-loc_B1ABF:
+.2:
         lea esp, [byte ebp-08h]
         pop ecx
         pop ebx
@@ -100,12 +96,12 @@ GusStartTimer1:
         call GusSetVoiceCallbacks
         mov ebx, eax
         test eax, eax
-        je short loc_B1AF9
+        je short .1
         call GusLeaveCritical
         popfw
         mov eax, ebx
-        jmp near loc_B1B83
-loc_B1AF9:
+        jmp near .2
+.1:
         mov edx, 46h
         mov ax, word [GusRegSelectPort]
         call outp_
@@ -137,7 +133,7 @@ loc_B1AF9:
         call GusLeaveCritical
         popfw
         xor eax, eax
-loc_B1B83:
+.2:
         lea esp, [byte ebp-08h]
         pop ecx
         pop ebx
@@ -219,8 +215,8 @@ GusResetVoiceAlloc:
         xor ebx, ebx
         mov byte [byte_D8B10], ah
         mov dword [GusVoiceAllocMask], edx
-        jmp short loc_B1CA9
-loc_B1C8A:
+        jmp short .2
+.1:
         xor edx, edx
         mov dx, bx
         lea eax, [nosplit edx*4+00h]
@@ -229,9 +225,9 @@ loc_B1C8A:
         mov dword [nosplit eax*4+dword_F79F8], ecx
         inc ebx
         mov dword [nosplit eax*4+dword_F79FC], ecx
-loc_B1CA9:
+.2:
         cmp bx, word [GusActiveVoices]
-        jb short loc_B1C8A
+        jb short .1
         xor eax, eax
         lea esp, [byte ebp-0Ch]
         pop edx
@@ -257,15 +253,15 @@ GusAllocVoice:
         mov dword [byte ebp-018h], edx
         mov dword [byte ebp-014h], ebx
         xor ebx, ebx
-        jmp near loc_B1DA6
-loc_B1CE9:
+        jmp near .6
+.1:
         mov eax, 1
         mov ecx, ebx
         shl eax, cl
         mov ecx, eax
         mov eax, dword [GusVoiceAllocMask]
         test ecx, eax
-        jne short loc_B1D46
+        jne short .2
         mov edx, eax
         or edx, ecx
         mov dword [GusVoiceAllocMask], edx
@@ -281,8 +277,8 @@ loc_B1CE9:
         call GusLeaveCritical
         popfw
         mov eax, ebx
-        jmp near loc_B1E22
-loc_B1D46:
+        jmp near .9
+.2:
         xor eax, eax
         mov ax, bx
         mov dword [byte ebp-01Ch], eax
@@ -292,12 +288,12 @@ loc_B1D46:
         shl eax, 2
         mov ecx, dword [dword eax+dword_F79FC]
         cmp ecx, dword [byte ebp-014h]
-        jb short loc_B1DA5
-        ja short loc_B1D71
+        jb short .5
+        ja short .3
         mov ecx, dword [byte ebp-018h]
         cmp ecx, dword [dword eax+dword_F79F8]
-        jbe short loc_B1D8B
-loc_B1D71:
+        jbe short .4
+.3:
         xor ecx, ecx
         mov cx, bx
         lea eax, [nosplit ecx*4+00h]
@@ -305,7 +301,7 @@ loc_B1D71:
         mov eax, dword [nosplit eax*4+dword_F79F8]
         mov edx, ecx
         mov dword [byte ebp-018h], eax
-loc_B1D8B:
+.4:
         xor eax, eax
         mov ax, bx
         mov dword [byte ebp-01Ch], eax
@@ -314,22 +310,22 @@ loc_B1D8B:
         sub eax, ecx
         mov eax, dword [nosplit eax*4+dword_F79FC]
         mov dword [byte ebp-014h], eax
-loc_B1DA5:
+.5:
         inc ebx
-loc_B1DA6:
+.6:
         cmp bx, word [GusActiveVoices]
-        jb near loc_B1CE9
+        jb near .1
         cmp edx, byte 0FFFFFFFFh
-        je short loc_B1E19
+        je short .8
         lea eax, [nosplit edx*4+00h]
         sub eax, edx
         shl eax, 2
         cmp dword [dword eax+dword_F7A00], byte 0
-        je short loc_B1DD7
+        je short .7
         mov ebx, eax
         mov eax, edx
         call dword [dword ebx+dword_F7A00]
-loc_B1DD7:
+.7:
         mov eax, 1
         mov cl, dl
         shl eax, cl
@@ -344,11 +340,11 @@ loc_B1DD7:
         inc ebx
         mov dword [nosplit eax*4+dword_F7A00], edi
         mov dword [dword_D89DC], ebx
-loc_B1E19:
+.8:
         call GusLeaveCritical
         popfw
         mov eax, edx
-loc_B1E22:
+.9:
         lea esp, [byte ebp-010h]
         pop edi
         pop esi
@@ -502,19 +498,19 @@ GusPokeFill:
         mov byte [byte ebp-014h], dl
         mov byte [byte ebp-010h], ah
         test al, 80h
-        je short loc_B1FC4
+        je short .1
         mov al, 80h
-        jmp short loc_B1FC6
-loc_B1FC4:
+        jmp short .2
+.1:
         xor al, al
-loc_B1FC6:
+.2:
         mov byte [byte ebp-0Ch], al
         pushfw
         cli
         call GusEnterCritical
-loc_B1FD1:
+.3:
         test ebx, ebx
-        je near loc_B2067
+        je near .8
         xor eax, eax
         mov edx, 44h
         mov ax, word [GusRegSelectPort]
@@ -525,7 +521,7 @@ loc_B1FD1:
         mov ax, word [GusDataHighPort]
         call outp_
         inc byte [byte ebp-014h]
-loc_B2000:
+.4:
         xor eax, eax
         mov edx, 43h
         mov ax, word [GusRegSelectPort]
@@ -542,27 +538,27 @@ loc_B2000:
         inc ecx
         xor ah, al
         test dl, dl
-        je short loc_B2043
+        je short .6
         cmp byte [byte ebp-010h], 0
-        je short loc_B203D
+        je short .5
         mov al, ah
-loc_B203D:
+.5:
         xor byte [byte ebp-010h], 1
-        jmp short loc_B2045
-loc_B2043:
+        jmp short .7
+.6:
         mov al, ah
-loc_B2045:
+.7:
         xor edx, edx
         mov dl, al
         xor eax, eax
         mov ax, word [GusDramPort]
         call outp_
         dec ebx
-        je near loc_B1FD1
+        je near .3
         test cx, cx
-        jne short loc_B2000
-        jmp near loc_B1FD1
-loc_B2067:
+        jne short .4
+        jmp near .3
+.8:
         call GusLeaveCritical
         popfw
         lea esp, [byte ebp-04h]
@@ -597,10 +593,10 @@ GusTestDramBank:
         mov eax, ebx
         call GusPeek
         cmp al, 55h
-        je short loc_B20C5
+        je short .1
         xor al, al
-        jmp near loc_B2214
-loc_B20C5:
+        jmp near .10
+.1:
         mov eax, ebx
         xor edx, edx
         call GusPoke
@@ -610,7 +606,7 @@ loc_B20C5:
         mov eax, ebx
         call GusPeek
         test al, al
-        je short loc_B20F1
+        je short .2
         xor al, al
         lea esp, [byte ebp-014h]
         pop edi
@@ -620,7 +616,7 @@ loc_B20C5:
         pop ebx
         pop ebp
         ret
-loc_B20F1:
+.2:
         mov edx, 0AAh
         mov eax, ebx
         call GusPoke
@@ -630,7 +626,7 @@ loc_B20F1:
         mov eax, ebx
         call GusPeek
         cmp al, 0AAh
-        je short loc_B211D
+        je short .3
         xor al, al
         lea esp, [byte ebp-014h]
         pop edi
@@ -640,7 +636,7 @@ loc_B20F1:
         pop ebx
         pop ebp
         ret
-loc_B211D:
+.3:
         mov edx, 0FFh
         mov eax, ebx
         call GusPoke
@@ -650,7 +646,7 @@ loc_B211D:
         mov eax, ebx
         call GusPeek
         cmp al, 0FFh
-        je short loc_B2149
+        je short .4
         xor al, al
         lea esp, [byte ebp-014h]
         pop edi
@@ -660,9 +656,9 @@ loc_B211D:
         pop ebx
         pop ebp
         ret
-loc_B2149:
+.4:
         cmp ebx, 3FFFFh
-        ja short loc_B2175
+        ja short .5
         xor edx, edx
         mov eax, ebx
         mov dl, byte [byte ebp-028h]
@@ -680,15 +676,15 @@ loc_B2149:
         pop ebx
         pop ebp
         ret
-loc_B2175:
+.5:
         mov edx, ebx
         shr edx, 12h
         xor edi, edi
         mov dword [byte ebp-02Ch], edx
-        jmp short loc_B21F4
-loc_B2181:
+        jmp short .8
+.6:
         cmp di, word [byte ebp-02Ch]
-        je short loc_B21FA
+        je short .9
         xor edx, edx
         mov esi, ebx
         mov dx, di
@@ -707,7 +703,7 @@ loc_B2181:
         mov eax, ebx
         call GusPeek
         cmp al, 0AAh
-        jne short loc_B21E7
+        jne short .7
         xor edx, edx
         mov eax, ebx
         mov dl, byte [byte ebp-01Ch]
@@ -725,16 +721,16 @@ loc_B2181:
         pop ebx
         pop ebp
         ret
-loc_B21E7:
+.7:
         xor edx, edx
         mov eax, esi
         mov dl, byte [byte ebp-024h]
         inc edi
         call GusPoke
-loc_B21F4:
+.8:
         cmp di, byte 4
-        jne short loc_B2181
-loc_B21FA:
+        jne short .6
+.9:
         xor edx, edx
         mov eax, ebx
         mov dl, byte [byte ebp-01Ch]
@@ -744,7 +740,7 @@ loc_B21FA:
         mov dl, byte [byte ebp-018h]
         call GusPoke
         mov al, 2
-loc_B2214:
+.10:
         lea esp, [byte ebp-014h]
         pop edi
         pop esi

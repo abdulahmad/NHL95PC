@@ -3,25 +3,25 @@ bits 32
 %include "hockey.inc"
 section s_A1877 progbits alloc exec nowrite align=1
 extern byte_D5440
-global __EnterWVIDEO_, loc_A1891, loc_A189A
+global __EnterWVIDEO_
 __EnterWVIDEO_:
         cmp byte [byte_D5440], 0
-        je short loc_A189A
+        je short .2
         and edx, 0FFFFh
         push edx
         push eax
         int3
-        jmp short loc_A1891
+        jmp short .1
         push edi
         push esi
         dec ecx
         inc esp
         inc ebp
         dec edi
-loc_A1891:
+.1:
         mov eax, 1
         add esp, byte 8
         ret
-loc_A189A:
+.2:
         xor eax, eax
         ret

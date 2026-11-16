@@ -3,9 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9805E progbits alloc exec nowrite align=1
 extern fgetc_
-global _fmemmove_, loc_98078, loc_9808C, loc_9809B, loc_980AE, unk_980C0, utoa_, loc_980FB
-global loc_9811B, itoa_, loc_98141, fgets_, loc_98166, loc_98184, loc_98194, loc_98198
-global loc_9819B
+global _fmemmove_, unk_980C0, utoa_, itoa_, fgets_
 _fmemmove_:
         push esi
         push edi
@@ -17,29 +15,29 @@ _fmemmove_:
         mov edx, eax
         mov eax, ebx
         cmp ebx, edx
-        jne short loc_98078
+        jne short .1
         cmp si, word [esp]
-        je short loc_980AE
-loc_98078:
+        je short .4
+.1:
         cmp eax, edx
-        jae short loc_9809B
+        jae short .3
         lea edi, [eax+ecx]
         cmp edi, edx
-        jbe short loc_9809B
+        jbe short .3
         mov fs, word [esp]
         mov es, esi
         mov eax, edi
         add edx, ecx
-loc_9808C:
+.2:
         test ecx, ecx
-        je short loc_980AE
+        je short .4
         dec eax
         dec edx
         mov bl, byte [es:eax]
         dec ecx
         mov byte [fs:edx], bl
-        jmp short loc_9808C
-loc_9809B:
+        jmp short .2
+.3:
         mov es, word [esp]
         mov edi, edx
         push ds
@@ -50,7 +48,7 @@ loc_9809B:
         adc ecx, ecx
         rep movsb
         pop ds
-loc_980AE:
+.4:
         mov ebx, dword [esp]
         mov eax, edx
         mov edx, ebx
@@ -76,7 +74,7 @@ utoa_:
         xor dl, dl
         lea ecx, [byte esp+01h]
         mov byte [esp], dl
-loc_980FB:
+.1:
         lea ebx, [byte esp+024h]
         mov dword [byte esp+024h], edi
         xor edx, edx
@@ -87,14 +85,14 @@ loc_980FB:
         mov eax, dword [byte esp+024h]
         inc ecx
         test eax, eax
-        jne short loc_980FB
-loc_9811B:
+        jne short .1
+.2:
         dec ecx
         mov al, byte [ecx]
         mov byte [esi], al
         inc esi
         test al, al
-        jne short loc_9811B
+        jne short .2
         mov eax, ebp
         add esp, byte 28h
         pop ebp
@@ -106,13 +104,13 @@ itoa_:
         push ecx
         mov ecx, edx
         cmp ebx, byte 0Ah
-        jne short loc_98141
+        jne short .1
         test eax, eax
-        jge short loc_98141
+        jge short .1
         neg eax
         mov byte [edx], 2Dh
         inc edx
-loc_98141:
+.1:
         call utoa_
         mov eax, ecx
         pop ecx
@@ -131,33 +129,33 @@ fgets_:
         and ah, 0CFh
         and ebp, byte 30h
         mov byte [byte ebx+0Ch], ah
-loc_98166:
+.1:
         dec ecx
         test ecx, ecx
-        jle short loc_98184
+        jle short .2
         mov eax, ebx
         call fgetc_
         mov dword [esp], eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_98184
+        je short .2
         mov al, byte [esp]
         mov byte [edx], al
         inc edx
         cmp al, 0Ah
-        jne short loc_98166
-loc_98184:
+        jne short .1
+.2:
         cmp dword [esp], byte 0FFFFFFFFh
-        jne short loc_98198
+        jne short .4
         cmp edx, edi
-        je short loc_98194
+        je short .3
         test byte [byte ebx+0Ch], 20h
-        je short loc_98198
-loc_98194:
+        je short .4
+.3:
         xor edi, edi
-        jmp short loc_9819B
-loc_98198:
+        jmp short .5
+.4:
         mov byte [edx], 0
-loc_9819B:
+.5:
         mov esi, dword [byte ebx+0Ch]
         or esi, ebp
         mov eax, edi

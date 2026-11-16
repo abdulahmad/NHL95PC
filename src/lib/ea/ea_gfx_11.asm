@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_92F50 progbits alloc exec nowrite align=1
 extern FillRectClipped, XorRectClipped
-global XorRectOutline, loc_92F6C, loc_92F89, DrawFrameClipped, loc_9301C, loc_93039
+global XorRectOutline, DrawFrameClipped
 XorRectOutline:
         push esi
         push edi
@@ -13,23 +13,23 @@ XorRectOutline:
         mov edi, dword [byte esp+01Ch]
         mov ebp, dword [byte esp+020h]
         cmp ebp, esi
-        jge short loc_92F6C
+        jge short .1
         mov eax, esi
         mov esi, ebp
         mov ebp, eax
-loc_92F6C:
+.1:
         mov eax, ebp
         sub eax, esi
         inc eax
         mov dword [byte esp+04h], eax
         mov edx, dword [byte esp+024h]
         cmp edi, edx
-        jle short loc_92F89
+        jle short .2
         mov dword [esp], edi
         mov edi, edx
         mov eax, dword [esp]
         mov dword [byte esp+024h], eax
-loc_92F89:
+.2:
         mov eax, dword [byte esp+024h]
         sub eax, edi
         dec eax
@@ -87,23 +87,23 @@ DrawFrameClipped:
         mov edi, dword [byte esp+01Ch]
         mov ebp, dword [byte esp+020h]
         cmp ebp, esi
-        jge short loc_9301C
+        jge short .1
         mov eax, esi
         mov esi, ebp
         mov ebp, eax
-loc_9301C:
+.1:
         mov eax, ebp
         sub eax, esi
         inc eax
         mov dword [byte esp+04h], eax
         mov edx, dword [byte esp+024h]
         cmp edi, edx
-        jle short loc_93039
+        jle short .2
         mov dword [esp], edi
         mov edi, edx
         mov eax, dword [esp]
         mov dword [byte esp+024h], eax
-loc_93039:
+.2:
         mov eax, dword [byte esp+024h]
         sub eax, edi
         dec eax

@@ -3,9 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_B27A0 progbits alloc exec nowrite align=1
 extern __CHP, BigIntCallHook
-global modf_, __CmpBigInt, loc_B27CC, loc_B27D5, loc_B27DD, loc_B27E0, loc_B27E9, loc_B27F1
-global __Rnd2Int, loc_B281F, loc_B2828, loc_B282C, loc_B284C, loc_B2852, __Bin2String, loc_B2874
-global loc_B2887, loc_B2889, loc_B289F, loc_B28C3
+global modf_, __CmpBigInt, __Rnd2Int, __Bin2String
 modf_:
         push eax
         fld qword [byte esp+08h]
@@ -27,27 +25,27 @@ __CmpBigInt:
         mov ecx, dword [edx]
         mov edx, dword [byte edx+04h]
         sub eax, eax
-loc_B27CC:
+.1:
         cmp edx, dword [cs:edi]
-        jne short loc_B27D5
+        jne short .2
         cmp ecx, dword [byte cs:edi+04h]
-loc_B27D5:
-        jb short loc_B27DD
+.2:
+        jb short .3
         add edi, byte 8
         inc eax
-        jmp short loc_B27CC
-loc_B27DD:
+        jmp short .1
+.3:
         sub edi, byte 8
-loc_B27E0:
+.4:
         cmp edx, dword [cs:edi]
-        jne short loc_B27E9
+        jne short .5
         cmp ecx, dword [byte cs:edi+04h]
-loc_B27E9:
-        jae short loc_B27F1
+.5:
+        jae short .6
         sub edi, byte 8
         dec eax
-        jmp short loc_B27E0
-loc_B27F1:
+        jmp short .4
+.6:
         pop ecx
         pop edi
         ret
@@ -67,35 +65,35 @@ __Rnd2Int:
         xor ebx, 100000h
         shr ebp, 14h
         sub ebp, 433h
-        je short loc_B2852
-        jbe short loc_B2828
-loc_B281F:
+        je short .5
+        jbe short .2
+.1:
         shl ecx, 1
         rcl ebx, 1
         dec ebp
-        jne short loc_B281F
-        jmp short loc_B2852
-loc_B2828:
+        jne short .1
+        jmp short .5
+.2:
         sub eax, eax
         sub esi, esi
-loc_B282C:
+.3:
         shr ebx, 1
         rcr ecx, 1
         rcr eax, 1
         adc esi, esi
         inc ebp
-        jne short loc_B282C
+        jne short .3
         cmp eax, 80000000h
-        jb short loc_B2852
-        jne short loc_B284C
+        jb short .5
+        jne short .4
         or esi, esi
-        jne short loc_B284C
+        jne short .4
         test ecx, 1
-        je short loc_B2852
-loc_B284C:
+        je short .5
+.4:
         add ecx, byte 1
         adc ebx, byte 0
-loc_B2852:
+.5:
         pop ebp
         mov dword [byte ebp+00h], ecx
         mov dword [byte ebp+04h], ebx
@@ -117,19 +115,19 @@ __Bin2String:
         add ebp, ebx
         mov byte [byte ebp+00h], 0
         push eax
-loc_B2874:
+.1:
         pop eax
         mov edi, 2710h
         sub edx, edx
         or eax, eax
-        jne short loc_B2887
+        jne short .2
         or ecx, ecx
-        jne short loc_B2889
+        jne short .3
         push eax
-        jmp short loc_B289F
-loc_B2887:
+        jmp short .4
+.2:
         div edi
-loc_B2889:
+.3:
         xchg ecx, eax
         div edi
         xchg ecx, eax
@@ -143,23 +141,23 @@ loc_B2889:
         xchg edx, eax
         mov ah, 0
         aam
-loc_B289F:
+.4:
         add ax, 3030h
         add dx, 3030h
         sub ebp, byte 4
         mov byte [byte ebp+03h], al
         dec ebx
-        je short loc_B28C3
+        je short .5
         mov byte [byte ebp+02h], ah
         dec ebx
-        je short loc_B28C3
+        je short .5
         mov byte [byte ebp+01h], dl
         dec ebx
-        je short loc_B28C3
+        je short .5
         mov byte [byte ebp+00h], dh
         dec ebx
-        jne short loc_B2874
-loc_B28C3:
+        jne short .1
+.5:
         pop eax
         pop ebx
         pop ecx

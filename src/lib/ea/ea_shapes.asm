@@ -9,22 +9,9 @@ extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalErr
 extern PushMemDescriptorLocked, FindCachedFile, GetPatchEntry, StopDigiChannel, SndHandleService, SndDriverCall, SndHandleMidi, DrawShapeQuad
 extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, ShapeWidth, ShapeHeight, unk_F1884, unk_F21FC
 extern word_D4F88
-global DrawShapeStretched, DrawShapeStretchedAt, FillRowTable, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
-global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, removewindow, loc_98DF6, loc_98E06
-global loc_98E17, loc_98E36, loc_98E47, LoadFileCached, loc_98EAA, loc_98EFB, loc_98F0A, SeqService
-global loc_98F44, SeqUpdate, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7, loc_98FDB, loc_98FEC
-global loc_98FED, loc_9900E, loc_99064, loc_9906B, loc_9907B, loc_99091, loc_9909A, loc_990C4
-global SeqStepTrack, loc_99116, loc_9912B, loc_9912F, loc_99165, loc_99185, loc_991C1, loc_991C7
-global loc_991E8, loc_991FF, loc_99203, loc_9921B, loc_99225, loc_9928F, loc_9929C, loc_992A9
-global loc_992C8, loc_992D6, loc_992DE, loc_992F8, loc_9930E, loc_99329, loc_99331, loc_9933E
-global loc_99351, loc_9936D, loc_993A4, loc_993AC, loc_993C5, loc_993CF, loc_993F3, loc_99424
-global loc_99428, loc_99436, loc_99449, loc_99455, loc_9947A, loc_994B0, loc_994DF, loc_99503
-global loc_99506, loc_99513, loc_9951A, SeqSendController, loc_9955D, loc_99594, loc_995DB, loc_99600
-global SeqNoteOffSlot, SeqChannelNotesOff, loc_99687, loc_9969C, loc_996A0, SeqSendPitchBend, SeqNoteOn, loc_99729
-global loc_99754, loc_9975B, loc_99786, loc_99798, loc_997A6, SeqQueueCommand, loc_997F1, loc_99812
-global loc_9981F, SeqFlushQueue, loc_99845, loc_9985E, loc_9989B, SeqSendProgram, jpt_998DD, SeqReadEvent
-global loc_99936, loc_99972, loc_99976, loc_99981, loc_99988, loc_9998E, loc_99991, loc_999A5
-global loc_999AC, loc_999BD, loc_999CF, loc_999E1, loc_999FC, PeekDword, PeekWord
+global DrawShapeStretched, DrawShapeStretchedAt, FillRowTable, removewindow, LoadFileCached, SeqService, SeqUpdate, SeqUpdate
+global SeqStepTrack, SeqSendController, SeqNoteOffSlot, SeqChannelNotesOff, SeqSendPitchBend, SeqNoteOn, SeqQueueCommand, SeqFlushQueue
+global SeqSendProgram, jpt_998DD, SeqReadEvent, SeqReadEvent, SeqReadEvent, PeekDword, PeekWord
 DrawShapeStretched:
         push esi
         push edi
@@ -194,66 +181,66 @@ FillRowTable:
         xor ebx, ebx
         mov eax, dword [dword_D2F60]
         cmp eax, dword [dword_EDAA8]
-        jae short loc_98D7D
+        jae short .4
         mov edx, ecx
         add edx, edi
         mov dword [esp], edx
-loc_98D43:
+.1:
         mov edx, dword [eax]
         cmp edx, esi
-        jl short loc_98D6D
+        jl short .3
         cmp dword [byte eax+04h], byte 0
-        jbe short loc_98D67
+        jbe short .2
         cmp ecx, dword [byte eax+08h]
-        jne short loc_98D6D
+        jne short .3
         mov ebp, dword [byte eax+0Ch]
         cmp ebp, dword [esp]
-        jne short loc_98D6D
+        jne short .3
         inc dword [byte eax+04h]
         add eax, byte 8
-        jmp near loc_98DCF
-loc_98D67:
+        jmp near .10
+.2:
         test ebx, ebx
-        jne short loc_98D6D
+        jne short .3
         mov ebx, eax
-loc_98D6D:
+.3:
         shl edx, 2
         add edx, byte 8
         add eax, edx
         cmp eax, dword [dword_EDAA8]
-        jb short loc_98D43
-loc_98D7D:
+        jb short .1
+.4:
         test ebx, ebx
-        je short loc_98DCD
+        je short .9
         mov eax, dword [ebx]
         lea edx, [byte esi+08h]
         cmp eax, edx
-        jge short loc_98D8E
+        jge short .5
         mov esi, eax
-        jmp short loc_98DA1
-loc_98D8E:
+        jmp short .6
+.5:
         mov edx, eax
         sub edx, esi
         sub edx, byte 2
         mov dword [byte ebx+esi*4+08h], edx
         mov dword [byte ebx+esi*4+0Ch], 0
-loc_98DA1:
+.6:
         mov dword [ebx], esi
         add ebx, byte 4
         mov dword [ebx], 1
         xor edx, edx
         add ebx, byte 4
         test esi, esi
-        jle short loc_98DC3
+        jle short .8
         mov eax, ebx
-loc_98DB7:
+.7:
         mov dword [eax], ecx
         add ecx, edi
         add eax, byte 4
         inc edx
         cmp edx, esi
-        jl short loc_98DB7
-loc_98DC3:
+        jl short .7
+.8:
         mov eax, ebx
         add esp, byte 4
         pop ebp
@@ -261,9 +248,9 @@ loc_98DC3:
         pop esi
         pop ecx
         ret
-loc_98DCD:
+.9:
         xor eax, eax
-loc_98DCF:
+.10:
         add esp, byte 4
         pop ebp
         pop edi
@@ -282,46 +269,46 @@ removewindow:
         dec ebx
         mov dword [byte eax+04h], ebx
         test ebx, ebx
-        ja short loc_98E47
+        ja short .5
         mov esi, dword [dword_D2F60]
         xor edi, edi
         cmp esi, eax
-        jae short loc_98E06
-loc_98DF6:
+        jae short .2
+.1:
         mov edi, esi
         mov eax, dword [esi]
         add eax, byte 2
         shl eax, 2
         add esi, eax
         cmp esi, edx
-        jb short loc_98DF6
-loc_98E06:
+        jb short .1
+.2:
         cmp esi, edx
-        je short loc_98E17
+        je short .3
         push str_RemovewindowROWSPACE
         call FatalError
         add esp, byte 4
-loc_98E17:
+.3:
         mov eax, dword [esi]
         add eax, byte 2
         shl eax, 2
         add eax, esi
         cmp eax, dword [dword_EDAA8]
-        jae short loc_98E36
+        jae short .4
         cmp dword [byte eax+04h], byte 0
-        ja short loc_98E36
+        ja short .4
         mov eax, dword [eax]
         add eax, byte 2
         add dword [esi], eax
-loc_98E36:
+.4:
         test edi, edi
-        je short loc_98E47
+        je short .5
         cmp dword [byte edi+04h], byte 0
-        ja short loc_98E47
+        ja short .5
         mov eax, dword [esi]
         add eax, byte 2
         add dword [edi], eax
-loc_98E47:
+.5:
         pop edi
         pop esi
         pop edx
@@ -349,18 +336,18 @@ LoadFileCached:
         call FindCachedFile
         add esp, byte 4
         test eax, eax
-        jne near loc_98F0A
+        jne near .3
         mov edx, str_Vsh
         mov eax, esi
         call stricmp_
         test eax, eax
-        je short loc_98EAA
+        je short .1
         mov edx, str_Qvs
         mov eax, esi
         call stricmp_
         test eax, eax
-        jne short loc_98EFB
-loc_98EAA:
+        jne short .2
+.1:
         push edi
         mov eax, ebp
         xor al, 20h
@@ -371,7 +358,7 @@ loc_98EAA:
         mov esi, eax
         add esp, byte 0Ch
         test eax, eax
-        je short loc_98F0A
+        je short .3
         mov ebx, dword [eax]
         push ebx
         call ConvertShapeBankInPlace
@@ -394,15 +381,15 @@ loc_98EAA:
         call PushMemDescriptorLocked
         add esp, byte 4
         mov eax, edi
-        jmp short loc_98F0A
-loc_98EFB:
+        jmp short .3
+.2:
         push edi
         push ebp
         lea eax, [byte esp+08h]
         push eax
         call LoadPackedCore
         add esp, byte 0Ch
-loc_98F0A:
+.3:
         add esp, byte 64h
         pop ebp
         pop edi
@@ -412,17 +399,17 @@ SeqService:
         push edx
         mov ah, byte [byte_D4F5E]
         test ah, ah
-        jne short loc_98F44
+        jne short .1
         cmp word [word_D4F88], byte 0
-        jne short loc_98F44
+        jne short .1
         cmp dword [sndhandlecount], byte 0
-        je short loc_98F44
+        je short .1
         mov dl, ah
         inc dl
         mov byte [byte_D4F5E], dl
         call SeqUpdate
         dec byte [byte_D4F5E]
-loc_98F44:
+.1:
         pop edx
         ret
 SeqUpdate:
@@ -434,7 +421,7 @@ SeqUpdate:
         push ebp
         xor ecx, ecx
         inc byte [byte_D4F5D]
-loc_98F54:
+.1:
         mov eax, ecx
         shl eax, 2
         add eax, ecx
@@ -442,14 +429,14 @@ loc_98F54:
         mov ebx, dword_F22FC
         add ebx, eax
         cmp dword [ebx], byte 0
-        je short loc_98FA7
+        je short .3
         mov eax, dword [byte ebx+08h]
         mov esi, dword [byte ebx+04h]
         sub esi, eax
         mov dword [byte ebx+04h], esi
         sar esi, 18h
         cmp esi, dword [ebx]
-        je short loc_98FA7
+        je short .3
         mov eax, ecx
         shl eax, 18h
         mov edx, esi
@@ -460,63 +447,63 @@ loc_98F54:
         mov al, byte [byte ebx+010h]
         call SndDriverCall
         test esi, esi
-        jg short loc_98FA5
+        jg short .2
         mov eax, dword [byte ebx+0Ch]
         mov edx, ecx
         call StopDigiChannel
         xor esi, esi
-loc_98FA5:
+.2:
         mov dword [ebx], esi
-loc_98FA7:
+.3:
         inc ecx
         cmp ecx, byte 4
-        jl short loc_98F54
+        jl short .1
         cmp dword [SndTimerHandle], byte 0
-        jl short loc_98FD7
+        jl short .4
         xor eax, eax
         mov al, byte [SndTimerHandle]
         mov edx, 8
         call SndDriverCall
         test eax, eax
-        je short loc_98FD7
+        je short .4
         xor eax, eax
         mov al, byte [SndTimerHandle]
         call SndHandleService
-loc_98FD7:
+.4:
         xor ecx, ecx
-        jmp short loc_98FED
-loc_98FDB:
+        jmp short .7
+.5:
         cmp ecx, dword [SndTimerHandle]
-        je short loc_98FEC
+        je short .6
         xor eax, eax
         mov al, cl
         call SndHandleService
-loc_98FEC:
+.6:
         inc ecx
-loc_98FED:
+.7:
         cmp ecx, dword [sndhandlecount]
-        jl short loc_98FDB
+        jl short .5
         call SeqFlushQueue
         cmp dword [dword_D4F8A], byte 0
-        jne near loc_9909A
+        jne near .13
         mov ebx, byte_F1A1C
         xor ecx, ecx
-loc_9900E:
+.8:
         mov dl, byte [byte ebx+01h]
         test dl, dl
-        je short loc_9906B
+        je short .10
         test dl, 8
-        je short loc_99064
+        je short .9
         mov eax, dword [byte ebx+06h]
         mov dl, byte [byte eax+015h]
         mov dh, byte [byte_D4F5D]
         cmp dl, dh
-        je short loc_99064
+        je short .9
         mov byte [byte eax+015h], dh
         mov eax, dword [byte ebx+06h]
         mov dx, word [byte eax+0Eh]
         test dx, dx
-        je short loc_99064
+        je short .9
         movzx ebp, byte [byte eax+010h]
         mov esi, edx
         movsx edx, dx
@@ -532,43 +519,42 @@ loc_9900E:
         sar edx, 1Fh
         idiv edi
         mov byte [byte esi+011h], al
-loc_99064:
+.9:
         mov eax, ebx
         call SeqStepTrack
-loc_9906B:
+.10:
         add ebx, byte 54h
         inc ecx
         cmp ecx, byte 18h
-        jl short loc_9900E
+        jl short .8
         mov ebx, dword_F189C
         xor ecx, ecx
-loc_9907B:
+.11:
         cmp byte [byte ebx+05h], 0FFh
-        jne short loc_99091
+        jne short .12
         mov esi, dword [byte ebx+08h]
         dec esi
         mov dword [byte ebx+08h], esi
-        jne short loc_99091
+        jne short .12
         mov eax, ebx
         call SeqNoteOffSlot
-loc_99091:
+.12:
         add ebx, byte 0Ch
         inc ecx
         cmp ecx, byte 20h
-        jl short loc_9907B
-loc_9909A:
+        jl short .11
+.13:
         cmp dword [SndTimerHandle], byte 0
-        jl short loc_990C4
+        jl short SeqUpdate+017Eh
         xor eax, eax
         mov al, byte [SndTimerHandle]
         mov edx, 8
         call SndDriverCall
         test eax, eax
-        je short loc_990C4
+        je short SeqUpdate+017Eh
         xor eax, eax
         mov al, byte [SndTimerHandle]
         call SndHandleService
-loc_990C4:
         pop ebp
         pop edi
         pop esi
@@ -586,7 +572,7 @@ SeqStepTrack:
         sub esp, byte 4
         mov esi, eax
         cmp dword [byte eax+0Ah], byte 0
-        je near loc_9951A
+        je near .42
         mov edi, unk_F21FC
         mov ebx, dword [dword_D4F9A]
         add edi, ebx
@@ -594,28 +580,28 @@ SeqStepTrack:
         mov dword [dword_D4F9A], ecx
         mov byte [edi], 80h
         test byte [byte eax+01h], 8
-        je near loc_991C1
+        je near .6
         mov eax, dword [byte esi+06h]
         cmp word [byte eax+0Eh], byte 0
-        jne short loc_99165
+        jne short .4
         mov edx, dword_F189C
         xor ebx, ebx
-        jmp short loc_9912F
-loc_99116:
+        jmp short .3
+.1:
         mov eax, dword [edx]
         cmp eax, dword [byte esi+02h]
-        jne short loc_9912B
+        jne short .2
         mov al, byte [byte edx+05h]
         cmp al, byte [esi]
-        jne short loc_9912B
+        jne short .2
         mov eax, edx
         call SeqNoteOffSlot
-loc_9912B:
+.2:
         add edx, byte 0Ch
         inc ebx
-loc_9912F:
+.3:
         cmp bx, byte 20h
-        jl short loc_99116
+        jl short .1
         mov al, byte [byte esi+050h]
         or al, 0B0h
         mov byte [edi], al
@@ -628,28 +614,28 @@ loc_9912F:
         call SeqQueueCommand
         mov dword [byte esi+0Ah], 0
         mov byte [byte esi+01h], 0
-        jmp near loc_99513
-loc_99165:
+        jmp near .41
+.4:
         movsx edx, word [byte eax+0Ch]
         movsx eax, word [byte eax+0Eh]
         call abs_
         cmp eax, edx
-        jne short loc_99185
+        jne short .5
         mov eax, dword [byte esi+06h]
         mov dl, byte [byte eax+010h]
         mov byte [byte eax+011h], dl
         and byte [byte esi+01h], 0F7h
-        jmp short loc_991C1
-loc_99185:
+        jmp short .6
+.5:
         mov eax, dword [byte esi+06h]
         mov bx, word [byte eax+0Eh]
         test bx, bx
-        je short loc_991C1
+        je short .6
         movsx edx, word [byte eax+0Ch]
         movsx eax, bx
         call abs_
         cmp eax, edx
-        je short loc_991C1
+        je short .6
         xor edx, edx
         mov dl, byte [byte esi+050h]
         mov eax, edx
@@ -660,48 +646,48 @@ loc_99185:
         mov edx, 7
         mov eax, esi
         call SeqSendController
-loc_991C1:
+.6:
         add word [byte esi+04Ah], 80h
-loc_991C7:
+.7:
         mov ax, word [byte esi+04Ah]
         cmp ax, word [byte esi+04Ch]
-        jl near loc_99513
+        jl near .41
         cmp dword [byte esi+0Ah], byte 0
-        je near loc_99513
+        je near .41
         mov edx, dword_F189C
         xor ebx, ebx
-        jmp short loc_99203
-loc_991E8:
+        jmp short .10
+.8:
         mov al, byte [byte edx+05h]
         cmp al, byte [esi]
-        jne short loc_991FF
+        jne short .9
         mov ebp, dword [byte edx+08h]
         dec ebp
         mov dword [byte edx+08h], ebp
-        jne short loc_991FF
+        jne short .9
         mov eax, edx
         call SeqNoteOffSlot
-loc_991FF:
+.9:
         add edx, byte 0Ch
         inc ebx
-loc_99203:
+.10:
         cmp bx, byte 20h
-        jl short loc_991E8
+        jl short .8
         mov edx, dword [byte esi+0Eh]
         test edx, edx
-        je short loc_9921B
+        je short .11
         lea ecx, [byte edx-01h]
         mov dword [byte esi+0Eh], ecx
-        jmp near loc_99506
-loc_9921B:
+        jmp near .40
+.11:
         cmp dword [byte esi+0Ah], byte 0
-        je near loc_99506
-loc_99225:
+        je near .40
+.12:
         cmp dword [byte esi+0Eh], byte 0
-        jne near loc_99503
+        jne near .39
         mov ebx, dword [byte esi+0Ah]
         test ebx, ebx
-        je near loc_99503
+        je near .39
         mov edx, ebx
         mov eax, unk_F1884
         call SeqReadEvent
@@ -712,62 +698,62 @@ loc_99225:
         mov dword [byte esi+0Ah], ebp
         mov al, byte [byte_F188C]
         cmp al, 0D9h
-        jb near loc_99449
+        jb near .34
         mov dl, byte [byte_F188D]
         cmp al, 0E2h
-        jb short loc_992A9
-        jbe near loc_99351
+        jb short .15
+        jbe near .24
         cmp al, 0E5h
-        jb short loc_9929C
-        jbe near loc_99436
+        jb short .14
+        jbe near .33
         cmp al, 0E8h
-        jb short loc_9928F
-        jbe near loc_993AC
+        jb short .13
+        jbe near .27
         cmp al, 0EAh
-        je short loc_992D6
-        jmp near loc_994DF
-loc_9928F:
+        je short .17
+        jmp near .38
+.13:
         cmp al, 0E6h
-        je near loc_9930E
-        jmp near loc_994DF
-loc_9929C:
+        je near .20
+        jmp near .38
+.14:
         cmp al, 0E3h
-        jbe near loc_9936D
-        jmp near loc_993A4
-loc_992A9:
+        jbe near .25
+        jmp near .26
+.15:
         cmp al, 0DCh
-        jb short loc_992C8
-        jbe near loc_993F3
+        jb short .16
+        jbe near .30
         cmp al, 0DDh
-        jbe near loc_9933E
+        jbe near .23
         cmp al, 0DFh
-        je near loc_993CF
-        jmp near loc_994DF
-loc_992C8:
+        je near .29
+        jmp near .38
+.16:
         cmp al, 0D9h
-        jb near loc_994DF
+        jb near .38
         cmp al, 0DAh
-        jbe short loc_992DE
-        jmp short loc_99331
-loc_992D6:
+        jbe short .18
+        jmp short .22
+.17:
         mov byte [byte esi+04Eh], dl
-        jmp near loc_994DF
-loc_992DE:
+        jmp near .38
+.18:
         mov bh, byte [byte esi+031h]
         test bh, bh
-        je short loc_992F8
+        je short .19
         xor eax, eax
         mov al, bh
         mov eax, dword [byte esi+eax*4+032h]
         mov dword [byte esi+0Ah], eax
         dec byte [byte esi+031h]
-        jmp near loc_994DF
-loc_992F8:
+        jmp near .38
+.19:
         mov dword [byte esi+0Ah], 0
         mov dword [byte esi+02h], 0
         mov byte [byte esi+01h], bh
-        jmp near loc_994DF
-loc_9930E:
+        jmp near .38
+.20:
         mov cl, byte [byte esi+031h]
         inc cl
         mov byte [byte esi+031h], cl
@@ -777,20 +763,20 @@ loc_9930E:
         mov dword [byte esi+eax*4+032h], edx
         mov eax, dword [dword_F1888]
         add eax, byte 4
-loc_99329:
+.21:
         mov dword [byte esi+0Ah], eax
-        jmp near loc_994DF
-loc_99331:
+        jmp near .38
+.22:
         mov byte [byte esi+031h], 0
         mov byte [byte esi+030h], 0
         mov eax, dword [byte esi+032h]
-        jmp short loc_99329
-loc_9933E:
+        jmp short .21
+.23:
         and edx, 0FFh
         mov eax, dword [byte esi+02h]
         call SeqChannelNotesOff
-        jmp near loc_994DF
-loc_99351:
+        jmp near .38
+.24:
         xor eax, eax
         mov al, byte [byte esi+030h]
         mov dword [byte esi+eax*4+018h], ebp
@@ -799,11 +785,11 @@ loc_99351:
         mov al, byte [byte esi+030h]
         mov byte [byte esi+eax+012h], dl
         inc byte [byte esi+030h]
-        jmp near loc_994DF
-loc_9936D:
+        jmp near .38
+.25:
         mov ch, byte [byte esi+030h]
         test ch, ch
-        je near loc_994DF
+        je near .38
         xor eax, eax
         mov al, ch
         mov eax, dword [byte esi+eax*4+014h]
@@ -815,13 +801,13 @@ loc_9936D:
         dec dh
         mov byte [byte esi+eax+011h], dh
         test dl, dl
-        jne near loc_994DF
+        jne near .38
         dec byte [byte esi+030h]
-        jmp near loc_994DF
-loc_993A4:
+        jmp near .38
+.26:
         mov byte [byte esi+052h], dl
-        jmp near loc_994DF
-loc_993AC:
+        jmp near .38
+.27:
         xor eax, eax
         mov al, byte [byte_F188E]
         sub eax, byte 4
@@ -830,19 +816,19 @@ loc_993AC:
         xor eax, eax
         mov al, byte [byte esi+051h]
         mov ebx, byte_F1784
-loc_993C5:
+.28:
         call SndHandleMidi
-        jmp near loc_994DF
-loc_993CF:
+        jmp near .38
+.29:
         test byte [byte esi+01h], 8
-        jne near loc_994DF
+        jne near .38
         xor ebx, ebx
         mov bl, byte [dword_F1888]
         and edx, 0FFh
         mov eax, esi
         call SeqSendController
-        jmp near loc_994DF
-loc_993F3:
+        jmp near .38
+.30:
         mov byte [byte esi+04Fh], dl
         mov al, byte [byte esi+050h]
         or al, 0C0h
@@ -855,50 +841,50 @@ loc_993F3:
         add esp, byte 4
         mov edx, eax
         test eax, eax
-        je short loc_99428
+        je short .32
         mov bl, byte [byte eax+0Fh]
         test bl, 80h
-        je short loc_99424
+        je short .31
         mov al, bl
         and al, 7Fh
         mov byte [byte esi+051h], al
-        jmp short loc_99428
-loc_99424:
+        jmp short .32
+.31:
         mov byte [byte esi+051h], 7Fh
-loc_99428:
+.32:
         xor eax, eax
         mov al, byte [byte esi+051h]
         mov ebx, edi
         mov edx, 2
-        jmp short loc_993C5
-loc_99436:
+        jmp short .28
+.33:
         movsx edx, word [dword_F1888]
         mov eax, esi
         call SeqSendPitchBend
-        jmp near loc_994DF
-loc_99449:
+        jmp near .38
+.34:
         cmp al, 80h
-        jae short loc_99455
+        jae short .35
         mov al, byte [byte esi+052h]
         mov byte [byte_F188D], al
-loc_99455:
+.35:
         mov dl, byte [byte_F188C]
         and dl, 7Fh
         mov byte [byte_F188C], dl
         cmp byte [byte esi+050h], 9
-        je short loc_9947A
+        je short .36
         mov eax, dword [byte esi+06h]
         mov al, byte [byte eax+013h]
         mov bl, dl
         add bl, al
         mov byte [byte_F188C], bl
-loc_9947A:
+.36:
         cmp dword [dword_D4F92], byte 0
-        je short loc_994DF
+        je short .38
         mov al, byte [byte esi+051h]
         mov byte [esp], al
         cmp byte [byte esi+050h], 9
-        jne short loc_994B0
+        jne short .37
         mov al, byte [byte_F188C]
         add al, 5Ch
         and eax, 0FFh
@@ -906,11 +892,11 @@ loc_9947A:
         call GetPatchEntry
         add esp, byte 4
         test eax, eax
-        je short loc_994B0
+        je short .37
         mov al, byte [byte eax+0Fh]
         and al, 7Fh
         mov byte [esp], al
-loc_994B0:
+.37:
         mov edx, dword [byte esi+02h]
         push edx
         xor eax, eax
@@ -927,27 +913,27 @@ loc_994B0:
         xor eax, eax
         mov al, byte [byte_F188C]
         call SeqNoteOn
-loc_994DF:
+.38:
         mov ebx, dword [byte esi+0Ah]
         test ebx, ebx
-        je near loc_99225
+        je near .12
         mov edx, ebx
         mov eax, dword_F1890
         call SeqReadEvent
         mov eax, dword [dword_F1890]
         mov dword [byte esi+0Eh], eax
-        jmp near loc_99225
-loc_99503:
+        jmp near .12
+.39:
         dec dword [byte esi+0Eh]
-loc_99506:
+.40:
         mov ax, word [byte esi+04Ch]
         sub word [byte esi+04Ah], ax
-        jmp near loc_991C7
-loc_99513:
+        jmp near .7
+.41:
         sub dword [dword_D4F9A], byte 4
-loc_9951A:
+.42:
         add esp, byte 4
-        jmp near loc_990C4
+        jmp near SeqUpdate+017Eh
 SeqSendController:
         push ecx
         push esi
@@ -964,12 +950,12 @@ SeqSendController:
         mov byte [esi], al
         mov byte [byte esi+01h], dl
         cmp dl, 7
-        jb near loc_99600
-        jbe short loc_9955D
+        jb near .4
+        jbe short .1
         cmp dl, 0Ah
-        je short loc_99594
-        jmp near loc_99600
-loc_9955D:
+        je short .2
+        jmp near .4
+.1:
         xor edx, edx
         mov dl, byte [byte ecx+050h]
         mov eax, edx
@@ -988,10 +974,10 @@ loc_9955D:
         idiv ebx
         mov bl, al
         cmp al, 7Fh
-        jbe short loc_99600
+        jbe short .4
         mov bl, 7Fh
-        jmp short loc_99600
-loc_99594:
+        jmp short .4
+.2:
         xor edx, edx
         mov dl, byte [byte ecx+050h]
         mov eax, edx
@@ -1001,7 +987,7 @@ loc_99594:
         mov eax, dword [byte ecx+06h]
         mov dl, byte [byte eax+012h]
         cmp dl, 3Fh
-        jbe short loc_995DB
+        jbe short .3
         mov al, dl
         and eax, 0FFh
         and ebx, 0FFh
@@ -1014,8 +1000,8 @@ loc_99594:
         sar edx, 1Fh
         idiv edi
         add ebx, eax
-        jmp short loc_99600
-loc_995DB:
+        jmp short .4
+.3:
         xor edx, edx
         mov dl, byte [byte eax+012h]
         mov eax, 3Fh
@@ -1028,7 +1014,7 @@ loc_995DB:
         sar edx, 1Fh
         idiv edi
         sub ebx, eax
-loc_99600:
+.4:
         mov byte [byte esi+02h], bl
         xor eax, eax
         mov al, byte [byte ecx+051h]
@@ -1080,21 +1066,21 @@ SeqChannelNotesOff:
         mov ebx, byte_F1A1C
         xor ecx, ecx
         movzx esi, byte [esp]
-        jmp short loc_996A0
-loc_99687:
+        jmp short .3
+.1:
         cmp edi, dword [byte ebx+02h]
-        jne short loc_9969C
+        jne short .2
         mov eax, 7D00h
         mov edx, eax
         sar edx, 1Fh
         idiv esi
         mov word [byte ebx+04Ch], ax
-loc_9969C:
+.2:
         add ebx, byte 54h
         inc ecx
-loc_996A0:
+.3:
         cmp cx, byte 18h
-        jl short loc_99687
+        jl short .1
         xor eax, eax
         add esp, byte 4
         pop edi
@@ -1142,9 +1128,9 @@ SeqNoteOn:
         mov eax, dword_F189C
         xor ecx, ecx
         add dword [dword_D4F9A], byte 4
-loc_99729:
+.1:
         cmp dword [eax], byte 0
-        jne short loc_99798
+        jne short .5
         mov edi, dword [byte esp+01Ch]
         mov dword [eax], edi
         mov dh, byte [esp]
@@ -1155,12 +1141,12 @@ loc_99729:
         mov dh, byte [byte esp+014h]
         mov byte [byte eax+07h], dh
         test esi, esi
-        jbe short loc_99754
+        jbe short .2
         mov dword [byte eax+08h], esi
-        jmp short loc_9975B
-loc_99754:
+        jmp short .3
+.2:
         mov dword [byte eax+08h], 1
-loc_9975B:
+.3:
         or dl, 90h
         mov byte [ebx], dl
         mov al, byte [esp]
@@ -1168,25 +1154,25 @@ loc_9975B:
         mov al, byte [byte esp+04h]
         mov byte [byte ebx+02h], al
         cmp byte [byte esp+018h], 0FFh
-        je short loc_99786
+        je short .4
         xor eax, eax
         mov al, byte [byte esp+014h]
         mov edx, 3
         call SndHandleMidi
-        jmp short loc_997A6
-loc_99786:
+        jmp short .6
+.4:
         xor eax, eax
         mov al, byte [byte esp+014h]
         mov edx, 3
         call SeqQueueCommand
-        jmp short loc_997A6
-loc_99798:
+        jmp short .6
+.5:
         add eax, byte 0Ch
         inc ecx
         cmp ecx, byte 20h
-        jl short loc_99729
+        jl short .1
         mov ecx, 0FFFFFFFFh
-loc_997A6:
+.6:
         sub dword [dword_D4F9A], byte 4
         mov eax, ecx
         add esp, byte 8
@@ -1198,20 +1184,20 @@ SeqQueueCommand:
         push esi
         mov cl, al
         cmp byte [byte_D4F5C], 0
-        jne short loc_9981F
+        jne short .3
         movsx eax, dx
         mov esi, dword [dword_D4F58]
         add eax, esi
         cmp eax, 80h
-        jge short loc_9981F
+        jge short .3
         mov byte [dword esi+byte_F1704], cl
         inc word [word_D4F88]
         inc byte [byte_D4F5C]
         lea eax, [byte esi+01h]
         mov dword [dword_D4F58], eax
-loc_997F1:
+.1:
         test dx, dx
-        je short loc_99812
+        je short .2
         mov esi, ebx
         mov eax, dword [dword_D4F58]
         inc ebx
@@ -1220,11 +1206,11 @@ loc_997F1:
         mov cl, byte [esi]
         mov byte [dword eax+byte_F1704], cl
         dec edx
-        jmp short loc_997F1
-loc_99812:
+        jmp short .1
+.2:
         dec byte [byte_D4F5C]
         dec word [word_D4F88]
-loc_9981F:
+.3:
         pop esi
         pop ecx
         ret
@@ -1234,23 +1220,23 @@ SeqFlushQueue:
         push edx
         push esi
         cmp dword [dword_D4F58], byte 0
-        je short loc_9989B
+        je short .3
         mov ah, byte [byte_D4F5C]
         test ah, ah
-        jne short loc_9989B
+        jne short .3
         xor ecx, ecx
         mov dl, ah
         inc dl
         mov byte [byte_D4F5C], dl
-loc_99845:
+.1:
         mov esi, 3
         movsx eax, cx
         mov al, byte [dword eax+byte_F1705]
         and al, 0F0h
         cmp al, 0C0h
-        jne short loc_9985E
+        jne short .2
         mov esi, 2
-loc_9985E:
+.2:
         movsx eax, cx
         lea ebx, [byte eax+01h]
         add ebx, byte_F1704
@@ -1263,11 +1249,11 @@ loc_9985E:
         add ecx, esi
         movsx eax, cx
         cmp eax, dword [dword_D4F58]
-        jl short loc_99845
+        jl short .1
         xor ecx, ecx
         mov dword [dword_D4F58], ecx
         dec byte [byte_D4F5C]
-loc_9989B:
+.3:
         pop esi
         pop edx
         pop ecx
@@ -1294,24 +1280,24 @@ SeqSendProgram:
         ret
         db 08Bh,0C0h
 jpt_998DD:
-        dd loc_999CF
-        dd loc_999CF
-        dd loc_999CF
-        dd loc_999A5
-        dd loc_999A5
-        dd loc_999A5
-        dd loc_999AC
-        dd loc_999A5
-        dd loc_999A5
-        dd loc_999A5
-        dd loc_999CF
-        dd loc_999A5
-        dd loc_999BD
-        dd loc_99991
-        dd loc_99988
-        dd loc_99972
-        dd loc_999A5
-        dd loc_999A5
+        dd SeqReadEvent+0AAh
+        dd SeqReadEvent+0AAh
+        dd SeqReadEvent+0AAh
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+087h
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+0AAh
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+098h
+        dd SeqReadEvent+06Ch
+        dd SeqReadEvent+063h
+        dd SeqReadEvent+04Dh
+        dd SeqReadEvent+080h
+        dd SeqReadEvent+080h
 SeqReadEvent:
         push ebx
         push ecx
@@ -1320,7 +1306,7 @@ SeqReadEvent:
         mov ebx, eax
         mov dword [esp], edx
         mov dword [eax], 0
-loc_99936:
+.1:
         mov al, byte [edx]
         and al, 7Fh
         and eax, 0FFh
@@ -1331,69 +1317,62 @@ loc_99936:
         mov eax, edx
         inc edx
         test byte [eax], 80h
-        jne short loc_99936
+        jne short .1
         mov al, byte [edx]
         mov byte [byte ebx+08h], al
         mov ch, al
         inc edx
         sub al, 0D9h
         cmp al, 11h
-        ja near loc_999CF
+        ja near SeqReadEvent+0AAh
         and eax, 0FFh
         lea esi, [byte edx+01h]
         jmp dword [nosplit cs:eax*4+jpt_998DD]
-loc_99972:
         xor eax, eax
-        jmp short loc_99981
-loc_99976:
+        jmp short .3
+.2:
         mov cl, byte [byte edx+eax+01h]
         mov byte [dword eax+byte_F1784], cl
         inc eax
-loc_99981:
+.3:
         movzx esi, byte [edx]
         cmp eax, esi
-        jl short loc_99976
-loc_99988:
+        jl short .2
         xor eax, eax
         mov al, byte [edx]
         add edx, eax
-loc_9998E:
+.4:
         inc edx
-        jmp short loc_999CF
-loc_99991:
+        jmp short SeqReadEvent+0AAh
         mov al, byte [edx]
         mov byte [byte ebx+09h], al
         mov eax, esi
         call PeekDword
         mov dword [byte ebx+04h], eax
         lea edx, [byte esi+04h]
-        jmp short loc_999CF
-loc_999A5:
+        jmp short SeqReadEvent+0AAh
         mov al, byte [edx]
         mov byte [byte ebx+09h], al
-        jmp short loc_9998E
-loc_999AC:
+        jmp short .4
         mov al, byte [edx]
         mov byte [byte ebx+09h], al
         xor eax, eax
         mov al, byte [esi]
         mov dword [byte ebx+04h], eax
         lea edx, [byte esi+01h]
-        jmp short loc_999CF
-loc_999BD:
+        jmp short SeqReadEvent+0AAh
         mov eax, edx
         call PeekWord
         and eax, 0FFFFh
         mov dword [byte ebx+04h], eax
         add edx, byte 2
-loc_999CF:
         cmp ch, 0D9h
-        jae short loc_999FC
+        jae short .6
         mov al, byte [edx]
         mov byte [byte ebx+09h], al
         mov dword [byte ebx+04h], 0
         inc edx
-loc_999E1:
+.5:
         mov eax, dword [byte ebx+04h]
         shl eax, 7
         mov cl, byte [edx]
@@ -1404,8 +1383,8 @@ loc_999E1:
         mov eax, edx
         inc edx
         test byte [eax], 80h
-        jne short loc_999E1
-loc_999FC:
+        jne short .5
+.6:
         mov al, byte [esp]
         sub dl, al
         mov byte [byte ebx+0Ah], dl

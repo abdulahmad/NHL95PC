@@ -5,19 +5,15 @@ section s_9C594 progbits alloc exec nowrite align=1
 extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
 extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, FlipArtHorizontal
 extern FlipArtVertical, RemapArt, bcopy, UnpackArtRle
-global ToUpperChar, loc_9C5A4, ReturnFalse, FindNearestColor, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
-global loc_9C70C, loc_9C71B, loc_9C72B, loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873
-global loc_9C880, TextPrintCentered, ShapePixelSize, DrawArtAnyFormat, loc_9C924, loc_9C969, loc_9C97D, loc_9C97F
-global loc_9C991, loc_9C9C1, loc_9C9D3, loc_9CA00, loc_9CA2B, loc_9CA3B, loc_9CA60, DrawArtAnyFormatAt
-global DrawArtAnyFormatOwnPos
+global ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered, ShapePixelSize, DrawArtAnyFormat, DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos
 ToUpperChar:
         mov eax, dword [byte esp+04h]
         cmp eax, byte 61h
-        jb short loc_9C5A4
+        jb short .1
         cmp eax, byte 7Ah
-        ja short loc_9C5A4
+        ja short .1
         sub al, 20h
-loc_9C5A4:
+.1:
         ret
         db 00h,00h,00h
 ReturnFalse:
@@ -31,7 +27,7 @@ FindNearestColor:
         sub esp, 330h
         mov edx, dword [dword_D5068]
         test edx, edx
-        je short loc_9C611
+        je short .1
         mov ecx, dword [dword esp+0340h]
         shr ecx, 10h
         and ecx, 0FFh
@@ -49,17 +45,17 @@ FindNearestColor:
         or eax, edx
         mov edx, dword [dword_D5068]
         movzx edi, byte [edx+eax]
-        jmp near loc_9C880
-loc_9C611:
+        jmp near .13
+.1:
         cmp dword [dword_D5064], byte 0
-        jne short loc_9C62B
+        jne short .2
         mov eax, esp
         push eax
         push dword 100h
         push edx
         call SetPalette
         add esp, byte 0Ch
-loc_9C62B:
+.2:
         mov eax, dword [dword esp+0340h]
         shr eax, 12h
         and eax, byte 3Fh
@@ -81,9 +77,9 @@ loc_9C62B:
         mov esi, 9
         mov eax, dword [dword_D5064]
         test eax, eax
-        jne short loc_9C689
+        jne short .3
         mov eax, esp
-loc_9C689:
+.3:
         xor edx, edx
         mov bl, byte [dword esp+0308h]
         sub bl, 4
@@ -94,58 +90,58 @@ loc_9C689:
         mov bl, byte [dword esp+0318h]
         sub bl, 4
         mov byte [dword esp+0324h], bl
-loc_9C6BE:
+.4:
         cmp byte [dword edx+byte_D506C], 0
-        je near loc_9C748
+        je near .8
         mov bl, byte [dword esp+0318h]
         mov bh, byte [byte eax+01h]
         sub bl, bh
         cmp bl, 9
-        jae near loc_9C748
+        jae near .8
         mov bl, byte [dword esp+030Ch]
         sub bl, byte [eax]
         cmp bl, 9
-        jae short loc_9C748
+        jae short .8
         mov bl, byte [dword esp+0308h]
         sub bl, byte [byte eax+02h]
         cmp bl, 9
-        jae short loc_9C748
+        jae short .8
         mov bl, byte [dword esp+0324h]
         sub bl, bh
         test bl, bl
-        jge short loc_9C70C
+        jge short .5
         neg bl
-loc_9C70C:
+.5:
         mov bh, byte [dword esp+031Ch]
         sub bh, byte [eax]
         test bh, bh
-        jge short loc_9C71B
+        jge short .6
         neg bh
-loc_9C71B:
+.6:
         mov cl, byte [dword esp+0320h]
         sub cl, byte [byte eax+02h]
         test cl, cl
-        jge short loc_9C72B
+        jge short .7
         neg cl
-loc_9C72B:
+.7:
         movsx ebp, bh
         movsx ebx, bl
         add ebx, ebp
         movsx ecx, cl
         add ebx, ecx
         cmp ebx, esi
-        jge short loc_9C748
+        jge short .8
         mov esi, ebx
         mov edi, edx
         test ebx, ebx
-        je near loc_9C880
-loc_9C748:
+        je near .13
+.8:
         add eax, byte 3
         inc edx
         cmp edx, 100h
-        jl near loc_9C6BE
+        jl near .4
         cmp esi, byte 9
-        jl near loc_9C880
+        jl near .13
         mov eax, dword [dword esp+0340h]
         shr eax, 12h
         and eax, byte 3Fh
@@ -161,11 +157,11 @@ loc_9C748:
         mov ebp, 270Fh
         mov eax, dword [dword_D5064]
         test eax, eax
-        jne short loc_9C7AD
+        jne short .9
         mov eax, esp
-loc_9C7AD:
+.9:
         xor edx, edx
-loc_9C7AF:
+.10:
         mov cl, byte [eax]
         inc eax
         mov ch, byte [eax]
@@ -174,7 +170,7 @@ loc_9C7AF:
         mov byte [dword esp+0314h], bl
         inc eax
         cmp byte [dword edx+byte_D506C], 0
-        je near loc_9C873
+        je near .12
         mov ebx, dword [dword esp+0325h]
         sar ebx, 18h
         mov dword [dword esp+0300h], ebx
@@ -207,21 +203,21 @@ loc_9C7AF:
         mov esi, dword [dword esp+0304h]
         add esi, ebx
         cmp esi, ebp
-        jge short loc_9C873
+        jge short .12
         test cl, cl
-        jne short loc_9C86F
+        jne short .11
         test ch, ch
-        jne short loc_9C86F
+        jne short .11
         cmp byte [dword esp+0314h], 0
-        je short loc_9C873
-loc_9C86F:
+        je short .12
+.11:
         mov ebp, esi
         mov edi, edx
-loc_9C873:
+.12:
         inc edx
         cmp edx, 100h
-        jl near loc_9C7AF
-loc_9C880:
+        jl near .10
+.13:
         mov eax, edi
         add esp, 330h
         pop ebp
@@ -280,15 +276,15 @@ DrawArtAnyFormat:
         shl eax, 18h
         sar eax, 18h
         test al, 80h
-        jne short loc_9C924
+        jne short .1
         mov ebx, dword [byte esp+024h]
         cmp ebx, 10000h
-        jne short loc_9C924
+        jne short .1
         cmp ebx, dword [byte esp+028h]
-        jne short loc_9C924
+        jne short .1
         cmp dword [byte esp+020h], byte 0
-        je short loc_9C97D
-loc_9C924:
+        je short .3
+.1:
         push byte 20h
         mov eax, edi
         call ShapePixelSize
@@ -303,7 +299,7 @@ loc_9C924:
         shl eax, 18h
         sar eax, 18h
         test al, 80h
-        je short loc_9C969
+        je short .2
         push byte 0
         push edx
         push edi
@@ -312,8 +308,8 @@ loc_9C924:
         push str_Unpacking
         call DebugPrintf
         add esp, byte 4
-        jmp short loc_9C97F
-loc_9C969:
+        jmp short .4
+.2:
         mov eax, edi
         call ShapePixelSize
         push eax
@@ -321,18 +317,18 @@ loc_9C969:
         push edi
         call bcopy
         add esp, byte 0Ch
-        jmp short loc_9C97F
-loc_9C97D:
+        jmp short .4
+.3:
         mov esi, edi
-loc_9C97F:
+.4:
         mov edi, dword [byte esp+04h]
         cmp edi, byte 1
-        jb short loc_9C9D3
-        jbe short loc_9C991
+        jb short .7
+        jbe short .5
         cmp edi, byte 2
-        je short loc_9C9C1
-        jmp short loc_9C9D3
-loc_9C991:
+        je short .6
+        jmp short .7
+.5:
         mov eax, dword [byte esi+06h]
         sar eax, 10h
         push eax
@@ -349,18 +345,18 @@ loc_9C991:
         call FixedMulRound
         add esp, byte 8
         sub ebp, eax
-        jmp short loc_9C9D3
-loc_9C9C1:
+        jmp short .7
+.6:
         mov eax, dword [byte esi+0Ah]
         sar eax, 10h
         add dword [byte esp+08h], eax
         mov eax, dword [byte esi+0Ch]
         sar eax, 10h
         add ebp, eax
-loc_9C9D3:
+.7:
         mov edx, dword [byte esp+024h]
         test edx, edx
-        jge short loc_9CA00
+        jge short .8
         mov ebx, edx
         neg ebx
         mov dword [byte esp+024h], ebx
@@ -374,10 +370,10 @@ loc_9C9D3:
         push esi
         call FlipArtHorizontal
         add esp, byte 4
-loc_9CA00:
+.8:
         mov eax, dword [byte esp+028h]
         test eax, eax
-        jge short loc_9CA2B
+        jge short .9
         mov edx, eax
         neg edx
         mov dword [byte esp+028h], edx
@@ -391,13 +387,13 @@ loc_9CA00:
         push esi
         call FlipArtVertical
         add esp, byte 4
-loc_9CA2B:
+.9:
         cmp dword [byte esp+020h], byte 0
-        je short loc_9CA3B
+        je short .10
         push esi
         call RemapArt
         add esp, byte 4
-loc_9CA3B:
+.10:
         mov eax, dword [byte esp+01Ch]
         push ebp
         mov edi, dword [byte esp+0Ch]
@@ -407,11 +403,11 @@ loc_9CA3B:
         add esp, byte 0Ch
         mov ebp, dword [esp]
         test ebp, ebp
-        je short loc_9CA60
+        je short .11
         push ebp
         call FreeMemBlock
         add esp, byte 4
-loc_9CA60:
+.11:
         add esp, byte 0Ch
         pop ebp
         pop edi

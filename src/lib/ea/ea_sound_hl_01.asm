@@ -12,33 +12,14 @@ extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, ResizeMemHandleUnlocked, Pu
 extern SndDriverHandle, SndHandleClose, SndDriverCall, SndHandleSetTrack, SndHandlePlayDigi, SeqService, SeqUpdate, SeqSendController
 extern SeqNoteOffSlot, SeqSendPitchBend, SeqNoteOn, SeqQueueCommand, SeqSendProgram, AddExitHandler, bcopy, FillMem
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
-global SndInit, loc_8EB8D, SndShutdown, loc_8EBAB, loc_8EBB4, loc_8EBBB, SndClearTables, loc_8EBEB
-global loc_8EC08, loc_8EC12, loc_8EC26, loc_8EC30, loc_8EC3D, loc_8EC47, loc_8EC53, loc_8EC5D
-global loc_8EC7F, loc_8EC89, loc_8EC9D, LoadMusicBank, loc_8ECDE, loc_8ED0A, loc_8ED6F, loc_8ED73
-global loc_8EDB8, loc_8EDB9, loc_8EDCB, FreeMusicBank, loc_8EDE2, loc_8EE06, loc_8EE2B, LoadPatchFile
-global FreeSoundBlock, LoadTimbreFile, loc_8EE8B, loc_8EE90, loc_8EED5, loc_8EEF5, loc_8EEFF, loc_8EF2F
-global loc_8EF36, loc_8EF43, loc_8EF47, loc_8EF4A, AddTimbreBank, loc_8EF56, loc_8EF6D, FreeTimbreFile
-global RemoveTimbreBank, loc_8EF98, loc_8EFB1, LinkPatchTimbres, loc_8EFDB, loc_8F008, loc_8F011, loc_8F01B
-global loc_8F01C, loc_8F029, loc_8F02B, loc_8F05C, loc_8F074, loc_8F095, loc_8F0A5, loc_8F0AB
-global loc_8F0B5, loc_8F0CF, GetPatchEntry, loc_8F0E7, loc_8F0EB, GetPatchTimbre, loc_8F127, LoadSample
-global loc_8F151, loc_8F158, loc_8F19C, loc_8F1F2, loc_8F1F4, loc_8F1F7, loc_8F1F8, FreeSample
-global loc_8F244, FindSongSlot, loc_8F24D, loc_8F262, PlaySong, StartSongTracks, loc_8F2D7, loc_8F2F8
-global loc_8F38D, loc_8F3F3, loc_8F413, loc_8F420, loc_8F42B, FindFreeTrack, loc_8F43D, loc_8F447
-global loc_8F44F, FindFreeMidiChannel, loc_8F45B, loc_8F47E, loc_8F47F, loc_8F48A, LoadAndPlaySong, loc_8F4A0
-global StartSong, loc_8F4BD, PlayPatch, loc_8F4D7, loc_8F4E1, loc_8F4F1, loc_8F526, loc_8F52B
-global loc_8F592, loc_8F609, loc_8F616, PlayPatchFull, ReleaseAllVoices, loc_8F64F, loc_8F66B, loc_8F66C
-global loc_8F679, StopSongId, loc_8F694, loc_8F6B2, loc_8F6CD, loc_8F6D4, loc_8F6E2, loc_8F6ED
-global loc_8F6F1, loc_8F70D, loc_8F767, loc_8F76B, loc_8F7A2, ReleaseSong, loc_8F7C6, loc_8F7F6
-global loc_8F7FA, SongFinished, loc_8F824, loc_8F834, loc_8F838, loc_8F83E, SongReleased, loc_8F85C
-global loc_8F86C, loc_8F870, loc_8F876, loc_8F88D, loc_8F8A5, loc_8F8A9, loc_8F8E6, loc_8F909
-global loc_8F90A, loc_8F929, loc_8F94F, loc_8F950, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic, DisableMidiMusic
-global LoadDigiFile, loc_8F9F6, loc_8FA46, loc_8FA83, loc_8FAD8, loc_8FAE0, loc_8FAE6, loc_8FAEA
-global FindSubstring, loc_8FB08, loc_8FB16, loc_8FB18, loc_8FB1C, PlayDigiBlock, loc_8FB72, loc_8FB87
-global PlayDigiBlockLoop, PlayDigiPtr, loc_8FC2E, loc_8FC31, PlayDigiPtrLoop, SndQuery, loc_8FC96, loc_8FC9C
-global StopDigiChannel, loc_8FCDC, SetDigiChannelVolume, loc_8FCF8, loc_8FD5F, QueryDigiChannel, loc_8FD82, MidiProgramChange
-global loc_8FDAE, MidiSetVolume, loc_8FDE1, MidiPitchBend, loc_8FE18, MidiNoteOn, loc_8FE4B, MidiNoteOff
-global loc_8FE7F, SetSoundByteOrder, FindSoundChunk, loc_8FEAD, loc_8FEBE, loc_8FEC2, ReplaceFileExt, FreeMemPtr
-global loc_8FF39, ReleaseMemPtr, loc_8FF59, SwapBytes16, SwapBytes32, SetPalette, loc_8FFCB
+global SndInit, SndShutdown, SndClearTables, LoadMusicBank, FreeMusicBank, LoadPatchFile, FreeSoundBlock, LoadTimbreFile
+global LoadTimbreFile, AddTimbreBank, FreeTimbreFile, RemoveTimbreBank, LinkPatchTimbres, GetPatchEntry, GetPatchTimbre, LoadSample
+global LoadSample, FreeSample, FindSongSlot, PlaySong, StartSongTracks, StartSongTracks, FindFreeTrack, FindFreeMidiChannel
+global LoadAndPlaySong, StartSong, PlayPatch, PlayPatchFull, ReleaseAllVoices, StopSongId, ReleaseSong, SongFinished
+global SongReleased, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic, DisableMidiMusic, LoadDigiFile, FindSubstring, PlayDigiBlock
+global PlayDigiBlockLoop, PlayDigiPtr, PlayDigiPtrLoop, SndQuery, StopDigiChannel, SetDigiChannelVolume, QueryDigiChannel, MidiProgramChange
+global MidiSetVolume, MidiPitchBend, MidiNoteOn, MidiNoteOff, SetSoundByteOrder, FindSoundChunk, ReplaceFileExt, FreeMemPtr
+global ReleaseMemPtr, SwapBytes16, SwapBytes32, SetPalette
 SndInit:
         push ebx
         push ecx
@@ -48,12 +29,12 @@ SndInit:
         call addtimer
         add esp, byte 4
         cmp byte [byte_D41CC], 0
-        jne short loc_8EB8D
+        jne short .1
         push SndShutdown
         call AddExitHandler
         add esp, byte 4
         mov byte [byte_D41CC], 1
-loc_8EB8D:
+.1:
         xor eax, eax
         pop edx
         pop ecx
@@ -67,17 +48,17 @@ SndShutdown:
         call RemoveTimerCallback
         add esp, byte 4
         mov edx, dword [sndhandlecount]
-        jmp short loc_8EBB4
-loc_8EBAB:
+        jmp short .2
+.1:
         xor eax, eax
         mov al, dl
         call SndHandleClose
-loc_8EBB4:
+.2:
         dec edx
         test edx, edx
-        jge short loc_8EBAB
+        jge short .1
         xor edx, edx
-loc_8EBBB:
+.3:
         mov eax, edx
         shl eax, 2
         sub eax, edx
@@ -85,7 +66,7 @@ loc_8EBBB:
         call FreeSample
         inc edx
         cmp edx, byte 0Dh
-        jl short loc_8EBBB
+        jl short .3
         call FreeMusicBank
         call SndClearTables
         pop edx
@@ -99,8 +80,8 @@ SndClearTables:
         push esi
         push edi
         xor eax, eax
-        jmp short loc_8EC08
-loc_8EBEB:
+        jmp short .2
+.1:
         movsx edx, ax
         imul edx, byte 54h
         mov byte [dword edx+byte_F1A1C], al
@@ -109,12 +90,12 @@ loc_8EBEB:
         xor ebx, ebx
         mov dword [dword edx+dword_F1A1E], ebx
         inc eax
-loc_8EC08:
+.2:
         cmp ax, 18h
-        jl short loc_8EBEB
+        jl short .1
         xor eax, eax
-        jmp short loc_8EC26
-loc_8EC12:
+        jmp short .4
+.3:
         movsx ebx, ax
         mov edx, ebx
         shl edx, 2
@@ -122,32 +103,32 @@ loc_8EC12:
         xor ecx, ecx
         mov dword [nosplit edx*4+dword_F189C], ecx
         inc eax
-loc_8EC26:
+.4:
         cmp ax, 20h
-        jl short loc_8EC12
+        jl short .3
         xor eax, eax
-        jmp short loc_8EC3D
-loc_8EC30:
+        jmp short .6
+.5:
         movsx edx, ax
         xor esi, esi
         mov dword [nosplit edx*4+dword_EDE34], esi
         inc eax
-loc_8EC3D:
+.6:
         cmp ax, 0Ah
-        jl short loc_8EC30
+        jl short .5
         xor eax, eax
-        jmp short loc_8EC53
-loc_8EC47:
+        jmp short .8
+.7:
         movsx edx, ax
         xor bh, bh
         mov byte [dword edx+byte_F23BC], bh
         inc eax
-loc_8EC53:
+.8:
         cmp ax, 10h
-        jl short loc_8EC47
+        jl short .7
         xor eax, eax
-        jmp short loc_8EC7F
-loc_8EC5D:
+        jmp short .10
+.9:
         movsx ebx, ax
         mov edx, ebx
         shl edx, 2
@@ -157,12 +138,12 @@ loc_8EC5D:
         mov dword [nosplit edx*8+dword_EDD00], edi
         mov dword [nosplit edx*8+dword_EDD04], edi
         inc eax
-loc_8EC7F:
+.10:
         cmp ax, 0Dh
-        jl short loc_8EC5D
+        jl short .9
         xor eax, eax
-        jmp short loc_8EC9D
-loc_8EC89:
+        jmp short .12
+.11:
         movsx ebx, ax
         mov edx, ebx
         shl edx, 2
@@ -170,14 +151,14 @@ loc_8EC89:
         xor ecx, ecx
         mov dword [nosplit edx*4+dword_F22FC], ecx
         inc eax
-loc_8EC9D:
+.12:
         cmp ax, 4
-        jl short loc_8EC89
+        jl short .11
         xor esi, esi
         mov dword [dword_EDE5C], esi
         mov dword [sndhandlecount], esi
         mov dword [SndTimerHandle], 0FFFFFFFFh
-        jmp near loc_8F1F8
+        jmp near LoadSample+0BDh
 LoadMusicBank:
         push ebx
         push ecx
@@ -187,10 +168,10 @@ LoadMusicBank:
         mov esi, edx
         call FreeMusicBank
         cmp byte [ecx], 0
-        jne short loc_8ECDE
+        jne short .1
         mov eax, 0FFFFFFFBh
-        jmp near loc_8EDCB
-loc_8ECDE:
+        jmp near .7
+.1:
         mov ebx, esp
         mov edx, str_SCN
         mov eax, ecx
@@ -200,10 +181,10 @@ loc_8ECDE:
         call SndLoadFile2
         mov dword [byte esp+010h], eax
         test eax, eax
-        jne short loc_8ED0A
+        jne short .2
         mov eax, 0FFFFFFFFh
-        jmp near loc_8EDCB
-loc_8ED0A:
+        jmp near .7
+.2:
         push eax
         call MemDescSize
         add esp, byte 4
@@ -231,14 +212,14 @@ loc_8ED0A:
         call LoadPatchFile
         mov dword [dword_F23EA], eax
         test eax, eax
-        jne short loc_8ED6F
+        jne short .3
         call FreeMusicBank
         mov eax, 0FFFFFFFEh
-        jmp short loc_8EDCB
-loc_8ED6F:
+        jmp short .7
+.3:
         xor ebx, ebx
-        jmp short loc_8EDB9
-loc_8ED73:
+        jmp short .6
+.4:
         xor eax, eax
         mov al, byte [dword ebx+byte_F23E0]
         push eax
@@ -256,20 +237,20 @@ loc_8ED73:
         call LoadTimbreFile
         mov dword [dword ecx+dword_F23EE], eax
         test eax, eax
-        jne short loc_8EDB8
+        jne short .5
         call FreeMusicBank
         mov eax, 0FFFFFFFDh
-        jmp short loc_8EDCB
-loc_8EDB8:
+        jmp short .7
+.5:
         inc ebx
-loc_8EDB9:
+.6:
         xor eax, eax
         mov al, byte [byte_F23CF]
         cmp ebx, eax
-        jl short loc_8ED73
+        jl short .4
         call LinkPatchTimbres
         xor eax, eax
-loc_8EDCB:
+.7:
         add esp, byte 14h
         pop esi
         pop ecx
@@ -280,10 +261,10 @@ FreeMusicBank:
         push edx
         push esi
         cmp byte [byte_F23CC], 4
-        jne short loc_8EE2B
+        jne short .3
         xor ecx, ecx
-        jmp short loc_8EE06
-loc_8EDE2:
+        jmp short .2
+.1:
         mov edx, dword [nosplit ecx*4+dword_F2416]
         mov eax, dword [nosplit ecx*4+dword_F23EE]
         call FreeTimbreFile
@@ -291,18 +272,18 @@ loc_8EDE2:
         mov dword [nosplit ecx*4+dword_F23EE], esi
         mov dword [nosplit ecx*4+dword_F2416], esi
         inc ecx
-loc_8EE06:
+.2:
         xor eax, eax
         mov al, byte [byte_F23CF]
         cmp ecx, eax
-        jl short loc_8EDE2
+        jl short .1
         mov eax, dword [dword_F23EA]
         call FreeSoundBlock
         xor edx, edx
         mov dword [dword_F23EA], edx
         xor dl, dl
         mov byte [byte_F23CC], dl
-loc_8EE2B:
+.3:
         pop esi
         pop edx
         pop ecx
@@ -335,26 +316,26 @@ LoadTimbreFile:
         call SndLoadFile
         mov dword [byte esp+04h], eax
         test eax, eax
-        je near loc_8EF47
+        je near .9
         call AddTimbreBank
         cmp byte [byte_D41CD], 0
-        je short loc_8EE8B
+        je short .1
         mov edx, 6769642Eh
-        jmp short loc_8EE90
-loc_8EE8B:
+        jmp short .2
+.1:
         mov edx, 2E646967h
-loc_8EE90:
+.2:
         mov eax, dword [byte esp+04h]
         call FindSoundChunk
         test eax, eax
-        je near loc_8EF43
+        je near .8
         mov edx, eax
         mov eax, 4
         call SndLoadFile2
         mov edx, dword [esp]
         mov dword [edx], eax
         test eax, eax
-        je near loc_8EF43
+        je near .8
         mov eax, dword [byte esp+04h]
         mov ax, word [byte eax+04h]
         mov dword [byte esp+0Ch], eax
@@ -362,23 +343,23 @@ loc_8EE90:
         add edi, byte 6
         xor ebx, ebx
         mov dword [byte esp+08h], ebx
-        jmp short loc_8EF36
-loc_8EED5:
+        jmp short .7
+.3:
         mov edx, dword [edi]
         mov eax, dword [byte esp+04h]
         call FindSoundChunk
         mov esi, eax
         cmp byte [eax], 6
-        jne short loc_8EF2F
+        jne short .6
         cmp byte [byte_D41CD], 0
-        je short loc_8EEF5
+        je short .4
         mov ebp, dword [byte eax+02h]
-        jmp short loc_8EEFF
-loc_8EEF5:
+        jmp short .5
+.4:
         mov eax, dword [byte eax+02h]
         call SwapBytes32
         mov ebp, eax
-loc_8EEFF:
+.5:
         mov eax, dword [esp]
         mov edx, dword [eax]
         push edx
@@ -387,25 +368,24 @@ loc_8EEFF:
         mov edx, ebp
         call FindSoundChunk
         test eax, eax
-        je short loc_8EF2F
+        je short .6
         mov word [byte esi+0Ah], 0
         mov dword [byte esi+0Ch], eax
         mov byte [byte esi+010h], 0
         mov byte [byte esi+011h], 0
         mov word [byte esi+012h], 2B11h
-loc_8EF2F:
+.6:
         add edi, byte 4
         inc dword [byte esp+08h]
-loc_8EF36:
+.7:
         xor eax, eax
         mov ax, word [byte esp+0Ch]
         cmp eax, dword [byte esp+08h]
-        jg short loc_8EED5
-loc_8EF43:
+        jg short .3
+.8:
         mov eax, dword [byte esp+04h]
-loc_8EF47:
+.9:
         add esp, byte 10h
-loc_8EF4A:
         pop ebp
         pop edi
         pop esi
@@ -417,19 +397,19 @@ AddTimbreBank:
         push edx
         mov ebx, eax
         xor eax, eax
-loc_8EF56:
+.1:
         mov edx, eax
         shl edx, 2
         cmp dword [dword edx+dword_EDE34], byte 0
-        jne short loc_8EF6D
+        jne short .2
         mov dword [dword edx+dword_EDE34], ebx
         pop edx
         pop ebx
         ret
-loc_8EF6D:
+.2:
         inc eax
         cmp eax, byte 0Ah
-        jl short loc_8EF56
+        jl short .1
         pop edx
         pop ebx
         ret
@@ -449,21 +429,21 @@ RemoveTimbreBank:
         push esi
         mov ebx, eax
         xor eax, eax
-loc_8EF98:
+.1:
         mov edx, eax
         shl edx, 2
         cmp ebx, dword [dword edx+dword_EDE34]
-        jne short loc_8EFB1
+        jne short .2
         xor esi, esi
         mov dword [dword edx+dword_EDE34], esi
         pop esi
         pop edx
         pop ebx
         ret
-loc_8EFB1:
+.2:
         inc eax
         cmp eax, byte 0Ah
-        jl short loc_8EF98
+        jl short .1
         pop esi
         pop edx
         pop ebx
@@ -475,11 +455,11 @@ LinkPatchTimbres:
         push ebp
         sub esp, byte 8
         cmp dword [dword_EDE5C], byte 0
-        je near loc_8F0CF
+        je near .14
         xor ebx, ebx
         mov dword [esp], ebx
         inc word [word_D4F88]
-loc_8EFDB:
+.1:
         xor eax, eax
         mov al, byte [esp]
         push eax
@@ -487,34 +467,34 @@ loc_8EFDB:
         add esp, byte 4
         mov ebx, eax
         test eax, eax
-        je near loc_8F0B5
+        je near .13
         mov dl, byte [byte eax+0Fh]
         test dl, 80h
-        jne near loc_8F0B5
+        jne near .13
         cmp dl, 3
-        jne short loc_8F029
+        jne short .6
         xor eax, eax
-        jmp short loc_8F01C
-loc_8F008:
+        jmp short .5
+.2:
         cmp byte [dword eax+SndHandleType], 3
-        jne short loc_8F01B
-loc_8F011:
+        jne short .4
+.3:
         or al, 80h
         mov byte [byte ebx+0Fh], al
-        jmp near loc_8F0B5
-loc_8F01B:
+        jmp near .13
+.4:
         inc eax
-loc_8F01C:
+.5:
         cmp eax, dword [sndhandlecount]
-        jl short loc_8F008
-        jmp near loc_8F0B5
-loc_8F029:
+        jl short .2
+        jmp near .13
+.6:
         xor ecx, ecx
-loc_8F02B:
+.7:
         cmp dword [nosplit ecx*4+dword_EDE34], byte 0
-        je near loc_8F0AB
+        je near .12
         cmp byte [byte_D41CD], 0
-        je short loc_8F05C
+        je short .8
         mov byte [byte esp+04h], 80h
         mov al, byte [ebx]
         mov byte [byte esp+05h], al
@@ -522,8 +502,8 @@ loc_8F02B:
         mov byte [byte esp+06h], al
         mov al, byte [byte ebx+01h]
         mov byte [byte esp+07h], al
-        jmp short loc_8F074
-loc_8F05C:
+        jmp short .9
+.8:
         mov byte [byte esp+07h], 80h
         mov al, byte [ebx]
         mov byte [byte esp+06h], al
@@ -531,37 +511,37 @@ loc_8F05C:
         mov byte [byte esp+05h], dl
         mov al, byte [byte ebx+01h]
         mov byte [byte esp+04h], al
-loc_8F074:
+.9:
         mov eax, dword [nosplit ecx*4+dword_EDE34]
         mov edx, dword [byte esp+04h]
         call FindSoundChunk
         mov dword [byte ebx+010h], eax
         test eax, eax
-        je short loc_8F0AB
+        je short .12
         xor eax, eax
         mov ebp, dword [sndhandlecount]
-        jmp short loc_8F0A5
-loc_8F095:
+        jmp short .11
+.10:
         mov cl, byte [byte ebx+0Fh]
         cmp cl, byte [dword eax+SndHandleType]
-        je near loc_8F011
+        je near .3
         inc eax
-loc_8F0A5:
+.11:
         cmp eax, ebp
-        jl short loc_8F095
-        jmp short loc_8F0B5
-loc_8F0AB:
+        jl short .10
+        jmp short .13
+.12:
         inc ecx
         cmp ecx, byte 0Ah
-        jl near loc_8F02B
-loc_8F0B5:
+        jl near .7
+.13:
         mov ebx, dword [esp]
         inc ebx
         mov dword [esp], ebx
         cmp ebx, 100h
-        jl near loc_8EFDB
+        jl near .1
         dec word [word_D4F88]
-loc_8F0CF:
+.14:
         add esp, byte 8
         pop ebp
         pop edx
@@ -573,18 +553,18 @@ GetPatchEntry:
         call __GETDS
         mov edx, dword [dword_EDE5C]
         test edx, edx
-        jne short loc_8F0EB
-loc_8F0E7:
+        jne short .2
+.1:
         xor eax, eax
         pop ds
         ret
-loc_8F0EB:
+.2:
         mov ebx, edx
         xor eax, eax
         mov al, byte [byte esp+08h]
         add eax, edx
         cmp byte [byte eax+02h], 0
-        je short loc_8F0E7
+        je short .1
         xor edx, edx
         mov dl, byte [byte eax+02h]
         mov eax, edx
@@ -599,11 +579,11 @@ GetPatchTimbre:
         push ds
         call __GETDS
         cmp dword [dword_EDE5C], byte 0
-        jne short loc_8F127
+        jne short .1
         xor eax, eax
         pop ds
         ret
-loc_8F127:
+.1:
         xor eax, eax
         mov al, byte [byte esp+08h]
         push eax
@@ -624,11 +604,11 @@ LoadSample:
         xor eax, eax
         call FindSongSlot
         test eax, eax
-        jge short loc_8F158
-loc_8F151:
+        jge short .2
+.1:
         xor eax, eax
-        jmp near loc_8F1F4
-loc_8F158:
+        jmp near .5
+.2:
         mov ecx, eax
         shl ecx, 2
         sub ecx, eax
@@ -644,9 +624,9 @@ loc_8F158:
         inc edx
         mov dword [dword_D41CE], edx
         cmp edx, 200h
-        ja short loc_8F19C
+        ja short .3
         mov dword [dword_D41CE], 200h
-loc_8F19C:
+.3:
         mov eax, dword [dword_D41CE]
         mov dword [ecx], eax
         mov ebx, esp
@@ -658,7 +638,7 @@ loc_8F19C:
         call SndLoadFile
         mov dword [byte ecx+04h], eax
         test eax, eax
-        je short loc_8F1F4
+        je short .5
         mov ebx, esp
         mov edx, str_CFG2
         mov eax, ebp
@@ -668,17 +648,15 @@ loc_8F19C:
         call SndLoadFile
         mov dword [byte ecx+08h], eax
         test eax, eax
-        jne short loc_8F1F2
+        jne short .4
         lea eax, [byte ecx+04h]
         call FreeMemPtr
-        jmp near loc_8F151
-loc_8F1F2:
+        jmp near .1
+.4:
         mov eax, dword [ecx]
-loc_8F1F4:
+.5:
         add esp, byte 10h
-loc_8F1F7:
         pop ebp
-loc_8F1F8:
         pop edi
         pop esi
         pop edx
@@ -690,12 +668,12 @@ FreeSample:
         push edx
         mov edx, eax
         cmp eax, 200h
-        jb short loc_8F244
+        jb short .1
         call StopSongId
         mov eax, edx
         call FindSongSlot
         test eax, eax
-        jl short loc_8F244
+        jl short .1
         mov edx, eax
         shl eax, 2
         sub eax, edx
@@ -709,7 +687,7 @@ FreeSample:
         call FreeMemPtr
         xor ebx, ebx
         mov dword [dword edx+dword_EDCFC], ebx
-loc_8F244:
+.1:
         pop edx
         pop ebx
         ret
@@ -718,20 +696,20 @@ FindSongSlot:
         push edx
         mov ecx, eax
         xor edx, edx
-loc_8F24D:
+.1:
         mov eax, edx
         shl eax, 2
         sub eax, edx
         cmp ecx, dword [nosplit eax*8+dword_EDCFC]
-        jne short loc_8F262
+        jne short .2
         mov eax, edx
         pop edx
         pop ecx
         ret
-loc_8F262:
+.2:
         inc edx
         cmp edx, byte 0Dh
-        jl short loc_8F24D
+        jl short .1
         mov eax, 0FFFFFFFFh
         pop edx
         pop ecx
@@ -754,7 +732,7 @@ StartSongTracks:
         call SndDriverHandle
         mov dword [byte esp+018h], eax
         test eax, eax
-        jl near loc_8F4BD
+        jl near StartSong+016h
         mov eax, dword [byte ebx+04h]
         mov dword [byte esp+08h], eax
         mov dword [byte esp+0Ch], eax
@@ -769,17 +747,17 @@ StartSongTracks:
         xor ah, ah
         mov byte [byte esp+028h], ah
         inc word [word_D4F88]
-loc_8F2D7:
+.1:
         cmp byte [byte esp+020h], 0
-        je near loc_8F420
+        je near .6
         call FindFreeTrack
         mov esi, eax
         mov edi, eax
         test eax, eax
-        jne short loc_8F2F8
+        jne short .2
         mov dword [byte esp+04h], eax
-        jmp near loc_8F420
-loc_8F2F8:
+        jmp near .6
+.2:
         mov al, byte [eax]
         mov byte [byte esp+01Ch], al
         push byte 0
@@ -812,7 +790,7 @@ loc_8F2F8:
         mov word [byte esi+04Ch], ax
         mov ecx, dword [byte esp+014h]
         test ecx, ecx
-        je near loc_8F3F3
+        je near .4
         shl ebx, 4
         add ecx, byte 8
         add ecx, ebx
@@ -823,11 +801,11 @@ loc_8F2F8:
         xor eax, eax
         mov al, byte [byte esi+050h]
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_8F38D
+        jne short .3
         xor edi, esi
         mov dword [byte esp+04h], edi
-        jmp near loc_8F420
-loc_8F38D:
+        jmp near .6
+.3:
         mov al, byte [byte esp+018h]
         mov byte [byte esi+051h], al
         mov ebx, dword [byte ecx+02h]
@@ -859,24 +837,23 @@ loc_8F38D:
         mov edx, 4000h
         mov eax, esi
         call SeqSendPitchBend
-loc_8F3F3:
+.4:
         mov byte [byte edi+01h], 1
         cmp dword [esp], byte 0
-        jle short loc_8F413
+        jle short .5
         or byte [byte edi+01h], 8
         mov edx, dword [byte edi+06h]
         mov word [byte edx+0Eh], 0FFFFh
         mov ecx, dword [byte edi+06h]
         mov al, byte [byte ecx+011h]
         mov byte [byte ecx+010h], al
-loc_8F413:
+.5:
         dec byte [byte esp+020h]
         inc byte [byte esp+028h]
-        jmp near loc_8F2D7
-loc_8F420:
+        jmp near .1
+.6:
         mov eax, dword [byte esp+04h]
         dec word [word_D4F88]
-loc_8F42B:
         add esp, byte 2Ch
         pop ebp
         pop edi
@@ -887,17 +864,17 @@ FindFreeTrack:
         push edx
         mov eax, byte_F1A1C
         xor edx, edx
-        jmp short loc_8F447
-loc_8F43D:
+        jmp short .2
+.1:
         cmp byte [byte eax+01h], 0
-        je short loc_8F44F
+        je short .3
         add eax, byte 54h
         inc edx
-loc_8F447:
+.2:
         cmp dx, byte 18h
-        jl short loc_8F43D
+        jl short .1
         xor eax, eax
-loc_8F44F:
+.3:
         pop edx
         ret
 FindFreeMidiChannel:
@@ -907,24 +884,24 @@ FindFreeMidiChannel:
         push esi
         mov esi, eax
         xor eax, eax
-        jmp short loc_8F47F
-loc_8F45B:
+        jmp short .3
+.1:
         movsx edx, ax
         mov bx, word [nosplit edx*2+word_D4F68]
         and ebx, 0FFFFh
         xor ecx, ecx
         mov cx, si
         test ecx, ebx
-        je short loc_8F47E
+        je short .2
         cmp byte [dword edx+byte_F23BC], 0
-        je short loc_8F48A
-loc_8F47E:
+        je short .4
+.2:
         inc eax
-loc_8F47F:
+.3:
         cmp ax, 10h
-        jl short loc_8F45B
+        jl short .1
         mov eax, 0FFFFFFFFh
-loc_8F48A:
+.4:
         pop esi
         pop edx
         pop ecx
@@ -934,10 +911,10 @@ LoadAndPlaySong:
         push ebx
         call LoadSample
         test eax, eax
-        je short loc_8F4A0
+        je short .1
         xor ebx, ebx
         call StartSong
-loc_8F4A0:
+.1:
         pop ebx
         ret
         call LoadSample
@@ -952,9 +929,8 @@ StartSong:
         call FindSongSlot
         test eax, eax
         jge near StartSongTracks
-loc_8F4BD:
         xor eax, eax
-        jmp near loc_8F42B
+        jmp near StartSongTracks+01B1h
 PlayPatch:
         push ecx
         push esi
@@ -964,40 +940,40 @@ PlayPatch:
         mov esi, edx
         mov byte [byte esp+08h], bl
         cmp ax, 100h
-        jb short loc_8F4E1
-loc_8F4D7:
+        jb short .2
+.1:
         mov eax, 0FFFFFFFFh
-        jmp near loc_8F616
-loc_8F4E1:
+        jmp near .8
+.2:
         cmp dword [dword_D4F8E], byte 0
-        jne short loc_8F4F1
+        jne short .3
         xor eax, eax
-        jmp near loc_8F616
-loc_8F4F1:
+        jmp near .8
+.3:
         xor eax, eax
         mov al, byte [esp]
         push eax
         call GetPatchEntry
         add esp, byte 4
         test eax, eax
-        je short loc_8F4D7
+        je short .1
         mov dl, byte [byte eax+0Fh]
         and dl, 7Fh
         test esi, esi
-        jne short loc_8F52B
+        jne short .5
         mov dh, byte [byte eax+0Eh]
         test dh, dh
-        je short loc_8F526
+        je short .4
         mov al, dh
         and eax, 0FFh
         mov esi, eax
         shl esi, 2
         sub esi, eax
         add esi, esi
-        jmp short loc_8F52B
-loc_8F526:
+        jmp short .5
+.4:
         mov esi, 0A0h
-loc_8F52B:
+.5:
         mov ecx, unk_F21FC
         mov ebx, dword [dword_D4F9A]
         add ecx, ebx
@@ -1005,7 +981,7 @@ loc_8F52B:
         mov dword [dword_D4F9A], edi
         mov ebx, dword [esp]
         cmp bx, 80h
-        jb short loc_8F592
+        jb short .6
         mov byte [ecx], 0B9h
         mov byte [byte ecx+01h], 7
         mov al, byte [byte esp+08h]
@@ -1026,8 +1002,8 @@ loc_8F52B:
         mov ecx, 9
         mov ebx, esi
         mov edx, 7Fh
-        jmp short loc_8F609
-loc_8F592:
+        jmp short .7
+.6:
         mov eax, dword [dword_D41EA]
         add eax, byte 0Ch
         mov dword [byte esp+04h], eax
@@ -1063,11 +1039,11 @@ loc_8F592:
         mov ebx, esi
         mov edx, 7Fh
         mov eax, 24h
-loc_8F609:
+.7:
         call SeqNoteOn
         cwde
         sub dword [dword_D4F9A], byte 4
-loc_8F616:
+.8:
         add esp, byte 0Ch
         pop edi
         pop esi
@@ -1088,27 +1064,27 @@ ReleaseAllVoices:
         push ecx
         push edx
         cmp dword [dword_D4F8E], byte 0
-        je short loc_8F679
+        je short .4
         xor edx, edx
         inc word [word_D4F88]
         mov ecx, 1
-        jmp short loc_8F66C
-loc_8F64F:
+        jmp short .3
+.1:
         movsx ebx, dx
         mov eax, ebx
         shl eax, 2
         sub eax, ebx
         shl eax, 2
         cmp dword [dword eax+dword_F189C], byte 0
-        je short loc_8F66B
+        je short .2
         mov dword [dword eax+dword_F18A4], ecx
-loc_8F66B:
+.2:
         inc edx
-loc_8F66C:
+.3:
         cmp dx, byte 20h
-        jl short loc_8F64F
+        jl short .1
         dec word [word_D4F88]
-loc_8F679:
+.4:
         pop edx
         pop ecx
         pop ebx
@@ -1122,51 +1098,51 @@ StopSongId:
         push ebp
         mov ebp, eax
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_8F694
+        jne short .1
         mov eax, 0FFFFFFFFh
-        jmp near loc_8F1F7
-loc_8F694:
+        jmp near LoadSample+0BCh
+.1:
         inc word [word_D4F88]
         cmp eax, 100h
-        jae short loc_8F6D4
+        jae short .4
         cmp dword [dword_D4F8E], byte 0
-        jne short loc_8F6B2
+        jne short .2
         xor eax, eax
-        jmp near loc_8F1F7
-loc_8F6B2:
+        jmp near LoadSample+0BCh
+.2:
         shl eax, 2
         sub eax, ebp
         shl eax, 2
         cmp dword [dword eax+dword_F18A4], byte 0
-        je short loc_8F6CD
+        je short .3
         mov dword [dword eax+dword_F18A4], 1
-loc_8F6CD:
+.3:
         xor eax, eax
-        jmp near loc_8F7A2
-loc_8F6D4:
+        jmp near .11
+.4:
         mov ecx, dword_F189C
         mov esi, byte_F1A1C
         xor edi, edi
-        jmp short loc_8F6F1
-loc_8F6E2:
+        jmp short .7
+.5:
         cmp ebp, dword [ecx]
-        jne short loc_8F6ED
+        jne short .6
         mov eax, ecx
         call SeqNoteOffSlot
-loc_8F6ED:
+.6:
         add ecx, byte 0Ch
         inc edi
-loc_8F6F1:
+.7:
         cmp di, byte 20h
-        jl short loc_8F6E2
+        jl short .5
         mov ecx, unk_F21FC
         add ecx, dword [dword_D4F9A]
         xor edi, edi
         add dword [dword_D4F9A], byte 4
-        jmp short loc_8F76B
-loc_8F70D:
+        jmp short .10
+.8:
         cmp ebp, dword [byte esi+02h]
-        jne short loc_8F767
+        jne short .9
         mov al, byte [byte esi+050h]
         or al, 0B0h
         mov byte [ecx], al
@@ -1191,12 +1167,12 @@ loc_8F70D:
         call SeqQueueCommand
         mov byte [byte esi+01h], 0
         mov dword [byte esi+02h], 0
-loc_8F767:
+.9:
         add esi, byte 54h
         inc edi
-loc_8F76B:
+.10:
         cmp di, byte 18h
-        jl short loc_8F70D
+        jl short .8
         mov byte [ecx], 0B9h
         mov byte [byte ecx+01h], 7
         mov byte [byte ecx+02h], 7Fh
@@ -1209,9 +1185,9 @@ loc_8F76B:
         call SeqUpdate
         xor eax, eax
         sub dword [dword_D4F9A], byte 4
-loc_8F7A2:
+.11:
         dec word [word_D4F88]
-        jmp near loc_8F1F7
+        jmp near LoadSample+0BCh
 ReleaseSong:
         push ebx
         push ecx
@@ -1222,13 +1198,13 @@ ReleaseSong:
         mov eax, byte_F1A1C
         xor ebx, ebx
         inc word [word_D4F88]
-        jmp short loc_8F7FA
-loc_8F7C6:
+        jmp short .3
+.1:
         cmp esi, dword [byte eax+02h]
-        jne short loc_8F7F6
+        jne short .2
         mov dl, byte [byte eax+01h]
         test dl, dl
-        je short loc_8F7F6
+        je short .2
         mov dh, dl
         or dh, 8
         mov byte [byte eax+01h], dh
@@ -1241,12 +1217,12 @@ loc_8F7C6:
         mov edx, dword [byte eax+06h]
         mov cl, byte [byte edx+011h]
         mov byte [byte edx+010h], cl
-loc_8F7F6:
+.2:
         add eax, byte 54h
         inc ebx
-loc_8F7FA:
+.3:
         cmp bx, byte 18h
-        jl short loc_8F7C6
+        jl short .1
         dec word [word_D4F88]
         xor eax, eax
         pop edi
@@ -1259,26 +1235,26 @@ SongFinished:
         push edx
         mov ebx, eax
         cmp dword [sndhandlecount], byte 0
-        je short loc_8F83E
+        je short .4
         mov eax, byte_F1A1C
         xor edx, edx
-        jmp short loc_8F838
-loc_8F824:
+        jmp short .3
+.1:
         cmp ebx, dword [byte eax+02h]
-        jne short loc_8F834
+        jne short .2
         cmp byte [byte eax+01h], 0
-        je short loc_8F834
+        je short .2
         xor eax, eax
         pop edx
         pop ebx
         ret
-loc_8F834:
+.2:
         add eax, byte 54h
         inc edx
-loc_8F838:
+.3:
         cmp dx, byte 18h
-        jl short loc_8F824
-loc_8F83E:
+        jl short .1
+.4:
         mov eax, 1
         pop edx
         pop ebx
@@ -1288,26 +1264,26 @@ SongReleased:
         push edx
         mov ebx, eax
         cmp dword [sndhandlecount], byte 0
-        je short loc_8F876
+        je short .4
         mov eax, byte_F1A1C
         xor edx, edx
-        jmp short loc_8F870
-loc_8F85C:
+        jmp short .3
+.1:
         cmp ebx, dword [byte eax+02h]
-        jne short loc_8F86C
+        jne short .2
         test byte [byte eax+01h], 8
-        je short loc_8F86C
+        je short .2
         xor eax, eax
         pop edx
         pop ebx
         ret
-loc_8F86C:
+.2:
         add eax, byte 54h
         inc edx
-loc_8F870:
+.3:
         cmp dx, byte 18h
-        jl short loc_8F85C
-loc_8F876:
+        jl short .1
+.4:
         mov eax, 1
         pop edx
         pop ebx
@@ -1318,26 +1294,26 @@ loc_8F876:
         mov bl, dl
         mov eax, byte_F1A1C
         xor edx, edx
-        jmp short loc_8F8A9
-loc_8F88D:
+        jmp short .7
+.5:
         cmp ecx, dword [byte eax+02h]
-        jne short loc_8F8A5
+        jne short .6
         mov bh, byte [byte eax+050h]
         cmp bl, bh
-        jne short loc_8F8A5
+        jne short .6
         cmp bh, bh
-        jne short loc_8F8A5
+        jne short .6
         mov al, byte [byte eax+04Eh]
         xor ah, ah
         pop ecx
         pop ebx
         ret
-loc_8F8A5:
+.6:
         add eax, byte 54h
         inc edx
-loc_8F8A9:
+.7:
         cmp dx, byte 18h
-        jl short loc_8F88D
+        jl short .5
         mov eax, 0FFFFFFFFh
         pop ecx
         pop ebx
@@ -1356,10 +1332,10 @@ loc_8F8A9:
         xor edi, edi
         lea ebp, [byte edx+04h]
         mov dword [dword_D4F9A], ebp
-        jmp short loc_8F90A
-loc_8F8E6:
+        jmp short .10
+.8:
         cmp byte [byte esi+01h], 0
-        je short loc_8F909
+        je short .9
         mov al, byte [byte esi+050h]
         or al, 0B0h
         mov byte [ecx], al
@@ -1369,23 +1345,23 @@ loc_8F8E6:
         mov edx, 3
         xor eax, eax
         call SeqQueueCommand
-loc_8F909:
+.9:
         inc edi
-loc_8F90A:
+.10:
         cmp di, byte 18h
-        jl short loc_8F8E6
+        jl short .8
         sub dword [dword_D4F9A], byte 4
-        jmp near loc_8F1F7
+        jmp near LoadSample+0BCh
         push ebx
         push ecx
         push edx
         push esi
         mov ecx, byte_F1A1C
         xor esi, esi
-        jmp short loc_8F950
-loc_8F929:
+        jmp short .13
+.11:
         cmp byte [byte ecx+01h], 0
-        je short loc_8F94F
+        je short .12
         xor edx, edx
         mov dl, byte [byte ecx+050h]
         mov eax, edx
@@ -1396,11 +1372,11 @@ loc_8F929:
         mov edx, 7
         mov eax, ecx
         call SeqSendController
-loc_8F94F:
+.12:
         inc esi
-loc_8F950:
+.13:
         cmp si, byte 18h
-        jl short loc_8F929
+        jl short .11
         xor edx, edx
         mov dword [dword_D4F8A], edx
         pop esi
@@ -1439,7 +1415,7 @@ LoadDigiFile:
         call SndLoadFile2
         mov dword [byte esp+054h], eax
         test eax, eax
-        je near loc_8FAEA
+        je near .7
         push eax
         call MemDescPtr
         add esp, byte 4
@@ -1450,19 +1426,19 @@ LoadDigiFile:
         xor esi, esi
         mov edx, dword [eax]
         cmp edx, 4D524F46h
-        jne short loc_8FA46
+        jne short .2
         lea ebx, [byte eax+04h]
         mov edx, str_VHDR
         mov eax, ebx
         call FindSubstring
         mov esi, eax
         test eax, eax
-        jge short loc_8F9F6
+        jge short .1
         lea eax, [byte esp+054h]
         call ReleaseMemPtr
         xor eax, eax
-        jmp near loc_8FAEA
-loc_8F9F6:
+        jmp near .7
+.1:
         add eax, ebx
         push byte 18h
         lea edx, [byte esp+030h]
@@ -1486,10 +1462,10 @@ loc_8F9F6:
         mov dword [byte esp+048h], edx
         xor bh, bh
         mov byte [byte esp+058h], bh
-        jmp short loc_8FA83
-loc_8FA46:
+        jmp short .3
+.2:
         cmp edx, 46464952h
-        jne short loc_8FA83
+        jne short .3
         push byte 2Ch
         lea edx, [byte esp+04h]
         push edx
@@ -1505,7 +1481,7 @@ loc_8FA46:
         mov dword [byte esp+04Ch], edx
         mov dword [byte esp+050h], edx
         mov byte [byte esp+058h], 80h
-loc_8FA83:
+.3:
         mov ecx, dword [byte esp+054h]
         push ecx
         call MemDescSize
@@ -1535,23 +1511,23 @@ loc_8FA83:
         movsd
         movsd
         cmp byte [byte esp+058h], 0
-        je short loc_8FAE6
+        je short .6
         mov eax, ebp
         xor edx, edx
-        jmp short loc_8FAE0
-loc_8FAD8:
+        jmp short .5
+.4:
         mov bl, byte [byte esp+058h]
         xor byte [eax], bl
         inc eax
         inc edx
-loc_8FAE0:
+.5:
         cmp edx, dword [byte esp+048h]
-        jb short loc_8FAD8
-loc_8FAE6:
+        jb short .4
+.6:
         mov eax, dword [byte esp+054h]
-loc_8FAEA:
+.7:
         add esp, byte 5Ch
-        jmp near loc_8F1F7
+        jmp near LoadSample+0BCh
 FindSubstring:
         push ebx
         push ecx
@@ -1565,23 +1541,23 @@ FindSubstring:
         mov ebp, eax
         xor eax, eax
         xor esi, esi
-loc_8FB08:
+.1:
         mov cl, byte [ebx]
         cmp cl, byte [edi+eax]
-        jne short loc_8FB16
+        jne short .2
         inc eax
         cmp eax, ebp
-        je short loc_8FB1C
-        jmp short loc_8FB18
-loc_8FB16:
+        je short .4
+        jmp short .3
+.2:
         xor eax, eax
-loc_8FB18:
+.3:
         inc ebx
         inc esi
-        jmp short loc_8FB08
-loc_8FB1C:
+        jmp short .1
+.4:
         lea eax, [byte esi+01h]
-        jmp near loc_8EF4A
+        jmp near LoadTimbreFile+0FBh
 PlayDigiBlock:
         push esi
         push edi
@@ -1592,11 +1568,11 @@ PlayDigiBlock:
         mov esi, ebx
         mov ebp, ecx
         test edi, edi
-        je short loc_8FB87
+        je short PlayDigiBlock+063h
         call SndDriverHandle
         mov dword [esp], eax
         test eax, eax
-        jl short loc_8FB87
+        jl short PlayDigiBlock+063h
         push edi
         call MemDescPtr
         add esp, byte 4
@@ -1617,14 +1593,12 @@ PlayDigiBlock:
         push edi
         mov ebp, dword [byte eax+04h]
         push ebp
-loc_8FB72:
         movzx edi, byte [byte esp+018h]
         mov ecx, 10h
         mov ebx, eax
         mov edx, esi
         mov eax, edi
         call SndHandlePlayDigi
-loc_8FB87:
         add esp, byte 4
         pop ebp
         pop edi
@@ -1640,11 +1614,11 @@ PlayDigiBlockLoop:
         mov esi, ebx
         mov ebp, ecx
         test edi, edi
-        je short loc_8FB87
+        je short PlayDigiBlock+063h
         call SndDriverHandle
         mov dword [esp], eax
         test eax, eax
-        jl short loc_8FB87
+        jl short PlayDigiBlock+063h
         push edi
         call MemDescPtr
         add esp, byte 4
@@ -1668,7 +1642,7 @@ PlayDigiBlockLoop:
         mov edx, dword [byte eax+04h]
         shr edx, 1
         push edx
-        jmp short loc_8FB72
+        jmp short PlayDigiBlock+04Eh
 PlayDigiPtr:
         push esi
         push edi
@@ -1678,11 +1652,11 @@ PlayDigiPtr:
         mov eax, edx
         mov edx, ebx
         test esi, esi
-        je short loc_8FC2E
+        je short .1
         call SndDriverHandle
         mov dword [esp], eax
         test eax, eax
-        jl short loc_8FC2E
+        jl short .1
         mov eax, ebx
         shl eax, 2
         add eax, ebx
@@ -1701,9 +1675,8 @@ PlayDigiPtr:
         xor ecx, ecx
         mov ebx, esi
         call SndHandlePlayDigi
-loc_8FC2E:
+.1:
         add esp, byte 4
-loc_8FC31:
         pop ebp
         pop edi
         pop esi
@@ -1717,11 +1690,11 @@ PlayDigiPtrLoop:
         mov edi, ebx
         mov edx, ecx
         test esi, esi
-        je short loc_8FC31
+        je short PlayDigiPtr+04Ch
         call SndDriverHandle
         mov ecx, eax
         test eax, eax
-        jl short loc_8FC31
+        jl short PlayDigiPtr+04Ch
         mov eax, ebx
         shl eax, 2
         add eax, ebx
@@ -1745,16 +1718,16 @@ PlayDigiPtrLoop:
         mov ebx, esi
         mov edx, edi
         call SndHandlePlayDigi
-        jmp short loc_8FC31
+        jmp short PlayDigiPtr+04Ch
 SndQuery:
         cmp eax, dword [sndhandlecount]
-        jge short loc_8FC96
+        jge short .1
         test eax, eax
-        jge short loc_8FC9C
-loc_8FC96:
+        jge short .2
+.1:
         mov eax, 0FFFFFFFFh
         ret
-loc_8FC9C:
+.2:
         shl edx, 10h
         add edx, byte 9
         and eax, 0FFh
@@ -1765,7 +1738,7 @@ StopDigiChannel:
         call SndDriverHandle
         mov ecx, eax
         test eax, eax
-        jl short loc_8FCDC
+        jl short .1
         push byte 0
         push byte 0
         push byte 0
@@ -1779,7 +1752,7 @@ StopDigiChannel:
         mov al, cl
         xor ecx, ecx
         call SndHandlePlayDigi
-loc_8FCDC:
+.1:
         pop ecx
         pop ebx
         ret
@@ -1793,14 +1766,14 @@ SetDigiChannelVolume:
         mov esi, edx
         mov dword [esp], ebx
         test ebx, ebx
-        jne short loc_8FCF8
+        jne short .1
         call StopDigiChannel
-        jmp short loc_8FD5F
-loc_8FCF8:
+        jmp short .2
+.1:
         call SndDriverHandle
         mov edi, eax
         test eax, eax
-        jl short loc_8FD5F
+        jl short .2
         shl edx, 10h
         add edx, byte 0Ah
         and eax, 0FFh
@@ -1827,7 +1800,7 @@ loc_8FCF8:
         mov dword [nosplit ebx*4+dword_F22FC], ebp
         mov dword [nosplit ebx*4+dword_F2308], ecx
         mov dword [nosplit ebx*4+dword_F230C], edi
-loc_8FD5F:
+.2:
         add esp, byte 4
         pop ebp
         pop edi
@@ -1839,21 +1812,21 @@ QueryDigiChannel:
         call SndDriverHandle
         mov ebx, eax
         test eax, eax
-        jl short loc_8FD82
+        jl short .1
         shl edx, 10h
         add edx, byte 33h
         xor eax, eax
         mov al, bl
         call SndDriverCall
-loc_8FD82:
+.1:
         pop ebx
         ret
 MidiProgramChange:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
-        jge short loc_8FDAE
+        jge short .1
         test eax, eax
-        jl short loc_8FDAE
+        jl short .1
         or dl, 0C0h
         mov byte [esp], dl
         mov byte [byte esp+01h], bl
@@ -1861,15 +1834,15 @@ MidiProgramChange:
         mov ebx, esp
         mov edx, 2
         call SeqQueueCommand
-loc_8FDAE:
+.1:
         add esp, byte 4
         ret
 MidiSetVolume:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
-        jge short loc_8FDE1
+        jge short .1
         test eax, eax
-        jl short loc_8FDE1
+        jl short .1
         or dl, 0B0h
         mov byte [esp], dl
         mov byte [byte esp+01h], 7
@@ -1878,15 +1851,15 @@ MidiSetVolume:
         mov ebx, esp
         mov edx, 3
         call SeqQueueCommand
-loc_8FDE1:
+.1:
         add esp, byte 4
         ret
 MidiPitchBend:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
-        jge short loc_8FE18
+        jge short .1
         test eax, eax
-        jl short loc_8FE18
+        jl short .1
         or dl, 0E0h
         mov byte [esp], dl
         xor ah, ah
@@ -1897,15 +1870,15 @@ MidiPitchBend:
         mov ebx, esp
         mov edx, 3
         call SeqQueueCommand
-loc_8FE18:
+.1:
         add esp, byte 4
         ret
 MidiNoteOn:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
-        jge short loc_8FE4B
+        jge short .1
         test eax, eax
-        jl short loc_8FE4B
+        jl short .1
         or dl, 90h
         mov byte [esp], dl
         mov byte [byte esp+01h], bl
@@ -1914,15 +1887,15 @@ MidiNoteOn:
         mov ebx, esp
         mov edx, 3
         call SeqQueueCommand
-loc_8FE4B:
+.1:
         add esp, byte 4
         ret
 MidiNoteOff:
         sub esp, byte 4
         cmp eax, dword [sndhandlecount]
-        jge short loc_8FE7F
+        jge short .1
         test eax, eax
-        jl short loc_8FE7F
+        jl short .1
         or dl, 80h
         mov byte [esp], dl
         mov byte [byte esp+01h], bl
@@ -1932,7 +1905,7 @@ MidiNoteOff:
         mov ebx, esp
         mov edx, 3
         call SeqQueueCommand
-loc_8FE7F:
+.1:
         add esp, byte 4
         ret
 SetSoundByteOrder:
@@ -1955,24 +1928,24 @@ FindSoundChunk:
         shl edx, 3
         lea edi, [eax+edx]
         xor edx, edx
-        jmp short loc_8FEC2
-loc_8FEAD:
+        jmp short .3
+.1:
         cmp esi, dword [eax]
-        jne short loc_8FEBE
+        jne short .2
         mov eax, edx
         mov eax, dword [byte ebp+eax*4+00h]
         add eax, edi
-        jmp near loc_8EF4A
-loc_8FEBE:
+        jmp near LoadTimbreFile+0FBh
+.2:
         inc edx
         add eax, byte 4
-loc_8FEC2:
+.3:
         xor ecx, ecx
         mov cx, word [ebx]
         cmp edx, ecx
-        jl short loc_8FEAD
+        jl short .1
         xor eax, eax
-        jmp near loc_8EF4A
+        jmp near LoadTimbreFile+0FBh
 ReplaceFileExt:
         push ecx
         push esi
@@ -2005,12 +1978,12 @@ FreeMemPtr:
         mov esi, eax
         mov edx, dword [eax]
         test edx, edx
-        je short loc_8FF39
+        je short .1
         push edx
         call FreeMemBlock
         add esp, byte 4
         mov dword [esi], 0
-loc_8FF39:
+.1:
         pop esi
         pop edx
         pop ecx
@@ -2024,12 +1997,12 @@ ReleaseMemPtr:
         mov esi, eax
         mov edx, dword [eax]
         test edx, edx
-        je short loc_8FF59
+        je short .1
         push edx
         call PushMemDescriptorLocked
         add esp, byte 4
         mov dword [esi], 0
-loc_8FF59:
+.1:
         pop esi
         pop edx
         pop ecx
@@ -2079,10 +2052,10 @@ SetPalette:
         mov ebx, dword [byte ebp+0Ch]
         lea ecx, [ebx+ebx*2]
         mov edx, 3C9h
-loc_8FFCB:
+.1:
         in al, dx
         stosb
-        loop loc_8FFCB
+        loop .1
         pop edi
         leave
         ret

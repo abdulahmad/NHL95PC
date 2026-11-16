@@ -3,8 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90C32 progbits alloc exec nowrite align=1
 extern __doserror_, __set_errno_dos_
-global rmdir_, loc_90C4D, _dos_close_, _dos_commit_, _dos_open_, loc_90C7A, _dos_creat_, loc_90C8D
-global _dos_creatnew_, loc_90CA1, lseek_, loc_90CE0, loc_90CE3, _dos_read_, loc_90CEF, loc_90D08
+global rmdir_, _dos_close_, _dos_commit_, _dos_open_, _dos_creat_, _dos_creatnew_, lseek_, _dos_read_
 global _dos_write_
 rmdir_:
         push edx
@@ -14,12 +13,12 @@ rmdir_:
         rcl eax, 1
         ror eax, 1
         test eax, eax
-        jge short loc_90C4D
+        jge short .1
         and eax, 0FFFFh
         call __set_errno_dos_
         pop edx
         ret
-loc_90C4D:
+.1:
         xor eax, eax
         pop edx
         ret
@@ -45,9 +44,9 @@ _dos_open_:
         xchg edx, eax
         mov ah, 3Dh
         int 21h
-        jb short loc_90C7A
+        jb short .1
         mov dword [ebx], eax
-loc_90C7A:
+.1:
         call __doserror_
         ret
 _dos_creat_:
@@ -56,9 +55,9 @@ _dos_creat_:
         mov edx, eax
         mov ah, 3Ch
         int 21h
-        jb short loc_90C8D
+        jb short .1
         mov dword [ebx], eax
-loc_90C8D:
+.1:
         call __doserror_
         pop ecx
         ret
@@ -68,9 +67,9 @@ _dos_creatnew_:
         mov edx, eax
         mov ah, 5Bh
         int 21h
-        jb short loc_90CA1
+        jb short .1
         mov dword [ebx], eax
-loc_90CA1:
+.1:
         call __doserror_
         pop ecx
         ret
@@ -91,14 +90,14 @@ lseek_:
         rcl eax, 1
         ror eax, 1
         test eax, eax
-        jge short loc_90CE0
+        jge short .1
         and eax, 0FFFFh
         call __set_errno_dos_
         mov eax, 0FFFFFFFFh
-        jmp short loc_90CE3
-loc_90CE0:
+        jmp short .2
+.1:
         mov eax, dword [esp]
-loc_90CE3:
+.2:
         add esp, byte 4
         pop edi
         pop ecx
@@ -106,7 +105,6 @@ loc_90CE3:
         db 00h
 _dos_read_:
         push dword 3F00h
-loc_90CEF:
         push ds
         mov ds, ecx
         mov ecx, edx
@@ -116,15 +114,15 @@ loc_90CEF:
         int 21h
         pop ds
         push ds
-        jb short loc_90D08
+        jb short .1
         mov ebx, dword [byte esp+0Ch]
         mov dword [ebx], eax
-loc_90D08:
+.1:
         call __doserror_
         pop ds
         add esp, byte 4
         ret 4
 _dos_write_:
         push dword 4000h
-        jmp short loc_90CEF
+        jmp short _dos_read_+05h
         db 00h,00h,00h,00h,00h

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B2720 progbits alloc exec nowrite align=1
-global GusConvertAddr16, GusRegsToAddr, loc_B278E
+global GusConvertAddr16, GusRegsToAddr
 GusConvertAddr16:
         push ebp
         mov ebp, esp
@@ -45,13 +45,13 @@ GusRegsToAddr:
         mov ax, cx
         add eax, edx
         test bl, 1
-        je short loc_B278E
+        je short .1
         mov edx, eax
         add eax, eax
         and edx, 0C0000h
         and eax, 3FFFFh
         or eax, edx
-loc_B278E:
+.1:
         lea esp, [byte ebp-08h]
         pop esi
         pop ecx

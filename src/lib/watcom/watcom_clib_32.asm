@@ -3,23 +3,16 @@ bits 32
 %include "hockey.inc"
 section s_9AFB0 progbits alloc exec nowrite align=1
 extern __qwrite_, __set_errno_, __SetIOMode_, _nfree_, _nmalloc_, dword_EDF00, dword_F24C8, isatty_
-extern loc_9B544, loc_9B565, loc_9B589, loc_9B5A9, loc_9B5C9, loc_9B61A, loc_9B66B, loc_9B6B3
-extern loc_9B6F7, lseek_, memset_, tell_, unk_D4D18, unk_D4F20, _psp
-global tolower_, loc_9AFBD, __allocfp_, loc_9AFE6, loc_9AFED, loc_9B00A, loc_9B00D, loc_9B02F
-global loc_9B054, loc_9B060, __freefp_, loc_9B070, loc_9B081, loc_9B09B, loc_9B09F, loc_9B0A0
-global loc_9B0BB, __update_buffer_, loc_9B0E9, fseek_, loc_9B125, loc_9B12F, loc_9B138, loc_9B140
-global loc_9B14C, loc_9B167, loc_9B175, loc_9B17B, loc_9B1A0, loc_9B1D1, loc_9B1F5, loc_9B1F7
-global __chktty_, loc_9B228, GetPsp, __flush_, loc_9B280, loc_9B29F, loc_9B2CE, loc_9B2DE
-global ftell_, loc_9B319, loc_9B31D, __close_, loc_9B341, __ioalloc_, loc_9B373, loc_9B381
-global loc_9B388, loc_9B3B7, loc_9B3BB, fputc_, loc_9B3E5, loc_9B3EF, loc_9B3FC, loc_9B439
-global loc_9B459, loc_9B464, loc_9B468, unk_9B470
+extern FillRectSpans, FillRectSpans, lseek_, memset_, tell_, unk_D4D18, unk_D4F20, _psp
+global tolower_, __allocfp_, __freefp_, __update_buffer_, fseek_, __chktty_, GetPsp, __flush_
+global ftell_, __close_, __ioalloc_, fputc_, unk_9B470
 tolower_:
         cmp eax, byte 41h
-        jl short loc_9AFBD
+        jl short .1
         cmp eax, byte 5Ah
-        jg short loc_9AFBD
+        jg short .1
         add eax, byte 20h
-loc_9AFBD:
+.1:
         ret
 __allocfp_:
         push ebx
@@ -29,41 +22,41 @@ __allocfp_:
         push edi
         mov esi, dword [dword_EDF00]
         test esi, esi
-        je short loc_9AFE6
+        je short .1
         mov ecx, dword [byte esi+04h]
         mov edi, dword [byte ecx+0Ch]
         mov eax, dword [esi]
         and edi, 4003h
         mov dword [dword_EDF00], eax
         or di, byte 3
-        jmp short loc_9B02F
-loc_9AFE6:
+        jmp short .5
+.1:
         mov ecx, unk_D4D18
-        jmp short loc_9B00D
-loc_9AFED:
+        jmp short .4
+.2:
         test byte [byte ecx+0Ch], 3
-        jne short loc_9B00A
+        jne short .3
         mov eax, 8
         call _nmalloc_
         mov esi, eax
         test eax, eax
-        je short loc_9B054
+        je short .6
         mov edi, 3
-        jmp short loc_9B02F
-loc_9B00A:
+        jmp short .5
+.3:
         add ecx, byte 1Ah
-loc_9B00D:
+.4:
         cmp ecx, unk_D4F20
-        jb short loc_9AFED
+        jb short .2
         mov eax, 22h
         mov edi, 4003h
         call _nmalloc_
         mov ecx, eax
         mov esi, eax
         test eax, eax
-        je short loc_9B054
+        je short .6
         lea ecx, [byte eax+08h]
-loc_9B02F:
+.5:
         mov ebx, 1Ah
         mov eax, ecx
         xor edx, edx
@@ -74,12 +67,12 @@ loc_9B02F:
         mov dword [dword_F24C8], esi
         mov dword [esi], eax
         mov eax, ecx
-        jmp short loc_9B060
-loc_9B054:
+        jmp short .7
+.6:
         mov eax, 5
         call __set_errno_
         xor eax, eax
-loc_9B060:
+.7:
         pop edi
         pop esi
         pop edx
@@ -92,16 +85,16 @@ __freefp_:
         push edx
         mov ebx, eax
         mov edx, dword_F24C8
-loc_9B070:
+.1:
         mov eax, dword [edx]
         test eax, eax
-        je short loc_9B09B
+        je short .3
         mov ecx, dword [byte eax+04h]
         cmp ebx, ecx
-        je short loc_9B081
+        je short .2
         mov edx, eax
-        jmp short loc_9B070
-loc_9B081:
+        jmp short .1
+.2:
         mov cl, byte [byte ecx+0Ch]
         or cl, 3
         mov byte [byte ebx+0Ch], cl
@@ -110,23 +103,22 @@ loc_9B081:
         mov edx, dword [dword_EDF00]
         mov dword [dword_EDF00], eax
         mov dword [eax], edx
-loc_9B09B:
+.3:
         pop edx
         pop ecx
         pop ebx
         ret
-loc_9B09F:
         push edx
-loc_9B0A0:
+.4:
         mov edx, dword [dword_EDF00]
         test edx, edx
-        je short loc_9B0BB
+        je short .5
         mov eax, edx
         mov edx, dword [edx]
         call _nfree_
         mov dword [dword_EDF00], edx
-        jmp short loc_9B0A0
-loc_9B0BB:
+        jmp short .4
+.5:
         pop edx
         ret
 __update_buffer_:
@@ -136,12 +128,12 @@ __update_buffer_:
         push edi
         and byte [byte edx+0Ch], 0EFh
         cmp eax, dword [byte edx+04h]
-        jg short loc_9B0E9
+        jg short .1
         mov ebx, dword [byte edx+08h]
         mov ecx, dword [edx]
         sub ebx, ecx
         cmp eax, ebx
-        jl short loc_9B0E9
+        jl short .1
         mov edi, dword [byte edx+04h]
         lea esi, [ecx+eax]
         sub edi, eax
@@ -153,7 +145,7 @@ __update_buffer_:
         pop ecx
         pop ebx
         ret
-loc_9B0E9:
+.1:
         mov eax, dword [byte edx+08h]
         mov dword [byte edx+04h], 0
         mov dword [edx], eax
@@ -170,74 +162,74 @@ fseek_:
         mov ecx, eax
         mov esi, edx
         test byte [byte eax+0Ch], 6
-        je short loc_9B167
+        je short .6
         test byte [byte ecx+0Dh], 10h
-        je short loc_9B138
+        je short .3
         mov eax, ecx
         call __flush_
         test eax, eax
-        je short loc_9B14C
+        je short .5
         test ebx, ebx
-        jne short loc_9B12F
+        jne short .2
         test esi, esi
-        jge short loc_9B12F
-loc_9B125:
+        jge short .2
+.1:
         mov eax, 9
         call __set_errno_
-loc_9B12F:
+.2:
         mov eax, 0FFFFFFFFh
         pop edi
         pop esi
         pop ecx
         ret
-loc_9B138:
+.3:
         cmp ebx, byte 1
-        jne short loc_9B140
+        jne short .4
         sub esi, dword [byte ecx+04h]
-loc_9B140:
+.4:
         mov eax, dword [byte ecx+08h]
         mov dword [byte ecx+04h], 0
         mov dword [ecx], eax
-loc_9B14C:
+.5:
         and byte [byte ecx+0Ch], 0EBh
         mov edx, esi
         mov eax, dword [byte ecx+010h]
         call lseek_
         cmp eax, byte 0FFFFFFFFh
-        jne near loc_9B1F5
+        jne near .11
         pop edi
         pop esi
         pop ecx
         ret
-loc_9B167:
+.6:
         cmp ebx, byte 1
-        jb short loc_9B175
-        jbe short loc_9B17B
+        jb short .7
+        jbe short .8
         cmp ebx, byte 2
-        je short loc_9B1D1
-        jmp short loc_9B125
-loc_9B175:
+        je short .10
+        jmp short .1
+.7:
         test ebx, ebx
-        je short loc_9B1A0
-        jmp short loc_9B125
-loc_9B17B:
+        je short .9
+        jmp short .1
+.8:
         mov eax, edx
         mov edx, ecx
         mov edi, dword [byte ecx+04h]
         call __update_buffer_
         test eax, eax
-        je short loc_9B1F5
+        je short .11
         mov edx, esi
         mov eax, dword [byte ecx+010h]
         sub edx, edi
         call lseek_
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_9B1F5
+        jne short .11
         pop edi
         pop esi
         pop ecx
         ret
-loc_9B1A0:
+.9:
         mov eax, dword [byte ecx+010h]
         call tell_
         mov edx, dword [byte ecx+04h]
@@ -248,17 +240,17 @@ loc_9B1A0:
         mov eax, edi
         call __update_buffer_
         test eax, eax
-        je short loc_9B1F5
+        je short .11
         mov edx, esi
         mov eax, dword [byte ecx+010h]
         call lseek_
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_9B1F5
+        jne short .11
         pop edi
         pop esi
         pop ecx
         ret
-loc_9B1D1:
+.10:
         mov eax, dword [byte ecx+08h]
         mov dl, byte [byte ecx+0Ch]
         mov dword [ecx], eax
@@ -269,10 +261,10 @@ loc_9B1D1:
         mov dword [byte ecx+04h], 0
         call lseek_
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9B1F7
-loc_9B1F5:
+        je short .12
+.11:
         xor eax, eax
-loc_9B1F7:
+.12:
         pop edi
         pop esi
         pop ecx
@@ -283,20 +275,20 @@ __chktty_:
         push edx
         mov edx, eax
         test byte [byte eax+0Dh], 20h
-        jne short loc_9B228
+        jne short .1
         mov eax, dword [byte edx+010h]
         call isatty_
         test eax, eax
-        je short loc_9B228
+        je short .1
         mov bl, byte [byte edx+0Dh]
         or bl, 20h
         mov byte [byte edx+0Dh], bl
         test bl, 7
-        jne short loc_9B228
+        jne short .1
         mov cl, bl
         or cl, 2
         mov byte [byte edx+0Dh], cl
-loc_9B228:
+.1:
         pop edx
         pop ecx
         pop ebx
@@ -313,61 +305,61 @@ __flush_:
         mov ah, byte [byte eax+0Dh]
         xor esi, esi
         test ah, 10h
-        je short loc_9B29F
+        je short .2
         mov bh, byte [byte ecx+0Dh]
         and bh, 0EFh
         mov al, byte [byte ecx+0Ch]
         mov byte [byte ecx+0Dh], bh
         test al, 2
-        je near loc_9B2DE
+        je near .4
         cmp dword [byte ecx+08h], byte 0
-        je near loc_9B2DE
+        je near .4
         mov ebx, dword [byte ecx+04h]
         mov edx, dword [byte ecx+08h]
         mov eax, dword [byte ecx+010h]
         call __qwrite_
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_9B280
+        jne short .1
         mov dl, byte [byte ecx+0Ch]
         or dl, 20h
         mov esi, eax
         mov byte [byte ecx+0Ch], dl
-        jmp short loc_9B2DE
-loc_9B280:
+        jmp short .4
+.1:
         cmp eax, dword [byte ecx+04h]
-        je short loc_9B2DE
+        je short .4
         mov eax, 0Ch
         call __set_errno_
         mov ah, byte [byte ecx+0Ch]
         or ah, 20h
         mov esi, 0FFFFFFFFh
         mov byte [byte ecx+0Ch], ah
-        jmp short loc_9B2DE
-loc_9B29F:
+        jmp short .4
+.2:
         cmp dword [byte ecx+08h], byte 0
-        je short loc_9B2DE
+        je short .4
         mov dl, byte [byte ecx+0Ch]
         and dl, 0EFh
         mov dh, byte [byte ecx+0Dh]
         mov byte [byte ecx+0Ch], dl
         test dh, 20h
-        jne short loc_9B2DE
+        jne short .4
         mov eax, dword [byte ecx+04h]
         test eax, eax
-        je short loc_9B2CE
+        je short .3
         mov edx, eax
         mov ebx, 1
         neg edx
         mov eax, dword [byte ecx+010h]
         call lseek_
-loc_9B2CE:
+.3:
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_9B2DE
+        jne short .4
         mov bl, byte [byte ecx+0Ch]
         or bl, 20h
         mov esi, eax
         mov byte [byte ecx+0Ch], bl
-loc_9B2DE:
+.4:
         mov eax, dword [byte ecx+08h]
         mov dword [byte ecx+04h], 0
         mov dword [ecx], eax
@@ -386,21 +378,21 @@ ftell_:
         call tell_
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9B31D
+        je short .2
         mov ecx, dword [byte edx+04h]
         test ecx, ecx
-        je short loc_9B31D
+        je short .2
         test byte [byte edx+0Dh], 10h
-        je short loc_9B319
+        je short .1
         lea eax, [ecx+ebx]
         pop edx
         pop ecx
         pop ebx
         ret
-loc_9B319:
+.1:
         mov eax, ebx
         sub eax, ecx
-loc_9B31D:
+.2:
         pop edx
         pop ecx
         pop ebx
@@ -415,7 +407,7 @@ __close_:
         rcl eax, 1
         ror eax, 1
         test eax, eax
-        jl short loc_9B341
+        jl short .1
         mov eax, edx
         xor edx, edx
         call __SetIOMode_
@@ -423,7 +415,7 @@ __close_:
         pop edx
         pop ebx
         ret
-loc_9B341:
+.1:
         mov eax, 4
         call __set_errno_
         mov eax, 0FFFFFFFFh
@@ -436,25 +428,25 @@ __ioalloc_:
         mov edx, eax
         call __chktty_
         cmp dword [byte edx+014h], byte 0
-        jne short loc_9B388
+        jne short .3
         mov ah, byte [byte edx+0Dh]
         test ah, 2
-        je short loc_9B373
+        je short .1
         mov dword [byte edx+014h], 86h
-        jmp short loc_9B388
-loc_9B373:
+        jmp short .3
+.1:
         test ah, 4
-        je short loc_9B381
+        je short .2
         mov dword [byte edx+014h], 1
-        jmp short loc_9B388
-loc_9B381:
+        jmp short .3
+.2:
         mov dword [byte edx+014h], 1000h
-loc_9B388:
+.3:
         mov eax, dword [byte edx+014h]
         call _nmalloc_
         mov dword [byte edx+08h], eax
         test eax, eax
-        jne short loc_9B3B7
+        jne short .4
         lea eax, [byte edx+018h]
         mov cl, byte [byte edx+0Dh]
         mov dword [byte edx+014h], 1
@@ -464,10 +456,10 @@ loc_9B388:
         mov byte [byte edx+0Dh], cl
         or ch, 4
         mov byte [byte edx+0Dh], ch
-        jmp short loc_9B3BB
-loc_9B3B7:
+        jmp short .5
+.4:
         or byte [byte edx+0Ch], 8
-loc_9B3BB:
+.5:
         mov eax, dword [byte edx+08h]
         mov dword [byte edx+04h], 0
         mov dword [edx], eax
@@ -482,26 +474,26 @@ fputc_:
         push ebp
         mov ebx, eax
         test byte [byte edx+0Ch], 2
-        jne short loc_9B3EF
+        jne short .2
         mov eax, 4
         call __set_errno_
         or byte [byte edx+0Ch], 20h
-loc_9B3E5:
+.1:
         mov eax, 0FFFFFFFFh
-        jmp near loc_9B468
-loc_9B3EF:
+        jmp near .7
+.2:
         cmp dword [byte edx+08h], byte 0
-        jne short loc_9B3FC
+        jne short .3
         mov eax, edx
         call __ioalloc_
-loc_9B3FC:
+.3:
         mov ecx, 400h
         cmp ebx, byte 0Ah
-        jne short loc_9B439
+        jne short .4
         mov al, byte [byte edx+0Ch]
         mov ecx, 600h
         test al, 40h
-        jne short loc_9B439
+        jne short .4
         or byte [byte edx+0Dh], 10h
         mov eax, dword [edx]
         mov byte [eax], 0Dh
@@ -513,12 +505,12 @@ loc_9B3FC:
         mov ebp, dword [byte edx+014h]
         mov dword [byte edx+04h], edi
         cmp edi, ebp
-        jne short loc_9B439
+        jne short .4
         mov eax, edx
         call __flush_
         test eax, eax
-        jne short loc_9B3E5
-loc_9B439:
+        jne short .1
+.4:
         or byte [byte edx+0Dh], 10h
         mov eax, dword [edx]
         mov byte [eax], bl
@@ -530,18 +522,18 @@ loc_9B439:
         mov edi, dword [byte edx+0Ch]
         mov dword [byte edx+04h], esi
         test ecx, edi
-        jne short loc_9B459
+        jne short .5
         cmp esi, dword [byte edx+014h]
-        jne short loc_9B464
-loc_9B459:
+        jne short .6
+.5:
         mov eax, edx
         call __flush_
         test eax, eax
-        jne short loc_9B3E5
-loc_9B464:
+        jne short .1
+.6:
         xor eax, eax
         mov al, bl
-loc_9B468:
+.7:
         pop ebp
         pop edi
         pop esi
@@ -550,13 +542,13 @@ loc_9B468:
         ret
         db 00h,00h
 unk_9B470:
-        dd loc_9B544
-        dd loc_9B544
-        dd loc_9B565
-        dd loc_9B589
-        dd loc_9B5A9
-        dd loc_9B5C9
-        dd loc_9B61A
-        dd loc_9B66B
-        dd loc_9B6B3
-        dd loc_9B6F7
+        dd FillRectSpans+0ACh
+        dd FillRectSpans+0ACh
+        dd FillRectSpans+0CDh
+        dd FillRectSpans+0F1h
+        dd FillRectSpans+0111h
+        dd FillRectSpans+0131h
+        dd FillRectSpans+0182h
+        dd FillRectSpans+01D3h
+        dd FillRectSpans+021Bh
+        dd FillRectSpans+025Fh

@@ -4,23 +4,8 @@ bits 32
 section s_97300 progbits alloc exec nowrite align=1
 extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
 extern dword_EDEF4, dword_EDEF8, FatalError, off_D3088, off_D308C, strncmp_, bcopy
-global SkipCopyrightHeader, loc_97329, UnpackReadBE, loc_97338, loc_9734A, PackedTypeOf, loc_973BC, loc_973D9
-global loc_97406, loc_97429, loc_97462, loc_97481, loc_974AF, loc_974B8, loc_974C3, loc_974CE
-global loc_974D9, loc_974E4, loc_974EF, loc_974FA, loc_97505, loc_97510, loc_9751B, loc_9752F
-global loc_97542, loc_97562, loc_9756D, loc_97578, loc_97583, loc_9758E, loc_97599, loc_975A4
-global loc_975B8, loc_975CB, loc_975E3, loc_975EE, loc_97621, loc_97623, UnpackedSize, loc_97677
-global loc_97679, HuffGetBits, loc_976B7, loc_976D7, loc_976EE, loc_97703, HuffGetLength, loc_97720
-global UnpackHuffman, loc_977A3, loc_97803, loc_97840, loc_9787D, loc_97885, loc_97893, loc_97897
-global loc_978A6, loc_978B0, loc_978D3, loc_978E4, loc_97911, loc_97923, loc_9793A, loc_97963
-global loc_97995, loc_979AE, loc_979CD, loc_979E6, ExpandBytePair, loc_979FA, loc_97A26, UnpackBytePair
-global loc_97A9A, loc_97AD1, loc_97AF6, loc_97B2A, loc_97B30, loc_97B56, loc_97B84, loc_97B9C
-global UnpackDelta, loc_97BE4, loc_97BEF, loc_97C10, loc_97C24, UnpackRunLength, loc_97C58, loc_97C8A
-global loc_97C96, loc_97CA2, loc_97CAD, loc_97CB8, loc_97CBD, loc_97CBF, loc_97CCF, loc_97CD3
-global UnpackRefPack, loc_97D13, loc_97D40, loc_97D5A, loc_97D63, loc_97D87, loc_97D92, loc_97DAA
-global loc_97DB3, loc_97DDA, loc_97DE9, loc_97E10, loc_97E19, loc_97E60, loc_97E6F, loc_97E7D
-global loc_97E9E, loc_97EA4, loc_97EAD, unpack, loc_97EE1, loc_97F3C, loc_97F49, loc_97F64
-global loc_97F7D, loc_97F8D, loc_97F9F, loc_97FB1, loc_97FBE, loc_97FCB, loc_97FE1, loc_97FEF
-global loc_98009, loc_9801E, UnpackTo, UnpackQuiet
+global SkipCopyrightHeader, UnpackReadBE, PackedTypeOf, UnpackedSize, HuffGetBits, HuffGetLength, UnpackHuffman, ExpandBytePair
+global UnpackBytePair, UnpackDelta, UnpackRunLength, UnpackRefPack, unpack, UnpackTo, UnpackQuiet
 SkipCopyrightHeader:
         push ebx
         push ecx
@@ -32,7 +17,7 @@ SkipCopyrightHeader:
         mov edx, str_Copyright
         call strncmp_
         test eax, eax
-        jne short loc_97329
+        jne short .1
         mov edi, esi
         sub ecx, ecx
         dec ecx
@@ -42,7 +27,7 @@ SkipCopyrightHeader:
         dec ecx
         inc ecx
         add esi, ecx
-loc_97329:
+.1:
         mov eax, esi
         pop edi
         pop esi
@@ -55,17 +40,17 @@ UnpackReadBE:
         push ebx
         push ecx
         xor ebx, ebx
-loc_97338:
+.1:
         dec edx
         cmp edx, byte 0FFFFFFFFh
-        je short loc_9734A
+        je short .2
         xor ecx, ecx
         mov cl, byte [eax]
         shl ebx, 8
         inc eax
         add ebx, ecx
-        jmp short loc_97338
-loc_9734A:
+        jmp short .1
+.2:
         mov eax, ebx
         pop ecx
         pop ebx
@@ -82,266 +67,266 @@ PackedTypeOf:
         xor ecx, ecx
         mov cl, byte [byte eax+01h]
         cmp ecx, 0FBh
-        jne near loc_975EE
+        jne near .30
         xor eax, eax
         mov al, byte [edx]
         and eax, 0FEh
         cmp eax, byte 44h
-        jb near loc_97429
-        jbe near loc_9758E
+        jb near .4
+        jbe near .24
         cmp eax, byte 72h
-        jb short loc_973D9
-        jbe near loc_97505
+        jb short .2
+        jbe near .15
         cmp eax, byte 78h
-        jb short loc_973BC
-        jbe near loc_974B8
+        jb short .1
+        jbe near .8
         cmp eax, byte 7Ah
-        jb near loc_975E3
-        jbe near loc_9751B
+        jb near .29
+        jbe near .17
         cmp eax, 0C0h
-        je near loc_97562
-        jmp near loc_975E3
-loc_973BC:
+        je near .20
+        jmp near .29
+.1:
         cmp eax, byte 74h
-        jb near loc_975E3
-        jbe near loc_97510
+        jb near .29
+        jbe near .16
         cmp eax, byte 76h
-        je near loc_975A4
-        jmp near loc_975E3
-loc_973D9:
+        je near .26
+        jmp near .29
+.2:
         cmp eax, byte 6Ah
-        jb short loc_97406
-        jbe near loc_97562
+        jb short .3
+        jbe near .20
         cmp eax, byte 6Eh
-        jb near loc_975E3
-        jbe near loc_974EF
+        jb near .29
+        jbe near .13
         cmp eax, byte 70h
-        je near loc_974FA
+        je near .14
         mov edx, 12h
-        jmp near loc_97623
-loc_97406:
+        jmp near .32
+.3:
         cmp eax, byte 46h
-        jb near loc_975E3
-        jbe near loc_974E4
+        jb near .29
+        jbe near .12
         cmp eax, byte 66h
-        je near loc_97599
+        je near .25
         mov edx, 12h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97429:
+.4:
         cmp eax, byte 2Ch
-        jb short loc_97481
-        jbe near loc_97583
+        jb short .6
+        jbe near .23
         cmp eax, byte 32h
-        jb short loc_97462
-        jbe near loc_974CE
+        jb short .5
+        jbe near .10
         cmp eax, byte 34h
-        jb near loc_975E3
-        jbe near loc_974D9
+        jb near .29
+        jbe near .11
         cmp eax, byte 42h
-        je near loc_9758E
+        je near .24
         mov edx, 12h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97462:
+.5:
         cmp eax, byte 2Eh
-        jb near loc_975E3
-        jbe near loc_97578
+        jb near .29
+        jbe near .22
         cmp eax, byte 30h
-        je short loc_974C3
+        je short .9
         mov edx, 12h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97481:
+.6:
         cmp eax, byte 26h
-        jb short loc_974AF
-        jbe near loc_9756D
+        jb short .7
+        jbe near .21
         cmp eax, byte 28h
-        jb near loc_975E3
-        jbe near loc_97578
+        jb near .29
+        jbe near .22
         cmp eax, byte 2Ah
-        je near loc_9756D
+        je near .21
         mov edx, 12h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_974AF:
+.7:
         cmp eax, byte 10h
-        jne near loc_975E3
-loc_974B8:
+        jne near .29
+.8:
         mov edx, 0Ch
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_974C3:
+.9:
         mov edx, 7
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_974CE:
+.10:
         mov edx, 9
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_974D9:
+.11:
         mov edx, 0Ah
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_974E4:
+.12:
         mov edx, 5
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_974EF:
+.13:
         mov edx, 1
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_974FA:
+.14:
         mov edx, 11h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97505:
+.15:
         mov edx, 0Bh
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97510:
+.16:
         mov edx, 10h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_9751B:
+.17:
         mov edx, 2
         mov ecx, 5
         test ah, 1
-        je short loc_9752F
+        je short .18
         mov ecx, 8
-loc_9752F:
+.18:
         lea eax, [ebx+ecx]
         cmp byte [eax], 1
-        jne short loc_97542
+        jne short .19
         cmp byte [byte eax+01h], 1
-        jne short loc_97542
+        jne short .19
         mov edx, 3
-loc_97542:
+.19:
         add ebx, ecx
         cmp byte [ebx], 2
-        jne near loc_97623
+        jne near .32
         cmp byte [byte ebx+01h], 1
-        jne near loc_97623
+        jne near .32
         mov edx, 4
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97562:
+.20:
         mov edx, 1Fh
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_9756D:
+.21:
         mov edx, 18h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97578:
+.22:
         mov edx, 1Ah
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97583:
+.23:
         mov edx, 19h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_9758E:
+.24:
         mov edx, 17h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97599:
+.25:
         mov edx, 1Bh
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_975A4:
+.26:
         mov edx, 14h
         mov ecx, 5
         test ah, 1
-        je short loc_975B8
+        je short .27
         mov ecx, 8
-loc_975B8:
+.27:
         lea eax, [ebx+ecx]
         cmp byte [eax], 1
-        jne short loc_975CB
+        jne short .28
         cmp byte [byte eax+01h], 1
-        jne short loc_975CB
+        jne short .28
         mov edx, 15h
-loc_975CB:
+.28:
         add ebx, ecx
         cmp byte [ebx], 2
-        jne short loc_97623
+        jne short .32
         cmp byte [byte ebx+01h], 1
-        jne short loc_97623
+        jne short .32
         mov edx, 16h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_975E3:
+.29:
         mov edx, 12h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_975EE:
+.30:
         xor eax, eax
         mov al, byte [edx]
         shl eax, 8
@@ -355,16 +340,16 @@ loc_975EE:
         shl eax, 8
         add eax, edx
         cmp eax, 3F3h
-        jne short loc_97621
+        jne short .31
         mov edx, 21h
         mov eax, edx
         pop edx
         pop ecx
         pop ebx
         ret
-loc_97621:
+.31:
         xor edx, edx
-loc_97623:
+.32:
         mov eax, edx
         pop edx
         pop ecx
@@ -377,13 +362,13 @@ UnpackedSize:
         mov edi, dword [byte esp+0Ch]
         mov esi, dword [byte esp+010h]
         cmp esi, byte 2
-        jle short loc_97677
+        jle short .1
         push esi
         push edi
         call dword [off_D3088]
         add esp, byte 8
         test eax, eax
-        jne short loc_97679
+        jne short .2
         mov eax, edi
         call SkipCopyrightHeader
         mov edx, eax
@@ -392,18 +377,18 @@ UnpackedSize:
         mov eax, edx
         call PackedTypeOf
         test eax, eax
-        jle short loc_97677
+        jle short .1
         cmp eax, byte 1Eh
-        jg short loc_97677
+        jg short .1
         lea eax, [byte edx+02h]
         mov edx, 3
         call UnpackReadBE
         pop edi
         pop esi
         ret
-loc_97677:
+.1:
         mov eax, esi
-loc_97679:
+.2:
         pop edi
         pop esi
         ret
@@ -419,7 +404,7 @@ HuffGetBits:
         mov edi, dword [dword_EDEE4]
         mov ebp, dword [dword_EDEF0]
         cmp eax, byte 10h
-        jle short loc_976B7
+        jle short .1
         sub eax, byte 10h
         call HuffGetBits
         mov edx, eax
@@ -427,8 +412,8 @@ HuffGetBits:
         mov eax, 10h
         call HuffGetBits
         or eax, edx
-        jmp short loc_97703
-loc_976B7:
+        jmp short .4
+.1:
         mov ecx, 20h
         sub ecx, eax
         mov edx, edi
@@ -438,11 +423,11 @@ loc_976B7:
         shl edi, cl
         sub esi, eax
         cmp esi, byte 10h
-        jge short loc_976EE
+        jge short .3
         mov eax, esi
         neg eax
         add eax, byte 18h
-loc_976D7:
+.2:
         xor ebx, ebx
         mov bl, byte [byte ebp+00h]
         inc ebp
@@ -452,13 +437,13 @@ loc_976D7:
         sub eax, byte 8
         add esi, byte 8
         cmp eax, byte 8
-        jg short loc_976D7
-loc_976EE:
+        jg short .2
+.3:
         mov eax, dword [esp]
         mov dword [dword_EDEE0], esi
         mov dword [dword_EDEE4], edi
         mov dword [dword_EDEF0], ebp
-loc_97703:
+.4:
         mov esi, dword [dword_EDEE0]
         add esp, byte 4
         pop ebp
@@ -474,13 +459,13 @@ HuffGetLength:
         push edx
         mov ebx, 2
         mov edx, 1
-loc_97720:
+.1:
         add ebx, ebx
         inc edx
         mov eax, 1
         call HuffGetBits
         test eax, eax
-        je short loc_97720
+        je short .1
         mov eax, edx
         call HuffGetBits
         add eax, ebx
@@ -500,7 +485,7 @@ UnpackHuffman:
         xor edx, edx
         mov dword [dword esp+02C4h], edx
         test eax, eax
-        je near loc_979E6
+        je near .19
         mov dl, byte [eax]
         mov dword [dword esp+02CCh], edx
         inc eax
@@ -513,9 +498,9 @@ UnpackHuffman:
         add edx, ecx
         mov dword [dword esp+02CCh], edx
         test byte [dword esp+02CDh], 1
-        je short loc_977A3
+        je short .1
         add dword [dword_EDEF0], byte 3
-loc_977A3:
+.1:
         and byte [dword esp+02CDh], 0FEh
         xor esi, esi
         mov dword [dword_EDEE0], esi
@@ -526,7 +511,7 @@ loc_977A3:
         call HuffGetBits
         mov dword [dword esp+02C4h], eax
         test ebx, ebx
-        je near loc_979E6
+        je near .19
         mov eax, 8
         call HuffGetBits
         mov byte [dword esp+02D4h], al
@@ -535,7 +520,7 @@ loc_977A3:
         mov dword [dword esp+02C0h], 0Fh
         mov ebx, 4
         xor ebp, ebp
-loc_97803:
+.2:
         add edx, edx
         mov eax, edx
         sub eax, esi
@@ -547,21 +532,21 @@ loc_97803:
         add edx, eax
         mov ecx, ebp
         test eax, eax
-        je short loc_97840
+        je short .3
         mov cl, byte [dword esp+02C0h]
         mov eax, edx
         shl eax, cl
         mov ecx, eax
         and ecx, 0FFFFh
-loc_97840:
+.3:
         mov dword [dword esp+ebx+0280h], ecx
         dec dword [dword esp+02C0h]
         add ebx, byte 4
         inc edi
         cmp ebp, dword [dword esp+02D0h]
-        je short loc_97803
+        je short .2
         test ecx, ecx
-        jne short loc_97803
+        jne short .2
         dec edi
         mov ecx, 100h
         xor edx, edx
@@ -570,32 +555,32 @@ loc_97840:
         mov edx, 0FFFFFFFFh
         xor ebx, ebx
         test esi, esi
-        jle short loc_978A6
+        jle short .8
         xor ebp, ebp
         mov cl, 1
-loc_9787D:
+.4:
         call HuffGetLength
         inc eax
-        je short loc_97897
-loc_97885:
+        je short .7
+.5:
         inc edx
         and edx, 0FFh
         cmp byte [esp+edx], 0
-        jne short loc_97893
+        jne short .6
         dec eax
-loc_97893:
+.6:
         test eax, eax
-        jne short loc_97885
-loc_97897:
+        jne short .5
+.7:
         mov byte [esp+edx], cl
         mov byte [dword esp+ebx+0100h], dl
         inc ebx
         cmp ebx, esi
-        jl short loc_9787D
-loc_978A6:
+        jl short .4
+.8:
         mov esi, 4
         mov ebp, 1
-loc_978B0:
+.9:
         mov ecx, dword [dword_EDEE4]
         shr ecx, 10h
         and ecx, 0FFFFh
@@ -603,66 +588,66 @@ loc_978B0:
         mov eax, esi
         lea ebx, [nosplit edi*4+00h]
         cmp ecx, dword [dword esp+0284h]
-        jb short loc_978E4
-loc_978D3:
+        jb short .11
+.10:
         cmp eax, ebx
-        jge short loc_978E4
+        jge short .11
         add eax, byte 4
         inc edx
         cmp ecx, dword [dword esp+eax+0280h]
-        jae short loc_978D3
-loc_978E4:
+        jae short .10
+.11:
         mov eax, edx
         call HuffGetBits
         sub eax, dword [dword esp+edx*4+0240h]
         mov dl, byte [dword esp+eax+0100h]
         cmp dl, byte [dword esp+02D4h]
-        je short loc_97911
+        je short .12
         mov eax, dword [dword_EDEE8]
         mov byte [eax], dl
         inc eax
         mov dword [dword_EDEE8], eax
-        jmp short loc_978B0
-loc_97911:
+        jmp short .9
+.12:
         call HuffGetLength
         test eax, eax
-        je short loc_9793A
+        je short .14
         mov ebx, dword [dword_EDEE8]
         mov bl, byte [byte ebx-01h]
-loc_97923:
+.13:
         dec eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_978B0
+        je short .9
         mov edx, dword [dword_EDEE8]
         mov byte [edx], bl
         inc edx
         mov dword [dword_EDEE8], edx
-        jmp short loc_97923
-loc_9793A:
+        jmp short .13
+.14:
         mov eax, ebp
         call HuffGetBits
         test eax, eax
-        jne short loc_97963
+        jne short .15
         mov eax, 8
         call HuffGetBits
         mov edx, dword [dword_EDEE8]
         mov byte [edx], al
         inc edx
         mov dword [dword_EDEE8], edx
-        jmp near loc_978B0
-loc_97963:
+        jmp near .9
+.15:
         mov eax, dword [dword esp+02C8h]
         add eax, dword [dword esp+02C4h]
         mov esi, dword [dword esp+02CCh]
         cmp esi, 32FBh
-        jne short loc_979AE
+        jne short .17
         xor ebx, ebx
         mov edx, dword [dword esp+02C8h]
         mov dword [dword_EDEE8], edx
         mov ecx, eax
         cmp eax, edx
-        jbe short loc_979E6
-loc_97995:
+        jbe short .19
+.16:
         mov eax, dword [dword_EDEE8]
         xor edx, edx
         mov dl, byte [eax]
@@ -671,19 +656,19 @@ loc_97995:
         inc eax
         mov dword [dword_EDEE8], eax
         cmp ecx, eax
-        ja short loc_97995
-        jmp short loc_979E6
-loc_979AE:
+        ja short .16
+        jmp short .19
+.17:
         cmp esi, 34FBh
-        jne short loc_979E6
+        jne short .19
         xor ebx, ebx
         xor edx, edx
         mov ecx, dword [dword esp+02C8h]
         mov dword [dword_EDEE8], ecx
         mov esi, eax
         cmp eax, ecx
-        jbe short loc_979E6
-loc_979CD:
+        jbe short .19
+.18:
         mov eax, dword [dword_EDEE8]
         xor ecx, ecx
         mov cl, byte [eax]
@@ -693,8 +678,8 @@ loc_979CD:
         inc eax
         mov dword [dword_EDEE8], eax
         cmp esi, eax
-        ja short loc_979CD
-loc_979E6:
+        ja short .18
+.19:
         mov eax, dword [dword esp+02C4h]
         add esp, 2D8h
         pop ebp
@@ -705,20 +690,20 @@ loc_979E6:
 ExpandBytePair:
         push ebx
         push edx
-loc_979FA:
+.1:
         xor edx, edx
         mov dl, al
         mov ebx, dword [dword_EDEF8]
         cmp byte [edx+ebx], 0
-        je short loc_97A26
+        je short .2
         mov eax, dword [dword_EDEEC]
         mov al, byte [edx+eax]
         and eax, 0FFh
         call ExpandBytePair
         mov eax, dword [dword_EDEF4]
         mov al, byte [edx+eax]
-        jmp short loc_979FA
-loc_97A26:
+        jmp short .1
+.2:
         mov edx, dword [dword_EDEE8]
         mov byte [edx], al
         inc edx
@@ -744,7 +729,7 @@ UnpackBytePair:
         mov edx, esp
         mov dword [dword_EDEF4], edx
         test eax, eax
-        je near loc_97B9C
+        je near .8
         xor edx, edx
         mov dl, byte [eax]
         lea ebx, [byte eax+01h]
@@ -754,9 +739,9 @@ UnpackBytePair:
         inc ebx
         add edx, eax
         cmp edx, 47FBh
-        jne short loc_97A9A
+        jne short .1
         add ebx, byte 3
-loc_97A9A:
+.1:
         xor eax, eax
         mov al, byte [ebx]
         mov dword [dword esp+0300h], eax
@@ -775,12 +760,12 @@ loc_97A9A:
         add edx, eax
         mov dword [dword esp+0300h], edx
         xor edx, edx
-loc_97AD1:
+.2:
         mov eax, dword [dword_EDEF8]
         mov byte [edx+eax], 0
         inc edx
         cmp edx, 100h
-        jl short loc_97AD1
+        jl short .2
         xor edx, edx
         mov dl, byte [ebx]
         inc ebx
@@ -789,8 +774,8 @@ loc_97AD1:
         xor eax, eax
         inc ebx
         test ebp, ebp
-        jle short loc_97B2A
-loc_97AF6:
+        jle short .4
+.3:
         xor edx, edx
         mov dl, byte [ebx]
         lea esi, [byte ebx+01h]
@@ -808,10 +793,10 @@ loc_97AF6:
         mov byte [ecx+edx], 0FFh
         inc eax
         cmp eax, ebp
-        jl short loc_97AF6
-loc_97B2A:
+        jl short .3
+.4:
         mov dword [dword_EDEF0], ebx
-loc_97B30:
+.5:
         mov ebx, dword [dword_EDEF0]
         xor edx, edx
         mov dl, byte [ebx]
@@ -819,15 +804,15 @@ loc_97B30:
         inc ebx
         mov al, byte [edx+eax]
         test al, al
-        jne short loc_97B56
+        jne short .6
         mov eax, dword [dword_EDEE8]
         mov byte [eax], dl
         inc eax
         mov dword [dword_EDEE8], eax
-        jmp short loc_97B2A
-loc_97B56:
+        jmp short .4
+.6:
         mov dword [dword_EDEF0], ebx
-        jge short loc_97B84
+        jge short .7
         mov eax, dword [dword_EDEEC]
         mov al, byte [edx+eax]
         and eax, 0FFh
@@ -836,19 +821,19 @@ loc_97B56:
         mov al, byte [edx+eax]
         and eax, 0FFh
         call ExpandBytePair
-        jmp short loc_97B30
-loc_97B84:
+        jmp short .5
+.7:
         xor edx, edx
         mov dl, byte [ebx]
         inc ebx
         test edx, edx
-        je short loc_97B9C
+        je short .8
         mov eax, dword [dword_EDEE8]
         mov byte [eax], dl
         inc eax
         mov dword [dword_EDEE8], eax
-        jmp short loc_97B2A
-loc_97B9C:
+        jmp short .4
+.8:
         mov eax, dword [dword esp+0300h]
         mov dword [dword_EDEF0], ebx
         add esp, 304h
@@ -868,7 +853,7 @@ UnpackDelta:
         mov eax, edx
         xor edi, edi
         test ebx, ebx
-        je short loc_97C24
+        je short .4
         xor ecx, ecx
         mov cl, byte [ebx]
         lea edx, [byte ebx+01h]
@@ -878,14 +863,14 @@ UnpackDelta:
         inc edx
         add ecx, ebx
         cmp ecx, 62FBh
-        jne short loc_97BE4
+        jne short .1
         add edx, byte 3
-        jmp short loc_97BEF
-loc_97BE4:
+        jmp short .2
+.1:
         cmp ecx, 66FBh
-        jne short loc_97BEF
+        jne short .2
         add edx, byte 4
-loc_97BEF:
+.2:
         movzx edi, byte [edx]
         inc edx
         xor ebx, ebx
@@ -901,8 +886,8 @@ loc_97BEF:
         lea esi, [eax+edi]
         xor ebx, ebx
         cmp eax, esi
-        jae short loc_97C24
-loc_97C10:
+        jae short .4
+.3:
         xor ecx, ecx
         mov cl, byte [edx]
         inc edx
@@ -911,8 +896,8 @@ loc_97C10:
         mov byte [eax], bl
         inc eax
         cmp eax, esi
-        jb short loc_97C10
-loc_97C24:
+        jb short .3
+.4:
         mov eax, edi
         pop edi
         pop esi
@@ -930,7 +915,7 @@ UnpackRunLength:
         xor ebx, ebx
         mov dword [esp], ebx
         test eax, eax
-        je near loc_97CD3
+        je near .10
         mov bl, byte [eax]
         inc eax
         movzx esi, byte [eax]
@@ -938,9 +923,9 @@ UnpackRunLength:
         inc eax
         add ebx, esi
         cmp ebx, 7BFBh
-        jne short loc_97C58
+        jne short .1
         add eax, byte 3
-loc_97C58:
+.1:
         xor ebx, ebx
         mov bl, byte [eax]
         mov dword [esp], ebx
@@ -964,53 +949,53 @@ loc_97C58:
         inc eax
         dec ebx
         mov dword [byte esp+04h], ebx
-loc_97C8A:
+.2:
         mov ebx, dword [byte esp+04h]
         movsx edi, byte [eax]
         inc eax
         test ebx, ebx
-        je short loc_97CA2
-loc_97C96:
+        je short .4
+.3:
         movzx esi, byte [eax]
         shl edi, 8
         inc eax
         add edi, esi
         dec ebx
-        jne short loc_97C96
-loc_97CA2:
+        jne short .3
+.4:
         test edi, edi
-        jge short loc_97CB8
+        jge short .6
         mov ebx, edi
         neg ebx
         imul ebx, ebp
-loc_97CAD:
+.5:
         mov cl, byte [eax]
         mov byte [edx], cl
         inc eax
         inc edx
         dec ebx
-        je short loc_97CCF
-        jmp short loc_97CAD
-loc_97CB8:
-        je short loc_97CCF
+        je short .9
+        jmp short .5
+.6:
+        je short .9
         lea esi, [byte edi+01h]
-loc_97CBD:
+.7:
         mov ebx, ebp
-loc_97CBF:
+.8:
         mov cl, byte [eax]
         mov byte [edx], cl
         inc eax
         inc edx
         dec ebx
-        jne short loc_97CBF
+        jne short .8
         sub eax, ebp
         dec esi
-        jne short loc_97CBD
+        jne short .7
         add eax, ebp
-loc_97CCF:
+.9:
         test edi, edi
-        jne short loc_97C8A
-loc_97CD3:
+        jne short .2
+.10:
         mov eax, dword [esp]
         add esp, byte 8
         pop ebp
@@ -1032,7 +1017,7 @@ UnpackRefPack:
         xor edx, edx
         mov dword [esp], edx
         test ecx, ecx
-        je near loc_97EAD
+        je near .18
         xor ebx, ebx
         mov bl, byte [ecx]
         lea edx, [byte ecx+01h]
@@ -1042,9 +1027,9 @@ UnpackRefPack:
         inc edx
         add ebx, ecx
         test bh, 1
-        je short loc_97D13
+        je short .1
         add edx, byte 3
-loc_97D13:
+.1:
         xor ebx, ebx
         mov bl, byte [edx]
         mov dword [esp], ebx
@@ -1063,27 +1048,27 @@ loc_97D13:
         add ecx, ebx
         mov dword [esp], ecx
         test esi, esi
-        je near loc_97EAD
-loc_97D40:
+        je near .18
+.2:
         movzx esi, byte [edx]
         inc edx
         mov ecx, esi
         and ecx, byte 3
         test si, 80h
-        jne short loc_97D92
+        jne short .6
         movzx edi, byte [edx]
         mov ebx, ecx
         inc edx
         test ecx, ecx
-        je short loc_97D63
-loc_97D5A:
+        je short .4
+.3:
         mov cl, byte [edx]
         mov byte [eax], cl
         inc edx
         inc eax
         dec ebx
-        jne short loc_97D5A
-loc_97D63:
+        jne short .3
+.4:
         mov ebx, esi
         and ebx, byte 60h
         shl ebx, 3
@@ -1103,17 +1088,17 @@ loc_97D63:
         mov byte [eax], cl
         inc ebx
         inc eax
-loc_97D87:
+.5:
         mov cl, byte [ebx]
         mov byte [eax], cl
         inc ebx
         inc eax
         dec esi
-        je short loc_97D40
-        jmp short loc_97D87
-loc_97D92:
+        je short .2
+        jmp short .5
+.6:
         test si, 40h
-        jne short loc_97DE9
+        jne short .10
         movzx edi, byte [edx]
         inc edx
         movzx ebp, byte [edx]
@@ -1121,15 +1106,15 @@ loc_97D92:
         shr ebx, 6
         inc edx
         test ebx, ebx
-        je short loc_97DB3
-loc_97DAA:
+        je short .8
+.7:
         mov cl, byte [edx]
         mov byte [eax], cl
         inc edx
         inc eax
         dec ebx
-        jne short loc_97DAA
-loc_97DB3:
+        jne short .7
+.8:
         and edi, byte 3Fh
         shl edi, 8
         add edi, ebp
@@ -1151,17 +1136,17 @@ loc_97DB3:
         mov byte [eax], cl
         inc ebx
         inc eax
-loc_97DDA:
+.9:
         mov cl, byte [ebx]
         mov byte [eax], cl
         inc ebx
         inc eax
         dec esi
-        je near loc_97D40
-        jmp short loc_97DDA
-loc_97DE9:
+        je near .2
+        jmp short .9
+.10:
         test si, 20h
-        jne near loc_97E6F
+        jne near .14
         xor ebx, ebx
         mov bl, byte [edx]
         mov dword [byte esp+08h], ebx
@@ -1174,15 +1159,15 @@ loc_97DE9:
         mov ebx, ecx
         inc edx
         test ecx, ecx
-        je short loc_97E19
-loc_97E10:
+        je short .12
+.11:
         mov cl, byte [edx]
         mov byte [eax], cl
         inc edx
         inc eax
         dec ebx
-        jne short loc_97E10
-loc_97E19:
+        jne short .11
+.12:
         mov ebx, esi
         and ebx, byte 10h
         shr ebx, 4
@@ -1217,21 +1202,21 @@ loc_97E19:
         mov byte [eax], cl
         inc ebx
         inc eax
-loc_97E60:
+.13:
         mov cl, byte [ebx]
         mov byte [eax], cl
         inc ebx
         inc eax
         dec esi
-        je near loc_97D40
-        jmp short loc_97E60
-loc_97E6F:
+        je near .2
+        jmp short .13
+.14:
         cmp esi, 0FCh
-        jae short loc_97E9E
+        jae short .16
         mov ebx, esi
         and ebx, byte 1Fh
         inc ebx
-loc_97E7D:
+.15:
         mov cl, byte [edx]
         mov byte [eax], cl
         inc edx
@@ -1249,20 +1234,20 @@ loc_97E7D:
         inc edx
         inc eax
         dec ebx
-        je near loc_97D40
-        jmp short loc_97E7D
-loc_97E9E:
+        je near .2
+        jmp short .15
+.16:
         mov ebx, ecx
         test ecx, ecx
-        je short loc_97EAD
-loc_97EA4:
+        je short .18
+.17:
         mov cl, byte [edx]
         mov byte [eax], cl
         inc edx
         inc eax
         dec ebx
-        jne short loc_97EA4
-loc_97EAD:
+        jne short .17
+.18:
         mov eax, dword [esp]
         add esp, byte 0Ch
         pop ebp
@@ -1284,10 +1269,10 @@ unpack:
         call dword [off_D308C]
         add esp, byte 0Ch
         test eax, eax
-        je short loc_97EE1
+        je short .1
         mov edi, eax
-        jmp near loc_9801E
-loc_97EE1:
+        jmp near .14
+.1:
         push ebp
         push edi
         call UnpackedSize
@@ -1299,78 +1284,78 @@ loc_97EE1:
         mov ebp, eax
         xor edi, edi
         cmp byte [byte eax+01h], 0FBh
-        jne near loc_98009
+        jne near .13
         mov al, byte [ecx]
         and al, 0FEh
         cmp al, 60h
-        jb short loc_97F64
-        jbe near loc_97FBE
+        jb short .4
+        jbe near .9
         cmp al, 6Ah
-        jb short loc_97F49
-        jbe near loc_97FCB
+        jb short .3
+        jbe near .10
         cmp al, 72h
-        jb short loc_97F3C
-        jbe near loc_97FBE
+        jb short .2
+        jbe near .9
         cmp al, 7Ah
-        jb near loc_97FEF
+        jb near .12
         cmp al, 7Bh
-        jbe near loc_97FE1
-        jmp near loc_97FEF
-loc_97F3C:
+        jbe near .11
+        jmp near .12
+.2:
         cmp al, 6Eh
-        je near loc_97FCB
-        jmp near loc_97FEF
-loc_97F49:
+        je near .10
+        jmp near .12
+.3:
         cmp al, 62h
-        jb near loc_97FEF
-        jbe near loc_97FBE
+        jb near .12
+        jbe near .9
         cmp al, 66h
-        je near loc_97FBE
-        jmp near loc_97FEF
-loc_97F64:
+        je near .9
+        jmp near .12
+.4:
         cmp al, 32h
-        jb short loc_97F7D
-        jbe short loc_97F9F
+        jb short .5
+        jbe short .7
         cmp al, 34h
-        jb near loc_97FEF
-        jbe short loc_97F9F
+        jb near .12
+        jbe short .7
         cmp al, 46h
-        je short loc_97FB1
-        jmp near loc_97FEF
-loc_97F7D:
+        je short .8
+        jmp near .12
+.5:
         cmp al, 10h
-        jb near loc_97FEF
-        jbe short loc_97F8D
+        jb near .12
+        jbe short .6
         cmp al, 30h
-        je short loc_97F9F
-        jmp short loc_97FEF
-loc_97F8D:
+        je short .7
+        jmp short .12
+.6:
         mov ebx, 1
         mov edx, esi
         mov eax, ecx
         call UnpackRefPack
         mov edi, eax
-        jmp short loc_98009
-loc_97F9F:
+        jmp short .13
+.7:
         mov ebx, 1
         mov edx, esi
         mov eax, ebp
         call UnpackHuffman
         mov edi, eax
-        jmp short loc_98009
-loc_97FB1:
+        jmp short .13
+.8:
         mov edx, esi
         mov eax, ecx
         call UnpackBytePair
         mov edi, eax
-        jmp short loc_98009
-loc_97FBE:
+        jmp short .13
+.9:
         mov edx, esi
         mov eax, ebp
         call UnpackDelta
         mov edi, eax
-        jmp short loc_98009
-loc_97FCB:
+        jmp short .13
+.10:
         mov edx, dword [esp]
         push edx
         push esi
@@ -1379,25 +1364,25 @@ loc_97FCB:
         call bcopy
         add esp, byte 0Ch
         mov edi, dword [esp]
-        jmp short loc_98009
-loc_97FE1:
+        jmp short .13
+.11:
         mov edx, esi
         mov eax, ecx
         call UnpackRunLength
         mov dword [esp], eax
-        jmp short loc_98009
-loc_97FEF:
+        jmp short .13
+.12:
         cmp dword [byte esp+020h], byte 0
-        je short loc_98009
+        je short .13
         xor eax, eax
         mov al, byte [byte ebp+00h]
         push eax
         push str_UnpackINVALIDPACKCODE
         call FatalError
         add esp, byte 8
-loc_98009:
+.13:
         test edi, edi
-        jne short loc_9801E
+        jne short .14
         mov ecx, dword [esp]
         push ecx
         push esi
@@ -1405,7 +1390,7 @@ loc_98009:
         call bcopy
         add esp, byte 0Ch
         mov edi, dword [esp]
-loc_9801E:
+.14:
         mov eax, edi
         add esp, byte 4
         pop ebp

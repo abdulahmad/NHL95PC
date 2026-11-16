@@ -3,25 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_9BA18 progbits alloc exec nowrite align=1
 extern __FDFS, byte_C4B6C, ScanBitMasks, memset_, off_D566C, tolower_
-global ScanFormat, loc_9BA37, loc_9BA6E, loc_9BA7B, loc_9BA8F, loc_9BA95, loc_9BAB1, loc_9BAE3
-global loc_9BAF1, loc_9BB01, loc_9BB0B, loc_9BB23, loc_9BB31, loc_9BB42, loc_9BB50, loc_9BB55
-global loc_9BB5E, loc_9BB65, loc_9BB72, loc_9BB79, loc_9BB86, loc_9BB8D, loc_9BB98, loc_9BBA3
-global loc_9BBB0, loc_9BBB9, loc_9BBCD, loc_9BBDA, loc_9BBE6, loc_9BC1A, loc_9BC2E, loc_9BC32
-global ScanParseSpec, loc_9BC69, loc_9BC86, loc_9BCAC, loc_9BCBC, loc_9BCC5, loc_9BCC7, loc_9BCE1
-global loc_9BCE8, loc_9BCF5, loc_9BD01, loc_9BD0C, ScanSkipSpace, loc_9BD1B, loc_9BD34, loc_9BD41
-global ScanStoreCount, loc_9BD69, loc_9BD7E, loc_9BD8C, loc_9BD9B, loc_9BDC0, loc_9BDC6, loc_9BDC8
-global ScanChars, loc_9BDE4, loc_9BDEC, loc_9BE03, loc_9BE17, loc_9BE25, loc_9BE27, loc_9BE3E
-global loc_9BE48, loc_9BE55, loc_9BE68, loc_9BE6C, loc_9BE73, loc_9BE8F, loc_9BE96, loc_9BEAC
-global loc_9BEB2, ScanStoreInt, loc_9BED9, loc_9BEEE, loc_9BEFE, loc_9BF0F, loc_9BF15, ScanBuildCharSet
-global loc_9BF38, loc_9BF57, ScanCharSet, loc_9BF80, loc_9BFA4, loc_9BFB9, loc_9BFC7, loc_9BFD4
-global loc_9C012, loc_9C025, loc_9C036, ScanFloatField, loc_9C05A, loc_9C078, loc_9C09D, loc_9C0BB
-global loc_9C0D6, loc_9C0FA, loc_9C113, loc_9C136, loc_9C171, loc_9C172, loc_9C196, loc_9C1A4
-global loc_9C1CA, loc_9C1D3, loc_9C1DC, loc_9C1F4, loc_9C212, loc_9C224, loc_9C23A, loc_9C25C
-global loc_9C263, loc_9C28E, loc_9C29A, loc_9C2B2, loc_9C2CB, loc_9C2DD, loc_9C2EB, loc_9C2F5
-global loc_9C306, loc_9C313, loc_9C316, ScanIntegerField, loc_9C33E, loc_9C357, loc_9C38C, loc_9C3A2
-global loc_9C3CE, loc_9C3EC, loc_9C3F3, loc_9C3FA, loc_9C427, loc_9C433, loc_9C43A, loc_9C45C
-global loc_9C467, loc_9C490, loc_9C497, loc_9C4A1, loc_9C4C8, loc_9C4E1, loc_9C4F3, loc_9C505
-global loc_9C50F, HexDigitValue, loc_9C527, loc_9C53A, ScanGetCharWidth, loc_9C55B, loc_9C560
+global ScanFormat, ScanParseSpec, ScanSkipSpace, ScanStoreCount, ScanChars, ScanStoreInt, ScanBuildCharSet, ScanCharSet
+global ScanFloatField, ScanIntegerField, HexDigitValue, ScanGetCharWidth
 ScanFormat:
         push ecx
         push esi
@@ -37,39 +20,39 @@ ScanFormat:
         and ah, 0FDh
         mov dword [byte esp+04h], edx
         mov byte [byte esi+010h], ah
-loc_9BA37:
+.1:
         mov ebx, dword [esp]
         lea ecx, [byte ebx+01h]
         mov dword [esp], ecx
         mov bl, byte [ebx]
         and ebx, 0FFh
-        je near loc_9BC1A
+        je near .29
         mov al, bl
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 2
-        je short loc_9BA6E
+        je short .2
         mov eax, esi
         call ScanSkipSpace
         add ebp, eax
-        jmp near loc_9BBE6
-loc_9BA6E:
+        jmp near .28
+.2:
         cmp ebx, byte 25h
-        je short loc_9BA95
+        je short .5
         mov eax, esi
         call dword [esi]
         cmp eax, ebx
-        je short loc_9BA8F
-loc_9BA7B:
+        je short .4
+.3:
         test byte [byte esi+010h], 2
-        jne near loc_9BC1A
+        jne near .29
         mov edx, esi
         call dword [byte esi+04h]
-        jmp near loc_9BC1A
-loc_9BA8F:
+        jmp near .29
+.4:
         inc ebp
-        jmp near loc_9BBE6
-loc_9BA95:
+        jmp near .28
+.5:
         mov eax, ecx
         mov edx, esi
         call ScanParseSpec
@@ -78,132 +61,132 @@ loc_9BA95:
         mov bl, byte [eax]
         mov edx, eax
         test ebx, ebx
-        je short loc_9BAB1
+        je short .6
         lea edx, [byte eax+01h]
         mov dword [esp], edx
-loc_9BAB1:
+.6:
         cmp ebx, byte 65h
-        jb short loc_9BB0B
+        jb short .10
         cmp ebx, byte 67h
-        jbe near loc_9BB8D
+        jbe near .21
         cmp ebx, byte 70h
-        jb short loc_9BAF1
-        jbe near loc_9BB86
+        jb short .8
+        jbe near .20
         cmp ebx, byte 75h
-        jb short loc_9BAE3
-        jbe near loc_9BB79
+        jb short .7
+        jbe near .19
         cmp ebx, byte 78h
-        je near loc_9BB86
-        jmp near loc_9BBE6
-loc_9BAE3:
+        je near .20
+        jmp near .28
+.7:
         cmp ebx, byte 73h
-        je near loc_9BB98
-        jmp near loc_9BBE6
-loc_9BAF1:
+        je near .22
+        jmp near .28
+.8:
         cmp ebx, byte 6Eh
-        jb short loc_9BB01
-        jbe near loc_9BBCD
-        jmp near loc_9BB72
-loc_9BB01:
+        jb short .9
+        jbe near .26
+        jmp near .18
+.9:
         cmp ebx, byte 69h
-        je short loc_9BB65
-        jmp near loc_9BBE6
-loc_9BB0B:
+        je short .17
+        jmp near .28
+.10:
         cmp ebx, byte 58h
-        jb short loc_9BB31
-        jbe near loc_9BB86
+        jb short .12
+        jbe near .20
         cmp ebx, byte 63h
-        jb short loc_9BB23
-        jbe near loc_9BBB0
-        jmp short loc_9BB50
-loc_9BB23:
+        jb short .11
+        jbe near .24
+        jmp short .14
+.11:
         cmp ebx, byte 5Bh
-        je near loc_9BBA3
-        jmp near loc_9BBE6
-loc_9BB31:
+        je near .23
+        jmp near .28
+.12:
         cmp ebx, byte 45h
-        jb short loc_9BB42
-        jbe short loc_9BB8D
+        jb short .13
+        jbe short .21
         cmp ebx, byte 47h
-        je short loc_9BB8D
-        jmp near loc_9BBE6
-loc_9BB42:
+        je short .21
+        jmp near .28
+.13:
         cmp ebx, byte 25h
-        je near loc_9BBDA
-        jmp near loc_9BBE6
-loc_9BB50:
+        je near .27
+        jmp near .28
+.14:
         mov ebx, 0Ah
-loc_9BB55:
+.15:
         mov ecx, 1
         mov eax, esi
         mov edx, edi
-loc_9BB5E:
+.16:
         call ScanIntegerField
-        jmp short loc_9BBB9
-loc_9BB65:
+        jmp short .25
+.17:
         mov ecx, 1
         mov eax, esi
         mov edx, edi
         xor ebx, ebx
-        jmp short loc_9BB5E
-loc_9BB72:
+        jmp short .16
+.18:
         mov ebx, 8
-        jmp short loc_9BB55
-loc_9BB79:
+        jmp short .15
+.19:
         mov ebx, 0Ah
         mov eax, esi
         mov edx, edi
         xor ecx, ecx
-        jmp short loc_9BB5E
-loc_9BB86:
+        jmp short .16
+.20:
         mov ebx, 10h
-        jmp short loc_9BB55
-loc_9BB8D:
+        jmp short .15
+.21:
         mov eax, esi
         mov edx, edi
         call ScanFloatField
-        jmp short loc_9BBB9
-loc_9BB98:
+        jmp short .25
+.22:
         mov eax, esi
         mov edx, edi
         call ScanChars
-        jmp short loc_9BBB9
-loc_9BBA3:
+        jmp short .25
+.23:
         mov ebx, esp
         mov eax, esi
         mov edx, edi
         call ScanCharSet
-        jmp short loc_9BBB9
-loc_9BBB0:
+        jmp short .25
+.24:
         mov eax, esi
         mov edx, edi
         call ScanStoreCount
-loc_9BBB9:
+.25:
         test eax, eax
-        jle short loc_9BC1A
+        jle short .29
         mov dh, byte [byte esi+010h]
         add ebp, eax
         test dh, 1
-        je short loc_9BBE6
+        je short .28
         inc dword [byte esp+04h]
-        jmp short loc_9BBE6
-loc_9BBCD:
+        jmp short .28
+.26:
         mov eax, esi
         mov edx, edi
         mov ebx, ebp
         call ScanStoreInt
-        jmp short loc_9BBE6
-loc_9BBDA:
+        jmp short .28
+.27:
         mov eax, esi
         call dword [esi]
         cmp eax, ebx
-        jne near loc_9BA7B
-loc_9BBE6:
+        jne near .3
+.28:
         test byte [byte esi+010h], 2
-        je near loc_9BA37
+        je near .1
         mov eax, dword [esp]
         cmp byte [eax], 25h
-        jne short loc_9BC1A
+        jne short .29
         lea edx, [byte eax+01h]
         mov dword [esp], edx
         mov eax, edx
@@ -211,21 +194,21 @@ loc_9BBE6:
         call ScanParseSpec
         mov dword [esp], eax
         cmp byte [eax], 6Eh
-        jne short loc_9BC1A
+        jne short .29
         mov eax, esi
         mov edx, edi
         mov ebx, ebp
         call ScanStoreInt
-loc_9BC1A:
+.29:
         cmp dword [byte esp+04h], byte 0
-        jne short loc_9BC2E
+        jne short .30
         test byte [byte esi+010h], 2
-        je short loc_9BC2E
+        je short .30
         mov eax, 0FFFFFFFFh
-        jmp short loc_9BC32
-loc_9BC2E:
+        jmp short .31
+.30:
         mov eax, dword [byte esp+04h]
-loc_9BC32:
+.31:
         add esp, byte 8
         pop ebp
         pop edi
@@ -246,12 +229,12 @@ ScanParseSpec:
         and dh, 3
         mov byte [byte ebx+010h], dh
         cmp byte [eax], 2Ah
-        jne short loc_9BC69
+        jne short .1
         mov ch, byte [byte ebx+010h]
         and ch, 0FEh
         inc eax
         mov byte [byte ebx+010h], ch
-loc_9BC69:
+.1:
         xor edx, edx
         mov dl, byte [eax]
         mov dword [esp], edx
@@ -259,9 +242,9 @@ loc_9BC69:
         inc dl
         and edx, 0FFh
         test byte [dword edx+byte_C4B6C], 20h
-        je short loc_9BCAC
+        je short .3
         xor edx, edx
-loc_9BC86:
+.2:
         imul edx, byte 0Ah
         mov esi, dword [esp]
         sub esi, byte 30h
@@ -273,55 +256,55 @@ loc_9BC86:
         inc cl
         movzx esi, cl
         test byte [dword esi+byte_C4B6C], 20h
-        jne short loc_9BC86
+        jne short .2
         mov dword [byte ebx+0Ch], edx
-loc_9BCAC:
+.3:
         mov cl, byte [eax]
         lea edx, [byte eax+01h]
         cmp cl, 4Eh
-        jne short loc_9BCBC
+        jne short .4
         or byte [byte ebx+010h], 8
-        jmp short loc_9BCC5
-loc_9BCBC:
+        jmp short .5
+.4:
         cmp cl, 46h
-        jne short loc_9BCC7
+        jne short .6
         or byte [byte ebx+010h], 4
-loc_9BCC5:
+.5:
         mov eax, edx
-loc_9BCC7:
+.6:
         mov cl, byte [eax]
         lea edx, [byte eax+01h]
         cmp cl, 68h
-        jb short loc_9BCE1
-        jbe short loc_9BCE8
+        jb short .7
+        jbe short .8
         cmp cl, 6Ch
-        jb short loc_9BD0C
-        jbe short loc_9BCF5
+        jb short .11
+        jbe short .9
         cmp cl, 77h
-        je short loc_9BCF5
-        jmp short loc_9BD0C
-loc_9BCE1:
+        je short .9
+        jmp short .11
+.7:
         cmp cl, 4Ch
-        je short loc_9BD01
-        jmp short loc_9BD0C
-loc_9BCE8:
+        je short .10
+        jmp short .11
+.8:
         mov cl, byte [byte ebx+010h]
         or cl, 10h
         mov eax, edx
         mov byte [byte ebx+010h], cl
-        jmp short loc_9BD0C
-loc_9BCF5:
+        jmp short .11
+.9:
         mov dl, byte [byte ebx+010h]
         or dl, 20h
         inc eax
         mov byte [byte ebx+010h], dl
-        jmp short loc_9BD0C
-loc_9BD01:
+        jmp short .11
+.10:
         mov ch, byte [byte ebx+010h]
         or ch, 40h
         mov eax, edx
         mov byte [byte ebx+010h], ch
-loc_9BD0C:
+.11:
         add esp, byte 4
         pop esi
         pop ecx
@@ -334,23 +317,23 @@ ScanSkipSpace:
         push esi
         mov ebx, eax
         xor ecx, ecx
-loc_9BD1B:
+.1:
         mov eax, ebx
         call dword [ebx]
         mov esi, eax
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 2
-        je short loc_9BD34
+        je short .2
         inc ecx
-        jmp short loc_9BD1B
-loc_9BD34:
+        jmp short .1
+.2:
         test byte [byte ebx+010h], 2
-        jne short loc_9BD41
+        jne short .3
         mov eax, esi
         mov edx, ebx
         call dword [byte ebx+04h]
-loc_9BD41:
+.3:
         mov eax, ecx
         pop esi
         pop edx
@@ -365,61 +348,60 @@ ScanStoreCount:
         push es
         mov ebx, eax
         test byte [byte eax+010h], 1
-        je short loc_9BD8C
+        je short .3
         mov cl, byte [byte ebx+010h]
         test cl, 4
-        je short loc_9BD69
+        je short .1
         mov edi, dword [edx]
         add edi, byte 8
         mov dword [edx], edi
         les ecx, [byte edi-08h]
-        jmp short loc_9BD8C
-loc_9BD69:
+        jmp short .3
+.1:
         test cl, 8
-        je short loc_9BD7E
+        je short .2
         mov esi, dword [edx]
         add esi, byte 4
         mov eax, ds
         mov dword [edx], esi
         mov es, eax
         mov ecx, dword [byte esi-04h]
-        jmp short loc_9BD8C
-loc_9BD7E:
+        jmp short .3
+.2:
         mov ecx, dword [edx]
         add ecx, byte 4
         mov eax, ds
         mov dword [edx], ecx
         mov es, eax
         mov ecx, dword [byte ecx-04h]
-loc_9BD8C:
+.3:
         mov edx, dword [byte ebx+0Ch]
         xor esi, esi
         cmp edx, byte 0FFFFFFFFh
-        jne short loc_9BD9B
+        jne short .4
         mov edx, 1
-loc_9BD9B:
+.4:
         test edx, edx
-        jle short loc_9BDC6
+        jle short .6
         mov eax, ebx
         call dword [ebx]
         test byte [byte ebx+010h], 2
-        jne short loc_9BDC6
+        jne short .6
         inc esi
         dec edx
         test byte [byte ebx+010h], 1
-        je short loc_9BD9B
+        je short .4
         test byte [byte ebx+010h], 20h
-        je short loc_9BDC0
+        je short .5
         db 066h,026h,089h,01h                   ; insn: mov [es:ecx],ax
         add ecx, byte 2
-        jmp short loc_9BD9B
-loc_9BDC0:
+        jmp short .4
+.5:
         mov byte [es:ecx], al
         inc ecx
-        jmp short loc_9BD9B
-loc_9BDC6:
+        jmp short .4
+.6:
         mov eax, esi
-loc_9BDC8:
         pop es
         pop edi
         pop esi
@@ -435,107 +417,107 @@ ScanChars:
         sub esp, byte 4
         mov ebx, eax
         test byte [byte eax+010h], 20h
-        je short loc_9BDE4
+        je short .1
         mov byte [esp], 2
-        jmp short loc_9BDEC
-loc_9BDE4:
+        jmp short .2
+.1:
         test byte [byte ebx+010h], 10h
         mov byte [esp], 1
-loc_9BDEC:
+.2:
         mov al, byte [byte ebx+010h]
         test al, 1
-        je short loc_9BE25
+        je short .5
         test al, 4
-        je short loc_9BE03
+        je short .3
         mov edi, dword [edx]
         add edi, byte 8
         mov dword [edx], edi
         les ecx, [byte edi-08h]
-        jmp short loc_9BE25
-loc_9BE03:
+        jmp short .5
+.3:
         test al, 8
-        je short loc_9BE17
+        je short .4
         mov esi, dword [edx]
         add esi, byte 4
         mov dword [edx], esi
         mov edx, ds
         mov es, edx
         mov ecx, dword [byte esi-04h]
-        jmp short loc_9BE25
-loc_9BE17:
+        jmp short .5
+.4:
         mov ecx, dword [edx]
         add ecx, byte 4
         mov dword [edx], ecx
         mov edx, ds
         mov es, edx
         mov ecx, dword [byte ecx-04h]
-loc_9BE25:
+.5:
         xor esi, esi
-loc_9BE27:
+.6:
         mov eax, ebx
         call dword [ebx]
         mov edx, eax
         inc al
         movzx edi, al
         test byte [dword edi+byte_C4B6C], 2
-        je short loc_9BE3E
+        je short .7
         inc esi
-        jmp short loc_9BE27
-loc_9BE3E:
+        jmp short .6
+.7:
         test byte [byte ebx+010h], 2
-        je short loc_9BE48
+        je short .8
         xor esi, esi
-        jmp short loc_9BE96
-loc_9BE48:
+        jmp short .14
+.8:
         mov edi, dword [byte ebx+0Ch]
         lea eax, [byte edi-01h]
         mov dword [byte ebx+0Ch], eax
         test edi, edi
-        je short loc_9BE8F
-loc_9BE55:
+        je short .13
+.9:
         mov al, byte [byte ebx+010h]
         inc esi
         test al, 1
-        je short loc_9BE73
+        je short .12
         cmp byte [esp], 1
-        jne short loc_9BE68
+        jne short .10
         mov byte [es:ecx], dl
-        jmp short loc_9BE6C
-loc_9BE68:
+        jmp short .11
+.10:
         db 066h,026h,089h,011h                  ; insn: mov [es:ecx],dx
-loc_9BE6C:
+.11:
         xor edx, edx
         mov dl, byte [esp]
         add ecx, edx
-loc_9BE73:
+.12:
         mov eax, ebx
         call ScanGetCharWidth
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9BE96
+        je short .14
         inc al
         movzx edi, al
         test byte [dword edi+byte_C4B6C], 2
-        je short loc_9BE55
-loc_9BE8F:
+        je short .9
+.13:
         mov eax, edx
         mov edx, ebx
         call dword [byte ebx+04h]
-loc_9BE96:
+.14:
         test byte [byte ebx+010h], 1
-        je short loc_9BEB2
+        je short .16
         test esi, esi
-        jle short loc_9BEB2
+        jle short .16
         cmp byte [esp], 1
-        jne short loc_9BEAC
+        jne short .15
         mov byte [es:ecx], 0
-        jmp short loc_9BEB2
-loc_9BEAC:
+        jmp short .16
+.15:
         db 066h,026h,0C7h,01h,00h,00h           ; insn: mov word [es:ecx],0
-loc_9BEB2:
+.16:
         mov eax, esi
         add esp, byte 4
-        jmp near loc_9BDC8
+        jmp near ScanStoreCount+080h
 ScanStoreInt:
         push ecx
         push esi
@@ -543,25 +525,25 @@ ScanStoreInt:
         push es
         mov cl, byte [byte eax+010h]
         test cl, 1
-        je short loc_9BF15
+        je short .5
         test cl, 4
-        je short loc_9BED9
+        je short .1
         mov edi, dword [edx]
         add edi, byte 8
         mov dword [edx], edi
         les edx, [byte edi-08h]
-        jmp short loc_9BEFE
-loc_9BED9:
+        jmp short .3
+.1:
         test cl, 8
-        je short loc_9BEEE
+        je short .2
         mov esi, dword [edx]
         add esi, byte 4
         mov ecx, ds
         mov dword [edx], esi
         mov es, ecx
         mov edx, dword [byte esi-04h]
-        jmp short loc_9BEFE
-loc_9BEEE:
+        jmp short .3
+.2:
         mov ecx, dword [edx]
         add ecx, byte 4
         mov dword [edx], ecx
@@ -569,20 +551,20 @@ loc_9BEEE:
         mov ecx, ds
         mov es, ecx
         mov edx, dword [byte edx-04h]
-loc_9BEFE:
+.3:
         mov ch, byte [byte eax+010h]
         test ch, 10h
-        je short loc_9BF0F
+        je short .4
         db 066h,026h,089h,01Ah                  ; insn: mov [es:edx],bx
         pop es
         pop edi
         pop esi
         pop ecx
         ret
-loc_9BF0F:
+.4:
         test ch, 20h
         mov dword [es:edx], ebx
-loc_9BF15:
+.5:
         pop es
         pop edi
         pop esi
@@ -602,8 +584,8 @@ ScanBuildCharSet:
         mov al, byte [ecx]
         inc ecx
         test eax, eax
-        je short loc_9BF57
-loc_9BF38:
+        je short .2
+.1:
         mov edx, eax
         and eax, byte 7
         sar edx, 3
@@ -612,11 +594,11 @@ loc_9BF38:
         xor eax, eax
         mov al, byte [ecx]
         test eax, eax
-        je short loc_9BF57
+        je short .2
         inc ecx
         cmp eax, byte 5Dh
-        jne short loc_9BF38
-loc_9BF57:
+        jne short .1
+.2:
         mov eax, ecx
         pop esi
         pop ecx
@@ -636,54 +618,54 @@ ScanCharSet:
         sete dl
         and edx, 0FFh
         mov dword [byte esp+020h], edx
-        je short loc_9BF80
+        je short .1
         inc eax
         mov dword [ebx], eax
-loc_9BF80:
+.1:
         mov edx, esp
         mov eax, dword [ebx]
         call ScanBuildCharSet
         mov dword [ebx], eax
         mov bl, byte [byte ecx+010h]
         test bl, 1
-        je short loc_9BFC7
+        je short .4
         test bl, 4
-        je short loc_9BFA4
+        je short .2
         mov esi, dword [edi]
         add esi, byte 8
         mov dword [edi], esi
         les esi, [byte esi-08h]
-        jmp short loc_9BFC7
-loc_9BFA4:
+        jmp short .4
+.2:
         test bl, 8
-        je short loc_9BFB9
+        je short .3
         mov ebx, dword [edi]
         add ebx, byte 4
         mov eax, ds
         mov dword [edi], ebx
         mov es, eax
         mov esi, dword [byte ebx-04h]
-        jmp short loc_9BFC7
-loc_9BFB9:
+        jmp short .4
+.3:
         mov edx, dword [edi]
         add edx, byte 4
         mov eax, ds
         mov dword [edi], edx
         mov es, eax
         mov esi, dword [byte edx-04h]
-loc_9BFC7:
+.4:
         mov ebp, dword [byte esp+020h]
         xor edi, edi
         mov ebx, dword [byte ecx+0Ch]
         mov dword [byte esp+024h], edi
-loc_9BFD4:
+.5:
         test ebx, ebx
-        jbe short loc_9C025
+        jbe short .7
         mov eax, ecx
         call dword [ecx]
         mov edx, eax
         test byte [byte ecx+010h], 2
-        jne short loc_9C025
+        jne short .7
         mov edi, eax
         and edx, byte 7
         sar edi, 3
@@ -694,26 +676,26 @@ loc_9BFD4:
         sete dl
         and edx, 0FFh
         cmp edx, ebp
-        je short loc_9C012
+        je short .6
         mov edx, ecx
         call dword [byte ecx+04h]
-        jmp short loc_9C025
-loc_9C012:
+        jmp short .7
+.6:
         inc dword [byte esp+024h]
         mov dl, byte [byte ecx+010h]
         dec ebx
         test dl, 1
-        je short loc_9BFD4
+        je short .5
         mov byte [es:esi], al
         inc esi
-        jmp short loc_9BFD4
-loc_9C025:
+        jmp short .5
+.7:
         test byte [byte ecx+010h], 1
-        je short loc_9C036
+        je short .8
         cmp dword [byte esp+024h], byte 0
-        jle short loc_9C036
+        jle short .8
         mov byte [es:esi], 0
-loc_9C036:
+.8:
         mov eax, dword [byte esp+024h]
         add esp, byte 28h
         pop ebp
@@ -735,7 +717,7 @@ ScanFloatField:
         xor edi, edi
         mov esi, esp
         mov dword [byte esp+06Ch], edi
-loc_9C05A:
+.1:
         mov eax, ecx
         call dword [ecx]
         mov ebp, eax
@@ -743,22 +725,22 @@ loc_9C05A:
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 2
-        je short loc_9C078
+        je short .2
         inc dword [byte esp+06Ch]
-        jmp short loc_9C05A
-loc_9C078:
+        jmp short .1
+.2:
         test byte [byte ecx+010h], 2
-        jne near loc_9C263
+        jne near .21
         mov eax, dword [byte ecx+0Ch]
         lea edx, [byte eax-01h]
         mov dword [byte ecx+0Ch], edx
         test eax, eax
-        je near loc_9C25C
+        je near .20
         cmp ebp, byte 2Bh
-        je short loc_9C09D
+        je short .3
         cmp ebp, byte 2Dh
-        jne short loc_9C0BB
-loc_9C09D:
+        jne short .4
+.3:
         mov ebp, dword [byte esp+06Ch]
         mov eax, ecx
         mov byte [esi], bl
@@ -768,16 +750,16 @@ loc_9C09D:
         mov ebx, eax
         mov dword [byte esp+06Ch], ebp
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9C263
-loc_9C0BB:
+        je near .21
+.4:
         mov al, bl
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 20h
-        jne short loc_9C0D6
+        jne short .5
         cmp ebx, byte 2Eh
-        jne near loc_9C25C
-loc_9C0D6:
+        jne near .20
+.5:
         xor eax, eax
         mov dword [byte esp+068h], eax
         mov dword [byte esp+05Ch], eax
@@ -785,54 +767,54 @@ loc_9C0D6:
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 20h
-        je short loc_9C136
+        je short .8
         mov dword [byte esp+05Ch], 1
-loc_9C0FA:
+.6:
         mov byte [esi], bl
         mov al, byte [byte ecx+010h]
         inc esi
         test al, 10h
-        je short loc_9C113
+        je short .7
         imul eax, dword [byte esp+06Ah], byte 0Ah
         add ebx, eax
         sub ebx, byte 30h
         mov word [byte esp+06Ah], bx
-loc_9C113:
+.7:
         mov eax, ecx
         inc edi
         call ScanGetCharWidth
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9C263
+        je near .21
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 20h
-        jne short loc_9C0FA
-loc_9C136:
+        jne short .6
+.8:
         cmp ebx, byte 2Eh
-        jne near loc_9C1DC
+        jne near .15
         mov eax, ecx
         mov byte [esi], bl
         call ScanGetCharWidth
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9C263
+        je near .21
         cmp dword [byte esp+05Ch], byte 0
-        jne short loc_9C171
+        jne short .9
         mov al, bl
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 20h
-        je near loc_9C25C
-loc_9C171:
+        je near .20
+.9:
         inc edi
-loc_9C172:
+.10:
         mov al, bl
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 20h
-        je short loc_9C196
+        je short .11
         inc edi
         mov eax, ecx
         mov byte [esi], bl
@@ -840,18 +822,18 @@ loc_9C172:
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        jne short loc_9C172
-loc_9C196:
+        jne short .10
+.11:
         test byte [byte ecx+010h], 10h
-        je short loc_9C1D3
+        je short .14
         xor edx, edx
         mov ebp, esi
         mov dword [byte esp+064h], edx
-loc_9C1A4:
+.12:
         dec ebp
         mov al, byte [byte ebp+00h]
         cmp al, 2Eh
-        je short loc_9C1CA
+        je short .13
         sub al, 30h
         mov dword [byte esp+060h], 0Ah
         mov byte [byte esp+066h], al
@@ -859,21 +841,21 @@ loc_9C1A4:
         mov eax, dword [byte esp+064h]
         div dword [byte esp+060h]
         mov dword [byte esp+064h], eax
-        jmp short loc_9C1A4
-loc_9C1CA:
+        jmp short .12
+.13:
         mov eax, dword [byte esp+064h]
         mov word [byte esp+068h], ax
-loc_9C1D3:
+.14:
         cmp ebx, byte 0FFFFFFFFh
-        je near loc_9C263
-loc_9C1DC:
+        je near .21
+.15:
         test byte [byte ecx+010h], 10h
-        jne near loc_9C25C
+        jne near .20
         cmp ebx, byte 65h
-        je short loc_9C1F4
+        je short .16
         cmp ebx, byte 45h
-        jne near loc_9C25C
-loc_9C1F4:
+        jne near .20
+.16:
         inc edi
         mov eax, ecx
         mov byte [esi], bl
@@ -882,12 +864,12 @@ loc_9C1F4:
         mov ebp, eax
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9C263
+        je short .21
         cmp eax, byte 2Bh
-        je short loc_9C212
+        je short .17
         cmp eax, byte 2Dh
-        jne short loc_9C224
-loc_9C212:
+        jne short .18
+.17:
         inc edi
         mov eax, ecx
         mov byte [esi], bl
@@ -895,16 +877,16 @@ loc_9C212:
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9C263
-loc_9C224:
+        je short .21
+.18:
         mov al, bl
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 20h
-        jne short loc_9C23A
+        jne short .19
         xor edi, edi
-        jmp short loc_9C25C
-loc_9C23A:
+        jmp short .20
+.19:
         inc edi
         mov eax, ecx
         mov byte [esi], bl
@@ -912,45 +894,45 @@ loc_9C23A:
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9C263
+        je short .21
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 20h
-        jne short loc_9C23A
-loc_9C25C:
+        jne short .19
+.20:
         mov eax, ebx
         mov edx, ecx
         call dword [byte ecx+04h]
-loc_9C263:
+.21:
         test edi, edi
-        jle near loc_9C316
+        jle near .31
         add edi, dword [byte esp+06Ch]
         test byte [byte ecx+010h], 1
-        je near loc_9C316
+        je near .31
         mov byte [esi], 0
         test byte [byte ecx+010h], 10h
-        je short loc_9C28E
+        je short .22
         cmp byte [esp], 2Dh
-        jne short loc_9C29A
+        jne short .23
         neg dword [byte esp+068h]
-        jmp short loc_9C29A
-loc_9C28E:
+        jmp short .23
+.22:
         mov eax, esp
         lea edx, [byte esp+050h]
         call dword [off_D566C]
-loc_9C29A:
+.23:
         mov ah, byte [byte ecx+010h]
         test ah, 4
-        je short loc_9C2B2
+        je short .24
         mov eax, dword [byte esp+058h]
         mov ebx, dword [eax]
         add ebx, byte 8
         mov dword [eax], ebx
         les ebx, [byte ebx-08h]
-        jmp short loc_9C2DD
-loc_9C2B2:
+        jmp short .26
+.24:
         test ah, 8
-        je short loc_9C2CB
+        je short .25
         mov eax, dword [byte esp+058h]
         mov edx, dword [eax]
         add edx, byte 4
@@ -958,8 +940,8 @@ loc_9C2B2:
         mov eax, ds
         mov es, eax
         mov ebx, dword [byte edx-04h]
-        jmp short loc_9C2DD
-loc_9C2CB:
+        jmp short .26
+.25:
         mov eax, dword [byte esp+058h]
         mov ebp, dword [eax]
         add ebp, byte 4
@@ -967,34 +949,34 @@ loc_9C2CB:
         mov eax, ds
         mov es, eax
         mov ebx, dword [byte ebp-04h]
-loc_9C2DD:
+.26:
         mov dh, byte [byte ecx+010h]
         test dh, 10h
-        je short loc_9C2EB
+        je short .27
         mov eax, dword [byte esp+068h]
-        jmp short loc_9C313
-loc_9C2EB:
+        jmp short .30
+.27:
         test dh, 20h
-        jne short loc_9C2F5
+        jne short .28
         test dh, 40h
-        je short loc_9C306
-loc_9C2F5:
+        je short .29
+.28:
         mov eax, dword [byte esp+050h]
         mov dword [es:ebx], eax
         mov eax, dword [byte esp+054h]
         mov dword [byte es:ebx+04h], eax
-        jmp short loc_9C316
-loc_9C306:
+        jmp short .31
+.29:
         mov eax, dword [byte esp+050h]
         mov edx, dword [byte esp+054h]
         call __FDFS
-loc_9C313:
+.30:
         mov dword [es:ebx], eax
-loc_9C316:
+.31:
         mov eax, edi
         add esp, byte 70h
         pop ebp
-        jmp near loc_9BDC8
+        jmp near ScanStoreCount+080h
 ScanIntegerField:
         push esi
         push edi
@@ -1009,103 +991,103 @@ ScanIntegerField:
         xor ebx, ebx
         xor ebp, ebp
         mov dword [byte esp+08h], edx
-loc_9C33E:
+.1:
         mov eax, esi
         call dword [esi]
         mov edx, eax
         inc al
         and eax, 0FFh
         test byte [dword eax+byte_C4B6C], 2
-        je short loc_9C357
+        je short .2
         inc ebp
-        jmp short loc_9C33E
-loc_9C357:
+        jmp short .1
+.2:
         test byte [byte esi+010h], 2
-        jne near loc_9C497
+        jne near .15
         mov eax, dword [byte esi+0Ch]
         lea ecx, [byte eax-01h]
         mov dword [byte esi+0Ch], ecx
         test eax, eax
-        je near loc_9C490
+        je near .14
         mov ecx, 2Bh
         mov eax, dword [byte esp+04h]
         mov dword [esp], ecx
         test eax, eax
-        je short loc_9C3A2
+        je short .4
         cmp edx, byte 2Bh
-        je short loc_9C38C
+        je short .3
         cmp edx, byte 2Dh
-        jne short loc_9C3A2
-loc_9C38C:
+        jne short .4
+.3:
         mov dword [esp], edx
         mov eax, esi
         inc ebp
         call ScanGetCharWidth
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9C497
-loc_9C3A2:
+        je near .15
+.4:
         test edi, edi
-        jne short loc_9C3FA
+        jne short .8
         cmp edx, byte 30h
-        jne short loc_9C3F3
+        jne short .7
         mov eax, esi
         mov ebx, 1
         call ScanGetCharWidth
         mov ecx, eax
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9C497
+        je near .15
         cmp eax, byte 78h
-        je short loc_9C3CE
+        je short .5
         cmp eax, byte 58h
-        jne short loc_9C3EC
-loc_9C3CE:
+        jne short .6
+.5:
         mov eax, esi
         add ebp, byte 2
         call ScanGetCharWidth
         xor ebx, ebx
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9C497
+        je near .15
         mov edi, 10h
-        jmp short loc_9C43A
-loc_9C3EC:
+        jmp short .11
+.6:
         mov edi, 8
-        jmp short loc_9C43A
-loc_9C3F3:
+        jmp short .11
+.7:
         mov edi, 0Ah
-        jmp short loc_9C43A
-loc_9C3FA:
+        jmp short .11
+.8:
         cmp edi, byte 10h
-        jne short loc_9C43A
+        jne short .11
         cmp edx, byte 30h
-        jne short loc_9C43A
+        jne short .11
         mov eax, esi
         mov ebx, 1
         call ScanGetCharWidth
         mov ecx, eax
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
-        je near loc_9C497
+        je near .15
         cmp eax, byte 78h
-        je short loc_9C427
+        je short .9
         cmp eax, byte 58h
-        jne short loc_9C43A
-loc_9C427:
+        jne short .11
+.9:
         mov eax, esi
         add ebp, byte 2
         call ScanGetCharWidth
         xor ebx, ebx
-loc_9C433:
+.10:
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9C497
-loc_9C43A:
+        je short .15
+.11:
         mov eax, edx
         call HexDigitValue
         cmp eax, edi
-        jge short loc_9C45C
+        jge short .12
         mov edx, dword [byte esp+08h]
         imul edx, edi
         inc ebx
@@ -1113,54 +1095,54 @@ loc_9C43A:
         mov eax, esi
         mov dword [byte esp+08h], edx
         call ScanGetCharWidth
-        jmp short loc_9C433
-loc_9C45C:
+        jmp short .10
+.12:
         cmp edx, byte 3Ah
-        jne short loc_9C490
+        jne short .14
         test byte [byte esi+010h], 80h
-        je short loc_9C490
-loc_9C467:
+        je short .14
+.13:
         mov eax, esi
         inc ebx
         call ScanGetCharWidth
         mov ecx, eax
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
-        je short loc_9C497
+        je short .15
         call HexDigitValue
         cmp eax, edi
-        jge short loc_9C490
+        jge short .14
         mov edx, dword [byte esp+08h]
         imul edx, edi
         add edx, eax
         mov dword [byte esp+08h], edx
-        jmp short loc_9C467
-loc_9C490:
+        jmp short .13
+.14:
         mov eax, edx
         mov edx, esi
         call dword [byte esi+04h]
-loc_9C497:
+.15:
         cmp dword [esp], byte 2Dh
-        jne short loc_9C4A1
+        jne short .16
         neg dword [byte esp+08h]
-loc_9C4A1:
+.16:
         test ebx, ebx
-        jle near loc_9C50F
+        jle near .21
         mov ah, byte [byte esi+010h]
         add ebx, ebp
         test ah, 1
-        je short loc_9C50F
+        je short .21
         test ah, 4
-        je short loc_9C4C8
+        je short .17
         mov eax, dword [byte esp+0Ch]
         mov edx, dword [eax]
         add edx, byte 8
         mov dword [eax], edx
         les eax, [byte edx-08h]
-        jmp short loc_9C4F3
-loc_9C4C8:
+        jmp short .19
+.17:
         test ah, 8
-        je short loc_9C4E1
+        je short .18
         mov eax, dword [byte esp+0Ch]
         mov ebp, dword [eax]
         add ebp, byte 4
@@ -1168,8 +1150,8 @@ loc_9C4C8:
         mov dword [eax], ebp
         mov es, edx
         mov eax, dword [byte ebp-04h]
-        jmp short loc_9C4F3
-loc_9C4E1:
+        jmp short .19
+.18:
         mov eax, dword [byte esp+0Ch]
         mov edi, dword [eax]
         add edi, byte 4
@@ -1177,18 +1159,18 @@ loc_9C4E1:
         mov dword [eax], edi
         mov es, edx
         mov eax, dword [byte edi-04h]
-loc_9C4F3:
+.19:
         mov cl, byte [byte esi+010h]
         test cl, 10h
-        je short loc_9C505
+        je short .20
         mov edx, dword [byte esp+08h]
         db 066h,026h,089h,010h                  ; insn: mov [es:eax],dx
-        jmp short loc_9C50F
-loc_9C505:
+        jmp short .21
+.20:
         test cl, 20h
         mov edx, dword [byte esp+08h]
         mov dword [es:eax], edx
-loc_9C50F:
+.21:
         mov eax, ebx
         add esp, byte 10h
         pop ebp
@@ -1198,20 +1180,20 @@ loc_9C50F:
         ret
 HexDigitValue:
         cmp eax, byte 30h
-        jl short loc_9C527
+        jl short .1
         cmp eax, byte 39h
-        jg short loc_9C527
+        jg short .1
         sub eax, byte 30h
         ret
-loc_9C527:
+.1:
         call tolower_
         cmp eax, byte 61h
-        jl short loc_9C53A
+        jl short .2
         cmp eax, byte 66h
-        jg short loc_9C53A
+        jg short .2
         sub eax, byte 57h
         ret
-loc_9C53A:
+.2:
         mov eax, 10h
         ret
 ScanGetCharWidth:
@@ -1222,14 +1204,14 @@ ScanGetCharWidth:
         lea ebx, [byte eax-01h]
         mov dword [byte edx+0Ch], ebx
         test eax, eax
-        je short loc_9C55B
+        je short .1
         mov eax, edx
         call dword [edx]
         test byte [byte edx+010h], 2
-        je short loc_9C560
-loc_9C55B:
+        je short .2
+.1:
         mov eax, 0FFFFFFFFh
-loc_9C560:
+.2:
         pop edx
         pop ebx
         ret

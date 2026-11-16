@@ -5,64 +5,30 @@ section s_A3274 progbits alloc exec nowrite align=1
 extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, Hook387Flag, Hook387Saved, FpeHandler, unk_D657C, Hook387Save
 global unk_A3274, unk_A3278, unk_A327C, unk_A327E, unk_A3280, unk_A3282, unk_A32CE, unk_A32D0
 global unk_A32D4, unk_A32D6, unk_A331E, unk_A3322, unk_A332C, unk_A338C, jpt_A33EC, jpt_A34EC
-global __int7_pl3, __int7_X32VM, __int7, EmuTrapExit, loc_A369A, loc_A3706, loc_A370C, loc_A3732
-global loc_A3735, loc_A373E, loc_A3747, loc_A3750, loc_A3759, loc_A3761, loc_A3769, loc_A379C
-global loc_A37B3, RoundToSingle, loc_A37CE, loc_A37E2, RoundToDouble, loc_A3804, loc_A381B, RoundToDouble_32
-global loc_A3839, loc_A3874, RaiseFpuError, loc_A38DD, EaEax, EaEcx, EaEdx, EaEbx
-global EaEsp, EaDisp32, EaEsi, EaEdi, EaEaxDisp8, EaEcxDisp8, EaEdxDisp8, EaEbxDisp8
-global EaEspDisp8, EaEbpDisp8, EaEsiDisp8, EaEdiDisp8, EaEaxDisp32, EaEcxDisp32, EaEdxDisp32, EaEbxDisp32
-global EaEspDisp32, EaEbpDisp32, EaEsiDisp32, EaEdiDisp32, EaSib, loc_A39D6, EmuUnsupported, EmuFaddM32
-global EmuFmulM32, EmuFcomM32, EmuFcompM32, EmuFsubM32, EmuFsubrM32, EmuFdivM32, EmuFdivrM32, EmuFldM32
-global EmuFstM32, EmuFstpM32, EmuFldenv, EmuFldcw, loc_A3B68, loc_A3B7A, loc_A3B84, EmuFstenv
-global EmuFstcw, EmuFiaddM32, EmuFimulM32, EmuFicomM32, EmuFicompM32, EmuFisubM32, EmuFisubrM32, EmuFidivM32
-global EmuFidivrM32, EmuFildM32, EmuFistM32, EmuFistpM32, EmuFaddM64, EmuFmulM64, EmuFcomM64, EmuFcompM64
-global EmuFsubM64, EmuFsubrM64, EmuFdivM64, EmuFdivrM64, EmuFldM80, EmuFldM64, EmuFstM64, EmuFstpM80
-global EmuFstpM64, EmuFrstor, loc_A3F44, EmuFsave, loc_A3F6F, EmuFstswM16, EmuFiaddM16, EmuFimulM16
-global EmuFicomM16, EmuFicompM16, EmuFisubM16, EmuFisubrM16, EmuFidivM16, EmuFidivrM16, EmuFildM16, EmuFistM16
-global loc_A4107, EmuFistpM16, loc_A4143, EmuFbld, EmuFildM64, EmuFbstp, EmuFistpM64, EmuReservedOp
-global EmuDispatchD9Reg, jpt_A41C1, loc_A41E1, EmuFaddSt, EmuFmulSt, EmuFcomSt, EmuFcompSt, EmuFsubSt
-global EmuFsubrSt, EmuFdivSt, EmuFdivrSt, EmuFldSt, EmuFxch, EmuFtstFxam, jpt_A4300, loc_A4320
-global loc_A432D, loc_A433A, loc_A436B, EmuSignOps, jpt_A4381, loc_A43A1, loc_A43E4, loc_A4429
-global loc_A446E, loc_A44B3, loc_A44F8, loc_A453D, EmuLogOps, jpt_A459C, loc_A45BC, loc_A45C9
-global loc_A4610, loc_A465C, loc_A467D, EmuRemOps, jpt_A46A6, loc_A46C6, loc_A46F0, loc_A4737
-global loc_A4744, loc_A479C, loc_A47A9, EmuFucompp, jpt_A47BE, loc_A47DE, EmuDispatchDBReg, jpt_A4847
-global loc_A4867, loc_A4873, EmuFaddToSt, EmuFmulToSt, EmuFsubrToSt, EmuFsubToSt, EmuFdivrToSt, EmuFdivToSt
-global EmuFfree, EmuFstSt, EmuFucom, EmuFucomp, EmuFstpSt, EmuFaddp, EmuFmulp, EmuFcompp
-global jpt_A4A50, loc_A4A70, EmuFsubrp, EmuFsubp, EmuFdivrp, EmuFdivp, EmuDispatchDFReg, jpt_A4C05
-global loc_A4C25, loc_A4C6E, loc_A4CD3, loc_A4CFD, loc_A4D15, loc_A4D45, loc_A4D52, loc_A4D54
-global loc_A4D76, loc_A4D7A, loc_A4D86, EmuSub, EmuAdd, loc_A4DAB, AddExtRaw, AddMantissas
-global loc_A4E1D, loc_A4E1E, loc_A4E21, loc_A4E32, loc_A4E6D, loc_A4E81, loc_A4E96, loc_A4EB7
-global loc_A4EBB, loc_A4EC9, loc_A4EEB, loc_A4EFA, loc_A4F10, loc_A4F1A, loc_A4F36, loc_A4F4F
-global loc_A4F51, loc_A4F53, loc_A4F5D, EmuCompare, loc_A4F82, loc_A4F98, loc_A4FBD, loc_A4FC8
-global loc_A4FD0, loc_A4FD5, loc_A4FDD, EmuDiv, DivideMantissas, loc_A5062, loc_A5077, loc_A5078
-global loc_A5086, loc_A5089, loc_A50BA, loc_A50C4, loc_A50C9, loc_A50D3, loc_A50F6, loc_A5107
-global loc_A5119, loc_A513A, loc_A5142, loc_A5154, loc_A5169, loc_A5189, loc_A51A0, loc_A51B2
-global loc_A51BD, loc_A51C3, loc_A51CE, EmuMul, MultiplyMantissas, loc_A5210, loc_A5213, loc_A522A
-global loc_A525A, loc_A526B, loc_A52A2, loc_A52B5, loc_A52CE, loc_A52D9, loc_A52DC, loc_A52E7
-global loc_A52F1, StoreM32IntTrunc, loc_A5317, loc_A5324, loc_A5331, loc_A534E, loc_A5350, StoreM32Int
-global Emu387LdToInt, loc_A535B, loc_A5394, loc_A53A1, loc_A53B2, loc_A53B5, loc_A53BD, LoadM32Int
-global loc_A53D2, Emu387IntToLd, loc_A53DB, loc_A53F6, loc_A53FA, LoadM64Real, loc_A542A, loc_A5438
-global loc_A544B, loc_A5453, loc_A545F, loc_A546C, loc_A5478, StoreM32Real, loc_A54A9, loc_A54B7
-global loc_A54DA, loc_A54E5, loc_A54F8, loc_A5503, StoreM64Real, loc_A5523, loc_A5534, loc_A5559
-global loc_A5563, loc_A556A, loc_A558C, loc_A559E, loc_A55A2, loc_A55A4, loc_A55CA, LoadM32Real
-global loc_A55EF, loc_A55FD, loc_A5607, EmuMantissaMasks, ExtToInt, loc_A56A8, loc_A56B3, loc_A56BE
-global loc_A56CC, loc_A5703, loc_A5705, loc_A570D, loc_A5720, loc_A5722, loc_A576A, loc_A5772
-global loc_A5776, loc_A5782, loc_A5785, loc_A57AA, loc_A57BA, EmuRemPolyCoefs, EmuRemainder, loc_A5849
-global loc_A585C, loc_A585E, loc_A5886, loc_A58B6, loc_A58B8, loc_A58D2, RemainderStep, loc_A5918
-global loc_A594E, loc_A5969, loc_A59DC, loc_A5A0A, loc_A5A2A, loc_A5A33, EmuRoundInt, loc_A5A4E
-global loc_A5A6E, RoundMantissa, loc_A5AB3, loc_A5ABF, loc_A5AC1, loc_A5AC6, loc_A5ADB, loc_A5AE7
-global loc_A5AF2, loc_A5AFC, loc_A5AFE, loc_A5B02, loc_A5B12, loc_A5B19, EmuExamine, loc_A5B38
-global loc_A5B6A, loc_A5B6C, loc_A5B8C, loc_A5B92, loc_A5B94, loc_A5BAB, EmuLog2PolyNum, EmuLog2PolyDen
-global AddOne, EmuLog2, Log2Core, loc_A5C76, loc_A5CB5, loc_A5CD1, loc_A5CDD, loc_A5E26
-global EmuSinPolyCoefs, EmuCosPolyCoefs, EmuSinCosTermCounts, SinCosCore, loc_A5F1E, loc_A5F6D, loc_A5F99, loc_A5FC3
-global loc_A5FCC, loc_A5FD9, loc_A5FF3, loc_A6031, loc_A603C, loc_A605A, loc_A606F, loc_A6078
-global loc_A6085, loc_A60A8, loc_A60B4, loc_A60BC, loc_A60DD, loc_A60E2, EmuSin, EmuCos
-global EmuTan, EmuTan_E, EmuAtan, loc_A6162, loc_A6183, loc_A6192, loc_A61A3, loc_A61A9
-global loc_A61AF, loc_A61BB, loc_A61BF, loc_A61CA, loc_A61CC, loc_A62BB, loc_A62EE, loc_A62F3
-global EmuExp2, loc_A6333, loc_A6346, loc_A634F, loc_A635A, loc_A6377, loc_A638D, loc_A63A3
-global loc_A63B5, loc_A63C0, loc_A63C9, loc_A63D2, loc_A63DA, PolyEvalExt, PolyEval, loc_A6417
-global PolyEvalOdd, __hook387, loc_A6500, loc_A650C, loc_A6558, loc_A655A, __unhook387, loc_A6593
-global loc_A65B7, EmuNoOp, __init_80x87, loc_A65D8
+global __int7_pl3, __int7_X32VM, __int7, EmuTrapExit, RoundToSingle, RoundToDouble, RoundToDouble_32, RoundToDouble_32
+global RaiseFpuError, EaEax, EaEcx, EaEdx, EaEbx, EaEsp, EaDisp32, EaEsi
+global EaEdi, EaEaxDisp8, EaEcxDisp8, EaEdxDisp8, EaEbxDisp8, EaEspDisp8, EaEbpDisp8, EaEsiDisp8
+global EaEdiDisp8, EaEaxDisp32, EaEcxDisp32, EaEdxDisp32, EaEbxDisp32, EaEspDisp32, EaEbpDisp32, EaEsiDisp32
+global EaEdiDisp32, EaSib, EmuUnsupported, EmuFaddM32, EmuFmulM32, EmuFcomM32, EmuFcompM32, EmuFsubM32
+global EmuFsubrM32, EmuFdivM32, EmuFdivrM32, EmuFldM32, EmuFstM32, EmuFstpM32, EmuFldenv, EmuFldcw
+global EmuFstenv, EmuFstcw, EmuFiaddM32, EmuFimulM32, EmuFicomM32, EmuFicompM32, EmuFisubM32, EmuFisubrM32
+global EmuFidivM32, EmuFidivrM32, EmuFildM32, EmuFistM32, EmuFistpM32, EmuFaddM64, EmuFmulM64, EmuFcomM64
+global EmuFcompM64, EmuFsubM64, EmuFsubrM64, EmuFdivM64, EmuFdivrM64, EmuFldM80, EmuFldM64, EmuFstM64
+global EmuFstpM80, EmuFstpM64, EmuFrstor, EmuFsave, EmuFstswM16, EmuFiaddM16, EmuFimulM16, EmuFicomM16
+global EmuFicompM16, EmuFisubM16, EmuFisubrM16, EmuFidivM16, EmuFidivrM16, EmuFildM16, EmuFistM16, EmuFistpM16
+global EmuFbld, EmuFildM64, EmuFbstp, EmuFistpM64, EmuReservedOp, EmuDispatchD9Reg, jpt_A41C1, EmuFaddSt
+global EmuFmulSt, EmuFcomSt, EmuFcompSt, EmuFsubSt, EmuFsubrSt, EmuFdivSt, EmuFdivrSt, EmuFldSt
+global EmuFxch, EmuFtstFxam, jpt_A4300, EmuSignOps, jpt_A4381, EmuLogOps, jpt_A459C, EmuRemOps
+global jpt_A46A6, EmuFucompp, jpt_A47BE, EmuDispatchDBReg, jpt_A4847, jpt_A4847, EmuFaddToSt, EmuFmulToSt
+global EmuFsubrToSt, EmuFsubToSt, EmuFdivrToSt, EmuFdivToSt, EmuFfree, EmuFstSt, EmuFucom, EmuFucomp
+global EmuFstpSt, EmuFaddp, EmuFmulp, EmuFcompp, jpt_A4A50, EmuFsubrp, EmuFsubp, EmuFdivrp
+global EmuFdivp, EmuDispatchDFReg, jpt_A4C05, jpt_A4C05, EmuSub, EmuAdd, AddExtRaw, AddMantissas
+global EmuCompare, EmuDiv, DivideMantissas, EmuMul, MultiplyMantissas, StoreM32IntTrunc, StoreM32Int, Emu387LdToInt
+global LoadM32Int, Emu387IntToLd, LoadM64Real, StoreM32Real, StoreM64Real, LoadM32Real, EmuMantissaMasks, ExtToInt
+global EmuRemPolyCoefs, EmuRemainder, RemainderStep, EmuRoundInt, RoundMantissa, EmuExamine, EmuLog2PolyNum, EmuLog2PolyDen
+global AddOne, EmuLog2, Log2Core, EmuSinPolyCoefs, EmuCosPolyCoefs, EmuSinCosTermCounts, SinCosCore, EmuSin
+global EmuCos, EmuTan, EmuTan_E, EmuAtan, EmuExp2, PolyEvalExt, PolyEval, PolyEvalOdd
+global __hook387, __unhook387, EmuNoOp, __init_80x87
 unk_A3274:
         db 00h,00h,00h,00h
 unk_A3278:
@@ -362,17 +328,17 @@ EmuTrapExit:
         mov dx, word [byte ebp+06h]
         mov al, byte [esi]
         cmp al, 9Bh
-        jbe near loc_A370C
-loc_A369A:
+        jbe near .3
+.1:
         LD mov, bl, al
         and bl, 0F8h
         cmp bl, 0D8h
-        jne near loc_A37B3
+        jne near .13
         mov ah, byte [byte esi+01h]
         add esi, byte 2
         and al, 7
         cmp ah, 0C0h
-        jae near loc_A3769
+        jae near .11
         LD mov, bl, ah
         LD mov, bh, ah
         shr bh, 3
@@ -394,62 +360,62 @@ loc_A369A:
         lea edi, [edi+edi*4]
         LD add, edi, edi
         jmp dword [nosplit cs:ebx*4+jpt_A33EC]
-loc_A3706:
+.2:
         mov al, byte [esi]
         cmp al, 9Bh
-        ja short loc_A369A
-loc_A370C:
-        je short loc_A3732
+        ja short .1
+.3:
+        je short .4
         cmp al, 26h
-        je short loc_A3750
+        je short .8
         cmp al, 2Eh
-        je short loc_A3735
+        je short .5
         cmp al, 36h
-        je short loc_A3747
+        je short .7
         cmp al, 3Eh
-        je short loc_A373E
+        je short .6
         cmp al, 64h
-        je short loc_A3759
+        je short .9
         cmp al, 65h
-        je short loc_A3761
+        je short .10
         cmp al, 66h
-        je short loc_A3732
+        je short .4
         cmp al, 67h
-        jne near loc_A369A
-loc_A3732:
+        jne near .1
+.4:
         inc esi
-        jmp short loc_A3706
-loc_A3735:
+        jmp short .2
+.5:
         mov cx, word [byte ebp+03Ch]
         LD mov, edx, ecx
         inc esi
-        jmp short loc_A3706
-loc_A373E:
+        jmp short .2
+.6:
         mov cx, word [byte ebp+04h]
         LD mov, edx, ecx
         inc esi
-        jmp short loc_A3706
-loc_A3747:
+        jmp short .2
+.7:
         mov cx, word [byte ebp+06h]
         LD mov, edx, ecx
         inc esi
-        jmp short loc_A3706
-loc_A3750:
+        jmp short .2
+.8:
         mov cx, word [byte ebp+08h]
         LD mov, edx, ecx
         inc esi
-        jmp short loc_A3706
-loc_A3759:
+        jmp short .2
+.9:
         mov cx, fs
         LD mov, edx, ecx
         inc esi
-        jmp short loc_A3706
-loc_A3761:
+        jmp short .2
+.10:
         mov cx, gs
         LD mov, edx, ecx
         inc esi
-        jmp short loc_A3706
-loc_A3769:
+        jmp short .2
+.11:
         mov dword [byte ebp+038h], esi
         call __GETDS
         lea ebp, [unk_D657C]
@@ -463,9 +429,9 @@ loc_A3769:
         and ebx, byte 7
         LD mov, esi, ebx
         cmp ax, 0F801h
-        jne short loc_A379C
+        jne short .12
         mov si, 1
-loc_A379C:
+.12:
         LD add, esi, edi
         and esi, byte 7
         lea edi, [edi+edi*4]
@@ -473,24 +439,24 @@ loc_A379C:
         lea esi, [esi+esi*4]
         LD add, esi, esi
         jmp dword [nosplit cs:edx*4+jpt_A34EC]
-loc_A37B3:
+.13:
         ret
 RoundToSingle:
         lea ebx, [byte edi+ebp+01Ch]
         mov edx, 0FFFFFF00h
         mov eax, dword [byte ebx+04h]
         shl eax, 19h
-        jae short loc_A37E2
-        jne short loc_A37CE
+        jae short .2
+        jne short .1
         cmp dword [ebx], byte 0
-        jne short loc_A37CE
+        jne short .1
         LD add, edx, edx
-loc_A37CE:
+.1:
         add dword [byte ebx+04h], 100h
-        jae short loc_A37E2
+        jae short .2
         mov dword [byte ebx+04h], 80000000h
         inc word [byte ebx+08h]
-loc_A37E2:
+.2:
         and dword [byte ebx+04h], edx
         mov dword [ebx], 0
         jmp near EmuTrapExit
@@ -499,16 +465,16 @@ RoundToDouble:
         mov edx, 0FFFFF800h
         mov eax, dword [ebx]
         shl eax, 16h
-        jae short loc_A381B
-        jne short loc_A3804
+        jae short .2
+        jne short .1
         LD add, edx, edx
-loc_A3804:
+.1:
         add dword [ebx], 800h
         adc dword [byte ebx+04h], byte 0
-        jae short loc_A381B
+        jae short .2
         mov dword [byte ebx+04h], 80000000h
         inc word [byte ebx+08h]
-loc_A381B:
+.2:
         and dword [ebx], edx
         jmp near EmuTrapExit
 RoundToDouble_32:
@@ -517,7 +483,6 @@ RoundToDouble_32:
         and dx, 0B8FFh
         or dh, byte [dword cs:eax+unk_A331E]
         mov word [byte ds:ebp+04h], dx
-loc_A3839:
         mov bx, word [dword cs:edi+unk_A32CE]
         and word [byte ds:ebp+08h], bx
         mov bx, word [dword cs:edi+unk_A32D6]
@@ -527,7 +492,6 @@ loc_A3839:
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp near EmuTrapExit
-loc_A3874:
         inc eax
         mov dx, word [byte ds:ebp+04h]
         and dx, 0B8FFh
@@ -537,7 +501,7 @@ loc_A3874:
 RaiseFpuError:
         or byte [byte ds:ebp+04h], al
         test byte [byte ds:ebp+00h], al
-        jne short loc_A38DD
+        jne short .1
         push esi
         push edi
         push ecx
@@ -568,7 +532,7 @@ RaiseFpuError:
         pop ecx
         pop edi
         pop esi
-loc_A38DD:
+.1:
         ret
 EaEax:
         LD xor, ebx, ebx
@@ -703,14 +667,14 @@ EaSib:
         LD mov, ecx, edx
         and dl, 38h
         cmp dl, 20h
-        je short loc_A39D6
+        je short .1
         shr edx, 1
         neg edx
         mov edx, dword [byte ebp+edx+028h]
         shr cl, 6
         shl edx, cl
         LD add, ebx, edx
-loc_A39D6:
+.1:
         pop ecx
         ret
 EmuUnsupported:
@@ -740,7 +704,7 @@ EmuFcomM32:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         call EmuCompare
-        jmp near loc_A3874
+        jmp near RoundToDouble_32+052h
 EmuFcompM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
@@ -805,7 +769,7 @@ EmuFstpM32:
         lea eax, [byte edi+ebp+01Ch]
         call StoreM32Real
         mov dword [es:esi], eax
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuFldenv:
         mov ecx, 7
         push ds
@@ -824,20 +788,20 @@ EmuFldcw:
         mov word [byte ds:ebp+00h], ax
         and ax, 300h
         cmp ax, 300h
-        jne short loc_A3B68
+        jne short .1
         lea edx, [EmuTrapExit]
         mov dword [byte ds:ebp+076h], edx
-        jmp short loc_A3B84
-loc_A3B68:
+        jmp short .3
+.1:
         cmp ax, 200h
-        jne short loc_A3B7A
+        jne short .2
         lea edx, [RoundToDouble]
         mov dword [byte ds:ebp+076h], edx
-        jmp short loc_A3B84
-loc_A3B7A:
+        jmp short .3
+.2:
         lea edx, [RoundToSingle]
         mov dword [byte ds:ebp+076h], edx
-loc_A3B84:
+.3:
         jmp near EmuTrapExit
 EmuFstenv:
         mov ecx, 7
@@ -876,7 +840,7 @@ EmuFicomM32:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         call EmuCompare
-        jmp near loc_A3874
+        jmp near RoundToDouble_32+052h
 EmuFicompM32:
         mov eax, dword [es:esi]
         lea edx, [byte ebp+06Ch]
@@ -957,7 +921,7 @@ EmuFistpM32:
         lea eax, [byte edi+ebp+01Ch]
         call StoreM32Int
         mov dword [es:esi], eax
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuFaddM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
@@ -986,7 +950,7 @@ EmuFcomM64:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         call EmuCompare
-        jmp near loc_A3874
+        jmp near RoundToDouble_32+052h
 EmuFcompM64:
         mov eax, dword [es:esi]
         mov edx, dword [byte es:esi+04h]
@@ -1075,13 +1039,13 @@ EmuFstpM80:
         mov dword [byte es:esi+04h], eax
         mov ax, word [byte edi+ebp+024h]
         mov word [byte es:esi+08h], ax
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuFstpM64:
         lea eax, [byte edi+ebp+01Ch]
         call StoreM64Real
         mov dword [es:esi], eax
         mov dword [byte es:esi+04h], edx
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuFrstor:
         mov ecx, 7
         push ds
@@ -1098,13 +1062,13 @@ EmuFrstor:
         lea ebx, [ebx+ebx*4]
         LD add, ebx, ebx
         mov ecx, 8
-loc_A3F44:
+.1:
         lea edi, [byte ebp+ebx+01Ch]
         movsd
         movsd
         movsw
         movzx ebx, word [dword cs:ebx+unk_A327E]
-        loop loc_A3F44
+        loop .1
         pop es
         pop ds
         jmp near EmuTrapExit
@@ -1115,15 +1079,15 @@ EmuFsave:
         LD mov, esi, ebp
         rep movsd
         mov ecx, 8
-loc_A3F6F:
+.1:
         lea esi, [byte ebx+ebp+01Ch]
         movsd
         movsd
         movsw
         movzx ebx, word [dword cs:ebx+unk_A327E]
-        loop loc_A3F6F
+        loop .1
         LD mov, edi, ebx
-        jmp near loc_A4873
+        jmp near jpt_A4847+02Ch
 EmuFstswM16:
         mov ax, word [byte ds:ebp+04h]
         mov word [es:esi], ax
@@ -1156,7 +1120,7 @@ EmuFicomM16:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         call EmuCompare
-        jmp near loc_A3874
+        jmp near RoundToDouble_32+052h
 EmuFicompM16:
         mov ax, word [es:esi]
         cwde
@@ -1232,9 +1196,9 @@ EmuFistM16:
         LD mov, edx, eax
         cwde
         LD cmp, eax, edx
-        je short loc_A4107
+        je short .1
         mov ax, 8000h
-loc_A4107:
+.1:
         mov word [es:esi], ax
         lea ebx, [byte edi+ebp+01Ch]
         pop dword [byte ebx+06h]
@@ -1251,11 +1215,11 @@ EmuFistpM16:
         LD mov, edx, eax
         cwde
         LD cmp, eax, edx
-        je short loc_A4143
+        je short .1
         mov ax, 8000h
-loc_A4143:
+.1:
         mov word [es:esi], ax
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuFbld:
         jmp near EmuTrapExit
 EmuFildM64:
@@ -1270,7 +1234,7 @@ EmuFildM64:
         call Emu387IntToLd
         jmp near EmuTrapExit
 EmuFbstp:
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuFistpM64:
         lea eax, [byte edi+ebp+01Ch]
         mov dx, word [byte ds:ebp+00h]
@@ -1279,13 +1243,13 @@ EmuFistpM64:
         lea eax, [byte edi+ebp+01Ch]
         call Emu387LdToInt
         mov dword [es:esi], eax
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuReservedOp:
         jmp near EmuTrapExit
 EmuDispatchD9Reg:
         jmp dword [nosplit cs:ebx*4+jpt_A41C1]
 jpt_A41C1:
-        dd loc_A41E1
+        dd .1
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
@@ -1293,7 +1257,7 @@ jpt_A41C1:
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
-loc_A41E1:
+.1:
         jmp near EmuTrapExit
 EmuFaddSt:
         lea eax, [byte edi+ebp+01Ch]
@@ -1311,7 +1275,7 @@ EmuFcomSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuCompare
-        jmp near loc_A3874
+        jmp near RoundToDouble_32+052h
 EmuFcompSt:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
@@ -1371,23 +1335,23 @@ EmuFxch:
 EmuFtstFxam:
         jmp dword [nosplit cs:ebx*4+jpt_A4300]
 jpt_A4300:
-        dd loc_A4320
-        dd loc_A432D
+        dd .1
+        dd .2
         dd EmuReservedOp
         dd EmuReservedOp
-        dd loc_A433A
-        dd loc_A436B
+        dd .3
+        dd .4
         dd EmuReservedOp
         dd EmuReservedOp
-loc_A4320:
+.1:
         lea eax, [byte edi+ebp+01Ch]
         xor byte [byte eax+09h], 80h
         jmp near EmuTrapExit
-loc_A432D:
+.2:
         lea eax, [byte edi+ebp+01Ch]
         and byte [byte eax+09h], 7Fh
         jmp near EmuTrapExit
-loc_A433A:
+.3:
         mov eax, dword [cs:unk_A3274]
         mov dword [byte ds:ebp+06Ch], eax
         mov eax, dword [cs:unk_A3278]
@@ -1397,23 +1361,23 @@ loc_A433A:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte ebp+06Ch]
         call EmuCompare
-        jmp near loc_A3874
-loc_A436B:
+        jmp near RoundToDouble_32+052h
+.4:
         lea eax, [byte edi+ebp+01Ch]
         call EmuExamine
         jmp near EmuTrapExit
 EmuSignOps:
         jmp dword [nosplit cs:ebx*4+jpt_A4381]
 jpt_A4381:
-        dd loc_A43A1
-        dd loc_A43E4
-        dd loc_A4429
-        dd loc_A446E
-        dd loc_A44B3
-        dd loc_A44F8
-        dd loc_A453D
+        dd .1
+        dd .2
+        dd .3
+        dd .4
+        dd .5
+        dd .6
+        dd .7
         dd EmuReservedOp
-loc_A43A1:
+.1:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1426,7 +1390,7 @@ loc_A43A1:
         mov dword [byte esi+04h], 80000000h
         mov word [byte esi+08h], 3FFFh
         jmp near EmuTrapExit
-loc_A43E4:
+.2:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1438,7 +1402,7 @@ loc_A43E4:
         mov dword [byte esi+04h], 0D49A784Bh
         mov word [byte esi+08h], 4000h
         jmp near EmuTrapExit
-loc_A4429:
+.3:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1450,7 +1414,7 @@ loc_A4429:
         mov dword [byte esi+04h], 0B8AA3B29h
         mov word [byte esi+08h], 3FFFh
         jmp near EmuTrapExit
-loc_A446E:
+.4:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1462,7 +1426,7 @@ loc_A446E:
         mov dword [byte esi+04h], 0C900DAA2h
         mov word [byte esi+08h], 4000h
         jmp near EmuTrapExit
-loc_A44B3:
+.5:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1474,7 +1438,7 @@ loc_A44B3:
         mov dword [byte esi+04h], 9A209A84h
         mov word [byte esi+08h], 3FFDh
         jmp near EmuTrapExit
-loc_A44F8:
+.6:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1486,7 +1450,7 @@ loc_A44F8:
         mov dword [byte esi+04h], 0B17217F7h
         mov word [byte esi+08h], 3FFEh
         jmp near EmuTrapExit
-loc_A453D:
+.7:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1506,19 +1470,19 @@ loc_A453D:
 EmuLogOps:
         jmp dword [nosplit cs:ebx*4+jpt_A459C]
 jpt_A459C:
-        dd loc_A45BC
-        dd loc_A45C9
-        dd loc_A4610
-        dd loc_A4C25
-        dd loc_A4C6E
-        dd loc_A4CD3
-        dd loc_A465C
-        dd loc_A467D
-loc_A45BC:
+        dd .1
+        dd .2
+        dd .3
+        dd jpt_A4C05+020h
+        dd jpt_A4C05+069h
+        dd jpt_A4C05+0CEh
+        dd .4
+        dd .5
+.1:
         lea eax, [byte edi+ebp+01Ch]
         call EmuAtan
         jmp dword [byte ds:ebp+076h]
-loc_A45C9:
+.2:
         lea eax, [byte edi+ebp+01Ch]
         mov bx, word [dword cs:edi+unk_A32CE]
         and word [byte ds:ebp+08h], bx
@@ -1531,7 +1495,7 @@ loc_A45C9:
         lea edx, [byte edi+ebp+01Ch]
         call EmuLog2
         jmp dword [byte ds:ebp+076h]
-loc_A4610:
+.3:
         lea eax, [byte edi+ebp+01Ch]
         call EmuTan
         movzx edi, word [dword cs:edi+unk_A3280]
@@ -1546,13 +1510,13 @@ loc_A4610:
         mov dword [byte esi+04h], 80000000h
         mov word [byte esi+08h], 3FFFh
         jmp near EmuTrapExit
-loc_A465C:
+.4:
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
         or word [byte ds:ebp+04h], bx
         jmp near EmuTrapExit
-loc_A467D:
+.5:
         movzx edi, word [dword cs:edi+unk_A327E]
         mov bx, word [dword cs:edi+unk_A3282]
         and word [byte ds:ebp+04h], 0C7FFh
@@ -1561,15 +1525,15 @@ loc_A467D:
 EmuRemOps:
         jmp dword [nosplit cs:ebx*4+jpt_A46A6]
 jpt_A46A6:
-        dd loc_A46C6
-        dd loc_A46F0
-        dd loc_A4737
-        dd loc_A4744
-        dd loc_A4CFD
-        dd loc_A4D15
-        dd loc_A479C
-        dd loc_A47A9
-loc_A46C6:
+        dd .1
+        dd .2
+        dd .3
+        dd .4
+        dd jpt_A4C05+0F8h
+        dd jpt_A4C05+0110h
+        dd .5
+        dd .6
+.1:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuRoundInt
@@ -1579,7 +1543,7 @@ loc_A46C6:
         or dh, byte [dword cs:eax+unk_A3322]
         mov word [byte ds:ebp+04h], dx
         jmp dword [byte ds:ebp+076h]
-loc_A46F0:
+.2:
         lea eax, [byte edi+ebp+01Ch]
         mov bx, word [dword cs:edi+unk_A32CE]
         and word [byte ds:ebp+08h], bx
@@ -1592,11 +1556,11 @@ loc_A46F0:
         lea edx, [byte edi+ebp+01Ch]
         call AddOne
         jmp dword [byte ds:ebp+076h]
-loc_A4737:
+.3:
         lea eax, [byte edi+ebp+01Ch]
         call EmuExp2
         jmp dword [byte ds:ebp+076h]
-loc_A4744:
+.4:
         lea ebx, [byte edi+ebp+01Ch]
         push dword [ebx]
         push dword [byte ebx+04h]
@@ -1616,11 +1580,11 @@ loc_A4744:
         lea eax, [byte edi+ebp+01Ch]
         call EmuCos
         jmp near EmuTrapExit
-loc_A479C:
+.5:
         lea eax, [byte edi+ebp+01Ch]
         call EmuSin
         jmp dword [byte ds:ebp+076h]
-loc_A47A9:
+.6:
         lea eax, [byte edi+ebp+01Ch]
         call EmuCos
         jmp dword [byte ds:ebp+076h]
@@ -1628,14 +1592,14 @@ EmuFucompp:
         jmp dword [nosplit cs:ebx*4+jpt_A47BE]
 jpt_A47BE:
         dd EmuReservedOp
-        dd loc_A47DE
+        dd .1
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
-loc_A47DE:
+.1:
         mov eax, dword [byte edi+ebp+01Ch]
         mov dword [byte ds:ebp+06Ch], eax
         mov eax, dword [byte edi+ebp+020h]
@@ -1659,16 +1623,15 @@ EmuDispatchDBReg:
 jpt_A4847:
         dd EmuReservedOp
         dd EmuReservedOp
-        dd loc_A4867
-        dd loc_A4873
+        dd .1
+        dd jpt_A4847+02Ch
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
-loc_A4867:
+.1:
         and word [byte ds:ebp+04h], 7F00h
         jmp near EmuTrapExit
-loc_A4873:
         mov word [byte ds:ebp+00h], 33Fh
         mov word [byte ds:ebp+04h], 0
         mov word [byte ds:ebp+08h], 0FFFFh
@@ -1732,7 +1695,7 @@ EmuFucom:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuCompare
-        jmp near loc_A3874
+        jmp near RoundToDouble_32+052h
 EmuFucomp:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
@@ -1747,7 +1710,7 @@ EmuFstpSt:
         mov word [byte esi+ebp+024h], ax
         mov bx, word [dword cs:esi+unk_A32CE]
         and word [byte ds:ebp+08h], bx
-        jmp near loc_A3839
+        jmp near RoundToDouble_32+017h
 EmuFaddp:
         lea eax, [byte esi+ebp+01Ch]
         lea edx, [byte edi+ebp+01Ch]
@@ -1780,14 +1743,14 @@ EmuFcompp:
         jmp dword [nosplit cs:ebx*4+jpt_A4A50]
 jpt_A4A50:
         dd EmuReservedOp
-        dd loc_A4A70
+        dd .1
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
-loc_A4A70:
+.1:
         mov eax, dword [byte edi+ebp+01Ch]
         mov dword [byte ds:ebp+06Ch], eax
         mov eax, dword [byte edi+ebp+020h]
@@ -1865,7 +1828,7 @@ EmuFdivp:
 EmuDispatchDFReg:
         jmp dword [nosplit cs:ebx*4+jpt_A4C05]
 jpt_A4C05:
-        dd loc_A4D86
+        dd .6
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
@@ -1873,7 +1836,6 @@ jpt_A4C05:
         dd EmuReservedOp
         dd EmuReservedOp
         dd EmuReservedOp
-loc_A4C25:
         lea edx, [byte edi+ebp+01Ch]
         mov bx, word [dword cs:edi+unk_A32CE]
         and word [byte ds:ebp+08h], bx
@@ -1887,7 +1849,6 @@ loc_A4C25:
         LD mov, ebx, eax
         call EmuRemainder
         jmp dword [byte ds:ebp+076h]
-loc_A4C6E:
         lea esi, [byte edi+ebp+01Ch]
         movzx edi, word [dword cs:edi+unk_A3280]
         mov bx, word [dword cs:edi+unk_A3282]
@@ -1911,7 +1872,6 @@ loc_A4C6E:
         LD mov, edx, esi
         call StoreM32Int
         jmp near EmuTrapExit
-loc_A4CD3:
         lea eax, [byte edi+ebp+01Ch]
         lea edx, [byte esi+ebp+01Ch]
         call EmuRoundInt
@@ -1921,13 +1881,11 @@ loc_A4CD3:
         or dh, byte [dword cs:eax+unk_A3322]
         mov word [byte ds:ebp+04h], dx
         jmp dword [byte ds:ebp+076h]
-loc_A4CFD:
         lea eax, [byte edi+ebp+01Ch]
         mov dx, word [byte ds:ebp+00h]
         and dx, 0C00h
         call ExtToInt
         jmp near EmuTrapExit
-loc_A4D15:
         LD mov, esi, edi
         movzx edi, word [dword cs:edi+unk_A327E]
         lea eax, [byte edi+ebp+01Ch]
@@ -1938,37 +1896,37 @@ loc_A4D15:
         LD mov, edx, eax
         cwde
         LD cmp, eax, edx
-        je short loc_A4D54
+        je short .3
         LD or, ch, ch
-        jns short loc_A4D45
+        jns short .1
         LD sub, dx, dx
         LD sub, cx, cx
-        jmp short loc_A4D52
-loc_A4D45:
+        jmp short .2
+.1:
         mov dx, 7FFFh
         mov cx, word [byte ebx+08h]
         and cx, 8000h
-loc_A4D52:
-        jmp short loc_A4D7A
-loc_A4D54:
+.2:
+        jmp short .5
+.3:
         mov dx, word [byte ebx+08h]
         LD mov, cx, dx
         and cx, 8000h
         and dx, 7FFFh
         LD add, dx, ax
-        jns short loc_A4D7A
+        jns short .5
         LD or, ah, ah
-        jns short loc_A4D76
+        jns short .4
         LD sub, dx, dx
         LD sub, cx, cx
-        jmp short loc_A4D7A
-loc_A4D76:
+        jmp short .5
+.4:
         mov dx, 7FFFh
-loc_A4D7A:
+.5:
         LD or, dx, cx
         mov word [byte ebx+08h], dx
         jmp near EmuTrapExit
-loc_A4D86:
+.6:
         mov ax, word [byte ds:ebp+04h]
         LD mov, ebp, esp
         mov word [byte ebp+028h], ax
@@ -1979,13 +1937,12 @@ EmuSub:
         push ebx
         mov si, word [byte edx+08h]
         xor si, 8000h
-        jmp short loc_A4DAB
+        jmp short EmuAdd+07h
 EmuAdd:
         push esi
         push ecx
         push ebx
         mov si, word [byte edx+08h]
-loc_A4DAB:
         mov ecx, dword [byte edx+04h]
         mov ebx, dword [edx]
         shl esi, 10h
@@ -2021,32 +1978,32 @@ AddExtRaw:
         ret 0Ch
 AddMantissas:
         LD or, eax, eax
-        jne short loc_A4E21
+        jne short .3
         LD or, edx, edx
-        jne short loc_A4E21
+        jne short .3
         LD add, si, si
-        jne short loc_A4E1E
+        jne short .2
         shr esi, 10h
         LD mov, eax, ebx
         LD mov, edx, ecx
         LD add, esi, esi
         LD or, bx, si
         LD or, ebx, edx
-        je short loc_A4E1D
+        je short .1
         shr esi, 1
-loc_A4E1D:
+.1:
         ret
-loc_A4E1E:
+.2:
         rcr si, 1
-loc_A4E21:
+.3:
         LD or, ecx, ecx
-        jne short loc_A4E32
+        jne short .4
         LD or, ebx, ebx
-        jne short loc_A4E32
+        jne short .4
         test esi, 7FFF0000h
-        jne short loc_A4E32
+        jne short .4
         ret
-loc_A4E32:
+.4:
         push ebp
         push edi
         db 087h,0CEh                            ; insn: xchg ecx,esi
@@ -2063,15 +2020,15 @@ loc_A4E32:
         rol edi, 10h
         rol ecx, 10h
         LD sub, cx, di
-        je short loc_A4E81
-        jae short loc_A4E6D
+        je short .6
+        jae short .5
         LD mov, ebp, edi
         neg cx
         xchg ebx, eax
         db 087h,0D6h                            ; insn: xchg edx,esi
-loc_A4E6D:
+.5:
         cmp cx, byte 40h
-        jbe short loc_A4E81
+        jbe short .6
         LD add, ebp, ebp
         rcr bp, 1
         LD mov, eax, ebx
@@ -2080,169 +2037,169 @@ loc_A4E6D:
         pop edi
         pop ebp
         ret
-loc_A4E81:
+.6:
         mov ch, 0
         LD or, ecx, ecx
-        jns short loc_A4E96
+        jns short .7
         mov ch, 0FFh
         neg esi
         neg ebx
         sbb esi, byte 0
         xor ebp, 80000000h
-loc_A4E96:
+.7:
         LD sub, edi, edi
         cmp cl, 0
-        je short loc_A4EC9
+        je short .10
         push ebx
         LD sub, ebx, ebx
         cmp cl, 20h
-        jb short loc_A4EBB
+        jb short .9
         LD or, eax, eax
         setne bl
         LD mov, edi, ebx
         LD sub, ebx, ebx
         cmp cl, 40h
-        jne short loc_A4EB7
+        jne short .8
         LD or, edi, edx
         LD sub, edx, edx
-loc_A4EB7:
+.8:
         LD mov, eax, edx
         LD sub, edx, edx
-loc_A4EBB:
+.9:
         shrd ebx, eax, cl
         LD or, edi, ebx
         LD sub, ebx, ebx
         shrd eax, edx, cl
         shrd edx, ebx, cl
         pop ebx
-loc_A4EC9:
+.10:
         LD add, eax, ebx
         LD adc, edx, esi
         adc ch, 0
-        jns short loc_A4EFA
+        jns short .12
         cmp cl, 40h
-        jne short loc_A4EEB
+        jne short .11
         test edi, 7FFFFFFFh
         setne bl
         shr ebx, 1
         adc eax, byte 0
         adc edx, byte 0
         adc ch, 0
-loc_A4EEB:
+.11:
         neg edx
         neg eax
         sbb edx, byte 0
         mov ch, 0
         xor ebp, 80000000h
-loc_A4EFA:
+.12:
         LD mov, ebx, eax
         LD or, bl, ch
         LD or, ebx, edx
-        je short loc_A4F51
+        je short .17
         LD or, bp, bp
-        je short loc_A4F53
+        je short .18
         cmp ch, 0
-        jne short loc_A4F1A
+        jne short .14
         rol edi, 1
         ror edi, 1
-loc_A4F10:
+.13:
         dec bp
-        je short loc_A4F53
+        je short .18
         LD adc, eax, eax
         LD adc, edx, edx
-        jae short loc_A4F10
-loc_A4F1A:
+        jae short .13
+.14:
         inc bp
         cmp bp, 7FFFh
-        je near loc_A4F5D
+        je near .19
         stc
         rcr edx, 1
         rcr eax, 1
-        jae short loc_A4F4F
+        jae short .16
         LD add, edi, edi
-        jne short loc_A4F36
+        jne short .15
         ror eax, 1
         rol eax, 1
-loc_A4F36:
+.15:
         adc eax, byte 0
         adc edx, byte 0
-        jae short loc_A4F4F
+        jae short .16
         rcr edx, 1
         rcr eax, 1
         inc bp
         cmp bp, 7FFFh
-        je near loc_A4F5D
-loc_A4F4F:
-        jmp short loc_A4F53
-loc_A4F51:
+        je near .19
+.16:
+        jmp short .18
+.17:
         LD mov, ebp, ebx
-loc_A4F53:
+.18:
         LD add, ebp, ebp
         rcr bp, 1
         LD mov, esi, ebp
         pop edi
         pop ebp
         ret
-loc_A4F5D:
+.19:
         mov bp, 7FFFh
         LD sub, eax, eax
         mov edx, 80000000h
-        jmp short loc_A4F53
+        jmp short .18
 EmuCompare:
         push edi
         push esi
         mov si, word [byte eax+08h]
         or si, 8000h
         inc si
-        jne short loc_A4F82
+        jne short .1
         mov esi, dword [byte eax+04h]
         LD add, esi, esi
         or esi, dword [eax]
-        jne short loc_A4FD5
-loc_A4F82:
+        jne short .6
+.1:
         mov si, word [byte edx+08h]
         or si, 8000h
         inc si
-        jne short loc_A4F98
+        jne short .2
         mov esi, dword [byte edx+04h]
         LD add, esi, esi
         or esi, dword [edx]
-        jne short loc_A4FD5
-loc_A4F98:
+        jne short .6
+.2:
         mov esi, dword [byte eax+06h]
         mov edi, dword [byte edx+06h]
         LD xor, edi, esi
         mov edi, 0
-        js short loc_A4FDD
+        js short .7
         mov si, word [byte eax+08h]
         cmp si, word [byte edx+08h]
-        jne short loc_A4FBD
+        jne short .3
         mov edi, dword [byte eax+04h]
         cmp edi, dword [byte edx+04h]
-        jne short loc_A4FBD
+        jne short .3
         mov edi, dword [eax]
         cmp edi, dword [edx]
-loc_A4FBD:
+.3:
         mov edi, 0
-        je short loc_A4FD0
+        je short .5
         rcr eax, 1
         LD xor, esi, eax
-loc_A4FC8:
+.4:
         LD add, esi, esi
         sbb edi, byte 0
         LD add, edi, edi
         inc edi
-loc_A4FD0:
+.5:
         LD mov, eax, edi
         pop esi
         pop edi
         ret
-loc_A4FD5:
+.6:
         mov eax, 2
         pop esi
         pop edi
         ret
-loc_A4FDD:
+.7:
         or edi, dword [eax]
         or edi, dword [edx]
         or edi, dword [byte eax+04h]
@@ -2253,7 +2210,7 @@ loc_A4FDD:
         and eax, 7FFF7FFFh
         LD or, eax, edi
         mov edi, 0
-        jne short loc_A4FC8
+        jne short .4
         pop esi
         pop edi
         ret
@@ -2278,45 +2235,45 @@ EmuDiv:
         ret
 DivideMantissas:
         LD or, ecx, ecx
-        jne short loc_A5078
+        jne short .3
         LD or, ebx, ebx
-        jne short loc_A5078
+        jne short .3
         test esi, 7FFF0000h
-        jne short loc_A5078
+        jne short .3
         LD or, eax, eax
-        jne short loc_A5062
+        jne short .1
         LD or, edx, edx
-        jne short loc_A5062
+        jne short .1
         LD mov, eax, esi
         LD add, ax, ax
-        jne short loc_A5062
+        jne short .1
         mov al, 1
         mov ah, 81h
         call RaiseFpuError
         mov edx, 0C0000000h
         LD sub, eax, eax
         mov si, 0FFFFh
-        jmp short loc_A5077
-loc_A5062:
+        jmp short .2
+.1:
         mov al, 4
         mov ah, 83h
         call RaiseFpuError
         mov edx, 80000000h
         LD sub, eax, eax
         or si, 7FFFh
-loc_A5077:
+.2:
         ret
-loc_A5078:
+.3:
         LD or, eax, eax
-        jne short loc_A5089
+        jne short .5
         LD or, edx, edx
-        jne short loc_A5089
+        jne short .5
         LD add, si, si
-        jne short loc_A5086
+        jne short .4
         ret
-loc_A5086:
+.4:
         rcr si, 1
-loc_A5089:
+.5:
         push ebp
         LD mov, ebp, esp
         push edi
@@ -2333,41 +2290,41 @@ loc_A5089:
         rol edi, 10h
         rol ecx, 10h
         LD or, di, di
-        jne short loc_A50C4
-loc_A50BA:
+        jne short .7
+.6:
         LD add, eax, eax
         LD adc, edx, edx
         dec di
         LD or, edx, edx
-        jns short loc_A50BA
-loc_A50C4:
+        jns short .6
+.7:
         LD or, cx, cx
-        jne short loc_A50D3
-loc_A50C9:
+        jne short .9
+.8:
         LD add, ebx, ebx
         LD adc, esi, esi
         dec cx
         LD or, esi, esi
-        jns short loc_A50C9
-loc_A50D3:
+        jns short .8
+.9:
         LD sub, di, cx
         add di, 3FFFh
-        js short loc_A50F6
+        js short .10
         cmp di, 7FFFh
-        jb short loc_A50F6
+        jb short .10
         LD mov, edi, ecx
         mov di, 7FFFh
         mov edx, 80000000h
         LD sub, eax, eax
-        jmp near loc_A51CE
-loc_A50F6:
+        jmp near .22
+.10:
         cmp di, byte 0FFC0h
-        jge short loc_A5107
+        jge short .11
         LD sub, eax, eax
         LD sub, edx, edx
         LD sub, edi, edi
-        jmp near loc_A51CE
-loc_A5107:
+        jmp near .22
+.11:
         push edi
         push esi
         push ebx
@@ -2376,10 +2333,10 @@ loc_A5107:
         LD mov, esi, eax
         LD sub, eax, eax
         LD cmp, ecx, edi
-        ja short loc_A5119
+        ja short .12
         LD sub, edx, ecx
         inc eax
-loc_A5119:
+.12:
         push eax
         LD mov, eax, esi
         div ecx
@@ -2393,37 +2350,37 @@ loc_A5119:
         adc edx, byte 0
         mov ebx, dword [byte ebp-010h]
         test byte [byte ebp-014h], 1
-        je short loc_A513A
+        je short .13
         LD add, eax, ebx
         adc edx, dword [byte ebp-0Ch]
-loc_A513A:
+.13:
         neg ecx
         LD sbb, esi, eax
         LD sbb, edi, edx
-        je short loc_A5154
-loc_A5142:
+        je short .15
+.14:
         sub dword [byte ebp-018h], byte 1
         sbb dword [byte ebp-014h], byte 0
         LD add, ecx, ebx
         adc esi, dword [byte ebp-0Ch]
         adc edi, byte 0
-        jne short loc_A5142
-loc_A5154:
+        jne short .14
+.15:
         LD mov, edi, esi
         LD mov, esi, ecx
         mov ecx, dword [byte ebp-0Ch]
         LD cmp, ecx, edi
-        ja short loc_A5169
+        ja short .16
         LD sub, edi, ecx
         add dword [byte ebp-018h], byte 1
         adc dword [byte ebp-014h], byte 0
-loc_A5169:
+.16:
         LD mov, edx, edi
         LD mov, eax, esi
         div ecx
         push eax
         LD or, eax, eax
-        je short loc_A51A0
+        je short .18
         xchg ebx, eax
         mul ebx
         xchg ecx, eax
@@ -2434,16 +2391,16 @@ loc_A5169:
         neg ecx
         LD sbb, esi, eax
         LD sbb, edi, edx
-        je short loc_A51A0
-loc_A5189:
+        je short .18
+.17:
         sub dword [byte ebp-01Ch], byte 1
         sbb dword [byte ebp-018h], byte 0
         sbb dword [byte ebp-014h], byte 0
         add ecx, dword [byte ebp-010h]
         adc esi, dword [byte ebp-0Ch]
         adc edi, byte 0
-        jne short loc_A5189
-loc_A51A0:
+        jne short .17
+.18:
         pop eax
         pop edx
         pop ebx
@@ -2451,25 +2408,25 @@ loc_A51A0:
         pop edi
         dec di
         shr ebx, 1
-        jae short loc_A51B2
+        jae short .19
         rcr edx, 1
         rcr eax, 1
         inc edi
-loc_A51B2:
+.19:
         LD or, di, di
-        jg short loc_A51CE
-        jne short loc_A51BD
+        jg short .22
+        jne short .20
         mov cl, 1
-        jmp short loc_A51C3
-loc_A51BD:
+        jmp short .21
+.20:
         neg di
         LD mov, cx, di
-loc_A51C3:
+.21:
         LD sub, ebx, ebx
         shrd eax, edx, cl
         shrd edx, ebx, cl
         LD sub, di, di
-loc_A51CE:
+.22:
         LD add, edi, edi
         rcr di, 1
         LD mov, esi, edi
@@ -2497,26 +2454,26 @@ EmuMul:
         ret
 MultiplyMantissas:
         LD or, eax, eax
-        jne short loc_A5213
+        jne short .2
         LD or, edx, edx
-        jne short loc_A5213
+        jne short .2
         LD add, si, si
-        jne short loc_A5210
+        jne short .1
         ret
-loc_A5210:
+.1:
         rcr si, 1
-loc_A5213:
+.2:
         LD or, ecx, ecx
-        jne short loc_A522A
+        jne short .3
         LD or, ebx, ebx
-        jne short loc_A522A
+        jne short .3
         test esi, 7FFF0000h
-        jne short loc_A522A
+        jne short .3
         LD sub, eax, eax
         LD sub, edx, edx
         LD sub, esi, esi
         ret
-loc_A522A:
+.3:
         push ebp
         push edi
         db 087h,0CEh                            ; insn: xchg ecx,esi
@@ -2528,19 +2485,19 @@ loc_A522A:
         and ecx, 80007FFFh
         LD add, ecx, edi
         sub cx, 3FFEh
-        jb short loc_A525A
+        jb short .4
         cmp cx, 7FFFh
-        jb short loc_A525A
-        jmp near loc_A52F1
-loc_A525A:
+        jb short .4
+        jmp near .12
+.4:
         cmp cx, byte 0FFC0h
-        jge short loc_A526B
+        jge short .5
         LD sub, eax, eax
         LD sub, edx, edx
         LD sub, ecx, ecx
-        jmp short loc_A52E7
+        jmp short .11
         db 090h,090h,090h
-loc_A526B:
+.5:
         push ecx
         LD sub, ebp, ebp
         push esi
@@ -2568,79 +2525,79 @@ loc_A526B:
         LD adc, edx, ebp
         LD mov, ebx, ecx
         pop ecx
-        js short loc_A52A2
+        js short .6
         LD add, ebx, ebx
         LD adc, eax, eax
         LD adc, edx, edx
         dec cx
-loc_A52A2:
+.6:
         LD add, ebx, ebx
-        jae short loc_A52CE
-        jne short loc_A52B5
+        jae short .8
+        jne short .7
         LD or, esi, esi
         setne bl
         shr ebx, 1
-        jb short loc_A52B5
+        jb short .7
         LD mov, esi, eax
         shr esi, 1
-loc_A52B5:
+.7:
         adc eax, byte 0
         adc edx, byte 0
-        jae short loc_A52CE
+        jae short .8
         rcr edx, 1
         rcr eax, 1
         inc cx
         cmp cx, 7FFFh
-        je near loc_A52F1
-loc_A52CE:
+        je near .12
+.8:
         LD or, cx, cx
-        jg short loc_A52E7
-        jne short loc_A52D9
+        jg short .11
+        jne short .9
         mov cl, 1
-        jmp short loc_A52DC
-loc_A52D9:
+        jmp short .10
+.9:
         neg cx
-loc_A52DC:
+.10:
         LD sub, ebx, ebx
         shrd eax, edx, cl
         shrd edx, ebx, cl
         LD sub, cx, cx
-loc_A52E7:
+.11:
         LD add, ecx, ecx
         rcr cx, 1
         LD mov, esi, ecx
         pop edi
         pop ebp
         ret
-loc_A52F1:
+.12:
         mov cx, 7FFFh
         mov edx, 80000000h
         LD sub, eax, eax
-        jmp short loc_A52E7
+        jmp short .11
 StoreM32IntTrunc:
         push ebx
         mov bl, 0A0h
-        jmp short loc_A535B
+        jmp short Emu387LdToInt+03h
         push ebx
         mov bh, byte [byte eax+09h]
         push ecx
         mov cx, word [byte eax+08h]
         and cx, 7FFFh
-        jne short loc_A5317
+        jne short .1
         LD sub, eax, eax
-        jmp short loc_A5350
-loc_A5317:
+        jmp short .5
+.1:
         sub cx, 3FFEh
-        jg short loc_A5324
+        jg short .2
         LD add, bh, bh
         LD sbb, eax, eax
-        jmp short loc_A5350
-loc_A5324:
+        jmp short .5
+.2:
         cmp cx, byte 1Fh
-        jle short loc_A5331
+        jle short .3
         mov eax, 80000000h
-        jmp short loc_A5350
-loc_A5331:
+        jmp short .5
+.3:
         LD mov, ch, bh
         mov ebx, dword [eax]
         mov eax, dword [byte eax+04h]
@@ -2652,24 +2609,23 @@ loc_A5331:
         LD mov, eax, edx
         pop edx
         LD add, ch, ch
-        jae short loc_A5350
+        jae short .5
         LD or, ebx, ebx
-        je short loc_A534E
+        je short .4
         inc eax
-loc_A534E:
+.4:
         neg eax
-loc_A5350:
+.5:
         pop ecx
         pop ebx
         ret
 StoreM32Int:
         push ebx
         mov bl, 1Fh
-        jmp short loc_A535B
+        jmp short Emu387LdToInt+03h
 Emu387LdToInt:
         push ebx
         mov bl, 20h
-loc_A535B:
         mov bh, byte [byte eax+09h]
         shr bh, 1
         LD or, bh, bl
@@ -2677,47 +2633,47 @@ loc_A535B:
         mov cx, word [byte eax+08h]
         and cx, 7FFFh
         sub cx, 3FFEh
-        jl short loc_A53BD
+        jl short .5
         cmp cx, byte 20h
-        jg short loc_A53B5
+        jg short .4
         and bl, 3Fh
         LD cmp, cl, bl
-        jg short loc_A53B5
+        jg short .4
         LD mov, ch, bh
         mov ebx, dword [eax]
         mov eax, dword [byte eax+04h]
         LD add, ebx, ebx
         rcr ch, 1
         cmp cl, 20h
-        jne short loc_A5394
+        jne short .1
         LD add, ch, ch
-        jmp short loc_A53A1
-loc_A5394:
+        jmp short .2
+.1:
         LD sub, ebx, ebx
         shld ebx, eax, cl
         shl eax, cl
         LD add, ch, ch
         LD add, eax, eax
         LD mov, eax, ebx
-loc_A53A1:
+.2:
         mov cl, 0FFh
         rcr cl, 1
         LD and, ch, cl
         LD add, ch, ch
         adc eax, byte 0
         LD add, ch, ch
-        jae short loc_A53B2
+        jae short .3
         neg eax
-loc_A53B2:
+.3:
         pop ecx
         pop ebx
         ret
-loc_A53B5:
+.4:
         mov eax, 80000000h
         pop ecx
         pop ebx
         ret
-loc_A53BD:
+.5:
         LD sub, eax, eax
         pop ecx
         pop ebx
@@ -2726,20 +2682,19 @@ LoadM32Int:
         push ebx
         LD mov, ebx, edx
         LD or, eax, eax
-        jns short loc_A53D2
+        jns short .1
         neg eax
         mov edx, 0BFFFh
-        jmp short loc_A53DB
-loc_A53D2:
+        jmp short Emu387IntToLd+08h
+.1:
         pop ebx
 Emu387IntToLd:
         push ebx
         LD mov, ebx, edx
         mov edx, 3FFFh
-loc_A53DB:
         push ecx
         LD or, eax, eax
-        je short loc_A53F6
+        je short .1
         bsr ecx, eax
         LD mov, ch, cl
         mov cl, 1Fh
@@ -2749,11 +2704,11 @@ loc_A53DB:
         movzx ecx, ch
         LD add, ecx, edx
         LD mov, edx, eax
-        jmp short loc_A53FA
-loc_A53F6:
+        jmp short .2
+.1:
         LD sub, edx, edx
         LD sub, ecx, ecx
-loc_A53FA:
+.2:
         LD sub, eax, eax
         mov dword [ebx], eax
         mov dword [byte ebx+04h], edx
@@ -2768,48 +2723,48 @@ LoadM64Real:
         shl eax, 0Bh
         sar ecx, 14h
         and cx, 7FFh
-        je short loc_A5453
+        je short .4
         cmp cx, 7FFh
-        je short loc_A542A
+        je short .1
         add cx, 3C00h
-        jmp short loc_A544B
-loc_A542A:
+        jmp short .3
+.1:
         mov cx, 7FFFh
         test edx, 7FFFFFFFh
-        jne short loc_A5438
+        jne short .2
         LD or, eax, eax
-loc_A5438:
-        je short loc_A544B
+.2:
+        je short .3
         push eax
         mov al, 1
         mov ah, 81h
         call RaiseFpuError
         pop eax
         or edx, 40000000h
-loc_A544B:
+.3:
         or edx, 80000000h
-        jmp short loc_A5478
-loc_A5453:
+        jmp short .7
+.4:
         LD or, edx, edx
-        jne short loc_A545F
+        jne short .5
         LD or, eax, eax
-        jne short loc_A545F
+        jne short .5
         LD sub, ecx, ecx
-        jmp short loc_A5478
-loc_A545F:
+        jmp short .7
+.5:
         mov cx, 3C01h
         LD or, edx, edx
-        jne short loc_A546C
+        jne short .6
         xchg edx, eax
         sub cx, byte 20h
-loc_A546C:
+.6:
         LD or, edx, edx
-        js short loc_A5478
+        js short .7
         LD add, eax, eax
         LD adc, edx, edx
         dec cx
-        jmp short loc_A546C
-loc_A5478:
+        jmp short .6
+.7:
         mov dword [ebx], eax
         mov dword [byte ebx+04h], edx
         LD add, ecx, ecx
@@ -2827,47 +2782,47 @@ StoreM32Real:
         LD mov, ecx, eax
         shl ecx, 19h
         mov cx, word [byte ebx+08h]
-        jae short loc_A54B7
-        jne short loc_A54A9
+        jae short .2
+        jne short .1
         cmp dword [ebx], byte 0
-        jne short loc_A54A9
+        jne short .1
         LD add, edx, edx
-loc_A54A9:
+.1:
         add eax, 100h
-        jae short loc_A54B7
+        jae short .2
         mov eax, 80000000h
         inc cx
-loc_A54B7:
+.2:
         LD and, eax, edx
         LD mov, ebx, ecx
         and cx, 7FFFh
-        je short loc_A5503
+        je short .6
         cmp cx, 7FFFh
-        jne short loc_A54DA
+        jne short .3
         LD add, eax, eax
         shr eax, 8
         or eax, 0FF000000h
         LD add, bx, bx
         rcr eax, 1
-        jmp short loc_A5503
-loc_A54DA:
+        jmp short .6
+.3:
         add cx, 0C080h
-        jns short loc_A54E5
+        jns short .4
         LD sub, eax, eax
-        jmp short loc_A5503
-loc_A54E5:
+        jmp short .6
+.4:
         cmp cx, 0FFh
-        jl short loc_A54F8
+        jl short .5
         mov eax, 0FF000000h
         LD add, bx, bx
         rcr eax, 1
-        jmp short loc_A5503
-loc_A54F8:
+        jmp short .6
+.5:
         LD add, eax, eax
         shrd eax, ecx, 8
         LD add, bx, bx
         rcr eax, 1
-loc_A5503:
+.6:
         pop ebx
         pop ecx
         pop edx
@@ -2882,63 +2837,63 @@ StoreM64Real:
         mov esi, 0FFFFF800h
         LD mov, ebx, eax
         shl ebx, 16h
-        jae short loc_A5534
-        jne short loc_A5523
+        jae short .2
+        jne short .1
         LD add, esi, esi
-loc_A5523:
+.1:
         add eax, 800h
         adc edx, byte 0
-        jae short loc_A5534
+        jae short .2
         mov edx, 80000000h
         inc cx
-loc_A5534:
+.2:
         LD and, eax, esi
         LD mov, ebx, ecx
         and cx, 7FFFh
         add cx, 0C400h
         cmp cx, 7FFh
-        jae short loc_A556A
+        jae short .5
         LD or, cx, cx
-        jne short loc_A5559
+        jne short .3
         shrd eax, edx, 0Ch
         LD add, edx, edx
         shr edx, 0Ch
-        jmp short loc_A5563
-loc_A5559:
+        jmp short .4
+.3:
         shrd eax, edx, 0Bh
         LD add, edx, edx
         shrd edx, ecx, 0Bh
-loc_A5563:
+.4:
         LD add, bx, bx
         rcr edx, 1
-        jmp short loc_A55CA
-loc_A556A:
+        jmp short .10
+.5:
         cmp cx, 0C400h
-        jb short loc_A55A4
+        jb short .9
         cmp cx, byte 0FFCCh
-        jl short loc_A559E
+        jl short .7
         sub cx, byte 0Ch
         neg cx
         cmp cl, 20h
-        jb short loc_A558C
+        jb short .6
         sub cl, 20h
         LD mov, esi, eax
         LD mov, eax, edx
         LD sub, edx, edx
-loc_A558C:
+.6:
         shrd esi, eax, cl
         shrd eax, edx, cl
         shr edx, cl
         LD add, esi, esi
         adc eax, byte 0
         adc edx, byte 0
-        jmp short loc_A55A2
-loc_A559E:
+        jmp short .8
+.7:
         LD sub, eax, eax
         LD sub, edx, edx
-loc_A55A2:
-        jmp short loc_A55CA
-loc_A55A4:
+.8:
+        jmp short .10
+.9:
         shrd eax, edx, 0Bh
         LD add, edx, edx
         shr edx, 0Bh
@@ -2946,13 +2901,13 @@ loc_A55A4:
         rcr edx, 1
         or edx, 7FF00000h
         cmp cx, 43FFh
-        je short loc_A55CA
+        je short .10
         push eax
         mov al, 8
         mov ah, 84h
         call RaiseFpuError
         pop eax
-loc_A55CA:
+.10:
         pop esi
         pop ebx
         pop ecx
@@ -2965,22 +2920,22 @@ LoadM32Real:
         LD mov, ecx, eax
         sar ecx, 17h
         and cx, 0FFh
-        je short loc_A5607
+        je short .3
         shl eax, 8
         cmp cl, 0FFh
-        je short loc_A55EF
+        je short .1
         add cx, 3F80h
-        jmp short loc_A55FD
-loc_A55EF:
+        jmp short .2
+.1:
         mov ch, 0FFh
         and eax, 7FFFFFFFh
-        je short loc_A55FD
+        je short .2
         or eax, 40000000h
-loc_A55FD:
+.2:
         LD add, ecx, ecx
         rcr cx, 1
         or eax, 80000000h
-loc_A5607:
+.3:
         mov dword [ebx], edx
         mov dword [byte ebx+04h], eax
         mov word [byte ebx+08h], cx
@@ -3002,116 +2957,116 @@ ExtToInt:
         LD sub, ebx, ebx
         mov bx, word [byte edi+08h]
         cmp dx, 400h
-        je short loc_A56A8
+        je short .1
         cmp dx, 800h
-loc_A56A8:
-        jne short loc_A56B3
+.1:
+        jne short .2
         LD or, bh, bh
-        jns short loc_A56B3
+        jns short .2
         xor dx, 0C00h
-loc_A56B3:
+.2:
         cmp dx, 0C00h
-        jne short loc_A56BE
+        jne short .3
         mov dx, 400h
-loc_A56BE:
+.3:
         and bx, 7FFFh
         sub bx, 403Fh
-        jl short loc_A56CC
+        jl short .4
         pop edi
         ret
-loc_A56CC:
+.4:
         mov ecx, dword [edi]
         add bx, byte 20h
-        jl short loc_A5722
+        jl short .9
         mov eax, dword [nosplit cs:ebx*4+EmuMantissaMasks]
         LD and, ecx, eax
         xor dword [edi], ecx
         inc eax
         cmp dx, 400h
-        je short loc_A5720
+        je short .8
         cmp dx, byte 0
-        jne short loc_A570D
+        jne short .7
         LD add, ecx, ecx
         LD cmp, eax, ecx
-        ja near loc_A5720
-        jne short loc_A570D
+        ja near .8
+        jne short .7
         rol eax, 1
-        jae short loc_A5703
+        jae short .5
         test dword [byte edi+04h], eax
-        jmp short loc_A5705
-loc_A5703:
+        jmp short .6
+.5:
         test dword [edi], eax
-loc_A5705:
-        je near loc_A5720
+.6:
+        je near .8
         ror eax, 1
-loc_A570D:
+.7:
         LD or, ecx, ecx
-        je short loc_A5720
+        je short .8
         add dword [edi], eax
         adc dword [byte edi+04h], byte 0
-        jae short loc_A5720
+        jae short .8
         rcr dword [byte edi+04h], 1
         inc word [byte edi+08h]
-loc_A5720:
+.8:
         pop edi
         ret
-loc_A5722:
+.9:
         push esi
         mov dword [edi], 0
         mov esi, dword [byte edi+04h]
         add bx, byte 20h
-        jl short loc_A5785
+        jl short .14
         mov eax, dword [nosplit cs:ebx*4+EmuMantissaMasks]
         LD and, esi, eax
         xor dword [byte edi+04h], esi
         inc eax
         cmp dx, 400h
-        je short loc_A5782
+        je short .13
         cmp dx, byte 0
-        jne short loc_A5772
+        jne short .11
         rol ecx, 1
         LD adc, esi, esi
         LD cmp, eax, esi
-        ja near loc_A5782
-        jne short loc_A5772
+        ja near .13
+        jne short .11
         LD or, ecx, ecx
-        jne near loc_A5776
+        jne near .12
         LD add, eax, eax
-        jb short loc_A576A
+        jb short .10
         test dword [byte edi+04h], eax
-loc_A576A:
-        je near loc_A5782
+.10:
+        je near .13
         shr eax, 1
-loc_A5772:
+.11:
         LD or, ecx, esi
-        je short loc_A5782
-loc_A5776:
+        je short .13
+.12:
         add dword [byte edi+04h], eax
-        jae short loc_A5782
+        jae short .13
         rcr dword [byte edi+04h], 1
         inc word [byte edi+08h]
-loc_A5782:
+.13:
         pop esi
         pop edi
         ret
-loc_A5785:
+.14:
         cmp dx, 400h
-        je short loc_A57BA
+        je short .16
         cmp dx, byte 0
-        jne short loc_A57AA
+        jne short .15
         inc bx
-        jne near loc_A57BA
+        jne near .16
         cmp esi, 80000000h
-        jne short loc_A57AA
+        jne short .15
         LD or, ecx, ecx
-        je near loc_A57BA
-loc_A57AA:
+        je near .16
+.15:
         mov dword [byte edi+04h], 80000000h
         or word [byte edi+08h], 3FFFh
         pop esi
         pop edi
         ret
-loc_A57BA:
+.16:
         LD sub, eax, eax
         mov dword [byte edi+04h], eax
         mov word [byte edi+08h], ax
@@ -3132,56 +3087,56 @@ EmuRemainder:
         LD mov, edi, eax
         mov cx, word [byte edi+08h]
         shl cx, 1
-        jne short loc_A585E
+        jne short .3
         test byte [byte edx+09h], 80h
-        je short loc_A5849
+        je short .1
         mov word [byte ebx+08h], 4000h
         mov dword [byte ebx+04h], 0C90FDAA2h
         mov dword [ebx], 2168C235h
-        jmp short loc_A585C
-loc_A5849:
+        jmp short .2
+.1:
         mov word [byte ebx+08h], 0
         mov dword [byte ebx+04h], 0
         mov dword [ebx], 0
-loc_A585C:
-        jmp short loc_A58D2
-loc_A585E:
+.2:
+        jmp short .7
+.3:
         mov cx, word [byte edx+08h]
         shl cx, 1
-        jne short loc_A5886
+        jne short .4
         mov ax, word [byte edi+08h]
         and ax, 8000h
         or ax, 3FFFh
         mov word [byte ebx+08h], ax
         mov dword [byte ebx+04h], 0C90FDAA2h
         mov dword [ebx], 2168C235h
-        jmp short loc_A58D2
-loc_A5886:
+        jmp short .7
+.4:
         mov ch, byte [byte edi+09h]
         call EmuDiv
         LD mov, eax, ebx
         call RemainderStep
         mov dl, byte [byte ebx+09h]
         LD or, ch, ch
-        js short loc_A58B8
+        js short .6
         LD or, dl, dl
-        jns short loc_A58B6
+        jns short .5
         LD mov, eax, ebx
         push dword 4000h
         push dword 0C90FDAA2h
         push dword 2168C235h
         call AddExtRaw
-loc_A58B6:
-        jmp short loc_A58D2
-loc_A58B8:
+.5:
+        jmp short .7
+.6:
         LD or, dl, dl
-        jle short loc_A58D2
+        jle short .7
         LD mov, eax, ebx
         push dword 0C000h
         push dword 0C90FDAA2h
         push dword 2168C235h
         call AddExtRaw
-loc_A58D2:
+.7:
         pop ecx
         pop esi
         pop edi
@@ -3195,11 +3150,11 @@ RemainderStep:
         mov cl, byte [byte edi+09h]
         and byte [byte edi+09h], 7Fh
         cmp word [byte edi+08h], 3FFFh
-        jne short loc_A5918
+        jne short .1
         cmp dword [byte edi+04h], 80000000h
-        jne short loc_A5918
+        jne short .1
         cmp dword [edi], byte 0
-        jne short loc_A5918
+        jne short .1
         mov dword [edi], 2168C235h
         mov dword [byte edi+04h], 0C90FDAA2h
         mov ax, 3FFEh
@@ -3210,11 +3165,11 @@ RemainderStep:
         pop esi
         pop edi
         ret
-loc_A5918:
+.1:
         push edx
         push ebx
         cmp word [byte edi+08h], 3FFFh
-        jl short loc_A594E
+        jl short .2
         push ecx
         mov si, word [byte edi+08h]
         mov ecx, dword [byte edi+04h]
@@ -3229,17 +3184,17 @@ loc_A5918:
         mov word [byte edi+08h], si
         pop ecx
         mov ch, 2
-loc_A594E:
+.2:
         mov ax, word [byte edi+08h]
         cmp ax, 3FFDh
-        jne short loc_A5969
+        jne short .3
         mov eax, dword [byte edi+04h]
         cmp eax, 8930A2F4h
-        jne short loc_A5969
+        jne short .3
         mov eax, dword [edi]
         cmp eax, 0F66AB09Bh
-loc_A5969:
-        jbe short loc_A59DC
+.3:
+        jbe short .4
         push ecx
         mov ebx, 0C265539Eh
         mov ecx, 0DDB3D742h
@@ -3276,22 +3231,22 @@ loc_A5969:
         mov word [byte edi+08h], si
         pop ecx
         or ch, 1
-loc_A59DC:
+.4:
         LD mov, eax, edi
         lea edx, [EmuRemPolyCoefs]
         mov ebx, 8
         call PolyEvalOdd
         shr ch, 1
-        jae short loc_A5A0A
+        jae short .5
         LD mov, eax, edi
         push dword 3FFEh
         push dword 860A91C1h
         push dword 6B9B2C23h
         LD mov, ebx, edi
         call AddExtRaw
-loc_A5A0A:
+.5:
         shr ch, 1
-        jae short loc_A5A2A
+        jae short .6
         push dword 0BFFFh
         push dword 0C90FDAA2h
         push dword 2168C235h
@@ -3299,11 +3254,11 @@ loc_A5A0A:
         LD mov, ebx, edi
         call AddExtRaw
         xor byte [byte ebx+09h], 80h
-loc_A5A2A:
+.6:
         cmp cl, 0
-        jns short loc_A5A33
+        jns short .7
         xor byte [byte edi+09h], 80h
-loc_A5A33:
+.7:
         pop ebx
         pop edx
         pop ecx
@@ -3312,27 +3267,27 @@ loc_A5A33:
         ret
 EmuRoundInt:
         cmp word [byte eax+08h], byte 0
-        jne short loc_A5A4E
+        jne short .1
         cmp dword [byte eax+04h], byte 0
-        jne short loc_A5A4E
+        jne short .1
         cmp dword [eax], byte 0
-        jne short loc_A5A4E
+        jne short .1
         LD sub, eax, eax
         ret
-loc_A5A4E:
+.1:
         cmp word [byte edx+08h], byte 0
-        jne short loc_A5A6E
+        jne short .2
         cmp dword [byte edx+04h], byte 0
-        jne short loc_A5A6E
+        jne short .2
         cmp dword [edx], byte 0
-        jne short loc_A5A6E
+        jne short .2
         LD sub, edx, edx
         mov dword [eax], edx
         mov dword [byte eax+04h], edx
         mov word [byte eax+08h], dx
         LD sub, eax, eax
         ret
-loc_A5A6E:
+.2:
         push ebp
         push esi
         push edi
@@ -3365,66 +3320,66 @@ RoundMantissa:
         and esi, 7FFFh
         and edi, 7FFFh
         LD sub, esi, edi
-        jl short loc_A5AFE
+        jl short .9
         LD sub, edi, edi
-loc_A5AB3:
+.1:
         LD cmp, ecx, edx
-        jne short loc_A5ABF
+        jne short .2
         LD cmp, ebx, eax
-        je near loc_A5AC1
-loc_A5ABF:
-        jae short loc_A5AC6
-loc_A5AC1:
+        je near .3
+.2:
+        jae short .4
+.3:
         LD sub, eax, ebx
         LD sbb, edx, ecx
         stc
-loc_A5AC6:
+.4:
         LD adc, edi, edi
         dec esi
-        jl near loc_A5ADB
+        jl near .5
         LD add, eax, eax
         LD adc, edx, edx
-        jb short loc_A5AC1
+        jb short .3
         LD or, edx, edx
-        js short loc_A5AB3
-        jmp short loc_A5AC6
-loc_A5ADB:
+        js short .1
+        jmp short .4
+.5:
         LD sub, esi, esi
         LD or, eax, eax
-        jne short loc_A5AE7
+        jne short .6
         LD or, edx, edx
-        jne short loc_A5AE7
-        jmp short loc_A5AFC
-loc_A5AE7:
+        jne short .6
+        jmp short .8
+.6:
         LD or, edx, edx
-        js short loc_A5AF2
+        js short .7
         LD adc, eax, eax
         LD adc, edx, edx
         dec esi
-        jmp short loc_A5AE7
-loc_A5AF2:
+        jmp short .6
+.7:
         pop ecx
         push ecx
         and ecx, 7FFFh
         LD add, esi, ecx
-loc_A5AFC:
-        jmp short loc_A5B02
-loc_A5AFE:
+.8:
+        jmp short .10
+.9:
         LD add, esi, edi
         LD sub, edi, edi
-loc_A5B02:
+.10:
         pop ecx
         pop ebx
         and ebx, 8000h
         LD or, esi, ebx
         LD or, edx, edx
-        jne short loc_A5B12
+        jne short .11
         LD sub, esi, esi
-loc_A5B12:
+.11:
         LD xor, bx, cx
-        jns short loc_A5B19
+        jns short .12
         neg edi
-loc_A5B19:
+.12:
         ret
 EmuExamine:
         push ebx
@@ -3434,11 +3389,11 @@ EmuExamine:
         LD mov, edx, eax
         and ax, word [byte ds:ebp+08h]
         LD cmp, ax, dx
-        jne short loc_A5B38
+        jne short .1
         mov al, 41h
         mov dh, 0
-        jmp short loc_A5BAB
-loc_A5B38:
+        jmp short .7
+.1:
         not edx
         and word [byte ds:ebp+08h], dx
         mov ax, word [byte ebx+08h]
@@ -3447,39 +3402,39 @@ loc_A5B38:
         rol dh, 1
         shl dh, 1
         and ax, 7FFFh
-        jne short loc_A5B6C
+        jne short .3
         mov eax, dword [byte ebx+04h]
         or eax, dword [ebx]
         mov al, 44h
-        jne short loc_A5B6A
+        jne short .2
         mov ax, word [dword cs:edi+unk_A32D0]
         or word [byte ds:ebp+08h], ax
         mov al, 40h
-loc_A5B6A:
-        jmp short loc_A5BAB
-loc_A5B6C:
+.2:
+        jmp short .7
+.3:
         cmp ax, 7FFFh
-        jne short loc_A5B94
+        jne short .6
         mov ax, word [dword cs:edi+unk_A32D4]
         or word [byte ds:ebp+08h], ax
         cmp dword [ebx], byte 0
-        jne short loc_A5B8C
+        jne short .4
         mov eax, dword [byte ebx+04h]
         cmp eax, 80000000h
-loc_A5B8C:
+.4:
         mov al, 1
-        jne short loc_A5B92
+        jne short .5
         mov al, 5
-loc_A5B92:
-        jmp short loc_A5BAB
-loc_A5B94:
+.5:
+        jmp short .7
+.6:
         test byte [byte ebx+07h], 80h
         mov al, 4
-        jne short loc_A5BAB
+        jne short .7
         mov ax, word [dword cs:edi+unk_A32D4]
         or word [byte ds:ebp+08h], ax
         mov al, 44h
-loc_A5BAB:
+.7:
         LD or, al, dh
         mov dx, word [byte ds:ebp+04h]
         and dx, 0B8FFh
@@ -3547,9 +3502,9 @@ Log2Core:
         LD sub, ecx, ecx
         mov cx, word [byte eax+08h]
         LD or, cx, cx
-        js short loc_A5C76
-        jmp short loc_A5C76
-loc_A5C76:
+        js short .1
+        jmp short .1
+.1:
         LD mov, edi, eax
         mov edx, 3FFEh
         sub ecx, 3FFEh
@@ -3562,24 +3517,24 @@ loc_A5C76:
         LD sub, ebx, ebx
         call AddMantissas
         cmp word [byte edi+08h], 3FFEh
-        jne short loc_A5CB5
+        jne short .2
         cmp dword [byte edi+04h], 0B504F333h
-        jne short loc_A5CB5
+        jne short .2
         cmp dword [edi], 0F9DE6484h
-loc_A5CB5:
-        jbe short loc_A5CD1
+.2:
+        jbe short .3
         and esi, 0FFFFh
         or esi, 0BFFE0000h
         mov ecx, 80000000h
         LD sub, ebx, ebx
         call AddMantissas
-        jmp short loc_A5CDD
-loc_A5CD1:
+        jmp short .4
+.3:
         mov dword [edi], eax
         mov dword [byte edi+04h], edx
         mov word [byte edi+08h], si
         dec dword [esp]
-loc_A5CDD:
+.4:
         push eax
         push edx
         push esi
@@ -3652,7 +3607,7 @@ loc_A5CDD:
         call AddMantissas
         pop ecx
         LD or, ecx, ecx
-        je short loc_A5E26
+        je short .5
         push eax
         push edx
         push esi
@@ -3692,7 +3647,7 @@ loc_A5CDD:
         pop ecx
         pop ebx
         call AddMantissas
-loc_A5E26:
+.5:
         mov dword [edi], eax
         mov dword [byte edi+04h], edx
         mov word [byte edi+08h], si
@@ -3734,8 +3689,8 @@ SinCosCore:
         and cx, 7FFFh
         sub cx, 3FFEh
         cmp cx, byte 20h
-        jl short loc_A5F1E
-loc_A5F1E:
+        jl short .1
+.1:
         push ecx
         push esi
         push edi
@@ -3754,7 +3709,7 @@ loc_A5F1E:
         LD mov, edi, ecx
         pop esi
         test byte [byte edi+09h], 80h
-        je short loc_A5F6D
+        je short .2
         push eax
         LD mov, ebx, edi
         LD mov, eax, edi
@@ -3764,7 +3719,7 @@ loc_A5F1E:
         call AddExtRaw
         pop eax
         dec eax
-loc_A5F6D:
+.2:
         LD mov, ebx, esi
         LD mov, ah, bl
         and bl, 2
@@ -3772,7 +3727,7 @@ loc_A5F6D:
         and al, 7
         push eax
         test al, 1
-        je short loc_A5F99
+        je short .3
         push dword 0BFFEh
         push dword 0C90FDAA2h
         push dword 2168C235h
@@ -3780,36 +3735,36 @@ loc_A5F6D:
         LD mov, ebx, edi
         call AddExtRaw
         xor byte [byte ebx+09h], 80h
-loc_A5F99:
+.3:
         LD sub, ecx, ecx
         mov cx, word [byte edi+08h]
         sub cx, 3FFEh
         cmp cx, byte 0FFE0h
-        jge short loc_A5FC3
+        jge short .4
         mov dword [byte ebp-0Ch], 0
         mov dword [byte ebp-08h], 80000000h
         mov word [byte ebp-04h], 3FFFh
-        jmp near loc_A605A
-loc_A5FC3:
+        jmp near .10
+.4:
         LD or, cx, cx
-        js short loc_A5FCC
+        js short .5
         mov cx, 0
-loc_A5FCC:
+.5:
         neg cx
         cmp cx, byte 8
-        jle short loc_A5FD9
+        jle short .6
         mov cx, 8
-loc_A5FD9:
+.6:
         mov cx, word [nosplit cs:ecx*2+EmuSinCosTermCounts]
         push ecx
         mov eax, dword [byte ebp-014h]
         inc al
         and al, 2
-        jne short loc_A5FF3
+        jne short .7
         cmp ah, 1
-        je short loc_A5FF3
-        jmp short loc_A6031
-loc_A5FF3:
+        je short .7
+        jmp short .8
+.7:
         push eax
         mov eax, dword [edi]
         mov edx, dword [byte edi+04h]
@@ -3829,13 +3784,13 @@ loc_A5FF3:
         mov dword [byte ebp-08h], edx
         mov word [byte ebp-04h], si
         pop eax
-loc_A6031:
+.8:
         cmp al, 0
-        je short loc_A603C
+        je short .9
         cmp ah, 1
-        je short loc_A603C
-        jmp short loc_A605A
-loc_A603C:
+        je short .9
+        jmp short .10
+.9:
         LD mov, eax, edi
         mov ecx, dword [byte ebp-018h]
         mov ebx, 8
@@ -3845,61 +3800,61 @@ loc_A603C:
         lea edx, [EmuSinPolyCoefs]
         LD add, edx, ecx
         call PolyEvalOdd
-loc_A605A:
+.10:
         mov eax, dword [byte ebp-014h]
         inc al
         and al, 2
-        je short loc_A606F
+        je short .11
         mov eax, dword [byte ebp-0Ch]
         mov edx, dword [byte ebp-08h]
         mov si, word [byte ebp-04h]
-        jmp short loc_A6078
-loc_A606F:
+        jmp short .12
+.11:
         mov eax, dword [edi]
         mov edx, dword [byte edi+04h]
         mov si, word [byte edi+08h]
-loc_A6078:
+.12:
         mov ecx, dword [byte ebp-014h]
         test cl, 4
-        je short loc_A6085
+        je short .13
         xor si, 8000h
-loc_A6085:
+.13:
         cmp ch, 1
-        jne short loc_A60E2
+        jne short .18
         rol esi, 10h
         add cl, 2
         LD mov, bl, cl
         inc bl
         and bl, 2
-        je short loc_A60A8
+        je short .14
         and cl, 4
         mov ebx, dword [byte ebp-0Ch]
         mov ecx, dword [byte ebp-08h]
         mov si, word [byte ebp-04h]
-        jmp short loc_A60B4
-loc_A60A8:
+        jmp short .15
+.14:
         and cl, 4
         mov ebx, dword [edi]
         mov ecx, dword [byte edi+04h]
         mov si, word [byte edi+08h]
-loc_A60B4:
-        je short loc_A60BC
+.15:
+        je short .16
         xor esi, 8000h
-loc_A60BC:
+.16:
         rol esi, 10h
         LD or, ebx, ebx
-        jne short loc_A60DD
+        jne short .17
         LD or, ecx, ecx
-        jne short loc_A60DD
+        jne short .17
         test esi, 7FFF0000h
-        jne short loc_A60DD
+        jne short .17
         LD sub, eax, eax
         mov edx, 80000000h
         or si, 7FFFh
-        jmp short loc_A60E2
-loc_A60DD:
+        jmp short .18
+.17:
         call DivideMantissas
-loc_A60E2:
+.18:
         mov dword [edi], eax
         mov dword [byte edi+04h], edx
         mov word [byte edi+08h], si
@@ -3947,14 +3902,14 @@ EmuAtan:
         mov cx, word [byte edi+08h]
         and byte [byte edi+09h], 7Fh
         cmp word [byte edi+08h], byte 0
-        jne short loc_A6162
+        jne short .1
         cmp dword [byte edi+04h], byte 0
-        jne short loc_A6162
+        jne short .1
         cmp dword [edi], byte 0
-loc_A6162:
-        je short loc_A61CA
+.1:
+        je short .9
         LD or, cx, cx
-        jns short loc_A6183
+        jns short .2
         dec esi
         push dword 0BFFFh
         push dword 80000000h
@@ -3963,45 +3918,45 @@ loc_A6162:
         LD mov, ebx, edi
         call AddExtRaw
         xor byte [byte ebx+09h], 80h
-loc_A6183:
+.2:
         mov bx, word [byte edi+08h]
         add bx, byte 4
         LD sub, ecx, ecx
         mov edx, dword [byte edi+04h]
         mov eax, dword [edi]
-loc_A6192:
+.3:
         cmp bx, 3FFFh
-        jb short loc_A61A3
+        jb short .4
         LD add, eax, eax
         LD adc, edx, edx
         LD adc, ecx, ecx
         dec bx
-        jmp short loc_A6192
-loc_A61A3:
+        jmp short .3
+.4:
         LD or, edx, edx
-        jne short loc_A61A9
+        jne short .5
         LD or, eax, eax
-loc_A61A9:
-        jne short loc_A61AF
+.5:
+        jne short .6
         LD sub, ebx, ebx
-        jmp short loc_A61BF
-loc_A61AF:
+        jmp short .8
+.6:
         LD or, edx, edx
-        js short loc_A61BB
+        js short .7
         LD add, eax, eax
         LD adc, edx, edx
         dec bx
-        jmp short loc_A61AF
-loc_A61BB:
+        jmp short .6
+.7:
         sub bx, byte 4
-loc_A61BF:
+.8:
         mov dword [edi], eax
         mov dword [byte edi+04h], edx
         mov word [byte edi+08h], bx
-        jmp short loc_A61CC
-loc_A61CA:
+        jmp short .10
+.9:
         LD sub, ecx, ecx
-loc_A61CC:
+.10:
         push esi
         push ecx
         mov eax, dword [edi]
@@ -4072,11 +4027,11 @@ loc_A61CC:
         add esp, byte 0Ch
         pop ecx
         lea esi, [EmuTan_E]
-loc_A62BB:
+.11:
         LD or, ecx, ecx
-        je short loc_A62F3
+        je short .13
         shr ecx, 1
-        jae short loc_A62EE
+        jae short .12
         push ecx
         push esi
         mov ax, word [byte edi+08h]
@@ -4093,10 +4048,10 @@ loc_A62BB:
         mov word [byte edi+08h], si
         pop esi
         pop ecx
-loc_A62EE:
+.12:
         lea esi, [byte esi+0Ah]
-        jmp short loc_A62BB
-loc_A62F3:
+        jmp short .11
+.13:
         pop esi
         add word [byte edi+08h], si
         LD mov, eax, edi
@@ -4122,44 +4077,44 @@ EmuExp2:
         mov edx, dword [byte eax+04h]
         mov ebx, dword [eax]
         LD or, ebx, ebx
-        jne short loc_A635A
+        jne short .4
         LD or, edx, edx
-        jne short loc_A634F
+        jne short .3
         LD add, cx, cx
-        je near loc_A63DA
-loc_A6333:
+        je near .12
+.1:
         mov word [byte eax+08h], 0FFFFh
         mov dword [byte eax+04h], 0
         mov dword [eax], 0
-loc_A6346:
+.2:
         or byte [byte eax+07h], 0C0h
-        jmp near loc_A63DA
-loc_A634F:
+        jmp near .12
+.3:
         cmp cx, 7FFFh
-        je near loc_A63DA
-loc_A635A:
+        je near .12
+.4:
         LD mov, edx, ecx
         and dh, 7Fh
         cmp dx, 7FFFh
-        je short loc_A6346
+        je short .2
         LD add, cx, cx
-        jb short loc_A6346
+        jb short .2
         shr cx, 1
-        je short loc_A6377
+        je short .5
         mov edx, dword [byte eax+04h]
         LD add, edx, edx
-        jae short loc_A6333
-loc_A6377:
+        jae short .1
+.5:
         mov edx, dword [byte eax+04h]
         LD sub, edi, edi
         push eax
         sub cx, 3FFFh
         sar cx, 1
-        jb short loc_A638D
+        jb short .6
         shr edx, 1
         rcr ebx, 1
         rcr edi, 1
-loc_A638D:
+.6:
         add cx, 3FFFh
         mov word [byte eax+08h], cx
         LD mov, ecx, edx
@@ -4168,44 +4123,44 @@ loc_A638D:
         stc
         rcr esi, 1
         inc edx
-        je short loc_A63C0
+        je short .9
         dec edx
-loc_A63A3:
+.7:
         div esi
         dec esi
         LD cmp, esi, eax
-        jbe short loc_A63B5
+        jbe short .8
         inc esi
         LD add, esi, eax
         rcr esi, 1
         LD mov, edx, ecx
         LD mov, eax, ebx
-        jmp short loc_A63A3
-loc_A63B5:
+        jmp short .7
+.8:
         inc esi
         LD mov, ecx, eax
         LD mov, eax, edi
         div esi
         LD add, esi, ecx
-        jmp short loc_A63C9
-loc_A63C0:
+        jmp short .10
+.9:
         LD cmp, eax, esi
-        je short loc_A63D2
+        je short .11
         xchg edx, eax
         LD mov, eax, edi
         div esi
-loc_A63C9:
+.10:
         LD sub, edx, edx
         stc
         rcr esi, 1
         rcr eax, 1
         LD adc, eax, edx
-loc_A63D2:
+.11:
         LD adc, edx, esi
         pop esi
         mov dword [esi], eax
         mov dword [byte esi+04h], edx
-loc_A63DA:
+.12:
         pop ebx
         pop ecx
         pop edx
@@ -4241,7 +4196,7 @@ PolyEval:
         mov eax, dword [cs:edi]
         mov edx, dword [byte cs:edi+04h]
         mov si, word [byte cs:edi+08h]
-loc_A6417:
+.1:
         rol esi, 10h
         mov si, word [byte ebp+08h]
         rol esi, 10h
@@ -4256,7 +4211,7 @@ loc_A6417:
         rol esi, 10h
         call AddMantissas
         dec dword [byte ebp+0Ch]
-        jne short loc_A6417
+        jne short .1
         add esp, byte 10h
         pop ecx
         pop edi
@@ -4305,9 +4260,9 @@ __hook387:
         mov ax, 1600h
         int 2Fh
         test al, al
-        je short loc_A6500
+        je short .1
         cmp al, 80h
-        je short loc_A6500
+        je short .1
         xor al, al
         xor edx, edx
         xor ecx, ecx
@@ -4315,7 +4270,7 @@ __hook387:
         mov ah, 0FAh
         int 2Fh
         cmp ax, 666h
-        jne short loc_A6500
+        jne short .1
         mov al, 22h
         xor edx, edx
         xor ecx, ecx
@@ -4323,7 +4278,7 @@ __hook387:
         mov ah, 0FAh
         int 2Fh
         test ax, ax
-        jne short loc_A6500
+        jne short .1
         mov dh, 1
         mov al, 1Eh
         xor ecx, ecx
@@ -4341,14 +4296,14 @@ __hook387:
         mov ah, 0FAh
         int 2Fh
         mov al, 1
-        jmp short loc_A655A
-loc_A6500:
+        jmp short .4
+.1:
         mov edx, dword [esp]
         test ebp, ebp
-        jne short loc_A650C
+        jne short .2
         test dx, dx
-        je short loc_A6558
-loc_A650C:
+        je short .3
+.2:
         mov esi, str_RATIONALDOS4G
         mov eax, 0A00h
         push es
@@ -4356,7 +4311,7 @@ loc_A650C:
         sbb eax, eax
         pop es
         test eax, eax
-        jne short loc_A6558
+        jne short .3
         mov eax, 7
         mov ebx, __int7
         mov ecx, cs
@@ -4373,9 +4328,9 @@ loc_A650C:
         mov ah, 30h
         int 21h
         mov byte [Hook387Flag], dl
-loc_A6558:
+.3:
         xor al, al
-loc_A655A:
+.4:
         add esp, byte 4
         pop ebp
         pop es
@@ -4391,7 +4346,7 @@ __unhook387:
         mov es, edx
         mov dl, byte [Hook387Saved]
         test dl, dl
-        je short loc_A6593
+        je short .1
         mov eax, cs
         mov edx, eax
         xor ecx, ecx
@@ -4410,9 +4365,9 @@ __unhook387:
         pop ecx
         pop ebx
         ret
-loc_A6593:
+.1:
         cmp byte [Hook387Flag], 0
-        je short loc_A65B7
+        je short .2
         mov bl, byte [byte es:eax+040h]
         mov byte [byte es:eax+03Eh], dl
         and bl, 0FBh
@@ -4422,7 +4377,7 @@ loc_A6593:
         mov cr0, eax
         mov ah, 30h
         int 21h
-loc_A65B7:
+.2:
         xor al, al
         pop es
         pop ecx
@@ -4443,9 +4398,9 @@ __init_80x87:
         fnstsw ax
         mov al, 2
         sahf
-        je short loc_A65D8
+        je short .1
         mov al, 3
-loc_A65D8:
+.1:
         wait
         fninit
         fldcw word [esp]
