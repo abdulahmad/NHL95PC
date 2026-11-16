@@ -5,7 +5,7 @@ section s_5B9D1 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, assinsert, assreplace, asstab, awscore, awtmgoaliesc, awtmnear
 extern awtmnearpl, awtmstruct, bannermsg, bannertimer, LinePlayersAway, c1playernum, c2playernum, camx
 extern camy, changeplayer_ret5, checkcoll, checkwindow, ChkGoalies, ClearPenaltyBuffer, clearteams, cliprect_y0
-extern cliprect_y1, clockticks, collflag, cont1team, cont2team, crowdlevel, cupceremony, curperiod
+extern cliprect_y1, clockticks, collflag, cont1team, cont2team, Crowdlevel, cupceremony, curperiod
 extern CwdExciteLvl, DecayCrowdLevel, defsort_d, defsort_fwd, doinput, DrawCallBanner, DrawFrameSprite, DrawRinkEndArt
 extern DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay, ds2list, AimArrowFrames_m2, DrawClipLeft, DrawClipRight, GameVarsClear
 extern SpeechPatchNext, EndPenaltyShot, energywarn, exitgame, fadeinpending, findpc, findpc_ret5, findpc_ret6
@@ -13,9 +13,9 @@ extern fodir1, fodir2, fox, foy, gameclock, gameopts, gameover, gmode
 extern gmode2, goalevent, gsp, hmscore, hmtmgoaliesc, hmtmnear, hmtmnearpl, hmtmstruct
 extern InitCoachModes, IntermissionPC, IsCupClinched, joysampling, joysampling_save, lastsfx, lcblink, lcboxon
 extern lcline, lcrequest, lldisp, lldispodd, ltack, markframes_e1, MaxCwdExciteLvl, mousex
-extern mousey, musicon, NumCwdExciteLvl, offsort_d, offsort_fwd, OOlist, OOlistpos, ovlseq
-extern ovltimer, pad1dev, pad2dev, PaOneMinuteLeft, PBnum, PenaltyManager, PenBuf, Pencntdwn
-extern Pencntdwn2, penshotlive, penshotmode, penshotplayer, penshotstart, penshotteam, penshottimer, periodendtime
+extern mousey, MusicOn, NumCwdExciteLvl, offsort_d, offsort_fwd, OOlist, OOlistpos, ovlseq
+extern ovltimer, pad1dev, pad2dev, PaOneMinuteLeft, PBnum, PenaltyManager, PenBuf, PenCntDwn
+extern PenCntDwn2, penshotlive, penshotmode, penshotplayer, penshotstart, penshotteam, penshottimer, periodendtime
 extern PerTimeTab, PerTimeTotal, playsuspended, PlList, priolist, priolist_m1, puckc, puckstruct
 extern puckx, pucky, puckz, randomd0, ReadJoy1, ReadJoy2, recbpr, reenergizeteam
 extern refasslist, reflegspd, reflegstr, refposition, RefStep, refweight, regd0, regd1
@@ -711,7 +711,7 @@ StartPer:
         call assreplace
         cmp word [gsp], byte 0
         je short .6
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
 .6:
         or byte [gmode2], 4
         and byte [sflags], 0AFh
@@ -843,9 +843,9 @@ updatecrowdf:
 .2:
         test byte [gmode], 1
         je short .x
-        cmp word [crowdlevel], 258h
+        cmp word [Crowdlevel], 258h
         jle short .x
-        mov edx, dword [crowdlevel-2]
+        mov edx, dword [Crowdlevel-2]
         sar edx, 10h
         mov eax, 3E8h
         sub eax, edx
@@ -1015,7 +1015,7 @@ updateplayers:
         jne near .4
         test byte [gmode2], 1
         jne near .5
-        cmp word [Pencntdwn], byte 0
+        cmp word [PenCntDwn], byte 0
         jge short .5
         cmp byte [PenBuf], 0
         jne short .5
@@ -2091,7 +2091,7 @@ DrawRinkOverlays:
         movsx ebx, ax
         movsx edx, cx
         movsx eax, di
-        mov eax, dword [nosplit eax*2+Pencntdwn2]
+        mov eax, dword [nosplit eax*2+PenCntDwn2]
         sar eax, 10h
         xor ecx, ecx
 .28:
@@ -2689,15 +2689,15 @@ clockcont_0:
         test byte [gameopts+1], 2
         je near .7
         call ClearPenaltyBuffer
-        mov di, word [crowdlevel]
+        mov di, word [Crowdlevel]
         cmp di, 4B0h
         jg short .3
         mov eax, edi
         add eax, 384h
-        mov word [crowdlevel], ax
+        mov word [Crowdlevel], ax
         cmp ax, 4B0h
         jle short .3
-        mov word [crowdlevel], 4B0h
+        mov word [Crowdlevel], 4B0h
 .3:
         or byte [gmode], 41h
         xor esi, esi
@@ -2872,24 +2872,24 @@ clockcont_0:
         mov ax, word [hmscore]
         cmp ax, word [awscore]
         jle short .29
-        mov ax, word [crowdlevel]
+        mov ax, word [Crowdlevel]
         cmp ax, 5DCh
         jg short .28
         mov edx, eax
         add edx, 3E8h
-        mov word [crowdlevel], dx
+        mov word [Crowdlevel], dx
         cmp dx, 5DCh
         jle short .28
-        mov word [crowdlevel], 5DCh
+        mov word [Crowdlevel], 5DCh
 .28:
         cmp word [regd0], byte 8
         jne short .30
-        add word [crowdlevel], 320h
+        add word [Crowdlevel], 320h
         jmp short .30
 .29:
-        cmp word [crowdlevel], 320h
+        cmp word [Crowdlevel], 320h
         jge short .30
-        mov word [crowdlevel], 320h
+        mov word [Crowdlevel], 320h
 .30:
         or byte [gmode], 41h
         add word [CwdExciteLvl], byte 28h
@@ -2962,7 +2962,7 @@ ClockTick:
         cmp cx, byte 3Ch
         jne short .8
 .5:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .6
         test byte [gameopts+1], 1
         jne short .7

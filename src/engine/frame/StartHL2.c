@@ -110,7 +110,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     passplayer = -1;
     refsignal = 0;
     RefStep[0] = -1;
-    Pencntdwn = -1;
+    PenCntDwn = -1;
     RefPen = 0;
     penaltysc = -1;
     ovltimer = -1;
@@ -120,7 +120,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     ovlseq = -1;
     bannertimer = 0;
     injurystop = 0;
-    crowdlevel = 0;
+    Crowdlevel = 0;
     crowdsmooth = 0;
     puckcross6 = -1;
     puckcross2 = -1;
@@ -235,8 +235,8 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
                 PaHighlightIntro(home, vis);
                 FadePalette(0, gamepal, 0x10);
                 fadeinpending = 0;
-                crowdlevel = randomd0(0xC8) + 0x64;
-                crowdsmooth = crowdlevel;
+                Crowdlevel = randomd0(0xC8) + 0x64;
+                crowdsmooth = Crowdlevel;
             }
             joysampling = joysampling_save;
         }
@@ -256,9 +256,9 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     CrowdFadeOut();
-    crowdlevel = 0;
+    Crowdlevel = 0;
     crowdsmooth = 0;
-    if (musicon && gameopts.speech) {
+    if (MusicOn && gameopts.speech) {
         MusicChanReset2();
         while (SpeechBusy());
     } else
@@ -321,7 +321,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     RefStep[0] = -1;
     assreplace(&SortCords[0x10], 0x1E);
     ClearPenaltyBuffer();
-    Pencntdwn = -1;
+    PenCntDwn = -1;
     joyq_flush();
     if (escrequest) {
         escrequest = 0;

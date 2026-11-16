@@ -15,14 +15,14 @@ typedef struct RinkObj {
 
 typedef struct { short x, y; } Pt;
 
-/* DecayCrowdLevel (615A2, PC only; owner of sfxslots_popx): ease crowdlevel down (by 2 above 2BCh, by 3 above
+/* DecayCrowdLevel (615A2, PC only; owner of sfxslots_popx): ease Crowdlevel down (by 2 above 2BCh, by 3 above
    15Eh, then always by 1) and, if it goes negative, sometimes kick it with a small random. Then walk the 20
    rink-object slots (12 bytes at rinkobjs). A free slot (negative id) counts its timer down and then spawns an
    object (SetRinkObject): slots 12h / 13h a random one of 11h from 89h / 9Ah, slot 11h in the game (gmode bit 0)
    85h or 86h half the time, else a random id below 85h whose bit in rinkobjused is clear. A live slot counts its
    timer down, steps its frame (rinkobjanim) until the step reaches |byte 0Bh|, or with a negative byte 0Bh
    restarts half the time (rinkobjanim_b1); else it releases its id bit and is freed, its timer armed from the crowd
-   level ((3E8h - crowdlevel) / 8, at least 14h, 64h for slots 12h / 13h, 78h for slot 11h in the game,
+   level ((3E8h - Crowdlevel) / 8, at least 14h, 64h for slots 12h / 13h, 78h for slot 11h in the game,
    randomised). The spawn id and the release timer are separate shorts (one shared short spills it). No
    arguments, no result. */
 void DecayCrowdLevel(void)
@@ -32,15 +32,15 @@ void DecayCrowdLevel(void)
     signed char *o;
     short delay;
 
-    if (crowdlevel > 0x2BC)
-        crowdlevel = crowdlevel - 2;
-    else if (crowdlevel > 0x15E)
-        crowdlevel = crowdlevel - 3;
-    crowdlevel--;
-    if (crowdlevel < 0) {
-        crowdlevel = 0;
+    if (Crowdlevel > 0x2BC)
+        Crowdlevel = Crowdlevel - 2;
+    else if (Crowdlevel > 0x15E)
+        Crowdlevel = Crowdlevel - 3;
+    Crowdlevel--;
+    if (Crowdlevel < 0) {
+        Crowdlevel = 0;
         if (randomd0(0x10) == 0)
-            crowdlevel = randomd0(0x20);
+            Crowdlevel = randomd0(0x20);
     }
     for (i = 0; i < 0x14; i++) {
         o = (signed char *)rinkobjs + i * 12;
@@ -79,7 +79,7 @@ void DecayCrowdLevel(void)
             }
             rinkobjused[*(short *)o / 16] &= ~(1 << (*(short *)o % 16));
             *(short *)o = -1;
-            delay = (0x3E8 - crowdlevel) / 8;
+            delay = (0x3E8 - Crowdlevel) / 8;
             if (delay < 0x14)
                 delay = 0x14;
             if (i >= 0x12 && delay < 0x64)

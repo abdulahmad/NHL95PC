@@ -18,12 +18,12 @@ int SetupGame(void)
     SetupTeamLines(0);
     SetupTeamLines(1);
     gsp = -1;
-    crowdlevel = 0;
+    Crowdlevel = 0;
     CrowdNoiseReset();
     introskipped = 0;
     ResetGameVars();
     DrawHudPanel(HomeTeam, VisTeam, 1, 1);
-    crowdlevel = 0;
+    Crowdlevel = 0;
     crowdsmooth = 0;
     if (StartPreGame(0, 0) < 0) return -1;
     s = introskipped;

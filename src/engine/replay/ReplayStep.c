@@ -120,7 +120,7 @@ short ReplayStep(short n, short sound)
     camx = rpl_camx = *(signed char *)replayplay++;
     camy = rpl_camy = *(short *)replayplay;
     replayplay += 2;
-    crowdlevel = *(short *)replayplay;
+    Crowdlevel = *(short *)replayplay;
     replayplay += 2;
     for (i = 0; i < 0xA; i++) {
         RB(regd0) = *replayplay++;
@@ -146,8 +146,8 @@ short ReplayStep(short n, short sound)
 /* the overlay frames (shorts read the -5r way): the markers from CC0B2 (controller 1, 2, the puck carrier) and the
    edge arrows from CC0B8 (one row of eight per controller; d is the direction 1-8, the byte offset summed after
    the call as in the EXE) */
-#define MARKFRAME(j) (((short *)((char *)Pencntdwn2 + 2))[j])
-#define ARROWFRAME(j, d) (*(short *)((char *)Pencntdwn2 + 6 + (d) * 2 + ((j) << 4)))
+#define MARKFRAME(j) (((short *)((char *)PenCntDwn2 + 2))[j])
+#define ARROWFRAME(j, d) (*(short *)((char *)PenCntDwn2 + 6 + (d) * 2 + ((j) << 4)))
 
 /* DrawRinkSideObjects (67DCC, PC only; ends in ReplayStep_popx): DrawRinkOverlays for the replay, from the unpacked
    replay frame (x rpl_x, y rpl_y, frame rpl_frame, flip rpl_flip, jersey rpl_jersey and position

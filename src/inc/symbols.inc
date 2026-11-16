@@ -2350,7 +2350,7 @@
 ;  C1B2C  str_EASports                             data/engine/debug_dump.asm                   1
 ;  C1B36  str_StarFmt                              data/engine/debug_dump.asm                   1
 ;  C1B3E  str_NoStar                               data/engine/debug_dump.asm                   1
-;  C1B40  PenaltyList                              data/engine/debug_dump.asm                   1
+;  C1B40  str_RoughingTitle                        data/engine/debug_dump.asm                   1
 ;  C1B49  str_NoPenalty                            data/engine/debug_dump.asm                   4
 ;  C1B4A  str_Charging                             data/engine/debug_dump.asm                   1
 ;  C1B53  str_Slashing                             data/engine/debug_dump.asm                   1
@@ -3895,7 +3895,7 @@
 ;  C90C8  cont2team                                data/engine/faceoff_hockey.asm               30
 ;  C90CA  HomeTeam                                 data/engine/faceoff_hockey.asm               27
 ;  C90CC  VisTeam                                  data/engine/faceoff_hockey.asm               27
-;  C90CE  Pencntdwn                                data/engine/faceoff_hockey.asm               13
+;  C90CE  PenCntDwn                                data/engine/faceoff_hockey.asm               13
 ;  C90D0  Penaltytimer                             data/engine/faceoff_hockey.asm               7
 ;  C90D2  refsignal                                data/engine/faceoff_hockey.asm               11
 ;  C90D4  RefStep                                  data/engine/faceoff_hockey.asm               15
@@ -3963,13 +3963,13 @@
 ;  CC054  ovlsteptime                              data/engine/game_saveload.asm                3
 ;  CC080  ovlartfiles                              data/engine/game_saveload.asm                5
 ;  CC0AC  goalienotebits                           data/engine/game_saveload.asm                5
-;  CC0B0  Pencntdwn2                               data/engine/game_saveload.asm                9
+;  CC0B0  PenCntDwn2                               data/engine/game_saveload.asm                9
 ;  CC0B4  markframes_e1                            data/engine/game_saveload.asm                4
 ;  CC0D8  lldispodd                                data/engine/game_saveload.asm                2
 ;  CC0D9  lldisp                                   data/engine/game_saveload.asm                1
 ;  CC0DA  ltack                                    data/engine/game_saveload.asm                3
 ;  CC0DC  lastsfx                                  data/engine/game_saveload.asm                10
-;  CC0DE  crowdlevel                               data/engine/game_saveload.asm                22
+;  CC0DE  Crowdlevel                               data/engine/game_saveload.asm                22
 ;  CC0E0  photobankf                               data/engine/game_saveload.asm                4
 ;  CC0EC  demoflag                                 data/engine/game_saveload.asm                8
 ;  CC0F0  introskipped                             data/engine/game_saveload.asm                8
@@ -4453,7 +4453,7 @@
 ;  D2427  musicdriver                              data/front/lockerroom_announcer.asm          2
 ;  D242B  digidriver                               data/front/lockerroom_announcer.asm          1
 ;  D242F  musicslot                                data/front/lockerroom_announcer.asm          23
-;  D2430  musicon                                  data/front/lockerroom_announcer.asm          36
+;  D2430  MusicOn                                  data/front/lockerroom_announcer.asm          36
 ;  D2431  musichandle                              data/front/lockerroom_announcer.asm          24
 ;  D2435  sndtempbuf                               data/front/lockerroom_announcer.asm          2
 ;  D2439  crowddriver                              data/front/lockerroom_announcer.asm          2

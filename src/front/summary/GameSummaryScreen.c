@@ -138,7 +138,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     *(struct SummaryHandles *)f.seasonfh = *(struct SummaryHandles *)gsuminitff;
     f.gsumfh = -1;
     EnsureFreeMemory(700000);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         SetDigiChannelVolume(musichandle, 3, 0x4B);
         while (!SndQuery(musicslot, 3)) ;
         PushMemDescriptorLocked(songdata);
@@ -258,7 +258,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     /* The GAMESUM song, or the summary sample. */
     if (!(mode & 0x20)) {
         FadeOutPalCycle();
-        if (musicon && !songdata) {
+        if (MusicOn && !songdata) {
             MakePath(f.name, fileoncd[0x1E4] == 1 ? (char *)cddriveptr : 0, (char *)str_Gamesum, (char *)str_Iff6);
             songdata = LoadDigiFile(f.name);
             if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -594,9 +594,9 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         }
     }
 
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 100);
     FadePalStep(1, f.pal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(musicslot, 3)) ;
         PushMemDescriptorLocked(songdata);
         songdata = 0;

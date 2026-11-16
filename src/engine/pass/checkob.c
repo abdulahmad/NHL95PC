@@ -363,9 +363,9 @@ void ChkShotStat(void)
     if (gmode & 1) return;
     p = &SortCords[shotplayer];
     if ((*pucky > 0) ^ ((p->pflags & pfgoal) != 0)) return;
-    if (crowdlevel <= 1000) {
-        crowdlevel += 100;
-        if (crowdlevel > 1000) crowdlevel = 1000;
+    if (Crowdlevel <= 1000) {
+        Crowdlevel += 100;
+        if (Crowdlevel > 1000) Crowdlevel = 1000;
     }
     CwdExciteLvl += 10;
     if (gmode & 0x10) return;
@@ -397,9 +397,9 @@ void setInjuryType(Player *p)
     int kind;
 
     p->pflags2 |= 4;
-    if (crowdlevel <= 1000) {
-        crowdlevel += 300;
-        if (crowdlevel > 1000) crowdlevel = 1000;
+    if (Crowdlevel <= 1000) {
+        Crowdlevel += 300;
+        if (Crowdlevel > 1000) Crowdlevel = 1000;
     }
     CwdExciteLvl += 30;
     sfx(0xA1);

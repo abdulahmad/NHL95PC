@@ -828,12 +828,12 @@ int PlayoffModeLoop(int *fh)
         schedgameidx = *(int *)(f.sched + 0x40) + 0x444;
         FreeMemBlock(f.sched - 2);
         f.sched = 0;
-        if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+        if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
         pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
         SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
-        if (musicon && songdata) {
+        if (MusicOn && songdata) {
             while (!SndQuery(musicslot, 3));
             PushMemDescriptorLocked(songdata);
             songdata = 0;
@@ -895,12 +895,12 @@ int PlayoffModeLoop(int *fh)
         MakePath(f.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
         embscupbank = LoadBank(f.path, 0x20);
     }
-    if (!f.stopped && musicon) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (!f.stopped && MusicOn) SetDigiChannelVolume(musichandle, 3, 0x64);
     pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
     SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
-    if (!f.stopped && musicon) {
+    if (!f.stopped && MusicOn) {
         while (!SndQuery(musicslot, 3));
         if (songdata) PushMemDescriptorLocked(songdata);
         songdata = 0;

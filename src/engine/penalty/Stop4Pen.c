@@ -6,7 +6,7 @@
  else the puck; for 8 (offside-like) the nearer end dot (y +-4Eh) when inside the blue lines, for 6 the
  offender's end (y -258h 258h); the penalty shot spot when penshotstart. Clamp x to +-60h and pull deep spots
  to the end dots (+-60h, y +-B8h); then for every queued penalty move the dot out of the offender's zone (y -3Dh /
- 3Dh, x +-100). Then Pencntdwn 0, gmode bit 2, the whistle (sfx A4h) and the ref (SetPA 5). */
+ 3Dh, x +-100). Then PenCntDwn 0, gmode bit 2, the whistle (sfx A4h) and the ref (SetPA 5). */
 void Stop4Pen(short n)
 {
     signed char pen;
@@ -61,7 +61,7 @@ void Stop4Pen(short n)
             i++;
         } while (PenBuf[i * 2]);
     }
-    Pencntdwn = 0;
+    PenCntDwn = 0;
     gmode |= 4;
     sfx(0xA4);
     SetPA(5);

@@ -452,11 +452,11 @@ void StartThreeStars(void)
     xc1 = camx = -0x20;
     yc1 = camy = 0;
     CloseTextOverlay();
-    if (ThreeStarsLoop() < 0) crowdlevel = 0;
+    if (ThreeStarsLoop() < 0) Crowdlevel = 0;
     curperiod = per;
     CrowdFadeOut();
-    crowdlevel = 0;
-    if (musicon) MusicChanReset();
+    Crowdlevel = 0;
+    if (MusicOn) MusicChanReset();
     else ReleaseAllVoices();
 }
 
@@ -496,7 +496,7 @@ void assthreestars(Player *p)
         textline4 = textline5 = 0;
         p->temp1 = 2;
         p->temp2 = randomd0(0x14) + 0x14;
-        if (gameopts.speech && musicon) p->temp2 += 0xDC;
+        if (gameopts.speech && MusicOn) p->temp2 += 0xDC;
         p->temp3 = -1;
         tm = startm[p->temp1 * 2];
         pl = starpl[p->temp1 * 2];
@@ -516,7 +516,7 @@ void assthreestars(Player *p)
     q = &SortCords[p->temp3];
     if (p->temp3 >= 0 && q->temp1 == 0x64 && q->frame == -1) {
         p->temp2 = randomd0(0x1E) + 0x14;
-        if (gameopts.speech && musicon) p->temp2 += 0xDC;
+        if (gameopts.speech && MusicOn) p->temp2 += 0xDC;
         p->temp3 = -1;
         if (--p->temp1 < 0) {
             ovltimer = 0x258;
@@ -537,7 +537,7 @@ void assthreestars(Player *p)
     p->temp3 = slot;
     q = &SortCords[slot];
     side = (q->pflags & 0x40) != 0;
-    crowdlevel = side ? 0x2BC : 0x5DC;
+    Crowdlevel = side ? 0x2BC : 0x5DC;
     pn = q->pnum = starpl[p->temp1 * 2];
     q->position = pn < 0x19 ? 4 : 0;
     q->temp1 = 0;

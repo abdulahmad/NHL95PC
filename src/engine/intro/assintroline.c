@@ -56,7 +56,7 @@ void assintroline(Player *p)
         z = 0;
         yc1 = z;
         RefStep[0] = 1;
-        crowdlevel = 0x320;
+        Crowdlevel = 0x320;
     }
     dx = HIWORD(p->Xpos) - p->temp3;
     dy = HIWORD(p->Ypos) - p->temp4;

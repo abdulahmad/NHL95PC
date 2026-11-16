@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_4B467 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, ass_popx, assexit, assinsert, assrefwhistle, check4bench, chk4pass
-extern crowdlevel, gmode, goaliesave_saveanim_m2, iflags, imul32, playeracc, puckc, puckcross
+extern Crowdlevel, gmode, goaliesave_saveanim_m2, iflags, imul32, playeracc, puckc, puckcross
 extern puckvx, puckvy, puckvz, puckx, pucky, puckz, randomd0, regd0
 extern regd1, regd2, regd3, regd3_m2, regd4, SetSPA, sflags, ShotLaneOpen
 extern skateto, skatetopuck, SortCords, stopna, threat, vecdist, vtoa
@@ -723,15 +723,15 @@ assgoalie:
         mov eax, esi
         call SetSPA
         mov word [byte esi+04Ah], 168h
-        mov bx, word [crowdlevel]
+        mov bx, word [Crowdlevel]
         cmp bx, 4B0h
         jg near assgoalie_popebp
         mov ecx, ebx
         add ecx, 96h
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
         cmp cx, 4B0h
         jle near assgoalie_popebp
-        mov word [crowdlevel], 4B0h
+        mov word [Crowdlevel], 4B0h
         jmp near assgoalie_popebp
 .47:
         mov eax, dword [byte esi+Ypos]
@@ -1394,15 +1394,15 @@ assgoalie:
         sar edx, 10h
         mov eax, esi
         call SetSPA
-        mov dx, word [crowdlevel]
+        mov dx, word [Crowdlevel]
         cmp dx, 4B0h
         jg short .137
         mov ebx, edx
         add ebx, 96h
-        mov word [crowdlevel], bx
+        mov word [Crowdlevel], bx
         cmp bx, 4B0h
         jle short .137
-        mov word [crowdlevel], 4B0h
+        mov word [Crowdlevel], 4B0h
 .137:
         mov ax, word [edi]
         mov word [regd0], ax

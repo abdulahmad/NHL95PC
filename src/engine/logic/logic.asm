@@ -7,7 +7,7 @@ extern __CHK, ass_popx, asscentero_dedata, asscentero_dedata_xrand, asscentero_d
 extern assrefwhistle, assreplace, assscore_dancecnt, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand, doorpflags3
 extern c1playernum, camx, camy, changeplayer, check4bench, check4check, ChkPullGoalieLate, doorpflags
 extern doortemp1, doplayeracc, EvadePC, gmode, gmode2, gsp, ovltimer, PaSpeechBusy
-extern PBnum, Pencntdwn, PerTimeTotal, playeracc, puckc, puckshadow, puckstruct, puckvy
+extern PBnum, PenCntDwn, PerTimeTotal, playeracc, puckc, puckshadow, puckstruct, puckvy
 extern puckx, pucky, randomd0, regd0, regd1, regd2, regd3, regd4
 extern RemoveFromLines, SetBoxDoorObject, Setplass, setplayer, SetSPA, shotplayer, skateto, SkateToSpot
 extern SortCords, sortobj15, SprSort, vtoa
@@ -16,7 +16,7 @@ global asswingo_evade, asscenterd, asscentero, donothing, assstanley, assscore, 
 global asspenalty, assdopen, assepen, assbench
 ;-----------------------------------------------------------------------------
 ; assboxenter                                     499D8  95 PC, low confidence
-; Asstab 2Ah: Pencntdwn 12Ch; skates to x -91h,y 6, then seats the player in
+; Asstab 2Ah: PenCntDwn 12Ch; skates to x -91h,y 6, then seats the player in
 ; the box (pflags 20h, tmpde 800h, SetBoxDoorObject)
 ;
 ; and opens the box door sprite (sortobj15)
@@ -33,7 +33,7 @@ assboxenter:
         push edx
         push esi
         mov ebx, eax
-        mov word [Pencntdwn], 12Ch
+        mov word [PenCntDwn], 12Ch
         test byte [byte eax+pflags], 20h
         jne near .x
         mov dl, byte [byte ebx+pflags]
@@ -1218,7 +1218,7 @@ assstanley:
         mov edx, 0ECBh
         mov eax, ebx
         call SetSPA
-        mov word [Pencntdwn], 100h
+        mov word [PenCntDwn], 100h
 .1:
         cmp word [byte ebx+SPA], byte 0
         jne short .2

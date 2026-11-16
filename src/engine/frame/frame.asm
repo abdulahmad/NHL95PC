@@ -5,7 +5,7 @@ bits 32
 section s_69336 progbits alloc exec nowrite align=1
 extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtmstruct
 extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
-extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
+extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, Crowdlevel
 extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, oneminsaid
 extern starthl2pos, hmtmtouch2, hmtmtouch3, awtmtouch3, ovlartbank, SpeechPatchNext, rinkendart
 extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
@@ -13,8 +13,8 @@ extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
 extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund
 extern hudclockmin, hudclocksec, hudhundaccum, hudhundstep, icingPlayer, iflags, inputframes, Intermission
 extern joyq_flush, joysampling, joysampling_save, lastsfx, lcblink, lcboxon, lcline, LoadGameTeams
-extern LoadPlayerPhotos, LoadRink, LoadTeamPalette, MusicChanReset2, musicon, ovlseq, ovlstep, ovltimer
-extern PaHighlightIntro, PaOpenBank, passplayer, Pencntdwn, puckc, puckstruct, puckx, pucky
+extern LoadPlayerPhotos, LoadRink, LoadTeamPalette, MusicChanReset2, MusicOn, ovlseq, ovlstep, ovltimer
+extern PaHighlightIntro, PaOpenBank, passplayer, PenCntDwn, puckc, puckstruct, puckx, pucky
 extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep, regd1
 extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
@@ -252,7 +252,7 @@ StartHL2:
         mov eax, esi
         mov word [RefStep], si
         mov edx, esi
-        mov word [Pencntdwn], si
+        mov word [PenCntDwn], si
         mov word [RefPen], bx
         mov ecx, esi
         mov word [penaltysc], si
@@ -266,7 +266,7 @@ StartHL2:
         mov word [bannertimer], cx
         xor esi, esi
         mov word [injurystop], si
-        mov word [crowdlevel], si
+        mov word [Crowdlevel], si
         xor esi, esi
         mov dword [crowdsmooth], esi
         mov word [puckcross6], ax
@@ -607,8 +607,8 @@ StartHL2:
         mov eax, 0C8h
         call randomd0
         add eax, 64h
-        mov word [crowdlevel], ax
-        mov eax, dword [crowdlevel-2]
+        mov word [Crowdlevel], ax
+        mov eax, dword [Crowdlevel-2]
         sar eax, 10h
         mov dword [crowdsmooth], eax
 .24:
@@ -660,10 +660,10 @@ StartHL2:
         call FadePalette
         call CrowdFadeOut
         xor ebx, ebx
-        mov word [crowdlevel], bx
+        mov word [Crowdlevel], bx
         xor edi, edi
         mov dword [crowdsmooth], edi
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .29
         test byte [gameopts+1], 1
         je short .29
@@ -819,7 +819,7 @@ StartHL2:
         mov eax, SortCords+800h
         call assreplace
         call ClearPenaltyBuffer
-        mov word [Pencntdwn], cx
+        mov word [PenCntDwn], cx
         call joyq_flush
         cmp dword [escrequest], byte 0
         je short .38

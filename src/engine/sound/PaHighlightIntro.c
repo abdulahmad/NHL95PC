@@ -5,7 +5,7 @@
  the home one is passed twice). */
 void PaHighlightIntro(int home, int vis)
 {
-    if (musicon && gameopts.speech) {
+    if (MusicOn && gameopts.speech) {
         SayHighlightIntro((char *)teamabbrevs[home], (char *)teamabbrevs[vis], (char *)teamabbrevs[home]);
     }
 }

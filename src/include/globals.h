@@ -885,7 +885,7 @@ extern unsigned char str_3rd[]; /* C1B28 */
 extern unsigned char str_EASports[]; /* C1B2C */
 extern unsigned char str_StarFmt[]; /* C1B36 */
 extern unsigned char str_NoStar[]; /* C1B3E */
-extern unsigned char PenaltyList[]; /* C1B40 */
+extern unsigned char str_RoughingTitle[]; /* C1B40 */
 extern unsigned char str_NoPenalty[]; /* C1B49 */
 extern unsigned char str_Charging[]; /* C1B4A */
 extern unsigned char str_Slashing[]; /* C1B53 */
@@ -2726,7 +2726,7 @@ extern short cont1team; /* C90C6 */
 extern short cont2team; /* C90C8 */
 extern short HomeTeam; /* C90CA */
 extern short VisTeam; /* C90CC */
-extern short Pencntdwn; /* C90CE */
+extern short PenCntDwn; /* C90CE */
 extern short Penaltytimer; /* C90D0 */
 extern short refsignal; /* C90D2 */
 extern short RefStep[]; /* C90D4 */
@@ -2806,13 +2806,13 @@ extern unsigned char ovlseqtimed[]; /* CC049 */
 extern short ovlsteptime[]; /* CC054 */
 extern int ovlartfiles[]; /* CC080 */
 extern int goalienotebits; /* CC0AC */
-extern short Pencntdwn2[]; /* CC0B0 */
+extern short PenCntDwn2[]; /* CC0B0 */
 extern int markframes_e1[]; /* CC0B4 */
 extern short lldispodd; /* CC0D8 */
 extern unsigned char lldisp; /* CC0D9 */
 extern short ltack; /* CC0DA */
 extern short lastsfx; /* CC0DC */
-extern short crowdlevel; /* CC0DE */
+extern short Crowdlevel; /* CC0DE */
 extern int photobankf; /* CC0E0 */
 extern int demoflag; /* CC0EC */
 extern int introskipped; /* CC0F0 */
@@ -3498,7 +3498,7 @@ extern int SoundDevActive; /* D2423 */
 extern int musicdriver; /* D2427 */
 extern int digidriver; /* D242B */
 extern signed char musicslot; /* D242F */
-extern unsigned char musicon; /* D2430 */
+extern unsigned char MusicOn; /* D2430 */
 extern int musichandle; /* D2431 */
 extern int sndtempbuf; /* D2435 */
 extern unsigned char crowddriver; /* D2439 */

@@ -16,7 +16,7 @@ global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBa
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
 global str_ThegameBar, str_VIV, str_AGameYouRequire3, TeamJerseyBase, fadeend, fadeend2, jerseyremap
-global jerseyremaptrim, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, crowddriver
+global jerseyremaptrim, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, MusicOn, crowddriver
 global SpeechInitMode, dbdlgrects
 global lineslotx
 global linesloty, LineEdPairX, LineEdPairY, LineEdFiveX, LineEdFiveY, LineEdFourX, LineEdFourY, LineEdExtraX
@@ -794,7 +794,7 @@ musicslot:                                      ; music driver slot byte read be
                                                 ; arena_logos, sound_config; used by AwardsCeremony,
                                                 ; CalendarScreen, CoachCutScene ...
         db 00h
-musicon:                                        ; music present/on flag tested before every song call (with
+MusicOn:                                        ; music present/on flag tested before every song call (with
                                                 ; songdata != 0); used by AwardsCeremony, CalendarScreen,
                                                 ; ClockTick ...
         db 00h

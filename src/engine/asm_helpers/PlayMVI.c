@@ -111,7 +111,7 @@ int PlayMVI(char *path, int x, int y)
                     frame = CmvDecodeFrame(dec, chunk);
                     if (GetTicks() - t0 < due) DrawArtOpaque(frame, x, y);
                     if (!ends && n == nframes) {
-                        if (musicon && songdata) PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
+                        if (MusicOn && songdata) PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
                         t0 = GetTicks();
                     }
                     n--;
@@ -144,7 +144,7 @@ int PlayMVI(char *path, int x, int y)
     } while (!key && !bad && ends != 3);
     CmvDestroy(dec);
     CdStreamClose(stream);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!key && !SndQuery(musicslot, 3)) key = WaitClickTimeout(10);
         SetDigiChannelVolume(musichandle, 3, 0x50);
     }

@@ -8,7 +8,7 @@ extern cont1team, cont2team, dbg_assnames, dbg_posnames, dbg_spalist, dbg_spanam
 extern PenBuf_m2, exitgame, fclose_, fopen_, fprintf_, frameaccum, gameclock, gamemode
 extern gameover, gmode, gmode2, gsp, hmgoalcnt, hmscore, hmshotcnt, hmtmap
 extern hmtmgoalie, hmtmpdst_m2, hmtmplstats, hmtmstruct, hudhundaccum, joyq_flush, Penaltytimer, PenBuf
-extern PenBuf_pl, Pencntdwn, penshotctl, penshotlive, penshotmode, penshotplayer, penshotpnum, penshotstart
+extern PenBuf_pl, PenCntDwn, penshotctl, penshotlive, penshotmode, penshotplayer, penshotpnum, penshotstart
 extern penshotteam, penshottimer, PollKey, psendcount, puckc, puckvz, refsignal, RefStep
 extern sflags3, shotongoal, shotontarget, SortCords, sprintf_, str_dbgAss, str_dbgBail, str_dbgC12
 extern str_dbgClin, str_dbgD, str_dbgDash, str_dbgDRb, str_dbgDS, str_dbgG, str_dbgGO, str_dbgGsp
@@ -215,7 +215,7 @@ DebugMonitor:
         call sprintf_
         add esp, byte 18h
         add esi, eax
-        mov eax, dword [Pencntdwn-2]
+        mov eax, dword [PenCntDwn-2]
         sar eax, 10h
         push eax
         mov bh, byte [gmode]

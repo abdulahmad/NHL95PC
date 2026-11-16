@@ -10,7 +10,7 @@ extern FindShape, fputchar, FreeMemBlock, GameGoalieStatsScreen, gamemode, gameo
 extern GameStandingsMenu, GameStandingsScreen, GameTeamStatsScreen, GetInputEvent, goaliestatscb, GrabBlock, hmgoaliemenu, HomeTeam
 extern InitGameSummary, InputInstall, InputRemove, j_unlink_, kaufmfont, lgstate, LoadBank, LoadModeState
 extern LoadScheduleDB, mainfont, MakePath, menuact_homelines, menuact_playnextgame, menuact_visitorlines, MenuHitTest, MenuPlayNextGame
-extern menusub_awgoalie, menusub_hmgoalie, mousepollfn, MouseSetPos, musichandle, musicon, musicslot, PlayGame
+extern menusub_awgoalie, menusub_hmgoalie, mousepollfn, MouseSetPos, musichandle, MusicOn, musicslot, PlayGame
 extern playoffmenubar, playofftree, playofftree_p1, POAfterGame, pochampion, POCreateSchedule, POCreateSchedule_x, POHandleElimination
 extern pointerspr, POSeedRound2, POSeedRound2_x, POSeedRound2_x30, poslotx, posloty, postate, potreeround
 extern potreeseeds, PreGameScreen, PrintCenteredText, PrintOutlinedText, PrintShadowText, ptrupdatefn, PutBlock, SaveModeState
@@ -99,7 +99,7 @@ PlayoffModeLoop:
         add esp, byte 4
         xor edx, edx
         mov dword [byte esp+020h], edx
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .2
         cmp dword [songdata], byte 0
         je short .2
@@ -126,7 +126,7 @@ PlayoffModeLoop:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         cmp dword [songdata], byte 0
         je short .4
@@ -298,7 +298,7 @@ PlayoffModeLoop:
 .18:
         cmp dword [byte esp+024h], byte 0
         jne short .19
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .19
         mov eax, dword [musichandle]
         mov ebx, 64h
@@ -325,7 +325,7 @@ PlayoffModeLoop:
         add esp, byte 4
         cmp dword [byte esp+024h], byte 0
         jne short .22
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .22
 .20:
         mov eax, dword [musicslot-3]

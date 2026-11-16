@@ -138,7 +138,7 @@ void SportsDesk(int mode)
     my = oldmy = (menus[0]->y1 + menus[0]->y2) / 2;
     GrabBlock(ptr, oldmx, oldmy);
     DrawArt(pointerspr, oldmx, oldmy);
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(path, fileoncd[0x21C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pause, (char *)str_Iff3);
         songdata = LoadDigiFile(path);
         if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -164,7 +164,7 @@ void SportsDesk(int mode)
     }
     speech = 0xB4;
     for (;;) {
-        if (musicon) {
+        if (MusicOn) {
             /* Retail 19B0A compares the timer with the routine address. */
             if ((unsigned)speech > (unsigned)TicksSinceLastCall) speech -= TicksSinceLastCall();
             else if (speech > 0) speech = 0;
@@ -177,7 +177,7 @@ void SportsDesk(int mode)
         if (autoret) {
             timeout -= TicksSinceLastCall();
             if (timeout < 0) {
-                if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
+                if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 100);
                 DeskRedrawFlag = 1;
                 DeskRedrawAll = 1;
                 ClearInputQueue();
@@ -192,13 +192,13 @@ void SportsDesk(int mode)
                 FadePalStep(1, pal, 0x10);
                 SetScreenTitle(gamemode);
                 FreeMemBlock(ptr);
-                if (musicon && songdata) {
+                if (MusicOn && songdata) {
                     while (!SndQuery(musicslot, 3));
                     PushMemDescriptorLocked(songdata);
                     songdata = 0;
                 }
                 DeskReloadGame();
-                if (musicon && !gameresult && gameopts.speech) {
+                if (MusicOn && !gameresult && gameopts.speech) {
                     MusicChanReset();
                     FreeBackMoment();
                 }
@@ -251,8 +251,8 @@ void SportsDesk(int mode)
                         deferpending = 0;
                         MouseSetPos(savex, savey);
                         SetPalette(0, 0x100, pal);
-                        if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
-                        if (r == 1 && musicon && gameopts.speech) {
+                        if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 100);
+                        if (r == 1 && MusicOn && gameopts.speech) {
                             MusicChanReset();
                             SayNowBack();
                         }
@@ -260,13 +260,13 @@ void SportsDesk(int mode)
                         if (r != 1) gameresult = 2;
                         SetScreenTitle(gamemode);
                         if (ptr) FreeMemBlock(ptr);
-                        if (musicon && songdata) {
+                        if (MusicOn && songdata) {
                             while (!SndQuery(musicslot, 3));
                             PushMemDescriptorLocked(songdata);
                             songdata = 0;
                         }
                         if (r == 1) DeskReloadGame();
-                        if (r == 1 && musicon && gameopts.speech) {
+                        if (r == 1 && MusicOn && gameopts.speech) {
                             while (SpeechBusy());
                             FreeNowBack();
                         }

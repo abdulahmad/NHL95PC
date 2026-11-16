@@ -116,7 +116,7 @@ extern int16_t *puckx, *pucky;
 extern int puckz, puckvz;           /* addresses of the puck's z words (globals.h) */
 extern signed char *puckc;
 extern int32_t regd0, regd1, regd2, regd3;
-extern int16_t crowdlevel;
+extern int16_t Crowdlevel;
 extern short goaliesave_saveanim_m2[];
 extern uint8_t gmode, gmode2, sflags; /* gmode bit 0: play is stopped; gmode2 bit 0: a faceoff; sflags bit 2 pass, bit 3 shot */
 extern int16_t *puckvx, *puckvy;
@@ -204,7 +204,7 @@ void goalie_dive(uint8_t *p, int dir)
     call_ad(SetSPA, p, SPAGDIVE);
     P_B(p, P_PFLAGS2) |= PF2AIP;
     P_B(p, P_PFLAGS) |= PFALOCK;
-    crowdlevel = (int16_t)(crowdlevel + 0x96);
+    Crowdlevel = (int16_t)(Crowdlevel + 0x96);
 }
 
 void goalie_save(uint8_t *p)
@@ -218,7 +218,7 @@ void goalie_save(uint8_t *p)
     if (P_B(p, P_ATTR) & 8) i ^= 1;
     call_ad(SetSPA, p, goaliesave_saveanim_m2[i]);
     P_B(p, P_PFLAGS2) |= PF2AIP;
-    crowdlevel = (int16_t)(crowdlevel + 0x96);
+    Crowdlevel = (int16_t)(Crowdlevel + 0x96);
 }
 
 /* 94G goalieacc for a pad-controlled goalie. Returns 1 if it ran (skip the 95 PC body). */

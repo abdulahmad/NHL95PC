@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_55804 progbits alloc exec nowrite align=1
 extern __CHK, assreplace, awshotcnt, awtmstruct, camx, checkob, checkob_ret5, chk4lc
-extern chk4lc_shoot, clockticks, CountShotOnGoal, crowdlevel, CwdExciteLvl, gameclock, gameopts, gmode
+extern chk4lc_shoot, clockticks, CountShotOnGoal, Crowdlevel, CwdExciteLvl, gameclock, gameopts, gmode
 extern gmode2, hmshotcnt, hmtmstruct, injurystop, lastimpact, lasttouch, penshotlive, penshotstart
 extern PerTimeTotal, PostInjuryEvent, puckx, pucky, randomd0, regd0, regd1, regd3
 extern regd4, regd5, RemoveFromLines, sflags, sfx, shotplayer, SortCords, threat
@@ -439,7 +439,7 @@ MarkTwoLinePlayers:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ChkShotStat                                       55D28  93G penalty93_2.asm
-; If the shot flag (gmode2 bit 4) was set: clear it, crowdlevel +100,
+; If the shot flag (gmode2 bit 4) was set: clear it, Crowdlevel +100,
 ; shot counts for the shooter and the goalie.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/checkob.c (ChkShotStat)
@@ -476,15 +476,15 @@ ChkShotStat:
         and edx, 0FFh
         xor edx, ebx
         jne near checkob_ret5
-        mov si, word [crowdlevel]
+        mov si, word [Crowdlevel]
         cmp si, 3E8h
         jg short .1
         mov edi, esi
         add edi, byte 64h
-        mov word [crowdlevel], di
+        mov word [Crowdlevel], di
         cmp di, 3E8h
         jle short .1
-        mov word [crowdlevel], 3E8h
+        mov word [Crowdlevel], 3E8h
 .1:
         add word [CwdExciteLvl], byte 0Ah
         test byte [gmode], 10h
@@ -555,15 +555,15 @@ setInjuryType:
         mov ah, byte [byte eax+045h]
         or ah, 4
         mov byte [byte esi+pflags2], ah
-        mov dx, word [crowdlevel]
+        mov dx, word [Crowdlevel]
         cmp dx, 3E8h
         jg short .1
         mov ebx, edx
         add ebx, 12Ch
-        mov word [crowdlevel], bx
+        mov word [Crowdlevel], bx
         cmp bx, 3E8h
         jle short .1
-        mov word [crowdlevel], 3E8h
+        mov word [Crowdlevel], 3E8h
 .1:
         add word [CwdExciteLvl], byte 1Eh
         mov eax, 0A1h

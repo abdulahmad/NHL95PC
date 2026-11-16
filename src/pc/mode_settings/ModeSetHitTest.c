@@ -13,7 +13,7 @@ int ModeSetHitTest(int x, int y, int *hit)
          && y >= ((Rect4 *)modesetrects)[i].t && y <= ((Rect4 *)modesetrects)[i].b) {
             if (i == 10 || i == 11) return 0;
             if (i >= 12 && i <= 15 && sounddev == 0x10) return 0;
-            if ((i == 16 || i == 17) && !musicon) return 0;
+            if ((i == 16 || i == 17) && !MusicOn) return 0;
             *hit = i;
             return 1;
         }

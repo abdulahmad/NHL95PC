@@ -120,14 +120,14 @@ __attribute__((naked)) static void setenvp_entry(void)
 
 /* The MT-32 with the digital sound of the Sound Blaster and the Ultrasound.
  * The game treats the MT-32 like an AdLib: only MIDI. Its other devices have two sound drivers (SetSoundDevice): the music driver (id 2 FM,
- * 4 MT-32, 5 Ultrasound) and a second, digital one (3 Sound Blaster, 6 Ultrasound), and `musicon`, set for the Sound Blaster and the Ultrasound,
+ * 4 MT-32, 5 Ultrasound) and a second, digital one (3 Sound Blaster, 6 Ultrasound), and `MusicOn`, set for the Sound Blaster and the Ultrasound,
  * is what lets the rest of the game play digital music, speech and effects. `sounddev` stays 8 for the MT-32, so everything the game picks by it
  * (the MT*.KMS songs for the MIDI music, the MT-32 setup) stays the MT-32's. This changes, once, when the game starts (the code is checked first):
  *   - the MT-32 branch of SetSoundDevice sets the second driver to 3 (the Sound Blaster's digital driver) and crowddriver (the digital driver
  *     the crowd noise uses) as the Sound Blaster branch does;
  *   - its scene is MT32DIGI, a scene file made here: the MT-32 patch map (PCFF002.PAT) and the digital timbres (PCFF001.TIM, which brings
  *     PCFF001.DIG): the CD's MT32SBDA.SCN names the Sound Blaster's patch map and silences the MIDI music;
- *   - the three tests of sounddev for 2 or 20h (the Sound Blaster or the Ultrasound: musicon, starting and stopping speech) take 8 as well.
+ *   - the three tests of sounddev for 2 or 20h (the Sound Blaster or the Ultrasound: MusicOn, starting and stopping speech) take 8 as well.
  * NHL95_MT32_DIGITAL=1 turns it on (not finished). */
 static char mt32_scene[] = "MT32DIGI";
 
@@ -157,7 +157,7 @@ static void mt32_digital(void)
     uint8_t *q = (uint8_t *)begtext_forever + (0x82F12 - 0x10000);       /* mov dword [digidriver], -1 */
     uint8_t *r = (uint8_t *)begtext_forever + (0x82F1C - 0x10000);       /* xor dh, dh / mov byte [crowddriver], dh */
     uint8_t *t1 = (uint8_t *)begtext_forever + (0x82DA8 - 0x10000);      /* cmp ecx, 2 / je (the old device: stop the speech) */
-    uint8_t *t2 = (uint8_t *)begtext_forever + (0x83140 - 0x10000);      /* cmp ecx, 2 / je (musicon) */
+    uint8_t *t2 = (uint8_t *)begtext_forever + (0x83140 - 0x10000);      /* cmp ecx, 2 / je (MusicOn) */
     uint8_t *t3 = (uint8_t *)begtext_forever + (0x83269 - 0x10000);      /* cmp edx, 2 / je (start the speech) */
     static const uint8_t cmp_cl[4] = { 0x83, 0xF9, 0x02, 0x74 }, cmp_dl[4] = { 0x83, 0xFA, 0x02, 0x74 };
     static const uint8_t test_cl[4] = { 0xF6, 0xC1, 0x2A, 0x75 }, test_dl[4] = { 0xF6, 0xC2, 0x2A, 0x75 };     /* test cl, 2Ah / jne: 2, 8 or 20h */

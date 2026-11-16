@@ -17,9 +17,9 @@ void AddPenalty2(Player *p, short pen)
         if (bannermsg != -1 && bannermsg != 6) bannertimer = 0x50;
     }
     if (pen >= 7) {
-        if (crowdlevel <= 800) {
-            crowdlevel += 400;
-            if (crowdlevel > 800) crowdlevel = 800;
+        if (Crowdlevel <= 800) {
+            Crowdlevel += 400;
+            if (Crowdlevel > 800) Crowdlevel = 800;
         }
         if (p->pflags & 0x40) {
             CwdExciteLvl += 20;

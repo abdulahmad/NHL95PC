@@ -5,7 +5,7 @@ section s_7A13A progbits alloc exec nowrite align=1
 extern __CHK, acptspr, AllocMemBlock, cddriveptr, chkoffspr, chkonspr, ClearInputQueue, dlggreys
 extern DrawArt, DrawArtMasked, DrawSettingsHeading, exhstate, fdlg_cancel, fileoncd, FindShape, FreeMemBlock
 extern gamemode, gameopts, GetInputEvent, GrabBlock, leaguesetimg, leaguesetrects, LoadBank, LoadModeState
-extern LoadSettingsShapes, MakePath, MouseRead, musichandle, musicon, musicslot, na01spr, na03spr
+extern LoadSettingsShapes, MakePath, MouseRead, musichandle, MusicOn, musicslot, na01spr, na03spr
 extern na05spr, pg01spr, pg03spr, pg05spr, pg07spr, pl05spr, pl10spr, pl20spr
 extern pointerspr, postate, PrintString, ptrupdatefn, PutBlock, SaveModeState, seriesgameno, setbits
 extern SetColorRemap, settingsfile, SndQuery, songdata, sounddev, str_BKGD, str_Dbox2, str_DigitizedSpeech
@@ -398,7 +398,7 @@ MenuShowLeagueSettings2:
         call PrintString
         add esp, byte 0Ch
 .3:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .4
         push dword 0D6h
         push byte 68h
@@ -507,7 +507,7 @@ DrawLeagueSetDlgSel:
         call PrintString
         add esp, byte 0Ch
 .4:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .5
         push dword 0D6h
         push byte 68h
@@ -640,7 +640,7 @@ DrawLeagueSetDlg:
         call PrintString
         add esp, byte 0Ch
 .7:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .8
         push dword 0D6h
         push byte 68h
@@ -881,7 +881,7 @@ LeagueSetHitTest:
         jne short .13
         jmp short .11
 .7:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jmp short LeagueSetHitTest.6
 .8:
         mov ebp, dword [gamemode]
@@ -1402,7 +1402,7 @@ LeagueSetEditLoop:
         idiv ebx
         test edx, edx
         je short .9
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .8
         cmp edi, byte 11h
         je near .36
@@ -1420,7 +1420,7 @@ LeagueSetEditLoop:
         and dword [setbits], eax
         jmp near .36
 .9:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .10
         cmp edi, byte 10h
         je near .36
@@ -1576,7 +1576,7 @@ LeagueSetEditLoop:
 .24:
         test byte [gameopts], 40h
         je short .26
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .25
         cmp dword [songdata], byte 0
         je short .25
@@ -1597,7 +1597,7 @@ LeagueSetEditLoop:
         call EnableMidiMusic
         jmp short .28
 .26:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .27
         cmp dword [songdata], byte 0
         je short .27

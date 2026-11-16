@@ -53,7 +53,7 @@ int PostPenaltyEvent(int team, int player, int pen, int len, int min, int sec, i
         CloseTextOverlay();
         joysampling_save = joysampling;
         joysampling = 0;
-        if (crowdlevel > 0x190) crowdlevel = 0x190;
+        if (Crowdlevel > 0x190) Crowdlevel = 0x190;
         side = team ? VisTeam : HomeTeam;
         if (pen == 0x11) {
             side = penshotteam ? VisTeam : HomeTeam;

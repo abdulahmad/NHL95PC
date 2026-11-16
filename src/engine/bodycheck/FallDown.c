@@ -38,9 +38,9 @@ void FallDown(Player *h, Player *p)
         if (s == 0xB13) return;
         p->pflags |= 0x20;
         SetSPA(p, 0xB13);
-        if (crowdlevel <= 0x3E8) {
-            crowdlevel += 0x1F4;
-            if (crowdlevel > 0x3E8) crowdlevel = 0x3E8;
+        if (Crowdlevel <= 0x3E8) {
+            Crowdlevel += 0x1F4;
+            if (Crowdlevel > 0x3E8) Crowdlevel = 0x3E8;
         }
         CwdExciteLvl += 0xF;
         newcheck(1);
@@ -131,9 +131,9 @@ pick:
                 || (p->pflags2 & 0x10)) goto fall;
             if (randomd0((p->pflags & 8) ? 0xC8 : 0xA0) > 0x14) goto fall;
             if (!CanRemovePlayer(p)) goto fall;
-            if (crowdlevel <= 0x3E8) {
-                crowdlevel += 0x1F4;
-                if (crowdlevel > 0x3E8) crowdlevel = 0x3E8;
+            if (Crowdlevel <= 0x3E8) {
+                Crowdlevel += 0x1F4;
+                if (Crowdlevel > 0x3E8) Crowdlevel = 0x3E8;
             }
             CwdExciteLvl += 0xF;
             p->pflags |= 0x20;
@@ -149,7 +149,7 @@ pick:
             s = 0x681;
         }
     } else {
-        crowdlevel += 0x64;
+        Crowdlevel += 0x64;
         if (*puckc != p->SCnum && checkagr(h) <= 3 && s >= 0xF0F && s <= 0xFE1)
             AddPenalty(h, p->impact > 0x23 ? 0x18 : 0x14);
     }
@@ -157,9 +157,9 @@ fall:
     p->pflags |= 0x20;
     SetSPA(p, s);
     if (p->asslist[p->assnum] == 0x12) assexit(p);
-    if (crowdlevel <= 0x3E8) {
-        crowdlevel += 0x1F4;
-        if (crowdlevel > 0x3E8) crowdlevel = 0x3E8;
+    if (Crowdlevel <= 0x3E8) {
+        Crowdlevel += 0x1F4;
+        if (Crowdlevel > 0x3E8) Crowdlevel = 0x3E8;
     }
     CwdExciteLvl += 0xF;
     if (*puckc < 0 || *puckc != p->SCnum) {

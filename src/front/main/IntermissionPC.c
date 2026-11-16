@@ -11,7 +11,7 @@ void IntermissionPC(void)
         FadePalette(1, savepal, 0x10);
         SetScreenSize(0x280, 0x1E0);
         CrowdFadeOut();
-        if (musicon) MusicChanReset();
+        if (MusicOn) MusicChanReset();
         else ReleaseAllVoices();
         StopDigiSample();
         EnsureFreeMemory(0x222E0);

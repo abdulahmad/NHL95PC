@@ -4,7 +4,7 @@
 /* PaPenaltyShot: with music and announcer speech on: MusicChanReset, then SayPenaltyShot (arguments passed through). */
 void PaPenaltyShot(char *team, int num, int min, int sec)
 {
-    if (musicon && gameopts.speech) {
+    if (MusicOn && gameopts.speech) {
         MusicChanReset();
         SayPenaltyShot(team, num, min, sec);
     }

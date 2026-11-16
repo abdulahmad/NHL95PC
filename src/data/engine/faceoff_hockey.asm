@@ -17,7 +17,7 @@ global puckz, puckc, camx_m2, coachlinetab, lastplayer, puckvz, threat, SPAtab
 global CoachRotateFour, CoachRotateThree, CoachRotateThreeTop, CoachRotateFourEven, CoachRotateFourMixed, CoachRotateThreeEven, CoachSpecialUnits, CoachRotateTwo
 global CoachRotateTwoDeep, CoachRotateFourShort, CoachRotateThreeShort, ds2list, wcradiusx, camx, camy, shotplayer
 global passdir, passspeed, passplayer, xc1, yc1, fox, foy, fodir1
-global fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal
+global fodir2, c1playernum, c2playernum, cont1team, VisTeam, PenCntDwn, Penaltytimer, refsignal
 global RefStep, RefPen, penaltysc, gsp, gameclock, clockticks, dirtab_y
 global debugstep, SortPending, exitgame, gameover, PerTimeTab, energywarn, lcblink
 global lcblinktime, lcsel, lcsel_aw, lcline, lctimer
@@ -116,7 +116,7 @@ HomeTeam:                                       ; used by ControlsDlgLoop, DeskG
 VisTeam:                                        ; used by ControlsDlgLoop, DrawControlsDlg,
                                                 ; DrawGameLineJerseys ...
         db 015h,00h
-Pencntdwn:                                      ; used by DebugMonitor, LoadGameState, ResetGameVars ...
+PenCntDwn:                                      ; used by DebugMonitor, LoadGameState, ResetGameVars ...
         db 0FFh,0FFh
 Penaltytimer:                                   ; used by LoadGameState, ResetGameVars, SaveGameState ...
         db 00h,00h
@@ -159,7 +159,7 @@ penmintab:                                      ; used by AddPenalty2, InProgres
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,02h,00h,02h,02h,02h,02h,02h
         db 02h,02h,02h,02h,02h,02h,0FFh,05h,05h,05h,00h,00h,00h,00h,00h
 pendelay2tab:                                   ; checkfornewpen: second delay per penalty, x 32 frames, the
-                                                ; minimum for Pencntdwn2; used by checkfornewpen
+                                                ; minimum for PenCntDwn2; used by checkfornewpen
         db 00h,02h,02h,02h
 pendelay2tab_e4:                                ; pendelay2tab+4: entry 4, used for a penalty shot; used by
                                                 ; checkfornewpen

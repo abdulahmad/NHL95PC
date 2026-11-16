@@ -5,9 +5,9 @@
  (PenBuf: penalty, player pairs up to a 0). Outside gmode bit 2: a penalty with a minimum (penmintab) is delayed
  while the puck is loose or held by the other team (player < 6 is the home side) - gmode bit 3, ref arm up
  (SetPA 1Ch) - else the ref signals (refsignal 28h, banner timer 50h with a banner up); then stop play for it
- (Stop4Pen). A penalty not yet counted (player bit 7) gets marked, the countdown Pencntdwn raised to its delay
+ (Stop4Pen). A penalty not yet counted (player bit 7) gets marked, the countdown PenCntDwn raised to its delay
  (pendelaytab x 32; 140h with injurystop; a penalty shot (5) when penshotstart takes pendelaytab_e13 pendelay2tab_e4)
- and Pencntdwn2 raised to its box time (pendelay2tab x 32). pen is read in the body, not in the loop test, so pen
+ and PenCntDwn2 raised to its box time (pendelay2tab x 32). pen is read in the body, not in the loop test, so pen
  (one loop reference fewer) falls below i, which keeps dx; the marked flag and the puck owner are read in place. */
 void checkfornewpen(void)
 {
@@ -37,14 +37,14 @@ void checkfornewpen(void)
         if (PenBuf_pl[i * 2] & 0x80) continue;
         PenBuf_pl[i * 2] |= 0x80;
         t = pendelaytab[pen] << 5;
-        if (t > Pencntdwn) Pencntdwn = t;
-        if (injurystop) Pencntdwn = 0x140;
+        if (t > PenCntDwn) PenCntDwn = t;
+        if (injurystop) PenCntDwn = 0x140;
         if (penshotstart && pen == 5) {
             t = pendelay2tab_e4 << 5;
-            Pencntdwn = pendelaytab_e13 << 5;
+            PenCntDwn = pendelaytab_e13 << 5;
         } else {
             t = pendelay2tab[pen] << 5;
         }
-        if (t > Pencntdwn2[0]) Pencntdwn2[0] = t;
+        if (t > PenCntDwn2[0]) PenCntDwn2[0] = t;
     }
 }

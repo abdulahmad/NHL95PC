@@ -8,7 +8,7 @@ extern homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr, chkon
 extern ctl1side, ctl1team, ctl2side, ctl2team, lockerindex, lockerteams, poroundnameidx, lockeracceptx
 extern lockeraccepty, lockercancelx, lockercancely, sndtempbuf, FadeOutPalCycle, FadePalStep, fdlg_cancel, fileoncd
 extern fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr, homenamebckspr, HomeTeam
-extern kaufmfont, lockerrects, mainfont, MakePath, modesetlabel, MouseSetPos, musichandle, musicon
+extern kaufmfont, lockerrects, mainfont, MakePath, modesetlabel, MouseSetPos, musichandle, MusicOn
 extern musicslot, na01spr, na03spr, na05spr, menutext_deskreturn, menutext_desktodesk, jerseyabbrevs, poroundnames
 extern pg01spr, pg03spr, pg05spr, pg07spr, pl05spr, pl10spr, pl20spr, pointerspr
 extern PrintOutlinedText, PrintShadowText, ptrupdatefn, s1font, setbits, SetTextColors, settingsfile, ShowLoadingScreen
@@ -516,7 +516,7 @@ LockerRoomScreen:
         push edi
         push ebp
         sub esp, 340h
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1
@@ -535,7 +535,7 @@ LockerRoomScreen:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3
@@ -1342,7 +1342,7 @@ DrawLockerRoom:
         push eax
         call TextSetFont
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .35
         mov edx, dword [songdata]
         test edx, edx
@@ -2444,7 +2444,7 @@ LockerRoomLoop_n6:
         mov dword [ctl2team], eax
 .10:
         call WriteCurModeState
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .11
         cmp dword [songdata], byte 0
         je short .11
@@ -2467,7 +2467,7 @@ LockerRoomLoop_n6:
         push ebp
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .13
         cmp dword [songdata], byte 0
         je short .13
@@ -2490,7 +2490,7 @@ LockerRoomLoop_n6:
         add esp, 320h
         jmp near LockerStub
 LockerRoomLoop_n7:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1
@@ -2513,7 +2513,7 @@ LockerRoomLoop_n7:
         push edi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3
@@ -2534,7 +2534,7 @@ LockerRoomLoop_n7:
         mov eax, 3
         jmp near LockerRoomLoop_n6.14
 .4:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .5
         cmp dword [songdata], byte 0
         je short .5
@@ -2557,7 +2557,7 @@ LockerRoomLoop_n7:
         push ebp
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short LockerRoomLoop_n7.3
         cmp dword [songdata], byte 0
         je short LockerRoomLoop_n7.3

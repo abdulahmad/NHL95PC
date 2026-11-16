@@ -159,12 +159,12 @@ short ModeSetEditLoop(void)
             if (ModeSetHitTest(x, y, &hit)) {
                 if (hit < 0x12) {
                     if (hit % 2) {
-                        if (musicon || hit != 0x11) {
+                        if (MusicOn || hit != 0x11) {
                             hit /= 2;
                             setbits[0] &= ~(1 << hit);
                         }
                     } else {
-                        if (musicon || hit != 0x10) {
+                        if (MusicOn || hit != 0x10) {
                             hit /= 2;
                             setbits[0] |= 1 << hit;
                         }
@@ -192,13 +192,13 @@ short ModeSetEditLoop(void)
                     } else {
                         gameopts.sfx = sfx;
                     }
-                    if (musicon) gameopts.speech = (setbits[0] & 0x100) != 0;
+                    if (MusicOn) gameopts.speech = (setbits[0] & 0x100) != 0;
                     if (gameopts.music) {
-                        if (musicon && songdata && !oldmusic && SndQuery(musicslot, 3))
+                        if (MusicOn && songdata && !oldmusic && SndQuery(musicslot, 3))
                             PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
                         EnableMidiMusic();
                     } else {
-                        if (musicon && songdata && !SndQuery(musicslot, 3))
+                        if (MusicOn && songdata && !SndQuery(musicslot, 3))
                             SetDigiChannelVolume(musichandle, 3, 0x64);
                         DisableMidiMusic();
                     }

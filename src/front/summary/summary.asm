@@ -7,7 +7,7 @@ extern DrawGadgetByType, cursndbank, hmteamrec_skaters, FadeOutPalCycle, FadePal
 extern FileOpenRead, FileOpenRW, FitPlayerName, fputchar, FreeMemBlock, gameopts, gameresult, gamestatlabels
 extern gsuminitff, hmcrestbmp, hmlinetab, hmpassatt, hmpasscmp, hmroster, hmscore, hmteamrec
 extern hmtmstruct, HomeTeam, joyq_flush, kaufmfont, leaguedbfmt, leaguedbfmt2, leaguedbnames, MakePath
-extern memcpy_, MusicChanCmd3, musichandle, musicon, musicslot, othergames, othergamesb, otherperiod
+extern memcpy_, MusicChanCmd3, musichandle, MusicOn, musicslot, othergames, othergamesb, otherperiod
 extern otherscores, otherscoresb, PaElseNhl, PaOpenBank, PaScoringPeriod, penaltynames, PlayDigiSample, PrintShadowText
 extern rand_, ReadGSummaryRec, ReadKeyRec, ReadSeasonRec, ReadTeamRec, schedgameidx, SetDrawBitmap, SetTextColors
 extern SetTickDeadline, songdata, sounddev, sprintf_, StopDigiSample, str_02d02d, str_1st2, str_2nd2
@@ -60,7 +60,7 @@ GameSummaryScreen:
         mov dword [dword esp+0760h], edx
         mov eax, 0AAE60h
         call EnsureFreeMemory
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .2
         cmp dword [songdata], byte 0
         je short .2
@@ -517,7 +517,7 @@ GameSummaryScreen:
         test byte [esp], 20h
         jne near .37
         call FadeOutPalCycle
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .32
         cmp dword [songdata], byte 0
         jne short .32
@@ -1967,7 +1967,7 @@ GameSummaryScreen_period:
         xor eax, eax
         jmp near GameSummaryScreen_period.77
 .81:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .82
         cmp dword [songdata], byte 0
         je short .82
@@ -1980,7 +1980,7 @@ GameSummaryScreen_period:
         mov edx, dword [dword esp+07A8h]
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .84
         cmp dword [songdata], byte 0
         je short .84
@@ -2898,7 +2898,7 @@ GameStatsScreen:
         inc edi
         cmp edi, byte 2
         jl near GameStatsScreen.9
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .16
         cmp dword [songdata], byte 0
         je short .13
@@ -2979,7 +2979,7 @@ GameStatsScreen:
         call FadePalStep
         mov eax, 7D0h
         call WaitClickTimeout
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .22
         cmp dword [songdata], byte 0
         je short .22
@@ -2992,7 +2992,7 @@ GameStatsScreen:
         lea edx, [dword ebp-0374h]
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .24
         cmp dword [songdata], byte 0
         je short .25

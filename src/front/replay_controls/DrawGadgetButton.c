@@ -112,7 +112,7 @@ void InstantReplay(int mode)
     ocy = camy;
     ox = viewscrollx;
     oy = viewscrolly;
-    ocl = crowdlevel;
+    ocl = Crowdlevel;
     ReplayCamFree = 0;
     replayfollowpl = -1;
     ReplayHoverPrev = ReplayHoverPlayer = -1;
@@ -123,7 +123,7 @@ void InstantReplay(int mode)
     replayplay = ReplayFirstFrame();
     step = 0;
     ReplayStep(0, 0);
-    crowdsmooth = crowdlevel;
+    crowdsmooth = Crowdlevel;
     viewscrollx = camx + 0x20;
     if (viewscrollx > 0x40) viewscrollx = 0x40;
     if (viewscrollx < 0) viewscrollx = 0;
@@ -209,7 +209,7 @@ void InstantReplay(int mode)
     camy = ocy;
     viewscrollx = ox;
     viewscrolly = oy;
-    crowdlevel = ocl;
+    Crowdlevel = ocl;
     crowdsmooth = ocl;
     DeskRedrawAll = DeskRedrawFlag = 1;
     SetPalette(0, 0x100, savepal);

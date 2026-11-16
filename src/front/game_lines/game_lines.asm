@@ -16,7 +16,7 @@ extern gameopts, GetInputEvent, gmroster, gmrosterjersey, gmrosterslot, hmroster
 extern HomeTeam, j___close_, j___delay_, jerseydigits, jerseyremap, KeyDbPtr, leaguedbfmt, leaguedbfmt2
 extern lineedpanel, lineslotx, linesloty, lseek_, mainfont, MakePath, memcpy_, menuact_dbdress
 extern menuact_dbscratch, menuact_gamedress, menuact_gamescratch, menuact_savedeflines, menuact_savedeflines2, menuact_savelines, menuact_uselines, menuact_uselines2
-extern MenuHitTest, MessageBox, MouseSetPos, msglines, MusicChanReset2, musichandle, musicon, musicslot
+extern MenuHitTest, MessageBox, MouseSetPos, msglines, MusicChanReset2, musichandle, MusicOn, musicslot
 extern open_, palfadedin, perror_, pointerspr, PrintCenteredText, PrintFmt1, PrintFmt2, PrintLineEdStatus
 extern PrintShadowText, ptrupdatefn, qsort_, read_, rostergstat, rosterjersey, rosterlist, rosterpstat
 extern rosterslot, rosterstat, rosterteam, rosterteamrec, RunMenu, SetDrawBitmap, SetTextColors, ShowLoadingScreen
@@ -85,7 +85,7 @@ GameLineEditor:
         push edi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .2
         cmp dword [songdata], byte 0
         je short .2
@@ -107,7 +107,7 @@ GameLineEditor:
         xor ecx, ecx
         mov dword [songdata], ecx
 .2:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         test byte [gameopts+1], 1
         je short .4

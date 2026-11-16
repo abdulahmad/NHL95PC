@@ -6,7 +6,7 @@ section s_4FCE8 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, assonetimer_blade
 extern assonetimer_blade_y, fofdata2_b3, fofdata2_b7, c1playernum, c2playernum, camx, camy, changeplayer
-extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel
+extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, Crowdlevel
 extern donothing, doplayeracc, doshot, DrawPanelLine, demoflag, playsuspended, ovlartbank, shotongoal
 extern SpeechPatchNext, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
 extern fodir2, fofdata2, forcepldata, fox, foy, FreeMemBlock, gameclock, gameopts
@@ -1596,7 +1596,7 @@ assonetimer:
         call updateanim
         mov eax, dword [byte ebx+06Ch]
         inc word [byte eax+018h]
-        add word [crowdlevel], byte 64h
+        add word [Crowdlevel], byte 64h
         mov eax, ebx
         call a2touchpuck
         mov eax, ebx

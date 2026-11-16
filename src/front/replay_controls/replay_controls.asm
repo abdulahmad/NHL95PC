@@ -4,12 +4,12 @@ bits 32
 %include "hockey.inc"
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, AllocMemBlock, bgscrollx, bgscrolly, camx, camy, cddriveptr, ClearInputQueue
-extern crowdlevel, CrowdNoiseOff, crowdsmooth, ctl1team, ctl2team, cursndbank, DrawArt, DrawFrameSprite
+extern Crowdlevel, CrowdNoiseOff, crowdsmooth, ctl1team, ctl2team, cursndbank, DrawArt, DrawFrameSprite
 extern DrawRinkSideObjects, DrawShape, dressedskaters, DeskRedrawAll, DeskRedrawFlag, GadgetMovie, ReplaySpeedAccum, ReplayHoverPrev
 extern ReplayCamFree, ReplayHoverPlayer, ReplayStartRate, ReplayCtlFlags, FadePalette, fileoncd, FindShape, FreeMemBlock
 extern FreeSample, gadgetfile, gadgetptrx, gadgetptry, gadgetrect_x1, gadgetrect_y0, gadgetrect_y1, gadgetrects
 extern gadgetshape, gamemode, gamepal, GetInputEvent, GrabBlock, HilightSaveToDlg, hilightslot, HomeTeam
-extern lastsfx, LoadSample, mainfont, MakePath, MessageBox, MouseSetPos, msg_NoHilightSpace, musicon
+extern lastsfx, LoadSample, mainfont, MakePath, MessageBox, MouseSetPos, msg_NoHilightSpace, MusicOn
 extern NudgeRinkScroll, PlotPixel, pointerspr, ptrupdatefn, rand_, replaybtnarmed, ReplayFirstFrame, replayfollowpl
 extern replayfrac, replaynosave, replayplay, replayptrx, replayptry, replaysfx, replayspotx, replayspoty
 extern ReplayStep, RestoreDialogBg, rinkscrollx, rinkscrolly, rockcuefiles, rockcuepathsel, rockcuepool, rockrandcues
@@ -160,7 +160,7 @@ LoadRockMusic:
         xor edx, edx
         jmp short .23
 .19:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .20
         xor ecx, ecx
         mov ebx, str_SBROCKU
@@ -617,7 +617,7 @@ InstantReplay:
         mov di, word [viewscrollx]
         mov ax, word [viewscrolly]
         mov word [byte esp+018h], ax
-        mov si, word [crowdlevel]
+        mov si, word [Crowdlevel]
         xor ecx, ecx
         mov dword [ReplayCamFree], ecx
         mov word [replayfollowpl], 0FFFFh
@@ -636,7 +636,7 @@ InstantReplay:
         mov dword [byte esp+014h], ebp
         xor eax, eax
         call ReplayStep
-        mov eax, dword [crowdlevel-2]
+        mov eax, dword [Crowdlevel-2]
         sar eax, 10h
         mov dword [crowdsmooth], eax
         mov eax, dword [camx-2]
@@ -981,7 +981,7 @@ InstantReplay:
         mov eax, dword [byte esp+016h]
         sar eax, 10h
         mov dword [viewscrolly], eax
-        mov word [crowdlevel], si
+        mov word [Crowdlevel], si
         movsx eax, si
         mov dword [crowdsmooth], eax
         mov eax, 1

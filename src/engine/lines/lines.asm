@@ -8,7 +8,7 @@ extern lineslotgroups, lineslotgroupstart, hmrosterpos, awayremap, homeremap, ri
 extern regd1_b1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
 extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
-extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
+extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, Crowdlevel, CrowdNoiseOff
 extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, ovlartfiles, markframes_e1, rinkobjdefs_m2
 extern ovlmemneed, DrawClipLeft, DrawClipRight, ovlstepart, ovlstepart_e21, ovlstepart_e30, RinkSideShape
 extern RinkSideShapeFlipped, ovlartbank, regd3_m2, regd0_m3, regd1_m3, SpeechPatchNext, lineslotmark
@@ -17,7 +17,7 @@ extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, 
 extern rpl_objstep_m3, rpl_ysort, ReplayHoverPlayer, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
 extern joysampling, joysampling_save, lastsfx, MakePath, ovlartnames, ovlscripts, goaliemenuflags, goaliemenuflags_e02
-extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
+extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, PenCntDwn
 extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
@@ -25,7 +25,7 @@ extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_P
 extern MarkZoneRect, MemLargestFree, LoadBank, OpenArtArchiveErr, TextSetColors, TextSetFont, ShapeBankCount, FillRect
 extern FillRectClipped, PrintString, SortIndices, FindShape, JoyButtonMap, SetClipWindow, VgaBlitKeyedFlipV, PutPixel
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
-extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
+extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, PenCntDwn2
 extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
 extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, rpl_puckunused, rpl_camx
 extern rpl_camy, rpl_objframe, xc1, yc1, yleader

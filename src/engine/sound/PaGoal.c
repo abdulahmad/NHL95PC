@@ -5,7 +5,7 @@
  the goal (SayGoal, arguments passed through). */
 void PaGoal(char *team, int nast, int scorer, int a1, int a2)
 {
-    if (musicon && gameopts.speech && (gmode & 0x10) == 0) {
+    if (MusicOn && gameopts.speech && (gmode & 0x10) == 0) {
         MusicChanReset();
         SayGoal(team, nast, scorer, a1, a2);
     }

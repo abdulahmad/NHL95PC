@@ -9,7 +9,7 @@ extern Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, SortCordsOvlFlag, doorpfl
 extern goalevent_b2, goalevent_b3, goalevent_b4, c1playernum, c2playernum, camx, camx_m2, camy
 extern changeplayer, check4bench, check4check, checkob, checkpuckcoll, chk4lc, chk4pass, chk4shot
 extern ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks, CloseTextOverlay, cont2team, Crowd_Noise, CrowdFadeOut
-extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame, doorpflags
+extern Crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame, doorpflags
 extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, demoflag, apl
 extern introstandanims_m2, assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, HotStickList_y
 extern hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, rinkendart, hudhundaccum
@@ -22,8 +22,8 @@ extern hmrosterjersey, hmscore, hmteamrec, hmtmap, hmtmpde, hmtmpdst_m2, hmtmstr
 extern icingPlayer, iflags, imul32, inputframes, introskipped, IsCupClinched, joyq_flush, joysampling
 extern joysampling_save, lasttouch, lcblink, lcblinktime, lcboxon, lcline, lcrequest, lcsel
 extern lctimer, lj1, loadpals, loadscreenon, LoadScreenPalTick, LoadTeamPPV, ltx, lty
-extern MarkTwoLinePlayers, MusicChanReset, musicon, ovlseq, ovlstep, ovltimer, PaGoal, palcyclelock
-extern PaPlayerNumber, PaSpeechBusy, passdir, passspeed, PBnum, Penaltytimer, PenBuf, Pencntdwn
+extern MarkTwoLinePlayers, MusicChanReset, MusicOn, ovlseq, ovlstep, ovltimer, PaGoal, palcyclelock
+extern PaPlayerNumber, PaSpeechBusy, passdir, passspeed, PBnum, Penaltytimer, PenBuf, PenCntDwn
 extern PenShotAssign, penshotlive, penshotmode, penshotplayer, penshotstart, penshotteam, periodendtime, PerTimeTotal
 extern PlayCrowdSample, playeracc, PostGoalEvent, psendcount, pspathdir, pspathside, puckc, puckcross
 extern PuckIChk, puckshadow, puckstruct, pucktemp1, puckvx, puckvy, puckvz, puckx
@@ -729,7 +729,7 @@ assintrostand:
 ; Asstab 26h (PreGameIntro): skates to the line-up spot (temp3 -0Fh,temp4),
 ; turns to face centre, marks temp5 -64h;
 ;
-; when all 12 skaters are done sets seqtimer 0Ah; crowdlevel 320h
+; when all 12 skaters are done sets seqtimer 0Ah; Crowdlevel 320h
 ;-----------------------------------------------------------------------------
 ; C: src/engine/intro/assintroline.c
 %ifdef CBUILD
@@ -834,7 +834,7 @@ assintroline:
         xor edi, edi
         mov word [yc1], di
         mov word [RefStep], 1
-        mov word [crowdlevel], 320h
+        mov word [Crowdlevel], 320h
 .8:
         mov edx, dword [ebx]
         sar edx, 10h
@@ -1844,13 +1844,13 @@ StartThreeStars:
         call ThreeStarsLoop
         test eax, eax
         jge short .3
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
 .3:
         mov dword [curperiod], esi
         call CrowdFadeOut
         xor ebx, ebx
-        mov word [crowdlevel], bx
-        cmp byte [musicon], 0
+        mov word [Crowdlevel], bx
+        cmp byte [MusicOn], 0
         je short .4
         call MusicChanReset
         jmp near PreGameIntro_popx
@@ -2228,7 +2228,7 @@ assthreestars:
         mov word [byte ebp+temp2], ax
         test byte [gameopts+1], 1
         je short .2
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .2
         mov esi, eax
         add esi, 0DCh
@@ -2343,7 +2343,7 @@ assthreestars:
         mov word [byte ebp+temp2], ax
         test byte [gameopts+1], 1
         je short .7
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .7
         add word [byte ebp+temp2], 0DCh
 .7:
@@ -2451,7 +2451,7 @@ assthreestars:
 .12:
         mov eax, 5DCh
 .13:
-        mov word [crowdlevel], ax
+        mov word [Crowdlevel], ax
         mov eax, dword [byte ebp+temp1-2]
         sar eax, 10h
         mov al, byte [nosplit eax*4+starpl]

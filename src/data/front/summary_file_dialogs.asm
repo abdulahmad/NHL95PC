@@ -94,31 +94,31 @@ str_feB5:                                       ; FatalError code "B5" (key_team
         db 042h,035h,00h
 str_feB8:                                       ; FatalError code "B8" (key_team_db); used by InitGameSummary
         db 042h,038h,00h
-str_feD:                                        ; FatalError code "D" (key_team_db); used by ReadPlayerRecs
+str_feD:                                        ; FatalError code "D" (key_team_db); used by ReadPlayerRecord
         db 044h,00h
-str_feE:                                        ; FatalError code "E" (key_team_db); used by ReadPlayerRecs
+str_feE:                                        ; FatalError code "E" (key_team_db); used by ReadPlayerRecord
         db 045h,00h
-str_feF:                                        ; FatalError code "F" (key_team_db); used by ReadPlayerRecs
+str_feF:                                        ; FatalError code "F" (key_team_db); used by ReadPlayerRecord
         db 046h,00h
-str_feG:                                        ; FatalError code "G" (key_team_db); used by ReadPlayerRecs
+str_feG:                                        ; FatalError code "G" (key_team_db); used by ReadPlayerRecord
         db 047h,00h
-str_feH:                                        ; FatalError code "H" (key_team_db); used by ReadPlayerRecs
+str_feH:                                        ; FatalError code "H" (key_team_db); used by ReadPlayerRecord
         db 048h,00h
-str_feI:                                        ; FatalError code "I" (key_team_db); used by ReadPlayerRecs
+str_feI:                                        ; FatalError code "I" (key_team_db); used by ReadPlayerRecord
         db 049h,00h
 str_feL:                                        ; FatalError code "L" (key_team_db); used by OpenPlayerDBs,
-                                                ; ReadPlayerRecs
+                                                ; ReadPlayerRecord
         db 04Ch,00h
 str_feM:                                        ; FatalError code "M" (key_team_db); used by OpenPlayerDBs,
-                                                ; ReadPlayerRecs
+                                                ; ReadPlayerRecord
         db 04Dh,00h
-str_feN:                                        ; FatalError code "N" (key_team_db); used by ReadPlayerRecs
+str_feN:                                        ; FatalError code "N" (key_team_db); used by ReadPlayerRecord
         db 04Eh,00h
-str_feO:                                        ; FatalError code "O" (key_team_db); used by ReadPlayerRecs
+str_feO:                                        ; FatalError code "O" (key_team_db); used by ReadPlayerRecord
         db 04Fh,00h
-str_feP:                                        ; FatalError code "P" (key_team_db); used by ReadPlayerRecs
+str_feP:                                        ; FatalError code "P" (key_team_db); used by ReadPlayerRecord
         db 050h,00h
-str_feQ:                                        ; FatalError code "Q" (key_team_db); used by ReadPlayerRecs
+str_feQ:                                        ; FatalError code "Q" (key_team_db); used by ReadPlayerRecord
         db 051h,00h
 str_key:                                        ; string 'key'; used by OpenPlayerDBs
         db 06Bh,065h,079h,00h

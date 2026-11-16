@@ -39,7 +39,7 @@ typedef struct { char b[0x11]; } SprHdr;
    first). A click (event bit 2) on an available device that is not the chosen one (SoundCardHitTest: setbits
    bit, sndcardmissing as a dword of available bits) picks it (bits 1-20h). The OK button (40h) stops the music and
    tries SetSoundDevice: on success the device becomes sounddev, the music restarts (MAINDESK.IFF, from the CD
-   when it is there) and gameopts bit 8 follows musicon; on failure the device is marked unavailable, the old
+   when it is there) and gameopts bit 8 follows MusicOn; on failure the device is marked unavailable, the old
    one is chosen again and the music restarts. Cancel (80h) or event bit 4 leaves. Result: 0. */
 int SoundCardDlgLoop(void)
 {
@@ -102,7 +102,7 @@ int SoundCardDlgLoop(void)
                     case 0x40:
                         DrawSelBoxOn((Rect4 *)sndselbox1);
                         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
-                        if (musicon && songdata) {
+                        if (MusicOn && songdata) {
                             SetDigiChannelVolume(musichandle, 3, 0x64);
                             while (!SndQuery(musicslot, 3));
                             PushMemDescriptorLocked(songdata);
@@ -111,19 +111,19 @@ int SoundCardDlgLoop(void)
                         if (SetSoundDevice(setbits[0])) {
                             sounddev = setbits[0];
                             FreeMemBlock(bg);
-                            if (musicon && !songdata) {
+                            if (MusicOn && !songdata) {
                                 MakePath(s.path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk2, (char *)str_Iff12);
                                 t = LoadDigiFile(s.path);
                                 songdata = t;
                                 if (t && gameopts.music) PlayDigiBlockLoop(t, musichandle, 3, 0x4C);
                             }
-                            if (musicon) gameopts.speech = 1;
+                            if (MusicOn) gameopts.speech = 1;
                             else gameopts.speech = 0;
                             return 0;
                         }
                         *(int *)&sndcardmissing ^= setbits[0];
                         setbits[0] = sounddev;
-                        if (musicon && !songdata) {
+                        if (MusicOn && !songdata) {
                             MakePath(s.path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk2, (char *)str_Iff12);
                             t = LoadDigiFile(s.path);
                             songdata = t;
@@ -275,10 +275,10 @@ int SetSoundDevice(int dev)
             fprintf(fp, (char *)str_04x, i);
             fclose(fp);
             if (sounddev == 2 || sounddev == 0x20) {
-                musicon = 1;
+                MusicOn = 1;
                 musichandle = digidriver;
             } else {
-                musicon = 0;
+                MusicOn = 0;
             }
         } else {
             if (dev != 0x10 && dev != 1) {

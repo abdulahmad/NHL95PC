@@ -13,7 +13,7 @@ extern hmtmlines, hmtmstruct, HomeTeam, humancount, InitGameSummary, InputInstal
 extern leaguedbfmt, leaguedbfmt2, leaguedbnames, leaguediskmsg, leagueflags, leaguemaster, leaguesaved, leagueteams
 extern LeagueTeamSelect, lggameidx, lgplayteam, lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3, lgschedrec_b4
 extern lgschedrec_b5, lgteam_17, lgteamflags, LoadBank, LoadLeagueGameRef, MakePath, masterpw, MergeLeagueFiles
-extern MessageBox, MouseRead, msg_DbUpdateError, msg_InsertDisk_arg, msg_MergeNeeded, msg_MergeNeeded_e01, musichandle, musicon
+extern MessageBox, MouseRead, msg_DbUpdateError, msg_InsertDisk_arg, msg_MergeNeeded, msg_MergeNeeded_e01, musichandle, MusicOn
 extern musicslot, playerdbsmsg, PlayGame, PreGameScreen, ReadGoalieSeasonRec, ReadGSummaryRec, ReadKeyRec, ReadLeagueInfo
 extern ReadLeagueTeamEntry, ReadSchedGame, ReadSeasonRec, ReadTeamNames, ReadTeamRec, RestoreDialogBg, savedname, savleague1
 extern savleague2, schedgameidx, SetDialogColors, SetPalette, SetupControllers, SetViewRect, ShowLoadingScreen, skaterstatscb
@@ -1093,7 +1093,7 @@ PlayLeagueGame:
         call AllocMemBlock
         add esp, byte 0Ch
         mov dword [dword esp+080h], eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .19
         cmp dword [songdata], byte 0
         je short .19
@@ -1116,7 +1116,7 @@ PlayLeagueGame:
         push eax
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .22
         cmp dword [songdata], byte 0
         je near .22
@@ -1339,7 +1339,7 @@ PlayLeagueGame:
         call FreeMemBlock
         add esp, byte 4
 .37:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .39
         cmp dword [songdata], byte 0
         je short .39
@@ -1898,7 +1898,7 @@ PlayLeagueGame:
         call AllocMemBlock
         add esp, byte 0Ch
         mov dword [dword esp+08Ch], eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .81
         cmp dword [songdata], byte 0
         je short .81
@@ -1921,7 +1921,7 @@ PlayLeagueGame:
         push eax
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .83
         cmp dword [songdata], byte 0
         je short .83

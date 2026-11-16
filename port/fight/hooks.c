@@ -36,7 +36,7 @@ extern char checkcx[], checkcheck[], DoGameFrame[], updateplayers[], FallDown[];
 extern uint8_t SortCords[], puckstruct[];
 extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
-extern short ovltimer, ovlseq, refsignal, Pencntdwn;
+extern short ovltimer, ovlseq, refsignal, PenCntDwn;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
 extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[], DrawRinkOverlays[], DrawTextOverlay[], assrefgoalpa[];
 extern short scrollx, scrolly;
@@ -47,11 +47,11 @@ extern int32_t regd0, regd1;
 extern short c1playernum[], c2playernum[], cont1team, cont2team, lastplayer;
 extern uint32_t gameopts;
 extern int16_t gsp, xc1, yc1;
-extern short HomeTeam, VisTeam, crowdlevel, CwdExciteLvl;
+extern short HomeTeam, VisTeam, Crowdlevel, CwdExciteLvl;
 extern uint8_t homeremap[256], awayremap[256];       /* the sprite colour remaps: home, visitors */
 extern char *penaltynames[], *pennametab[];      /* by event type (penalty - 9): the name shown, the announcer's file */
 extern char BuildEventLines[], GameSummaryScreen[], PostPenaltyEvent[];
-extern short Pencntdwn2[];                      /* the box-time count of a call (chkprogress) */
+extern short PenCntDwn2[];                      /* the box-time count of a call (chkprogress) */
 
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
 #define P_B(p, o) (*(uint8_t *)((p) + (o)))
@@ -331,7 +331,7 @@ void fight_check(uint8_t *a, uint8_t *b)
     fight_begin(&ft);
     fight_on_now = 1;
     start_penalties(inst);
-    crowdlevel = (short)(crowdlevel + ft.crowd);        /* the crowd gets up for a fight */
+    Crowdlevel = (short)(Crowdlevel + ft.crowd);        /* the crowd gets up for a fight */
     CwdExciteLvl = (short)(CwdExciteLvl + ft.excite);
     if (have_rom) {
         free_sprites();
@@ -468,7 +468,7 @@ static void end_fight(void)
     if (ft.winner >= 0) map_event(who[ft.winner], EV_ROUGHING, EV_FIGHTING_W);
     post[0] = post[1] = 1;
     post_timer = 1200;            /* 10 s (counted once per fighter a frame) */
-    if (whistled && Pencntdwn > 0) Pencntdwn = 0;
+    if (whistled && PenCntDwn > 0) PenCntDwn = 0;
     whistled = 0;
 }
 
@@ -476,8 +476,8 @@ static void end_fight(void)
 static void hold_stoppage(void)
 {
     if (!whistled) return;
-    if (Pencntdwn < 2) Pencntdwn = 2;
-    if (Pencntdwn2[0] >= 0 && Pencntdwn2[0] < 2) Pencntdwn2[0] = 2;
+    if (PenCntDwn < 2) PenCntDwn = 2;
+    if (PenCntDwn2[0] >= 0 && PenCntDwn2[0] < 2) PenCntDwn2[0] = 2;
 }
 
 /* a fighter in the box for his major does not leave his team a man short (tmpdst bit 12, as 93's coincidental
@@ -622,7 +622,7 @@ void fight_frame(void)
             pad_new[k] = 0;
         }
         fight_pass(&ft, 1, pad, fight_accel);
-        crowdlevel = (short)(crowdlevel + ft.crowd);    /* 93's Crowdlevel / CwdExciteLvl: each punch, the end */
+        Crowdlevel = (short)(Crowdlevel + ft.crowd);    /* 93's Crowdlevel / CwdExciteLvl: each punch, the end */
         CwdExciteLvl = (short)(CwdExciteLvl + ft.excite);
     }
     watch();
@@ -655,7 +655,7 @@ void fight_frame(void)
         uint8_t *p = who[ft.loser];
         int a = 0xA1;
         P_B(p, P_PFLAGS2) |= 0x40 | 4;
-        if (crowdlevel <= 1000) { crowdlevel = (short)(crowdlevel + 300); if (crowdlevel > 1000) crowdlevel = 1000; }
+        if (Crowdlevel <= 1000) { Crowdlevel = (short)(Crowdlevel + 300); if (Crowdlevel > 1000) Crowdlevel = 1000; }
         CwdExciteLvl = (short)(CwdExciteLvl + 30);
         __asm__ volatile("call " SYM("sfx") : "+a"(a) : : "ecx", "edx", "memory", "cc");
     }

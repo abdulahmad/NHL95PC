@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_4DFF7 progbits alloc exec nowrite align=1
 extern __CHK, assgoalie, assgoalie_popebp, assreplace, asswingd, asswingd_skateto, awscore, awtmap
-extern awtmstruct, SortCordsOvlFlag, camy, ChkScorerMilestone, clockticks, CloseTextOverlay, crowdlevel, deferpending
+extern awtmstruct, SortCordsOvlFlag, camy, ChkScorerMilestone, clockticks, CloseTextOverlay, Crowdlevel, deferpending
 extern demoflag, doplayeracc, SpeechPatchNext, UnusedEventWord, EvadePlayers, exitgame, fox, foy
 extern gameclock, gameopts, gmode, gmode2, goalevent, goalevent_b1, goalevent_b2, goalevent_b3
 extern goalevent_b4, gsp, hmrosterjersey, hmscore, hmtmap, hmtmstruct, HomeTeam, injurystop
-extern joysampling, joysampling_save, LoadTeamPPV, musicon, ovlseq, ovltimer, PaGoal, PaSpeechBusy
+extern joysampling, joysampling_save, LoadTeamPPV, MusicOn, ovlseq, ovltimer, PaGoal, PaSpeechBusy
 extern penaltysc, PenBuf, PenShotAssign, penshotmode, periodendtime, PerTimeTotal, PlayCrowdSample, PostGoalEvent
 extern puckc, puckstruct, puckvx, puckvy, puckvz, puckx, pucky, puckz
 extern QueueGoalieNote, randomd0, RefPen, refsigdir, refsigspa_m2, RefStep, regd0, regd1
@@ -658,7 +658,7 @@ SkateToSpot:
 ; On a whistle (ovltimer -1, not replay) picks crowd/music reactions by RefPen
 ; and clock: PlayCrowdSample 2 late in the period, 5 at period end, team music
 ;
-; when musicon and gameopts+1 bit 0
+; when MusicOn and gameopts+1 bit 0
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/CrowdOnStoppage.c
 %ifdef CBUILD
@@ -728,7 +728,7 @@ CrowdOnStoppage:
 .5:
         test byte [gameopts+1], 1
         je short .7
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .7
         mov eax, dword [awtmap-2]
         sar eax, 10h
@@ -760,7 +760,7 @@ CrowdOnStoppage:
         je near .12
         test byte [sounddev], 2Ah
         je near .12
-        cmp word [crowdlevel], 2BCh
+        cmp word [Crowdlevel], 2BCh
         jg near .12
         xor eax, eax
         call LoadTeamPPV

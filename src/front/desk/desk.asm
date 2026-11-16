@@ -11,7 +11,7 @@ extern FreeBackMoment, FreeMemBlock, FreeNowBack, GameLineEditor, gamemode, game
 extern GameSummaryScreen, GetInputEvent, hlplayedmask, hmgoalcnt, hmlinetab, hmscore, hmshotcnt, HomeTeam
 extern InputInstall, InputRemove, InstantReplay, joysampling, LoadPlayerPhotos, LoadRink, MakePath, MenuHitTest
 extern MessageBox, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mousepollfn
-extern MouseSetPos, MusicChanReset, musichandle, musicon, musicslot, menuact_gotoreplay, othergames, othergamesb
+extern MouseSetPos, MusicChanReset, musichandle, MusicOn, musicslot, menuact_gotoreplay, othergames, othergamesb
 extern otherperiod, otherscores, otherscoresb, PaOpenBank, PaPlayoffResult, PickOtherGames, pointerspr, ptrupdatefn
 extern randomd0, ReadGSumHeader, ReadGSumTail, ReplayIsEmpty, s1font, savepal, SayBackMoment, SayNowBack
 extern schedgameidx, scrollx, scrolly, SetDialogColors, SetModeMenuLabels, SetScreenSize, SetScreenTitle, SetTeamGoalie
@@ -750,7 +750,7 @@ SportsDesk:
         push edx
         call DrawArt
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .12
         cmp dword [songdata], byte 0
         jne short .12
@@ -895,7 +895,7 @@ SportsDesk:
         mov dword [dword esp+03F0h], esi
         test esi, esi
         jge near .29
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .25
         cmp dword [songdata], byte 0
         je short .25
@@ -945,7 +945,7 @@ SportsDesk:
         push ebp
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .27
         cmp dword [songdata], byte 0
         je short .27
@@ -964,7 +964,7 @@ SportsDesk:
         mov dword [songdata], ebx
 .27:
         call DeskReloadGame
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .28
         cmp dword [gameresult], byte 0
         jne short .28
@@ -1037,7 +1037,7 @@ SportsDesk:
         mov eax, dword [dword esp+03E0h]
         mov dword [dword esp+03ECh], eax
 .34:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near SportsDesk.24
         mov ebx, dword [dword esp+03E8h]
         cmp ebx, TicksSinceLastCall
@@ -1173,7 +1173,7 @@ SportsDesk:
         push byte 0
         call SetPalette
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .40
         cmp dword [songdata], byte 0
         je short .40
@@ -1184,7 +1184,7 @@ SportsDesk:
 .40:
         cmp dword [dword esp+03DCh], byte 1
         jne short .41
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .41
         test byte [gameopts+1], 1
         je short .41
@@ -1208,7 +1208,7 @@ SportsDesk:
         call FreeMemBlock
         add esp, byte 4
 .43:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .45
         cmp dword [songdata], byte 0
         je short .45
@@ -1232,7 +1232,7 @@ SportsDesk:
 .46:
         cmp dword [dword esp+03DCh], byte 1
         jne near SportsDesk.28
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near SportsDesk.28
         test byte [gameopts+1], 1
         je near SportsDesk.28
@@ -1831,7 +1831,7 @@ DeskExitGame:
         push edi
         push ebp
         sub esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1
@@ -1884,7 +1884,7 @@ DeskExitGame:
         push byte 0
         call ClearScreen
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3
@@ -2071,7 +2071,7 @@ DeskPenaltySummary:
         push byte 0
         call SetPalette
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1
@@ -2084,7 +2084,7 @@ DeskPenaltySummary:
         mov edx, savepal
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3

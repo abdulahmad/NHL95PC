@@ -13,8 +13,8 @@ global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, introsta
 global assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, nethit, checkinglist_m2
 global digihandle, crowdsmooth, crowdvol8, crowdvol7, cursndbank, oneminsaid, playsuspended
 global Setplass_alist_m3, sublist_m2, sublist, sublist_defl_m3, AimArrowFrames_m2, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, sideobjpos
-global ovlscripts, starordtab, shotsets, sublist_defl, ovlsteptime, Pencntdwn2, lldispodd, ltack
-global crowdlevel, lcline_aw, RockTuneIds, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+global ovlscripts, starordtab, shotsets, sublist_defl, ovlsteptime, PenCntDwn2, lldispodd, ltack
+global Crowdlevel, lcline_aw, RockTuneIds, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 global linenext, FallDown_pinxr, FallDown_pinxl, FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, blockspd
 global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
@@ -50,7 +50,7 @@ goalienotebits:                                 ; QueueGoalieNote: one bit per g
                                                 ; tmgoalie, +3 for the visitors; 3Fh = all done); used by
                                                 ; LoadGameState, QueueGoalieNote, ResetGameVars ...
         db 00h,00h,00h,00h
-Pencntdwn2:                                     ; second penalty-call countdown: checkfornewpen raises it from
+PenCntDwn2:                                     ; second penalty-call countdown: checkfornewpen raises it from
                                                 ; pendelay2tab, chkprogress counts it down and sets gmode2 bit
                                                 ; 2 at the end; used by DrawRinkOverlays, DrawRinkSideObjects,
                                                 ; LoadGameState ...
@@ -72,7 +72,7 @@ ltack:                                          ; word before lastsfx, the 95/94
         db 00h,00h
 lastsfx:                                        ; used by InstantReplay, LoadGameState, SaveGameState ...
         db 0FFh,0FFh
-crowdlevel:                                     ; used by AddPenalty2, ChkShotStat, CountShotOnGoal ...
+Crowdlevel:                                     ; used by AddPenalty2, ChkShotStat, CountShotOnGoal ...
         db 00h,00h
 photobankf:                                     ; loaded "f000_149.PPV" bank (LoadPhotoBankF); used by
                                                 ; FreePhotoBankF, LoadGameState, LoadPhotoBankF
@@ -442,7 +442,7 @@ digihandle:                                     ; handle of the digital sample P
                                                 ; none); StopDigiSample / WaitDigiSample poll it; used by
                                                 ; FreeDigiSample, PlayDigiSample, StopDigiSample ...
         db 0FFh,0FFh,0FFh,0FFh
-crowdsmooth:                                    ; MIDI crowd noise: crowdlevel eased by CrowdNoiseUpdate (step
+crowdsmooth:                                    ; MIDI crowd noise: Crowdlevel eased by CrowdNoiseUpdate (step
                                                 ; 30*eax per call); drives the channel 8/7 volumes; used by
                                                 ; CrowdNoiseReset, Crowd_Noise, InstantReplay ...
         db 00h,00h,00h,00h

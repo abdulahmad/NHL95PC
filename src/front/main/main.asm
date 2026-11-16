@@ -20,7 +20,7 @@ extern joyq_flush, joyq_peek, joyq_pop, joyqcount, joyqhead, joyqtick, joyqueue,
 extern joyrec, joysampling, joysampling_save, JoystickCalScreen, kaufmfont, keydirtab, lasthotkey, lcreqchoice
 extern lcrequest, leaguedbnames, LoadCupFinalSeries, LoadGameGfx, LoadGameState, LoadModeState, LoadNhlCfg, LoadRink
 extern LoadRockMusic, LoadTeamPalette, MainDeskLoop, mainfont, MakeGSummaryPath, MakePath, memlist0, memlist1
-extern mousebtns, mousepollfn, MouseSetPos, mousex, mousey, MusicChanReset, musichandle, musicon
+extern mousebtns, mousepollfn, MouseSetPos, mousex, mousey, MusicChanReset, musichandle, MusicOn
 extern musicslot, NormalizeDressFlags, numshapes, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02, awardstatsptrs_e03, awardstatsptrs_e04
 extern awardstatsptrs_e05, awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, ovlartnames, ovlseq, ovlstep, pad1dev
 extern pad2dev, palfadedin, PaPreloadClips, penshotlive, PeriodOver, photoptrs, PlayCrowdSample, pntrshapes
@@ -518,7 +518,7 @@ main_:
         call AllocMemBlock
         add esp, byte 0Ch
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .33
         cmp dword [songdata], byte 0
         je short .33
@@ -536,7 +536,7 @@ main_:
         mov edx, esi
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .35
         cmp dword [songdata], byte 0
         je short .35
@@ -1519,7 +1519,7 @@ IntermissionPC:
         mov eax, 280h
         call SetScreenSize
         call CrowdFadeOut
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         call MusicChanReset
         jmp short .2
@@ -1841,7 +1841,7 @@ HandleHotKey:
         mov eax, 1
         call FadePalette
         call CrowdFadeOut
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .13
         call MusicChanReset
         jmp short .14
@@ -1916,7 +1916,7 @@ HandleHotKey_ret:
         test byte [gameopts], 80h
         je short .23
         call CrowdNoiseOff
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .21
         call MusicChanReset
         jmp short .22
@@ -2397,7 +2397,7 @@ Gameloop:
         mov dword [savedmousey], eax
 .13:
         call CrowdFadeOut
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .14
         call MusicChanReset
         jmp short .15

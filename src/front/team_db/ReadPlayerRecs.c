@@ -1,11 +1,11 @@
 /* Key team databases: player records. */
 #include "nhl95.h"
 
-/* ReadPlayerRecs: read one player's records from four open database files: the 34h-byte key record at off in f1
+/* ReadPlayerRecord: read one player's records from four open database files: the 34h-byte key record at off in f1
  (hdr), then n2 bytes of f2 at hdr dword +24h, n3 bytes of f3 at +2Ch and, when n4 is not 0, n4 bytes of f4 at
  +28h (each file rewound first). Any failure is fatal. Returns 0 when n4 is 0 (otherwise the value is
  undefined, as in the original). */
-int ReadPlayerRecs(int f1, int f2, int f3, int f4, long off, unsigned char *hdr, void *b2, unsigned n2, void *b3, unsigned n3, void *b4, unsigned n4)
+int ReadPlayerRecord(int f1, int f2, int f3, int f4, long off, unsigned char *hdr, void *b2, unsigned n2, void *b3, unsigned n3, void *b4, unsigned n4)
 {
     int r;
 

@@ -1,7 +1,7 @@
 /* Engine player logic: penalty box entry. */
 #include "nhl95.h"
 
-/* assboxenter: the penalized player skates into the box. Pencntdwn 300; not while flag
+/* assboxenter: the penalized player skates into the box. PenCntDwn 300; not while flag
  20h. A new assignment (bit 1): temp2 = 8, the box spot temp3 temp4 = -91h 6, temp1 = temp5 = 0. Seated
  (temp1 100): once the door (sortobj15) is waiting for him (doortemp1 == 100) close it (SPA EA9h, doortemp1 = C8h),
  clear attribute bit 3, frame 165h, facing 2, byte +46h 0, flag 20h with SPA E83h, his energy (tmpde) full, leave
@@ -10,7 +10,7 @@
  and not seated skate there (SkateToSpot). */
 void assboxenter(Player *p)
 {
-    Pencntdwn = 0x12C;
+    PenCntDwn = 0x12C;
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {
         p->pflags &= 0xFD;

@@ -150,7 +150,7 @@ int RunDemoGame(void)
     *(int *)(exhstate + 0x61) = -2;
     LoadModeState(exhstate);
     *(unsigned char *)&gameopts |= 0xFF;
-    if (musicon) ((unsigned char *)&gameopts)[1] |= 1;
+    if (MusicOn) ((unsigned char *)&gameopts)[1] |= 1;
     else ((unsigned char *)&gameopts)[1] &= 0xFE;
     ((unsigned char *)&gameopts)[1] |= 2;
     ((unsigned char *)&gameopts)[1] &= 3;
@@ -255,7 +255,7 @@ int TitleScreen(void)
     *(short *)(mask + 6) = 0xC8;
     memcpy(mask + 0x10, m + 0x10, 0x9C40);
     FreeMemBlock(bank);
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(path, fileoncd[0x1DA] == 1 ? (char *)cddriveptr : 0, (char *)str_Title30, (char *)str_Iff2);
         songdata = LoadDigiFile(path);
     } else {
@@ -273,7 +273,7 @@ int TitleScreen(void)
     while (!TickDeadlinePassed()) CdStreamService();
     delay = 10;
     pal[2] = pal[1] = pal[0] = 0;
-    if (musicon) {
+    if (MusicOn) {
         if (songdata) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
         FadePalStep(0, (unsigned char *)pal, 0x10);
         SetTickDeadline(0x5A);
@@ -308,7 +308,7 @@ int TitleScreen(void)
                     DrawArtKeyFF(*(int *)(bmp + 0x2C), 0x21, 0x56);
                 }
                 if (first == 1 && ends == 0) {
-                    if (musicon && nhlintrosaid) {
+                    if (MusicOn && nhlintrosaid) {
                         nhlintrosaid = 0;
                         PaNhlIntro();
                     }
@@ -352,9 +352,9 @@ int TitleScreen(void)
     if (bmp) FreeBitmap(bmp);
     CmvDestroy(dec);
     CdStreamClose(stream);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, (unsigned char *)pal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(musicslot, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;
@@ -395,7 +395,7 @@ void RunIntro(void)
     int bank2;
 
     skip = 0;
-    if (musicon) PushMemDescriptorLocked(*(int *)((char *)speechbank + 0x3B60));
+    if (MusicOn) PushMemDescriptorLocked(*(int *)((char *)speechbank + 0x3B60));
     ClearInputQueue();
     SetScreenTarget();
     ClearScreen(0);
@@ -409,7 +409,7 @@ void RunIntro(void)
     FreeMemBlock(bank);
     MakePath(path, fileoncd[0x128] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer2, 0);
     bank2 = LoadBank(path, 0);
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(path, fileoncd[0x12C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer4, (char *)str_Iff2);
         song4 = LoadDigiFile(path);
         MakePath(path, fileoncd[0x12B] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer3, (char *)str_Iff2);
@@ -423,7 +423,7 @@ void RunIntro(void)
     } else {
         wait = 0xC8;
     }
-    if (musicon && songdata) PlayDigiBlockLoop(songdata, musichandle, 0, 0x64);
+    if (MusicOn && songdata) PlayDigiBlockLoop(songdata, musichandle, 0, 0x64);
     FadePalStep(0, (unsigned char *)pal, 0x5A);
     changed = 1;
     while (changed) {
@@ -465,7 +465,7 @@ void RunIntro(void)
     memcpy(tgt, (char *)FindShape(bank2, (char *)str_Pio) + 0x10, 0x300);
     SetTickDeadline(0x50);
     WaitTickDeadline();
-    if (musicon && song3) PlayDigiBlockLoop(song3, musichandle, 2, 0x7F);
+    if (MusicOn && song3) PlayDigiBlockLoop(song3, musichandle, 2, 0x7F);
     for (i = 1; i < 5; i++) DrawShape(shapes[i]);
     VgaSetPalette(0, 0x100, (unsigned char *)pal);
     DrawArtOpaqueAtOwnPos(shapes[0]);
@@ -486,7 +486,7 @@ void RunIntro(void)
     }
     SetTickDeadline(0x28);
     WaitTickDeadline();
-    if (musicon && song4) PlayDigiBlockLoop(song4, musichandle, 3, 0x7F);
+    if (MusicOn && song4) PlayDigiBlockLoop(song4, musichandle, 3, 0x7F);
     for (i = 0xE0; i < 0xF0; i++) {
         if (i > 0xE0) {
             pal[(i - 1) * 3] = 0;
@@ -500,7 +500,7 @@ void RunIntro(void)
     }
     SetTickDeadline(0xC8);
     WaitTickDeadline();
-    if (musicon) {
+    if (MusicOn) {
         SetDigiChannelVolume(musichandle, 0, 0x64);
         SetDigiChannelVolume(musichandle, 1, 0x64);
         SetDigiChannelVolume(musichandle, 2, 0x64);
@@ -508,7 +508,7 @@ void RunIntro(void)
     } else if (!skip) {
         WaitClickTimeout(0x78);
     }
-    if (musicon) {
+    if (MusicOn) {
         while (!SndQuery(musicslot, 0));
         while (!SndQuery(musicslot, 1));
         while (!SndQuery(musicslot, 2));
@@ -518,7 +518,7 @@ void RunIntro(void)
         if (song3) PushMemDescriptorLocked(song3);
         if (song4) PushMemDescriptorLocked(song4);
     }
-    if (musicon) {
+    if (MusicOn) {
         cursndbank = 0x20;
         InitSpeechSlots(SpeechSlotMemSize);
         cursndbank = 0;
@@ -533,7 +533,7 @@ void RunIntro(void)
         memcpy(pal, (char *)FindShape(bank, (char *)str_Pal4) + 0x10, 0x300);
         DrawArtKeyFFAtOwnPos(FindShape(bank, (char *)str_Scrn2));
         FreeMemBlock(bank);
-        if (musicon && !songdata) {
+        if (MusicOn && !songdata) {
             MakePath(path, fileoncd[0x1DC] == 1 ? (char *)cddriveptr : 0, (char *)str_Easports, (char *)str_Iff2);
             i = LoadDigiFile(path);                 /* i reused for the song */
             songdata = i;
@@ -542,7 +542,7 @@ void RunIntro(void)
         FadePalStep(0, (unsigned char *)pal, 0x10);
         SetTickDeadline(0xC8);
         WaitTickDeadline();
-        if (musicon && songdata) {
+        if (MusicOn && songdata) {
             while (!SndQuery(musicslot, 3));
             PushMemDescriptorLocked(songdata);
             songdata = 0;
@@ -607,7 +607,7 @@ void ShowCredits(void)
     DrawBitmap(art);
     FreeMemBlock(bank);
     GrabBlock(bg, 0x14A, 0x3F);
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(path, fileoncd[0x1E1] == 1 ? (char *)cddriveptr : 0, (char *)str_Credits, (char *)str_Iff2);
         wait = LoadDigiFile(path);
         songdata = wait;
@@ -656,10 +656,10 @@ void ShowCredits(void)
         if (WaitClickTimeout(wait)) break;
     }
     PutBlock(bg, 0x14A, 0x3F);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     SpeechStopQueue();
     FadePalStep(1, pal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(musicslot, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;

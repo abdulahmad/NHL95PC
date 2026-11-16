@@ -63,9 +63,9 @@ extern uint32_t ctl1side, ctl2side, ctl1dev, ctl2dev, seed;
 extern int32_t ctl1team, ctl2team, curperiod;
 extern int16_t HomeTeam, VisTeam, cont1team, cont2team, gameover;
 extern uint16_t PerTimeTab[];
-extern uint8_t pad1dev, pad2dev, musicon;
+extern uint8_t pad1dev, pad2dev, MusicOn;
 extern uint8_t SortCords[], hmtmstruct[], hmlinetab[], awlinetab[];
-extern uint16_t gameclock, clockticks, gsp, lj1, lj2, crowdlevel;
+extern uint16_t gameclock, clockticks, gsp, lj1, lj2, Crowdlevel;
 extern char SampleInputTick[], joyq_peek[], joyq_pop[], joyq_flush[], RunGameFrames[], PlayGame[], PaSpeechBusy[], SpeechBusy[];
 extern char Crowd_Noise[], IntermissionPC[], ThreeStarsLoop[], ReadJoy1[], ReadJoy2[], ReadControllerPad[], ReadHotKeys[], ReadJoyRaw[];
 extern char InitGameSummary[];
@@ -580,7 +580,7 @@ static uint64_t sim_hash(void)
     MIX(hmlinetab, 0x30);
     MIX(awlinetab, 0x30);
     MIX(&seed, 4); MIX(&gameclock, 2); MIX(&clockticks, 2); MIX(&gsp, 2); MIX(&curperiod, 4);
-    MIX(&lj1, 2); MIX(&lj2, 2); MIX(&crowdlevel, 2);
+    MIX(&lj1, 2); MIX(&lj2, 2); MIX(&Crowdlevel, 2);
 #undef MIX
     return h;
 }
@@ -754,7 +754,7 @@ static void fill_game(ob_net_game *g, char *identity, size_t idsz)
 {
     nh_rb = getenv("NHL95_LOCKSTEP") == NULL;
     snprintf(identity, idsz, "nhl95pc %s %s sound %02x/%u", NHL95_BUILD, nh_rb ? "rollback2" : "lockstep2",
-             (unsigned)(sounddev & 0xFF), (unsigned)musicon);
+             (unsigned)(sounddev & 0xFF), (unsigned)MusicOn);
     memset(g, 0, sizeof *g);
     g->identity = identity;
     g->pads = NH_PADS;

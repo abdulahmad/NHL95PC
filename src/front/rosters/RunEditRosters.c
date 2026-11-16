@@ -44,7 +44,7 @@ void RunEditRosters(void)
     editrosters_exit = (int)pal;
     rostereditmode = (int)pal;
     pal = (unsigned char *)AllocMemBlock((char *)str_Temp7, 0x300, 0x20);
-    if (musicon && songdata)
+    if (MusicOn && songdata)
         SetDigiChannelVolume(musichandle, 3, 0x32);
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
@@ -53,7 +53,7 @@ void RunEditRosters(void)
     RosterFont = mainfont;
     TextSetFont(RosterFont);
     TextSaveState(s.state);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;
@@ -68,7 +68,7 @@ void RunEditRosters(void)
     EditRosters(editrostersmenubar, 6, 0x40, 0x41, 0x42);
     FreeLeagueDbsMem();
     FreeMemBlock(editptrspr);
-    if (musicon && songdata)
+    if (MusicOn && songdata)
         SetDigiChannelVolume(musichandle, 3, 0x32);
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
@@ -80,7 +80,7 @@ void RunEditRosters(void)
     boxshadecolor = s.shade;
     dlgtextfg = s.fg;
     dlgtextbg = s.bg;
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;

@@ -35,7 +35,7 @@ void SetupPenaltyShot(void)
         c2playernum[0] = restorepl(-1, *(int *)((char *)c2playernum - 2) >> 16);
     t = (short *)p->tmptr;
     t[0x18] = t[0x19] = t[0x1A] = -1;
-    crowdlevel += 0x64;
+    Crowdlevel += 0x64;
     *puckc = penshotplayer;
     penshotstart = penshotlive = 1;
     penshottimer = 0x3E8;

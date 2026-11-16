@@ -6,7 +6,7 @@ extern __CHK, cddriveptr, ClearInputQueue, divisionteams, DrawMenuBar, DrawMenuD
 extern DrawTeamGrid, DrawTeamGridName, exportmsg, FadePalStep, FileClose, fileoncd, FileOpenRead, FileReadAt
 extern FileWriteAt, FreeMemBlock, gameopts, GetInputEvent, HighlightGridCell, leaguedbnames, leagueflags, leaguemaster
 extern leaguesaved, lgsetmenu, lgsetshowmenu, ListDialog, mainfont, MakePath, masterpw, memcpy_
-extern memset_, MenuHitTest, MessageBox, MouseSetPos, musichandle, musicon, musicslot, passkey
+extern memset_, MenuHitTest, MessageBox, MouseSetPos, musichandle, MusicOn, musicslot, passkey
 extern passkey_m1, pointerspr, ptrupdatefn, pwmismatchmsg, ReadTeamRec, removeteambtns, removeteammsg, RestoreGridCellBg
 extern savedname, SaveGridCellBg, SetDialogColors, SetTextColors, songdata, str_Bkgd8, str_Embnhl, str_EnterMasterControllerPasswor
 extern str_EnterMasterPassword, str_EnterPasswordFor, str_extDB, str_Iff10, str_Leaguetm2, str_Menubuff6, str_MightyDucksOfAnaheim3, str_Pal19
@@ -906,7 +906,7 @@ LeagueTeamSelect:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .9
         cmp dword [songdata], byte 0
         je short .9
@@ -1055,7 +1055,7 @@ LeagueTeamSelect:
         mov dx, word [byte edx+06h]
         inc edx
         mov word [byte eax+06h], dx
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .20
         cmp dword [songdata], byte 0
         jne short .20
@@ -1272,7 +1272,7 @@ LeagueTeamSelect:
         call AllocMemBlock
         add esp, byte 0Ch
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .32
         cmp dword [songdata], byte 0
         je short .32

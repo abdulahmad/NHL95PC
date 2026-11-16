@@ -67,7 +67,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&c2playernum);
     *p++ = *(short *)(&cont1team);
     *p++ = *(short *)(&cont2team);
-    *p++ = *(short *)(&Pencntdwn);
+    *p++ = *(short *)(&PenCntDwn);
     *p++ = *(short *)(&Penaltytimer);
     *p++ = *(short *)(&refsignal);
     *p++ = *(short *)(&RefStep);
@@ -132,7 +132,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&ltack);
     *p++ = *(short *)(&lastsfx);
     *p++ = *(short *)(&UnusedSpeechWord);
-    *p++ = *(short *)(&crowdlevel);
+    *p++ = *(short *)(&Crowdlevel);
     *p++ = *(short *)(&UnusedCrowdWordHi);
     *p++ = *(short *)(&UnusedCrowdWord);
     *p++ = *(short *)(&CwdExciteLvl);
@@ -146,7 +146,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&hudclockmin);
     *p++ = *(short *)(&hudclocksec);
     *p++ = *(short *)(&hudclockhund);
-    *p++ = *(short *)(&Pencntdwn2);
+    *p++ = *(short *)(&PenCntDwn2);
     *p++ = *(short *)(&hudhundaccum);
     *p++ = *(short *)(&frameaccum);
     *p++ = *(short *)(&goalienotebits);
@@ -308,7 +308,7 @@ int LoadGameState(int fh)
     c2playernum[0] = *p++;
     cont1team = *p++;
     cont2team = *p++;
-    Pencntdwn = *p++;
+    PenCntDwn = *p++;
     Penaltytimer = *p++;
     refsignal = *p++;
     RefStep[0] = *p++;
@@ -373,7 +373,7 @@ int LoadGameState(int fh)
     ltack = *p++;
     lastsfx = *p++;
     UnusedSpeechWord = *p++;
-    crowdsmooth = crowdlevel = *p++;
+    crowdsmooth = Crowdlevel = *p++;
     UnusedCrowdWordHi = *p++;
     UnusedCrowdWord = *p++;
     CwdExciteLvl = *p++;
@@ -387,7 +387,7 @@ int LoadGameState(int fh)
     hudclockmin = *p++;
     hudclocksec = *p++;
     hudclockhund = *p++;
-    Pencntdwn2[0] = *p++;
+    PenCntDwn2[0] = *p++;
     hudhundaccum = *p++;
     frameaccum = *p++;
     goalienotebits = *p++;

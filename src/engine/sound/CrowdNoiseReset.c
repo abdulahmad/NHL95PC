@@ -1,5 +1,5 @@
 /* CrowdNoiseReset: reset the crowd noise mixer state: the smoothed crowd level (crowdsmooth)
- and the two crowd channel volumes (crowdvol8, crowdvol7). Called with crowdlevel = 0 at game start. */
+ and the two crowd channel volumes (crowdvol8, crowdvol7). Called with Crowdlevel = 0 at game start. */
 #include "nhl95.h"
 
 void CrowdNoiseReset(void)

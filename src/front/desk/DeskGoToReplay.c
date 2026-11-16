@@ -56,9 +56,9 @@ int DeskGameStats(void)
 int DeskPenaltySummary(void)
 {
     SetPalette(0, 0x100, savepal);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, savepal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;

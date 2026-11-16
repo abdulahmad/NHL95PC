@@ -34,11 +34,11 @@ int CoachCutScene(void)
     DrawBitmap(FindShape(bank, (char *)str_Scrn4));
     memcpy(s.pal, (unsigned char *)FindShape(bank, (char *)str_Pal29) + 0x10, 0x300);
     FreeMemBlock(bank);
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(s.path, fileoncd[0x21F] == 1 ? (char *)cddriveptr : 0, (char *)str_Coach, (char *)str_Iff13);
         songdata = LoadDigiFile(s.path);
     }
-    if (musicon && (((unsigned char *)&gameopts)[1] & 1)) {
+    if (MusicOn && (((unsigned char *)&gameopts)[1] & 1)) {
         flag = 1;
         SayCoachClip();
     } else
@@ -49,16 +49,16 @@ int CoachCutScene(void)
         n = rand() % 0x32;
         sprintf(s.name, (char *)str_Clip04d, n + 1);
         MakePath(s.path, fileoncd[0x1E7 + n] == 1 ? (char *)cddriveptr : 0, s.name, (char *)str_Cmv2);
-        if (musicon && (((unsigned char *)&gameopts)[1] & 1))
+        if (MusicOn && (((unsigned char *)&gameopts)[1] & 1))
             while (SpeechBusy());
         r = PlayMVI(s.path, 0x161, 0x54);
         SetPalette(0, 0x100, s.pal);
         FadePalette(1, s.pal, 0x10);
-        if (musicon && (((unsigned char *)&gameopts)[1] & 1)) {
+        if (MusicOn && (((unsigned char *)&gameopts)[1] & 1)) {
             MusicChanReset2();
             while (SpeechBusy());
         }
-        if (musicon && songdata) {
+        if (MusicOn && songdata) {
             while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
             PushMemDescriptorLocked(songdata);
             songdata = 0;
@@ -66,7 +66,7 @@ int CoachCutScene(void)
     } else {
         SetPalette(0, 0x100, s.pal);
         FadePalette(1, s.pal, 0x10);
-        if (musicon && songdata) {
+        if (MusicOn && songdata) {
             PushMemDescriptorLocked(songdata);
             songdata = 0;
         }

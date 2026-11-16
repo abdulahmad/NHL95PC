@@ -81,11 +81,11 @@ int PreGameScreen(unsigned char home, unsigned char away)
     FileClose(&io.fh);
     SetScreenTarget();
     pal = (unsigned char *)AllocMemBlock((char *)str_Pal10, 0x300, 0x20);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(musicslot, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;
@@ -171,7 +171,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     GrabBlock(ptrbg, 0, 0);
     DrawArt(pointerspr, 0, 0);
     ClearInputQueue();
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(path, fileoncd[0x1E3] == 1 ? (char *)cddriveptr : 0, (char *)str_Scouting, (char *)str_Iff4);
         songdata = LoadDigiFile(path);
         if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -264,14 +264,14 @@ int PreGameScreen(unsigned char home, unsigned char away)
             oldmy = io.my;
         }
     } while (done == 0);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, apal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(musicslot, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
-    if (musicon && gameopts.speech) {
+    if (MusicOn && gameopts.speech) {
         MusicChanReset2();
         while (SpeechBusy());
     }

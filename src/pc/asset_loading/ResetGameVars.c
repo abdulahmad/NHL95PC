@@ -44,8 +44,8 @@ void ResetGameVars(void)
     ovltimer = -1;
     penaltysc = -1;
     RefStep[0] = -1;
-    Pencntdwn = -1;
-    Pencntdwn2[0] = -1;
+    PenCntDwn = -1;
+    PenCntDwn2[0] = -1;
     threat = 0;
     passplayer = 0;
     passspeed = 0;

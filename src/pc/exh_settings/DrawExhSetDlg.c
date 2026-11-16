@@ -18,6 +18,6 @@ void DrawExhSetDlg(void)
         PrintString((char *)str_Music3, 0x60, 0xAA);
         PrintString((char *)str_Sound3, 0x60, 0xC0);
     }
-    if (!musicon) PrintString((char *)str_DigitizedSpeech3, 0x60, 0xD6);
+    if (!MusicOn) PrintString((char *)str_DigitizedSpeech3, 0x60, 0xD6);
     DrawSettingsHeading(0xA, 0x13, 6, gamemode, 0xFA);
 }

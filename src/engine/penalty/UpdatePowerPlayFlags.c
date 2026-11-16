@@ -34,7 +34,7 @@ start:
         gmode2 |= 0x20;
         t->tmpp++;
         if (gmode & 1) {
-            if (gameopts.speech == 0 || musicon == 0) crowd = 1;
+            if (gameopts.speech == 0 || MusicOn == 0) crowd = 1;
             else crowd = 0;
             if (crowd) PlayCrowdSample(t == &hmtmstruct ? 1 : 4);
         }

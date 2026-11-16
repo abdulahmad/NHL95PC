@@ -22,7 +22,7 @@ void DrawModeSetDlg(void)
         PrintString((char *)str_Music2, 0x60, 0xAA);
         PrintString((char *)str_Sound2, 0x60, 0xC0);
     }
-    if (!musicon) PrintString((char *)str_DigitizedSpeech2, 0x60, 0xD6);
+    if (!MusicOn) PrintString((char *)str_DigitizedSpeech2, 0x60, 0xD6);
     SetScreenTarget();
     DrawSettingsHeading(0xA, 0x13, 4, gamemode, 0xFA);
 }

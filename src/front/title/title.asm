@@ -14,7 +14,7 @@ extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTick
 extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
 extern InitGameSummary, InitSpeechSlots, InputInstall, InputRemove, introskipped, joyq_flush, kaufmfont, lcblink
 extern lcboxon, lcline, linesprites, LoadModeState, LoadRink, LoadRockMusic, LoadScheduleDB, LoadTeamPalette
-extern mainfont, MakePath, memcpy_, memset_, mousebtns, mousepollfn, musichandle, musicon
+extern mainfont, MakePath, memcpy_, memset_, mousebtns, mousepollfn, musichandle, MusicOn
 extern musicslot, hudotname, creditpages, PaGoodnight, PaNhlIntro, PaOpenBank, PaPreloadClips, penaltydigits
 extern perioddigits, PerTimeTab, PlayDigiSample, pointerspr, PollKey, rand_, randomd0, ReloadGameGfx
 extern seed, SelectScreenBM, SeriesLength, SetDrawBitmap, SetScreenSize, SetTickDeadline, SetupControllers, SetupDemoGame
@@ -130,7 +130,7 @@ RunDemoGame:
         mov eax, exhstate
         call LoadModeState
         or byte [gameopts], 0FFh
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         or byte [gameopts+1], 1
         jmp short .5
@@ -405,7 +405,7 @@ TitleScreen:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .8
         cmp dword [songdata], byte 0
         jne short .8
@@ -491,7 +491,7 @@ TitleScreen:
         mov byte [esp], bl
         mov byte [byte esp+01h], bl
         mov byte [byte esp+02h], bl
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .20
         cmp dword [songdata], byte 0
         je short .18
@@ -594,7 +594,7 @@ TitleScreen:
         jne near .32
         cmp dword [dword esp+0348h], byte 0
         jne near .32
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .27
         cmp dword [nhlintrosaid], byte 0
         je short .27
@@ -738,7 +738,7 @@ TitleScreen:
         push edx
         call CdStreamClose
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .39
         cmp dword [songdata], byte 0
         je short .39
@@ -751,7 +751,7 @@ TitleScreen:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .41
         cmp dword [songdata], byte 0
         je short .41
@@ -805,7 +805,7 @@ RunIntro:
         sub esp, 64Ch
         xor edx, edx
         mov dword [dword esp+0638h], edx
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         mov eax, dword [speechbank]
         mov ebx, dword [dword eax+03B60h]
@@ -887,7 +887,7 @@ RunIntro:
         call LoadBank
         add esp, byte 8
         mov ebp, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .13
         cmp dword [songdata], byte 0
         jne near .13
@@ -950,7 +950,7 @@ RunIntro:
 .13:
         mov dword [dword esp+063Ch], 0C8h
 .14:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .15
         mov eax, dword [songdata]
         test eax, eax
@@ -1079,7 +1079,7 @@ RunIntro:
         call SetTickDeadline
         add esp, byte 4
         call WaitTickDeadline
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .26
         cmp dword [dword esp+0648h], byte 0
         je short .26
@@ -1146,7 +1146,7 @@ RunIntro:
         call SetTickDeadline
         add esp, byte 4
         call WaitTickDeadline
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .32
         mov edi, dword [dword esp+0644h]
         test edi, edi
@@ -1194,7 +1194,7 @@ RunIntro:
         call SetTickDeadline
         add esp, byte 4
         call WaitTickDeadline
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .35
         mov eax, dword [musichandle]
         mov ebx, 64h
@@ -1219,7 +1219,7 @@ RunIntro:
         mov eax, 78h
         call WaitClickTimeout
 .36:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .43
 .37:
         mov eax, dword [musicslot-3]
@@ -1272,7 +1272,7 @@ RunIntro:
         call PushMemDescriptorLocked
         add esp, byte 4
 .43:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .44
         mov dword [cursndbank], 20h
         mov eax, dword [SpeechSlotMemSize]
@@ -1326,7 +1326,7 @@ RunIntro:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .50
         cmp dword [songdata], byte 0
         jne short .50
@@ -1359,7 +1359,7 @@ RunIntro:
         call SetTickDeadline
         add esp, byte 4
         call WaitTickDeadline
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .52
         cmp dword [songdata], byte 0
         je short .52
@@ -1497,7 +1497,7 @@ ShowCredits:
         push ebx
         call GrabBlock
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .5
         cmp dword [songdata], byte 0
         jne short .5
@@ -1711,7 +1711,7 @@ ShowCredits:
         push ecx
         call PutBlock
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .24
         cmp dword [songdata], byte 0
         je short .24
@@ -1725,7 +1725,7 @@ ShowCredits:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .26
         cmp dword [songdata], byte 0
         je short .26

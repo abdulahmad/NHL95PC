@@ -8,7 +8,7 @@ extern FileClose, FileCreate, FileOpenRead, FileOpenWrite, FileReadAt, FileWrite
 extern fputchar, FreeMemBlock, FreeRinkGfx, FreeRockMusic, gamepal, GetFileSize, hilightfont, hilightrec
 extern hmrosterjersey, hmteamrec, HomeTeam, hudclockhund, hudclockmin, hudclocksec, InstantReplay, ListDialog
 extern LoadGameGfx, LoadRink, LoadRockMusic, LoadTeamPalette, lseek_, MakePath, MessageBox, MouseRead
-extern msg_NoHilights, musichandle, musicon, musicslot, numshpbank, PlotPixel, PrintString, qsort_
+extern msg_NoHilights, musichandle, MusicOn, musicslot, numshpbank, PlotPixel, PrintString, qsort_
 extern recbpr, replaynosave, replaystart, rinkendbank, rinkscrollx, rinkscrolly, s1font, scrbrdshapes
 extern SetDialogColors, SetPalette, SetScreenSize, sflags, ShowLoadingScreen, SndQuery, songdata, sprintf_
 extern str_backslash4, str_CantOpenFile, str_dot4, str_F12, str_F3, str_F4, str_HI, str_HI2
@@ -949,7 +949,7 @@ PlayHilight:
         inc edx
         cmp edx, byte 1Ch
         jl short PlayHilight.1
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .2
         cmp dword [songdata], byte 0
         je short .2
@@ -968,7 +968,7 @@ PlayHilight:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         cmp dword [songdata], byte 0
         je short .4

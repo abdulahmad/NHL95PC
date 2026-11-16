@@ -12,7 +12,7 @@ extern FileOpenRW, FileReadAt, FileWriteAt, FreeMemBlock, GameGoalieStatsScreen,
 extern GameStandingsMenu, GameStandingsScreen, GameTeamStatsScreen, GetInputEvent, goaliestatscb, HomeTeam, ImportDbs, InitGameSummary
 extern InputInstall, InputRemove, keepdesksong, leaguedbfmt, leaguedbfmt2, leaguemgrmenu, LeagueSettingsDlg, lgstate
 extern mainmenubar, MakePath, memcpy_, menuact_export, menuact_nextlg, MenuHitTest, menusub_lgmgr, MergeLeagueFiles
-extern MergeUpdateDbs, MessageBox, mousepollfn, MouseSetPos, musichandle, musicon, musicslot, PlayGame
+extern MergeUpdateDbs, MessageBox, mousepollfn, MouseSetPos, musichandle, MusicOn, musicslot, PlayGame
 extern PlayLeagueGame, pointerspr, PreGameScreen, ptrupdatefn, RebuildLeagueDbs, RemoveHumanTeam, rinkbm, rinktilebm
 extern schedgameidx, scrpitch, setdiskmsg, SetLeagueSetImage, SetScreenTitle, SetSideControls, SettingsStub, SetupControllers
 extern SetupStatsSourceMenu, ShowLoadingScreen, skaterstatscb, songdata, standingscb, standingsmenucb, str_Desk2, str_Easndesk
@@ -138,7 +138,7 @@ MainDeskLoop:
         mov dx, word [byte edx+06h]
         inc edx
         mov word [byte eax+06h], dx
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .7
         cmp dword [songdata], byte 0
         jne near .7
@@ -226,7 +226,7 @@ MainDeskLoop:
         call DrawArt
         add esp, byte 0Ch
         mov word [scrpitch], 50h
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .10
         mov eax, dword [songdata]
         test eax, eax
@@ -435,7 +435,7 @@ MainDeskLoop:
         call SetScreenTarget
         cmp dword [keepdesksong], byte 0
         jne short .21
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .21
         cmp dword [songdata], byte 0
         je short .21
@@ -462,7 +462,7 @@ MainDeskLoop:
         mov dword [keepdesksong], edx
 .22:
         xor edi, edi
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .28
         mov edx, dword [songdata]
         test edx, edx
@@ -541,7 +541,7 @@ MainDeskLoop:
         call FindShape
         add esp, byte 8
         lea esi, [byte eax+010h]
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .31
         cmp edi, byte 1
         jne short .31
@@ -1515,7 +1515,7 @@ MenuNewExhibition:
         push byte 0
         call SetPalette
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3
@@ -1531,7 +1531,7 @@ MenuNewExhibition:
         push edi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .5
         cmp dword [songdata], byte 0
         je short .5
@@ -1562,7 +1562,7 @@ MenuNewExhibition:
         call AllocMemBlock
         add esp, byte 0Ch
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .8
         cmp dword [songdata], byte 0
         je short .8
@@ -1583,7 +1583,7 @@ MenuNewExhibition:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .10
         cmp dword [songdata], byte 0
         je short .10
@@ -1632,7 +1632,7 @@ MenuNewLeague:
         mov dword [lgstate+51h], 0Ch
         mov dword [lgstate+55h], 15h
         or word [lgstate+59h], 2FFh
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         or byte [lgstate+5Ah], 1
         jmp short .2
@@ -1717,7 +1717,7 @@ MenuNewLeague:
         push byte 0
         call SetPalette
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .12
         cmp dword [songdata], byte 0
         je short .12
@@ -1733,7 +1733,7 @@ MenuNewLeague:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near MenuAddTeam_ret2
         cmp dword [songdata], byte 0
         je near MenuAddTeam_ret2

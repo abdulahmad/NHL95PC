@@ -9,7 +9,7 @@ int CountShotOnGoal(void)
     ShotLaneOpen();
     shotongoal = shotontarget;
     if (shotongoal) {
-        crowdlevel += 100;
+        Crowdlevel += 100;
         if (!penshotmode) {
             short *t;
             int vis;

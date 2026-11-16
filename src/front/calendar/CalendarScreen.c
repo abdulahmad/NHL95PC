@@ -110,10 +110,10 @@ int CalendarScreen(char *dir, char *ext, int team)
     c3 = 0x67;
     SetScreenTarget();
     ClearScreen(0);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 100);
     SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (SndQuery(musicslot, 3) == 0) ;
         PushMemDescriptorLocked(songdata);
         songdata = 0;
@@ -194,7 +194,7 @@ int CalendarScreen(char *dir, char *ext, int team)
         SetScreenTarget();
         DrawMenuBar((MenuItem *)calmenubar, 3, c1, c2, c3);
         DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
-        if (musicon && !songdata) {
+        if (MusicOn && !songdata) {
             MakePath(path, fileoncd[0x1E2] == 1 ? (char *)cddriveptr : 0, (char *)str_Calendar, (char *)str_Iff9);
             songdata = LoadDigiFile(path);
             if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -245,7 +245,7 @@ int CalendarScreen(char *dir, char *ext, int team)
                         nitems[1] = sel[1] = bg[1] = bg[0] = 0;
                         if (r == 1) {
                             FreeMemBlock(ptr);
-                            if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
+                            if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 100);
                             return 0;
                         }
                         MouseSetPos(oldmx, oldmy);
@@ -434,6 +434,6 @@ int CalendarScreen(char *dir, char *ext, int team)
     goaliestatscb = (int)GameGoalieStatsScreen;
     standingscb = (int)GameStandingsScreen;
     standingsmenucb = (int)GameStandingsMenu;
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 100);
     return calsel;
 }

@@ -29,7 +29,7 @@ int CrowdOnStoppage(void)
         PlayCrowdSample(5);
         return 0;
     }
-    if (gameopts.speech && musicon) {
+    if (gameopts.speech && MusicOn) {
         diff = awtmap - hmtmap[0];
         if (diff != 0 && !randomd0(4)) {
             if (diff > 0) PlayCrowdSample(4);
@@ -39,7 +39,7 @@ int CrowdOnStoppage(void)
     }
     r = randomd0(8);
     if (demoflag == 0 && r == 0) {
-        if (!gameopts.sfx || !(sounddev & 0x2A) || crowdlevel > 700) return 0;
+        if (!gameopts.sfx || !(sounddev & 0x2A) || Crowdlevel > 700) return 0;
         LoadTeamPPV(0);
         if (ovlseq == -1) return 0;
         CloseTextOverlay();

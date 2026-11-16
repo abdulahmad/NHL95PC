@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* assstanley: Stanley Cup celebration skate for p (not while flag 20h): a new assignment (pflags bit 1) heads
- for (-50h, 0) with SPA ECBh and Pencntdwn 100h; when the SPA ends, full energy (tmpde 300h) and SPA 833h. Near
+ for (-50h, 0) with SPA ECBh and PenCntDwn 100h; when the SPA ends, full energy (tmpde 300h) and SPA 833h. Near
  the target direction (vtoa <= 7) turn one step every 12 frames toward it and skate. */
 void assstanley(Player *p)
 {
@@ -14,7 +14,7 @@ void assstanley(Player *p)
         p->temp1 = 0;
         ((unsigned char *)p)[0x46] = 0;
         SetSPA(p, 0xECB);
-        Pencntdwn = 0x100;
+        PenCntDwn = 0x100;
     }
     if (!p->SPA) {
         p->tmptr->tmpde[p->pnum] = 0x300;

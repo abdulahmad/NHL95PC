@@ -37,7 +37,7 @@ int DrawLeagueSetDlgSel(void)
         PrintString((char *)str_Music, 0x68, 0xAA);
         PrintString((char *)str_Sound, 0x68, 0xC0);
     }
-    if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
+    if (!MusicOn) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     DrawSettingsHeading(0x0A, 0x13, leaguesetimg[0] ? 5 : 3, gamemode, 0xFA);
     SetScreenTarget();
     return 0;

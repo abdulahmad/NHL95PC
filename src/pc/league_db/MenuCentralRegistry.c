@@ -7,7 +7,7 @@
  cursndbank = 20h around it). Returns 2. */
 int MenuCentralRegistry(void)
 {
-    if (musicon) PushMemDescriptorLocked(*(int *)((char *)speechbank + 0x3B60));
+    if (MusicOn) PushMemDescriptorLocked(*(int *)((char *)speechbank + 0x3B60));
     *(int *)&scrpitch = 0xA0;
     EditRostersState = 0;
     RunEditRosters();
@@ -19,7 +19,7 @@ int MenuCentralRegistry(void)
         FreeMemBlock((int)falist);
         falist = 0;
     }
-    if (musicon) {
+    if (MusicOn) {
         cursndbank = 0x20;
         InitSpeechSlots(SpeechSlotMemSize);
         cursndbank = 0;

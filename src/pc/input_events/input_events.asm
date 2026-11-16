@@ -8,7 +8,7 @@ extern facount, FadePalStep, falist, falistsel, FreeLeagueDbsMem, FreeMemBlock, 
 extern inputinstalled, inputpolldiv, inputqcount, inputqhead, inputqtail, inputqueue, inputrepeat, joybtnheld
 extern joycalactive, joycalposthook, joycalprehook, joycalx, joycaly, joyenablemask, keydb, keydb_size
 extern KeyDbPtr, lastinputdir, lastmousebtns, lastmousex, lastmousey, leaguedbnames, MakePath, memcpy_
-extern memset_, mousebtns, mousepollfn, MouseSetPos, mousex, mousey, musicon, PollKey
+extern memset_, mousebtns, mousepollfn, MouseSetPos, mousex, mousey, MusicOn, PollKey
 extern PrintShadowText, ptrstep, ptrupdatefn, RemoveTimerCallback, RunEditRosters, scrpitch, seasondb, seasondb_size
 extern SetTextColors, speechbank, str_dot, str_Joycal, str_Left, str_LEFTJOYSTICK, str_Pal24, str_Puck
 extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, PushMemDescriptorLocked

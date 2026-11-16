@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C1B2C progbits alloc noexec write align=1
-global PenaltyList, str_EASports, str_StarFmt, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumNameSuffix, str_FmtNumName, str_FmtClockEvent
+global str_RoughingTitle, str_EASports, str_StarFmt, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumNameSuffix, str_FmtNumName, str_FmtClockEvent
 global str_PPTag, str_SHTag, str_FmtParenD, str_Unassisted, str_Assists, str_PenaltyShot, str_ToBeTakenBy, str_02d02dSPenalty
 global str_GameMisconduct, str_DMinutes, str_02d02dSInjury, str_GoneForTheGame, str_GoneFor1Period, str_ServedByD, str_04d2, str_HOMEPALS4
 global str_AWAYPALS, str_Rinkpal, str_Pal30, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos
@@ -48,8 +48,8 @@ str_StarFmt:                                    ; "%s Star" sprintf format, fill
 str_NoStar:                                     ; Empty string pushed when a three stars line has no star
                                                 ; text; used by assthreestars
         db 00h,00h
-PenaltyList:                                    ; not referenced by name (reached through a neighbouring label
-                                                ; or a table)
+str_RoughingTitle:                              ; "Roughing" string literal, the first penalty name string;
+                                                ; not referenced by name
         db 052h,06Fh,075h,067h,068h,069h,06Eh,067h,00h
 str_NoPenalty:                                  ; Empty penalty name in the penalty name list; used by
                                                 ; BuildEventLines

@@ -10,7 +10,7 @@ int DeskExitGame(void)
     int y;
     int r;
 
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     MouseRead(&x, &y, &r);
     msg_DeskExit = (int)str_ExitingTheGame;
     msg_DeskExit_e02 = (int)str_DoYouWishToExit;
@@ -21,7 +21,7 @@ int DeskExitGame(void)
         FadePalStep(1, savepal, 0x10);
         SetScreenTarget();
         ClearScreen(0);
-        if (musicon && songdata) {
+        if (MusicOn && songdata) {
             while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
             PushMemDescriptorLocked(songdata);
             songdata = 0;

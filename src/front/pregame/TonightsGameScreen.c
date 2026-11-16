@@ -106,7 +106,7 @@ int TonightsGameScreen(int home, int away)
     linetab[1] = awlinetab;
     err = faded = 0;
     key = 0;
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(path, fileoncd[0x1DF] == 1 ? (char *)cddriveptr : 0, (char *)str_Tonights, (char *)str_Iff5);
         songdata = LoadDigiFile(path);
         if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -203,11 +203,11 @@ int TonightsGameScreen(int home, int away)
         }
     }
     FreeMemBlock((int)gipk);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, pal, 0x10);
     SetScreenTarget();
     ClearScreen(0);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(musicslot, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;

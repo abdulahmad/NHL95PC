@@ -12,7 +12,7 @@ extern FillRect, FindShape, FitPlayerName, fputchar, FreeLeagueDbsMem, FreeMemBl
 extern GrabBlock, hmteamrec, HomeTeam, InitScrollBar, InputDialog, keydb, keydb_size, KeyDbPtr
 extern LoadBank, LoadLeagueDbsMem, mainfont, MakePath, memcpy_, menu_r1_editlines, menu_r1_freeagents, menu_r1_tofa
 extern menu_r1_toroster2, menu_r2_editlines, menu_r2_freeagents, menu_r2_tofa, menu_r2_toroster1, MenuHitTest, MessageBox, mousepollfn
-extern MouseSetPos, MoveToFreeAgents, MoveToOtherRoster, msglines, musichandle, musicon, musicslot, PlotPixel
+extern MouseSetPos, MoveToFreeAgents, MoveToOtherRoster, msglines, musichandle, MusicOn, musicslot, PlotPixel
 extern pointerspr, PrintCenteredText, PrintShadowText, PrintString, ptrupdatefn, PutBlock, roster1divmenus, roster2divmenus
 extern rostereditmode, rosterisfa, rosterjersey, rosterlist, rostersel, rosterslot, rosterteam, rosterteamptr
 extern rosterteamrec, savepal, SetClipWindow, SetDrawBitmap, SetPalette, SetTextColors, SetViewRect, SndQuery
@@ -73,7 +73,7 @@ RunEditRosters:
         call AllocMemBlock
         add esp, byte 0Ch
         mov ebp, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1
@@ -105,7 +105,7 @@ RunEditRosters:
         push eax
         call TextSaveState
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3
@@ -174,7 +174,7 @@ RunEditRosters:
         push eax
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         cmp dword [songdata], byte 0
         je short .4
@@ -213,7 +213,7 @@ RunEditRosters:
         mov dword [dlgtextfg], eax
         mov eax, dword [byte esp+044h]
         mov dword [dlgtextbg], eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .6
         cmp dword [songdata], byte 0
         je short .6
@@ -1963,7 +1963,7 @@ EditRosters:
         call dword [mousepollfn]
         call ClearInputQueue
 .3:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         cmp dword [songdata], byte 0
         je short .4

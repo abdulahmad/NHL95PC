@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_5601D progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assexit, c1playernum, CanRemovePlayer, checkagr, collflag
-extern crowdlevel, CwdExciteLvl, FallDown_pinxl, FallDown_pinxl2, FallDown_pinxr, FallDown_pinxr2, FallDown_pinyb, FallDown_pinyt
+extern Crowdlevel, CwdExciteLvl, FallDown_pinxl, FallDown_pinxl2, FallDown_pinxr, FallDown_pinxr2, FallDown_pinyb, FallDown_pinyt
 extern gameopts, gmode, newcheck, PassLaneChk_ret5, PBnum, PenBuf, penshotctl, penshotplayer
 extern puckc, QuickShotChk, randomd0, SetBoxDoorObject, setInjuryType, SetSPA, sflags, sfx
 extern Stop4Pen, vecdist, vtoa
@@ -289,15 +289,15 @@ FallDown:
         mov edx, 0B13h
         mov eax, ebx
         call SetSPA
-        mov di, word [crowdlevel]
+        mov di, word [Crowdlevel]
         cmp di, 3E8h
         jg short .2
         mov eax, edi
         add eax, 1F4h
-        mov word [crowdlevel], ax
+        mov word [Crowdlevel], ax
         cmp ax, 3E8h
         jle short .2
-        mov word [crowdlevel], 3E8h
+        mov word [Crowdlevel], 3E8h
 .2:
         add word [CwdExciteLvl], byte 0Fh
         mov eax, 1
@@ -579,15 +579,15 @@ FallDown:
         call CanRemovePlayer
         test eax, eax
         je near .38
-        mov dx, word [crowdlevel]
+        mov dx, word [Crowdlevel]
         cmp dx, 3E8h
         jg short .32
         mov esi, edx
         add esi, 1F4h
-        mov word [crowdlevel], si
+        mov word [Crowdlevel], si
         cmp si, 3E8h
         jle short .32
-        mov word [crowdlevel], 3E8h
+        mov word [Crowdlevel], 3E8h
 .32:
         add word [CwdExciteLvl], byte 0Fh
         or byte [byte ebx+pflags], 20h
@@ -622,7 +622,7 @@ FallDown:
         jmp short .38
 .35:
         mov eax, dword [puckc]
-        add word [crowdlevel], byte 64h
+        add word [Crowdlevel], byte 64h
         movsx ax, byte [eax]
         cmp ax, word [byte ebx+SCnum]
         je short .38
@@ -656,15 +656,15 @@ FallDown:
         mov eax, ebx
         call assexit
 .39:
-        mov di, word [crowdlevel]
+        mov di, word [Crowdlevel]
         cmp di, 3E8h
         jg short .40
         mov eax, edi
         add eax, 1F4h
-        mov word [crowdlevel], ax
+        mov word [Crowdlevel], ax
         cmp ax, 3E8h
         jle short .40
-        mov word [crowdlevel], 3E8h
+        mov word [Crowdlevel], 3E8h
 .40:
         mov eax, dword [puckc]
         add word [CwdExciteLvl], byte 0Fh

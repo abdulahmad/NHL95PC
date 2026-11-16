@@ -7,7 +7,7 @@ extern __CHK, __STOSB, apl, assinsert, awardart, awardnames, awardtitles, awardt
 extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, TextCharH
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
-extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
+extern Crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, DeskRedrawAll, DeskRedrawFlag, ovlartfiles
 extern goalienotebits, demoflag, gfxidlist, ovlstepart, SumCwdExciteLvl, ovlartbank
 extern SpeechPatchNext, UnusedEventWord, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
@@ -18,10 +18,10 @@ extern hudclockhund, hudclockmin, hudclocksec, hudhundaccum, hudhundstep, inputf
 extern joyq_flush, joysampling, joysampling_save, kaufmfont, lastplayer, lcblink, lcblinktime, lcboxon
 extern lcline, lcreqchoice, lcrequest, lcsel, lctimer, leaguedbnames, LoadCupFinalSeries, LoadGameGfx
 extern LoadGameState, LoadRink, LoadRockMusic, LoadTeamPalette, MakeGSummaryPath, MakePath, memcpy_, MouseSetPos
-extern mousex, mousey, MusicChanReset, musichandle, musicon, musicslot, NormalizeDressFlags, AssetLoadNoOp
+extern mousex, mousey, MusicChanReset, musichandle, MusicOn, musicslot, NormalizeDressFlags, AssetLoadNoOp
 extern numshapes, numshpbank, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02, awardstatsptrs_e03, awardstatsptrs_e04, awardstatsptrs_e05
 extern awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, awardscopenames, ovlartnames, ovlseq, ovlstep, ovltimer
-extern pad1dev, pad2dev, PaPreloadClips, passdir, passplayer, passspeed, Penaltytimer, Pencntdwn
+extern pad1dev, pad2dev, PaPreloadClips, passdir, passplayer, passspeed, Penaltytimer, PenCntDwn
 extern penshotlive, penshotmode, penshotplayer, penshotstart, PeriodOver, photobankf, photobanks, photoptrs
 extern photoptrsf, PlayCrowdSample, PlayDigiSample, PostGameDesk, presidentsteam, PrintFmt1, PrintFmt2, PrintShadowText
 extern puckx, pucky, randomd0, ReadGoalieSeasonRec, ReadKeyRec, ReadSeasonRec, ReadTeamNames, ReadTeamRec
@@ -46,7 +46,7 @@ extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, t
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
 extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
 extern WaitClickTimeout, WaitDigiSample, penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount
-extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, UnusedSpeechWord, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl
+extern injurystop, PenCntDwn2, rinkobjs, milestonesaid_b2, UnusedSpeechWord, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl
 extern UnusedCrowdWordHi, penevteam, rinkobjused
 global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary, AwardsCeremony
 ;-----------------------------------------------------------------------------
@@ -1533,7 +1533,7 @@ AwardsCeremony:
         push byte 0
         call SetPalette
         add esp, byte 0Ch
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1
@@ -1546,7 +1546,7 @@ AwardsCeremony:
         mov edx, esi
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3
@@ -1614,7 +1614,7 @@ AwardsCeremony:
         push ebp
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .8
         cmp dword [songdata], byte 0
         jne short .8
@@ -1677,7 +1677,7 @@ AwardsCeremony:
         mov edx, esi
         xor eax, eax
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .14
         cmp dword [sounddev], byte 1
         je short .14
@@ -1691,7 +1691,7 @@ AwardsCeremony:
         call FreeSample
         jmp near .20
 .14:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .19
         xor eax, eax
 .15:
@@ -1745,7 +1745,7 @@ AwardsCeremony:
         add esp, byte 4
         call PickAwardWinners
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .23
         cmp dword [songdata], byte 0
         jne short .23
@@ -1868,7 +1868,7 @@ AwardsCeremony:
         call ClearScreen
         add esp, byte 4
 .32:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .35
         mov eax, dword [musichandle]
         mov ebx, 78h

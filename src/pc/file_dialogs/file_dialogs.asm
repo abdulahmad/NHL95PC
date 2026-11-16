@@ -9,7 +9,7 @@ extern fdlg_up, fdlgmask, fdlgrects, fdlgshapes, fdlgtab, FileClose, FileCreate,
 extern FileOpenRead, FileReadAt, FileWriteAt, FreeMemBlock, gameresult, GetInputEvent, j_unlink_, leaguemgrmenu
 extern lgfilenames, lgfiles, lgstate, LoadModeState, MakePath, menuact_export, menuact_nextlg, menuact_nextpo
 extern menuact_pohilights, menuact_posettings, MenuExportDbs, MenuNewExhibition, MenuNextLeagueGame, menusub_lgmgr, MessageBox, MouseSetPos
-extern musicon, TeamAbbrevsAllStar, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02, othergames, otherperiod, otherscores
+extern MusicOn, TeamAbbrevsAllStar, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02, othergames, otherperiod, otherscores
 extern PlayoffModeLoop, pofilenames, pofiles, pointerspr, postate, ptrupdatefn, qsort_, savefname
 extern seriesgameno, SetDialogColors, SetupStatsSourceMenu, str_Arro, str_Buf, str_Can, str_Db2, str_Dbox
 extern str_Del, str_Delete, str_Dialogbx, str_Done, str_Down, str_Exhibition, str_ExhibitionGameCalled, str_feA1
@@ -2339,7 +2339,7 @@ ReadGameSettings:
 .6:
         test esi, esi
         je short .8
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .7
         and byte [byte edi+05Ah], 0FEh
 .7:

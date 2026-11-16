@@ -8,7 +8,7 @@ extern lineslotgroups, lineslotgroupstart, hmrosterpos, awayremap, homeremap, ri
 extern regd1_b1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
 extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
-extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
+extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, Crowdlevel, CrowdNoiseOff
 extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, ovlartfiles, markframes_e1, rinkobjdefs_m2
 extern ovlmemneed, DrawClipLeft, DrawClipRight, ovlstepart, ovlstepart_e21, ovlstepart_e30, RinkSideShape
 extern RinkSideShapeFlipped, ovlartbank, regd3_m2, regd0_m3, regd1_m3, SpeechPatchNext, lineslotmark
@@ -17,7 +17,7 @@ extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, 
 extern rpl_objstep_m3, rpl_ysort, ReplayHoverPlayer, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
 extern joysampling, joysampling_save, lastsfx, MakePath, ovlartnames, ovlscripts, goaliemenuflags, goaliemenuflags_e02
-extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
+extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, PenCntDwn
 extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
@@ -25,7 +25,7 @@ extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_P
 extern MarkZoneRect, MemLargestFree, LoadBank, OpenArtArchiveErr, TextSetColors, TextSetFont, ShapeBankCount, FillRect
 extern FillRectClipped, PrintString, SortIndices, FindShape, JoyButtonMap, SetClipWindow, VgaBlitKeyedFlipV, PutPixel
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
-extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
+extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, PenCntDwn2
 extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
 extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, rpl_puckunused, rpl_camx
 extern rpl_camy, rpl_objframe, xc1, yc1, yleader
@@ -255,7 +255,7 @@ checkwindow:
 .20:
         test byte [gmode], 4
         je short .21
-        cmp word [Pencntdwn], byte 0
+        cmp word [PenCntDwn], byte 0
         jl short .22
 .21:
         cmp word [RefStep], byte 0
@@ -1023,9 +1023,9 @@ DrawTextOverlay:
         cmp word [ovlstep], byte 2
         jne near .33
         add word [byte esp+01Ch], byte 23h
-        cmp word [crowdlevel], 2EEh
+        cmp word [Crowdlevel], 2EEh
         jle short .16
-        mov eax, dword [crowdlevel-2]
+        mov eax, dword [Crowdlevel-2]
         sar eax, 10h
         sub eax, 2EEh
         cmp eax, 0C8h
@@ -1048,9 +1048,9 @@ DrawTextOverlay:
         movsx eax, si
         call DitherRect
 .16:
-        cmp word [crowdlevel], 3B6h
+        cmp word [Crowdlevel], 3B6h
         jle short .18
-        mov eax, dword [crowdlevel-2]
+        mov eax, dword [Crowdlevel-2]
         sar eax, 10h
         add esi, byte 28h
         sub eax, 3B6h
@@ -1074,9 +1074,9 @@ DrawTextOverlay:
         movsx eax, si
         call DitherRect
 .18:
-        cmp word [crowdlevel], 47Eh
+        cmp word [Crowdlevel], 47Eh
         jle near .33
-        mov eax, dword [crowdlevel-2]
+        mov eax, dword [Crowdlevel-2]
         sar eax, 10h
         add esi, byte 28h
         sub eax, 47Eh
@@ -1392,7 +1392,7 @@ UpdateTextOverlay:
         push edi
         cmp word [ovltimer], byte 0
         jl near checkwindow_popx
-        mov bx, word [Pencntdwn]
+        mov bx, word [PenCntDwn]
         cmp bx, 100h
         jl short .1
         cmp bx, 140h
@@ -1404,14 +1404,14 @@ UpdateTextOverlay:
         jne near .6
         cmp word [ovlstep], byte 5
         jge short .6
-        mov ax, word [crowdlevel]
+        mov ax, word [Crowdlevel]
         cmp ax, 5DCh
         jge short .6
         cmp word [ovlstepidx], byte 1
         jne short .2
         cmp ax, 280h
         jge short .2
-        mov word [crowdlevel], 280h
+        mov word [Crowdlevel], 280h
 .2:
         mov si, word [ovlstepidx]
         cmp si, byte 1
@@ -1428,7 +1428,7 @@ UpdateTextOverlay:
         cmp word [ovlstepidx], byte 10h
         jle short .6
 .5:
-        add word [crowdlevel], byte 8
+        add word [Crowdlevel], byte 8
 .6:
         cmp word [ovltimer], byte 10h
         jne near .9

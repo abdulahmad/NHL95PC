@@ -6,12 +6,12 @@ extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, awglattr, awglstat
 extern awplattr, awplstats, awroster, awscore, awteamrec, awtmcoach_d2, awtmcoach_d3, awtmextra
 extern awtmglattr, awtmglstats, awtmgoalie, awtmlines, awtmpbox, awtmplattr, awtmplstats, awtmptrF2
 extern awtmroster, awtmsort, awtmstruct, c1playernum, c2playernum, changeplayer_ret5, ChkShotStat, collflag
-extern cont1team, cont2team, crowdlevel, CwdExciteLvl, DrawPanelScore, Setplass_alist_m3, UnusedEventWord, EndPenaltyShot
+extern cont1team, cont2team, Crowdlevel, CwdExciteLvl, DrawPanelScore, Setplass_alist_m3, UnusedEventWord, EndPenaltyShot
 extern findpc, findpc_ret5, findpc_ret6, fox, foy, freezewindow, gameclock, gameopts
 extern gmode, gmode2, gsp, hmglattr, hmglstats, hmlinetab, hmplattr, hmplstats
 extern hmroster, hmscore, hmteamrec, hmtmcoach_d2, hmtmcoach_d3, hmtmextra, hmtmglattr, hmtmglstats
 extern hmtmgoalie, hmtmlines, hmtmpbox, hmtmplattr, hmtmplstats, hmtmptrF2, hmtmroster, hmtmsort
-extern hmtmstruct, lastplayer, lasttouch, ltx, lty, musicon, onetimerflag, PenGoalStuff
+extern hmtmstruct, lastplayer, lasttouch, ltx, lty, MusicOn, onetimerflag, PenGoalStuff
 extern penshotfox, penshotfoy, penshotlive, penshotmode, penshotteam, PlayCrowdSample, puckcross, puckstruct
 extern pucky, regd1, restorepl, restoreteams_pdsttab, SetBoxDoorObject, Setplass_alist, SetSPA, sfx
 extern shotongoal, shotplayer, SortCords, UpdateCoachModes, GoalState
@@ -206,21 +206,21 @@ Goal:
         call freezewindow
         cmp word [byte esp+04h], byte 0
         jne short .15
-        mov cx, word [crowdlevel]
+        mov cx, word [Crowdlevel]
         add ecx, 320h
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
         cmp cx, 7D0h
         jle short .14
-        mov word [crowdlevel], 7D0h
+        mov word [Crowdlevel], 7D0h
 .14:
-        cmp word [crowdlevel], 708h
+        cmp word [Crowdlevel], 708h
         jge short .16
-        mov word [crowdlevel], 708h
+        mov word [Crowdlevel], 708h
         jmp short .16
 .15:
-        cmp word [crowdlevel], 320h
+        cmp word [Crowdlevel], 320h
         jge short .16
-        mov word [crowdlevel], 320h
+        mov word [Crowdlevel], 320h
 .16:
         mov eax, dword [byte esp+02h]
         sar eax, 10h
@@ -229,7 +229,7 @@ Goal:
         jne short .20
         test byte [gameopts+1], 1
         je short .17
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .18
 .17:
         mov eax, 1

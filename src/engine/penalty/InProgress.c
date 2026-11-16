@@ -141,9 +141,9 @@ void InProgress(void)
 /* The EXE splits it: its entry (63C0C) follows PenaltyManager, which falls into it (marked with PenaltyManager),
    and the rest (chkprogress_go, chkprogress_x) follows InProgress (marked as chkprogress_go; tools/splice.py). */
 /* chkprogress (63C0C; 93G penalty93 chkprogress): the penalty call in progress, each frame while the game runs
-   (gmode bit 0): update the text overlay, count Pencntdwn2 down (at the end set gmode2 bit 2), and with a call
-   pending (gmode bit 2) either run it (InProgress, while Pencntdwn is negative) or count refsignal and Pencntdwn
-   down; when Pencntdwn runs out, end the call (gmode bit 3 cleared) and, at the first penalty in PenBuf whose
+   (gmode bit 0): update the text overlay, count PenCntDwn2 down (at the end set gmode2 bit 2), and with a call
+   pending (gmode bit 2) either run it (InProgress, while PenCntDwn is negative) or count refsignal and PenCntDwn
+   down; when PenCntDwn runs out, end the call (gmode bit 3 cleared) and, at the first penalty in PenBuf whose
    type has a penmintab entry, stop play for it: gmode2 bit 2, the puck to no one with the faceoff assignment
    (1Ah), pucktemp1 1C20h, RefStep byte 1 FFh, and the banner cleared when no banner is up. No arguments and no
    result. */
@@ -153,16 +153,16 @@ void chkprogress(void)
 
     if (!(gmode & 1)) return;
     UpdateTextOverlay();
-    if (Pencntdwn2[0] >= 0) {
-        if (--Pencntdwn2[0] < 0) gmode2 |= 4;
+    if (PenCntDwn2[0] >= 0) {
+        if (--PenCntDwn2[0] < 0) gmode2 |= 4;
     }
     if (!(gmode & 4)) return;
-    if (Pencntdwn < 0) {
+    if (PenCntDwn < 0) {
         InProgress();
         return;
     }
     if (--refsignal < 0) refsignal = 0;
-    if (--Pencntdwn >= 0) return;
+    if (--PenCntDwn >= 0) return;
     gmode &= 0xF7;
     refsignal = 0;
     i = 0;
@@ -171,7 +171,7 @@ void chkprogress(void)
         if (penmintab[PenBuf[i * 2 - 2]]) break;
     }
     gmode2 |= 4;
-    Pencntdwn2[0] = -1;
+    PenCntDwn2[0] = -1;
     SortPending = 1;
     *(unsigned char *)puckc = 0xFF;
     assinsert((Player *)puckstruct, 0x1A);

@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* sfx: play sound effect id (remembered in lastsfx): while speech plays only 9Ch passes (and in a replay only
- with oneminsaid); A0h/A1h not on sound devices 4/8; 7Dh raises crowdlevel by 500; AAh on device 4 starts
+ with oneminsaid); A0h/A1h not on sound devices 4/8; 7Dh raises Crowdlevel by 500; AAh on device 4 starts
  sample SfxTestSample; 90h also plays 91h (both on device 4). */
 void sfx(int id)
 {
@@ -15,7 +15,7 @@ void sfx(int id)
         if (id == 0xA0 || id == 0xA1) return;
     }
     if (id == 0x7D) {
-        crowdlevel += 500;
+        Crowdlevel += 500;
         return;
     }
     if (sounddev == 4 && id == 0xAA) {

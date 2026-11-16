@@ -6,7 +6,7 @@ extern __CHK, awlinetab, boxfillcolor, boxlitecolor, boxshadecolor, TextCharH, c
 extern cont2team, crestnames, ctl1team, ctl2team, curleague, DrawBevelBox, DrawButtons, DrawGadgetByType
 extern hmteamrec_skaters, FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, fputchar, FreeMemBlock
 extern GameLineEditor, gameopts, GetInputEvent, hmlinetab, hmroster, HomeTeam, kaufmfont, leaguedbnames
-extern mainfont, MakePath, memcpy_, MouseSetPos, MusicChanReset2, musichandle, musicon, musicslot
+extern mainfont, MakePath, memcpy_, MouseSetPos, MusicChanReset2, musichandle, MusicOn, musicslot
 extern menuact_homelines, menuact_visitorlines, PaLineups, PaOpenBank, PaPlayoffTonight, PaPreloadClips, PaTonightIntro, pointerspr
 extern pregamebuttons, PrintOutlinedText, PrintShadowText, ptrupdatefn, ReadKeyRec, ReadTeamRec, schedgameidx, scoutcatidx
 extern scoutcatnames, SetDialogColors, SetTextColors, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, str_Apal
@@ -111,7 +111,7 @@ PreGameScreen:
         call AllocMemBlock
         add esp, byte 0Ch
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         cmp dword [songdata], byte 0
         je short .4
@@ -132,7 +132,7 @@ PreGameScreen:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .6
         cmp dword [songdata], byte 0
         je short .6
@@ -522,7 +522,7 @@ PreGameScreen:
         call DrawArt
         add esp, byte 0Ch
         call ClearInputQueue
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .25
         cmp dword [songdata], byte 0
         jne short .25
@@ -820,7 +820,7 @@ PreGameScreen_homelines:
 .7:
         cmp dword [dword esp+0664h], byte 0
         je near PreGameScreen.32
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .8
         cmp dword [songdata], byte 0
         je short .8
@@ -833,7 +833,7 @@ PreGameScreen_homelines:
         mov edx, dword [dword esp+0644h]
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .10
         cmp dword [songdata], byte 0
         je short .10
@@ -851,7 +851,7 @@ PreGameScreen_homelines:
         xor eax, eax
         mov dword [songdata], eax
 .10:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .12
         test byte [gameopts+1], 1
         je short .12
@@ -1209,7 +1209,7 @@ TonightsGameScreen:
         xor ebp, ebp
         mov dword [dword esp+0104h], ebp
         xor esi, esi
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .19
         cmp dword [songdata], byte 0
         jne short .19
@@ -1678,7 +1678,7 @@ TonightsGameScreen:
         push ecx
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .50
         cmp dword [songdata], byte 0
         je short .50
@@ -1695,7 +1695,7 @@ TonightsGameScreen:
         push byte 0
         call ClearScreen
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .52
         cmp dword [songdata], byte 0
         je short .52

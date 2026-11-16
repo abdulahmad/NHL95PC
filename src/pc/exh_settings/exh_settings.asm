@@ -5,7 +5,7 @@ section s_7BEBB progbits alloc exec nowrite align=1
 extern __CHK, acptspr, AllocMemBlock, cddriveptr, chkoffspr, chkonspr, ClearInputQueue, dlggreys
 extern DrawArt, DrawSettingsHeading, exhsetrects, fdlg_cancel, fileoncd, FindShape, FreeMemBlock, gamemode
 extern gameopts, GetInputEvent, GrabBlock, LoadBank, LoadSettingsShapes, MakePath, MouseRead, musichandle
-extern musicon, musicslot, pl05spr, pl10spr, pl20spr, pointerspr, PrintString, ptrupdatefn
+extern MusicOn, musicslot, pl05spr, pl10spr, pl20spr, pointerspr, PrintString, ptrupdatefn
 extern PutBlock, setbits, settingsfile, SndQuery, songdata, sounddev, str_BKGD3, str_Dbox4
 extern str_DigitizedSpeech3, str_Music3, str_Pointer17, str_Setting6, str_Sound3, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
 extern DisableMidiMusic, PlayDigiBlockLoop, SetDigiChannelVolume, DrawArtKeyFF, DrawShapeClippedKeyed, SetScreenTarget, TextSetColors, VgaSetPalette
@@ -183,7 +183,7 @@ ExhOptsToBits:
         push dword 0F8h
         call TextSetColors
         add esp, byte 8
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .12
         push dword 0D6h
         push byte 60h
@@ -375,7 +375,7 @@ DrawExhSetDlg:
         call PrintString
         add esp, byte 0Ch
 .3:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .4
         push dword 0D6h
         push byte 60h
@@ -441,7 +441,7 @@ ExhSetHitTest:
         cmp edx, byte 11h
         jne short .4
 .3:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .6
 .4:
         mov dword [ebx], edx
@@ -630,7 +630,7 @@ ExhSetEditLoop:
         idiv ebx
         test edx, edx
         je short .8
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .7
         cmp ecx, byte 11h
         je near .27
@@ -648,7 +648,7 @@ ExhSetEditLoop:
         and dword [setbits], eax
         jmp near .27
 .8:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .9
         cmp dword [esp], byte 10h
         je near .27
@@ -761,7 +761,7 @@ ExhSetEditLoop:
 .16:
         test byte [gameopts], 40h
         je short .18
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .17
         cmp dword [songdata], byte 0
         je short .17
@@ -782,7 +782,7 @@ ExhSetEditLoop:
         call EnableMidiMusic
         jmp short .20
 .18:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .19
         cmp dword [songdata], byte 0
         je short .19

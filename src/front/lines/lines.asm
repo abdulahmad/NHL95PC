@@ -9,7 +9,7 @@ extern LineEdPairY, LineEdFiveX, LineEdFiveY, LineEdFourX, LineEdFourY, LineEdEx
 extern LineEdGoalieY, editptrspr, FadeOutPalCycle, FadePalStep, fileoncd, FindShape, FitPlayerName, FreeMemBlock
 extern fullscrbmp, GetInputEvent, GrabBlock, jerseyremap, KeyDbPtr, LineEdHitTest, lineedpanel, lineslotx
 extern linesloty, LoadBank, LoadJerseyColours, mainfont, MakeJerseyShape, MakePath, memcpy_, menuact_dbdress
-extern menuact_dbscratch, MenuHitTest, MessageBox, MouseRead, MouseSetPos, msglines, musichandle, musicon
+extern menuact_dbscratch, MenuHitTest, MessageBox, MouseRead, MouseSetPos, msglines, musichandle, MusicOn
 extern pointerspr, PrintCenteredText, PrintFmt1, PrintFmt2, PrintLineEdStatus, PrintShadowText, ptrupdatefn, PutBlock
 extern qsort_, rostergstat, rosterjersey, rosterlist, rosterpstat, rosterslot, rosterstat, rosterstatsmenubar
 extern rosterteam, rosterteamrec, RunMenu, SetClipWindow, SetColorRemap, SetDrawBitmap, SetPalette, SetTextColors
@@ -74,7 +74,7 @@ DbLineEditor:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1

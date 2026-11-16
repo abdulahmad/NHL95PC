@@ -131,7 +131,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         SetPalette(0, 0x100, pal);
         FadePalStep(1, pal, 0x10);
         FreeMemBlock((int)pal);
-        if (musicon && songdata) {
+        if (MusicOn && songdata) {
             while (SndQuery(musicslot, 3) == 0) ;
             PushMemDescriptorLocked(songdata);
             songdata = 0;
@@ -170,7 +170,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
         ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
         ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
-        if (musicon && !songdata) {
+        if (MusicOn && !songdata) {
             MakePath(path, fileoncd[0x1E0] == 1 ? (char *)cddriveptr : 0, (char *)str_Leaguetm2, (char *)str_Iff10);
             songdata = LoadDigiFile(path);
             if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -219,7 +219,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                         if (teamselresult == -1) {
                             picks[cur] = -1;
                             pal = (unsigned char *)AllocMemBlock((char *)str_Pal19, 0x300, 0x20);
-                            if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
+                            if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 100);
                             SetPalette(0, 0x100, pal);
                             FadePalStep(1, pal, 0x10);
                             FreeMemBlock((int)pal);

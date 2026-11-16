@@ -3,9 +3,9 @@
 bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
-extern __CHK, crowddriver, crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, cursndbank
+extern __CHK, crowddriver, Crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, cursndbank
 extern oneminsaid, musicdriver, crowdsamples, SfxTestSample, gameopts, gmode, lastsfx, leaguesetimg
-extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
+extern MusicChanReset, MusicOn, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
 extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
 extern SayPlayerNumber, SayPlayoffResult, SayPlayoffTonight, SayScoringPeriod, SayTonightIntro, SetTickDeadline, sounddev, SpeechBusy
 extern OpenArtArchive, LoadFileAllocQuiet, PlaySong, PlayPatchFull, StopSongId, ReleaseSong, SongFinished, MidiProgramChange
@@ -77,7 +77,7 @@ Crowd_Noise:
         shl esi, 4
         sub esi, eax
         add esi, esi
-        mov ecx, dword [crowdlevel-2]
+        mov ecx, dword [Crowdlevel-2]
         sar ecx, 10h
         sub ecx, dword [crowdsmooth]
         test ecx, ecx
@@ -97,7 +97,7 @@ Crowd_Noise:
         add dword [crowdsmooth], esi
         jmp short .5
 .4:
-        mov eax, dword [crowdlevel-2]
+        mov eax, dword [Crowdlevel-2]
         sar eax, 10h
         mov dword [crowdsmooth], eax
 .5:
@@ -325,10 +325,10 @@ CrowdNoiseOff:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CrowdFadeOut                                 597E3  95 PC, medium confidence
-; Saves crowdlevel, then while it is > 0: wait a tick
-; (SetTickDeadline/WaitTickDeadline), crowdlevel -= 32h, CrowdNoiseUpdate(2);
+; Saves Crowdlevel, then while it is > 0: wait a tick
+; (SetTickDeadline/WaitTickDeadline), Crowdlevel -= 32h, CrowdNoiseUpdate(2);
 ;
-; then CrowdNoiseOff and restores crowdlevel; called at game exit / screen
+; then CrowdNoiseOff and restores Crowdlevel; called at game exit / screen
 ; changes
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/CrowdFadeOut.c
@@ -343,25 +343,25 @@ CrowdFadeOut:
         push edx
         push esi
         push edi
-        mov esi, dword [crowdlevel-2]
+        mov esi, dword [Crowdlevel-2]
         sar esi, 10h
         test byte [gameopts], 80h
         je short .x
         test byte [sounddev], 2Ah
         je short .x
 .1:
-        cmp word [crowdlevel], byte 0
+        cmp word [Crowdlevel], byte 0
         jle short .3
         push byte 1
         call SetTickDeadline
         add esp, byte 4
-        mov bx, word [crowdlevel]
+        mov bx, word [Crowdlevel]
         sub ebx, byte 32h
-        mov word [crowdlevel], bx
+        mov word [Crowdlevel], bx
         test bx, bx
         jge short .2
         xor edi, edi
-        mov word [crowdlevel], di
+        mov word [Crowdlevel], di
 .2:
         mov eax, 2
         call Crowd_Noise
@@ -369,7 +369,7 @@ CrowdFadeOut:
         jmp short CrowdFadeOut.1
 .3:
         call CrowdNoiseOff
-        mov word [crowdlevel], si
+        mov word [Crowdlevel], si
 .x:
         pop edi
         pop esi
@@ -380,7 +380,7 @@ CrowdFadeOut:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CrowdNoiseReset                              59863  95 PC, medium confidence
-; Clears crowdsmooth, crowdvol8, crowdvol7 (called with crowdlevel = 0 at
+; Clears crowdsmooth, crowdvol8, crowdvol7 (called with Crowdlevel = 0 at
 ; game start)
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/CrowdNoiseReset.c
@@ -403,7 +403,7 @@ CrowdNoiseReset:
 ; Play sound effect id (remembered in lastsfx): while speech plays only 9Ch
 ; passes (and in a replay only with oneminsaid);
 ;
-; A0h/A1h not on sound devices 4/8; 7Dh raises crowdlevel by 500; AAh on
+; A0h/A1h not on sound devices 4/8; 7Dh raises Crowdlevel by 500; AAh on
 ; device 4 starts sample SfxTestSample; 90h also plays 91h (both on device 4).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/sfx.c
@@ -440,7 +440,7 @@ sfx:
 .3:
         cmp edx, byte 7Dh
         jne short .4
-        add word [crowdlevel], 1F4h
+        add word [Crowdlevel], 1F4h
         pop edx
         pop ecx
         ret
@@ -637,13 +637,13 @@ PlayCrowdSample_ret:
         ret
 ;-----------------------------------------------------------------------------
 ; PaOneMinuteLeft                              59A7E  95 PC, medium confidence
-; If musicon and announcer option (gameopts+1 bit 0) and not gmode 10h:
+; If MusicOn and announcer option (gameopts+1 bit 0) and not gmode 10h:
 ; MusicChanReset, SayOneMinuteLeft
 ;-----------------------------------------------------------------------------
 PaOneMinuteLeft:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short PlayCrowdSample_ret
         test byte [gameopts+1], 1
         je short PlayCrowdSample_ret
@@ -654,7 +654,7 @@ PaOneMinuteLeft:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; PaSpeechBusy                                 59AAD  95 PC, medium confidence
-; SpeechBusy when musicon and announcer option, else 0
+; SpeechBusy when MusicOn and announcer option, else 0
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/PaSpeechBusy.c
 %ifdef CBUILD
@@ -663,7 +663,7 @@ PaOneMinuteLeft:
 PaSpeechBusy:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         test byte [gameopts+1], 1
         jne near SpeechBusy
@@ -685,7 +685,7 @@ PaGoal:
         push esi
         push edi
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         test byte [gameopts+1], 1
         je short .x
@@ -714,7 +714,7 @@ PaPlayerNumber:
         call __CHK
         push ecx
         mov ecx, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         test byte [gameopts+1], 1
         je short .x
@@ -740,7 +740,7 @@ PaPenalty:
         push edi
         push ebp
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         test byte [gameopts+1], 1
         je short .x
@@ -776,7 +776,7 @@ PaPenaltyShot:
         call __CHK
         push esi
         mov esi, eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         test byte [gameopts+1], 1
         je short .x
@@ -805,7 +805,7 @@ PaTonightIntro:
         jl short .1
         mov ecx, 0Ch
 .1:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .2
         test byte [gameopts+1], 1
         je short .2
@@ -828,7 +828,7 @@ PaTonightIntro_ret:
 PaScoringPeriod:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short PaTonightIntro_ret
         test byte [gameopts+1], 1
         je short PaTonightIntro_ret
@@ -840,7 +840,7 @@ PaScoringPeriod:
 PaNhlIntro:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short PaTonightIntro_ret
         test byte [gameopts+1], 1
         je short PaTonightIntro_ret
@@ -852,7 +852,7 @@ PaNhlIntro:
 PaGoodnight:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short PaTonightIntro_ret
         test byte [gameopts+1], 1
         je short PaTonightIntro_ret
@@ -864,7 +864,7 @@ PaGoodnight:
 PaLineups:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short PaTonightIntro_ret
         test byte [gameopts+1], 1
         je short PaTonightIntro_ret
@@ -876,7 +876,7 @@ PaLineups:
 PaElseNhl:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near PaTonightIntro_ret
         test byte [gameopts+1], 1
         je near PaTonightIntro_ret
@@ -894,7 +894,7 @@ PaHighlightIntro:
         push dword 8
         call __CHK
         push ebx
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         test byte [gameopts+1], 1
         je short .x
@@ -919,7 +919,7 @@ PaPlayoffResult:
         call __CHK
         push esi
         push edi
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         test byte [gameopts+1], 1
         je short .x
@@ -946,7 +946,7 @@ PaPlayoffTonight:
         push dword 10h
         call __CHK
         push esi
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         test byte [gameopts+1], 1
         je short .x
@@ -964,7 +964,7 @@ PaPlayoffTonight:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; PaOpenBank                                   59D54  95 PC, medium confidence
-; When musicon: retry OpenAnnouncerBank until it succeeds
+; When MusicOn: retry OpenAnnouncerBank until it succeeds
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/PaOpenBank.c
 %ifdef CBUILD
@@ -973,7 +973,7 @@ PaPlayoffTonight:
 PaOpenBank:
         push dword 4
         call __CHK
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
 .1:
         call OpenAnnouncerBank
@@ -984,7 +984,7 @@ PaOpenBank:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; PaPreloadClips                               59D71  95 PC, medium confidence
-; When musicon: retry PreloadAnnouncerClips until it succeeds
+; When MusicOn: retry PreloadAnnouncerClips until it succeeds
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/PaPreloadClips.c
 %ifdef CBUILD
@@ -997,7 +997,7 @@ PaPreloadClips:
         push ecx
         mov ebx, eax
         mov ecx, edx
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
 .1:
         mov edx, ecx

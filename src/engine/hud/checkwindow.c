@@ -83,7 +83,7 @@ void checkwindow(void)
         return;
     }
     if (gameclock || clockticks[0]) {
-        if ((gmode & 4) && Pencntdwn < 0 || RefStep[0] > 0) {
+        if ((gmode & 4) && PenCntDwn < 0 || RefStep[0] > 0) {
             p = &SortCords[0x10];
             xc1 = HIWORD(p->Xpos);
             yc1 = refYpos2;
@@ -195,7 +195,7 @@ void LoadTeamPPV(short seq)
    (bannermsg -1). The box is saved and dithered (FillRectClipped, DitherRect 9) while it slides or without an overlay
    script; once 3Eh wide it gets a black frame. With a script (ovlseq / ovlstep), the step art (ovlstepart) is
    drawn, for sequence 0Ah after step 10h over ovlstepart_e30 and for sequence 8 steps 12h-14h below ovlstepart_e21; at
-   sequence 0 step 2 the crowd meter: up to three bars (30h, 27h, 60h) from crowdlevel over 2EEh, 3B6h and 47Eh.
+   sequence 0 step 2 the crowd meter: up to three bars (30h, 27h, 60h) from Crowdlevel over 2EEh, 3B6h and 47Eh.
    Without one, the text lines 3, 1, 2, 4, 5 centred, line spacing by how many there are, twice (scor3font in 25h,
    then scor2font in 27h). Then the box is marked for redraw (MarkZoneRect). No arguments, no result. */
 void DrawTextOverlay(void)
@@ -271,20 +271,20 @@ void DrawTextOverlay(void)
         }
         if (ovlseq == 0 && ovlstep == 2) {
             y += 0x23;
-            if (crowdlevel > 0x2EE) {
-                w = crowdlevel - 0x2EE < 0xC8 ? crowdlevel - 0x2EE : 0xC8;
+            if (Crowdlevel > 0x2EE) {
+                w = Crowdlevel - 0x2EE < 0xC8 ? Crowdlevel - 0x2EE : 0xC8;
                 w /= 5;
                 DitherRect(x, y, w, y2 - y, 0x30);
             }
-            if (crowdlevel > 0x3B6) {
+            if (Crowdlevel > 0x3B6) {
                 x += 0x28;
-                w = crowdlevel - 0x3B6 < 0xC8 ? crowdlevel - 0x3B6 : 0xC8;
+                w = Crowdlevel - 0x3B6 < 0xC8 ? Crowdlevel - 0x3B6 : 0xC8;
                 w /= 5;
                 DitherRect(x, y, w, y2 - y, 0x27);
             }
-            if (crowdlevel > 0x47E) {
+            if (Crowdlevel > 0x47E) {
                 x += 0x28;
-                w = crowdlevel - 0x47E < 0xD7 ? crowdlevel - 0x47E : 0xD7;
+                w = Crowdlevel - 0x47E < 0xD7 ? Crowdlevel - 0x47E : 0xD7;
                 w /= 5;
                 DitherRect(x, y, w, y2 - y, 0x60);
             }
@@ -359,11 +359,11 @@ void UpdateTextOverlay(void)
     signed char *s;
 
     if (ovltimer < 0) return;
-    if (Pencntdwn >= 0x100 && Pencntdwn <= 0x140 && !(gmode & 0x40)) return;
-    if (ovlseq == 0 && ovlstep < 5 && crowdlevel < 0x5DC) {
-        if (ovlstepidx == 1 && crowdlevel < 0x280) crowdlevel = 0x280;
+    if (PenCntDwn >= 0x100 && PenCntDwn <= 0x140 && !(gmode & 0x40)) return;
+    if (ovlseq == 0 && ovlstep < 5 && Crowdlevel < 0x5DC) {
+        if (ovlstepidx == 1 && Crowdlevel < 0x280) Crowdlevel = 0x280;
         if (ovlstepidx >= 1 && ovlstepidx < 5 || ovlstepidx > 7 && ovlstepidx < 0xD || ovlstepidx > 0x10)
-            crowdlevel += 8;
+            Crowdlevel += 8;
     }
     if (ovltimer == 0x10 && ovlseq != -1 && ovlscript) {
         if (--ovlsteptimer >= 0) return;

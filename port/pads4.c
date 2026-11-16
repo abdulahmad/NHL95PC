@@ -163,7 +163,7 @@ extern int16_t *puckx, *pucky, *puckvx, *puckvy;
 extern signed char *puckc;
 extern uint8_t gmode, gmode2;
 extern int penshotmode, penshotlive, playsuspended;
-extern int16_t Pencntdwn2[];
+extern int16_t PenCntDwn2[];
 extern int demomode;
 extern int puckstruct[];
 extern uint8_t puckasslist[], homeremap[];
@@ -586,7 +586,7 @@ static void mk_free(void)
     mk_lut_ok = 0;                                      /* colours again for the next game's palette */
 }
 
-/* 95 PC's own frames (Pencntdwn2): pad 1's star 185h, pad 2's 186h, the puck carrier's 187h; the arrows of pad 1 and 2
+/* 95 PC's own frames (PenCntDwn2): pad 1's star 185h, pad 2's 186h, the puck carrier's 187h; the arrows of pad 1 and 2
  * (markframes_e1 by joyedgedir's direction of the edge mask: 1 above the screen, 2 below, 4 right, 8 left):
  * up 17Fh / 182h, up-right 180h / 183h, right 181h / 184h, down-right 161h / 163h, down 160h / 162h */
 int pads4_mark_code(int frame)
@@ -644,7 +644,7 @@ static void draw_mark(int k, int team, int x, int y)
             else if (x < vx - 0xC0) { x = vx - 0xC0; fl = 8; }
         }
         if (!marks94()) {                               /* 95 PC's: the star of the game pad it swaps into; no arrow */
-            if (!fl) draw_sprite(Pencntdwn2[1 + slot], x, y, 0);
+            if (!fl) draw_sprite(PenCntDwn2[1 + slot], x, y, 0);
             return;
         }
         if (!fl) code = FR_MARK + (k + 2) * 8;
@@ -721,7 +721,7 @@ __attribute__((naked)) static void dro_thunk(void)
         "pushal\n\tcall " SYM("pads4_draw") "\n\tpopal\n\tret");
 }
 
-/* DrawRinkOverlays .27 / .28: the one DrawFrameSprite of the stars and arrows (mov eax, [eax*2 + Pencntdwn2] /
+/* DrawRinkOverlays .27 / .28: the one DrawFrameSprite of the stars and arrows (mov eax, [eax*2 + PenCntDwn2] /
  * sar eax, 10h / xor ecx, ecx / call DrawFrameSprite; the arrow and puck paths jump to the call) */
 static int patch_marks(char *fn, size_t n, void (*thunk)(void))
 {
@@ -734,7 +734,7 @@ static int patch_marks(char *fn, size_t n, void (*thunk)(void))
         if (c[0] != 0xE8 || c[-2] != 0x31 || c[-1] != 0xC9 || c[-5] != 0xC1 || c[-4] != 0xF8 || c[-3] != 0x10) continue;
         if (c[-12] != 0x8B || c[-11] != 0x04 || c[-10] != 0x45) continue;
         memcpy(&a, c - 9, 4);
-        if (a != (uint32_t)(uintptr_t)Pencntdwn2) continue;
+        if (a != (uint32_t)(uintptr_t)PenCntDwn2) continue;
         memcpy(&rel, c + 1, 4);
         if ((uintptr_t)c + 5 + (uintptr_t)(intptr_t)rel != (uintptr_t)DrawFrameSprite) return 0;
         rel = (int32_t)((uintptr_t)thunk - ((uintptr_t)c + 5));

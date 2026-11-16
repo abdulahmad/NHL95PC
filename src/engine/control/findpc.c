@@ -134,14 +134,14 @@ void Goal(Player *net)
     sfx(0x9C);
     freezewindow();
     if (side == 0) {
-        crowdlevel += 0x320;
-        if (crowdlevel > 0x7D0) crowdlevel = 0x7D0;
-        if (crowdlevel < 0x708) crowdlevel = 0x708;
-    } else if (crowdlevel < 0x320) {
-        crowdlevel = 0x320;
+        Crowdlevel += 0x320;
+        if (Crowdlevel > 0x7D0) Crowdlevel = 0x7D0;
+        if (Crowdlevel < 0x708) Crowdlevel = 0x708;
+    } else if (Crowdlevel < 0x320) {
+        Crowdlevel = 0x320;
     }
     SetBoxDoorObject(side);
-    if (side == 0 && (!gameopts.speech || !musicon) != 0) PlayCrowdSample(3);
+    if (side == 0 && (!gameopts.speech || !MusicOn) != 0) PlayCrowdSample(3);
     if (side == 1) CwdExciteLvl += 0xA;
     else CwdExciteLvl += 0x1E;
     if (t->tmap < o->tmap) GoalState = 2;
@@ -484,7 +484,7 @@ void StartPer(void)
     fox = 0;                                    /* face off at center ice */
     foy = 0;
     assreplace((Player *)puckstruct, ASSpuckfaceoff);
-    if (gsp != 0) crowdlevel = 0;
+    if (gsp != 0) Crowdlevel = 0;
     gmode2 |= 4;
     sflags &= ~0x50;                            /* sfwrap: reset replay stuff */
     recbpr = replaystart;
@@ -525,7 +525,7 @@ void updateplayers(void)
     int a;
 
     i = refasslist[((short *)&refposition)[1]];
-    playsuspended = (gmode & 1) && ((gmode & 0x80) || !(gmode2 & 1) && Pencntdwn < 0 && !PenBuf[0] && i != 0x20 && i != 0x23
+    playsuspended = (gmode & 1) && ((gmode & 0x80) || !(gmode2 & 1) && PenCntDwn < 0 && !PenBuf[0] && i != 0x20 && i != 0x23
         && (ovlseq == 2 || !ovlseq || ovltimer < 0 || ovltimer >= 0x100) != 0);
     p = SortCords;
     hmtmgoaliesc = -1;
@@ -778,9 +778,9 @@ void clockcont_0(void)
     if ((regd1.w = hmscore[0] - awscore) == 0) {
         if (gsp == 3 && gameopts.fullot) {
             ClearPenaltyBuffer();
-            if (crowdlevel <= 0x4B0) {
-                crowdlevel += 0x384;
-                if (crowdlevel > 0x4B0) crowdlevel = 0x4B0;
+            if (Crowdlevel <= 0x4B0) {
+                Crowdlevel += 0x384;
+                if (Crowdlevel > 0x4B0) Crowdlevel = 0x4B0;
             }
             gmode |= 0x41;
             regd2.w = 0;
@@ -845,13 +845,13 @@ void clockcont_0(void)
     } while (--regd2.w != 0);
     ClearPenaltyBuffer();
     if (hmscore[0] > awscore) {
-        if (crowdlevel <= 0x5DC) {
-            crowdlevel += 0x3E8;
-            if (crowdlevel > 0x5DC) crowdlevel = 0x5DC;
+        if (Crowdlevel <= 0x5DC) {
+            Crowdlevel += 0x3E8;
+            if (Crowdlevel > 0x5DC) Crowdlevel = 0x5DC;
         }
-        if (regd0.w == 8) crowdlevel += 0x320;
-    } else if (crowdlevel < 0x320) {
-        crowdlevel = 0x320;
+        if (regd0.w == 8) Crowdlevel += 0x320;
+    } else if (Crowdlevel < 0x320) {
+        Crowdlevel = 0x320;
     }
     gmode |= 0x41;
     CwdExciteLvl += 0x28;

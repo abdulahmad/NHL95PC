@@ -4,7 +4,7 @@ bits 32
 section s_8BAAF progbits alloc exec nowrite align=1
 extern __CHK, str_S9, cddriveptr, cddrivestr, FadeOutPalCycle, FadePalette, FatalError, fclose_
 extern fgets_, fileoncd, fopen_, FreeCoachClip, FreeMemBlock, fscanf_, gameopts, InputInstall
-extern InputRemove, MakePath, memcpy_, MusicChanReset2, musicon, musicslot, PlayMVI, rand_
+extern InputRemove, MakePath, memcpy_, MusicChanReset2, MusicOn, musicslot, PlayMVI, rand_
 extern SayCoachClip, songdata, SpeechBusy, sprintf_, str_ALLFILESTXT, str_ALLFILESTXT2, str_CantOpenNhlCfg2, str_Clip04d
 extern str_Cmv2, str_Coach, str_Coachcut, str_CouldNotOpenALLFILES, str_Iff13, str_NhlCfg, str_Pal29, str_Scrn4
 extern strcat_, stricmp_, PushMemDescriptorLocked, LoadBank, LoadDigiFile, SndQuery, SetPalette, DrawBitmap
@@ -204,7 +204,7 @@ CoachCutScene:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .5
         cmp dword [songdata], byte 0
         jne short .5
@@ -223,7 +223,7 @@ CoachCutScene:
         call LoadDigiFile
         mov dword [songdata], eax
 .5:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .6
         test byte [gameopts+1], 1
         je short .6
@@ -265,7 +265,7 @@ CoachCutScene:
 .9:
         lea eax, [dword esp+0300h]
         call MakePath
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .11
         test byte [gameopts+1], 1
         je short .11
@@ -289,7 +289,7 @@ CoachCutScene:
         mov edx, esp
         mov eax, 1
         call FadePalette
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .13
         test byte [gameopts+1], 1
         je short .13
@@ -299,7 +299,7 @@ CoachCutScene:
         test eax, eax
         jne short CoachCutScene.12
 .13:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je near .16
         cmp dword [songdata], byte 0
         je near .16
@@ -328,7 +328,7 @@ CoachCutScene:
         mov edx, esp
         mov eax, 1
         call FadePalette
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .16
         mov ebx, dword [songdata]
         test ebx, ebx

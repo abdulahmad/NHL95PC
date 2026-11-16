@@ -27,7 +27,7 @@ void PostGoalEvent(int side, int scorer, int a1, int a2, int b, int min, int sec
 void ChkScorerMilestone(void);  /* 62807 */
 
 #define CROWDUP() \
-    if (crowdlevel <= 0x4B0 && (crowdlevel += 0x96) > 0x4B0) crowdlevel = 0x4B0
+    if (Crowdlevel <= 0x4B0 && (Crowdlevel += 0x96) > 0x4B0) Crowdlevel = 0x4B0
 
 /* assgoalie (4B774; 93G assgoalie, PC version; ends in ass_popx): the goalie. Count down the save timer (+4Ah),
    lose the puck hold flag (+63h) when he has not got it, and set the crease flags (+48h bits 1 and 2, cleared in

@@ -4,15 +4,15 @@ bits 32
 section s_13867 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefaultLines
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
-extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
+extern cont2team, Crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
 extern DrawHudPanel, DeskRedrawAll, DeskRedrawFlag, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, SpeechPatchNext
 extern UnusedEventWord, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, gameover
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
 extern joysampling, joysampling_save, kaufmfont, lastplayer, lcblink, lcblinktime, lcboxon, lcline
 extern lcreqchoice, lcrequest, lcsel, lctimer, MakePath, memcpy_, MouseSetPos, musichandle
-extern musicon, musicslot, AssetLoadNoOp, numshapes, numshpbank, ovlseq, ovlstep, ovltimer
-extern pad1dev, pad2dev, passdir, passplayer, passspeed, Penaltytimer, Pencntdwn, penshotlive
+extern MusicOn, musicslot, AssetLoadNoOp, numshapes, numshpbank, ovlseq, ovlstep, ovltimer
+extern pad1dev, pad2dev, passdir, passplayer, passspeed, Penaltytimer, PenCntDwn, penshotlive
 extern penshotmode, penshotplayer, penshotstart, photobankf, photobanks, photoptrs, photoptrsf, PickAwardWinners
 extern PickAwardWinners_x, PlayDigiSample, puckx, pucky, randomd0, RefPen, refsignal, RefStep
 extern regd0, regd1, regd2, regd4, rinkendart, rinkendbank, savedmousex, savedmousey
@@ -25,7 +25,7 @@ extern str_VFN, AllocMemBlock, PushMemDescriptorLocked, LoadBank, OpenArtArchive
 extern TextSetFont, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, SetPalette
 extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
-extern penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
+extern penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, PenCntDwn2
 extern rinkobjs, milestonesaid_b2, UnusedSpeechWord, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl, UnusedCrowdWordHi, penevteam
 extern rinkobjused
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
@@ -631,7 +631,7 @@ SetupGame:
         call SetupTeamLines
         mov word [gsp], 0FFFFh
         xor ebx, ebx
-        mov word [crowdlevel], bx
+        mov word [Crowdlevel], bx
         call CrowdNoiseReset
         xor edx, edx
         mov dword [introskipped], edx
@@ -644,7 +644,7 @@ SetupGame:
         mov ebx, ecx
         call DrawHudPanel
         xor ecx, ecx
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
         xor ebx, ebx
         mov dword [crowdsmooth], ebx
         xor edx, edx
@@ -724,13 +724,13 @@ SetupDemoGame:
         call SetupTeamLines
         mov word [gsp], 0FFFFh
         xor ebx, ebx
-        mov word [crowdlevel], bx
+        mov word [Crowdlevel], bx
         call CrowdNoiseReset
         xor edx, edx
         mov dword [introskipped], edx
         call ResetGameVars
         xor ecx, ecx
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
         mov dword [crowdsmooth], edx
         xor eax, eax
         call StartPreGame
@@ -796,8 +796,8 @@ ResetGameVars:
         mov word [ovltimer], dx
         mov word [penaltysc], dx
         mov word [RefStep], dx
-        mov word [Pencntdwn], dx
-        mov word [Pencntdwn2], dx
+        mov word [PenCntDwn], dx
+        mov word [PenCntDwn2], dx
         xor eax, eax
         mov word [threat], ax
         mov word [passplayer], ax

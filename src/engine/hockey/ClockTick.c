@@ -23,7 +23,7 @@ void ClockTick(void)
         clockticks[0] = 0;
     }
     if (gameclock == 0x3D || gameclock == 0x3C) {
-        if (!musicon || !gameopts.speech) {
+        if (!MusicOn || !gameopts.speech) {
             sfx(0x97);
         } else if (gameclock == 0x3C) {
             joysampling_save = joysampling;

@@ -52,7 +52,7 @@ void ExhOptsToBits(void)
     }
     DrawExhSetChecks();
     TextSetColors(0xF8, 0xFF);
-    if (musicon == 0) PrintString((char *)str_DigitizedSpeech3, 0x60, 0xD6);
+    if (MusicOn == 0) PrintString((char *)str_DigitizedSpeech3, 0x60, 0xD6);
     if (sounddev == 0x10) {
         PrintString((char *)str_Music3, 0x60, 0xAA);
         PrintString((char *)str_Sound3, 0x60, 0xC0);
@@ -135,12 +135,12 @@ short ExhSetEditLoop(void)
             if (ExhSetHitTest(x, y, &hit)) {
                 if (hit < 0x12) {
                     if (hit % 2) {
-                        if (musicon || hit != 0x11) {
+                        if (MusicOn || hit != 0x11) {
                             hit /= 2;
                             setbits[0] &= ~(1 << hit);
                         }
                     } else {
-                        if (musicon || hit != 0x10) {
+                        if (MusicOn || hit != 0x10) {
                             hit /= 2;
                             setbits[0] |= 1 << hit;
                         }
@@ -175,11 +175,11 @@ short ExhSetEditLoop(void)
                         break;
                     }
                     if (gameopts.music) {
-                        if (musicon && songdata && !oldmusic && SndQuery(musicslot, 3))
+                        if (MusicOn && songdata && !oldmusic && SndQuery(musicslot, 3))
                             PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
                         EnableMidiMusic();
                     } else {
-                        if (musicon && songdata && !SndQuery(musicslot, 3))
+                        if (MusicOn && songdata && !SndQuery(musicslot, 3))
                             SetDigiChannelVolume(musichandle, 3, 0x28);
                         DisableMidiMusic();
                     }

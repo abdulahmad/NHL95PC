@@ -7,7 +7,7 @@
    at +12h (11 bits, shifted 20) and bit 11 of the word at +54h; the frame byte (+5Eh) of the 12 players; the six
    position pairs as nibbles (Fh for off the ice); the puck height, doorZpos2, the two sound effect bytes
    (replaysfx, lastsfx, then both -1), the controlled player numbers and the puck carrier, the penalty box nibbles
-   (PBnum), camx (byte), camy and crowdlevel (words), the ten rink objects' frames as nibbles and the twenty
+   (PBnum), camx (byte), camy and Crowdlevel (words), the ten rink objects' frames as nibbles and the twenty
    object bytes of rinkobjs. When the buffer (9600h bytes from replaystart) is full it wraps (sflags bit 4). On
    the other tick only the sound effect is carried over (replaysfx). No arguments, no result.
    DRAFT (10.0 GA, 11 differing, 809 vs 810 bytes): a shared pair index (i + i), used by both nibble
@@ -57,7 +57,7 @@ void updatereplay(void)
     *recbpr++ = camx;
     *(short *)recbpr = camy;
     recbpr += 2;
-    *(short *)recbpr = crowdlevel;
+    *(short *)recbpr = Crowdlevel;
     recbpr += 2;
     for (i = 0; i < 0xA; i++) {
         int pair;

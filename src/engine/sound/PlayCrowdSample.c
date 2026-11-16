@@ -22,7 +22,7 @@ void PlayCrowdSample(int n)
  then SayOneMinuteLeft. */
 void PaOneMinuteLeft(void)
 {
-    if (musicon && gameopts.speech && !(gmode & 0x10)) {
+    if (MusicOn && gameopts.speech && !(gmode & 0x10)) {
         MusicChanReset();
         SayOneMinuteLeft();
     }

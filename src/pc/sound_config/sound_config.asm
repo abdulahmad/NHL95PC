@@ -11,7 +11,7 @@ extern lockercancelx, lockercancely, PcSpkSampleReady, SoundDevActive, musicdriv
 extern SfxTestSample, SpeechMemBlock, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
 extern fopen_, fprintf_, fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr
 extern homenamebckspr, HomeTeam, InitSpeech, kaufmfont, lockerrects, mainfont, MakePath, MessageBox
-extern modesetlabel, MouseSetPos, msg_InitMT32, musichandle, musicon, musicslot, na01spr, na03spr
+extern modesetlabel, MouseSetPos, msg_InitMT32, musichandle, MusicOn, musicslot, na01spr, na03spr
 extern na05spr, menutext_deskreturn, menutext_desktodesk, jerseyabbrevs, poroundnames, pg01spr, pg03spr, pg05spr
 extern pg07spr, pl05spr, pl10spr, pl20spr, PlayDigiSample, pointerspr, PrintOutlinedText, PrintShadowText
 extern ptrupdatefn, RestoreDialogBg, s1font, setbits, SetDialogColors, SetTextColors, SetTickDeadline, settingsfile
@@ -50,7 +50,7 @@ MenuSoundSettings:
         push esi
         push edi
         push ebp
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         jne short .2
@@ -627,7 +627,7 @@ SoundCardDlgLoop_poll:
         mov edx, ecx
         mov eax, 0F9h
         call SetDialogColors
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .10
         cmp dword [songdata], byte 0
         je short .10
@@ -658,7 +658,7 @@ SoundCardDlgLoop_poll:
         push ebp
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .13
         cmp dword [songdata], byte 0
         jne short .13
@@ -685,7 +685,7 @@ SoundCardDlgLoop_poll:
         mov ebx, 3
         call PlayDigiBlockLoop
 .13:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .14
         or byte [gameopts+1], 1
         jmp near SoundCardDlgLoop_next.1
@@ -697,7 +697,7 @@ SoundCardDlgLoop_poll:
         xor dword [sndcardmissing], eax
         mov eax, dword [sounddev]
         mov dword [setbits], eax
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .18
         cmp dword [songdata], byte 0
         jne short .18
@@ -1059,13 +1059,13 @@ SetSoundDevice:
         cmp ecx, byte 20h
         jne short .28
 .27:
-        mov byte [musicon], 1
+        mov byte [MusicOn], 1
         mov eax, dword [digidriver]
         mov dword [musichandle], eax
         jmp near .39
 .28:
         xor bh, bh
-        mov byte [musicon], bh
+        mov byte [MusicOn], bh
         jmp near .39
 .29:
         cmp esi, byte 10h

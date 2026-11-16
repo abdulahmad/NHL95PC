@@ -50,7 +50,7 @@ void DebugMonitor(void)
         n += sprintf(buf + n, (char *)str_dbgGO, gameover, exitgame, (gmode & 0x40) != 0, (gmode & 0x80) != 0);
         n += sprintf(buf + n, (char *)str_dbgGsp, gameclock, clockticks[0]);
         n += sprintf(buf + n, (char *)str_dbgC12, c1playernum[0], c2playernum[0], cont1team, cont2team);
-        sprintf(buf + n, (char *)str_dbgPuckc, *puckc, (gmode & 1) != 0, (gmode & 4) != 0, Pencntdwn);
+        sprintf(buf + n, (char *)str_dbgPuckc, *puckc, (gmode & 1) != 0, (gmode & 4) != 0, PenCntDwn);
         DebugPrintf(buf);
         i = 0;
         for (; i < 0x11; i++) {

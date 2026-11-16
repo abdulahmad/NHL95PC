@@ -59,7 +59,7 @@ int HandleHotKey(int key)
         SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
         CrowdFadeOut();
-        if (musicon) MusicChanReset();
+        if (MusicOn) MusicChanReset();
         else ReleaseAllVoices();
         SpeechStopQueue();
         StopDigiSample();
@@ -88,7 +88,7 @@ int HandleHotKey(int key)
     case 0x1F:
         if (gameopts.sfx) {
             CrowdNoiseOff();
-            if (musicon) MusicChanReset();
+            if (MusicOn) MusicChanReset();
             else ReleaseAllVoices();
             DisableMidiSfx();
         }

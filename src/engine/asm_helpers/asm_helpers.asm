@@ -3,7 +3,7 @@
 bits 32
 %include "hockey.inc"
 section s_8BEDB progbits alloc exec nowrite align=1
-extern __CHK, AnyInputPressed, bgscrollx, bgscrolly8, ClearInputQueue, GetTicks, musichandle, musicon
+extern __CHK, AnyInputPressed, bgscrollx, bgscrolly8, ClearInputQueue, GetTicks, musichandle, MusicOn
 extern musicslot, ReadBE32, rinkbm, saved_ss, screenbm, scrollx, scrolly, scrpitch
 extern seed, SetDrawBitmap, SetTickDeadline, songdata, CmvCreate, CmvDestroy, CmvReadHeader, CmvDecodeFrame
 extern CmvFrameCount, CmvFrameRate, CmvPaletteFirst, CmvPaletteCount, CmvPalette, CdStreamCreate, CdStreamClose, CdStreamOpen
@@ -123,7 +123,7 @@ PlayMVI:
         jne short .6
         cmp ebp, dword [byte esp+010h]
         jne short .6
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .5
         mov ecx, dword [songdata]
         test ecx, ecx
@@ -230,7 +230,7 @@ PlayMVI:
         push edx
         call CdStreamClose
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .x
         cmp dword [songdata], byte 0
         je short .x

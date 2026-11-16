@@ -30,7 +30,7 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
 
     for (i = 0; i < 25; i++) {
         if (*(int *)((char *)hmteamrec_skaters + team * 744 + i * 4) >= 0) {
-            ReadPlayerRecs(f1, f2, f3, f4, *(int *)((char *)hmteamrec_skaters + team * 744 + i * 4), buf + 0x38, buf + 0xC4, 0x14,
+            ReadPlayerRecord(f1, f2, f3, f4, *(int *)((char *)hmteamrec_skaters + team * 744 + i * 4), buf + 0x38, buf + 0xC4, 0x14,
                 buf + 0x6C, 0x2F, buf + 0x9C, n4);
             hmrosterjersey[team * 1092 + i * 39] = buf[0x39];
             hmrosterpos[team * 1092 + i * 39] = buf[0x3A];
@@ -74,7 +74,7 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
     }
     for (i = 0; i < 3; i++) {
         if (*(int *)((char *)hmteamrec_goalies + team * 744 + i * 4) >= 0) {
-            ReadPlayerRecs(f1, f2, f3, 0, *(int *)((char *)hmteamrec_goalies + team * 744 + i * 4), buf + 0x38, buf + 0xD8, 0x10,
+            ReadPlayerRecord(f1, f2, f3, 0, *(int *)((char *)hmteamrec_goalies + team * 744 + i * 4), buf + 0x38, buf + 0xD8, 0x10,
                 buf, 0x36, 0, 0);
             hmrosterjersey[team * 1092 + (i + 25) * 39] = buf[0x39];
             hmrosterpos[team * 1092 + (i + 25) * 39] = buf[0x3A];

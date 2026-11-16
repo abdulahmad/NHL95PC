@@ -40,7 +40,7 @@ scrollx,DD6AC,vgaflip: low 2 bits -> attribute 33h pixel panning
 vgapage,EDA04,vgaflip toggles it 0/1 and shows page 0B00h or 4400h
 bgscrolly8,DD70C,"background top row in 8-line units in the circular VRAM background buffer (vgacopy_bg, vgacopy_bgfull: *8 rows / *300h bytes)"
 bgscrollx,DD6B2,"background x offset (added twice, words) in the circular VRAM background buffer"
-musicon,D2430,music present/on flag tested before every song call (with songdata != 0)
+MusicOn,D2430,music on flag tested before every song call (94 SNES ram94s MusicOn)
 songdata,C721D,pointer to the loaded song (0 = none); freed and cleared after a fade in arena_logos; played with musichandle
 musichandle,D2431,music handle passed to the play (sub_8FB8E) and fade (sub_8FCDF) calls
 screenbm,C66C4,"pointer to the screen bitmap descriptor (set in main_ startup), selected by SelectScreenBM"
@@ -117,7 +117,7 @@ hmtmptrF2,DF706,"home team struct +F2h data pointer (clearteams sets unk_DBC30, 
 awtmptrF2,DF806,visitor team struct +F2h data pointer (clearteams sets unk_DBF18); role not identified
 iflags,E9AC0,"93G iflags (icing): puckIChk tests bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; player logic sets them when the puck crosses the red line. Also the -5r alias of lasttouch (dword [lasttouch-2])"
 lasttouch,E9AC2,"SCnum of the player who last touched the puck (written by the player logic puck code); Goal / PenTeamScored compare it with 6 for the team, ChkDelayedOffside penalizes SortCords[lasttouch]"
-crowdlevel,CC0DE,"93G crowdlevel: ChkShotStat +100 (64h), setInjuryType +12Ch, capped at 3E8h; the sound interface decays it"
+Crowdlevel,CC0DE,crowd excitement level (94G ram94 Crowdlevel)
 puckcross_m2,DF812,"puckcross-2: the -5r load dword [edx*2+puckcross_m2] / sar 10h reads puckcross[edx]; nosplit use, so not folded"
 hmtmap,DF64A,"home tmap (hmtmstruct+36h), players in the penalty box count (6 = none in restoreteams)"
 awtmap,DF74A,visitor tmap (awtmstruct+36h)
@@ -148,7 +148,7 @@ crowdvol8,CCC8C,MIDI crowd noise: current volume of channel 8 (0 = note off); Cr
 crowdvol7,CCC90,MIDI crowd noise: current volume of channel 7 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff
 digihandle,CCC84,handle of the digital sample PlayDigiSample started (-1 = none); StopDigiSample / WaitDigiSample poll it
 Penaltytimer,C90D0,"93G Penaltytimer: updatepentime subtracts 1 per call, at < 0 adds 18h (once a second)"
-Pencntdwn,C90CE,93G Pencntdwn: checkfornewpen raises it to the penalty's delay * 32; chkprogress counts it down (chkprogress_go) or runs InProgress when negative
+PenCntDwn,C90CE,penalty-call countdown (94G ram94 PenCntDwn)
 PenBuf,E9A16,"93G PenBuf: 32 byte pairs (penalty number, player | 80h called); ClearPenaltyBuffer clears it, checkfornewpen / chkprogress walk it"
 RefPen,C90D6,93G RefPen: penalty / animation number set by SetPA
 RefStep,C90D4,"93G RefStep: SetPA clears it; chkprogress sets it to -1 (93G st RefStep, PC byte RefStep+1)"
@@ -3590,7 +3590,7 @@ pendelaytab_e13,C9111,"pendelaytab+0Dh: entry 13, checkfornewpen uses it for a p
 penmintab_m3,C9120,penmintab-3: -5r byte-load base
 pendelay2tab,C9142,"checkfornewpen: second delay per penalty, x 32 frames, the minimum for Pencntdwn2"
 pendelay2tab_e4,C9146,"pendelay2tab+4: entry 4, used for a penalty shot"
-Pencntdwn2,CC0B0,"second penalty-call countdown: checkfornewpen raises it from pendelay2tab, chkprogress counts it down and sets gmode2 bit 2 at the end"
+PenCntDwn2,CC0B0,second penalty-call countdown next to PenCntDwn
 PenBuf_m2,E9A14,PenBuf-2: -5r short-load base
 PenBuf_pl_m2,E9A15,PenBuf_pl-2: the player byte of the entry before (PostPenaltyEvent)
 pennametab,CD354,"pointer to the name of each penalty (Roughing, Charging, Slashing ...) for the penalty event text"
@@ -4968,3 +4968,4 @@ F64_SlotRate11025,C37D0,Double 11025.0 used by LoadSpeechSlot
 replayfollowpl_m2,CD4FA,two bytes before replayfollowpl inside the last call banner string pointer; not used by name
 potreeround_m2,C6D22,two bytes before potreeround inside the last stats screen string pointer; not used by name
 RectFillPatterns_m2,D5742,two bytes before RectFillPatterns; the first three shade pattern pointers point here
+str_RoughingTitle,C1B40,"""Roughing"" penalty name; first of the penalty name strings"

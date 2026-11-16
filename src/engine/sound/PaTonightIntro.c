@@ -9,36 +9,36 @@ void PaTonightIntro(int home, int away)
 
     first = home;
     if (home >= 26) first = 12;
-    if (musicon && gameopts.speech)
+    if (MusicOn && gameopts.speech)
         SayTonightIntro((char *)teamabbrevs[first], (char *)teamabbrevs[away], (char *)teamabbrevs[home]);
 }
 
 /* PaScoringPeriod: with music and announcer speech on: SayScoringPeriod (arguments passed through). */
 void PaScoringPeriod(int period, int b, int c)
 {
-    if (musicon && gameopts.speech) SayScoringPeriod(period, b, c);
+    if (MusicOn && gameopts.speech) SayScoringPeriod(period, b, c);
 }
 
 /* PaNhlIntro: with music and announcer speech on: SayNhlIntro. */
 void PaNhlIntro(void)
 {
-    if (musicon && gameopts.speech) SayNhlIntro();
+    if (MusicOn && gameopts.speech) SayNhlIntro();
 }
 
 /* PaGoodnight: with music and announcer speech on: SayGoodnight. */
 void PaGoodnight(void)
 {
-    if (musicon && gameopts.speech) SayGoodnight();
+    if (MusicOn && gameopts.speech) SayGoodnight();
 }
 
 /* PaLineups: with music and announcer speech on: SayLineups. */
 void PaLineups(void)
 {
-    if (musicon && gameopts.speech) SayLineups();
+    if (MusicOn && gameopts.speech) SayLineups();
 }
 
 /* PaElseNhl: with music and announcer speech on: SayElseNhl. */
 void PaElseNhl(void)
 {
-    if (musicon && gameopts.speech) SayElseNhl();
+    if (MusicOn && gameopts.speech) SayElseNhl();
 }

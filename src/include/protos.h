@@ -682,7 +682,7 @@ void SetupPenaltyShot(void);  /* 63F72 */
 int SayPenalty(char *team, int num, int len, char *pen, int a, int b, int idx, int cnt, int withtime);  /* 84F7B */
 void RequestTimeClips(int a, int b);
 void QueueTimeClips(int a, int b);
-int ReadPlayerRecs(int f1, int f2, int f3, int f4, long off, unsigned char *hdr, void *b2, unsigned n2, void *b3, unsigned n3, void *b4, unsigned n4);  /* 1C0AF */
+int ReadPlayerRecord(int f1, int f2, int f3, int f4, long off, unsigned char *hdr, void *b2, unsigned n2, void *b3, unsigned n3, void *b4, unsigned n4);  /* 1C0AF */
 void OpenPlayerDBs(int mode, int *key, int *att, int *season, int *career, char *fmt, int *out);  /* 1C26C */
 long lseek(int fh, long pos, int how);
 void SelectMatchingPlayers(char *first, char *last, int side);  /* 71690 */

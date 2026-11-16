@@ -14,7 +14,7 @@ extern inputqcount, inputqhead, inputqtail, inputqueue, inputrepeat, joybtnheld,
 extern joycalprehook, joycalx, joycaly, joyenablemask, keydb, keydb_size, lastinputdir, lastmousebtns
 extern lastmousex, lastmousey, leaguedbnames, mainfont, MakePath, memcpy_, memset_, MessageBox
 extern mkdir_, mousebtns, mousepollfn, MouseSetPos, mousex, mousey, msglines, musichandle
-extern musicon, musicslot, nodiskspacemsg, pointerspr, PollKey, PrintCenteredText, PrintShadowText, ptrstep
+extern MusicOn, musicslot, nodiskspacemsg, pointerspr, PollKey, PrintCenteredText, PrintShadowText, ptrstep
 extern ptrupdatefn, RemoveTimerCallback, RestoreDialogBg, rmdir_, rosterisfa, rosterjersey, rosterlist, rostersel
 extern rosterteamptr, RunEditRosters, savedbbtns, scrpitch, seasondb, seasondb_size, SetTextColors, songdata
 extern speechbank, sprintf_, str_3dKbytesOfFree2, str_C4, str_Current2, str_Current3, str_DATABASE, str_DBX
@@ -48,7 +48,7 @@ MenuCentralRegistry:
         push edx
         push esi
         push ebp
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         mov eax, dword [speechbank]
         mov edx, dword [dword eax+03B60h]
@@ -78,7 +78,7 @@ MenuCentralRegistry:
         xor ebx, ebx
         mov dword [falist], ebx
 .3:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .4
         mov dword [cursndbank], 20h
         mov eax, dword [SpeechSlotMemSize]

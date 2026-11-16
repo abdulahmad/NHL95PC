@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_56D06 progbits alloc exec nowrite align=1
-extern __CHK, a2touchpuck, assreplace, ChkShotStat, crowdlevel, CwdExciteLvl, dopass_ret6, SpeechPatchNext
+extern __CHK, a2touchpuck, assreplace, ChkShotStat, Crowdlevel, CwdExciteLvl, dopass_ret6, SpeechPatchNext
 extern EndPenaltyShot, FallDown, GetHot, GiveControl, gmode, gmode2, iflags, imul32
 extern lastplayer, onetimerflag, PassCompleted, passdir, PassLaneChk, PassLaneChk_ret5a, passplayer, passspeed
 extern penshotlive, puckc, puckflip, puckvx, puckvy, puckvz, puckx, pucky
@@ -240,14 +240,14 @@ puckshadow:
 ;
 ; assist slots are cleared and its tmflags bit 3 set. After a faceoff
 ; (sflags3 bit 4) count a faceoff won (and one won in the attacking end),
-; raise crowdlevel by 200 (max 1000) and the home crowd's CwdExciteLvl by 10;
+; raise Crowdlevel by 200 (max 1000) and the home crowd's CwdExciteLvl by 10;
 ;
 ; otherwise play sfx 9Bh . Then the pass completion, clear the pass/shot dir
 ; modes (sflags bits 2-3); a goalie checks the shot stat and gets temp5 hold
 ; time (5 after SPA 181h, else 8Ch). Falls into setd0player:
 ;
 ; GiveControl(regd0). The attacking-end count is two increments (if / else
-; if): one `||` test moved the registers of the crowdlevel clamp after it.
+; if): one `||` test moved the registers of the Crowdlevel clamp after it.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckphys/puckglue.c
 %ifdef CBUILD
@@ -305,15 +305,15 @@ puckglue:
 .3:
         inc word [byte ebx+014h]
 .4:
-        mov ax, word [crowdlevel]
+        mov ax, word [Crowdlevel]
         cmp ax, 3E8h
         jg short .5
         mov ebx, eax
         add ebx, 0C8h
-        mov word [crowdlevel], bx
+        mov word [Crowdlevel], bx
         cmp bx, 3E8h
         jle short .5
-        mov word [crowdlevel], 3E8h
+        mov word [Crowdlevel], 3E8h
 .5:
         test byte [byte edx+pflags], 40h
         jne short .7

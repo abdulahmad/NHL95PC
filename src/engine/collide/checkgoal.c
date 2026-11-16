@@ -102,9 +102,9 @@ void checkgoal(Player *p, Player *g, short x, short y)
                     }
                     gmode2 &= ~0x10;
                     if (!(gmode & 1)) {
-                        if (crowdlevel <= 1200) {
-                            crowdlevel += 500;
-                            if (crowdlevel > 1200) crowdlevel = 1200;
+                        if (Crowdlevel <= 1200) {
+                            Crowdlevel += 500;
+                            if (Crowdlevel > 1200) Crowdlevel = 1200;
                         }
                         CwdExciteLvl += 40;
                     }

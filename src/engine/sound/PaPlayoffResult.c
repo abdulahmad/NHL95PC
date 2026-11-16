@@ -5,5 +5,5 @@
  abbreviation, teamabbrevs) - the other arguments pass straight to SayPlayoffResult. */
 void PaPlayoffResult(int team, int game, unsigned conf, unsigned round, int ot, int final)
 {
-    if (musicon && gameopts.speech) SayPlayoffResult((char *)teamabbrevs[team], game, conf, round, ot, final);
+    if (MusicOn && gameopts.speech) SayPlayoffResult((char *)teamabbrevs[team], game, conf, round, ot, final);
 }

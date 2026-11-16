@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_58084 progbits alloc exec nowrite align=1
-extern __CHK, AddPenalty2, checkcheck, checkgoalp, checkint, collflag, crowdlevel, CwdExciteLvl
+extern __CHK, AddPenalty2, checkcheck, checkgoalp, checkint, collflag, Crowdlevel, CwdExciteLvl
 extern dopass_ret6, doplayeracc, EndPenaltyShot, GetHot, gmode, gmode2, Goal, lastimpact
 extern lasttouch, ltack, lty, nethit, onetimerflag, OOlist, OOlistpos, passplayer
 extern puckc, puckflip, pucky, randomd0, regd0, regd1, regd1_b1, regd2
@@ -494,15 +494,15 @@ checkgoal:
         and byte [gmode2], 0EFh
         test byte [gmode], 1
         jne short .8
-        mov di, word [crowdlevel]
+        mov di, word [Crowdlevel]
         cmp di, 4B0h
         jg short .7
         mov eax, edi
         add eax, 1F4h
-        mov word [crowdlevel], ax
+        mov word [Crowdlevel], ax
         cmp ax, 4B0h
         jle short .7
-        mov word [crowdlevel], 4B0h
+        mov word [Crowdlevel], 4B0h
 .7:
         add word [CwdExciteLvl], byte 28h
 .8:
@@ -843,7 +843,7 @@ wallcoll:
 ;
 ; Otherwise only at |Xpos| 28h-38h with Yvel >= FA0h and lty >= 26h (else
 ; wallcoll): halve Yvel, SPA 821h on the next struct (the glass) at x 3Fh -40h
-; (by the puck's side), y 10Bh, sfx AEh, crowdlevel +1200 (max 1500)
+; (by the puck's side), y 10Bh, sfx AEh, Crowdlevel +1200 (max 1500)
 ;
 ; and CwdExciteLvl +15, then out of play.
 ;
@@ -930,15 +930,15 @@ wallcollb:
         mov word [dword ebx+086h], 10Bh
         mov eax, 0AEh
         call sfx
-        mov dx, word [crowdlevel]
+        mov dx, word [Crowdlevel]
         cmp dx, 5DCh
         jg short .11
         mov ecx, edx
         add ecx, 4B0h
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
         cmp cx, 5DCh
         jle short .11
-        mov word [crowdlevel], 5DCh
+        mov word [Crowdlevel], 5DCh
 .11:
         add word [CwdExciteLvl], byte 0Fh
 .12:

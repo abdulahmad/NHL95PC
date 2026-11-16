@@ -11,7 +11,7 @@ int MenuSoundSettings(int a, int b)
 {
     int bm;
 
-    if (!musicon || !songdata) sndtempbuf = AllocMemBlock((char *)str_Temp8, 0x4E200, 0);
+    if (!MusicOn || !songdata) sndtempbuf = AllocMemBlock((char *)str_Temp8, 0x4E200, 0);
     bm = AllocMemBlock((char *)str_Buffer, 0x5F11, 0);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0x80;

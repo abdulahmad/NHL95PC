@@ -156,7 +156,7 @@ void GameStatsScreen(void)
             *(short *)((char *)&hmtmstruct + (i << 8) + 0x26), m);
         PrintClampedText(i * 455 + 0x49 - (fputchar(s.buf) >> 1), y, s.buf);
     }
-    if (musicon) {
+    if (MusicOn) {
         if (songdata) {
             SetDigiChannelVolume(musichandle, 3, 0x28);
             SetTickDeadline(0x28);
@@ -180,9 +180,9 @@ void GameStatsScreen(void)
     }
     FadePalStep(0, s.pal, 0x10);
     WaitClickTimeout(2000);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, s.pal, 0x10);
-    if (musicon) {
+    if (MusicOn) {
         if (songdata) {
             do
                 slot = musicslot;

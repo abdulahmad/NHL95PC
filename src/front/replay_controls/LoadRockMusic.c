@@ -75,7 +75,7 @@ void LoadRockMusic(void)
     } while (i < 3);
     if (sounddev == 8)
         MakePath(s.path, fileoncd[0x100] == 1 ? (char *)cddriveptr : 0, (char *)str_MTROCKU, 0);
-    else if (musicon)
+    else if (MusicOn)
         MakePath(s.path, fileoncd[0x166] == 1 ? (char *)cddriveptr : 0, (char *)str_SBROCKU, 0);
     else
         MakePath(s.path, fileoncd[0x1F] == 1 ? (char *)cddriveptr : 0, (char *)str_ADROCKU, 0);

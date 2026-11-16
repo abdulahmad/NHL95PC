@@ -4,8 +4,8 @@
 /* updatecrowdf: once a second (from periodicevents): crowd excitement bookkeeping. The PC version
  differs from (which steps the crowd animation): MaxCwdExciteLvl keeps the peak CwdExciteLvl, SumCwdExciteLvl
  the sum and NumCwdExciteLvl the count (an average for the stats), then CwdExciteLvl decays by 1 (not below 0).
- While the clock is stopped (gmode gmclock) and the crowd is loud (crowdlevel > 258h), a random crowd
- sound: 1 in max((3E8h - crowdlevel) 4, 25) for sfx A6h, the same for sfx 96h. */
+ While the clock is stopped (gmode gmclock) and the crowd is loud (Crowdlevel > 258h), a random crowd
+ sound: 1 in max((3E8h - Crowdlevel) 4, 25) for sfx A6h, the same for sfx 96h. */
 void updatecrowdf(void)
 {
     int t;
@@ -15,8 +15,8 @@ void updatecrowdf(void)
     SumCwdExciteLvl += CwdExciteLvl;                /* sum */
     NumCwdExciteLvl++;                               /* count */
     if (--CwdExciteLvl < 0) CwdExciteLvl = 0;
-    if ((gmode & gmclock) && crowdlevel > 0x258) {
-        t = (1000 - crowdlevel) / 4;
+    if ((gmode & gmclock) && Crowdlevel > 0x258) {
+        t = (1000 - Crowdlevel) / 4;
         n = t;
         if (t < 25) n = 25;
         n = randomd0(n);                        /* n reused for the draw (keeps it in edx) */

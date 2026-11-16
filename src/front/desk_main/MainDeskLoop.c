@@ -97,7 +97,7 @@ int MainDeskLoop(void)
         ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
         ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
     }
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         if (desksongalt) {
             MakePath(path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk, (char *)str_Iff8);
             desksongalt = 0;
@@ -116,7 +116,7 @@ int MainDeskLoop(void)
     GrabBlock(ptr, oldmx, oldmy);
     DrawArt(pointerspr, oldmx, oldmy);
     scrpitch = 0x50;
-    if (musicon && songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
+    if (MusicOn && songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
     FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_Pal15) + 0x10, 0x10);
     FreeMemBlock(bank);
     ClearInputQueue();
@@ -172,7 +172,7 @@ int MainDeskLoop(void)
                     }
                     if (r == 2) {
                         SetScreenTarget();
-                        if (!keepdesksong && musicon && songdata) {
+                        if (!keepdesksong && MusicOn && songdata) {
                             SetDigiChannelVolume(musichandle, 3, 0x46);
                             while (SndQuery(musicslot, 3) == 0);
                             PushMemDescriptorLocked(songdata);
@@ -181,7 +181,7 @@ int MainDeskLoop(void)
                             keepdesksong = 0;
                         }
                         newsong = 0;
-                        if (musicon && !songdata) {
+                        if (MusicOn && !songdata) {
                             newsong = 1;
                             if (desksongalt) {
                                 MakePath(path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk,
@@ -200,7 +200,7 @@ int MainDeskLoop(void)
                         DrawBitmap(FindShape(bank, (char *)str_Desk2));
                         DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
                         pal = (unsigned char *)FindShape(bank, (char *)str_Pal15) + 0x10;
-                        if (musicon && newsong == 1 && gameopts.music && songdata)
+                        if (MusicOn && newsong == 1 && gameopts.music && songdata)
                             PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
                         FadePalStep(0, pal, 0x10);
                         FreeMemBlock(bank);
@@ -459,11 +459,11 @@ int MenuNewExhibition(int *fh)
         if (*fh >= 0) {
             pal = (unsigned char *)AllocMemBlock((char *)str_Palette2, 0x300, 0x20);
             SetPalette(0, 0x100, pal);
-            if (musicon && songdata)
+            if (MusicOn && songdata)
                 SetDigiChannelVolume(musichandle, 3, 0x64);
             FadePalStep(1, pal, 0x10);
             FreeMemBlock((int)pal);
-            if (musicon && songdata) {
+            if (MusicOn && songdata) {
                 do
                     slot = musicslot;
                 while (SndQuery(slot, 3) == 0);
@@ -476,12 +476,12 @@ int MenuNewExhibition(int *fh)
         SetupStatsSourceMenu(0);
     }
     pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
-    if (musicon && songdata)
+    if (MusicOn && songdata)
         SetDigiChannelVolume(musichandle, 3, 0x19);
     SetPalette(0, 0x100, pal2);
     FadePalStep(1, pal2, 0x10);
     FreeMemBlock((int)pal2);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);

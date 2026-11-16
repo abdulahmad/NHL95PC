@@ -489,9 +489,9 @@ void AwardsCeremony(void)
     ClearInputQueue();
     pal = (unsigned char *)AllocMemBlock((char *)str_Palmem, 0x300, 0x20);
     SetPalette(0, 0x100, pal);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x32);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x32);
     FadePalStep(1, pal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);
@@ -506,7 +506,7 @@ void AwardsCeremony(void)
     DrawBitmap(FindShape(bank, (char *)str_Titl));
     memcpy(pal, (unsigned char *)FindShape(bank, (char *)str_Pal3) + 0x10, 0x300);
     FreeMemBlock(bank);
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(s.path, fileoncd[0x220] == 1 ? (char *)cddriveptr : 0, (char *)str_Awards, (char *)str_Iff);
         songdata = LoadDigiFile(s.path);
         if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -519,12 +519,12 @@ void AwardsCeremony(void)
         PlayDigiSample(smp);
     }
     FadePalStep(0, pal, 0x10);
-    if (!musicon && sounddev != 1) {
+    if (!MusicOn && sounddev != 1) {
         WaitDigiSample();
         FadePalStep(1, pal, 0x10);
         StopDigiSample();
         FreeSample(smp);
-    } else if (musicon) {
+    } else if (MusicOn) {
         done = 0;
         while (!done && SndQuery(musicslot, 3) == 0) done = WaitClickTimeout(0xA);
         SetDigiChannelVolume(musichandle, 3, 0x32);
@@ -540,7 +540,7 @@ void AwardsCeremony(void)
     }
     FreeMemBlock((int)pal);
     r = PickAwardWinners();
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(s.path, fileoncd[0x224] == 1 ? (char *)cddriveptr : 0, (char *)str_Awasong, (char *)str_Iff);
         songdata = LoadDigiFile(s.path);
         if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
@@ -572,7 +572,7 @@ void AwardsCeremony(void)
         SetScreenTarget();
         ClearScreen(0);
     }
-    if (musicon) {
+    if (MusicOn) {
         SetDigiChannelVolume(musichandle, 3, 0x78);
         do
             slot = musicslot;

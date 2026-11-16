@@ -173,7 +173,7 @@ int MenuShowLeagueSettings2(void)
         PrintString((char *)str_Music, 0x68, 0xAA);
         PrintString((char *)str_Sound, 0x68, 0xC0);
     }
-    if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
+    if (!MusicOn) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     DrawSettingsHeading(0xA, 0x13, 5, gamemode, 0xFA);
     LeagueOptsToBits();
     LeagueSetViewLoop();
@@ -217,7 +217,7 @@ void DrawLeagueSetDlg(int playoffs)
         PrintString((char *)str_Music, 0x68, 0xAA);
         PrintString((char *)str_Sound, 0x68, 0xC0);
     }
-    if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
+    if (!MusicOn) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     if (gamemode == 1) {
         if (seriesgameno >= 5) DrawArtKeyColour(na05spr, 0x85, 0x125);
         else if (seriesgameno >= 3) DrawArtKeyColour(na03spr, 0x85, 0x125);
@@ -378,12 +378,12 @@ short LeagueSetEditLoop(int mode)
             if (LeagueSetHitTest(x, y, &hit)) {
                 if (hit < 0x12) {
                     if (hit % 2) {
-                        if (musicon || hit != 0x11) {
+                        if (MusicOn || hit != 0x11) {
                             hit /= 2;
                             setbits[0] &= ~(1 << hit);
                         }
                     } else {
-                        if (musicon || hit != 0x10) {
+                        if (MusicOn || hit != 0x10) {
                             hit /= 2;
                             setbits[0] |= 1 << hit;
                         }
@@ -433,11 +433,11 @@ short LeagueSetEditLoop(int mode)
                         break;
                     }
                     if (gameopts.music) {
-                        if (musicon && songdata && !oldmusic && SndQuery(musicslot, 3))
+                        if (MusicOn && songdata && !oldmusic && SndQuery(musicslot, 3))
                             PlayDigiBlockLoop(songdata, musichandle, 3, 0x7F);
                         EnableMidiMusic();
                     } else {
-                        if (musicon && songdata && !SndQuery(musicslot, 3))
+                        if (MusicOn && songdata && !SndQuery(musicslot, 3))
                             SetDigiChannelVolume(musichandle, 3, 0x64);
                         DisableMidiMusic();
                     }

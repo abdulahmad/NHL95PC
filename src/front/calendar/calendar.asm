@@ -10,7 +10,7 @@ extern DrawBitmap, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItem
 extern fileoncd, FileOpenRead, FileReadAt, FindShape, fontcolor, fputchar, FreeMemBlock, GameGoalieStatsScreen
 extern gameopts, GameSkaterStatsScreen, GameStandingsMenu, GameStandingsScreen, GameTeamStatsScreen, GetInputEvent, goaliestatscb, GrabBlock
 extern leaguedbnames, lgteam_17, LoadBank, mainfont, MakePath, MenuHitTest, monthdays, monthfirstday
-extern monthfirstday_m1, MouseRead, MouseSetPos, musichandle, musicon, musicslot, pointerspr, PrintString
+extern monthfirstday_m1, MouseRead, MouseSetPos, musichandle, MusicOn, musicslot, pointerspr, PrintString
 extern ptrupdatefn, PutBlock, ReadSchedGame, savepal, SetClipWindow, SetColorRemap, SetCtlTeams, SetDialogColors
 extern SetPalette, ShowLoadingScreen, skaterstatscb, SndQuery, songdata, sprintf_, standingscb, standingsmenucb
 extern str_02d9D, str_Away, str_Bkgd7, str_Boxb, str_Boxr, str_Calendar, str_Callogo, str_D8
@@ -756,7 +756,7 @@ CalendarScreen:
         push byte 0
         call ClearScreen
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .1
         cmp dword [songdata], byte 0
         je short .1
@@ -774,7 +774,7 @@ CalendarScreen:
         mov edx, savepal
         mov eax, 1
         call FadePalStep
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .3
         cmp dword [songdata], byte 0
         je short .3
@@ -1105,7 +1105,7 @@ CalendarScreen:
         mov ebx, dword [dword esp+07B8h]
         lea edx, [dword esp+06A0h]
         call DrawCalendarDay
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .31
         cmp dword [songdata], byte 0
         jne short .31
@@ -1332,7 +1332,7 @@ CalendarScreen:
         push esi
         call FreeMemBlock
         add esp, byte 4
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .41
         cmp dword [songdata], byte 0
         je short .41
@@ -2121,7 +2121,7 @@ CalendarScreen:
         mov dword [goaliestatscb], GameGoalieStatsScreen
         mov dword [standingscb], GameStandingsScreen
         mov dword [standingsmenucb], GameStandingsMenu
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .84
         cmp dword [songdata], byte 0
         je short .84

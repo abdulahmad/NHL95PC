@@ -182,10 +182,10 @@ void main_(void)
     srand(s.t.hsecond);
     MainDeskLoop();
     pal = AllocMemBlock((char *)str_Temp3, 0x300, 0x20);
-    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         while (!SndQuery(musicslot, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;

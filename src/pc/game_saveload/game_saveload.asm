@@ -7,7 +7,7 @@ extern __CHK, __STOSB, __STOSD, awlinetab, awroster, awteamrec, awtmglstats, awt
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, BuildEventLines
 extern rinkobjanim, UnusedStateFlag, UnusedStateMode, UnusedStateSpare, GameRecordDay, GameRecordMonth, milestonesaid, curevent
 extern goalevent, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
-extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
+extern cont2team, Crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
 extern curperiod, CwdExciteLvl, deferpending, DeskRedrawAll, DeskRedrawFlag, goalienotebits, hmplstats, hmtmplattr
 extern hmtmglattr, awtmplattr, awtmglattr, SumCwdExciteLvl, SpeechPatchNext, UnusedEventWord, rinkobjused_m2, energywarn
 extern exhstate, exitgame, fadeinpending, FatalError, FileReadAt, FileWriteAt, fodir1, fodir2
@@ -20,7 +20,7 @@ extern lcsel, lctimer, lgstate, lj1, lj2, lldispodd, LoadGameGfx, LoadGameTeams
 extern LoadModeState, LoadRockMusic, LoadTeamPalette, ltack, ltx, lty, MouseSetPos, ovlscripts
 extern onetimerflag, OOlist, OOlistpos, ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer
 extern ovltimer, pad1dev, pad2dev, passdir, passplayer, passspeed, PBnum, Penaltytimer
-extern PenBuf, Pencntdwn, penshotctl, penshotfox, penshotfoy, penshotlive, penshotmode, penshotplayer
+extern PenBuf, PenCntDwn, penshotctl, penshotfox, penshotfoy, penshotlive, penshotmode, penshotplayer
 extern penshotpnum, penshotstart, penshotteam, penshottimer, periodendtime, PerTimeTotal, photobankf, photobanks
 extern PlList, postate, psendcount, pspathdir, pspathside, puckcross, recbpr, RefPen
 extern refsignal, RefStep, ReplayRecordReset, replaystart, savedmousex, savedmousey, SaveModeState, seed
@@ -28,7 +28,7 @@ extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopat
 extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, gsumheader
 extern gsumtail, hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats
 extern VisTeam, penaltysc, SortPending, lcsel_aw, ObjInitFrame, ObjInitAttr, refhitcount, injurystop
-extern Pencntdwn2, lcline_aw, rinkobjdefs, rinkobjs, rinkobjs_w2, SaveStateSpare, SaveStatePad, milestonesaid_b2
+extern PenCntDwn2, lcline_aw, rinkobjdefs, rinkobjs, rinkobjs_w2, SaveStateSpare, SaveStatePad, milestonesaid_b2
 extern UnusedSpeechWord, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl, UnusedCrowdWordHi, penevteam, GoalState, rinkobjused
 extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
@@ -230,7 +230,7 @@ SaveGameState:
         mov dx, word [cont2team]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [Pencntdwn]
+        mov dx, word [PenCntDwn]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [Penaltytimer]
@@ -424,7 +424,7 @@ SaveGameState:
         mov dx, word [UnusedSpeechWord]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [crowdlevel]
+        mov dx, word [Crowdlevel]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [UnusedCrowdWordHi]
@@ -466,7 +466,7 @@ SaveGameState:
         mov dx, word [hudclockhund]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [Pencntdwn2]
+        mov dx, word [PenCntDwn2]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [hudhundaccum]
@@ -1016,7 +1016,7 @@ LoadGameState:
         mov word [cont2team], ax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [Pencntdwn], ax
+        mov word [PenCntDwn], ax
         add ebx, byte 2
         mov ax, word [ebx]
         mov word [Penaltytimer], ax
@@ -1213,8 +1213,8 @@ LoadGameState:
         mov word [UnusedSpeechWord], ax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [crowdlevel], ax
-        mov eax, dword [crowdlevel-2]
+        mov word [Crowdlevel], ax
+        mov eax, dword [Crowdlevel-2]
         sar eax, 10h
         mov dword [crowdsmooth], eax
         add ebx, byte 2
@@ -1258,7 +1258,7 @@ LoadGameState:
         mov dword [hudclockhund], eax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [Pencntdwn2], ax
+        mov word [PenCntDwn2], ax
         add ebx, byte 2
         movsx eax, word [ebx]
         mov dword [hudhundaccum], eax

@@ -43,13 +43,13 @@ void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mo
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         SetDigiChannelVolume(musichandle, 3, 0x32);
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
-    if (musicon && (((unsigned char *)&gameopts)[1] & 1)) {
+    if (MusicOn && (((unsigned char *)&gameopts)[1] & 1)) {
         MusicChanReset2();
         while (SpeechBusy());
     }

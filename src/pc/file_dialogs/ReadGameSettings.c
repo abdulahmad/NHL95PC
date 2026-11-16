@@ -23,7 +23,7 @@ int ReadGameSettings(unsigned char *set, char *dir, int direct)
         dir = (char *)FindFirstFile(path);
     }
     if (dir != 0) {
-        if (!musicon) set[0x5A] &= 0xFE;
+        if (!MusicOn) set[0x5A] &= 0xFE;
         return 1;
     }
     return 0;

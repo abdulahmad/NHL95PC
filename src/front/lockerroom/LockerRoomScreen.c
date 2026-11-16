@@ -27,11 +27,11 @@ int LockerRoomScreen(void)
     int picked;
     int r;
 
-    if (musicon && songdata)
+    if (MusicOn && songdata)
         SetDigiChannelVolume(musichandle, 3, 0x64);
     SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
-    if (musicon && songdata) {
+    if (MusicOn && songdata) {
         int slot;
 
         do
@@ -214,7 +214,7 @@ void DrawLockerRoom(void)
         PrintOutlinedText((0x280 - fputchar((char *)str_ExhibitionGame)) / 2, 0x12, (char *)str_ExhibitionGame);
     }
     TextSetFont(mainfont);
-    if (musicon && !songdata) {
+    if (MusicOn && !songdata) {
         MakePath(path, fileoncd[0x1DD] == 1 ? (char *)cddriveptr : 0, (char *)str_Jersey, (char *)str_Iff11);
         songdata = LoadDigiFile(path);
         if (songdata && gameopts.music) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
@@ -381,22 +381,22 @@ int LockerRoomLoop(void)
                         else ctl2team = VisTeam;
                     }
                     WriteCurModeState();
-                    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+                    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
                     SetPalette(0, 0x100, buf);
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
-                    if (musicon && songdata) {
+                    if (MusicOn && songdata) {
                         while (!SndQuery(musicslot, 3));
                         PushMemDescriptorLocked(songdata);
                         songdata = 0;
                     }
                     return 0;
                 case 7:
-                    if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+                    if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
                     SetPalette(0, 0x100, buf);
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
-                    if (musicon && songdata) {
+                    if (MusicOn && songdata) {
                         while (!SndQuery(musicslot, 3));
                         PushMemDescriptorLocked(songdata);
                         songdata = 0;
@@ -409,11 +409,11 @@ int LockerRoomLoop(void)
             ox = x;
             oy = y;
         } else {
-            if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
+            if (MusicOn && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
             SetPalette(0, 0x100, buf);
             FadePalStep(1, buf, 0x10);
             FreeMemBlock(bm);
-            if (musicon && songdata) {
+            if (MusicOn && songdata) {
                 while (!SndQuery(musicslot, 3));
                 PushMemDescriptorLocked(songdata);
                 songdata = 0;

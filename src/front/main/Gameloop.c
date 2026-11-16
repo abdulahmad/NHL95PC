@@ -122,7 +122,7 @@ void Gameloop(void)
                     savedmousey = mousey;
                 }
                 CrowdFadeOut();
-                if (musicon) MusicChanReset();
+                if (MusicOn) MusicChanReset();
                 else ReleaseAllVoices();
                 StopDigiSample();
                 SpeechStopQueue();

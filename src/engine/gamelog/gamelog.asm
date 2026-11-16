@@ -7,7 +7,7 @@ extern __CHK, assinsert, assreplace, awgoalcnt, awscore, awtmap, awtmflags, awtm
 extern bannermsg, bannertimer, pendelaytab_e13, pendelay2tab, pendelay2tab_e4, rinkobjanim, rinkobjanim_b1, hmtmcoachflags
 extern awtmcoachflags, milestonesaid, milestonesaid_b1, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
 extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
-extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
+extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, Crowdlevel
 extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, apl
 extern goalienotebits, sideobjpos, hmplstats_m2, hmplstats, plcareergoals, plcareerpts, plseasongoals, plseasonpts
 extern hmtmtouch2, hmtmtouch3, RinkSideShape, RinkSideShapeFlipped, PenBuf_m2, SpeechPatchNext, rinkobjused_m2, defertab
@@ -16,9 +16,9 @@ extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemo
 extern gameopts, gmode, gmode2, gsp, gsummarypath, gsumqcount, hmgoalcnt, hmroster
 extern hmrosterjersey, hmscore, hmteamrec, hmtmap, hmtmflags, hmtmgoalie, hmtmlines, hmtmstruct
 extern HomeTeam, joysampling, joysampling_save, lastsfx, LoadTeamPPV, lseek_, ltx, lty
-extern MenuCallbackTrue, MenuCallbackTrue2, musicon, pennametab, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
+extern MenuCallbackTrue, MenuCallbackTrue2, MusicOn, pennametab, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
 extern PaPenalty, PaPenaltyShot, PaSpeechBusy, PBnum, penaltynames, Penaltytimer, PenBuf, PenBuf_m5
-extern PenBuf_pl, Pencntdwn, pendelaytab, penmintab, penshotfox, penshotfoy, penshotlive, penshotmode
+extern PenBuf_pl, PenCntDwn, pendelaytab, penmintab, penshotfox, penshotfoy, penshotlive, penshotmode
 extern penshotplayer, penshotpnum, penshotstart, penshotteam, penshottimer, periodendtime, PerTimeTotal, photoptrsf
 extern PlayCrowdSample, priolist_m1, puckc, puckstruct, pucktemp1, puckvx, puckvy, puckvz
 extern puckx, pucky, puckz, randomd0, RefPen, refsignal, RefStep, regd1
@@ -29,7 +29,7 @@ extern str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumI
 extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD, str_SHTag
 extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1, textline2
 extern textline3, textline4, textline5, str_NoPenalty, gsumheader, gsumtail, gsumqueue, UpdateTextOverlay
-extern vecdist, VisTeam, gsumcount, penaltysc, SortPending, injurystop, Pencntdwn2, rinkobjdefs
+extern vecdist, VisTeam, gsumcount, penaltysc, SortPending, injurystop, PenCntDwn2, rinkobjdefs
 extern penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
 global AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, fileio_tail_a, fileio_tail_b, fileio_tail_c, ReadGSumTail, WriteGSumHeader
@@ -148,34 +148,34 @@ DecayCrowdLevel:
         push esi
         push edi
         sub esp, byte 4
-        mov dx, word [crowdlevel]
+        mov dx, word [Crowdlevel]
         cmp dx, 2BCh
         jle short .1
         mov esi, edx
         sub esi, byte 2
-        mov word [crowdlevel], si
+        mov word [Crowdlevel], si
         jmp short .2
 .1:
         cmp dx, 15Eh
         jle short .2
         mov ecx, edx
         sub ecx, byte 3
-        mov word [crowdlevel], cx
+        mov word [Crowdlevel], cx
 .2:
-        mov di, word [crowdlevel]
+        mov di, word [Crowdlevel]
         dec edi
-        mov word [crowdlevel], di
+        mov word [Crowdlevel], di
         test di, di
         jge short .3
         xor edx, edx
-        mov word [crowdlevel], dx
+        mov word [Crowdlevel], dx
         mov eax, 10h
         call randomd0
         test ax, ax
         jne short .3
         mov eax, 20h
         call randomd0
-        mov word [crowdlevel], ax
+        mov word [Crowdlevel], ax
 .3:
         xor ebx, ebx
         mov word [esp], bx
@@ -324,7 +324,7 @@ DecayCrowdLevel:
         and eax, edx
         mov word [dword edi+rinkobjused], ax
         mov word [ebx], 0FFFFh
-        mov edx, dword [crowdlevel-2]
+        mov edx, dword [Crowdlevel-2]
         sar edx, 10h
         mov eax, 3E8h
         sub eax, edx
@@ -1592,9 +1592,9 @@ PostPenaltyEvent:
         mov word [joysampling_save], ax
         xor eax, eax
         mov dword [joysampling], eax
-        cmp word [crowdlevel], 190h
+        cmp word [Crowdlevel], 190h
         jle short .7
-        mov word [crowdlevel], 190h
+        mov word [Crowdlevel], 190h
 .7:
         cmp dword [byte esp+04h], byte 0
         je short .8

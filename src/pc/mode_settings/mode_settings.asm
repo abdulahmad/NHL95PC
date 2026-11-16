@@ -6,7 +6,7 @@ extern __CHK, acptspr, AllocMemBlock, awtmflags, awtmpde, cddriveptr, chkoffspr,
 extern ClearInputQueue, CrowdNoiseOff, CrowdNoiseReset, dlggreys, DrawArt, DrawSettingsHeading, fdlg_cancel, fileoncd
 extern FindShape, FreeMemBlock, gamemode, gameopts, GetInputEvent, GrabBlock, hmtmflags, hmtmpde
 extern lcblink, lcboxon, LoadBank, LoadSettingsShapes, MakePath, modesetrects, MouseRead, musichandle
-extern musicon, musicslot, pointerspr, PrintString, ptrupdatefn, PutBlock, scpflags2, setbits
+extern MusicOn, musicslot, pointerspr, PrintString, ptrupdatefn, PutBlock, scpflags2, setbits
 extern settingsfile, SndQuery, songdata, sounddev, str_BKGD2, str_Dbox3, str_DigitizedSpeech2, str_Music2
 extern str_Pointer16, str_Setting4, str_Setting7, str_Sound2, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic, DisableMidiMusic
 extern PlayDigiBlockLoop, SetDigiChannelVolume, DrawArtKeyFF, SetScreenTarget, TextSetColors, VgaSetPalette, WriteCurModeState
@@ -221,7 +221,7 @@ DrawModeSetDlg:
         call PrintString
         add esp, byte 0Ch
 .5:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .6
         push dword 0D6h
         push byte 60h
@@ -336,7 +336,7 @@ ModeOptsToBits:
         call PrintString
         add esp, byte 0Ch
 .7:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .8
         push dword 0D6h
         push byte 60h
@@ -395,7 +395,7 @@ ModeSetHitTest:
         cmp edx, byte 11h
         jne short .4
 .3:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .6
 .4:
         mov dword [ebx], edx
@@ -807,7 +807,7 @@ ModeSetEditLoop:
         idiv ebx
         test edx, edx
         je short .9
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .8
         cmp edi, byte 11h
         je near .11
@@ -825,7 +825,7 @@ ModeSetEditLoop:
         and dword [setbits], eax
         jmp near .11
 .9:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         jne short .10
         cmp edi, byte 10h
         je near .11
@@ -934,7 +934,7 @@ ModeSetEditLoop:
         shl eax, 7
         or dword [gameopts], eax
 .16:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .17
         test byte [setbits+1], 1
         setne al
@@ -945,7 +945,7 @@ ModeSetEditLoop:
 .17:
         test byte [gameopts], 40h
         je short .19
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .18
         cmp dword [songdata], byte 0
         je short .18
@@ -966,7 +966,7 @@ ModeSetEditLoop:
         call EnableMidiMusic
         jmp short .21
 .19:
-        cmp byte [musicon], 0
+        cmp byte [MusicOn], 0
         je short .20
         cmp dword [songdata], byte 0
         je short .20

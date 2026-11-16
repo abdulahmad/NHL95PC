@@ -12,7 +12,7 @@ void MidiNoteOn(int card, int voice, int what);
 void MidiPitchBend(int card, int voice, int what);
 
 /* Crowd_Noise: with sound effects and a crowd device (sounddev & 2Ah), ease crowdsmooth toward
- crowdlevel by at most n*30, map that to voice 8 and voice 7, and start or silence those voices.
+ Crowdlevel by at most n*30, map that to voice 8 and voice 7, and start or silence those voices.
  n is a signed step. */
 void Crowd_Noise(int n)
 {
@@ -28,13 +28,13 @@ void Crowd_Noise(int n)
     step <<= 4;
     step -= n;
     step += step;
-    v = *(int *)((char *)&crowdlevel - 2) >> 16;
+    v = *(int *)((char *)&Crowdlevel - 2) >> 16;
     v -= crowdsmooth;
     if ((v < 0 ? -v : v) > step) {
         if (v < 0) step = -step;
         crowdsmooth += step;
     } else
-        crowdsmooth = *(int *)((char *)&crowdlevel - 2) >> 16;
+        crowdsmooth = *(int *)((char *)&Crowdlevel - 2) >> 16;
     v = crowdsmooth;
     if (v < 0x200)
         v = 0;

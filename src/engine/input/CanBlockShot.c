@@ -264,7 +264,7 @@ void assonetimer(Player *p)
         ((signed char *)p)[0x46] = 0;
         updateanim(p);
         ((short *)p->tmptr)[0xC]++;
-        crowdlevel += 0x64;
+        Crowdlevel += 0x64;
         a2touchpuck(p);
         doshot(p);
         PassCompleted(p);

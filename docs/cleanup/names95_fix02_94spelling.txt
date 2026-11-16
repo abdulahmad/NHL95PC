@@ -1,0 +1,6 @@
+Pencntdwn PenCntDwn {source_game=94G,confidence=high} penalty-call countdown (94G ram94 PenCntDwn)
+Pencntdwn2 PenCntDwn2 {source_game=PC-new,confidence=medium} second penalty-call countdown next to PenCntDwn
+crowdlevel Crowdlevel {source_game=94G,confidence=high} crowd excitement level (94G ram94 Crowdlevel)
+musicon MusicOn {source_game=94G,confidence=medium} music on flag tested before every song call (94 SNES ram94s MusicOn)
+ReadPlayerRecs ReadPlayerRecord {source_game=94G,confidence=medium} reads one player's records (94G cards94 ReadPlayerRecord)
+PenaltyList str_RoughingTitle {source_game=PC-new,confidence=medium} "Roughing" penalty name; first of the penalty name strings

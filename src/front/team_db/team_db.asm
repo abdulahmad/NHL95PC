@@ -18,7 +18,7 @@ extern str_GsummaryDb2, str_key, str_season, str_teams, strcat_, strcpy_, strncp
 extern gsumtail, hmgoaliemenu, awgoaliemenu, hmglattr, hmplattr, hmglstats, _dos_findfirst_, VisTeam
 extern gsumcount, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, awpanelpen_time, awpanelpen_w4, awpanelpen_w6, hmplstats_w2
 extern hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w12, hmplstats_w14, hmglstats_w2, hmglstats_w4
-global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
+global LoadGameTeams, InitGameSummary, ReadPlayerRecord, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
 global ResetGoalieMenu, ClearPanelPenalties
 ;-----------------------------------------------------------------------------
 ; LoadGameTeams                                1BBCC  95 PC, medium confidence
@@ -437,15 +437,15 @@ InitGameSummary:
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; ReadPlayerRecs                               1C0AF  95 PC, medium confidence
+; ReadPlayerRecord                               1C0AF  95 PC, medium confidence
 ; Reads one player's KEY (34h), ATT, SEASON and CAREER records with lseek /
 ; FileReadAt (FatalError codes "D".."Q"); ret 20h
 ;-----------------------------------------------------------------------------
-; C: src/front/team_db/ReadPlayerRecs.c
+; C: src/front/team_db/ReadPlayerRecord.c
 %ifdef CBUILD
-%include "c/front/team_db/ReadPlayerRecs.inc"
+%include "c/front/team_db/ReadPlayerRecord.inc"
 %else
-ReadPlayerRecs:
+ReadPlayerRecord:
         push dword 1Ch
         call __CHK
         push esi
@@ -742,7 +742,7 @@ OpenPlayerDBs_x:
 ; (side, file handles...): for each roster slot of the team record reads the
 ; player records
 ;
-; (ReadPlayerRecs at hmteamrec_skaters offsets) into hmroster / awroster
+; (ReadPlayerRecord at hmteamrec_skaters offsets) into hmroster / awroster
 ; entries (names, attributes, status bytes 1 / 3 / 5)
 ;-----------------------------------------------------------------------------
 LoadTeamRoster:
@@ -803,7 +803,7 @@ LoadTeamRoster:
         mov ebx, dword [byte esp+020h]
         mov edx, dword [byte esp+024h]
         mov eax, dword [byte esp+028h]
-        call ReadPlayerRecs
+        call ReadPlayerRecord
         mov al, byte [byte esp+049h]
         mov byte [dword esi+hmrosterjersey], al
         mov al, byte [byte esp+04Ah]
@@ -981,7 +981,7 @@ LoadTeamRoster:
         mov ebx, dword [byte esp+020h]
         mov edx, dword [byte esp+024h]
         mov eax, dword [byte esp+028h]
-        call ReadPlayerRecs
+        call ReadPlayerRecord
         mov al, byte [byte esp+049h]
         mov byte [dword esi+hmrosterjersey], al
         mov al, byte [byte esp+04Ah]
