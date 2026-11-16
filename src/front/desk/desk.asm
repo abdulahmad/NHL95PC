@@ -5,7 +5,7 @@ section s_18D7F progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awlinetab, awscore, awshotcnt, bailout_vec, boxfillcolor, boxlitecolor
 extern boxshadecolor, btn_POHumanOut, cupceremony, cddriveptr, ClearInputQueue, CoachCutScene, cont2team, ctl1team
 extern ctl2team, curperiod, deferpending, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
-extern DrawMenuItemSel, msg_DeskExit, msg_DeskExit_e02, dword_C66D0, dword_C66D4, dword_CCC9D, dword_DC868, deskptry
+extern DrawMenuItemSel, msg_DeskExit, msg_DeskExit_e02, dword_C66D0, dword_C66D4, otherperiodprev, deskptry, playsuspended
 extern deskptrx, escrequest, exitgame, FadeOutPalCycle, FadePalette, FadePalStep, fileoncd, FlushGSumQueue
 extern FreeBackMoment, FreeMemBlock, FreeNowBack, GameLineEditor, gamemode, gameopts, gameresult, GameStatsScreen
 extern GameSummaryScreen, GetInputEvent, hlplayedmask, hmgoalcnt, hmlinetab, hmscore, hmshotcnt, HomeTeam
@@ -251,7 +251,7 @@ PlayRandomHighlight:
         mov ebx, dword [dword edx+otherperiod]
         cmp ebx, byte 5
         jl short .2
-        cmp ebx, dword [dword edx+dword_DC868]
+        cmp ebx, dword [dword edx+otherperiodprev]
         je short .2
         mov cl, al
         mov edx, 1
@@ -320,7 +320,7 @@ PlayRandomHighlight:
         xor eax, eax
 .6:
         mov ebx, dword [nosplit eax*4+otherperiod]
-        mov dword [nosplit eax*4+dword_DC868], ebx
+        mov dword [nosplit eax*4+otherperiodprev], ebx
         inc eax
         cmp eax, byte 6
         jl short PlayRandomHighlight.6
@@ -392,7 +392,7 @@ IntermissionDesk:
         xor edx, edx
 .1:
         mov ebx, dword [nosplit edx*4+otherperiod]
-        mov dword [nosplit edx*4+dword_DC868], ebx
+        mov dword [nosplit edx*4+otherperiodprev], ebx
         inc edx
         cmp edx, byte 6
         jl short IntermissionDesk.1

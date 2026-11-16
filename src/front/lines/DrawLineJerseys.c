@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* DrawLineJerseys: line editor: draw the 28h line slot jerseys at lineslotx y (art; numbers nums[i] up to
- 99 by MakeJerseyShape in the colours of team side's rosterteam (byte_D11BC through jerseyremap, byte_D12DE); an
+ 99 by MakeJerseyShape in the colours of team side's rosterteam (TeamJerseyBase through jerseyremap, jerseyremaptrim); an
  empty slot gets a plain jersey: remap entries 0-8Fh and C0h-EFh to the second colour), then for the 1Ch roster
  players (rosterlist, 27 bytes each, 2F4h per side) print "<num> <name>" in the colour of their status (2 FCh,
  3 C3h, others keep the last colour); stops at the first empty status. */
@@ -15,9 +15,9 @@ void DrawLineJerseys(unsigned char *nums, int art, unsigned char side)
     int i;
     int j;
 
-    c1 = byte_D11BC[rosterteam[side] * 4];
+    c1 = TeamJerseyBase[rosterteam[side] * 4];
     c1 = jerseyremap[c1];
-    c2 = byte_D12DE;
+    c2 = jerseyremaptrim;
     for (i = 0; i < 0x28; i++) {
         if (nums[i] <= 99) {
             MakeJerseyShape(jerseyremap, nums[i], c1, c2);

@@ -4,9 +4,9 @@ bits 32
 %include "hockey.inc"
 section s_408F5 progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_TradeStats, btn_WrongDisk, awayremap
-extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, CopyFile, curleague, DeleteFiles
+extern homeremap, lgschedrec, MergeResult, cddriveptr, ClearInputQueue, CopyFile, curleague, DeleteFiles
 extern dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol, menuwidth_trade1, menutext_trade1
-extern menuwidth_trade2, menutext_trade2, dword_DDD34, dword_DDD3C, tradebitmap, ExecuteTrade, ExportTeamToFloppy, FileClose
+extern menuwidth_trade2, menutext_trade2, lgoppteam, lgopphuman, tradebitmap, ExecuteTrade, ExportTeamToFloppy, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, humancount, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams, LeagueTeamSelect
 extern lggameidx, lgplayteam, MakePath, masterpw, memset_, MergeLeagueFiles, MessageBox, msg_AllHuman
@@ -18,7 +18,7 @@ extern str_extxx, str_floppydrv, str_FromLeague, str_HOMEPALS, str_LLSN, str_LLS
 extern str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Show, str_star, str_Statistics, strcat_
 extern strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, OpenArtArchiveErr, MouseRead
 extern FindShape, ClearScreen, VgaSetPalette, CreateBitmap, teamcitynames, TradeScreen, treeteamnames, _dos_findfirst_
-extern _dos_findnext_, word_DDD48, word_DDD4A, WriteLeagueTeamEntry
+extern _dos_findnext_, lggamecount, lgoppgamecount, WriteLeagueTeamEntry
 global AddHumanTeam, AddHumanTeam_msgbox, AddHumanTeam_exit, RemoveHumanTeam, CheckMasterPassword, FmtFromLeague, BuildLeagueList, LeagueCheckStub
 global GetLeagueId, WriteLeagueInfo, MsgCopyingDatabases, CopyHumanTeamDBs, SaveLeagueGameRef
 ;-----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ AddHumanTeam:
         push ebp
         sub esp, byte 44h
         xor ah, ah
-        mov byte [byte_DE268], ah
+        mov byte [MergeResult], ah
         mov edx, 2
         mov eax, curleague
         call LeagueCheckStub
@@ -134,7 +134,7 @@ AddHumanTeam:
 .5:
         test edi, edi
         jne near AddHumanTeam.1
-        cmp byte [byte_DE268], 0
+        cmp byte [MergeResult], 0
         je near .8
         push edi
         call ClearScreen
@@ -300,7 +300,7 @@ RemoveHumanTeam:
         push ebp
         sub esp, byte 44h
         xor ah, ah
-        mov byte [byte_DE268], ah
+        mov byte [MergeResult], ah
         mov edx, 2
         mov eax, curleague
         call LeagueCheckStub
@@ -391,7 +391,7 @@ RemoveHumanTeam:
 .5:
         test edi, edi
         jne near RemoveHumanTeam.1
-        cmp byte [byte_DE268], 0
+        cmp byte [MergeResult], 0
         je near .8
         push edi
         call ClearScreen
@@ -617,7 +617,7 @@ CheckMasterPassword:
         jne near CheckMasterPassword.1
         test esi, esi
         jne near .6
-        cmp byte [byte_DE268], 0
+        cmp byte [MergeResult], 0
         je short .5
         push edi
         call ClearScreen
@@ -664,7 +664,7 @@ CheckMasterPassword:
         mov edx, leagueteams
         call AskMasterPassword
         mov esi, eax
-        cmp byte [byte_DE268], 0
+        cmp byte [MergeResult], 0
         je short .6
         push byte 0
         call ClearScreen
@@ -1436,7 +1436,7 @@ SaveLeagueGameRef:
         jne short .1
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, dword_DDD34
+        mov edx, lgoppteam
         mov eax, esi
         call FileWriteAt
         mov edx, eax
@@ -1445,7 +1445,7 @@ SaveLeagueGameRef:
         jne short .2
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, dword_DDD3C
+        mov edx, lgopphuman
         mov eax, esi
         call FileWriteAt
         mov edx, eax
@@ -1454,7 +1454,7 @@ SaveLeagueGameRef:
         jne short .3
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, word_DDD48
+        mov edx, lggamecount
         mov eax, esi
         call FileWriteAt
         mov edx, eax
@@ -1463,7 +1463,7 @@ SaveLeagueGameRef:
         jne short .4
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, word_DDD4A
+        mov edx, lgoppgamecount
         mov eax, esi
         call FileWriteAt
         mov edx, eax
@@ -1541,7 +1541,7 @@ SaveLeagueGameRef:
 .11:
         lea eax, [byte esp+030h]
         call FileClose
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je short .x
         test edx, edx
         jne short .12

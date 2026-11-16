@@ -38,7 +38,7 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     int play;
 
     s.rdfh = s.rwfh = s.fh = -1;
-    byte_DE268 = 0;
+    MergeResult = 0;
     MakePath(s.path, dir, (char *)leaguedbnames[6], ext);
     err = FileOpenRW(s.path, &s.fh);
     if (!err) {
@@ -95,7 +95,7 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
    (SeedPlayoffRound1) and the slots are written to the schedule file fh at 199Ah (game 444h). Otherwise every
    round is seeded and simulated (SeedPlayoffRound1..SimPlayoffFinal; the seeding gets the league option bits
    12-14), the slots are written, the season database is saved under dir / ext, the awards ceremony is shown,
-   byte_DE268 is set to FFh and the schedule's game count becomes 4ADh (the end). rdfh: the read-only career
+   MergeResult is set to FFh and the schedule's game count becomes 4ADh (the end). rdfh: the read-only career
    teams file the simulations use; teams: the league team bytes. Returns 0 or the first error.
    Plain locals: rdfh stays a parameter (its home is stored in the prologue) and the short count has its own
    4-byte slot (a dword store). */
@@ -143,7 +143,7 @@ int BuildPlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir, c
         MakePath(path, dir, (char *)leaguedbnames[5], ext);
         WriteFile(path, seasondb, seasondb_size);
         AwardsCeremony();
-        byte_DE268 = -1;
+        MergeResult = -1;
         n = 0x4AD;
         err = FileWriteAt(fh, &n, 0, 2);
     }

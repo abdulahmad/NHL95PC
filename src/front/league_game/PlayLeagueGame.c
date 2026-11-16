@@ -31,9 +31,9 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
 int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *gdir);
 
 /* DRAFT (10.0 GA, 4,096 vs 4,095 bytes): the opponent pick is an if / else (the EXE's lgplayteam in edx,
-   `xor eax, edx` and the dword_DDD34 reload after the join). Left: s.bank = LoadBank(...) is stored after the
+   `xor eax, edx` and the lgoppteam reload after the join). Left: s.bank = LoadBank(...) is stored after the
    `add esp, 8` (the EXE stores it first, at [esp+70h]), and a few short-lived loads take other registers
-   (dword_DDD34 for the second sprintf in ecx, EXE eax: the extra byte; lgplayteam, songdata). The frame
+   (lgoppteam for the second sprintf in ecx, EXE eax: the extra byte; lgplayteam, songdata). The frame
    struct follows the EXE's esp offsets (0 to 90h). No goto: the game loop is guarded by `if (s.ok)` (same code). */
 /* PlayLeagueGame (36B93, PC only): play one league game and post its result. fh points to the handle of a
    saved game (GAME.SAV; -1 for a new game); a saved game's reference is loaded first. Read the league (a
@@ -42,7 +42,7 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
    password and set its directory (savleague1, the league or the floppy) and extension (str_extxx, the team
    number); fade out. For a saved game only ask the password. Then loop: pick the game on the calendar (new
    games, and every pass after the first), read the schedule's game count and the game; when the opponent is
-   a human team (dword_DDD3C) check its disk too and set its directory (savleague2) and extension (str_Xx),
+   a human team (lgopphuman) check its disk too and set its directory (savleague2) and extension (str_Xx),
    read its game count and ask its password. Play the game: fade out and stop the music, build both teams'
    database names (leaguedbfmt / leaguedbfmt2), set gameopts.fullot for a regular-season game (index below
    444h; clear for the playoffs), the teams and the controllers, show the pre-game screen (unless there is no
@@ -183,23 +183,23 @@ void PlayLeagueGame(int *fh)
                 MakePath(s.path, (char *)savleague1, (char *)leaguedbnames[6], (char *)str_extxx);
                 err = FileOpenRW(s.path, &s.fhsched1);
                 if (*fh < 0) {
-                    if (!err) err = FileReadAt(s.fhsched1, &word_DDD48, 0, 2);
+                    if (!err) err = FileReadAt(s.fhsched1, &lggamecount, 0, 2);
                     if (!err) err = ReadSchedGame(s.fhsched1, &lgschedrec, lggameidx);
                     if (!err) {
-                        if (lgschedrec_b2 == lgplayteam) dword_DDD34 = lgschedrec_b3;
-                        else dword_DDD34 = lgschedrec_b2;
-                        dword_DDD3C = -1;
-                        if (lgteam_17[dword_DDD34 * 30] == 0) dword_DDD3C = 0;
+                        if (lgschedrec_b2 == lgplayteam) lgoppteam = lgschedrec_b3;
+                        else lgoppteam = lgschedrec_b2;
+                        lgopphuman = -1;
+                        if (lgteam_17[lgoppteam * 30] == 0) lgopphuman = 0;
                     }
                 }
                 FileClose(&s.fhsched1);
-                if (dword_DDD3C) {
+                if (lgopphuman) {
                     if (!err) {
-                        err = CheckLeagueDiskSync((char *)&curleague, (char *)leagueteams, dword_DDD34, -1, 0);
+                        err = CheckLeagueDiskSync((char *)&curleague, (char *)leagueteams, lgoppteam, -1, 0);
                         if (!err) {
-                            sprintf(s.num, (char *)str_02d, dword_DDD34);
+                            sprintf(s.num, (char *)str_02d, lgoppteam);
                             strcpy((char *)str_Xx, s.num);
-                            strcpy((char *)savleague2, (lgteamflags[dword_DDD34 * 30] & 1) && s.picked ?
+                            strcpy((char *)savleague2, (lgteamflags[lgoppteam * 30] & 1) && s.picked ?
                                 (char *)&curleague : (char *)&str_floppydrv);
                         }
                     }
@@ -207,12 +207,12 @@ void PlayLeagueGame(int *fh)
                         MakePath(s.path, (char *)savleague2, (char *)leaguedbnames[6], (char *)str_Xx);
                         err = FileOpenRW(s.path, &s.fhsched2);
                     }
-                    if (*fh < 0 && !err) err = FileReadAt(s.fhsched2, &word_DDD4A, 0, 2);
+                    if (*fh < 0 && !err) err = FileReadAt(s.fhsched2, &lgoppgamecount, 0, 2);
                     FileClose(&s.fhsched2);
                     if (!err) {
-                        sprintf(s.num, (char *)str_02d, dword_DDD34);
+                        sprintf(s.num, (char *)str_02d, lgoppteam);
                         strcpy((char *)str_Xx, s.num);
-                        err = AskTeamPassword(dword_DDD34, (char *)leagueteams);
+                        err = AskTeamPassword(lgoppteam, (char *)leagueteams);
                         if (err) s.pwfail = -1;
                     }
                 }
@@ -252,7 +252,7 @@ void PlayLeagueGame(int *fh)
                         gameopts.fullot = 0;
                     if (*fh < 0) {
                         UnusedStateByte = lgschedrec;
-                        byte_DC267 = lgschedrec_b1;
+                        GameRecordDay = lgschedrec_b1;
                         HomeTeam = lgschedrec_b2;
                         VisTeam = lgschedrec_b3;
                     }
@@ -260,7 +260,7 @@ void PlayLeagueGame(int *fh)
                     err = 0;
                     if (*fh < 0) {
                         if (!CheckGameDiskSpace()) {
-                            InitGameSummary(UnusedStateByte, byte_DC267);
+                            InitGameSummary(UnusedStateByte, GameRecordDay);
                             err = PreGameScreen(HomeTeam, VisTeam);
                         } else
                             err = 4;
@@ -301,19 +301,19 @@ void PlayLeagueGame(int *fh)
                     s.num[2] = 0x3F;
                     VgaSetPalette(0xFA, 1, (unsigned char *)s.num);
                     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
-                    if (dword_DDD3C) {
-                        err = CheckLeagueDiskSync((char *)&curleague, (char *)leagueteams, dword_DDD34, -1, -1);
+                    if (lgopphuman) {
+                        err = CheckLeagueDiskSync((char *)&curleague, (char *)leagueteams, lgoppteam, -1, -1);
                         if (!err) {
-                            sprintf(s.num, (char *)str_02d, dword_DDD34);
+                            sprintf(s.num, (char *)str_02d, lgoppteam);
                             strcpy((char *)str_Xx, s.num);
-                            strcpy((char *)savleague2, (lgteamflags[dword_DDD34 * 30] & 1) && s.picked ?
+                            strcpy((char *)savleague2, (lgteamflags[lgoppteam * 30] & 1) && s.picked ?
                                 (char *)&curleague : (char *)&str_floppydrv);
                         }
                     }
                     if (!err) {
                         MakePath(s.path, (char *)savleague1, (char *)leaguedbnames[6], (char *)str_extxx);
                         err = FileOpenRW(s.path, &s.fhsched1);
-                        if (dword_DDD3C && !err) {
+                        if (lgopphuman && !err) {
                             MakePath(s.path, (char *)savleague2, (char *)leaguedbnames[6], (char *)str_Xx);
                             err = FileOpenRW(s.path, &s.fhsched2);
                         }
@@ -330,7 +330,7 @@ void PlayLeagueGame(int *fh)
                     if (!err) err = FileWriteAt(s.fhinfo, &s.zero, 4, 2);
                     if (!err) err = FileWriteAt(s.fhinfo, s.info, 6, 0xD);
                     FileClose(&s.fhinfo);
-                    if (dword_DDD3C) {
+                    if (lgopphuman) {
                         if (!err) {
                             MakePath(s.path, (char *)savleague2, (char *)str_PINFO, (char *)str_extDB);
                             err = FileOpenWrite(s.path, &s.fhinfo);
@@ -340,22 +340,22 @@ void PlayLeagueGame(int *fh)
                         FileClose(&s.fhinfo);
                     }
                     if (!err) err = WriteSchedGame(s.fhsched1, &lgschedrec, lggameidx);
-                    if (!err && dword_DDD3C) err = WriteSchedGame(s.fhsched2, &lgschedrec, lggameidx);
+                    if (!err && lgopphuman) err = WriteSchedGame(s.fhsched2, &lgschedrec, lggameidx);
                     if (!err) {
                         if (lggameidx >= 0x444) {
                             MakePath(s.path, (char *)savleague1, (char *)leaguedbnames[4], (char *)str_extxx);
                             err = FileOpenRW(s.path, &s.fhteam1);
                             if (!err) err = UpdatePlayoffSeries(s.fhsched1, s.fhteam1, lggameidx);
                             FileClose(&s.fhteam1);
-                            if (!err && dword_DDD3C) {
+                            if (!err && lgopphuman) {
                                 MakePath(s.path, (char *)savleague2, (char *)leaguedbnames[4], (char *)str_Xx);
                                 err = FileOpenRW(s.path, &s.fhteam2);
                                 if (!err) err = UpdatePlayoffSeries(s.fhsched2, s.fhteam2, lggameidx);
                                 FileClose(&s.fhteam2);
                             }
                         } else {
-                            if (++lggameidx > word_DDD48) err = FileWriteAt(s.fhsched1, &lggameidx, 0, 2);
-                            if (!err && dword_DDD3C && lggameidx > word_DDD4A)
+                            if (++lggameidx > lggamecount) err = FileWriteAt(s.fhsched1, &lggameidx, 0, 2);
+                            if (!err && lgopphuman && lggameidx > lgoppgamecount)
                                 err = FileWriteAt(s.fhsched2, &lggameidx, 0, 2);
                         }
                     }
@@ -366,14 +366,14 @@ void PlayLeagueGame(int *fh)
                             err = PostGameToTeamDb((char *)savleague1, (char *)str_extxx, lgplayteam, s.side, s.game,
                                 (char *)savleague1);
                         if (!err) {
-                            if (dword_DDD3C) {
+                            if (lgopphuman) {
                                 err = UpdateSeasonSchedule((char *)savleague2, (char *)str_Xx, lggameidx, leagueteams,
-                                    dword_DDD34, 2);
+                                    lgoppteam, 2);
                                 if (!err)
-                                    err = PostGameToTeamDb((char *)savleague2, (char *)str_Xx, dword_DDD34, other, s.game,
+                                    err = PostGameToTeamDb((char *)savleague2, (char *)str_Xx, lgoppteam, other, s.game,
                                         (char *)savleague1);
                             } else
-                                err = PostGameToTeamDb((char *)savleague1, (char *)str_extxx, dword_DDD34, other, s.game,
+                                err = PostGameToTeamDb((char *)savleague1, (char *)str_extxx, lgoppteam, other, s.game,
                                     (char *)savleague1);
                         }
                     }
@@ -384,7 +384,7 @@ void PlayLeagueGame(int *fh)
                     MouseRead(&s.btn, &s.my, &s.mx);
                     MessageBox(-1, -1, (char *)msg_DbUpdateError, 1, 0, 0, (int)&s.my, (int)&s.mx, -1);
                 }
-                if (dword_DDD3C) FileClose(&s.fhsched2);
+                if (lgopphuman) FileClose(&s.fhsched2);
                 FileClose(&s.fhsched1);
             }
             s.pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp5, 0x300, 0x20);

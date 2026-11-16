@@ -8,7 +8,7 @@ extern awpanelspr, awscore, awtmline, awtmstruct, awayremap, awayremap_e43, away
 extern homeremap_e43, homeremap_eFF, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
 extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, awlineenergies, hmlineenergies, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines, hmpanelpens, awpanelpens, hmlinetimer
-extern awlinetimer, demomatchups_m1, demomatchups, demoflag, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
+extern awlinetimer, demomatchups_m1, demomatchups, demoflag, PenaltyBlankDigit, energywarn, exhstate, FadeOutPalCycle
 extern FatalError, fileoncd, FreeMemBlock, Gameloop, gamemode, gameopts, gamepal, gameresult
 extern GetPeriodTime, gmode, hmlineind, hmpanelspr, hmscore, hmtmline, hmtmstruct, HomeTeam
 extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome
@@ -1453,7 +1453,7 @@ DrawLineGroupBars:
 ;-----------------------------------------------------------------------------
 ; DrawPanelPenalties                           15995  95 PC, medium confidence
 ; Draws up to 4 panel penalty entries per side: player number and time digits
-; from the penaltydigits / dword_DC2B8 shapes (UpdateHudPanel)
+; from the penaltydigits / PenaltyBlankDigit shapes (UpdateHudPanel)
 ;-----------------------------------------------------------------------------
 ; C: src/front/scoreboard/DrawPanelLine.c (DrawPanelPenalties)
 %ifdef CBUILD
@@ -1486,7 +1486,7 @@ DrawPanelPenalties:
         jge short .2
         push esi
         push edx
-        mov ebx, dword [dword_DC2B8]
+        mov ebx, dword [PenaltyBlankDigit]
         push ebx
         jmp short .3
 .2:
@@ -1522,7 +1522,7 @@ DrawPanelPenalties:
         jge short .4
         push esi
         push eax
-        mov ecx, dword [dword_DC2B8]
+        mov ecx, dword [PenaltyBlankDigit]
         push ecx
         jmp short .5
 .4:
@@ -1583,42 +1583,42 @@ DrawPanelPenalties:
 .6:
         push esi
         push edx
-        mov ebp, dword [dword_DC2B8]
+        mov ebp, dword [PenaltyBlankDigit]
         push ebp
         call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+010h]
         push eax
-        mov eax, dword [dword_DC2B8]
+        mov eax, dword [PenaltyBlankDigit]
         push eax
         call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+01Bh]
         push eax
-        mov edx, dword [dword_DC2B8]
+        mov edx, dword [PenaltyBlankDigit]
         push edx
         call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+021h]
         push eax
-        mov ebx, dword [dword_DC2B8]
+        mov ebx, dword [PenaltyBlankDigit]
         push ebx
         call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+02Ah]
         push eax
-        mov ecx, dword [dword_DC2B8]
+        mov ecx, dword [PenaltyBlankDigit]
         push ecx
         call VgaBlitKeyed
         add esp, byte 0Ch
         push esi
         lea eax, [byte edi+030h]
         push eax
-        mov ebp, dword [dword_DC2B8]
+        mov ebp, dword [PenaltyBlankDigit]
         push ebp
 .7:
         call VgaBlitKeyed

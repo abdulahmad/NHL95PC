@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_499D8 progbits alloc exec nowrite align=1
 extern __CHK, ass_popx, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, assexit, assinsert
-extern assrefwhistle, assreplace, assscore_dancecnt, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand, byte_DFFE2
+extern assrefwhistle, assreplace, assscore_dancecnt, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand, doorpflags3
 extern c1playernum, camx, camy, changeplayer, check4bench, check4check, ChkPullGoalieLate, doorpflags
 extern doortemp1, doplayeracc, EvadePC, gmode, gmode2, gsp, ovltimer, PaSpeechBusy
 extern PBnum, Pencntdwn, PerTimeTotal, playeracc, puckc, puckshadow, puckstruct, puckvy
@@ -54,7 +54,7 @@ assboxenter:
         jne near .x
         mov word [doortemp1], 0C8h
         xor al, al
-        mov byte [byte_DFFE2], al
+        mov byte [doorpflags3], al
         or byte [doorpflags], 20h
         mov edx, 0EA9h
         mov eax, sortobj15

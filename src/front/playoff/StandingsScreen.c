@@ -73,7 +73,7 @@ int StandingsScreen(Stand *teams, int *order)
 
     tmpl1 = stand_tmpl1;
     tmpl2 = stand_tmpl2;
-    off_CF6A3 = (int)DeskSetExit3b;
+    StandingsRosterAction = (int)DeskSetExit3b;
     mf = mainfont;
     kf = kaufmfont;
     MakePath(path, (char *)statsleague, (char *)statsteamdbs[statsfromleague], 0);

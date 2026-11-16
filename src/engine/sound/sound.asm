@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
 extern __CHK, crowddriver, crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, cursndbank
-extern oneminsaid, dword_D2427, crowdsamples, dword_ED7A4, gameopts, gmode, lastsfx, leaguesetimg
+extern oneminsaid, musicdriver, crowdsamples, dword_ED7A4, gameopts, gmode, lastsfx, leaguesetimg
 extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
 extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
 extern SayPlayerNumber, SayPlayoffResult, SayPlayoffTonight, SayScoringPeriod, SayTonightIntro, SetTickDeadline, sounddev, SpeechBusy
@@ -446,7 +446,7 @@ sfx:
         jne short .5
         cmp edx, 0AAh
         jne short .5
-        mov edx, dword [dword_D2427]
+        mov edx, dword [musicdriver]
         mov eax, dword [dword_ED7A4]
         call PlaySong
         pop edx
@@ -531,7 +531,7 @@ StopDigiSample:
 ;-----------------------------------------------------------------------------
 ; PlayDigiSample                               599B9  95 PC, medium confidence
 ; StopDigiSample, then unless the sound device (sounddev) has bits 11h, plays
-; sample eax via PlaySong on dword_D2427 and keeps the handle in digihandle
+; sample eax via PlaySong on musicdriver and keeps the handle in digihandle
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/PlayDigiSample.c
 %ifdef CBUILD
@@ -548,7 +548,7 @@ PlayDigiSample:
         jne short .x
         test ebx, ebx
         je short .x
-        mov edx, dword [dword_D2427]
+        mov edx, dword [musicdriver]
         mov eax, ebx
         call PlaySong
         mov dword [digihandle], eax

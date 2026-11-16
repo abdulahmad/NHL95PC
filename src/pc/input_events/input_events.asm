@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_6B093 progbits alloc exec nowrite align=1
 extern __CHK, addtimer, attdb, attdb_size, JoyPortMask, careerdb, careerdb_size, carteamsdb
-extern carteamsdb_size, ctlavailmask, dword_C4CFC, dword_C71E0, cursndbank, dword_CDA24, dword_CDA38, enterheld
+extern carteamsdb_size, ctlavailmask, dword_C4CFC, dword_C71E0, cursndbank, InputResetWord, InputQueueSpare, enterheld
 extern facount, FadePalStep, falist, falistsel, FreeLeagueDbsMem, FreeMemBlock, InitSpeechSlots, inputev
 extern inputinstalled, inputpolldiv, inputqcount, inputqhead, inputqtail, inputqueue, inputrepeat, joybtnheld
 extern joycalactive, joycalposthook, joycalprehook, joycalx, joycaly, joyenablemask, keydb, keydb_size
@@ -16,7 +16,7 @@ extern LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState, TextRestoreSta
 extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, InstallKeyboardHandler
 extern KeyDown, InitMouse, FindShape, CalibrateJoystick, JoyButtonMap, ReadJoyRaw, JoyDefaultCalib1, JoyDefaultCalib2
 extern ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, WaitRetraceStart, FillRectColor, TeamRecPtr, teamsdb
-extern teamsdb_size, unk_C27F5, DefaultFont
+extern teamsdb_size, str_OneSpace, DefaultFont
 global JoystickCalScreen, CalLeftJoystick, CalLeftJoystick_common, CalRightJoystick, GetInputEvent, ClearInputQueue, InputInstall, InputRemove
 global EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuDropdown_ret, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextGrey_common
 global PrintMenuTextGrey_ret, PrintMenuTextAlt, DrawMenuItemSel, DrawMenuItemSel_common, DrawMenuItemSel_ret, DrawMenuItemNorm, MenuHitTest, InputPollTick
@@ -196,7 +196,7 @@ JoystickCalScreen:
         mov esi, dword [dword esp+0348h]
         push byte 14h
         push byte 0
-        push unk_C27F5
+        push str_OneSpace
         call PrintString
         add esp, byte 0Ch
         jmp near JoystickCalScreen.5
@@ -318,7 +318,7 @@ ClearInputQueue:
         mov dword [inputqcount], edx
         mov dword [inputqtail], 1Fh
         mov dword [inputqhead], edx
-        mov dword [dword_CDA38], edx
+        mov dword [InputQueueSpare], edx
         mov dword [joybtnheld], edx
         mov dword [enterheld], edx
         xor eax, eax
@@ -352,7 +352,7 @@ InputInstall:
         jne short .x
         call InstallKeyboardHandler
         xor ebx, ebx
-        mov dword [dword_CDA24], ebx
+        mov dword [InputResetWord], ebx
         mov dword [ptrstep], ebx
         mov dword [inputinstalled], 1
         push InputPollTick
@@ -384,7 +384,7 @@ InputRemove:
         cmp dword [inputinstalled], byte 0
         je short .x
         xor ebx, ebx
-        mov dword [dword_CDA24], ebx
+        mov dword [InputResetWord], ebx
         mov dword [ptrstep], ebx
         push InputPollTick
         call RemoveTimerCallback

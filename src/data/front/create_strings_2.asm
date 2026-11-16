@@ -4,7 +4,7 @@ bits 32
 section s_D0C5C progbits alloc noexec write align=1
 extern str_Cancel6, str_Create, str_Yes, str_No4
 global str_ThereIsNoSpace, str_TheSelectedPlayer, str_NotEnoughSpaceTo2, str_AddAllSelectedPlayers, str_ErrorWhileMakingNew, str_NewPlayer, str_NotAddedToDatabases, str_Move
-global str_ToFreeAgentList, str_CreateAPlayerOr, dword_D0CDA, str_Two, str_Continue, str_Stop2, btn_DBError, str_Player4
+global str_ToFreeAgentList, str_CreateAPlayerOr, PosBitMasks, str_Two, str_Continue, str_Stop2, btn_DBError, str_Player4
 global str_Goalie3, btn_CreateFreeAgent
 str_Two:
         db 032h,00h,00h,00h,0B8h,01h,00h,00h,03Fh,00h,00h,00h,014h,00h,00h,00h
@@ -24,7 +24,7 @@ btn_DBError:
         db 01Ch,02h,00h,00h,0C2h,01h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
         db 00h,00h,00h,00h,05h,00h,00h,00h
         dd str_Stop2
-dword_D0CDA:
+PosBitMasks:
         db 01h,00h,00h,00h,02h,00h,00h,00h,04h,00h,00h,00h,08h,00h,00h,00h
         db 010h,00h,00h,00h,020h,00h,00h,00h,040h,00h,00h,00h,080h,00h,00h,00h
         db 00h,01h,00h,00h,00h,02h,00h,00h,046h,072h,065h,065h,020h,041h,067h,065h

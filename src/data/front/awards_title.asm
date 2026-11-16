@@ -34,7 +34,7 @@ global str_3007, str_3008, str_3009, str_300, str_OT2, str_BOS, str_BUF3, str_CG
 global str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL, str_NJ
 global str_NYI, str_NYR, str_OTT, str_PHI, str_PIT, str_QUE, str_STL, str_SJ
 global str_TB, str_TOR, str_VAN, str_WSH, str_WPG, str_ANA3, str_FLA, str_ASW
-global str_ASE, unk_C07A4, str_Credit19, str_Credit10, str_Credit09, str_Credit17, str_Credit01, str_Credit15
+global str_ASE, CreditBlankTitle, str_Credit19, str_Credit10, str_Credit09, str_Credit17, str_Credit01, str_Credit15
 global str_Credit12, str_Credit08, str_Credit02, str_Credit11, str_Credit05, str_Credit06, str_Credit07, str_Credit18
 global str_Credit14, str_Credit13, str_Credit16, str_Credit00, str_Credit04, str_Credit03, str_rt, str_wt
 str_NoDiskSpaceC:
@@ -493,7 +493,7 @@ str_Crests4:
         db 063h,072h,065h,073h,074h,073h,034h,00h,00h,00h,00h
 str_Stanley:
         db 053h,074h,061h,06Eh,06Ch,065h,079h,00h
-unk_C07A4:
+CreditBlankTitle:
         db 00h,00h
 str_Credit19:
         db 063h,072h,065h,064h,069h,074h,031h,039h,00h

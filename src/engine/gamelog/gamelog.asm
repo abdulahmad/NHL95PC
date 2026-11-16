@@ -8,9 +8,9 @@ extern bannermsg, bannertimer, pendelaytab_e13, pendelay2tab, pendelay2tab_e4, r
 extern awtmcoachflags, milestonesaid, milestonesaid_b1, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
 extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
-extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, dword_CBEBE
+extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, apl
 extern goalienotebits, sideobjpos, hmplstats_m2, hmplstats, plcareergoals, plcareerpts, plseasongoals, plseasonpts
-extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, PenBuf_m2, SpeechPatchNext, rinkobjused_m2, defertab
+extern hmtmtouch2, hmtmtouch3, RinkSideShape, RinkSideShapeFlipped, PenBuf_m2, SpeechPatchNext, rinkobjused_m2, defertab
 extern defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6, defertab_fn, FatalError
 extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemode
 extern gameopts, gmode, gmode2, gsp, gsummarypath, gsumqcount, hmgoalcnt, hmroster
@@ -28,7 +28,7 @@ extern str_02d02dSInjury, str_02d02dSPenalty, str_Assists, str_B3, str_B4, str_B
 extern str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumName, str_FmtNumNameSuffix, str_FmtParenD
 extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD, str_SHTag
 extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1, textline2
-extern textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue, UpdateTextOverlay
+extern textline3, textline4, textline5, str_NoPenalty, gsumheader, gsumtail, gsumqueue, UpdateTextOverlay
 extern vecdist, VisTeam, gsumcount, penaltysc, SortPending, injurystop, Pencntdwn2, rinkobjdefs
 extern penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
@@ -373,7 +373,7 @@ sfxslots_popx:
 ;-----------------------------------------------------------------------------
 ; DrawRinkObjects                                 61862  95 PC, low confidence
 ; Draws the 12h rink object slots of rinkobjs (photoptrsf frames at
-; +05h/+07h) and the slot sprites from sideobjpos / dword_E0220 / dword_E0230
+; +05h/+07h) and the slot sprites from sideobjpos / RinkSideShape / RinkSideShapeFlipped
 ;-----------------------------------------------------------------------------
 ; C: src/engine/gamelog/DecayCrowdLevel.c (DrawRinkObjects)
 %ifdef CBUILD
@@ -444,7 +444,7 @@ DrawRinkObjects:
         push eax
         mov ebx, dword [nosplit eax*4+sideobjpos]
         sar ebx, 10h
-        mov eax, dword [dword_E0220]
+        mov eax, dword [RinkSideShape]
         xor ecx, ecx
         mov edx, 4
         call DrawSprite
@@ -471,7 +471,7 @@ DrawRinkObjects:
         movsx eax, di
         mov ebx, dword [nosplit eax*4+sideobjpos]
         sar ebx, 10h
-        mov eax, dword [dword_E0230]
+        mov eax, dword [RinkSideShapeFlipped]
         xor ecx, ecx
         mov edx, 4
         call DrawSprite
@@ -1054,7 +1054,7 @@ BuildEventLines:
         mov eax, str_PPTag
         jmp short .3
 .2:
-        mov eax, unk_C1B49
+        mov eax, str_NoPenalty
 .3:
         push eax
         push str_S8
@@ -1111,7 +1111,7 @@ BuildEventLines:
         add ecx, byte 7
         xor ebx, esi
         mov bl, byte [dword edi+eax+hmrosterjersey]
-        mov edx, unk_C1B49
+        mov edx, str_NoPenalty
         mov eax, textline1
         call FormatPlayerName
         xor edx, edx
@@ -1128,7 +1128,7 @@ BuildEventLines:
         push textline2
         call sprintf_
         add esp, byte 8
-        push unk_C1B49
+        push str_NoPenalty
         mov eax, edx
         shl eax, 2
         add eax, edx
@@ -1141,7 +1141,7 @@ BuildEventLines:
         lea ecx, [byte eax+07h]
         xor ebx, ebx
         mov bl, byte [dword edx+edi+hmrosterjersey]
-        mov edx, unk_C1B49
+        mov edx, str_NoPenalty
         mov eax, textline4
         call FormatPlayerName
 .6:
@@ -1149,7 +1149,7 @@ BuildEventLines:
         mov dl, byte [curevent_b4]
         cmp edx, 0FFh
         je near .14
-        push unk_C1B49
+        push str_NoPenalty
         mov ebx, esi
         shl ebx, 4
         add ebx, esi
@@ -1169,7 +1169,7 @@ BuildEventLines:
         lea ecx, [byte edx+07h]
         mov bl, byte [dword ebx+eax+hmrosterjersey]
         and ebx, 0FFh
-        mov edx, unk_C1B49
+        mov edx, str_NoPenalty
         mov eax, textline5
 .7:
         call FormatPlayerName
@@ -1215,7 +1215,7 @@ BuildEventLines:
         movsd
         movsw
         movsb
-        push unk_C1B49
+        push str_NoPenalty
         mov edx, dword [penshotteam]
         mov ebx, edx
         shl ebx, 4
@@ -1238,7 +1238,7 @@ BuildEventLines:
         add eax, ebx
         xor ebx, ebx
         mov bl, byte [dword eax+hmrosterjersey]
-        mov edx, unk_C1B49
+        mov edx, str_NoPenalty
         mov eax, textline4
         jmp near BuildEventLines.7
 .9:
@@ -1261,7 +1261,7 @@ BuildEventLines:
         push textline3
         call sprintf_
         add esp, byte 14h
-        push unk_C1B49
+        push str_NoPenalty
         mov ebx, esi
         shl ebx, 4
         add ebx, esi
@@ -1283,7 +1283,7 @@ BuildEventLines:
         lea eax, [ebx+edx]
         xor ebx, ebx
         mov bl, byte [dword eax+hmrosterjersey]
-        mov edx, unk_C1B49
+        mov edx, str_NoPenalty
         mov eax, textline1
         call FormatPlayerName
         xor eax, eax
@@ -1335,7 +1335,7 @@ BuildEventLines:
         push textline3
         call sprintf_
         add esp, byte 14h
-        push unk_C1B49
+        push str_NoPenalty
         mov ebx, esi
         shl ebx, 4
         add ebx, esi
@@ -1355,7 +1355,7 @@ BuildEventLines:
         add ecx, byte 7
         mov bl, byte [dword ebx+eax+hmrosterjersey]
         and ebx, 0FFh
-        mov edx, unk_C1B49
+        mov edx, str_NoPenalty
         mov eax, textline1
         call FormatPlayerName
         test edi, edi

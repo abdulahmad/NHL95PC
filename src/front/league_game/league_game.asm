@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_35FB9 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _fstrcspn_, AllocMemBlock, AskTeamPassword, awlinetab, awscore, awtmgoalie
-extern awtmlines, btn_MasterDB, btn_MergeNeeded, byte_DC267, UnusedStateByte, CalendarScreen, cddriveptr, CheckGameDiskSpace
-extern ClearScreen, curleague, dword_DDD34, dword_DDD3C, FadePalStep, FileClose, FileExists, fileoncd
+extern awtmlines, btn_MasterDB, btn_MergeNeeded, GameRecordDay, UnusedStateByte, CalendarScreen, cddriveptr, CheckGameDiskSpace
+extern ClearScreen, curleague, lgoppteam, lgopphuman, FadePalStep, FileClose, FileExists, fileoncd
 extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, FindLeagueFloppy, FindShape, firstteammsg
 extern FmtFromLeague, FreeMemBlock, GameGoalieStatsScreen, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu, GameStandingsScreen
 extern GameTeamStatsScreen, GetLeagueId, goaliestatscb, hmglstats, hmglstats_w2, hmglstats_w4, hmlinetab, hmplstats
@@ -21,8 +21,8 @@ extern SndQuery, songdata, sprintf_, standingscb, standingsmenucb, starpl, start
 extern str_backslash2, str_dot, str_Easndesk2, str_extDB, str_extxx, str_floppydrv, str_GAME, str_GSUMMARY
 extern str_MustBeExportedTo, str_MustBeImportedFrom, str_Pal17, str_Pal18, str_PINFO, str_S4, str_SAV, str_SelectATeamTo
 extern str_Temp5, str_Xx, strcat_, strcpy_, PushMemDescriptorLocked, SetDigiChannelVolume, teamstatscb, treeteamnames
-extern UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg, VgaSetPalette, VisTeam, WaitLeagueFloppy, word_DDD48
-extern word_DDD4A, WriteGoalieSeasonRec, WriteSchedGame, WriteSeasonRec, WriteTeamRec
+extern UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg, VgaSetPalette, VisTeam, WaitLeagueFloppy, lggamecount
+extern lgoppgamecount, WriteGoalieSeasonRec, WriteSchedGame, WriteSeasonRec, WriteTeamRec
 global CheckLeagueDiskSync, MakeTeamDbFmt, PostGameToTeamDb, PlayLeagueGame
 ;-----------------------------------------------------------------------------
 ; CheckLeagueDiskSync                          35FB9  95 PC, medium confidence
@@ -1192,7 +1192,7 @@ PlayLeagueGame:
         jne short .27
         mov ecx, 2
         xor ebx, ebx
-        mov edx, word_DDD48
+        mov edx, lggamecount
         mov eax, dword [byte esp+06Ch]
         call FileReadAt
         mov esi, eax
@@ -1216,25 +1216,25 @@ PlayLeagueGame:
         xor eax, edx
         mov al, byte [lgschedrec_b3]
 .29:
-        mov dword [dword_DDD34], eax
-        mov dword [dword_DDD3C], 0FFFFFFFFh
-        mov edx, dword [dword_DDD34]
+        mov dword [lgoppteam], eax
+        mov dword [lgopphuman], 0FFFFFFFFh
+        mov edx, dword [lgoppteam]
         mov eax, edx
         shl eax, 4
         sub eax, edx
         cmp byte [nosplit eax*2+lgteam_17], 0
         jne short .30
         xor ecx, ecx
-        mov dword [dword_DDD3C], ecx
+        mov dword [lgopphuman], ecx
 .30:
         lea eax, [byte esp+06Ch]
         call FileClose
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je near .36
         test esi, esi
         jne near .33
         push esi
-        mov ebx, dword [dword_DDD34]
+        mov ebx, dword [lgoppteam]
         mov ecx, 0FFFFFFFFh
         mov edx, leagueteams
         mov eax, curleague
@@ -1242,7 +1242,7 @@ PlayLeagueGame:
         mov esi, eax
         test eax, eax
         jne short .33
-        mov edx, dword [dword_DDD34]
+        mov edx, dword [lgoppteam]
         push edx
         push str_02d
         lea eax, [byte esp+068h]
@@ -1252,7 +1252,7 @@ PlayLeagueGame:
         lea edx, [byte esp+060h]
         mov eax, str_Xx
         call strcpy_
-        mov edx, dword [dword_DDD34]
+        mov edx, dword [lgoppteam]
         mov eax, edx
         shl eax, 4
         sub eax, edx
@@ -1286,7 +1286,7 @@ PlayLeagueGame:
         jne short .35
         mov ecx, 2
         xor ebx, ebx
-        mov edx, word_DDD4A
+        mov edx, lgoppgamecount
         mov eax, dword [byte esp+05Ch]
         call FileReadAt
         mov esi, eax
@@ -1295,7 +1295,7 @@ PlayLeagueGame:
         call FileClose
         test esi, esi
         jne short .36
-        mov esi, dword [dword_DDD34]
+        mov esi, dword [lgoppteam]
         push esi
         push str_02d
         lea eax, [byte esp+068h]
@@ -1305,7 +1305,7 @@ PlayLeagueGame:
         lea edx, [byte esp+060h]
         mov eax, str_Xx
         call strcpy_
-        mov eax, dword [dword_DDD34]
+        mov eax, dword [lgoppteam]
         mov edx, leagueteams
         call AskTeamPassword
         mov esi, eax
@@ -1419,7 +1419,7 @@ PlayLeagueGame:
         mov al, byte [lgschedrec]
         mov byte [UnusedStateByte], al
         mov al, byte [lgschedrec_b1]
-        mov byte [byte_DC267], al
+        mov byte [GameRecordDay], al
         xor eax, eax
         mov al, byte [lgschedrec_b2]
         mov word [HomeTeam], ax
@@ -1435,7 +1435,7 @@ PlayLeagueGame:
         test eax, eax
         jne short .48
         xor edx, edx
-        mov dl, byte [byte_DC267]
+        mov dl, byte [GameRecordDay]
         mov al, byte [UnusedStateByte]
         call InitGameSummary
         xor edx, edx
@@ -1546,10 +1546,10 @@ PlayLeagueGame:
         mov edx, ecx
         mov eax, 0F9h
         call SetDialogColors
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je near .56
         push byte 0FFFFFFFFh
-        mov ebx, dword [dword_DDD34]
+        mov ebx, dword [lgoppteam]
         mov ecx, 0FFFFFFFFh
         mov edx, leagueteams
         mov eax, curleague
@@ -1557,7 +1557,7 @@ PlayLeagueGame:
         mov esi, eax
         test eax, eax
         jne short .56
-        mov eax, dword [dword_DDD34]
+        mov eax, dword [lgoppteam]
         push eax
         push str_02d
         lea eax, [byte esp+068h]
@@ -1567,7 +1567,7 @@ PlayLeagueGame:
         lea edx, [byte esp+060h]
         mov eax, str_Xx
         call strcpy_
-        mov edx, dword [dword_DDD34]
+        mov edx, dword [lgoppteam]
         mov eax, edx
         shl eax, 4
         sub eax, edx
@@ -1594,7 +1594,7 @@ PlayLeagueGame:
         mov eax, esp
         call FileOpenRW
         mov esi, eax
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je short .57
         test eax, eax
         jne short .57
@@ -1656,7 +1656,7 @@ PlayLeagueGame:
 .61:
         lea eax, [byte esp+064h]
         call FileClose
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je short .65
         test esi, esi
         jne short .62
@@ -1702,7 +1702,7 @@ PlayLeagueGame:
 .66:
         test esi, esi
         jne short .67
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je short .67
         mov ebx, dword [lggameidx-2]
         sar ebx, 10h
@@ -1738,7 +1738,7 @@ PlayLeagueGame:
         call FileClose
         test esi, esi
         jne near .72
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je near .72
         mov ebx, dword [leaguedbnames+10h]
         mov ecx, str_Xx
@@ -1765,7 +1765,7 @@ PlayLeagueGame:
         mov edx, eax
         inc edx
         mov word [lggameidx], dx
-        cmp dx, word [word_DDD48]
+        cmp dx, word [lggamecount]
         jle short .71
         mov ecx, 2
         xor ebx, ebx
@@ -1776,10 +1776,10 @@ PlayLeagueGame:
 .71:
         test esi, esi
         jne short .72
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je short .72
         mov ax, word [lggameidx]
-        cmp ax, word [word_DDD4A]
+        cmp ax, word [lgoppgamecount]
         jle short .72
         mov ecx, 2
         xor ebx, ebx
@@ -1815,10 +1815,10 @@ PlayLeagueGame:
 .73:
         test esi, esi
         jne near .76
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je short .74
         push byte 2
-        mov ecx, dword [dword_DDD34]
+        mov ecx, dword [lgoppteam]
         push ecx
         mov ebx, dword [lggameidx-2]
         sar ebx, 10h
@@ -1832,7 +1832,7 @@ PlayLeagueGame:
         push savleague1
         mov esi, dword [dword esp+080h]
         push esi
-        mov ebx, dword [dword_DDD34]
+        mov ebx, dword [lgoppteam]
         mov ecx, ebp
         mov edx, str_Xx
         mov eax, savleague2
@@ -1841,7 +1841,7 @@ PlayLeagueGame:
         push savleague1
         mov ebx, dword [dword esp+080h]
         push ebx
-        mov ebx, dword [dword_DDD34]
+        mov ebx, dword [lgoppteam]
         mov ecx, ebp
         mov edx, str_extxx
         mov eax, savleague1
@@ -1881,7 +1881,7 @@ PlayLeagueGame:
         mov eax, edx
         call MessageBox
 .78:
-        cmp dword [dword_DDD3C], byte 0
+        cmp dword [lgopphuman], byte 0
         je short .79
         lea eax, [byte esp+05Ch]
         call FileClose

@@ -3,7 +3,7 @@
 bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
-extern __CHK, deskexit, DiskSpaceShort, easnfontbuf, embscupbank, statsmenuresult, dword_DC6B4, leaguestatsmode
+extern __CHK, deskexit, DiskSpaceShort, easnfontbuf, embscupbank, statsmenuresult, StatsLastSel, leaguestatsmode
 extern exhstate, FadePalStep, fclose_, FileExists, fopen_, fputs_, FreeMemBlock, goaliestatscb
 extern LeadersScreen, lgstate, MessageBox, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode
 extern msg_NeedKbytes2, msg_FileExists, msg_StatsDiskSpace, postate, sfpal1, sfpal2, skaterstatscb, sprintf_
@@ -261,7 +261,7 @@ StatsSel9394Season:
         call FadePalStep
         mov dword [statspalvalid], 1
         mov dword [statspal], statsscreenpal
-        mov dword [dword_DC6B4], 0FFFFFFFFh
+        mov dword [StatsLastSel], 0FFFFFFFFh
         mov eax, dword [statscategory]
         call dword [statsredrawcb]
         mov dword [statspalvalid], ebp
@@ -331,7 +331,7 @@ StatsSel_common:
         call FadePalStep
         mov dword [statspalvalid], ebp
         mov dword [statspal], statsscreenpal
-        mov dword [dword_DC6B4], 0FFFFFFFFh
+        mov dword [StatsLastSel], 0FFFFFFFFh
         mov eax, dword [statscategory]
         call dword [statsredrawcb]
         xor esi, esi
@@ -402,7 +402,7 @@ StatsSelLeague:
         call FadePalStep
         mov dword [statspalvalid], 1
         mov dword [statspal], statsscreenpal
-        mov dword [dword_DC6B4], 0FFFFFFFFh
+        mov dword [StatsLastSel], 0FFFFFFFFh
         mov eax, dword [statscategory]
         call dword [statsredrawcb]
         mov dword [statspalvalid], ebp

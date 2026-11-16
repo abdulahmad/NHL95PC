@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D056C progbits alloc noexec write align=1
 extern MenuShowPlayerStats, ScratchPlayer, DressPlayer, str_ScratchPlayer2
-global menuact_dbdress, menuact_dbscratch, str_ShowPlayerStatistics2, unk_D05AF, str_LineEditor5, str_Roster4, str_PlayerStatistics4
+global menuact_dbdress, menuact_dbscratch, str_ShowPlayerStatistics2, DbLinesStatsMenu, str_LineEditor5, str_Roster4, str_PlayerStatistics4
 menuact_dbdress:
         dd DressPlayer
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
@@ -15,7 +15,7 @@ menuact_dbscratch:
 str_ShowPlayerStatistics2:
         db 053h,068h,06Fh,077h,020h,050h,06Ch,061h,079h,065h,072h,020h,053h,074h,061h,074h
         db 069h,073h,074h,069h,063h,073h,00h
-unk_D05AF:
+DbLinesStatsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,09Ch,00h,00h,00h,012h,00h,00h,00h
         dd str_ShowPlayerStatistics2
         dd MenuShowPlayerStats

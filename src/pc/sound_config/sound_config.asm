@@ -7,7 +7,7 @@ extern homeremap_e07, homeremap_e10, homeremap_e11, homeremap_e13, homeremap_e14
 extern homeremap_e51, homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont2team, ctl1side, ctl1team, ctl2side, ctl2team, DrawSelBoxOff
 extern DrawSelBoxOn, dword_C4CFC, cursndbank, lockerindex, lockerteams, poroundnameidx, lockeracceptx, lockeraccepty
-extern lockercancelx, lockercancely, dword_D2350, dword_D2423, dword_D2427, digidriver, sndtempbuf, speechchannel
+extern lockercancelx, lockercancely, PcSpkSampleReady, SoundDevActive, musicdriver, digidriver, sndtempbuf, speechchannel
 extern dword_ED7A4, dword_ED7A8, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
 extern fopen_, fprintf_, fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr
 extern homenamebckspr, HomeTeam, InitSpeech, kaufmfont, lockerrects, mainfont, MakePath, MessageBox
@@ -810,7 +810,7 @@ SetSoundDevice:
         mov esi, eax
         xor ebp, ebp
         mov dword [byte esp+03Ch], 1
-        cmp dword [dword_D2423], byte 0
+        cmp dword [SoundDevActive], byte 0
         je short .4
         mov ecx, dword [sounddev]
         cmp ecx, byte 2
@@ -836,7 +836,7 @@ SetSoundDevice:
 .4:
         mov dword [cursndbank], 20h
         xor edi, edi
-        mov dword [dword_D2423], edi
+        mov dword [SoundDevActive], edi
 .5:
         cmp esi, byte 4
         jb short .6
@@ -861,7 +861,7 @@ SetSoundDevice:
         mov edx, str_PC
         lea eax, [byte esp+010h]
         call strcpy_
-        mov dword [dword_D2427], 1
+        mov dword [musicdriver], 1
         mov dword [digidriver], 0FFFFFFFFh
         xor ch, ch
         mov byte [crowddriver], ch
@@ -873,7 +873,7 @@ SetSoundDevice:
         mov edx, str_PC
         lea eax, [byte esp+010h]
         call strcpy_
-        mov dword [dword_D2427], esi
+        mov dword [musicdriver], esi
         mov dword [digidriver], 3
         mov bh, 1
         mov byte [musicslot], bh
@@ -886,7 +886,7 @@ SetSoundDevice:
         mov edx, str_PC
         lea eax, [byte esp+010h]
         call strcpy_
-        mov dword [dword_D2427], 2
+        mov dword [musicdriver], 2
         mov dword [digidriver], 0FFFFFFFFh
         xor bl, bl
         mov byte [crowddriver], bl
@@ -898,7 +898,7 @@ SetSoundDevice:
         mov edx, str_PC
         lea eax, [byte esp+010h]
         call strcpy_
-        mov dword [dword_D2427], 4
+        mov dword [musicdriver], 4
         mov dword [digidriver], 0FFFFFFFFh
         xor dh, dh
         mov byte [crowddriver], dh
@@ -910,7 +910,7 @@ SetSoundDevice:
         mov edx, str_PC
         lea eax, [byte esp+010h]
         call strcpy_
-        mov dword [dword_D2427], 5
+        mov dword [musicdriver], 5
         mov dword [digidriver], 6
         mov ah, 1
         mov byte [musicslot], ah
@@ -924,13 +924,13 @@ SetSoundDevice:
         lea eax, [byte esp+010h]
         call strcpy_
         xor eax, eax
-        mov dword [dword_D2427], eax
+        mov dword [musicdriver], eax
         mov dword [digidriver], 0FFFFFFFFh
         xor al, al
         mov byte [crowddriver], al
 .13:
         call SndInit
-        mov ebx, dword [dword_D2427]
+        mov ebx, dword [musicdriver]
         test ebx, ebx
         jl short .15
         mov eax, ebx
@@ -947,9 +947,9 @@ SetSoundDevice:
         cmp eax, byte 0FFFFFFFFh
         je short .15
 .14:
-        mov dword [dword_D2423], 0FFFFFFFFh
+        mov dword [SoundDevActive], 0FFFFFFFFh
 .15:
-        cmp dword [dword_D2423], byte 0
+        cmp dword [SoundDevActive], byte 0
         je near .29
         lea edx, [byte esp+010h]
         lea eax, [byte esp+020h]
@@ -973,7 +973,7 @@ SetSoundDevice:
 .18:
         cmp esi, byte 8
         jne near .21
-        mov ebx, dword [dword_D2350]
+        mov ebx, dword [PcSpkSampleReady]
         test ebx, ebx
         jne near .21
         push ebx
@@ -1002,7 +1002,7 @@ SetSoundDevice:
         mov eax, esp
         call LoadSample
         mov edx, eax
-        mov dword [dword_D2350], 0FFFFFFFFh
+        mov dword [PcSpkSampleReady], 0FFFFFFFFh
         mov dword [sounddev], 8
         call PlayDigiSample
         call WaitDigiSample
@@ -1131,7 +1131,7 @@ SetSoundDevice:
         mov esi, 10h
         jmp short .38
 .37:
-        mov dword [dword_D2423], 0FFFFFFFFh
+        mov dword [SoundDevActive], 0FFFFFFFFh
 .38:
         call SndShutdown
         push byte 64h
@@ -1139,7 +1139,7 @@ SetSoundDevice:
         add esp, byte 4
         call WaitTickDeadline
 .39:
-        cmp dword [dword_D2423], byte 0
+        cmp dword [SoundDevActive], byte 0
         je near SetSoundDevice.5
         mov edx, dword [sounddev]
         cmp edx, byte 2

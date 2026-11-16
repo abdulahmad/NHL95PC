@@ -2,26 +2,26 @@
 bits 32
 %include "hockey.inc"
 section s_CF90F progbits alloc noexec write align=1
-extern MenuPlayoffSettings, MenuP1ControlsPlayoff, MenuP2ControlsPlayoff, MenuPlayNextGame, MenuReturnToSportsCentral, unk_C67B1, str_Dashes2, str_Player1Controls2
+extern MenuPlayoffSettings, MenuP1ControlsPlayoff, MenuP2ControlsPlayoff, MenuPlayNextGame, MenuReturnToSportsCentral, StatsSourceMenu, str_Dashes2, str_Player1Controls2
 extern str_Player2Controls2, str_PlayOffSettings2, str_File2, str_Settings4, str_Statistics5, str_PlayNextGame, str_ReturnToSportsCentral2, str_StatisticsType8
-global menuact_playnextgame, playoffmenubar, unk_CF96F, unk_CF9AF, unk_CFA2F
+global menuact_playnextgame, playoffmenubar, PlayoffFileMenu, PlayoffSettingsMenu, PlayoffStatsMenu
 playoffmenubar:
         db 00h,00h,00h,00h,00h,00h,00h,00h,020h,00h,00h,00h,012h,00h,00h,00h
         dd str_File2
         db 00h,00h,00h,00h
-        dd unk_CF96F
+        dd PlayoffFileMenu
         db 02h,00h,00h,00h,021h,00h,00h,00h,00h,00h,00h,00h,05Eh,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Settings4
         db 00h,00h,00h,00h
-        dd unk_CF9AF
+        dd PlayoffSettingsMenu
         db 04h,00h,00h,00h,05Fh,00h,00h,00h,00h,00h,00h,00h,0A4h,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Statistics5
         db 00h,00h,00h,00h
-        dd unk_CFA2F
+        dd PlayoffStatsMenu
         db 05h,00h,00h,00h
-unk_CF96F:
+PlayoffFileMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
         dd str_PlayNextGame
 menuact_playnextgame:
@@ -31,7 +31,7 @@ menuact_playnextgame:
         dd str_ReturnToSportsCentral2
         dd MenuReturnToSportsCentral
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CF9AF:
+PlayoffSettingsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_Player1Controls2
         dd MenuP1ControlsPlayoff
@@ -47,8 +47,8 @@ unk_CF9AF:
         dd str_PlayOffSettings2
         dd MenuPlayoffSettings
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CFA2F:
+PlayoffStatsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_StatisticsType8
         db 00h,00h,00h,00h
-        dd unk_C67B1
+        dd StatsSourceMenu

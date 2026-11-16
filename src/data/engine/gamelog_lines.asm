@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_CD34C progbits alloc noexec write align=1
-extern str_pen, unk_C1B49, str_Roughing, str_Charging2, str_Slashing2, str_Xcheck, str_Hooking2, str_Tripping2
+extern str_pen, str_NoPenalty, str_Roughing, str_Charging2, str_Slashing2, str_Xcheck, str_Hooking2, str_Tripping2
 extern str_Interfer, str_Holding2, str_Histick, str_Boarding2, str_Elbowing2, str_Abuse, str_Checkbnd, str_Penshot
 extern str_BnReturnGoalie, str_BnPullGoalie, str_BnFaceOff, str_BnTwoLinePass, str_BnOffside, str_BnIcing, str_BnPenalty, str_BnPenaltyShot
 extern str_Gready, str_Gready2, str_Gglover, str_Gglovel, str_Gglovel2, str_Gstickr, str_Gstickl, str_Gstackr
@@ -28,7 +28,7 @@ extern str_Rgotofo, str_Rpointgoal, str_Rgetnew, str_Anth, str_Ranth, str_Agotof
 extern str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, str_G5, str_LD, str_RD2
 extern str_LW, str_C6, str_RW, str_XC, str_sp00XXXXXXXXXXXXXXXXX, str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_sp00XXXXXXXXXXXXXXXXX3
 extern str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2
-global dressbystatus, lineslotgroups, lineslotgroupstart, gsumqcount, defercount, dword_CD41E, ovlmemneed, dbg_spalist
+global dressbystatus, lineslotgroups, lineslotgroupstart, gsumqcount, defercount, ovlmemneed, dbg_spalist
 global starthl2pos, pennametab, goaliemenuflags, goaliemenuflags_e02, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
 global dbg_posnames, penbannertab, replayfollowpl, replaytick, replaysfx
 gsumqcount:
@@ -37,7 +37,7 @@ defercount:
         db 00h,00h,00h,00h
 pennametab:
         dd str_Roughing
-        dd unk_C1B49
+        dd str_NoPenalty
         dd str_Charging2
         dd str_Slashing2
         dd str_Roughing
@@ -65,7 +65,6 @@ penbannertab:
         db 06h,00h,00h,00h,03h,00h,00h,00h,02h,00h,00h,00h
 dressbystatus:
         db 00h,00h,02h,01h,01h,00h
-dword_CD41E:
         db 00h,01h,00h
 lineslotgroups:
         db 00h,03h,06h,09h,0FFh,01h,04h,07h,0Ah,0FFh,02h,05h,08h,0Bh,0FFh,0Ch

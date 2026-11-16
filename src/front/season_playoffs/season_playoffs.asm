@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_428AB progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, AllocMemBlock, AskDatabaseChoice, AwardsCeremony, btn_LeagueExists, btn_WhichSchedule, byte_DE268
+extern __CHK, __STOSD, AllocMemBlock, AskDatabaseChoice, AwardsCeremony, btn_LeagueExists, btn_WhichSchedule, MergeResult
 extern confteams, CopyFile, CopyHumanTeamDBs, curleague, dbextension, DeleteDir, DiskFreeBytes, DiskSpaceShort
-extern dword_C9002, FileExists, FileReadAt, FileWriteAt, FreeMemBlock, gameopts, GetLeagueDBSizes, humancount
+extern LgGameSetFlag, FileExists, FileReadAt, FileWriteAt, FreeMemBlock, gameopts, GetLeagueDBSizes, humancount
 extern leaguedbnames, leaguedbsizes, leagueflags, leaguemaster, leaguesaved, leagueteams, LeagueTeamSelect, lgstate
 extern lgteam_17, lgteam_18, lgteam_19, lgteamflags, lgteamver, MakePath, masterpw, memset_
 extern MessageBox, mkdir_, MouseRead, msg_CreateError, msg_CreatingLeague, msg_DiskFull, msg_LeagueExists, msg_NoDiskSpace
@@ -220,7 +220,7 @@ BuildPlayoffs:
         call WriteFile
         add esp, byte 0Ch
         call AwardsCeremony
-        mov byte [byte_DE268], 0FFh
+        mov byte [MergeResult], 0FFh
         mov dword [dword esp+0A0h], 4ADh
         mov ecx, 2
         xor ebx, ebx
@@ -2743,7 +2743,7 @@ FinishPlayoffs_r4:
         call WriteFile
         add esp, byte 0Ch
         call AwardsCeremony
-        mov byte [byte_DE268], 0FFh
+        mov byte [MergeResult], 0FFh
         mov dword [byte esp+028h], 4ADh
         mov ecx, 2
         xor ebx, ebx
@@ -3003,7 +3003,7 @@ AdvancePlayoffs:
         call WriteFile
         add esp, byte 0Ch
         call AwardsCeremony
-        mov byte [byte_DE268], 0FFh
+        mov byte [MergeResult], 0FFh
 .11:
         mov ecx, 2
         xor ebx, ebx
@@ -3284,7 +3284,7 @@ CreateNewLeague:
         test eax, eax
         je short .13
         xor eax, eax
-        mov dword [dword_C9002], eax
+        mov dword [LgGameSetFlag], eax
 .13:
         mov edx, ebp
         shl edx, 2

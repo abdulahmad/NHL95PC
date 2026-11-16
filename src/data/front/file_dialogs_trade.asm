@@ -8,22 +8,22 @@ global homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE
 global savefname, fdlgmask, leaguedbfmt2, leaguedbfmt, othergames, othergamesb
 global otherscores, otherscoresb, leagueflags, lgteamflags, lgteam_17, lgteam_18, lgteam_19, savedname
 global lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3, lgschedrec_b5, traderoster, tradejersey, tradeslot
-global byte_DE268, loadpals, palcyclephase, palcycledelay, statsfilepos, lgstatsfilepos, dword_DC868, deskptry
-global deskptrx, StreamHandle, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
+global MergeResult, loadpals, palcyclephase, palcycledelay, statsfilepos, lgstatsfilepos, otherperiodprev, deskptry
+global deskptrx, StreamHandle, CurStream, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
 global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, exhfiles
 global exhfilenames, pofiles, pofilenames, lgfiles
 global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
 global fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp
 global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editpos, editmaxw
-global editbuf, editcuron, edity, editx, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly
+global editbuf, editcuron, edity, editx, rinkwtiles, rinkhtiles, bgscrolly
 global otherperiod, floppyok, dbextension, calsel, floppyprobe, calexit, teamselresult
 global traderesult, calmonth, criterrflag, leaguemaster, leaguesaved, lgteamver, humancount, calselday
-global calredraw, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, lgschedrec_b4, gridcelly, gridcellx
+global calredraw, calselmonth, lgoppteam, lgplayteam, lgopphuman, lgschedrec_b4, gridcelly, gridcellx
 global lgplayeridfile, tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg
-global tradeside, tradebitmap, dword_DE265, palcyclelock, plcareergoals, statsplayer
+global tradeside, tradebitmap, palcyclelock, plcareergoals, statsplayer
 global deskbankname, awayremap_eC0, homeremap_eC0, printfbuf, leagueteams, treeteamnames, poseriestext
 global masterpw, savleague1, savleague2, scrolly, scrollx, bgscrollx, bgscrolly8
-global lgteamver_hi, lggameidx, word_DDD48, word_DDD4A
+global lgteamver_hi, lggameidx, lggamecount, lgoppgamecount
 statsplayer:
         resb 2
         resb 1
@@ -33,7 +33,7 @@ statsfilepos:
         resb 4
 lgstatsfilepos:
         resb 8
-dword_DC868:
+otherperiodprev:
         resb 32
 deskptry:
         resb 4
@@ -43,7 +43,7 @@ deskbankname:
         resb 16
 StreamHandle:
         resb 40
-dword_DC8C8:
+CurStream:
         resb 8
 dirtyrectptr:
         resb 8
@@ -192,7 +192,6 @@ edity:
         resb 4
 editx:
         resb 2
-dword_DD6A6:
         resb 2
 rinkwtiles:
         resb 2
@@ -278,11 +277,11 @@ calredraw:
         resb 4
 calselmonth:
         resb 4
-dword_DDD34:
+lgoppteam:
         resb 4
 lgplayteam:
         resb 4
-dword_DDD3C:
+lgopphuman:
         resb 4
 lgschedrec:
         resb 1
@@ -298,9 +297,9 @@ lgschedrec_b5:
         resb 1
 lggameidx:
         resb 2
-word_DDD48:
+lggamecount:
         resb 2
-word_DDD4A:
+lgoppgamecount:
         resb 2
 savleague1:
         resb 13
@@ -335,9 +334,8 @@ tradeside:
         resb 4
 tradebitmap:
         resb 1
-dword_DE265:
         resb 3
-byte_DE268:
+MergeResult:
         resb 4
 loadpals:
         resb 2304

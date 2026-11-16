@@ -110,7 +110,7 @@ int TeamRosterScreen(int team)
     TextSaveState(state);
     TextSetFont(mf);
     TextGridOpen();
-    if (dword_DC734) SetTextColors(0xC0, 0xC3);
+    if (RosterFromStandings) SetTextColors(0xC0, 0xC3);
     else SetTextColors(0x40, 0x43);
     TextSetFont(kf);
     SetTextColors(0x40, 0x43);

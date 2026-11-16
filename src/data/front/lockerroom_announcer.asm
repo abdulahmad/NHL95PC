@@ -15,22 +15,22 @@ global str_PensnumCor, str_PenshotCor, str_GoalnumCor, str_AsstnumCor, str_Andnu
 global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBar, str_AndBar, str_BetweenBar, str_GamenumBar
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
-global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, fadeend, fadeend2, jerseyremap
-global byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, crowddriver
-global byte_D27B6, dbdlgrects
-global dword_D1229, dword_D122B, dword_D122F, dword_D1231, lineslotx
-global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
-global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
+global str_ThegameBar, str_VIV, str_AGameYouRequire3, TeamJerseyBase, fadeend, fadeend2, jerseyremap
+global jerseyremaptrim, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, crowddriver
+global SpeechInitMode, dbdlgrects
+global dword_D1229, dword_D122B, lineslotx
+global linesloty, LineEdPairX, LineEdPairY, LineEdFiveX, LineEdFiveY, LineEdFourX, LineEdFourY, LineEdExtraX
+global LineEdExtraY, LineEdGoalieX, LineEdGoalieY, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
 global ctldlgrects
 global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1
 global settingsfile, lockerindex, lockerteams, poroundnameidx, lockerrects
 global lockeracceptx, lockeraccepty
-global lockercancelx, lockercancely, dword_D2350, soundcardrects, dword_D2423
-global dword_D2427, digidriver, musichandle, sndtempbuf, sounddevids, sndcardname, str_Cor2
+global lockercancelx, lockercancely, PcSpkSampleReady, soundcardrects, SoundDevActive
+global musicdriver, digidriver, musichandle, sndtempbuf, sounddevids, sndcardname, str_Cor2
 global speechchannel, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
 global jerseyabbrevs, poroundnames, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
-global str_ConfirmDeletionOfThe2, deldbmsg, unk_D12C8, dlggreys, ctlboxrect1, ctlboxrect2, str_BOS1, str_BOS22
+global str_ConfirmDeletionOfThe2, deldbmsg, jerseyremapteam, dlggreys, ctlboxrect1, ctlboxrect2, str_BOS1, str_BOS22
 global str_BOS3, str_HART2, str_BUF22, str_CAL1, str_CAL2, str_CAL3, str_CHIC1, str_CHIC2
 global str_CHIC3, str_DET1, str_DET22, str_ED1, str_HART1, str_HART22, str_HART3, str_LA1
 global str_LA4, str_MON1, str_MON2, str_MON3, str_HART23, str_NJER2, str_LI2, str_LI3
@@ -40,7 +40,7 @@ global str_LA42, str_SHK7, str_SHK8, str_BOS23, str_TB22, str_TOR1, str_TOR22, s
 global str_VAN3, str_WASH3, str_WINN2, str_ROCKDITI2, str_CANADA, str_USA, str_InsufficientDiskSpaceTo2, str_SaveHilights
 global str_CurrentHilightNotSaved, str_ThereAreNoHilights, msg_NoHilights, str_ThereIsNotEnogh, str_TheFloppyDiskFor, str_SelectLessHilightsOr, str_ThereIsNotEnogh2, str_TheHardDiskFor
 global str_TrySelectingLessHilights, str_TheHilight, str_AlreadyExists, str_ExportingHilights, str_PC, sndselbox1, sndselbox2, str_CouldNotFindA
-global str_CardInThisMachine, msg_NoSoundCard, str_InitializingTheMT32Card, str_PleaseWait, str_1ststarCor, str_2ndstarCor, unk_D279A, str_SavingCurrent
+global str_CardInThisMachine, msg_NoSoundCard, str_InitializingTheMT32Card, str_PleaseWait, str_1ststarCor, str_2ndstarCor, str_3rdstar, str_SavingCurrent
 global str_LeagueGame, str_PlayOffGame, str_InsufficientDiskSpaceTo3, str_OfFreeDiskSpace2
 dbdlgrects:
         db 0Eh,00h,00h,00h
@@ -82,7 +82,7 @@ str_ConfirmDeletionOfThe2:
 deldbmsg:
         dd str_ConfirmDeletionOfThe2
         db 00h,00h,00h,00h,00h,00h
-byte_D11BC:
+TeamJerseyBase:
         db 0ADh,00h,00h,00h,0ADh,00h,00h,00h,0AAh,00h,00h,00h,0B0h,00h,00h,00h
         db 0AAh,00h,00h,00h,0AAh,00h,00h,00h,0ADh,00h,00h,00h,0ADh,00h,00h,00h
         db 0A2h,00h,00h,00h,0ADh,00h,00h,00h,0ADh,00h,00h,00h,0AAh,00h,00h,00h
@@ -99,11 +99,9 @@ fadestart:
         db 0Fh
 fadestep:
         db 01h
-dword_D122F:
         db 0FFh
 fadeend:
         db 011h
-dword_D1231:
         db 0FFh
 fadestart2:
         db 01h
@@ -122,10 +120,10 @@ jerseyremap:
         db 060h,061h,062h,063h,064h,065h,066h,067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh
         db 070h,071h,072h,073h,074h,075h,076h,077h,078h,079h,07Ah,07Bh,07Ch,07Dh,07Eh,07Fh
         db 080h,081h,082h,083h,084h,085h,086h,087h,088h,089h,08Ah,08Bh,08Ch,08Dh,08Eh,08Fh
-unk_D12C8:
+jerseyremapteam:
         db 090h,091h,092h,093h,094h,095h,096h,097h,098h,099h,09Ah,09Bh,09Ch,09Dh,09Eh,09Fh
         db 0A0h,0A1h,0A2h,0A3h,0A4h,0A5h
-byte_D12DE:
+jerseyremaptrim:
         db 0A6h,0A7h,0A8h,0A9h,0AAh,0ABh,0ACh,0ADh,0AEh,0AFh,0B0h,0B1h,0B2h,0B3h,0B4h,0B5h
         db 0B6h,0B7h,0B8h,0B9h,0BAh,0BBh,0BCh,0BDh,0BEh,0BFh,0C0h,0C1h,0C2h,0C3h,0C4h,0C5h
         db 0C6h,0C7h,0C8h,0C9h,0CAh,0CBh,0CCh,0CDh,0CEh,0CFh,0D0h,0D1h,0D2h,0D3h,0D4h,0D5h
@@ -149,34 +147,34 @@ linesloty:
         db 08Ah,00h,00h,00h,083h,00h,00h,00h,08Ah,00h,00h,00h,0BFh,00h,00h,00h
         db 08Ah,00h,00h,00h,047h,00h,00h,00h,0BBh,00h,00h,00h,083h,00h,00h,00h
         db 0BBh,00h,00h,00h,0BFh,00h,00h,00h,0BBh,00h,00h,00h
-dword_D1398:
+LineEdPairX:
         db 056h,01h,00h,00h
-dword_D139C:
+LineEdPairY:
         db 028h,00h,00h,00h,092h,01h,00h,00h,028h,00h,00h,00h,056h,01h,00h,00h
         db 059h,00h,00h,00h,092h,01h,00h,00h,059h,00h,00h,00h,056h,01h,00h,00h
         db 08Ah,00h,00h,00h,092h,01h,00h,00h,08Ah,00h,00h,00h
-dword_D13C8:
+LineEdFiveX:
         db 047h,00h,00h,00h
-dword_D13CC:
+LineEdFiveY:
         db 0F6h,00h,00h,00h,083h,00h,00h,00h,0F6h,00h,00h,00h,0BFh,00h,00h,00h
         db 0F6h,00h,00h,00h,0FBh,00h,00h,00h,0F6h,00h,00h,00h,037h,01h,00h,00h
         db 0F6h,00h,00h,00h,047h,00h,00h,00h,027h,01h,00h,00h,083h,00h,00h,00h
         db 027h,01h,00h,00h,0BFh,00h,00h,00h,027h,01h,00h,00h,0FBh,00h,00h,00h
         db 027h,01h,00h,00h,037h,01h,00h,00h,027h,01h,00h,00h
-dword_D1418:
+LineEdFourX:
         db 047h,00h,00h,00h
-dword_D141C:
+LineEdFourY:
         db 062h,01h,00h,00h,083h,00h,00h,00h,062h,01h,00h,00h,0BFh,00h,00h,00h
         db 062h,01h,00h,00h,0FBh,00h,00h,00h,062h,01h,00h,00h,047h,00h,00h,00h
         db 093h,01h,00h,00h,083h,00h,00h,00h,093h,01h,00h,00h,0BFh,00h,00h,00h
         db 093h,01h,00h,00h,0FBh,00h,00h,00h,093h,01h,00h,00h
-dword_D1458:
+LineEdExtraX:
         db 099h,01h,00h,00h
-dword_D145C:
+LineEdExtraY:
         db 0F5h,00h,00h,00h,099h,01h,00h,00h,022h,01h,00h,00h
-dword_D1468:
+LineEdGoalieX:
         db 063h,01h,00h,00h
-dword_D146C:
+LineEdGoalieY:
         db 093h,01h,00h,00h,09Fh,01h,00h,00h,093h,01h,00h,00h
 jerseydigits:
         db 0FEh,0F7h,0FFh,01h,018h,080h,01h,0F8h,0FFh,0FEh,07h,00h,00h,00h,00h,02h
@@ -683,7 +681,7 @@ lockercancely:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D2350:
+PcSpkSampleReady:
         db 00h,00h,00h,00h,02Eh,053h,043h,04Eh,00h,02Eh,050h,041h,054h,00h,02Eh,054h
         db 049h,04Dh,00h,050h,043h,046h,046h,025h,030h,033h,064h,00h,050h,043h,00h
 str_PCBEEP:
@@ -714,9 +712,9 @@ sndselbox1:
         db 09h,00h,00h,00h,0A4h,00h,00h,00h,03Ah,00h,00h,00h,0B4h,00h,00h,00h
 sndselbox2:
         db 045h,00h,00h,00h,0A4h,00h,00h,00h,076h,00h,00h,00h,0B4h,00h,00h,00h
-dword_D2423:
+SoundDevActive:
         db 00h,00h,00h,00h
-dword_D2427:
+musicdriver:
         db 0FFh,0FFh,0FFh,0FFh
 digidriver:
         db 0FFh
@@ -877,16 +875,16 @@ str_1ststarCor:
         db 031h,073h,074h,073h,074h,061h,072h,02Eh,063h,06Fh,072h,00h
 str_2ndstarCor:
         db 032h,06Eh,064h,073h,074h,061h,072h,02Eh,063h,06Fh,072h,00h
-unk_D279A:
+str_3rdstar:
         db 033h,072h,064h,073h,074h,061h,072h,02Eh
 str_Cor2:
         db 063h,06Fh,072h,00h
         dd str_1ststarCor
         dd str_2ndstarCor
-        dd unk_D279A
+        dd str_3rdstar
 speechchannel:
         db 00h,00h,00h,00h
-byte_D27B6:
+SpeechInitMode:
         db 00h
 speechcopylen:
         db 00h,00h,00h,00h

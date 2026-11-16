@@ -400,7 +400,7 @@ void DrawRinkOverlays(short vx, short vy)
             }
             x += HIWORD(SortCords[i].Xpos);
             y += HIWORD(SortCords[i].Ypos);
-            DrawFrameSprite(dword_CCD4F[fl] >> 16, x, y, fl > 4 && fl < 8 ? 1 : 0, 0);
+            DrawFrameSprite(AimArrowFrames_m2[fl] >> 16, x, y, fl > 4 && fl < 8 ? 1 : 0, 0);
         }
     }
 }

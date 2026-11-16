@@ -52,14 +52,14 @@
 #endif
 
 extern unsigned char curleague;
-extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[], gameresult;
+extern int gamemode, lgplayteam, lgoppteam, lgopphuman, lgstate[], gameresult;
 extern short lggameidx, HomeTeam, VisTeam;
 extern unsigned char lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3;
 extern char WaitLeagueFloppy[], FindLeagueFloppy[], PlayLeagueGame[];
 extern char CheckLeagueDiskSync[], CopyHumanTeamDBs[], LeagueTeamSelect[];
 extern char AddHumanTeam[], MergeLeagueFiles[], AskTeamPassword[];
 extern unsigned char exportmsg[], leagueflags;
-extern signed char byte_DE268;
+extern signed char MergeResult;
 extern volatile int quit_requested;
 /* MinGW winuser.h #define MessageBox MessageBoxA. Same as lineup.c fputchar. */
 extern char game_MessageBox[] __asm__(SYM("MessageBox"));
@@ -840,7 +840,7 @@ void port_playleague_enter(void)
 static void fold_posted_records(void)
 {
     char dest[512];
-    int a = lgplayteam, b = dword_DDD34, src, rec;
+    int a = lgplayteam, b = lgoppteam, src, rec;
     if (league_host_dir(dest, (int)sizeof dest)) return;
     /* one-dir PlayLeagueGame posts both teams into the playing copy's TEAMS.nn
      * (same ext). Each record is at team*0x2E8; pull both from each posted file. */
@@ -1289,7 +1289,7 @@ void port_add_human_team(void)
 int port_merge_league(void)
 {
     if (is_master_copy()) {
-        byte_DE268 = 0;
+        MergeResult = 0;
         return 0;
     }
     return watcall0((void *)mlf_orig_tramp);
@@ -1428,14 +1428,14 @@ int port_season_want_online(void)
 {
     int opp, me, k;
     if (!g_net || gamemode != 2) return 0;
-    if (!dword_DDD3C) return 0;
+    if (!lgopphuman) return 0;
     me = ob_net_me(g_net);
-    opp = machine_of_team(dword_DDD34);
+    opp = machine_of_team(lgoppteam);
     if (opp == me) return 0;
     if (opp >= 0) return 1;
     if (g_h2h_active) return 1;
     for (k = 0; k < OB_NET_MAX_MACHINES; k++)
-        if (g_h2h_have[k] && g_h2h_peer[k].mine == (uint8_t)dword_DDD34) return 1;
+        if (g_h2h_have[k] && g_h2h_peer[k].mine == (uint8_t)lgoppteam) return 1;
     return 0;
 }
 

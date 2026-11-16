@@ -19,7 +19,7 @@ int CopyHumanTeamDBs(char *dir, void *teams, int which);
 /* AddHumanTeam (408F5, PC only; owner of AddHumanTeam_exit / AddHumanTeam_msgbox): let one more team of the
    current league be human controlled. Read the league (LeagueCheckStub, ReadLeagueInfo); a league with a saved
    game in progress says so (msg_SavedGame) and stops; one not merged yet asks (msg_MasterDB) and merges
-   (MergeLeagueFiles) before reading it again. With byte_DE268 set the desk palette (EASNDESK, BANGPAL) and the
+   (MergeLeagueFiles) before reading it again. With MergeResult set the desk palette (EASNDESK, BANGPAL) and the
    three dialog colours are restored. With all 1Ah teams human say so (msg_AllHuman); else pick the new human
    team (LeagueTeamSelect over the team names) and, when one was added, write the league info and copy the
    human teams' databases (CopyHumanTeamDBs). No arguments, no result. */
@@ -39,7 +39,7 @@ void AddHumanTeam(void)
     int bank;
     int n;
 
-    byte_DE268 = 0;
+    MergeResult = 0;
     err = LeagueCheckStub((char *)&curleague, 2);
     do {
         shown = 0;
@@ -67,7 +67,7 @@ void AddHumanTeam(void)
             }
         }
     } while (shown);
-    if (byte_DE268) {
+    if (MergeResult) {
         ClearScreen(shown);
         MakePath(s.path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_easndesk, 0);
         bank = LoadBank(s.path, 0);
@@ -119,7 +119,7 @@ void RemoveHumanTeam(void)
     int bank;
     int n;
 
-    byte_DE268 = 0;
+    MergeResult = 0;
     err = LeagueCheckStub((char *)&curleague, 2);
     do {
         shown = 0;
@@ -147,7 +147,7 @@ void RemoveHumanTeam(void)
             }
         }
     } while (shown);
-    if (byte_DE268) {
+    if (MergeResult) {
         ClearScreen(shown);
         MakePath(s.path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_easndesk, 0);
         bank = LoadBank(s.path, 0);

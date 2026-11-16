@@ -10,7 +10,7 @@ global str_dbgRef, str_dbgPb, str_dbgG, str_dbgGO, str_dbgGsp, str_dbgC12, str_d
 global str_dbgD, str_dbgLbD, str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa
 global str_debError, str_dbgBail, str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex
 global str_dumpSortcords, str_dumpSortLine, str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlLineH, str_dumpGlHdrH
-global str_dumpGlLine, str_dumpTeamHdrA, str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, unk_C1B3E, unk_C1B49
+global str_dumpGlLine, str_dumpTeamHdrA, str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, str_NoStar, str_NoPenalty
 global str_Charging, str_Slashing, str_CrossChecking, str_Hooking, str_Tripping, str_Interference, str_Holding, str_HighSticking
 global str_Boarding, str_Elbowing, str_AbuseOfOfficial, str_CheckingFromBehind, str_PenaltyShot2, str_Roughing, str_Charging2, str_Slashing2
 global str_Xcheck, str_Hooking2, str_Tripping2, str_Interfer, str_Holding2, str_Histick, str_Boarding2, str_Elbowing2
@@ -43,11 +43,11 @@ str_EASports:
         db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,00h
 str_StarFmt:
         db 025h,073h,020h,053h,074h,061h,072h,00h
-unk_C1B3E:
+str_NoStar:
         db 00h,00h
 PenaltyList:
         db 052h,06Fh,075h,067h,068h,069h,06Eh,067h,00h
-unk_C1B49:
+str_NoPenalty:
         db 00h
 str_Charging:
         db 043h,068h,061h,072h,067h,069h,06Eh,067h,00h

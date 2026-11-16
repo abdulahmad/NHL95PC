@@ -3,7 +3,7 @@
 
 /* SelectMatchingPlayers: toggle the selection of every player on side's roster (or in the free-agent list when
  rosterisfa) whose lower-case name is first + last, or whose last name is first when last is empty. The roster
- selection is cleared first (free agents: falistsel, and with dword_D0C20 the first match is remembered in
+ selection is cleared first (free agents: falistsel, and with FaListScrolls the first match is remembered in
  falisttop). */
 void SelectMatchingPlayers(char *first, char *last, int side)
 {
@@ -26,14 +26,14 @@ void SelectMatchingPlayers(char *first, char *last, int side)
     } else {
         int i;
         for (i = 0; i < facount; i++) ((unsigned char *)falistsel)[i] = 0;
-        if (dword_D0C20) falisttop = -1;
+        if (FaListScrolls) falisttop = -1;
         for (i = 0; i < facount; i++) {
             SplitPlayerName((char *)(falist + i * 27) + 8, f, l);
             strlwr(f);
             strlwr(l);
             if ((!strcmp(first, f) && !strcmp(last, l)) || (!*last && !strcmp(first, l))) {
                 ((unsigned char *)falistsel)[i] = ~((unsigned char *)falistsel)[i];
-                if (dword_D0C20 && falisttop == -1) falisttop = i;
+                if (FaListScrolls && falisttop == -1) falisttop = i;
             }
         }
     }

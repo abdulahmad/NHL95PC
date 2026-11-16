@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D29FB progbits alloc noexec write align=1
-global seriesgameno, str_YourTeamHasBeen, str_FromThePlayOffs, str_WishToSeeThe, str_OfThePlayOffs, unk_D2A68
+global seriesgameno, str_YourTeamHasBeen, str_FromThePlayOffs, str_WishToSeeThe, str_OfThePlayOffs, str_TheEliminated
 seriesgameno:
         db 0FFh,0FFh,0FFh,0FFh
 str_YourTeamHasBeen:
@@ -17,5 +17,5 @@ str_WishToSeeThe:
 str_OfThePlayOffs:
         db 06Fh,066h,020h,074h,068h,065h,020h,070h,06Ch,061h,079h,02Dh,06Fh,066h,066h,073h
         db 03Fh,00h
-unk_D2A68:
+str_TheEliminated:
         db 054h,068h,065h,020h

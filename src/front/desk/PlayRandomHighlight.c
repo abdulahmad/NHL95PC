@@ -4,7 +4,7 @@
 /* PlayRandomHighlight: mark the other games that finished (period >= 5) since the last look as played; if all
  six are, return 0. Otherwise pick a random unplayed game, play a highlight of it (StartHL2 with its two teams,
  scores and period; a finished game is shown in the third period with one goal less each) and keep the scores
- it ends with for a game still in progress (period 4 becomes final, 5). Remember the periods in dword_DC868 and
+ it ends with for a game still in progress (period 4 becomes final, 5). Remember the periods in otherperiodprev and
  return StartHL2's result. */
 int PlayRandomHighlight(void)
 {
@@ -15,7 +15,7 @@ int PlayRandomHighlight(void)
     int per;
 
     for (i = 0; i < 6; i++)
-        if (otherperiod[i] >= 5 && otherperiod[i] != dword_DC868[i]) hlplayedmask |= 1 << i;
+        if (otherperiod[i] >= 5 && otherperiod[i] != otherperiodprev[i]) hlplayedmask |= 1 << i;
     if (hlplayedmask == 0x3F) return 0;
     do {
         g = randomd0(6);
@@ -35,6 +35,6 @@ int PlayRandomHighlight(void)
         otherscoresb[g * 2] = b;
         if (otherperiod[g] == 4) otherperiod[g] = 5;
     }
-    for (i = 0; i < 6; i++) dword_DC868[i] = otherperiod[i];
+    for (i = 0; i < 6; i++) otherperiodprev[i] = otherperiod[i];
     return per;
 }

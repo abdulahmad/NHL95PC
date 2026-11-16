@@ -8,9 +8,9 @@ extern bannermsg, bannertimer, pendelaytab_e13, pendelay2tab, pendelay2tab_e4, r
 extern awtmcoachflags, milestonesaid, milestonesaid_b1, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
 extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
-extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, dword_CBEBE
+extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, apl
 extern goalienotebits, sideobjpos, hmplstats_m2, hmplstats, plcareergoals, plcareerpts, plseasongoals, plseasonpts
-extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, PenBuf_m2, SpeechPatchNext, rinkobjused_m2, defertab
+extern hmtmtouch2, hmtmtouch3, RinkSideShape, RinkSideShapeFlipped, PenBuf_m2, SpeechPatchNext, rinkobjused_m2, defertab
 extern defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6, defertab_fn, FatalError
 extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemode
 extern gameopts, gmode, gmode2, gsp, gsummarypath, gsumqcount, hmgoalcnt, hmroster
@@ -28,7 +28,7 @@ extern sprintf_, str_02d02dSInjury, str_02d02dSPenalty, str_Assists, str_B3, str
 extern str_B7, str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumName, str_FmtNumNameSuffix
 extern str_FmtParenD, str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD
 extern str_SHTag, str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1
-extern textline2, textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue
+extern textline2, textline3, textline4, textline5, str_NoPenalty, gsumheader, gsumtail, gsumqueue
 extern UpdateTextOverlay, vecdist, VisTeam, gsumcount, penaltysc, SortPending, injurystop, Pencntdwn2
 extern rinkobjdefs, penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
 global GetPeriodTimeRemaining, AddPenalty, AddPenalty2, SetPA, InProgress, InProgress_popebp, InProgress_popx, chkprogress_go

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_3A9AA progbits alloc exec nowrite align=1
-extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, byte_DE268, ClearScreen, CopyFile, CopyHumanTeamDBs
+extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, MergeResult, ClearScreen, CopyFile, CopyHumanTeamDBs
 extern curleague, DeleteFiles, dlgsavebuf, FileClose, FileExists, FileOpenRead, FileOpenRW, FileReadAt
 extern FileWriteAt, GetLeagueId, humancount, LeagueCheckStub, leaguedbnames, leagueflags, leaguemaster, leaguesaved
 extern leagueteams, lgplayeridfile, lgteam_17, lgteamflags, lgteamver, MakePath, masterctlmsg, masteronlymsg
@@ -734,7 +734,7 @@ MergeLeagueFiles:
         mov eax, curleague
         call LeagueCheckStub
         xor dl, dl
-        mov byte [byte_DE268], dl
+        mov byte [MergeResult], dl
         test eax, eax
         jne near .27
         push savedname
@@ -1192,7 +1192,7 @@ MergeLeagueFiles:
         mov edx, ecx
         mov eax, 2Ah
         call SetDialogColors
-        mov eax, dword [byte_DE268-3]
+        mov eax, dword [MergeResult-3]
         sar eax, 18h
         add esp, byte 60h
         jmp near UpdateTeamDbs_ret

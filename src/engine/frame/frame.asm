@@ -7,7 +7,7 @@ extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtm
 extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
 extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
 extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, oneminsaid
-extern starthl2pos, dword_D8C72, dword_D8C7A, hmtmtouch2, hmtmtouch3, awtmtouch3, ovlartbank, SpeechPatchNext
+extern starthl2pos, hmtmtouch2, hmtmtouch3, awtmtouch3, ovlartbank, SpeechPatchNext, rinkendart
 extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
 extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
 extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund

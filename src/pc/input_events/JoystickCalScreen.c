@@ -76,7 +76,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
             GrabBlock((int)back, joycalx[s.cur], joycaly[s.cur]);
             DrawArt(s.shape, joycalx[s.cur], joycaly[s.cur]);
             prev = s.cur;
-            PrintString((char *)unk_C27F5, 0, 0x14);
+            PrintString((char *)str_OneSpace, 0, 0x14);
         }
         FreeMemBlock((int)back);
         FreeMemBlock(s.bank);

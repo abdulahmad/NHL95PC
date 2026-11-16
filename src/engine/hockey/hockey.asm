@@ -7,7 +7,7 @@ extern awtmnearpl, awtmstruct, bannermsg, bannertimer, LinePlayersAway, c1player
 extern camy, changeplayer_ret5, checkcoll, checkwindow, ChkGoalies, ClearPenaltyBuffer, clearteams, cliprect_y0
 extern cliprect_y1, clockticks, collflag, cont1team, cont2team, crowdlevel, cupceremony, curperiod
 extern CwdExciteLvl, DecayCrowdLevel, defsort_d, defsort_fwd, doinput, DrawCallBanner, DrawFrameSprite, DrawRinkEndArt
-extern DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay, ds2list, dword_CCD4F, DrawClipLeft, DrawClipRight, dword_E03A8
+extern DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay, ds2list, AimArrowFrames_m2, DrawClipLeft, DrawClipRight, GameVarsClear
 extern SpeechPatchNext, EndPenaltyShot, energywarn, exitgame, fadeinpending, findpc, findpc_ret5, findpc_ret6
 extern fodir1, fodir2, fox, foy, gameclock, gameopts, gameover, gmode
 extern gmode2, goalevent, gsp, hmscore, hmtmgoaliesc, hmtmnear, hmtmnearpl, hmtmstruct
@@ -1726,7 +1726,7 @@ cleargamevars:
         push ebx
         push edx
         xor edx, edx
-        mov dword [dword_E03A8], edx
+        mov dword [GameVarsClear], edx
         mov dword [LastShooterTeam], edx
         mov dword [regd5], edx
         mov dword [regd4], edx
@@ -2585,7 +2585,7 @@ DrawRinkOverlays:
         movsx edi, ax
         movsx esi, cx
         movsx eax, bx
-        mov eax, dword [nosplit eax*4+dword_CCD4F]
+        mov eax, dword [nosplit eax*4+AimArrowFrames_m2]
         sar eax, 10h
         mov ecx, edx
         mov ebx, edi

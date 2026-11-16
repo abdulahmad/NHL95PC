@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_6EAB5 progbits alloc exec nowrite align=1
-extern __CHK, btn_DBError, ClearInputQueue, ClearScreen, DrawArt, DrawButtons, DrawMenuBar, dword_D0CDA
+extern __CHK, btn_DBError, ClearInputQueue, ClearScreen, DrawArt, DrawButtons, DrawMenuBar, PosBitMasks
 extern editptrspr, editrostersmenubar, FillRect, fullscrbmp, GetInputEvent, GrabBlock, KeyDbPtr, KeyDown
 extern MouseSetPos, pointerspr, PrintCenteredText, ptrupdatefn, PutBlock, SetDrawBitmap, str_ErrorsFoundInDatabases, str_NotEnoughDefence
 extern str_NotEnoughForwards, str_NotEnoughGoalies, str_NotEnoughPlayers, str_TheDefenceLinesAre, str_TheExtraAttackerLines, str_TheForwardLinesAre, str_TheGoalieLinesAre, str_ThePenaltyKillingLines
@@ -326,7 +326,7 @@ CheckTeamLines:
 .2:
         mov eax, dword [byte esp+060h]
         mov ecx, dword [byte esp+078h]
-        and ecx, dword [nosplit eax*4+dword_D0CDA]
+        and ecx, dword [nosplit eax*4+PosBitMasks]
         je near .19
         cmp ecx, byte 10h
         jb short .4

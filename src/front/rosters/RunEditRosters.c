@@ -50,8 +50,8 @@ void RunEditRosters(void)
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
     SetScreenTarget();
-    dword_EA2B0 = mainfont;
-    TextSetFont(dword_EA2B0);
+    RosterFont = mainfont;
+    TextSetFont(RosterFont);
     TextSaveState(s.state);
     if (musicon && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));

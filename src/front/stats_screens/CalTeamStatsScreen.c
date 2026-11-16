@@ -196,7 +196,7 @@ int CalStandingsMenu(void)
             dword_C6D26 = 0;
             break;
         case 3:
-            dword_DC734 = 0;
+            RosterFromStandings = 0;
             statsredrawcb = (int)TeamRosterScreen;
             ((void (*)(int))TeamRosterScreen)(statscategory);
             DrawMenuBar(rostermenubar, 4, 0x40, 0x41, 0x42);
@@ -204,14 +204,14 @@ int CalStandingsMenu(void)
             break;
         case 4:
             statsredrawcb = (int)GoalieStatsCard;
-            dword_DC6B4 = 0;
+            StatsLastSel = 0;
             ((void (*)(void *))GoalieStatsCard)(statsplayer);
             DrawMenuBar(playercardmenubar, 2, 0x40, 0x41, 0x42);
             RunMenu(playercardmenubar, 2, 0x40, 0x41, 0x42);
             break;
         case 5:
             statsredrawcb = (int)SkaterStatsCard;
-            dword_DC6B4 = 0;
+            StatsLastSel = 0;
             ((void (*)(void *))SkaterStatsCard)(statsplayer);
             DrawMenuBar(playercardmenubar, 2, 0x40, 0x41, 0x42);
             RunMenu(playercardmenubar, 2, 0x40, 0x41, 0x42);

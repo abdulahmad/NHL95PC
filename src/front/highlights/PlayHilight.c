@@ -13,7 +13,7 @@ void PlayHilight(void)
     int i;
 
     UnusedStateByte = hilightrec[0];
-    byte_DC267 = hilightrec[1];
+    GameRecordDay = hilightrec[1];
     HomeTeam = hilightrec[2];
     VisTeam = hilightrec[0x1F];
     curperiod = *(int *)(hilightrec + 0x3C);
@@ -31,7 +31,7 @@ void PlayHilight(void)
     i = 0;
     do {
         hmrosterjersey[i * 39] = hilightrec[i + 3];
-        byte_DB7F1[i * 39] = hilightrec[i + 0x20];
+        awrosterjersey[i * 39] = hilightrec[i + 0x20];
         i++;
     } while (i < 0x1C);
     if (musicon && songdata)

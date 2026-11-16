@@ -2,34 +2,34 @@
 bits 32
 %include "hockey.inc"
 section s_CC01D progbits alloc noexec write align=1
-extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
-extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
+extern str_1st, str_2nd, str_3rd, OvlScriptGoal, OvlScriptClap, OvlScriptFanom, OvlScriptUflag, OvlScriptCflag
+extern OvlScriptSiren, OvlScriptRuff, OvlScriptHook, OvlScriptSaved, OvlScriptCross, OvlScriptGuilt
 global str_ErrLoadGame, str_ErrSaveGame, ovlseqtimed, lldisp, HotList, HotList_y, HotStickList, HotStickList_y
 global teamrocktune, starskatermin, stargoaliemin, Endfaceoff_ftab_m1, lchoicetab, assonetimer_blade, assonetimer_blade_y, cupceremony
 global rinkobjanim, rinkobjanim_b1, ovlartfiles, goalienotebits, markframes_e1, lastsfx, photobankf, demoflag
-global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
+global introskipped, onetimerflag, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotctl
 global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
-global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, introstandanims_m2
+global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, introstandanims_m2
 global assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, nethit, checkinglist_m2
-global digihandle, crowdsmooth, crowdvol8, crowdvol7, cursndbank, oneminsaid, playsuspended, dword_CCC9D
-global dword_CCC9E, sublist_m2, sublist, sublist_defl_m3, dword_CCD4F, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, sideobjpos
+global digihandle, crowdsmooth, crowdvol8, crowdvol7, cursndbank, oneminsaid, playsuspended
+global Setplass_alist_m3, sublist_m2, sublist, sublist_defl_m3, AimArrowFrames_m2, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, sideobjpos
 global ovlscripts, starordtab, shotsets, sublist_defl, ovlsteptime, Pencntdwn2, lldispodd, ltack
-global crowdlevel, lcline_aw, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+global crowdlevel, lcline_aw, RockTuneIds, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 global linenext, FallDown_pinxr, FallDown_pinxl, FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, blockspd
 global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
 ovlscripts:
-        dd unk_CBF18
-        dd unk_CBEFC
-        dd unk_CBF04
-        dd unk_CBF37
-        dd unk_CBF60
-        dd unk_CBF85
-        dd unk_CBF96
-        dd unk_CBFA9
-        dd unk_CBFC3
-        dd unk_CBFEB
-        dd unk_CBFFA
+        dd OvlScriptFanom
+        dd OvlScriptGoal
+        dd OvlScriptClap
+        dd OvlScriptUflag
+        dd OvlScriptCflag
+        dd OvlScriptSiren
+        dd OvlScriptRuff
+        dd OvlScriptHook
+        dd OvlScriptSaved
+        dd OvlScriptCross
+        dd OvlScriptGuilt
 ovlseqtimed:
         db 01h,00h,01h,01h,01h,00h,00h,00h,01h,00h,00h
 ovlsteptime:
@@ -68,7 +68,6 @@ onetimerflag:
         db 00h,00h,00h,00h
 shotongoal:
         db 00h,00h
-dword_CC0FA:
         db 00h,00h
 penshotplayer:
         db 00h,00h,00h,00h
@@ -249,12 +248,11 @@ HotStickList_y:
         db 0FEh,0Eh,0F6h,08h,0FDh,09h,0F8h,0F0h,0FDh,0E9h,0FAh,0Bh,0FFh,018h,0FDh,011h
         db 0FEh,017h,0F9h,0F9h,0FCh,0F9h,0F7h,0F8h,0FFh,0F3h,0F4h,0F1h,00h,0E3h,03h,0F6h
         db 0FFh,0F5h,0Ah,02h,06h,0FEh,016h,010h
-dword_CC9AD:
         db 0FDh,0Fh,0Dh
 teamrocktune:
         db 01h,01h,00h,01h,01h,00h,01h,01h,01h,00h,01h,01h,01h,00h,01h,01h
         db 00h,01h,01h,01h,00h,00h,01h,00h,01h,01h,00h,00h
-word_CC9CC:
+RockTuneIds:
         db 0FEh,01h
 introstandanims_m2:
         db 03Ah,02h,067h,0Dh,00h,00h,07Bh,0Dh,00h,00h,057h,0Dh,00h,00h,089h,0Dh
@@ -380,9 +378,8 @@ oneminsaid:
         db 00h,00h,00h,00h
 playsuspended:
         db 00h
-dword_CCC9D:
         db 00h
-dword_CCC9E:
+Setplass_alist_m3:
         db 00h,00h
 cupceremony:
         db 00h
@@ -406,7 +403,7 @@ sublist_defl:
         db 03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h,0Bh,014h,019h,026h,027h,0FFh
         db 026h,027h,01h,04h,07h,0Ah,013h,018h,01Dh,021h,00h,03h,06h,09h,012h,017h
         db 01Ch,020h,02h,05h,08h,0Bh,014h
-dword_CCD4F:
+AimArrowFrames_m2:
         db 019h,0FFh,0C4h,02h,00h,00h,0C5h,02h,00h,00h,0C6h,02h,00h,00h,0C9h,02h
         db 00h,00h,0CAh,02h,00h,00h,0C9h,02h,00h,00h,0C6h,02h,00h,00h,0C5h,02h
         db 00h,00h,064h,01h,00h,00h,00h,00h,00h

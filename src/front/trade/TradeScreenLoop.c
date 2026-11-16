@@ -35,9 +35,9 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
 #define DRAGJERSEY()                                                                                              \
     if (my > menus[0]->y2 && mx > 0xBE && mx < 0x1C0 && tradeside != -1 && tradecursor[tradeside] != -1        \
         && (!menus[1] || !MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item))) {             \
-        memcpy(unk_D12C8, (unsigned char *)traderemap1[tradeside] + 0x90, 0x30);                                  \
-        c1 = jerseyremap[byte_D11BC[teams[tradeside] * 4]];                                                       \
-        c2 = byte_D12DE;                                                                                          \
+        memcpy(jerseyremapteam, (unsigned char *)traderemap1[tradeside] + 0x90, 0x30);                                  \
+        c1 = jerseyremap[TeamJerseyBase[teams[tradeside] * 4]];                                                       \
+        c2 = jerseyremaptrim;                                                                                          \
         MakeJerseyShape(jerseyremap, tradejersey[tradeside * 0x268 + tradecursor[tradeside] * 0x16], c1, c2);     \
         SetColorRemap(jerseyremap);                                                                                   \
         DrawArtKeyColour(art, mx - 0x1C, my - 0x20);                                                                     \
@@ -302,9 +302,9 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                         }
                         if (r) {
                             for (i = 0; i < 4; i++) {
-                                memcpy(unk_D12C8, (unsigned char *)traderemap1[i >> 1] + 0x90, 0x30);
-                                c1 = jerseyremap[byte_D11BC[teams[i >> 1] * 4]];
-                                c2 = byte_D12DE;
+                                memcpy(jerseyremapteam, (unsigned char *)traderemap1[i >> 1] + 0x90, 0x30);
+                                c1 = jerseyremap[TeamJerseyBase[teams[i >> 1] * 4]];
+                                c2 = jerseyremaptrim;
                                 MakeJerseyShape(jerseyremap, picked[i].c[1], c1, c2);
                                 SetColorRemap(jerseyremap);
                                 DrawArtMasked(art, tradebtnx[i * 2], tradebtny[i * 2]);

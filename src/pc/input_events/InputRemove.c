@@ -6,7 +6,7 @@
 void InputRemove(void)
 {
     if (inputinstalled) {
-        dword_CDA24 = 0;
+        InputResetWord = 0;
         ptrstep = 0;
         RemoveTimerCallback(InputPollTick);
         inputinstalled = 0;

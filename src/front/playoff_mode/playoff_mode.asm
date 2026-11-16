@@ -5,7 +5,7 @@ section s_86696 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, AllocMemBlock, AskDatabaseChoice, awscore, boxfillcolor, boxlitecolor, boxshadecolor
 extern btn_LeagueExists, btn_POHumanOut, BuildSavedGameLabels, careerdb, careerdb_size, cddriveptr, confteams, CopyFile
 extern ctl1side, ctl1team, ctl2side, ctl2team, ctlavailmask, curleague, dbextension, DeleteDir
-extern DiskSpaceShort, dlgtextbg, dlgtextfg, DrawMenuBar, DrawPlayoffTree, DrawShape, dword_C6D26, dword_D2884
+extern DiskSpaceShort, dlgtextbg, dlgtextfg, DrawMenuBar, DrawPlayoffTree, DrawShape, dword_C6D26, PoGameSetFlag
 extern EditPlayoffSettings, embscupbank, exhstate, FadePalStep, FatalError, FileClose, FileExists, fileoncd
 extern FileOpenRead, FileOpenRW, FileOpenWrite, FileWriteAt, FindShape, FreeMemBlock, gameopts, GetFileSize
 extern GetLeagueDBSizes, hmscore, hmteamrec, HomeTeam, keydb, keydb_size, leaguedbfmt, leaguedbfmt2
@@ -352,7 +352,7 @@ CreatePlayoffs:
         test eax, eax
         je short .17
         xor edx, edx
-        mov dword [dword_D2884], edx
+        mov dword [PoGameSetFlag], edx
 .17:
         mov edx, podbsizes
         xor eax, eax

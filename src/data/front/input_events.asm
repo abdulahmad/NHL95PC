@@ -7,21 +7,21 @@ extern StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals, StatsMenuPlusMinus,
 extern StatsMenuSavePct, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, MenuOpenSaved, MenuExit, MenuNewExhibition
 extern MenuNewLeague, MenuAddTeam, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs, MenuMergeUpdateDbs, MenuMergeLeagueFiles, MenuUpdateTeamDbs
 extern MenuTradePlayers, MenuLeagueHilights, MenuImportDbs, MenuCentralRegistry, MenuExhibitionSettings, MenuP1ControlsExh, MenuP2ControlsExh, MenuP1ControlsInGame
-extern MenuP2ControlsInGame, LockerRoomScreen, MenuSoundSettings, MenuSaveGame, CreatePlayoffs, EasnStandingsMenu, unk_C67B1, unk_CEF0F
-extern unk_CEF2F, unk_CEF6F, unk_CEFEF
+extern MenuP2ControlsInGame, LockerRoomScreen, MenuSoundSettings, MenuSaveGame, CreatePlayoffs, EasnStandingsMenu, StatsSourceMenu, DeskReplayMenu
+extern DeskTeamLinesMenu, DeskGameStatsMenu, DeskStatsTypeMenu
 global str_LAAtMTL, modesetlabel, str_SportsCentral2, str_PlayoffTree2
 global str_Return, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_BroadcastBooth, str_IntermissionDesk, str_RinkSide
-global joycalx, joycaly, inputinstalled, ptrstep, dword_CDA24, inputqcount, inputqtail
-global inputqhead, inputpolldiv, dword_CDA38, joybtnheld, enterheld, lastmousebtns, lastmousex, lastmousey
+global joycalx, joycaly, inputinstalled, ptrstep, InputResetWord, inputqcount, inputqtail
+global inputqhead, inputpolldiv, InputQueueSpare, joybtnheld, enterheld, lastmousebtns, lastmousex, lastmousey
 global mainmenubar, menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo
-global menuact_posettings, menuact_pohilights, dword_CE8EB, menutext_deskreturn, menutext_desktodesk, str_File, str_Game6, str_Statistics3
-global str_Open5, unk_CDA6E, str_NewExhibitionGame, str_NewPlayOffSeries, str_NextPlayOffGame, str_PlayOffSettings, str_PlayOffHilights, str_NewLeague
-global str_ImportDatabases, str_ExportDatabases, str_NextLeagueGame, unk_CDB44, str_CentralRegistry, str_Exit, unk_CDB6F, str_Dashes2
-global str_Player1Controls2, str_Player2Controls2, str_ExhibitionSettings, str_PlayOffSettings2, str_SoundSettings, str_Dashes3, unk_CDC34, str_sp00XXXXXXXXXXXXXXXXX
+global menuact_posettings, menuact_pohilights, statsmenu_srccnt, menutext_deskreturn, menutext_desktodesk, str_File, str_Game6, str_Statistics3
+global str_Open5, str_FileMenuDivider, str_NewExhibitionGame, str_NewPlayOffSeries, str_NextPlayOffGame, str_PlayOffSettings, str_PlayOffHilights, str_NewLeague
+global str_ImportDatabases, str_ExportDatabases, str_NextLeagueGame, str_LeagueManager, str_CentralRegistry, str_Exit, str_GameLabel, str_Dashes2
+global str_Player1Controls2, str_Player2Controls2, str_ExhibitionSettings, str_PlayOffSettings2, str_SoundSettings, str_Dashes3, str_HomeTeamGoalie, str_sp00XXXXXXXXXXXXXXXXX
 global str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_VisitingTeamGoalie, str_sp00XXXXXXXXXXXXXXXXX3, str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2, str_GoalieItemTmpl, str_Action
 global str_Game7, str_InstantReplay, str_LineEditor, str_Statistics4, str_GameSummary, str_BackToGame, str_SaveGame2, str_SportsDesk
 global str_Exit2, str_GoToReplay, str_HomeTeam2, str_VisitingTeam2, str_GameStatistics, str_PenaltySummary, str_ScoringSummary, str_TeamScratches
-global unk_CDDF7, str_MergeLeagueFiles, str_RemoveTeamFromLeague, str_AddTeamToLeague, str_TradePlayers, str_RebuildDataBases, str_MergeAndUpdateTeam, str_UpdateTeamsDataBases
+global str_LeagueMenuDivider, str_MergeLeagueFiles, str_RemoveTeamFromLeague, str_AddTeamToLeague, str_TradePlayers, str_RebuildDataBases, str_MergeAndUpdateTeam, str_UpdateTeamsDataBases
 global str_ChangeLeaguePlaySettings, str_LeagueHilights, str_File2, str_Settings4, str_Statistics5, str_PlayNextGame, str_ReturnToSportsCentral2, str_StatisticsType8
 global str_Standings2, str_TeamsSortedBy2, str_PlayersSortedBy2, str_GoaliesSortedBy2, str_Scoring, str_Defense4, str_PenaltyKilling2, str_PowerPlay2
 global str_Penalties, str_Points, str_Goals, str_Assists2, str_PowerPlayGoals, str_ShorthandedGoals, str_PlusMinus4, str_PenaltyMinutes
@@ -31,8 +31,8 @@ global str_LineEditor3, str_PlayerStatistics2, str_Cancel4, str_UseTheseLines2, 
 global str_StatisticsType2, str_ReturnTo, str_SportsDesk2, str_ReturnTo2, str_Roster3, str_StatisticsType3, str_TeamRoster, str_OverallStandings
 global str_ShowTeamRoster, str_ReturnTo3, str_PlayerStatistics3, str_StatisticsType4, str_ShowPlayerStatisticsAnd, str_ReturnTo4, str_StatisticsType5, str_TeamsSortedBy
 global str_StatisticsType6, str_PlayersSortedBy, str_StatisticsType7, str_GoaliesSortedBy, str_Print, str_OutputCurrentData, filemenu, leaguemgrmenu
-global gamemenu, statsmenu, unk_CE96F, unk_CEA2F, unk_CEB2F, deskmenubar, deskmenubar_lg, unk_CECAF
-global unk_CED2F, unk_CED6F
+global gamemenu, statsmenu, TeamStatsSortMenu, SkaterStatsSortMenu, GoalieStatsSortMenu, deskmenubar, deskmenubar_lg, DeskFileMenu
+global DeskLeagueFileMenu, DeskSettingsMenu
 joycalx:
         db 01Dh,01h,00h,00h,01Dh,01h,00h,00h,09Dh,01h,00h,00h,09Dh,01h,00h,00h
         db 09Dh,01h,00h,00h,01Dh,01h,00h,00h,09Bh,00h,00h,00h,09Bh,00h,00h,00h
@@ -45,7 +45,7 @@ inputinstalled:
         db 00h,00h,00h,00h
 ptrstep:
         db 00h,00h,00h,00h
-dword_CDA24:
+InputResetWord:
         db 00h,00h,00h,00h
 inputqcount:
         db 00h,00h,00h,00h
@@ -55,7 +55,7 @@ inputqhead:
         db 00h,00h,00h,00h
 inputpolldiv:
         db 0Ah,00h,00h,00h
-dword_CDA38:
+InputQueueSpare:
         db 00h,00h,00h,00h
 joybtnheld:
         db 00h,00h,00h,00h
@@ -75,7 +75,7 @@ str_Statistics3:
         db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,00h
 str_Open5:
         db 04Fh,070h,065h,06Eh,020h,02Eh,02Eh,02Eh,00h
-unk_CDA6E:
+str_FileMenuDivider:
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,02Dh,02Dh,02Dh,00h
 str_NewExhibitionGame:
@@ -104,7 +104,7 @@ str_ExportDatabases:
 str_NextLeagueGame:
         db 04Eh,065h,078h,074h,020h,04Ch,065h,061h,067h,075h,065h,020h,047h,061h,06Dh,065h
         db 020h,02Eh,02Eh,02Eh,00h
-unk_CDB44:
+str_LeagueManager:
         db 04Ch,065h,061h,067h,075h,065h,020h,04Dh,061h,06Eh,061h,067h,065h,072h,020h,03h
         db 00h
 str_CentralRegistry:
@@ -112,7 +112,7 @@ str_CentralRegistry:
         db 020h,02Eh,02Eh,02Eh,00h
 str_Exit:
         db 045h,078h,069h,074h,00h
-unk_CDB6F:
+str_GameLabel:
         db 047h,061h,06Dh,065h,03Ah,020h
 str_LAAtMTL:
         db 04Ch,041h
@@ -145,7 +145,7 @@ str_SoundSettings:
 str_Dashes3:
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,02Dh,02Dh,02Dh,02Dh,00h
-unk_CDC34:
+str_HomeTeamGoalie:
         db 048h,06Fh,06Dh,065h,020h,054h,065h,061h,06Dh,020h,047h,06Fh,061h,06Ch,069h,065h
         db 020h,03h,00h
 str_sp00XXXXXXXXXXXXXXXXX:
@@ -216,7 +216,7 @@ str_ScoringSummary:
 str_TeamScratches:
         db 054h,065h,061h,06Dh,020h,053h,063h,072h,061h,074h,063h,068h,065h,073h,020h,02Eh
         db 02Eh,02Eh,00h
-unk_CDDF7:
+str_LeagueMenuDivider:
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
         db 02Dh,00h
@@ -455,14 +455,14 @@ filemenu:
         dd MenuOpenSaved
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
         db 0A5h,00h,00h,00h,023h,00h,00h,00h
-        dd unk_CDA6E
+        dd str_FileMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 024h,00h,00h,00h,0A5h,00h,00h,00h,035h,00h,00h,00h
         dd str_NewExhibitionGame
         dd MenuNewExhibition
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
         db 0A5h,00h,00h,00h,047h,00h,00h,00h
-        dd unk_CDA6E
+        dd str_FileMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 048h,00h,00h,00h,0A5h,00h,00h,00h,059h,00h,00h,00h
         dd str_NewLeague
@@ -481,12 +481,12 @@ menuact_export:
 menuact_nextlg:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 090h,00h,00h,00h,0A5h,00h,00h,00h,0A1h,00h,00h,00h
-        dd unk_CDB44
+        dd str_LeagueManager
         db 00h,00h,00h,00h
 menusub_lgmgr:
         db 00h,00h,00h,00h,0Dh,00h,00h,00h,00h,00h,00h,00h,0A2h,00h,00h,00h
         db 0A5h,00h,00h,00h,0B3h,00h,00h,00h
-        dd unk_CDA6E
+        dd str_FileMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 0B4h,00h,00h,00h,0A5h,00h,00h,00h,0C5h,00h,00h,00h
         dd str_NewPlayOffSeries
@@ -505,14 +505,14 @@ menuact_posettings:
 menuact_pohilights:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 0FCh,00h,00h,00h,0A5h,00h,00h,00h,0Dh,01h,00h,00h
-        dd unk_CDA6E
+        dd str_FileMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 0Eh,01h,00h,00h,0A5h,00h,00h,00h,01Fh,01h,00h,00h
         dd str_CentralRegistry
         dd MenuCentralRegistry
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,020h,01h,00h,00h
         db 0A5h,00h,00h,00h,031h,01h,00h,00h
-        dd unk_CDA6E
+        dd str_FileMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 032h,01h,00h,00h,0A5h,00h,00h,00h,044h,01h,00h,00h
         dd str_Exit
@@ -524,7 +524,7 @@ leaguemgrmenu:
         dd MenuMergeLeagueFiles
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
         db 0FDh,00h,00h,00h,023h,00h,00h,00h
-        dd unk_CDDF7
+        dd str_LeagueMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 024h,00h,00h,00h,0FDh,00h,00h,00h,035h,00h,00h,00h
         dd str_RemoveTeamFromLeague
@@ -535,14 +535,14 @@ leaguemgrmenu:
         dd MenuAddTeam
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
         db 0FDh,00h,00h,00h,059h,00h,00h,00h
-        dd unk_CDDF7
+        dd str_LeagueMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 05Ah,00h,00h,00h,0FDh,00h,00h,00h,06Bh,00h,00h,00h
         dd str_TradePlayers
         dd MenuTradePlayers
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h
         db 0FDh,00h,00h,00h,07Dh,00h,00h,00h
-        dd unk_CDDF7
+        dd str_LeagueMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 07Eh,00h,00h,00h,0FDh,00h,00h,00h,08Fh,00h,00h,00h
         dd str_RebuildDataBases
@@ -561,7 +561,7 @@ leaguemgrmenu:
         dd MenuLeagueHilights
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0C6h,00h,00h,00h
         db 0FDh,00h,00h,00h,0D7h,00h,00h,00h
-        dd unk_CDDF7
+        dd str_LeagueMenuDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 0D8h,00h,00h,00h,0FDh,00h,00h,00h,0EAh,00h,00h,00h
         dd str_UpdateTeamsDataBases
@@ -569,7 +569,7 @@ leaguemgrmenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h
 gamemenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,092h,00h,00h,00h,011h,00h,00h,00h
-        dd unk_CDB6F
+        dd str_GameLabel
         dd LockerRoomScreen
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
         db 092h,00h,00h,00h,023h,00h,00h,00h
@@ -598,8 +598,8 @@ statsmenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_StatisticsType8
         db 00h,00h,00h,00h
-        dd unk_C67B1
-dword_CE8EB:
+        dd StatsSourceMenu
+statsmenu_srccnt:
         db 04h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
         db 023h,00h,00h,00h
         dd str_Standings2
@@ -608,19 +608,19 @@ dword_CE8EB:
         db 08Ch,00h,00h,00h,035h,00h,00h,00h
         dd str_TeamsSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CE96F
+        dd TeamStatsSortMenu
         db 06h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
         db 047h,00h,00h,00h
         dd str_PlayersSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CEA2F
+        dd SkaterStatsSortMenu
         db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
         db 05Ah,00h,00h,00h
         dd str_GoaliesSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CEB2F
+        dd GoalieStatsSortMenu
         db 03h,00h,00h,00h
-unk_CE96F:
+TeamStatsSortMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,07Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_Standings2
         dd StatsMenuStandings
@@ -645,7 +645,7 @@ unk_CE96F:
         dd str_Penalties
         dd StatsMenuTeamPenalties
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CEA2F:
+SkaterStatsSortMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,09Fh,00h,00h,00h,011h,00h,00h,00h
         dd str_Points
         dd StatsMenuPoints
@@ -678,7 +678,7 @@ unk_CEA2F:
         dd str_ShootingPercentage
         dd StatsMenuShootPct
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CEB2F:
+GoalieStatsSortMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,0ABh,00h,00h,00h,011h,00h,00h,00h
         dd str_GoalsAgainstAverage
         dd StatsMenuGAA
@@ -695,50 +695,50 @@ deskmenubar:
         db 00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h,012h,00h,00h,00h
         dd str_Action
         db 00h,00h,00h,00h
-        dd unk_CECAF
+        dd DeskFileMenu
         db 04h,00h,00h,00h,02Fh,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Game7
         db 00h,00h,00h,00h
-        dd unk_CED6F
+        dd DeskSettingsMenu
         db 07h,00h,00h,00h,05Bh,00h,00h,00h,00h,00h,00h,00h,0A0h,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Statistics4
         db 00h,00h,00h,00h
-        dd unk_CEFEF
+        dd DeskStatsTypeMenu
         db 05h,00h,00h,00h,0A1h,00h,00h,00h,00h,00h,00h,00h,0EDh,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_LineEditor
         db 00h,00h,00h,00h
-        dd unk_CEF2F
+        dd DeskTeamLinesMenu
         db 02h,00h,00h,00h,0EEh,00h,00h,00h,00h,00h,00h,00h,058h,01h,00h,00h
         db 012h,00h,00h,00h
         dd str_InstantReplay
         db 00h,00h,00h,00h
-        dd unk_CEF0F
+        dd DeskReplayMenu
         db 01h,00h,00h,00h,059h,01h,00h,00h,00h,00h,00h,00h,0C6h,01h,00h,00h
         db 012h,00h,00h,00h
         dd str_GameSummary
         db 00h,00h,00h,00h
-        dd unk_CEF6F
+        dd DeskGameStatsMenu
         db 04h,00h,00h,00h
 deskmenubar_lg:
         db 00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h,012h,00h,00h,00h
         dd str_Action
         db 00h,00h,00h,00h
-        dd unk_CED2F
+        dd DeskLeagueFileMenu
         db 02h,00h,00h,00h,02Fh,00h,00h,00h,00h,00h,00h,00h,074h,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Statistics4
         db 00h,00h,00h,00h
-        dd unk_CEFEF
+        dd DeskStatsTypeMenu
         db 05h,00h,00h,00h,075h,00h,00h,00h,00h,00h,00h,00h,0E1h,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_GameSummary
         db 00h,00h,00h,00h
-        dd unk_CEF6F
+        dd DeskGameStatsMenu
         db 04h,00h,00h,00h
-unk_CECAF:
+DeskFileMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,011h,00h,00h,00h
         dd str_BackToGame
         dd DeskBackToGame
@@ -756,7 +756,7 @@ menutext_deskreturn:
         dd str_Exit2
         dd DeskExitGame
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CED2F:
+DeskLeagueFileMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,011h,00h,00h,00h
 menutext_desktodesk:
         dd str_SportsDesk
@@ -766,7 +766,7 @@ menutext_desktodesk:
         dd str_Exit2
         dd DeskExitGame
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CED6F:
+DeskSettingsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
         dd str_Player1Controls2
         dd MenuP1ControlsInGame
@@ -779,5 +779,5 @@ unk_CED6F:
         dd str_Dashes3
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 036h,00h,00h,00h,0A9h,00h,00h,00h,047h,00h,00h,00h
-        dd unk_CDC34
+        dd str_HomeTeamGoalie
         db 00h,00h,00h,00h

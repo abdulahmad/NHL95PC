@@ -50,8 +50,8 @@ void RunEditRosters(void)
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
     SetScreenTarget();
-    dword_EA2B0 = mainfont;
-    TextSetFont(dword_EA2B0);
+    RosterFont = mainfont;
+    TextSetFont(RosterFont);
     TextSaveState(s.state);
     if (musicon && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
@@ -153,9 +153,9 @@ void LoadRosterList(int side)
         ShellSortBytes(falist, facount, 0x1B, (int (*)(void *, void *))ComparePlayerEntry);
         for (i = 0; i < facount; i++) ((char *)falistsel)[i] = 0;
         falisttop = 0;
-        if (facount <= 0x1C) dword_D0C20 = 0;
+        if (facount <= 0x1C) FaListScrolls = 0;
         else {
-            dword_D0C20 = -1;
+            FaListScrolls = -1;
             InitScrollBar((int *)fascrollbar, 0x1C, facount);
         }
         if (side == 0) menu_r1_tofa = 0;

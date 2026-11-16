@@ -109,11 +109,11 @@ void ResetGameVars(void)
     __STOSB(rinkobjused, 0, 0x20);
     SpeechPatchNext = 0;
     penevteam = 0;
-    dword_E9AB6 = 0;
+    UnusedEventWord = 0;
     NumCwdExciteLvl = 0;
     MaxCwdExciteLvl = 0;
-    word_E9AA2 = 0;
-    word_E9AAA = 0;
+    UnusedCrowdWord = 0;
+    UnusedCrowdWordHi = 0;
     SumCwdExciteLvl = 0;
     UnusedSpeechWord = -1;
     StartGame();

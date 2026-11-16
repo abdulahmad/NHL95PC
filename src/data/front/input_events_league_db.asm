@@ -4,7 +4,7 @@ bits 32
 section s_C27CC progbits alloc noexec write align=1
 global str_Joycal, str_Scrn3, str_Rite, str_Left, str_Pal24, str_Puck, str_PuckBack, str_LEFTJOYSTICK
 global str_RIGHTJOYSTICK, str_SaveAsGameDatabases, str_Current2, str_EnterANewDatabase, str_DBX, str_ErrorGettingDiskSpace, str_3dKbytesOfFree2, str_Temp7
-global str_Current3, str_Pointer11, str_FreeAgents, str_DATABASE, unk_C27F5, str_S5
+global str_Current3, str_Pointer11, str_FreeAgents, str_DATABASE, str_OneSpace, str_S5
 str_Joycal:
         db 06Ah,06Fh,079h,063h,061h,06Ch,00h
 str_Scrn3:
@@ -19,7 +19,7 @@ str_Puck:
         db 070h,075h,063h,06Bh,00h
 str_PuckBack:
         db 050h,075h,063h,06Bh,042h,061h,063h,06Bh,00h
-unk_C27F5:
+str_OneSpace:
         db 020h,00h
 str_LEFTJOYSTICK:
         db 04Ch,045h,046h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h

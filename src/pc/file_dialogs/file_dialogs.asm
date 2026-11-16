@@ -9,7 +9,7 @@ extern fdlg_up, fdlgmask, fdlgrects, fdlgshapes, fdlgtab, FileClose, FileCreate,
 extern FileOpenRead, FileReadAt, FileWriteAt, FreeMemBlock, gameresult, GetInputEvent, j_unlink_, leaguemgrmenu
 extern lgfilenames, lgfiles, lgstate, LoadModeState, MakePath, menuact_export, menuact_nextlg, menuact_nextpo
 extern menuact_pohilights, menuact_posettings, MenuExportDbs, MenuNewExhibition, MenuNextLeagueGame, menusub_lgmgr, MessageBox, MouseSetPos
-extern musicon, off_C5441, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02, othergames, otherperiod, otherscores
+extern musicon, TeamAbbrevsAllStar, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02, othergames, otherperiod, otherscores
 extern PlayoffModeLoop, pofilenames, pofiles, pointerspr, postate, ptrupdatefn, qsort_, savefname
 extern seriesgameno, SetDialogColors, SetupStatsSourceMenu, str_Arro, str_Buf, str_Can, str_Db2, str_Dbox
 extern str_Del, str_Delete, str_Dialogbx, str_Done, str_Down, str_Exhibition, str_ExhibitionGameCalled, str_feA1
@@ -2180,7 +2180,7 @@ SelectSavedFile:
         mov edx, dword [nosplit edx*4+teamabbrevs]
         jmp short .3
 .2:
-        mov edx, dword [nosplit edx*4+off_C5441]
+        mov edx, dword [nosplit edx*4+TeamAbbrevsAllStar]
 .3:
         mov ebx, 3
         mov eax, str_LAAtMTL
@@ -2191,7 +2191,7 @@ SelectSavedFile:
         mov edx, dword [nosplit ebx*4+teamabbrevs]
         jmp short .5
 .4:
-        mov edx, dword [nosplit ebx*4+off_C5441]
+        mov edx, dword [nosplit ebx*4+TeamAbbrevsAllStar]
 .5:
         mov ebx, 3
         mov eax, str_LAAtMTL+7

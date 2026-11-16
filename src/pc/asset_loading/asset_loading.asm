@@ -6,7 +6,7 @@ extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefa
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
 extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
 extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, SpeechPatchNext
-extern dword_E9AB6, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
+extern UnusedEventWord, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, gameover
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
 extern joysampling, joysampling_save, kaufmfont, lastplayer, lcblink, lcblinktime, lcboxon, lcline
@@ -26,7 +26,7 @@ extern TextSetFont, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, Snd
 extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
 extern penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
-extern rinkobjs, milestonesaid_b2, UnusedSpeechWord, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
+extern rinkobjs, milestonesaid_b2, UnusedSpeechWord, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl, UnusedCrowdWordHi, penevteam
 extern rinkobjused
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
 global ReloadGameGfx, PlacePlayersAtStart, SetupGame, SetupDemoGame, ResetGameVars, FileExists
@@ -872,11 +872,11 @@ ResetGameVars:
         xor edx, edx
         mov word [SpeechPatchNext], dx
         mov word [penevteam], dx
-        mov word [dword_E9AB6], dx
+        mov word [UnusedEventWord], dx
         mov word [NumCwdExciteLvl], dx
         mov word [MaxCwdExciteLvl], dx
-        mov word [word_E9AA2], dx
-        mov word [word_E9AAA], dx
+        mov word [UnusedCrowdWord], dx
+        mov word [UnusedCrowdWordHi], dx
         xor ecx, ecx
         mov dword [SumCwdExciteLvl], ecx
         mov word [UnusedSpeechWord], 0FFFFh

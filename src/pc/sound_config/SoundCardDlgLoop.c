@@ -159,7 +159,7 @@ int SoundCardDlgLoop(void)
 
 /* SetSoundDevice (82D7A, PC only): switch the sound to device dev (setbits bits: 1 PC speaker, 2 Sound Blaster,
    4 AdLib, 8 MT-32, 20h Ultrasound, 10h none). Shut the current one down first (speech and its copy buffer for
-   2 / 20h, the AdLib sample for 4). Then open dev's music and digital drivers (SndOpenDriver of dword_D2427 /
+   2 / 20h, the AdLib sample for 4). Then open dev's music and digital drivers (SndOpenDriver of musicdriver /
    digidriver); on success name them to the sound library, load the AdLib SLAPSHOT sample, play the MT32HOCK
    sample once for the MT-32 (with a message), make dev sounddev and setbits, set the slots, write its index in
    sounddevids to NHL.CFG and turn music on for 2 / 20h. When a device fails, say so (its name in sndcardname)
@@ -184,7 +184,7 @@ int SetSoundDevice(int dev)
 
     h1 = 0;
     s.h2 = 1;
-    if (dword_D2423) {
+    if (SoundDevActive) {
         if (sounddev == 2 || sounddev == 0x20) {
             ShutdownSpeech();
             FreeMemBlock(dword_ED7A8);
@@ -195,68 +195,68 @@ int SetSoundDevice(int dev)
         SndShutdown();
     }
     cursndbank = 0x20;
-    dword_D2423 = 0;
+    SoundDevActive = 0;
     do {
         switch (dev) {
         case 1:
             strcpy(s.drv, (char *)str_PCBEEP);
             strcpy(s.port, (char *)str_PC);
-            dword_D2427 = 1;
+            musicdriver = 1;
             digidriver = -1;
             crowddriver = 0;
             break;
         case 2:
             strcpy(s.drv, (char *)str_SBDAC);
             strcpy(s.port, (char *)str_PC);
-            dword_D2427 = 2;
+            musicdriver = 2;
             digidriver = 3;
             crowddriver = musicslot = 1;
             break;
         case 4:
             strcpy(s.drv, (char *)str_ADLIB);
             strcpy(s.port, (char *)str_PC);
-            dword_D2427 = 2;
+            musicdriver = 2;
             digidriver = -1;
             crowddriver = 0;
             break;
         case 8:
             strcpy(s.drv, (char *)str_MT322);
             strcpy(s.port, (char *)str_PC);
-            dword_D2427 = 4;
+            musicdriver = 4;
             digidriver = -1;
             crowddriver = 0;
             break;
         case 0x20:
             strcpy(s.drv, (char *)str_SBDAC2);
             strcpy(s.port, (char *)str_PC);
-            dword_D2427 = 5;
+            musicdriver = 5;
             digidriver = 6;
             crowddriver = musicslot = 1;
             break;
         default:
             strcpy(s.drv, (char *)str_PCBEEP2);
             strcpy(s.port, (char *)str_PC);
-            dword_D2427 = 0;
+            musicdriver = 0;
             digidriver = -1;
             crowddriver = 0;
             break;
         }
         SndInit();
-        if (dword_D2427 >= 0 && (h1 = SndOpenDriver(dword_D2427)) != -1) {
-            if (digidriver < 0) dword_D2423 = -1;
-            else if ((s.h2 = SndOpenDriver(digidriver)) != -1) dword_D2423 = -1;
+        if (musicdriver >= 0 && (h1 = SndOpenDriver(musicdriver)) != -1) {
+            if (digidriver < 0) SoundDevActive = -1;
+            else if ((s.h2 = SndOpenDriver(digidriver)) != -1) SoundDevActive = -1;
         }
-        if (dword_D2423) {
+        if (SoundDevActive) {
             LoadMusicBank(s.drv, s.port);
             if (dev == 4) {
                 MakePath(s.path, fileoncd[0x18F] == 1 ? (char *)cddriveptr : 0, (char *)str_Slapshot, 0);
                 dword_ED7A4 = LoadSample(s.path);
             }
-            if (dev == 8 && !dword_D2350) {
+            if (dev == 8 && !PcSpkSampleReady) {
                 MessageBox(-1, -1, (char *)msg_InitMT32, 2, 0, 0, (int)&s.x, (int)&s.y, 0);
                 MakePath(s.path, fileoncd[0xF7] == 1 ? (char *)cddriveptr : 0, (char *)str_MT32HOCK, 0);
                 t = LoadSample(s.path);
-                dword_D2350 = -1;
+                PcSpkSampleReady = -1;
                 sounddev = 8;
                 PlayDigiSample((void *)t);
                 WaitDigiSample();
@@ -306,13 +306,13 @@ int SetSoundDevice(int dev)
                 RestoreDialogBg();
                 dev = 0x10;
             } else {
-                dword_D2423 = -1;
+                SoundDevActive = -1;
             }
             SndShutdown();
             SetTickDeadline(0x64);
             WaitTickDeadline();
         }
-    } while (!dword_D2423);
+    } while (!SoundDevActive);
     if (sounddev == 2 || sounddev == 0x20) {
         dword_ED7A8 = AllocMemBlock((char *)str_Emmcopybuf, 0x400, 0x20);
         InitSpeech(musicslot, dword_C4CFC, dword_ED7A8, 0x400);

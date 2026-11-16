@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D075E progbits alloc noexec write align=1
-extern unk_D068A, unk_D0720, str_PlayerStatistics6, str_Display
+extern RosterStatsSeasonMenu, RosterStatsReturnMenu, str_PlayerStatistics6, str_Display
 global str_TMP, rosterteam, rosterisfa, falist, falistsel, facount
 global seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 global carteamsdb_size, keydb_size, teamsdb_size, attdb_size, rosterstatsmenubar, str_C4
@@ -10,12 +10,12 @@ rosterstatsmenubar:
         db 00h,00h,00h,00h,00h,00h,00h,00h,075h,00h,00h,00h,012h,00h,00h,00h
         dd str_PlayerStatistics6
         db 00h,00h,00h,00h
-        dd unk_D0720
+        dd RosterStatsReturnMenu
         db 01h,00h,00h,00h,076h,00h,00h,00h,00h,00h,00h,00h,0BEh,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Display
         db 00h,00h,00h,00h
-        dd unk_D068A
+        dd RosterStatsSeasonMenu
         db 02h,00h,00h,00h
 rosterteam:
         db 0Ch

@@ -61,7 +61,7 @@ int AdvancePlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir,
         MakePath(path, dir, (char *)leaguedbnames[5], ext);
         WriteFile(path, seasondb, seasondb_size);
         AwardsCeremony();
-        byte_DE268 = -1;
+        MergeResult = -1;
     }
     if (err = FileWriteAt(fh, &n, 0, 2)) goto done;
 save:

@@ -5,11 +5,11 @@ bits 32
 section s_5FB03 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, __STOSD, awlinetab, awroster, awteamrec, awtmglstats, awtmlines
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, BuildEventLines
-extern rinkobjanim, byte_DC264, byte_DC265, byte_DC266, byte_DC267, UnusedStateByte, milestonesaid, curevent
+extern rinkobjanim, UnusedStateFlag, UnusedStateMode, UnusedStateSpare, GameRecordDay, UnusedStateByte, milestonesaid, curevent
 extern goalevent, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
 extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
 extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, goalienotebits, hmplstats, hmtmplattr
-extern hmtmglattr, awtmplattr, awtmglattr, SumCwdExciteLvl, SpeechPatchNext, dword_E9AB6, rinkobjused_m2, energywarn
+extern hmtmglattr, awtmplattr, awtmglattr, SumCwdExciteLvl, SpeechPatchNext, UnusedEventWord, rinkobjused_m2, energywarn
 extern exhstate, exitgame, fadeinpending, FatalError, FileReadAt, FileWriteAt, fodir1, fodir2
 extern fofdata2, fox, foy, frameaccum, gameclock, gamemode, gameover, gamepal
 extern GetPeriodTime, gmode, gmode2, gsp, hmlinetab, hmroster, hmteamrec, hmtmglstats
@@ -27,9 +27,9 @@ extern refsignal, RefStep, ReplayRecordReset, replaystart, savedmousex, savedmou
 extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopathend, sopathpoint
 extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, gsumheader
 extern gsumtail, hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats
-extern VisTeam, penaltysc, SortPending, lcsel_aw, word_CBD64, word_CBD66, refhitcount, injurystop
-extern Pencntdwn2, lcline_aw, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, milestonesaid_b2
-extern UnusedSpeechWord, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam, GoalState, rinkobjused
+extern VisTeam, penaltysc, SortPending, lcsel_aw, ObjInitFrame, ObjInitAttr, refhitcount, injurystop
+extern Pencntdwn2, lcline_aw, rinkobjdefs, rinkobjs, rinkobjs_w2, SaveStateSpare, SaveStatePad, milestonesaid_b2
+extern UnusedSpeechWord, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl, UnusedCrowdWordHi, penevteam, GoalState, rinkobjused
 extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
 ;-----------------------------------------------------------------------------
@@ -389,10 +389,10 @@ SaveGameState:
         mov dx, word [savedmousey]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_DEF84]
+        mov dx, word [SaveStateSpare]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_DEF88]
+        mov dx, word [SaveStatePad]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [curperiod]
@@ -401,7 +401,7 @@ SaveGameState:
         mov dx, word [lldispodd]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [dword_E9AB6]
+        mov dx, word [UnusedEventWord]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [penevteam]
@@ -425,10 +425,10 @@ SaveGameState:
         mov dx, word [crowdlevel]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_E9AAA]
+        mov dx, word [UnusedCrowdWordHi]
         mov word [eax], dx
         add eax, byte 2
-        mov dx, word [word_E9AA2]
+        mov dx, word [UnusedCrowdWord]
         mov word [eax], dx
         add eax, byte 2
         mov dx, word [CwdExciteLvl]
@@ -487,15 +487,15 @@ SaveGameState:
         add eax, byte 2
         mov dl, byte [UnusedStateByte]
         mov byte [eax], dl
-        mov dl, byte [byte_DC267]
+        mov dl, byte [GameRecordDay]
         mov byte [byte eax+01h], dl
         add eax, byte 2
-        mov dl, byte [byte_DC264]
+        mov dl, byte [UnusedStateFlag]
         mov byte [eax], dl
-        mov dl, byte [byte_DC265]
+        mov dl, byte [UnusedStateMode]
         mov byte [byte eax+01h], dl
         add eax, byte 2
-        mov dl, byte [byte_DC266]
+        mov dl, byte [UnusedStateSpare]
         mov byte [eax], dl
         mov dl, byte [onetimerflag]
         mov byte [byte eax+01h], dl
@@ -1177,10 +1177,10 @@ LoadGameState:
         mov dword [savedmousey], eax
         add ebx, byte 2
         movsx eax, word [ebx]
-        mov dword [word_DEF84], eax
+        mov dword [SaveStateSpare], eax
         add ebx, byte 2
         movsx eax, word [ebx]
-        mov dword [word_DEF88], eax
+        mov dword [SaveStatePad], eax
         add ebx, byte 2
         movsx eax, word [ebx]
         mov dword [curperiod], eax
@@ -1189,7 +1189,7 @@ LoadGameState:
         mov word [lldispodd], ax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [dword_E9AB6], ax
+        mov word [UnusedEventWord], ax
         add ebx, byte 2
         mov ax, word [ebx]
         mov word [penevteam], ax
@@ -1216,10 +1216,10 @@ LoadGameState:
         mov dword [crowdsmooth], eax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [word_E9AAA], ax
+        mov word [UnusedCrowdWordHi], ax
         add ebx, byte 2
         mov ax, word [ebx]
-        mov word [word_E9AA2], ax
+        mov word [UnusedCrowdWord], ax
         add ebx, byte 2
         mov ax, word [ebx]
         mov word [CwdExciteLvl], ax
@@ -1278,15 +1278,15 @@ LoadGameState:
         mov al, byte [ebx]
         mov byte [UnusedStateByte], al
         mov al, byte [byte ebx+01h]
-        mov byte [byte_DC267], al
+        mov byte [GameRecordDay], al
         add ebx, byte 2
         mov al, byte [ebx]
-        mov byte [byte_DC264], al
+        mov byte [UnusedStateFlag], al
         mov al, byte [byte ebx+01h]
-        mov byte [byte_DC265], al
+        mov byte [UnusedStateMode], al
         add ebx, byte 2
         mov al, byte [ebx]
-        mov byte [byte_DC266], al
+        mov byte [UnusedStateSpare], al
         movsx eax, byte [byte ebx+01h]
         mov dword [onetimerflag], eax
         mov ecx, 80h
@@ -1716,9 +1716,9 @@ LoadGameState:
         mov esi, eax
         shl esi, 3
         add esi, eax
-        mov ax, word [nosplit esi*2+word_CBD64]
+        mov ax, word [nosplit esi*2+ObjInitFrame]
         mov word [byte ebx+066h], ax
-        mov ax, word [nosplit esi*2+word_CBD66]
+        mov ax, word [nosplit esi*2+ObjInitAttr]
         mov word [byte ebx+068h], ax
         test byte [byte ebx+044h], 40h
         je short .37

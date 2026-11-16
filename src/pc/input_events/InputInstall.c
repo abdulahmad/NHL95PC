@@ -13,7 +13,7 @@ void InputInstall(void)
     else ctlavailmask &= 0xFE;
     if (inputinstalled == 0) {
         InstallKeyboardHandler();
-        ptrstep = dword_CDA24 = 0;
+        ptrstep = InputResetWord = 0;
         inputinstalled = 1;
         addtimer(InputPollTick);
         ClearInputQueue();

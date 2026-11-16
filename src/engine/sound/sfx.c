@@ -19,7 +19,7 @@ void sfx(int id)
         return;
     }
     if (sounddev == 4 && id == 0xAA) {
-        PlaySong((void *)dword_ED7A4, dword_D2427);
+        PlaySong((void *)dword_ED7A4, musicdriver);
         return;
     }
     if (id == 0x90) {

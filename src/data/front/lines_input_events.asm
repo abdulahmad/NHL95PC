@@ -4,7 +4,7 @@ bits 32
 section s_EA0DC nobits alloc noexec write align=1
 global ctlavailmask, rosterlist, rosterjersey, rosterslot
 global rosterstat, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
-global dword_EA2B0, fullscrbmp, rosterteamptr, tmpdbpath
+global RosterFont, fullscrbmp, rosterteamptr, tmpdbpath
 ptrupdatefn:
         resb 24
 ctlavailmask:
@@ -23,7 +23,7 @@ inputev:
         resb 1
         resb 4
         resb 7
-dword_EA2B0:
+RosterFont:
         resb 4
 fullscrbmp:
         resb 1716

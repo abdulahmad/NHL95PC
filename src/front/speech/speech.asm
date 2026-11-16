@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_832BC progbits alloc exec nowrite align=1
 extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
-extern addtimer, AllocMemBlock, byte_D27B6, cursndbank, FreeClip_ret, FreeMemBlock, lseek_, musichandle
+extern addtimer, AllocMemBlock, SpeechInitMode, cursndbank, FreeClip_ret, FreeMemBlock, lseek_, musichandle
 extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RemoveTimerCallback, samplereq, SayNhlIntro
 extern speechbank, speechchannel, speechcopybuf, speechcopylen, speechinit, speechq, str_SampleMemMan, str_Sentence
 extern str_SpeechBank, str_Speechbuf, strncpy_, AllocMemHandleLocked, PushMemDescriptorLocked, MemDescPtr, PlayDigiPtr, PlayDigiPtrLoop
@@ -272,7 +272,7 @@ InitSpeech:
         test eax, eax
         jne near .x
         mov al, byte [esp]
-        mov byte [byte_D27B6], al
+        mov byte [SpeechInitMode], al
         xor edx, edx
         mov dword [speechchannel], edx
         mov dword [speechcopybuf], ebx

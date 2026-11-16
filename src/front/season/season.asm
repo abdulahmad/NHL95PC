@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_41B80 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, AdvancePlayoffs, BuildPlayoffs, byte_DE268, careerdb, careerdb_size, divisionteams
-extern dword_DDD34, dword_DDD3C, FileClose, FileOpenRead, FileOpenRW, FileReadAt, FileWriteAt, FreeMemBlock
+extern __CHK, __STOSD, AdvancePlayoffs, BuildPlayoffs, MergeResult, careerdb, careerdb_size, divisionteams
+extern lgoppteam, lgopphuman, FileClose, FileOpenRead, FileOpenRW, FileReadAt, FileWriteAt, FreeMemBlock
 extern GetFileSize, keydb, keydb_size, leaguedbnames, lggameidx, lgplayteam, lgschedrec, MakePath
 extern MessageBox, monthdays_m1, msg_GenSchedule, rand_, ReadSchedGame, ReadTeamRec, RestoreDialogBg, savleague1
 extern savleague2, seasondb, seasondb_size, SeriesWinner, SimulateGame, str_extDB, OpenArtArchiveErr, teamdivision
-extern teamdivslot, word_DDD48, word_DDD4A, WriteFile, WriteSchedGame, WriteTeamRec
+extern teamdivslot, lggamecount, lgoppgamecount, WriteFile, WriteSchedGame, WriteTeamRec
 global LoadLeagueGameRef, DateKey, NormalizeDate, UpdateSeasonSchedule, UpdateSeasonSchedule_pop3, UpdatePlayoffSeries, SeriesLength_jt, SeriesLength
 global SeriesLength_bo1, SeriesLength_bo3, SeriesLength_n3, SeriesLength_n4, SeriesLength_bo7, RandomizeSchedule, SimScheduleDay
 ;-----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ LoadLeagueGameRef:
         jne short .1
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, dword_DDD34
+        mov edx, lgoppteam
         mov eax, esi
         call FileReadAt
 .1:
@@ -44,7 +44,7 @@ LoadLeagueGameRef:
         jne short .2
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, dword_DDD3C
+        mov edx, lgopphuman
         mov eax, esi
         call FileReadAt
 .2:
@@ -52,7 +52,7 @@ LoadLeagueGameRef:
         jne short .3
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, word_DDD48
+        mov edx, lggamecount
         mov eax, esi
         call FileReadAt
 .3:
@@ -60,7 +60,7 @@ LoadLeagueGameRef:
         jne short .4
         mov ecx, 4
         mov ebx, 0FFFFFFFFh
-        mov edx, word_DDD4A
+        mov edx, lgoppgamecount
         mov eax, esi
         call FileReadAt
 .4:
@@ -189,7 +189,7 @@ UpdateSeasonSchedule:
         mov dword [byte esp+02Ch], edx
         mov dword [byte esp+028h], edx
         xor ah, ah
-        mov byte [byte_DE268], ah
+        mov byte [MergeResult], ah
         mov ebx, dword [leaguedbnames+18h]
         mov ecx, esi
         mov edx, edi

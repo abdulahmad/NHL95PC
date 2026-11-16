@@ -6,5 +6,5 @@
 void PlayDigiSample(void *s)
 {
     StopDigiSample();
-    if (!(sounddev & 0x11) && s) digihandle = PlaySong(s, dword_D2427);
+    if (!(sounddev & 0x11) && s) digihandle = PlaySong(s, musicdriver);
 }

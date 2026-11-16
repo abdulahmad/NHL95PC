@@ -565,7 +565,7 @@ void RunIntro(void)
    and BKGD art, drawn after the palette cycle fades out. Start the credits song when there is music, else the
    ADTITLE and ROCKDITI samples (playing the first), fade the palette in and say goodnight. Then show the 29 pages
    of creditpages (from the eighth on in the Kaufmann font): after the first, wait 62h ticks for a click; a page
-   other than unk_C638C restores the backdrop and draws its art (a bank named at +5, its SHP0 shape at a random
+   other than CreditPageEnd restores the backdrop and draws its art (a bank named at +5, its SHP0 shape at a random
    spot) and centres its lines (count at +0, strings from +9) from DAh up by half their height, then waits its
    time (+1) for a click. A click ends the credits: restore the backdrop, fade the music and the palette out,
    free the song or the samples, the text state and the block, and clear the screen. No result. */
@@ -631,7 +631,7 @@ void ShowCredits(void)
         ClearInputQueue();
         if (page != 0) stop = WaitClickTimeout(0x62);
         if (stop) break;
-        if (cur == (CreditPage *)unk_C638C) continue;
+        if (cur == (CreditPage *)CreditPageEnd) continue;
         if (*cur->bank != 0) {
             MakePath(path, fileoncd[0x21E] == 1 ? (char *)cddriveptr : 0, cur->bank, 0);
             bank = LoadBank(path, 0);

@@ -46,7 +46,7 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     int play;
 
     s.rdfh = s.rwfh = s.fh = -1;
-    byte_DE268 = 0;
+    MergeResult = 0;
     MakePath(s.path, dir, (char *)leaguedbnames[6], ext);
     err = FileOpenRW(s.path, &s.fh);
     if (!err) {

@@ -106,7 +106,7 @@ short ReplayStep(short n, short sound)
         rpl_pos_b1[i * 2] = RB(regd1) == 0xF ? -1 : RSB(regd1);
     }
     rpl_puckz = *(signed char *)replayplay++;
-    word_E9FA9 = *(signed char *)replayplay++;
+    rpl_puckunused = *(signed char *)replayplay++;
     replayplay += 2;
     RB(regd0) = *replayplay++;
     RB(regd1) = RB(regd0) & 0xF;
@@ -196,10 +196,10 @@ void DrawRinkSideObjects(short vx, short vy)
             y = rinkobjdefs[++k];
             f = rinkobjanim[rinkobjdefs[++k] + (signed char)rpl_objstep[i]];
         }
-        if (f > 0x64 || k < 0) DrawSprite(dword_E0220, 4, (short)(i == 0x12 ? 0x1A5 : 0x12D), 0, (short)(i == 0x13), 0);
+        if (f > 0x64 || k < 0) DrawSprite(RinkSideShape, 4, (short)(i == 0x12 ? 0x1A5 : 0x12D), 0, (short)(i == 0x13), 0);
         if (f >= 0) DrawSprite(photoptrsf[f], x, y, 0, (short)(i == 0x13), 0);
         if (i == 0x12) {
-            DrawSprite(dword_E0230, 4, (short)(i == 0x12 ? 0x1A5 : 0x12D), 0, -1, 0);
+            DrawSprite(RinkSideShapeFlipped, 4, (short)(i == 0x12 ? 0x1A5 : 0x12D), 0, -1, 0);
         } else {
             f = rpl_frame_e15;
             if (f >= 0x362) DrawFrameSprite(f, rpl_x_e15, rpl_y_e15, 0, 0);

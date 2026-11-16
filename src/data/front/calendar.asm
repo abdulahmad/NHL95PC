@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_C88E2 progbits alloc noexec write align=1
-extern str_A5, unk_C1936, unk_C67B1, unk_C88C2, str_StatisticsType, str_ReturnTo
-global teamstartlag, greyramp, dword_C891E, calcolx, calrowy, calendarshapes
+extern str_A5, str_DriveB, StatsSourceMenu, TradeStatsReturnMenu, str_StatisticsType, str_ReturnTo
+global teamstartlag, greyramp, tradestatsmenubar_srccnt, calcolx, calrowy, calendarshapes
 global gridcellbuf, tradebtnx, tradebtny, masteronlymsg, mergeincompletemsg, updateerrmsg
 global exporterrmsg, unequaltrademsg, tradestatsmenubar, str_TheDatabasesCanOnly, str_OnTheMasterCopy, str_TheMasterControllerFor, str_MustBeImportedFirst, masterctlmsg
 global str_WarningMergeNotCompleted, str_LeagueCanNotBe, str_TheMergeIsComplete, str_ErrorWhileUpdating, str_PlayersDatabases, str_ErrorWhileMergingDatabases, mergeerrmsg, str_ImportingMasterDatabases
@@ -13,13 +13,13 @@ tradestatsmenubar:
         db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
         dd str_ReturnTo
         db 00h,00h,00h,00h
-        dd unk_C88C2
+        dd TradeStatsReturnMenu
         db 01h,00h,00h,00h,046h,00h,00h,00h,00h,00h,00h,00h,0AEh,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_StatisticsType
         db 00h,00h,00h,00h
-        dd unk_C67B1
-dword_C891E:
+        dd StatsSourceMenu
+tradestatsmenubar_srccnt:
         db 04h,00h,00h,00h
 teamstartlag:
         db 00h,00h,02h,01h,00h,02h,00h,03h,01h,00h,00h,00h,00h,00h,00h,00h
@@ -109,7 +109,7 @@ drivebtns:
         dd str_A5
         db 0F8h,0FFh,0FFh,0FFh,018h,00h,00h,00h,020h,00h,00h,00h,0Ah,00h,00h,00h
         db 00h,00h,00h,00h,06h,00h,00h,00h
-        dd unk_C1936
+        dd str_DriveB
 greyramp:
         db 00h,017h,02Ah,03Fh
 tradebtnx:

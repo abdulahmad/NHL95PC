@@ -8,7 +8,7 @@ extern TextCharH, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap_
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
 extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines, hmpanelpens, awpanelpens, hmlinetimer
-extern awlinetimer, demomatchups_m1, demomatchups, nhlintrosaid, demoflag, cursndbank, dword_DC2B8, titlesample
+extern awlinetimer, demomatchups_m1, demomatchups, nhlintrosaid, demoflag, cursndbank, PenaltyBlankDigit, titlesample
 extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
 extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTicks, hmscore
 extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
@@ -31,7 +31,7 @@ extern PutBlock, DrawBitmap, DrawArtOr, FillRect, DrawArtOpaqueAtOwnPos, DrawArt
 extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, ReadJoyRaw, ClearScreen, SaveDrawState
 extern RestoreDrawState, VgaSetPalette, SetScreenTarget, VgaBlitKeyed, VgaBlitKeyedAtOwnPos, SetColorRemap, VgaBlitRemap, CreateBitmap
 extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
-extern TickDeadlinePassed, TicksSinceLastCall, blackpal, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
+extern TickDeadlinePassed, TicksSinceLastCall, blackpal, CreditPageEnd, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
 extern lcsel_aw
 global RunDemoGame, RunDemoGame_x, AnyInputPressed, ReadBE32, TitleScreen, RunIntro, ShowCredits, SetTextColors
 global RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridFree
@@ -1591,7 +1591,7 @@ ShowCredits:
         test ecx, ecx
         jne near .23
         mov esi, dword [dword esp+0368h]
-        cmp esi, unk_C638C
+        cmp esi, CreditPageEnd
         je near .22
         mov eax, dword [byte esi+05h]
         cmp byte [eax], 0

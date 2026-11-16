@@ -2,17 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_DB7EC nobits alloc noexec write align=1
-global awroster, byte_DB7F1, hmgoalieidx, hmscratch, byte_DC264, byte_DC265, byte_DC266
-global byte_DC267, UnusedStateByte, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr, dword_DC23E
-global linesprites, hudhundstep, penaltydigits, dword_DC2B8, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
+global awroster, awrosterjersey, hmgoalieidx, hmscratch, UnusedStateFlag, UnusedStateMode, UnusedStateSpare
+global GameRecordDay, UnusedStateByte, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr
+global linesprites, hudhundstep, penaltydigits, PenaltyBlankDigit, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
 global clockdigits, clockcolon, cupseries, titlesample, statsteamorder, statsmenuresult, sfpal2, sfpal1
-global dword_DC6B4, statsnumgoalies, statsskaterorder, statsgoalieorder, dword_DC734, leaguestatsmode, statsgoalieplr, statsnumskaters
-global statsskaterplr, playofftree, hmteamrec, unk_DBD1C, awteamrec
+global StatsLastSel, statsnumgoalies, statsskaterorder, statsgoalieorder, RosterFromStandings, leaguestatsmode, statsgoalieplr, statsnumskaters
+global statsskaterplr, playofftree, hmteamrec, TeamRecLines, awteamrec
 global hmlinetab, hmglstats, awglstats, hmlineind, awlineind, statsscreenpal, hmglstats_w2
 global hmglstats_w4, hmglstats_w8, hmglstats_w14
 awroster:
         resb 5
-byte_DB7F1:
+awrosterjersey:
         resb 1087
 hmteamrec:
         resb 5
@@ -22,7 +22,7 @@ hmteamrec_skaters:
 hmteamrec_goalies:
         resb 12
         resb 48
-unk_DBD1C:
+TeamRecLines:
         resb 508
 awteamrec:
         resb 5
@@ -41,7 +41,6 @@ schedgameidx:
         resb 4
 pointerspr:
         resb 6
-dword_DC23E:
         resb 2
 hmglstats:
         resb 2
@@ -55,13 +54,13 @@ hmglstats_w14:
         resb 4
 awglstats:
         resb 18
-byte_DC264:
+UnusedStateFlag:
         resb 1
-byte_DC265:
+UnusedStateMode:
         resb 1
-byte_DC266:
+UnusedStateSpare:
         resb 1
-byte_DC267:
+GameRecordDay:
         resb 1
 UnusedStateByte:
         resb 4
@@ -71,7 +70,7 @@ hudhundstep:
         resb 4
 penaltydigits:
         resb 40
-dword_DC2B8:
+PenaltyBlankDigit:
         resb 4
 hmpanelspr:
         resb 4
@@ -103,7 +102,7 @@ sfpal2:
         resb 4
 sfpal1:
         resb 4
-dword_DC6B4:
+StatsLastSel:
         resb 4
 statsnumgoalies:
         resb 4
@@ -111,7 +110,7 @@ statsskaterorder:
         resb 100
 statsgoalieorder:
         resb 20
-dword_DC734:
+RosterFromStandings:
         resb 4
 leaguestatsmode:
         resb 4

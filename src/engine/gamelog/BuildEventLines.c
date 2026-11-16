@@ -51,26 +51,26 @@ void BuildEventLines(void)
                 (char *)hmteamrec + side * 0x2E8 + 0x1A);
         f = curevent_b5;
         pl = curevent_b2;
-        n = sprintf(buf, (char *)str_S8, (f & 2) ? (char *)str_SHTag : (f & 4) ? (char *)str_PPTag : (char *)unk_C1B49);
+        n = sprintf(buf, (char *)str_S8, (f & 2) ? (char *)str_SHTag : (f & 4) ? (char *)str_PPTag : (char *)str_NoPenalty);
         if (gamemode != 0 && !(gmode & 0x10) && pl < 0x19)
             sprintf(buf + n, (char *)str_FmtParenD, *(short *)((char *)hmplstats + side * 400 + pl * 16)
                     + *(int *)((char *)plseasongoals + side * 400 + pl * 16));
-        FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
+        FormatPlayerName((char *)&textline1, (char *)str_NoPenalty, hmrosterjersey[side * 0x444 + pl * 0x27],
                          (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17, buf);
         pl = (unsigned char)curevent_b3;
         if (pl == 0xFF) {
             sprintf((char *)&textline2, (char *)str_Unassisted);
         } else {
             sprintf((char *)&textline2, (char *)str_Assists);
-            FormatPlayerName((char *)&textline4, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
+            FormatPlayerName((char *)&textline4, (char *)str_NoPenalty, hmrosterjersey[side * 0x444 + pl * 0x27],
                              (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
-                             (char *)unk_C1B49);
+                             (char *)str_NoPenalty);
         }
         pl = curevent_b4;
         if (pl != 0xFF)
-            FormatPlayerName((char *)&textline5, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
+            FormatPlayerName((char *)&textline5, (char *)str_NoPenalty, hmrosterjersey[side * 0x444 + pl * 0x27],
                              (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
-                             (char *)unk_C1B49);
+                             (char *)str_NoPenalty);
     } else if (curevent == 2) {
         side = curevent_b1;
         pl = curevent_b2;
@@ -79,15 +79,15 @@ void BuildEventLines(void)
                     (char *)hmteamrec + penshotteam * 0x2E8);
             *(T13 *)&textline1 = *(T13 *)str_PenaltyShot;
             *(T15 *)&textline2 = *(T15 *)str_ToBeTakenBy;
-            FormatPlayerName((char *)&textline4, (char *)unk_C1B49, hmrosterjersey[penshotteam * 0x444 + penshotpnum * 0x27],
+            FormatPlayerName((char *)&textline4, (char *)str_NoPenalty, hmrosterjersey[penshotteam * 0x444 + penshotpnum * 0x27],
                              (char *)hmroster + penshotteam * 0x444 + penshotpnum * 0x27 + 7,
-                             (char *)hmroster + penshotteam * 0x444 + penshotpnum * 0x27 + 0x17, (char *)unk_C1B49);
+                             (char *)hmroster + penshotteam * 0x444 + penshotpnum * 0x27 + 0x17, (char *)str_NoPenalty);
         } else {
             sprintf((char *)&textline3, (char *)str_02d02dSPenalty, curevent_b6, curevent_b7,
                     (char *)hmteamrec + side * 0x2E8);
-            FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
+            FormatPlayerName((char *)&textline1, (char *)str_NoPenalty, hmrosterjersey[side * 0x444 + pl * 0x27],
                              (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
-                             (char *)unk_C1B49);
+                             (char *)str_NoPenalty);
             strcpy((char *)&textline2, (char *)penaltynames[(unsigned char)curevent_b3]);
             n = curevent_b4;
             if (n == 0xFF)
@@ -100,9 +100,9 @@ void BuildEventLines(void)
         pl = curevent_b2;
         n = curevent_b3;
         sprintf((char *)&textline3, (char *)str_02d02dSInjury, curevent_b5, curevent_b6, (char *)hmteamrec + side * 0x2E8);
-        FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
+        FormatPlayerName((char *)&textline1, (char *)str_NoPenalty, hmrosterjersey[side * 0x444 + pl * 0x27],
                          (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
-                         (char *)unk_C1B49);
+                         (char *)str_NoPenalty);
         if (n > 0) sprintf((char *)&textline2, (char *)str_GoneForTheGame);
         else sprintf((char *)&textline2, (char *)str_GoneFor1Period);
     }

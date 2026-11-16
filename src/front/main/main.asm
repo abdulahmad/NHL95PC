@@ -10,7 +10,7 @@ extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoi
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
 extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
 extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, BackBufferWidth, JoyRawX1, JoyRawY1, JoyRawX2
-extern JoyRawY2, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, SpeechPatchNext, escrequest
+extern JoyRawY2, gfxidlist, ovlstepart, ovlartbank, SpeechPatchNext, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
 extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
 extern gameover, gamepal, gameresult, gmode, gsp, HomeTeam, hudclockhund, hudclockmin

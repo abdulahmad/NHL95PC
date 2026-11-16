@@ -23,10 +23,10 @@ int SelectSavedFile(void)
         LoadModeState(exhstate);
         t = *(int *)(exhstate + 0x51);
         if (t < 0x18) strncpy((char *)str_LAAtMTL, (char *)teamabbrevs[t], 3);
-        else strncpy((char *)str_LAAtMTL, (char *)off_C5441[t], 3);
+        else strncpy((char *)str_LAAtMTL, (char *)TeamAbbrevsAllStar[t], 3);
         t = *(int *)(exhstate + 0x55);
         if (t < 0x18) strncpy((char *)str_LAAtMTL + 7, (char *)teamabbrevs[t], 3);
-        else strncpy((char *)str_LAAtMTL + 7, (char *)off_C5441[t], 3);
+        else strncpy((char *)str_LAAtMTL + 7, (char *)TeamAbbrevsAllStar[t], 3);
         return 1;
     case 1:
         strcpy(name, (char *)pofilenames[pofiles[1]]);

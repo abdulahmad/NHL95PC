@@ -9,8 +9,8 @@ extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, 
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, dword_C66D0, dword_C66D4, ovlartfiles
-extern goalienotebits, demoflag, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
-extern SpeechPatchNext, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
+extern goalienotebits, demoflag, gfxidlist, ovlstepart, SumCwdExciteLvl, ovlartbank
+extern SpeechPatchNext, UnusedEventWord, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox
 extern foy, fputchar, frameaccum, FreeMemBlock, gameclock, gamemode, gameopts, gameover
 extern gamepal, gameresult, GetTicks, gsp, HandleHotKey_ret, hilightfont, hmtmap, HomeTeam
@@ -46,8 +46,8 @@ extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, t
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
 extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
 extern WaitClickTimeout, WaitDigiSample, penaltysc, SortPending, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount
-extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, UnusedSpeechWord, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
-extern word_E9AAA, penevteam, rinkobjused
+extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, UnusedSpeechWord, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl
+extern UnusedCrowdWordHi, penevteam, rinkobjused
 global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary, AwardsCeremony
 ;-----------------------------------------------------------------------------
 ; PickAwardWinners                             1205D  95 PC, medium confidence

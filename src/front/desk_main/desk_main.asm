@@ -3,7 +3,7 @@
 bits 32
 %include "hockey.inc"
 section s_31AB5 progbits alloc exec nowrite align=1
-extern __CHK, AddHumanTeam, BuildSavedGameLabels, byte_DE268, cddriveptr, CheckGameDiskSpace, CheckMasterPassword, ClearInputQueue
+extern __CHK, AddHumanTeam, BuildSavedGameLabels, MergeResult, cddriveptr, CheckGameDiskSpace, CheckMasterPassword, ClearInputQueue
 extern cont2team, CreateNewLeague, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team
 extern ctlavailmask, curleague, currink, desksongalt, DiskFreeBytes, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
 extern DrawMenuItemSel, EasnGoalieStatsScreen, EasnSkaterStatsScreen, EasnStandingsMenu, EasnStandingsScreen, EasnTeamStatsScreen, exhstate, ExportDbs
@@ -1853,7 +1853,7 @@ MenuLeagueSettings:
         jne short .1
         mov edi, 0FFFFFFFFh
 .1:
-        cmp byte [byte_DE268], 0
+        cmp byte [MergeResult], 0
         je short .2
         push byte 20h
         push dword 300h

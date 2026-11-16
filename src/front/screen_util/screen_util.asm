@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_1CC3D progbits alloc exec nowrite align=1
 extern __CHK, awlineind, awpanelspr, str_Dashes, awayremap, homeremap, cddriveptr, cliprect_x0
-extern cliprect_x1, cliprect_y0, cliprect_y1, clockdigits, dirtyrectcount, dirtyrectptr, dword_C679D, dword_C67B9
-extern dword_C67BD, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, standingsmenubar_srccnt, dword_CF5D7
-extern dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, rostermenubar_srccnt, teamstatsmenubar_srccnt, skaterstatsmenubar_srccnt
-extern goaliestatsmenubar_srccnt, dword_CFA4B, exhstate, fileoncd, hmlineind, hmpanelspr, lastsprremap, lgstate
+extern cliprect_x1, cliprect_y0, cliprect_y1, clockdigits, dirtyrectcount, dirtyrectptr, StatsSourceLastBottom, StatsSourceMenuRight
+extern StatsSourceMenuBottom, tradestatsmenubar_srccnt, statsmenu_srccnt, deskstatsmenu_srccnt, gameplstatsmenubar_srccnt, StatsReturnRight, standingsmenubar_srccnt, StandingsReturnRight
+extern RosterReturnStandingsRight, RosterReturnDeskRight, PlayerCardReturnRosterRight, PlayerCardReturnStandingsRight, PlayerCardReturnDeskRight, rostermenubar_srccnt, teamstatsmenubar_srccnt, skaterstatsmenubar_srccnt
+extern goaliestatsmenubar_srccnt, playoffstatsmenu_srccnt, exhstate, fileoncd, hmlineind, hmpanelspr, lastsprremap, lgstate
 extern linesprites, MakePath, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode, menutext_statsleague
-extern menuact_statsleague, menutext_statslgplayoffs, menuact_statslgplayoffs, menutext_statsplayoff, menuact_statsplayoff, off_CF51F, off_CF5DF, off_CF61F
-extern off_CF67F, penaltydigits, postate, scoredigits, scrbrdshapes, spritedrawcount, statsfromleague, statsleague
+extern menuact_statsleague, menutext_statslgplayoffs, menuact_statslgplayoffs, menutext_statsplayoff, menuact_statsplayoff, StatsReturnText, StandingsReturnText, RosterReturnDeskText
+extern PlayerCardReturnDeskText, penaltydigits, postate, scoredigits, scrbrdshapes, spritedrawcount, statsfromleague, statsleague
 extern statsplayoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode, statsteamsel, str_BroadcastBooth, str_HomeLineTags, str_Homp
 extern str_IntermissionDesk, str_LeagueCalendar, str_LgPlayoffsTitle, str_LgSeasonTitle, str_LineCodes0, str_LineCodes1, str_LineCodes2, str_LineNames
 extern str_PlayOffsSfx, str_PlayoffTree, str_POTitle, str_PPV, str_RinkSide, str_scrbrd1, str_SeasonPlayOffsSfx, str_SeasonSfx
@@ -659,12 +659,12 @@ SetupStatsSourceMenu_all:
 .9:
         cmp ecx, byte 4
         jne short .10
-        mov dword [dword_C67B9], 0C5h
+        mov dword [StatsSourceMenuRight], 0C5h
         xor bh, bh
         mov byte [str_Dashes], bh
         jmp short .11
 .10:
-        mov dword [dword_C67B9], 0F7h
+        mov dword [StatsSourceMenuRight], 0F7h
         mov byte [str_Dashes], 2Dh
 .11:
         xor edx, edx
@@ -673,9 +673,9 @@ SetupStatsSourceMenu_all:
 .12:
         mov eax, edx
         shl eax, 5
-        mov dword [dword eax+dword_C67BD], ebx
-        mov esi, dword [dword_C67B9]
-        mov dword [dword eax+dword_C67B9], esi
+        mov dword [dword eax+StatsSourceMenuBottom], ebx
+        mov esi, dword [StatsSourceMenuRight]
+        mov dword [dword eax+StatsSourceMenuRight], esi
         inc edx
         add ebx, byte 12h
 .13:
@@ -683,17 +683,17 @@ SetupStatsSourceMenu_all:
         jl short SetupStatsSourceMenu_all.12
         mov eax, ecx
         shl eax, 5
-        mov dword [dword_CE8EB], ecx
-        mov dword [dword_CF00B], ecx
-        mov dword [dword_CF4CB], ecx
+        mov dword [statsmenu_srccnt], ecx
+        mov dword [deskstatsmenu_srccnt], ecx
+        mov dword [gameplstatsmenubar_srccnt], ecx
         mov dword [standingsmenubar_srccnt], ecx
         mov dword [rostermenubar_srccnt], ecx
         mov dword [teamstatsmenubar_srccnt], ecx
         mov dword [skaterstatsmenubar_srccnt], ecx
         mov dword [goaliestatsmenubar_srccnt], ecx
-        mov dword [dword_CFA4B], ecx
-        mov dword [dword_C891E], ecx
-        inc dword [dword eax+dword_C679D]
+        mov dword [playoffstatsmenu_srccnt], ecx
+        mov dword [tradestatsmenubar_srccnt], ecx
+        inc dword [dword eax+StatsSourceLastBottom]
         pop ebp
         pop edi
         pop esi
@@ -840,21 +840,21 @@ SetScreenTitle_rink:
         mov ebx, str_RinkSide
         mov edx, 41h
 .1:
-        mov dword [off_CF67F], ebx
-        mov dword [off_CF61F], ebx
-        mov dword [off_CF5DF], ebx
-        mov dword [off_CF51F], ebx
-        mov dword [dword_CF5D7], edx
-        mov dword [dword_CF517], edx
+        mov dword [PlayerCardReturnDeskText], ebx
+        mov dword [RosterReturnDeskText], ebx
+        mov dword [StandingsReturnText], ebx
+        mov dword [StatsReturnText], ebx
+        mov dword [StandingsReturnRight], edx
+        mov dword [StatsReturnRight], edx
         cmp edx, byte 7Dh
         jg short .2
         mov edx, 7Dh
 .2:
-        mov dword [dword_CF677], edx
-        mov dword [dword_CF657], edx
-        mov dword [dword_CF637], edx
-        mov dword [dword_CF617], edx
-        mov dword [dword_CF5F7], edx
+        mov dword [PlayerCardReturnDeskRight], edx
+        mov dword [PlayerCardReturnStandingsRight], edx
+        mov dword [PlayerCardReturnRosterRight], edx
+        mov dword [RosterReturnDeskRight], edx
+        mov dword [RosterReturnStandingsRight], edx
         pop edx
         pop ebx
         ret

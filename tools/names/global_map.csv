@@ -4652,3 +4652,198 @@ MidiMusicEnabled,D4F92,MIDI music on
 PerrorSeparator,D4D4C,""": "" separator printed by perror"
 MidiChannelBits,D4F68,Bit for each MIDI channel
 ActiveSongCount,D4F88,Songs or voices in use
+CoachRotateFour,CBC6E,Coach line table rows: next-line choices for a four-line rotation
+CoachRotateThree,CBC7E,Coach line table rows: three-line rotation with the power-play rows after it
+CoachRotateThreeTop,CBC9E,Coach line table rows: three lines with the top line first
+CoachRotateFourEven,CBCAE,Coach line table rows: four lines in even rotation
+CoachRotateFourMixed,CBCBE,Coach line table rows: four lines in mixed rotation
+CoachRotateThreeEven,CBCCE,Coach line table rows: three lines in even rotation
+CoachSpecialUnits,CBCDE,Coach line table rows: special team units only
+CoachRotateTwo,CBCEE,Coach line table rows: two lines only
+CoachRotateTwoDeep,CBCFE,Coach line table rows: two lines with the third line as backup
+CoachRotateFourShort,CBD0E,Coach line table rows: four lines with short shifts
+CoachRotateThreeShort,CBD1E,Coach line table rows: three lines with short shifts
+ObjInitFrame,CBD64,Object start table (18 bytes per object): frame word LoadGameState copies into the object
+ObjInitAttr,CBD66,Object start table: attribute word LoadGameState copies into the object
+CreditBlankTitle,C07A4,Empty string used as the title line of credit pages that have no title art
+CreditBlankLine,C588E,Empty string used as a blank line on the credit pages
+str_StanleyCupIsA,C5996,Credits text: Stanley Cup registered trademark line
+str_CopyrightNHL1994,C5A6C,Credits text: NHL 1994 copyright line
+CreditPageNhlLicense,C5969,Credit page: NHL licence notice
+CreditPageStanleyCup,C5A78,Credit page: Stanley Cup and team logo trademarks
+CreditPageNhlpaLicense,C5B93,Credit page: NHLPA licence notice
+CreditPageEaSports,C5C33,Credit page: EA Sports trademarks
+CreditPagePresentedBy,C5CA1,Credit page: production group presentation line
+CreditPageGameConcept,C5CF4,Credit page: original game concept
+CreditPagePcDesign,C5D51,Credit page: original PC version game design
+CreditPageLeadProgrammer,C5D85,Credit page: lead programmer
+CreditPageProgrammerWong,C5DB3,Credit page: programmer
+CreditPageProgrammerPenner,C5DE1,Credit page: programmer
+CreditPageProgrammerKennett,C5E0E,Credit page: programmer
+CreditPageArtistDeSouza,C5E39,Credit page: artist
+CreditPageArtistChow,C5E5F,Credit page: artist
+CreditPageAnimator,C5E99,Credit page: artist and 3D animations
+CreditPageComposer,C5ECA,Credit page: composer
+CreditPageAudioStewart,C5EFD,Credit page: audio programmer
+CreditPageAudioMacanulty,C5F32,Credit page: audio programmer
+CreditPageAdminAssistant,C5F6E,Credit page: administrative assistant
+CreditPageLeadTester,C5F98,Credit page: lead tester
+CreditPageAssistantProducer,C5FD4,Credit page: assistant producer
+CreditPageDevDirector,C600D,Credit page: director of development
+CreditPageProducerDesign,C603F,Credit page: producer and design
+CreditPageProducer,C6069,Credit page: producer
+CreditPageTesters,C60D7,Credit page: testers and QA support
+CreditPageRosters,C619A,Credit page: roster verification and ratings
+CreditPageAudioTeam,C6232,Credit page: audio technician and audio programmers
+CreditPageAnnouncers,C62D3,Credit page: announcers and player photographs
+CreditPageSpecialThanks,C6363,Credit page: video credit and special thanks
+CreditPageEnd,C638C,Empty credit page that ends the credits; ShowCredits stops when it reaches it
+DeskReplayMenu,CEF0F,Sports desk pull-down: Go To Replay
+DeskTeamLinesMenu,CEF2F,Sports desk pull-down: home and visitor line editors
+CalStatsMenu,C846A,Calendar menu bar pull-down: statistics type and sort orders
+CalSettingsMenu,C854F,Calendar menu bar pull-down: player controls and league settings
+TradeStatsMenu,C87B8,Trade screen pull-down under Player Statistics
+TradeLabelText,C17F0,Empty text of the first item of the trade screen menu bar
+TeamStatsSortMenu,CE96F,Statistics pull-down: team sort orders (standings scoring defense penalty killing power play penalties)
+SkaterStatsSortMenu,CEA2F,Statistics pull-down: skater sort orders (points goals assists and so on)
+GoalieStatsSortMenu,CEB2F,Statistics pull-down: goalie sort orders (GAA wins save percentage)
+DeskFileMenu,CECAF,Sports desk File pull-down: back to game save game sports desk exit
+DeskLeagueFileMenu,CED2F,Sports desk File pull-down in league play: sports desk and exit
+DeskSettingsMenu,CED6F,Sports desk Settings pull-down: player controls and home team goalie
+RosterPacificMenu,CFBE8,Edit rosters team pull-down: Pacific division teams
+RosterCentralMenu,CFCF2,Edit rosters team pull-down: Central division teams
+RosterNortheastMenu,CFE08,Edit rosters team pull-down: Northeast division teams
+RosterAtlanticMenu,CFF51,Edit rosters team pull-down: Atlantic division teams
+EditRostersFileMenu,D006E,Edit rosters File pull-down: save load database return
+Roster1TeamMenu,D0139,Edit rosters pull-down for roster 1: the four division team lists
+Roster2TeamMenu,D01F9,Edit rosters pull-down for roster 2: the four division team lists
+EditRoster1Menu,D031D,Edit rosters pull-down for roster 1: move to free agents or to roster 2
+EditRoster2Menu,D039D,Edit rosters pull-down for roster 2: move to free agents or to roster 1
+DbLinesStatsMenu,D05AF,Database line editor pull-down: show player statistics
+DeskGameStatsMenu,CEF6F,Sports desk pull-down: game statistics and summaries
+DeskStatsTypeMenu,CEFEF,Sports desk Statistics pull-down: statistics type
+PlayoffFileMenu,CF96F,Playoff menu bar File pull-down: play next game and return
+PlayoffSettingsMenu,CF9AF,Playoff menu bar Settings pull-down: player controls and playoff settings
+PlayoffStatsMenu,CFA2F,Playoff menu bar Statistics pull-down: statistics type
+DbLinesFileMenu,D04FC,Database line editor pull-down: done and cancel
+DbLinesPlayerMenu,D0558,Database line editor pull-down: dress player
+RosterStatsSeasonMenu,D068A,Roster statistics pull-down: regular season or playoff statistics
+RosterStatsReturnMenu,D0720,Roster statistics pull-down: return to line editor
+TradeFileMenu,C8804,Trade screen pull-down: done and cancel
+TradeStatsReturnMenu,C88C2,Trade statistics pull-down: return to the trade screen
+PregameLinesMenu,CF20F,Pre-game line editor pull-down: use these original or default lines
+GameRosterMenu,CF28F,Line editor Roster pull-down: dress or scratch a player
+ShowPlayerStatsMenu,CF2CF,Pull-down with the single Show Player Statistics item
+DeskLinesEditMenu,CF32F,Sports desk line editor pull-down: cancel and line choices
+TradeLinesMenu,CF42F,Trade line editor pull-down: save these lines and line choices
+GameStatsReturnMenu,CF4CF,In-game statistics Return To pull-down
+StatsReturnMenu,CF50F,Statistics screens Return To pull-down (screen title item)
+StatsReturnRight,CF517,Right edge of the Return To item; set from the screen title width
+StatsReturnText,CF51F,Text of the Return To item; set to the current screen title
+PrintMenu,CF52F,Print pull-down: output current data
+StandingsReturnMenu,CF5CF,Standings Return To pull-down
+StandingsReturnRight,CF5D7,Right edge of the standings Return To item
+StandingsReturnText,CF5DF,Text of the standings Return To item
+RosterReturnMenu,CF5EF,Team roster Return To pull-down
+RosterReturnStandingsRight,CF5F7,Right edge of the roster Return To standings item
+RosterReturnDeskRight,CF617,Right edge of the roster Return To screen item
+RosterReturnDeskText,CF61F,Text of the roster Return To screen item
+PlayerCardReturnMenu,CF62F,Player card Return To pull-down
+PlayerCardReturnRosterRight,CF637,Right edge of the player card Return To roster item
+PlayerCardReturnStandingsRight,CF657,Right edge of the player card Return To standings item
+PlayerCardReturnDeskRight,CF677,Right edge of the player card Return To screen item
+PlayerCardReturnDeskText,CF67F,Text of the player card Return To screen item
+StandingsRosterMenu,CF68F,Standings Roster pull-down: show team roster
+StandingsRosterAction,CF6A3,Action of the show team roster item; cleared on the playoff tree screen
+RosterPlayerMenu,CF72F,Team roster pull-down: show player statistics and card
+StatsSourceMenu,C67B1,Statistics Type pull-down: 93-94 season playoffs league and playoff mode sources
+StatsSourceMenuRight,C67B9,Right edge of each statistics source item (32-byte stride)
+StatsSourceMenuBottom,C67BD,Bottom edge of each statistics source item (32-byte stride)
+StatsSourceLastBottom,C679D,Base that reaches the bottom edge of the last statistics source item when indexed by the item count
+str_StatsSourceDivider,C678E,Dashed divider text between statistics source groups
+deskstatsmenu_srccnt,CF00B,Item count of the statistics source pull-down under the sports desk menu
+gameplstatsmenubar_srccnt,CF4CB,Item count of the statistics source pull-down under the in-game player statistics menu bar
+statsmenu_srccnt,CE8EB,Item count of the statistics source pull-down under the statistics menu
+tradestatsmenubar_srccnt,C891E,Item count of the statistics source pull-down under the trade statistics menu bar
+playoffstatsmenu_srccnt,CFA4B,Item count of the statistics source pull-down under the playoff menu bar
+str_HomeTeamGoalie,CDC34,Menu text: Home Team Goalie
+str_FileMenuDivider,CDA6E,Dashed divider text in the File pull-downs
+str_LeagueManager,CDB44,Menu text: League Manager
+str_GameLabel,CDB6F,Menu text: Game: prefix before the matchup
+str_LeagueMenuDivider,CDDF7,Dashed divider text in the league manager pull-down
+str_OneSpace,C27F5,One-space string printed on the joystick calibration screen
+str_TheEliminated,D2A68,Message text: The (before the eliminated team name)
+str_TheContinue,D2AAB,Message text: The (before the team that continues)
+str_3rdstar,D279A,Speech file name stem for the third star call
+str_BlankTeamColumn,C0F89,Empty team statistics column header
+str_BlankLeaderColumn,C11D1,Empty league leader column header
+str_DriveB,C1936,Drive button text: B
+str_NoStar,C1B3E,Empty string pushed when a three stars line has no star text
+str_NoPenalty,C1B49,Empty penalty name in the penalty name list
+SoundDrvWorkArea,F0000,Sound driver work area (no direct references)
+Setplass_alist_m3,CCC9E,Three bytes before Setplass_alist: a dword read here shifted right 24 gives the list byte
+AimArrowFrames_m2,CCD4F,Two bytes before the aim arrow frame table (one frame word every 4 bytes by direction; the last entry is the no-arrow frame)
+RockTuneIds,CC9CC,Word per rock tune number read by PreGameIntro from the home team's teamrocktune entry
+SortCordsOvlFlag,DF87F,Player byte at +63h of the SortCords objects (indexed by object times 128): set by the puck physics; the referee clears it and loads overlay 8
+doorpflags3,DFFE2,Door object pflags3 byte; cleared by assboxenter when the door closes
+RinkSideShape,E0220,Photo bank shape (entry 96 of photoptrsf) drawn at the side object slots
+RinkSideShapeFlipped,E0230,Photo bank shape (entry 100 of photoptrsf) drawn flipped at the side object slots
+GameVarsClear,E03A8,Dword cleared first by cleargamevars; nothing else uses it
+UnusedEventWord,E9AB6,Word cleared by ResetGameVars and kept in saved games; dword reads shifted right 17 give half of the word after it
+UnusedCrowdWord,E9AA2,Crowd word cleared by ResetGameVars and kept in saved games
+UnusedCrowdWordHi,E9AAA,Second crowd word cleared by ResetGameVars and kept in saved games
+rpl_puckunused,E9FA9,Byte read after the puck height in each replay frame; written by ReplayStep and never read
+SaveStateSpare,DEF84,Word only saved and restored with the game state
+SaveStatePad,DEF88,Second word only saved and restored with the game state
+awrosterjersey,DB7F1,Jersey number byte of each away roster record (39-byte records; pairs with hmrosterjersey)
+TeamRecLines,DBD1C,Line set at +0ECh of each team record copy (stride 2E8h per side); the save lines menus write it
+UnusedStateFlag,DC264,Byte only saved and restored with the game state
+UnusedStateMode,DC265,Byte only saved and restored with the game state
+UnusedStateSpare,DC266,Byte only saved and restored with the game state
+GameRecordDay,DC267,Second byte of the current game record (schedule byte 1); InitGameSummary stores it and LoadTeamRoster compares injury days against it
+PenaltyBlankDigit,DC2B8,Shape drawn in place of the tens digit when a penalty time is under ten
+StatsLastSel,DC6B4,Statistics screen selection reset to -1 whenever a statistics source is chosen
+RosterFromStandings,DC734,Set when the team roster screen is opened from a standings or stats menu; picks the roster layout
+MergeResult,DE268,Result byte of the league file merge and human team dialogs
+otherperiodprev,DC868,Copy of otherperiod (six dwords) used by the intermission desk to spot changes
+CurStream,DC8C8,Stream record the CD stream service is working on
+lgoppteam,DDD34,Opponent of the league team being played; saved with the league game reference
+lgopphuman,DDD3C,Non-zero when the league opponent has its own human team file; saved with the league game reference
+lggamecount,DDD48,Number of league games played (from the league file); compared with lggameidx
+lgoppgamecount,DDD4A,Number of league games played in the opponent's file
+FaListScrolls,D0C20,Set when the free agent list has more than 28 players and needs a scroll bar
+InputResetWord,CDA24,Cleared with ptrstep when the input handler is installed or removed; never read
+InputQueueSpare,CDA38,Cleared with the input queue; never read
+RosterFont,EA2B0,Font the roster editor saves from mainfont
+PoGameSetFlag,D2884,Last podbsizes entry; cleared when the playoff GAMESET file already exists
+LgGameSetFlag,C9002,Last leaguedbsizes entry; cleared when the league GAMESET file already exists
+TeamAbbrevsAllStar,C5441,Team abbreviation list two entries past teamabbrevs: indexed by team numbers from 24 up to reach the all-star abbreviations
+PosBitMasks,D0CDA,One bit per position (1 2 4 8 ...) used by CheckTeamLines
+TeamJerseyBase,D11BC,Palette index of each team's jersey base colour (dword per team)
+jerseyremapteam,D12C8,Team colour part of jerseyremap (entries 90h to BFh)
+jerseyremaptrim,D12DE,jerseyremap entry A6h: the trim colour the line editors read
+LineEdPairX,D1398,Line editor jersey X for the two-slot rows (two per page)
+LineEdPairY,D139C,Line editor jersey Y for the two-slot rows
+LineEdFiveX,D13C8,Line editor jersey X for the five-player lines
+LineEdFiveY,D13CC,Line editor jersey Y for the five-player lines
+LineEdFourX,D1418,Line editor jersey X for the four-player units
+LineEdFourY,D141C,Line editor jersey Y for the four-player units
+LineEdExtraX,D1458,Line editor jersey X for the first fixed pair of slots
+LineEdExtraY,D145C,Line editor jersey Y for the first fixed pair of slots
+LineEdGoalieX,D1468,Line editor jersey X for the second fixed pair of slots
+LineEdGoalieY,D146C,Line editor jersey Y for the second fixed pair of slots
+SpeechInitMode,D27B6,Argument InitSpeech keeps
+PcSpkSampleReady,D2350,Set to -1 once the PC speaker test sample is loaded
+SoundDevActive,D2423,Non-zero while a sound device is set up; SetSoundDevice checks and clears it
+musicdriver,D2427,Music driver number chosen by SetSoundDevice (1 for the PC speaker; -1 for none)
+OvlScriptGoal,CBEFC,Overlay animation script for the goal overlay
+OvlScriptClap,CBF04,Overlay animation script for the clapping overlay
+OvlScriptFanom,CBF18,Overlay animation script for the fan overlay
+OvlScriptUflag,CBF37,Overlay animation script for the uflag overlay
+OvlScriptCflag,CBF60,Overlay animation script for the cflag overlay
+OvlScriptSiren,CBF85,Overlay animation script for the siren overlay
+OvlScriptRuff,CBF96,Overlay animation script for the roughing overlay
+OvlScriptHook,CBFA9,Overlay animation script for the hooking overlay
+OvlScriptSaved,CBFC3,Overlay animation script for the save overlay
+OvlScriptCross,CBFEB,Overlay animation script for the cross-checking overlay
+OvlScriptGuilt,CBFFA,Overlay animation script for the guilty player overlay

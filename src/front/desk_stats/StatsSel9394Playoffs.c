@@ -18,7 +18,7 @@ void StatsSel9394Playoffs(void)
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;
-    dword_DC6B4 = -1;
+    StatsLastSel = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
@@ -43,7 +43,7 @@ void StatsSelLeague(void)
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;
-    dword_DC6B4 = -1;
+    StatsLastSel = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
@@ -66,7 +66,7 @@ void StatsSelLeaguePlayoffs(void)
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;
-    dword_DC6B4 = -1;
+    StatsLastSel = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
@@ -89,7 +89,7 @@ void StatsSelPlayoffMode(void)
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;
-    dword_DC6B4 = -1;
+    StatsLastSel = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;

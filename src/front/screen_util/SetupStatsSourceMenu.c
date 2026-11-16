@@ -97,25 +97,25 @@ void SetupStatsSourceMenu(int src)
         break;
     }
     if (n == 4) {
-        dword_C67B9[0] = 0xC5;
+        StatsSourceMenuRight[0] = 0xC5;
         str_Dashes = 0;
     } else {
-        dword_C67B9[0] = 0xF7;
+        StatsSourceMenuRight[0] = 0xF7;
         str_Dashes = 0x2D;
     }
     for (i = 0, y = 0x11; i < n; i++, y += 0x12) {
-        dword_C67BD[i * 8] = y;
-        dword_C67B9[i * 8] = dword_C67B9[0];
+        StatsSourceMenuBottom[i * 8] = y;
+        StatsSourceMenuRight[i * 8] = StatsSourceMenuRight[0];
     }
-    dword_C679D[n * 8]++;
-    dword_CE8EB = n;
-    dword_CF00B = n;
-    dword_CF4CB = n;
+    StatsSourceLastBottom[n * 8]++;
+    statsmenu_srccnt = n;
+    deskstatsmenu_srccnt = n;
+    gameplstatsmenubar_srccnt = n;
     standingsmenubar_srccnt = n;
     rostermenubar_srccnt = n;
     teamstatsmenubar_srccnt = n;
     skaterstatsmenubar_srccnt = n;
     goaliestatsmenubar_srccnt = n;
-    dword_CFA4B = n;
-    dword_C891E = n;
+    playoffstatsmenu_srccnt = n;
+    tradestatsmenubar_srccnt = n;
 }

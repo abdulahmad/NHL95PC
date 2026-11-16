@@ -11,7 +11,7 @@ extern str_3006, str_3007, str_3008, str_3009, str_300, str_OT2, str_BOS, str_BU
 extern str_CGY, str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL
 extern str_NJ, str_NYI, str_NYR, str_OTT, str_PHI, str_PIT, str_QUE, str_STL
 extern str_SJ, str_TB, str_TOR, str_VAN, str_WSH, str_WPG, str_ANA3, str_FLA
-extern str_ASW, str_ASE, unk_C07A4, str_Credit19, str_Credit10, str_Credit09, str_Credit17, str_Credit01
+extern str_ASW, str_ASE, CreditBlankTitle, str_Credit19, str_Credit10, str_Credit09, str_Credit17, str_Credit01
 extern str_Credit15, str_Credit12, str_Credit08, str_Credit02, str_Credit11, str_Credit05, str_Credit06, str_Credit07
 extern str_Credit18, str_Credit14, str_Credit13, str_Credit16, str_Credit00, str_Credit04, str_Credit03, str_PacificDivision
 extern str_CentralDivision, str_NortheastDivision, str_AtlanticDivision, str_Season3, str_Playoff3, str_RegSeason, str_Playoff4, str_Actual
@@ -20,10 +20,10 @@ extern str_Agility, str_Weight, str_ShotPower, str_Checking2, str_StickHandling,
 extern str_DefensiveAwareness, str_Aggressiveness, str_Endurance, str_ShootPassBias, str_Faceoffs, str_GloveLeft, str_GloveRight, str_StickLeft
 extern str_StickRight, str_PuckControl, str_Speed2, str_Agility2, str_Weight2, str_OffensiveAwareness2, str_DefensiveAwareness2, str_WesternConference3
 extern str_EasternConference3, str_TeamScoring, str_TeamDefense, str_TeamPenaltyKilling, str_TeamPowerPlay, str_TeamPenalties, str_TeamStandings, str_spW
-extern str_SpL4, str_SpT, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5, unk_C0F89
+extern str_SpL4, str_SpT, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5, str_BlankTeamColumn
 extern str_ADV, str_PPG3, str_PIM5, str_AVG, str_PTS, str_WINS, str_PointLeaders, str_GoalLeaders
 extern str_AssistLeaders, str_PowerPlayGoalLeaders, str_ShorthandedGoalLeaders, str_PlusMinusLeaders, str_PenaltyMinuteLeaders, str_ShootingPercentageLeaders, str_GoalsAgainstAverageLeaders, str_GoaltenderWinLeaders
-extern str_SavePercentageLeaders, str_spG, str_spA, str_Pt3, unk_C11D1, str_PP2, str_SHG3, str_PlusMinus5
+extern str_SavePercentageLeaders, str_spG, str_spA, str_Pt3, str_BlankLeaderColumn, str_PP2, str_SHG3, str_PlusMinus5
 extern str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, str_spW2, str_SpL5
 extern str_SpT2, str_SA4, str_PCT7, str_LSSCEDDB, str_SCHEDULEDB3, str_InsufficientDiskSpace3
 global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn
@@ -39,8 +39,8 @@ global hmpanelpens, awpanelpens, hmlinetimer, awlinetimer, demomatchups_m1, demo
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, easnfontbuf, embscupbank
 global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
 global standingsmenucb, hlplayedmask, msg_DeskExit, msg_DeskExit_e02, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
-global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
-global westconfteams, eastconfteams, dword_C6D26, potreeseeds, dword_C6E20, treerowy, divx, divy
+global dword_C66D4, lastsprremap, StatsSourceLastBottom, StatsSourceMenuRight, StatsSourceMenuBottom, statsplayoffs, statsfromleague, statspalvalid
+global westconfteams, eastconfteams, dword_C6D26, potreeseeds, treerowy, divx, divy
 global fdlgshapes, fdlgrects
 global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 global dword_C71E0, dlgsavebuf, listscroll
@@ -51,25 +51,25 @@ global menutext_statsplayoff, menuact_statsplayoff, divisionnames, statslabels, 
 global skaterratingnames, skatercardattrs_m3, goalieratingnames, goaliecardattrs_m3, teamsortfns, westconfname, eastconfname, teamstattitles
 global teamcolhdrs, leadersortfns, leadertitles, leadercolhdrs, leadercolhdrs_c1
 global leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4, off_C6D22, scoutcatnames, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02
-global gamestatlabels, setdiskmsg, dbchoicelines, str_OfFreeDiskSpace, unk_C588E, str_OfficiallyLicensed, str_ProductOfThe, str_NationalHockeyLeague
-global str_NationalHockeyLeagueNHL, str_TheLogoOfThe, str_TrademarksOfTheNational, str_LeagueAndAreUsed, unk_C5969, unk_C5996, str_TrademarkOfTheNational, str_LeagueAndIsUsed
-global str_ByElectronicArtsInc, str_TeamNamesAndLogos, str_AreOfficiallyLicensed, str_OfTheNationalHockey, unk_C5A6C, unk_C5A78, str_OfficiallyLicensedProductOf, str_NationalHockeyLeaguePlayers
-global str_Association, str_NHLPANationalHockeyLeague, str_PlayersAssociationAndThe, str_OfTheNHLPAAre, str_TheNHLPAAndAre, str_LicenseByElectronicArts, unk_C5B93, str_EASportsTheEA
-global str_IfItSIn, str_AreTrademarksOfElectronic, unk_C5C33, str_ThisHasBeenA, str_ThePIONEERPRODUCTIONSGroup, str_ElectronicArtsCanada, unk_C5CA1, str_OriginalGameConcept
-global str_JimSimmons, str_ScottOrr, str_RichardHilleman, unk_C5CF4, str_OriginalPCVersionGame, str_DaveWarfield, str_RichardHilleman2, unk_C5D51
-global str_LanceWall, str_LeadProgrammer, unk_C5D85, str_VictoriaWong, str_Programmer, unk_C5DB3, str_RobertPenner, str_Programmer2
-global unk_C5DE1, str_KurtKennett, str_Programmer3, unk_C5E0E, str_GerardDeSouza, str_Artist, unk_C5E39, str_PhilChow
-global str_Artist2, unk_C5E5F, str_KentMaclagan, str_Artist3DAnimations, unk_C5E99, str_MichaelJSokyrka, str_Composer, unk_C5ECA
-global str_AlanStewart, str_AudioProgrammer, unk_C5EFD, str_IainMacanulty, str_AudioProgrammer2, unk_C5F32, str_SerenaMcCabe, str_AdministrativeAssistant
-global unk_C5F6E, str_RodHigo, str_LeadTester, unk_C5F98, str_RichardRadarMul, str_AssistantProducer, unk_C5FD4, str_FosterHall
-global str_DirectorOfDevelopment, unk_C600D, str_KenSayler, str_ProducerDesign, unk_C603F, str_HannoLemke, str_Producer, unk_C6069
+global gamestatlabels, setdiskmsg, dbchoicelines, str_OfFreeDiskSpace, CreditBlankLine, str_OfficiallyLicensed, str_ProductOfThe, str_NationalHockeyLeague
+global str_NationalHockeyLeagueNHL, str_TheLogoOfThe, str_TrademarksOfTheNational, str_LeagueAndAreUsed, CreditPageNhlLicense, str_StanleyCupIsA, str_TrademarkOfTheNational, str_LeagueAndIsUsed
+global str_ByElectronicArtsInc, str_TeamNamesAndLogos, str_AreOfficiallyLicensed, str_OfTheNationalHockey, str_CopyrightNHL1994, CreditPageStanleyCup, str_OfficiallyLicensedProductOf, str_NationalHockeyLeaguePlayers
+global str_Association, str_NHLPANationalHockeyLeague, str_PlayersAssociationAndThe, str_OfTheNHLPAAre, str_TheNHLPAAndAre, str_LicenseByElectronicArts, CreditPageNhlpaLicense, str_EASportsTheEA
+global str_IfItSIn, str_AreTrademarksOfElectronic, CreditPageEaSports, str_ThisHasBeenA, str_ThePIONEERPRODUCTIONSGroup, str_ElectronicArtsCanada, CreditPagePresentedBy, str_OriginalGameConcept
+global str_JimSimmons, str_ScottOrr, str_RichardHilleman, CreditPageGameConcept, str_OriginalPCVersionGame, str_DaveWarfield, str_RichardHilleman2, CreditPagePcDesign
+global str_LanceWall, str_LeadProgrammer, CreditPageLeadProgrammer, str_VictoriaWong, str_Programmer, CreditPageProgrammerWong, str_RobertPenner, str_Programmer2
+global CreditPageProgrammerPenner, str_KurtKennett, str_Programmer3, CreditPageProgrammerKennett, str_GerardDeSouza, str_Artist, CreditPageArtistDeSouza, str_PhilChow
+global str_Artist2, CreditPageArtistChow, str_KentMaclagan, str_Artist3DAnimations, CreditPageAnimator, str_MichaelJSokyrka, str_Composer, CreditPageComposer
+global str_AlanStewart, str_AudioProgrammer, CreditPageAudioStewart, str_IainMacanulty, str_AudioProgrammer2, CreditPageAudioMacanulty, str_SerenaMcCabe, str_AdministrativeAssistant
+global CreditPageAdminAssistant, str_RodHigo, str_LeadTester, CreditPageLeadTester, str_RichardRadarMul, str_AssistantProducer, CreditPageAssistantProducer, str_FosterHall
+global str_DirectorOfDevelopment, CreditPageDevDirector, str_KenSayler, str_ProducerDesign, CreditPageProducerDesign, str_HannoLemke, str_Producer, CreditPageProducer
 global str_Testers, str_PaulSmith, str_JohnBrydon, str_TonyLam, str_DavidLee, str_QASupport, str_JonBruce, str_JohnSantamaria
-global unk_C60D7, str_RosterVerification, str_DaveWarfield2, str_JohnBrydon2, str_ProductManager, str_ChipLange, str_RatingsByJohnRosasco, str_AndNeilSmithOf
-global str_NewYorkRangers, unk_C619A, str_AudioTechnician, str_SteveRoyea, str_AudioProgrammers, str_PaulChernikhowsky, str_JasonLeeSteere, str_AdvancedGravis
-global unk_C6232, str_SportsDeskAnnouncer, str_MichaelDonovan, str_RinkAnnouncer, str_BruceJamieson, str_PlayerProfilePhotographs, str_SteveBabineau, unk_C62D3
-global str_VideoProvidedBy, str_NHLProductions, str_SpecialThanks, str_ScottJackson, str_CatherineOBrien, str_DougReid, str_MottLinn, unk_C6363
-global unk_C638C, str_TheFileYouSpecified, str_DoYouWantTo, str_No3, btn_FileExists, str_TheStatsWereSuccessfully, msg_StatsWritten, str_ERROROutputFileWas
-global msg_OutputFileError, str_InsufficientDiskSpaceTo, str_TheDisplayedStatisticsTo, statsleague, str_MayLoseThisGame, unk_C678E, unk_C67B1, photoremap
+global CreditPageTesters, str_RosterVerification, str_DaveWarfield2, str_JohnBrydon2, str_ProductManager, str_ChipLange, str_RatingsByJohnRosasco, str_AndNeilSmithOf
+global str_NewYorkRangers, CreditPageRosters, str_AudioTechnician, str_SteveRoyea, str_AudioProgrammers, str_PaulChernikhowsky, str_JasonLeeSteere, str_AdvancedGravis
+global CreditPageAudioTeam, str_SportsDeskAnnouncer, str_MichaelDonovan, str_RinkAnnouncer, str_BruceJamieson, str_PlayerProfilePhotographs, str_SteveBabineau, CreditPageAnnouncers
+global str_VideoProvidedBy, str_NHLProductions, str_SpecialThanks, str_ScottJackson, str_CatherineOBrien, str_DougReid, str_MottLinn, CreditPageSpecialThanks
+global CreditPageEnd, str_TheFileYouSpecified, str_DoYouWantTo, str_No3, btn_FileExists, str_TheStatsWereSuccessfully, msg_StatsWritten, str_ERROROutputFileWas
+global msg_OutputFileError, str_InsufficientDiskSpaceTo, str_TheDisplayedStatisticsTo, statsleague, str_MayLoseThisGame, str_StatsSourceDivider, StatsSourceMenu, photoremap
 global str_AwayLines, str_Play, str_Cancel, str_HomeLines, pregamebuttons, str_PenaltyKilling, str_PowerPlay
 global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_Goaltending, str_Overall, str_ConfirmDeletionOfThe
 global delmsgbox, str_gsScore, str_gsShots, str_gsPowerPlay, str_gsPenalties, str_gsFaceoffsWon, str_gsBodyChecks, str_gsAttackZone
@@ -202,7 +202,7 @@ demoteammode:
         db 02h,00h,00h,00h
 nhlintrosaid:
         db 01h,00h,00h,00h
-unk_C588E:
+CreditBlankLine:
         db 00h
 str_OfficiallyLicensed:
         db 04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch,069h,063h,065h,06Eh
@@ -230,19 +230,19 @@ str_LeagueAndAreUsed:
 CreditsList:
         db 062h,079h,020h,045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h
         db 074h,073h,020h,049h,06Eh,063h,02Eh,00h
-unk_C5969:
+CreditPageNhlLicense:
         db 09h,0DCh,00h,00h,00h
-        dd unk_C07A4
+        dd CreditBlankTitle
         dd str_OfficiallyLicensed
         dd str_ProductOfThe
         dd str_NationalHockeyLeague
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_NationalHockeyLeagueNHL
         dd str_TheLogoOfThe
         dd str_TrademarksOfTheNational
         dd str_LeagueAndAreUsed
         dd CreditsList
-unk_C5996:
+str_StanleyCupIsA:
         db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,0A8h,020h,069h,073h,020h
         db 061h,020h,072h,065h,067h,069h,073h,074h,065h,072h,065h,064h,00h
 str_TrademarkOfTheNational:
@@ -266,20 +266,20 @@ str_AreOfficiallyLicensed:
 str_OfTheNationalHockey:
         db 06Fh,066h,020h,074h,068h,065h,020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h
         db 048h,06Fh,063h,06Bh,065h,079h,020h,04Ch,065h,061h,067h,075h,065h,00h
-unk_C5A6C:
+str_CopyrightNHL1994:
         db 0A9h,020h,04Eh,048h,04Ch,020h,031h,039h,039h,034h,02Eh,00h
-unk_C5A78:
+CreditPageStanleyCup:
         db 09h,0DCh,00h,00h,00h
         dd str_Credit19
-        dd unk_C5996
+        dd str_StanleyCupIsA
         dd str_TrademarkOfTheNational
         dd str_LeagueAndIsUsed
         dd str_ByElectronicArtsInc
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_TeamNamesAndLogos
         dd str_AreOfficiallyLicensed
         dd str_OfTheNationalHockey
-        dd unk_C5A6C
+        dd str_CopyrightNHL1994
 str_OfficiallyLicensedProductOf:
         db 04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch,069h,063h,065h,06Eh
         db 073h,065h,064h,020h,050h,072h,06Fh,064h,075h,063h,074h,020h,06Fh,066h,020h,074h
@@ -306,13 +306,13 @@ str_LicenseByElectronicArts:
         db 06Ch,069h,063h,065h,06Eh,073h,065h,02Ch,020h,062h,079h,020h,045h,06Ch,065h,063h
         db 074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h,073h,020h,049h,06Eh,063h,02Eh
         db 00h
-unk_C5B93:
+CreditPageNhlpaLicense:
         db 09h,0FAh,00h,00h,00h
         dd str_Credit10
         dd str_OfficiallyLicensedProductOf
         dd str_NationalHockeyLeaguePlayers
         dd str_Association
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_NHLPANationalHockeyLeague
         dd str_PlayersAssociationAndThe
         dd str_OfTheNHLPAAre
@@ -330,7 +330,7 @@ str_AreTrademarksOfElectronic:
         db 061h,072h,065h,020h,074h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,073h,020h,06Fh
         db 066h,020h,045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h
         db 073h,02Ch,020h,049h,06Eh,063h,02Eh,00h
-unk_C5C33:
+CreditPageEaSports:
         db 03h,078h,00h,00h,00h
         dd str_Credit09
         dd str_EASportsTheEA
@@ -346,7 +346,7 @@ str_ThePIONEERPRODUCTIONSGroup:
 str_ElectronicArtsCanada:
         db 045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h,073h,020h
         db 043h,061h,06Eh,061h,064h,061h,02Eh,00h
-unk_C5CA1:
+CreditPagePresentedBy:
         db 03h,078h,00h,00h,00h
         dd str_Credit17
         dd str_ThisHasBeenA
@@ -362,11 +362,11 @@ str_ScottOrr:
 str_RichardHilleman:
         db 052h,069h,063h,068h,061h,072h,064h,020h,048h,069h,06Ch,06Ch,065h,06Dh,061h,06Eh
         db 00h
-unk_C5CF4:
+CreditPageGameConcept:
         db 05h,078h,00h,00h,00h
-        dd unk_C07A4
+        dd CreditBlankTitle
         dd str_OriginalGameConcept
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_JimSimmons
         dd str_ScottOrr
         dd str_RichardHilleman
@@ -379,137 +379,137 @@ str_DaveWarfield:
 str_RichardHilleman2:
         db 052h,069h,063h,068h,061h,072h,064h,020h,048h,069h,06Ch,06Ch,065h,06Dh,061h,06Eh
         db 00h
-unk_C5D51:
+CreditPagePcDesign:
         db 04h,078h,00h,00h,00h
-        dd unk_C07A4
+        dd CreditBlankTitle
         dd str_OriginalPCVersionGame
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_DaveWarfield
         dd str_RichardHilleman2
 str_LanceWall:
         db 04Ch,061h,06Eh,063h,065h,020h,057h,061h,06Ch,06Ch,00h
 str_LeadProgrammer:
         db 04Ch,065h,061h,064h,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-unk_C5D85:
+CreditPageLeadProgrammer:
         db 03h,078h,00h,00h,00h
         dd str_Credit01
         dd str_LanceWall
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_LeadProgrammer
 str_VictoriaWong:
         db 056h,069h,063h,074h,06Fh,072h,069h,061h,020h,057h,06Fh,06Eh,067h,00h
 str_Programmer:
         db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-unk_C5DB3:
+CreditPageProgrammerWong:
         db 03h,078h,00h,00h,00h
         dd str_Credit15
         dd str_VictoriaWong
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Programmer
 str_RobertPenner:
         db 052h,06Fh,062h,065h,072h,074h,020h,050h,065h,06Eh,06Eh,065h,072h,00h
 str_Programmer2:
         db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-unk_C5DE1:
+CreditPageProgrammerPenner:
         db 03h,078h,00h,00h,00h
         dd str_Credit12
         dd str_RobertPenner
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Programmer2
 str_KurtKennett:
         db 04Bh,075h,072h,074h,020h,04Bh,065h,06Eh,06Eh,065h,074h,074h,00h
 str_Programmer3:
         db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
-unk_C5E0E:
+CreditPageProgrammerKennett:
         db 03h,078h,00h,00h,00h
         dd str_Credit08
         dd str_KurtKennett
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Programmer3
 str_GerardDeSouza:
         db 047h,065h,072h,061h,072h,064h,020h,044h,065h,053h,06Fh,075h,07Ah,061h,00h
 str_Artist:
         db 041h,072h,074h,069h,073h,074h,00h
-unk_C5E39:
+CreditPageArtistDeSouza:
         db 03h,078h,00h,00h,00h
         dd str_Credit02
         dd str_GerardDeSouza
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Artist
 str_PhilChow:
         db 050h,068h,069h,06Ch,020h,043h,068h,06Fh,077h,00h
 str_Artist2:
         db 041h,072h,074h,069h,073h,074h,00h
-unk_C5E5F:
+CreditPageArtistChow:
         db 03h,078h,00h,00h,00h
         dd str_Credit11
         dd str_PhilChow
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Artist2
 str_KentMaclagan:
         db 04Bh,065h,06Eh,074h,020h,04Dh,061h,063h,06Ch,061h,067h,061h,06Eh,00h
 str_Artist3DAnimations:
         db 041h,072h,074h,069h,073h,074h,020h,02Fh,020h,033h,044h,020h,041h,06Eh,069h,06Dh
         db 061h,074h,069h,06Fh,06Eh,073h,00h
-unk_C5E99:
+CreditPageAnimator:
         db 03h,078h,00h,00h,00h
         dd str_Credit05
         dd str_KentMaclagan
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Artist3DAnimations
 str_MichaelJSokyrka:
         db 04Dh,069h,063h,068h,061h,065h,06Ch,020h,04Ah,02Eh,020h,053h,06Fh,06Bh,079h,072h
         db 06Bh,061h,00h
 str_Composer:
         db 043h,06Fh,06Dh,070h,06Fh,073h,065h,072h,00h
-unk_C5ECA:
+CreditPageComposer:
         db 03h,078h,00h,00h,00h
         dd str_Credit06
         dd str_MichaelJSokyrka
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Composer
 str_AlanStewart:
         db 041h,06Ch,061h,06Eh,020h,053h,074h,065h,077h,061h,072h,074h,00h
 str_AudioProgrammer:
         db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
         db 00h
-unk_C5EFD:
+CreditPageAudioStewart:
         db 03h,078h,00h,00h,00h
         dd str_Credit07
         dd str_AlanStewart
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_AudioProgrammer
 str_IainMacanulty:
         db 049h,061h,069h,06Eh,020h,04Dh,061h,063h,061h,06Eh,075h,06Ch,074h,079h,00h
 str_AudioProgrammer2:
         db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
         db 00h
-unk_C5F32:
+CreditPageAudioMacanulty:
         db 03h,078h,00h,00h,00h
         dd str_Credit18
         dd str_IainMacanulty
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_AudioProgrammer2
 str_SerenaMcCabe:
         db 053h,065h,072h,065h,06Eh,061h,020h,04Dh,063h,043h,061h,062h,065h,00h
 str_AdministrativeAssistant:
         db 041h,064h,06Dh,069h,06Eh,069h,073h,074h,072h,061h,074h,069h,076h,065h,020h,041h
         db 073h,073h,069h,073h,074h,061h,06Eh,074h,00h
-unk_C5F6E:
+CreditPageAdminAssistant:
         db 03h,078h,00h,00h,00h
         dd str_Credit14
         dd str_SerenaMcCabe
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_AdministrativeAssistant
 str_RodHigo:
         db 052h,06Fh,064h,020h,048h,069h,067h,06Fh,00h
 str_LeadTester:
         db 04Ch,065h,061h,064h,020h,054h,065h,073h,074h,065h,072h,00h
-unk_C5F98:
+CreditPageLeadTester:
         db 03h,078h,00h,00h,00h
         dd str_Credit13
         dd str_RodHigo
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_LeadTester
 str_RichardRadarMul:
         db 052h,069h,063h,068h,061h,072h,064h,020h,028h,052h,061h,064h,061h,072h,029h,020h
@@ -517,43 +517,43 @@ str_RichardRadarMul:
 str_AssistantProducer:
         db 041h,073h,073h,069h,073h,074h,061h,06Eh,074h,020h,050h,072h,06Fh,064h,075h,063h
         db 065h,072h,00h
-unk_C5FD4:
+CreditPageAssistantProducer:
         db 03h,078h,00h,00h,00h
         dd str_Credit16
         dd str_RichardRadarMul
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_AssistantProducer
 str_FosterHall:
         db 046h,06Fh,073h,074h,065h,072h,020h,048h,061h,06Ch,06Ch,00h
 str_DirectorOfDevelopment:
         db 044h,069h,072h,065h,063h,074h,06Fh,072h,020h,06Fh,066h,020h,044h,065h,076h,065h
         db 06Ch,06Fh,070h,06Dh,065h,06Eh,074h,00h
-unk_C600D:
+CreditPageDevDirector:
         db 03h,078h,00h,00h,00h
         dd str_Credit00
         dd str_FosterHall
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_DirectorOfDevelopment
 str_KenSayler:
         db 04Bh,065h,06Eh,020h,053h,061h,079h,06Ch,065h,072h,00h
 str_ProducerDesign:
         db 050h,072h,06Fh,064h,075h,063h,065h,072h,020h,026h,020h,044h,065h,073h,069h,067h
         db 06Eh,00h
-unk_C603F:
+CreditPageProducerDesign:
         db 03h,078h,00h,00h,00h
         dd str_Credit04
         dd str_KenSayler
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_ProducerDesign
 str_HannoLemke:
         db 048h,061h,06Eh,06Eh,06Fh,020h,04Ch,065h,06Dh,06Bh,065h,00h
 str_Producer:
         db 050h,072h,06Fh,064h,075h,063h,065h,072h,00h
-unk_C6069:
+CreditPageProducer:
         db 03h,078h,00h,00h,00h
         dd str_Credit03
         dd str_HannoLemke
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_Producer
 str_Testers:
         db 054h,065h,073h,074h,065h,072h,073h,03Ah,00h
@@ -571,19 +571,19 @@ str_JonBruce:
         db 04Ah,06Fh,06Eh,020h,042h,072h,075h,063h,065h,00h
 str_JohnSantamaria:
         db 04Ah,06Fh,068h,06Eh,020h,053h,061h,06Eh,074h,061h,06Dh,061h,072h,069h,061h,00h
-unk_C60D7:
+CreditPageTesters:
         db 0Ch,0B4h,00h,00h,00h
         dd str_Credit17
         dd str_Testers
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_PaulSmith
         dd str_JohnBrydon
         dd str_TonyLam
         dd str_DavidLee
-        dd unk_C588E
-        dd unk_C588E
+        dd CreditBlankLine
+        dd CreditBlankLine
         dd str_QASupport
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_JonBruce
         dd str_JohnSantamaria
 str_RosterVerification:
@@ -607,16 +607,16 @@ str_AndNeilSmithOf:
 str_NewYorkRangers:
         db 04Eh,065h,077h,020h,059h,06Fh,072h,06Bh,020h,052h,061h,06Eh,067h,065h,072h,073h
         db 00h
-unk_C619A:
+CreditPageRosters:
         db 0Ah,0B4h,00h,00h,00h
-        dd unk_C07A4
+        dd CreditBlankTitle
         dd str_RosterVerification
         dd str_DaveWarfield2
         dd str_JohnBrydon2
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_ProductManager
         dd str_ChipLange
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_RatingsByJohnRosasco
         dd str_AndNeilSmithOf
         dd str_NewYorkRangers
@@ -637,17 +637,17 @@ str_JasonLeeSteere:
 str_AdvancedGravis:
         db 028h,041h,064h,076h,061h,06Eh,063h,065h,064h,020h,047h,072h,061h,076h,069h,073h
         db 029h,00h
-unk_C6232:
+CreditPageAudioTeam:
         db 0Ah,0B4h,00h,00h,00h
-        dd unk_C07A4
+        dd CreditBlankTitle
         dd str_AudioTechnician
         dd str_SteveRoyea
-        dd unk_C588E
-        dd unk_C588E
+        dd CreditBlankLine
+        dd CreditBlankLine
         dd str_AudioProgrammers
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_PaulChernikhowsky
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_JasonLeeSteere
         dd str_AdvancedGravis
 str_SportsDeskAnnouncer:
@@ -664,15 +664,15 @@ str_PlayerProfilePhotographs:
         db 068h,06Fh,074h,06Fh,067h,072h,061h,070h,068h,073h,03Ah,00h
 str_SteveBabineau:
         db 053h,074h,065h,076h,065h,020h,042h,061h,062h,069h,06Eh,065h,061h,075h,00h
-unk_C62D3:
+CreditPageAnnouncers:
         db 08h,0B4h,00h,00h,00h
         dd str_Credit17
         dd str_SportsDeskAnnouncer
         dd str_MichaelDonovan
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_RinkAnnouncer
         dd str_BruceJamieson
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_PlayerProfilePhotographs
         dd str_SteveBabineau
 str_VideoProvidedBy:
@@ -691,49 +691,49 @@ str_DougReid:
         db 044h,06Fh,075h,067h,020h,052h,065h,069h,064h,00h
 str_MottLinn:
         db 04Dh,06Fh,074h,074h,020h,04Ch,069h,06Eh,06Eh,00h
-unk_C6363:
+CreditPageSpecialThanks:
         db 08h,0B4h,00h,00h,00h
         dd str_Credit17
         dd str_VideoProvidedBy
         dd str_NHLProductions
-        dd unk_C588E
+        dd CreditBlankLine
         dd str_SpecialThanks
         dd str_ScottJackson
         dd str_CatherineOBrien
         dd str_DougReid
         dd str_MottLinn
-unk_C638C:
+CreditPageEnd:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 creditpages:
-        dd unk_C5969
-        dd unk_C5B93
-        dd unk_C5A78
-        dd unk_C5C33
-        dd unk_C5CA1
-        dd unk_C5CF4
-        dd unk_C5D51
-        dd unk_C5D85
-        dd unk_C5DB3
-        dd unk_C5DE1
-        dd unk_C5E0E
-        dd unk_C5E39
-        dd unk_C5E5F
-        dd unk_C5E99
-        dd unk_C5ECA
-        dd unk_C5EFD
-        dd unk_C5F32
-        dd unk_C5F6E
-        dd unk_C5FD4
-        dd unk_C600D
-        dd unk_C603F
-        dd unk_C6069
-        dd unk_C5F98
-        dd unk_C60D7
-        dd unk_C619A
-        dd unk_C6232
-        dd unk_C62D3
-        dd unk_C6363
-        dd unk_C638C
+        dd CreditPageNhlLicense
+        dd CreditPageNhlpaLicense
+        dd CreditPageStanleyCup
+        dd CreditPageEaSports
+        dd CreditPagePresentedBy
+        dd CreditPageGameConcept
+        dd CreditPagePcDesign
+        dd CreditPageLeadProgrammer
+        dd CreditPageProgrammerWong
+        dd CreditPageProgrammerPenner
+        dd CreditPageProgrammerKennett
+        dd CreditPageArtistDeSouza
+        dd CreditPageArtistChow
+        dd CreditPageAnimator
+        dd CreditPageComposer
+        dd CreditPageAudioStewart
+        dd CreditPageAudioMacanulty
+        dd CreditPageAdminAssistant
+        dd CreditPageAssistantProducer
+        dd CreditPageDevDirector
+        dd CreditPageProducerDesign
+        dd CreditPageProducer
+        dd CreditPageLeadTester
+        dd CreditPageTesters
+        dd CreditPageRosters
+        dd CreditPageAudioTeam
+        dd CreditPageAnnouncers
+        dd CreditPageSpecialThanks
+        dd CreditPageEnd
         db 00h,00h,00h
 textgrid:
         db 00h,00h,00h,00h
@@ -908,17 +908,17 @@ str_POTitle:
         db 022h
         db 057h,057h,057h,057h,057h,057h,057h,057h,022h,020h,050h,06Ch,061h,079h,02Dh,04Fh
         db 066h,066h,073h,00h
-unk_C678E:
+str_StatsSourceDivider:
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
-dword_C679D:
+StatsSourceLastBottom:
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
 str_Dashes:
         db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,00h
-unk_C67B1:
+StatsSourceMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_C67B9:
+StatsSourceMenuRight:
         db 0F7h,00h,00h,00h
-dword_C67BD:
+StatsSourceMenuBottom:
         db 011h,00h,00h,00h
         dd mi_9394Season
         dd StatsSel9394Season
@@ -928,7 +928,7 @@ dword_C67BD:
         dd StatsSel9394Playoffs
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
         db 0F7h,00h,00h,00h,035h,00h,00h,00h
-        dd unk_C678E
+        dd str_StatsSourceDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 036h,00h,00h,00h,0F7h,00h,00h,00h,047h,00h,00h,00h
 menutext_statsleague:
@@ -943,7 +943,7 @@ menuact_statslgplayoffs:
         dd StatsSelLeaguePlayoffs
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
         db 0F7h,00h,00h,00h,06Bh,00h,00h,00h
-        dd unk_C678E
+        dd str_StatsSourceDivider
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
         db 06Ch,00h,00h,00h,0F7h,00h,00h,00h,07Eh,00h,00h,00h
 menutext_statsplayoff:
@@ -1097,19 +1097,19 @@ teamcolhdrs:
         dd str_TSH
         dd str_PPGA
         dd str_PCT5
-        dd unk_C0F89
+        dd str_BlankTeamColumn
         dd str_ADV
         dd str_PPG3
         dd str_PCT5
-        dd unk_C0F89
+        dd str_BlankTeamColumn
         dd str_PIM5
         dd str_AVG
-        dd unk_C0F89
-        dd unk_C0F89
+        dd str_BlankTeamColumn
+        dd str_BlankTeamColumn
         dd str_PTS
         dd str_WINS
-        dd unk_C0F89
-        dd unk_C0F89
+        dd str_BlankTeamColumn
+        dd str_BlankTeamColumn
 leadersortfns:
         dd CmpPoints
         dd CmpGoals
@@ -1141,39 +1141,39 @@ leadercolhdrs_c1:
 leadercolhdrs_c2:
         dd str_Pt3
 leadercolhdrs_c3:
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
 leadercolhdrs_c4:
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
         dd str_Pt3
-        dd unk_C11D1
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
+        dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
         dd str_Pt3
-        dd unk_C11D1
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
+        dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
         dd str_Pt3
         dd str_PP2
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
         dd str_Pt3
         dd str_SHG3
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
         dd str_Pt3
         dd str_PlusMinus5
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
         dd str_Pt3
         dd str_PIM6
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
         dd str_spG
         dd str_spA
         dd str_Pt3
@@ -1182,18 +1182,18 @@ leadercolhdrs_c4:
         dd str_MIN5
         dd str_GA5
         dd str_AVG2
-        dd unk_C11D1
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
+        dd str_BlankLeaderColumn
         dd str_MIN5
         dd str_spW2
         dd str_SpL5
         dd str_SpT2
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
         dd str_MIN5
         dd str_GA5
         dd str_SA4
         dd str_PCT7
-        dd unk_C11D1
+        dd str_BlankLeaderColumn
         dd str_LSSCEDDB
 off_C6D22 equ $+2
         dd str_SCHEDULEDB3
@@ -1238,7 +1238,6 @@ potreeseeds:
         db 011h,00h,00h,00h,012h,00h,00h,00h,013h,00h,00h,00h,014h,00h,00h,00h
         db 015h,00h,00h,00h,016h,00h,00h,00h,017h,00h,00h,00h,018h,00h,00h,00h
         db 019h,00h,00h,00h,01Ah,00h
-dword_C6E20:
         db 00h,00h
 treecolx:
         db 014h,00h,00h,00h,0B7h,00h,00h,00h,05Ch,01h,00h,00h,0FEh,01h,00h,00h

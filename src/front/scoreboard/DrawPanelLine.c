@@ -95,7 +95,7 @@ void DrawEnergyBar(int level, int x)
 /* DrawPanelPenalties (15995, PC only; segment 006, ends in DrawPanelLine_x): draw the first four entries of a
    penalty panel list at x, rows 5 apart from y 9: the player's number (two digits from x + 0Ah, a leading blank
    under 10), then the minutes (x + 1Bh, leading blank under 10) and the seconds (x + 2Ah) in penaltydigits; a free
-   entry (player < 0) is six blanks (dword_DC2B8). pens: the list (hudpenhome or hudpenaway); x: the left edge.
+   entry (player < 0) is six blanks (PenaltyBlankDigit). pens: the list (hudpenhome or hudpenaway); x: the left edge.
    No result. */
 void DrawPanelPenalties(PenSlot *pens, int x)
 {
@@ -104,21 +104,21 @@ void DrawPanelPenalties(PenSlot *pens, int x)
 
     for (i = 0, y = 9; i < 4; i++, y += 5) {
         if (pens[i].pl >= 0) {
-            if (pens[i].pl < 10) PUTSPRITE(dword_DC2B8, x + 0xA, y);
+            if (pens[i].pl < 10) PUTSPRITE(PenaltyBlankDigit, x + 0xA, y);
             else PUTSPRITE(penaltydigits[pens[i].pl / 10], x + 0xA, y);
             PUTSPRITE(penaltydigits[pens[i].pl % 10], x + 0x10, y);
-            if (pens[i].min < 10) PUTSPRITE(dword_DC2B8, x + 0x1B, y);
+            if (pens[i].min < 10) PUTSPRITE(PenaltyBlankDigit, x + 0x1B, y);
             else PUTSPRITE(penaltydigits[pens[i].min / 10], x + 0x1B, y);
             PUTSPRITE(penaltydigits[pens[i].min % 10], x + 0x21, y);
             PUTSPRITE(penaltydigits[pens[i].sec / 10], x + 0x2A, y);
             PUTSPRITE(penaltydigits[pens[i].sec % 10], x + 0x30, y);
         } else {
-            PUTSPRITE(dword_DC2B8, x + 0xA, y);
-            PUTSPRITE(dword_DC2B8, x + 0x10, y);
-            PUTSPRITE(dword_DC2B8, x + 0x1B, y);
-            PUTSPRITE(dword_DC2B8, x + 0x21, y);
-            PUTSPRITE(dword_DC2B8, x + 0x2A, y);
-            PUTSPRITE(dword_DC2B8, x + 0x30, y);
+            PUTSPRITE(PenaltyBlankDigit, x + 0xA, y);
+            PUTSPRITE(PenaltyBlankDigit, x + 0x10, y);
+            PUTSPRITE(PenaltyBlankDigit, x + 0x1B, y);
+            PUTSPRITE(PenaltyBlankDigit, x + 0x21, y);
+            PUTSPRITE(PenaltyBlankDigit, x + 0x2A, y);
+            PUTSPRITE(PenaltyBlankDigit, x + 0x30, y);
         }
     }
 }

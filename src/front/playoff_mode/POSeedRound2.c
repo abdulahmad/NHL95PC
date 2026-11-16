@@ -182,7 +182,7 @@ int CreatePlayoffs(void)
             if ((r = AskDatabaseChoice()) >= 0) {
                 GetLeagueDBSizes(0, (int *)podbsizes, (char *)dbextension);
                 MakePath(s.path, (char *)&curleague, (char *)str_GameSet, 0);
-                if (FileExists(s.path)) dword_D2884 = 0;
+                if (FileExists(s.path)) PoGameSetFlag = 0;
                 if ((r = DiskSpaceShort(0, (int *)podbsizes)) != 0) {
                     sprintf((char *)msg_PODiskSpace_arg, (char *)str_4dKbytesOfFree, r);
                     MessageBox(-1, -1, (char *)msg_PODiskSpace, 3, 0, 0, (int)&s.x, (int)&s.y, 0x258);

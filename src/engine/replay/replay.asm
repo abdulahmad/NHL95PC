@@ -9,8 +9,8 @@ extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
 extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, ovlartfiles, markframes_e1, rinkobjdefs_m2
-extern dword_CD41E, ovlmemneed, DrawClipLeft, DrawClipRight, ovlstepart, ovlstepart_e21, ovlstepart_e30, dword_E0220
-extern dword_E0230, ovlartbank, regd3_m2, regd0_m3, regd1_m3, SpeechPatchNext, lineslotmark, dword_E9C85
+extern ovlmemneed, DrawClipLeft, DrawClipRight, ovlstepart, ovlstepart_e21, ovlstepart_e30, RinkSideShape
+extern RinkSideShapeFlipped, ovlartbank, regd3_m2, regd0_m3, regd1_m3, SpeechPatchNext, lineslotmark
 extern linesortidx, dressedskaters, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
 extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
 extern rpl_objstep_m3, rpl_ysort, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
@@ -26,7 +26,7 @@ extern FillRectClipped, PrintString, SortIndices, FindShape, JoyButtonMap, SetCl
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
 extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
-extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9, rpl_camx
+extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, rpl_puckunused, rpl_camx
 extern rpl_camy, rpl_objframe, xc1, yc1, yleader
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, updatereplay, ReplayStep, ReplayStep_popx, DrawRinkSideObjects
 ;-----------------------------------------------------------------------------
@@ -553,7 +553,7 @@ ReplayStep:
         inc edx
         mov dword [replayplay], edx
         movsx ax, byte [eax]
-        mov word [word_E9FA9], ax
+        mov word [rpl_puckunused], ax
         lea edi, [byte edx+02h]
         mov dword [replayplay], edi
         lea edx, [byte edi+01h]
@@ -866,7 +866,7 @@ DrawRinkSideObjects:
         mov eax, 12Dh
 .16:
         movsx ebx, ax
-        mov eax, dword [dword_E0220]
+        mov eax, dword [RinkSideShape]
         mov edx, 4
         call DrawSprite
 .17:
@@ -901,7 +901,7 @@ DrawRinkSideObjects:
         mov eax, 12Dh
 .20:
         movsx ebx, ax
-        mov eax, dword [dword_E0230]
+        mov eax, dword [RinkSideShapeFlipped]
         mov edx, 4
         call DrawSprite
         jmp short .22

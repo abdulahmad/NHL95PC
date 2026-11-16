@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_27080 progbits alloc exec nowrite align=1
 extern __CHK, cddriveptr, CmpConfStandings, DeskSetExit3b, divisionnames, divx, divy, embscupbank
-extern dword_C6D26, potreeseeds, dword_C6E20, fileoncd, fputchar, FreeMemBlock, j___close_, kaufmfont
+extern dword_C6D26, potreeseeds, fileoncd, fputchar, FreeMemBlock, j___close_, kaufmfont
 extern LoadLeagueTree, LoadPlayoffModeTree, LoadScheduleDB, lseek_, mainfont, MakePath, MakeStatsTitle, memcpy_
-extern off_CF6A3, open_, OpenStatsSchedule, playofftree, PrintCenteredText, PrintFmt1, PrintFmt2, PrintOutlinedText
+extern StandingsRosterAction, open_, OpenStatsSchedule, playofftree, PrintCenteredText, PrintFmt1, PrintFmt2, PrintOutlinedText
 extern PrintShadowText, qsort_, read_, SetTextColors, sprintf_, stand_tmpl1, stand_tmpl2, statsbgnames
 extern statsbgshapes, statsfromleague, statsleague, statspal, statspalshape, statspalvalid, statsplayoffs, statsteamdbs
 extern str_Adn12, str_Adn22, str_Adn32, str_Aup12, str_Aup22, str_Aup32, str_Bkgd2, str_C3
@@ -49,7 +49,7 @@ StandingsScreen:
         movsd
         movsd
         movsw
-        mov dword [off_CF6A3], DeskSetExit3b
+        mov dword [StandingsRosterAction], DeskSetExit3b
         mov eax, dword [mainfont]
         mov dword [byte ebp-08h], eax
         mov eax, dword [kaufmfont]
@@ -1365,10 +1365,10 @@ PlayoffTreeScreen:
         mov dword [byte ebp-03Ch], eax
         cmp dword [playofftree], byte 1Ah
         jne short .1
-        mov dword [off_CF6A3], 0
+        mov dword [StandingsRosterAction], 0
         jmp short .2
 .1:
-        mov dword [off_CF6A3], DeskSetExit3b
+        mov dword [StandingsRosterAction], DeskSetExit3b
 .2:
         call SetScreenTarget
         cmp dword [embscupbank], byte 0

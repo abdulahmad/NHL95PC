@@ -4,7 +4,7 @@ bits 32
 section s_D0B16 progbits alloc noexec write align=1
 extern str_Yes, str_No4
 global dlgfillcol, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgbevelcol1, dlgbevelcol2, fascrollbar_len, fascrollbar_thumb
-global fascrollbar_top, fascrollbar_count, dword_D0C20, str_OK, str_Cancel5, btn_EditRosters, btn_RosterList, fascrollbar
+global fascrollbar_top, fascrollbar_count, FaListScrolls, str_OK, str_Cancel5, btn_EditRosters, btn_RosterList, fascrollbar
 global savedbbtns
 dlgfillcol:
         db 041h,00h,00h,00h
@@ -48,7 +48,7 @@ fascrollbar_top:
         db 00h,00h,00h,00h,00h,00h,00h,00h
 fascrollbar_count:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_D0C20:
+FaListScrolls:
         db 00h,00h,00h,00h
 savedbbtns:
         db 08h,00h,00h,00h,01Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h

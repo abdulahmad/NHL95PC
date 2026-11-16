@@ -50,10 +50,10 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     traderemap2 = (int)awayremap;
     for (i = 0; i < 4; i++) {
         t = i >> 1;
-        memcpy(unk_D12C8, (unsigned char *)traderemap1[t] + 0x90, 0x30);
-        c1 = byte_D11BC[tm[t] * 4];
+        memcpy(jerseyremapteam, (unsigned char *)traderemap1[t] + 0x90, 0x30);
+        c1 = TeamJerseyBase[tm[t] * 4];
         c1 = jerseyremap[c1];
-        c2 = byte_D12DE;
+        c2 = jerseyremaptrim;
         MakeJerseyShape(jerseyremap, cols[i * 22 + 1], c1, c2);
         SetColorRemap(jerseyremap);
         DrawArtMasked(art, tradebtnx[i * 2], tradebtny[i * 2]);

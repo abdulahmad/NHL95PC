@@ -182,7 +182,7 @@ int MenuSaveDefaultLines(unsigned char *nums, unsigned char *dst, unsigned char 
     r = write(fh, rec, 0x2E8);
     if (r < 0 || r != 0x2E8) FatalError((char *)str_ErrB7);
     *(Lines48 *)(hmteamrec + side * 0x2E8 + 0xBC) = *(Lines48 *)(rec + 0xBC);
-    *(Lines48 *)(unk_DBD1C + side * 0x2E8) = *(Lines48 *)(rec + 0xEC);
+    *(Lines48 *)(TeamRecLines + side * 0x2E8) = *(Lines48 *)(rec + 0xEC);
     j___close(fh);
     return 0;
 }
@@ -235,7 +235,7 @@ int MenuSaveTheseLines(unsigned char *nums, unsigned char *dst, unsigned char si
     r = write(fh, rec, 0x2E8);
     if (r < 0 || r != 0x2E8) FatalError((char *)str_ErrB7);
     *(Lines48 *)(hmteamrec + side * 0x2E8 + 0xBC) = *(Lines48 *)(rec + 0xBC);
-    *(Lines48 *)(unk_DBD1C + side * 0x2E8) = *(Lines48 *)(rec + 0xEC);
+    *(Lines48 *)(TeamRecLines + side * 0x2E8) = *(Lines48 *)(rec + 0xEC);
     j___close(fh);
     return 1;
 }
@@ -256,7 +256,7 @@ int MenuGameShowPlayerStats(unsigned char *nums, int a, unsigned char side, int 
     int i;
     int s;
 
-    dword_DC734 = leaguestatsmode = 1;
+    RosterFromStandings = leaguestatsmode = 1;
     statsredrawcb = (int)TeamRosterScreen;
     if (side) statscategory = VisTeam;
     else statscategory = HomeTeam;

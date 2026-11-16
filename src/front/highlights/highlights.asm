@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_7F724 progbits alloc exec nowrite align=1
-extern __CHK, _dos_getdiskfree_, AllocMemBlock, awteamrec, bothneitherstrs, byte_DB7F1, byte_DC267, UnusedStateByte
+extern __CHK, _dos_getdiskfree_, AllocMemBlock, awteamrec, bothneitherstrs, awrosterjersey, GameRecordDay, UnusedStateByte
 extern ClearInputQueue, curleague, curperiod, DrawGadgetButton, DrawGadgetButton_ret, FadeOutPalCycle, FadePalStep, FatalError
 extern FileClose, FileCreate, FileOpenRead, FileOpenWrite, FileReadAt, FileWriteAt, FillRect, fontcolor
 extern fputchar, FreeMemBlock, FreeRinkGfx, FreeRockMusic, gamepal, GetFileSize, hilightfont, hilightrec
@@ -326,7 +326,7 @@ SaveHilight:
 .2:
         mov al, byte [UnusedStateByte]
         mov byte [hilightrec], al
-        mov al, byte [byte_DC267]
+        mov al, byte [GameRecordDay]
         mov byte [hilightrec+1], al
         mov al, byte [HomeTeam]
         mov byte [hilightrec+2], al
@@ -355,7 +355,7 @@ SaveHilight:
         sub eax, edx
         mov bl, byte [dword eax+hmrosterjersey]
         mov byte [dword edx+hilightrec+3], bl
-        mov al, byte [dword eax+byte_DB7F1]
+        mov al, byte [dword eax+awrosterjersey]
         mov byte [dword edx+hilightrec+20h], al
         inc edx
         cmp edx, byte 1Ch
@@ -914,7 +914,7 @@ PlayHilight:
         mov al, byte [hilightrec]
         mov byte [UnusedStateByte], al
         mov al, byte [hilightrec+1]
-        mov byte [byte_DC267], al
+        mov byte [GameRecordDay], al
         xor eax, eax
         mov al, byte [hilightrec+2]
         mov word [HomeTeam], ax
@@ -945,7 +945,7 @@ PlayHilight:
         mov bl, byte [dword edx+hilightrec+3]
         mov byte [dword eax+hmrosterjersey], bl
         mov bl, byte [dword edx+hilightrec+20h]
-        mov byte [dword eax+byte_DB7F1], bl
+        mov byte [dword eax+awrosterjersey], bl
         inc edx
         cmp edx, byte 1Ch
         jl short PlayHilight.1

@@ -8,7 +8,7 @@ int ClearInputQueue(void)
     inputqcount = 0;
     inputqtail = 0x1F;
     inputqhead = 0;
-    dword_CDA38 = 0;
+    InputQueueSpare = 0;
     joybtnheld = 0;
     enterheld = 0;
     return 0;

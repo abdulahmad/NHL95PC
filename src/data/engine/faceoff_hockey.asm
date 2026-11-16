@@ -8,20 +8,20 @@ extern assbenchside, assrefpenshot, asspsclear, asspenshooter, assbench, asscent
 extern assdefo, assdopen, asseben, assepen, assfaceoff, assfaceoffpl, assgoalie, assgoalietopuck
 extern assnearest, asspassrec, asspenalty, asspuckc, assscore, assshoot, assstanley, asswingd
 extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
-extern unk_DFF5E, unk_E0416, puckstruct
+extern unk_E0416, puckstruct
 global seed, asstab, sflags, gmode2, pendelaytab
 global pendelaytab_e13, penmintab, pendelay2tab, pendelay2tab_e4, priolist_m1, priolist, apl, collflag
 global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, penmintab_m3, shownumbers
-global dword_CBEBE, bannertimer, puckvx, gmode, replaystart, puckx, pucky, puckvy
+global bannertimer, puckvx, gmode, replaystart, puckx, pucky, puckvy
 global puckz, puckc, camx_m2, coachlinetab, lastplayer, puckvz, threat, SPAtab
-global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
-global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, shotplayer
+global CoachRotateFour, CoachRotateThree, CoachRotateThreeTop, CoachRotateFourEven, CoachRotateFourMixed, CoachRotateThreeEven, CoachSpecialUnits, CoachRotateTwo
+global CoachRotateTwoDeep, CoachRotateFourShort, CoachRotateThreeShort, ds2list, wcradiusx, camx, camy, shotplayer
 global passdir, passspeed, passplayer, xc1, yc1, fox, foy, fodir1
 global fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal
 global RefStep, RefPen, penaltysc, gsp, gameclock, clockticks, dirtab_y
 global debugstep, SortPending, exitgame, gameover, PerTimeTab, energywarn, lcblink
 global lcblinktime, lcsel, lcsel_aw, lcline, lctimer
-global lcboxon, word_CBD64, word_CBD66, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
+global lcboxon, ObjInitFrame, ObjInitAttr, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
 global refhitcount, fadeinpending, injurystop, bannermsg, ovlseq, ovlstep
 replaystart:
         dd unk_E0416
@@ -39,7 +39,7 @@ puckvz:
         dd puckstruct+10h
 puckc:
 camx_m2 equ $+2
-        dd unk_DFF5E
+        dd puckstruct+042h
 camx:
         db 00h,00h
 camy:
@@ -900,46 +900,46 @@ lctimer:
 lcboxon:
         db 00h,00h
         db 00h,00h
-unk_CBC6E:
+CoachRotateFour:
         db 02h,01h,00h,03h,00h,03h,02h,01h,03h,02h,01h,00h,01h,00h,03h,02h
-unk_CBC7E:
+CoachRotateThree:
         db 01h,02h,03h,0FFh,02h,00h,03h,0FFh,00h,01h,03h,0FFh,00h,01h,02h,0FFh
         db 01h,02h,03h,0FFh,02h,00h,03h,0FFh,03h,00h,01h,0FFh,00h,01h,02h,0FFh
-unk_CBC9E:
+CoachRotateThreeTop:
         db 02h,01h,00h,0FFh,00h,02h,01h,0FFh,01h,02h,00h,0FFh,01h,00h,02h,0FFh
-unk_CBCAE:
+CoachRotateFourEven:
         db 02h,01h,00h,03h,00h,01h,02h,03h,03h,02h,01h,00h,01h,00h,03h,02h
-unk_CBCBE:
+CoachRotateFourMixed:
         db 02h,01h,00h,03h,00h,01h,03h,02h,03h,02h,01h,00h,01h,00h,03h,02h
-unk_CBCCE:
+CoachRotateThreeEven:
         db 02h,01h,00h,0FFh,00h,01h,02h,0FFh,02h,01h,00h,0FFh,01h,00h,02h,0FFh
-unk_CBCDE:
+CoachSpecialUnits:
         db 05h,04h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
-unk_CBCEE:
+CoachRotateTwo:
         db 01h,00h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,0FFh,0FFh
-unk_CBCFE:
+CoachRotateTwoDeep:
         db 01h,02h,0FFh,0FFh,02h,00h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,02h,0FFh
-unk_CBD0E:
+CoachRotateFourShort:
         db 01h,02h,03h,0FFh,02h,03h,00h,0FFh,03h,00h,01h,0FFh,00h,01h,02h,0FFh
-unk_CBD1E:
+CoachRotateThreeShort:
         db 01h,02h,0FFh,0FFh,00h,02h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,02h,0FFh
 coachlinetab:
-        dd unk_CBC6E
-        dd unk_CBC7E
-        dd unk_CBC9E
-        dd unk_CBCAE
-        dd unk_CBCBE
-        dd unk_CBCCE
-        dd unk_CBCDE
-        dd unk_CBCEE
-        dd unk_CBCFE
-        dd unk_CBD0E
-        dd unk_CBD1E
+        dd CoachRotateFour
+        dd CoachRotateThree
+        dd CoachRotateThreeTop
+        dd CoachRotateFourEven
+        dd CoachRotateFourMixed
+        dd CoachRotateThreeEven
+        dd CoachSpecialUnits
+        dd CoachRotateTwo
+        dd CoachRotateTwoDeep
+        dd CoachRotateFourShort
+        dd CoachRotateThreeShort
 ds2list:
         db 060h,0FFh,0F1h,0FFh,00h,00h,0FFh,0FFh,00h,00h
-word_CBD64:
+ObjInitFrame:
         db 08h,00h
-word_CBD66:
+ObjInitAttr:
         db 04h,00h,029h,00h,080h,00h,060h,0FFh,0E2h,0FFh,00h,00h,0FFh,0FFh,00h,00h
         db 08h,00h,04h,00h,029h,00h,080h,00h,060h,0FFh,0D3h,0FFh,00h,00h,0FFh,0FFh
         db 00h,00h,08h,00h,04h,00h,029h,00h,080h,00h,060h,0FFh,0C4h,0FFh,00h,00h
@@ -967,7 +967,6 @@ puckfaceoff2_ptab_y:
 apl:
         db 00h,01h,02h,03h,04h,05h,06h,00h,00h,01h,05h,03h,04h,02h,00h,00h
         db 00h,03h,05h,01h,04h,00h
-dword_CBEBE:
         db 00h,00h
 ovltimer:
         db 0FFh,0FFh

@@ -102,7 +102,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
             e = GetInputEvent();
             if (e) bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &mx, &my);
         } while (e && !(bits & 2));
-        if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && rostereditmode != 2 && bits) {
+        if (FaListScrolls && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && rostereditmode != 2 && bits) {
             PutBlock(editptrspr, oldmx, oldmy);
             k = TrackButtons((int *)btn_RosterList, 2, mx, my, bits);
             if (k == 0 && falisttop > 0) {

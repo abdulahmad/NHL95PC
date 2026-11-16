@@ -2,30 +2,30 @@
 bits 32
 %include "hockey.inc"
 section s_D0151 progbits alloc noexec write align=1
-extern ShowFreeAgents, EditTeamLines, CreateFreeAgent, FindPlayer, LineEdDone, MenuLineEdCancel, unk_CFBE8, unk_CFCF2
-extern unk_CFE08, unk_CFF51, unk_D006E, str_FreeAgents2, str_FindPlayer, str_Pacific, str_Central, str_Northeast
-extern str_Atlantic, unk_D0139
+extern ShowFreeAgents, EditTeamLines, CreateFreeAgent, FindPlayer, LineEdDone, MenuLineEdCancel, RosterPacificMenu, RosterCentralMenu
+extern RosterNortheastMenu, RosterAtlanticMenu, EditRostersFileMenu, str_FreeAgents2, str_FindPlayer, str_Pacific, str_Central, str_Northeast
+extern str_Atlantic, Roster1TeamMenu
 global roster1divmenus, roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, menu_r1_freeagents, menu_r2_freeagents
-global menu_r1_editlines, menu_r2_editlines, unk_D01F9, str_MoveToFreeAgent, str_MoveToRoster2, str_MoveToRoster1, str_CreateFreeAgent, str_EditTeamLines
-global unk_D031D, unk_D039D, str_File3, str_Roster12, str_Roster22, str_EditRoster1, str_EditRoster2, editrostersmenubar
-global str_Done5, str_Cancel8, unk_D04FC, str_DressPlayer2, str_ScratchPlayer2, unk_D0558
+global menu_r1_editlines, menu_r2_editlines, Roster2TeamMenu, str_MoveToFreeAgent, str_MoveToRoster2, str_MoveToRoster1, str_CreateFreeAgent, str_EditTeamLines
+global EditRoster1Menu, EditRoster2Menu, str_File3, str_Roster12, str_Roster22, str_EditRoster1, str_EditRoster2, editrostersmenubar
+global str_Done5, str_Cancel8, DbLinesFileMenu, str_DressPlayer2, str_ScratchPlayer2, DbLinesPlayerMenu
 roster1divmenus:
-        dd unk_CFBE8
+        dd RosterPacificMenu
         db 06h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,066h,00h,00h,00h
         db 023h,00h,00h,00h
         dd str_Central
         db 00h,00h,00h,00h
-        dd unk_CFCF2
+        dd RosterCentralMenu
         db 06h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h,066h,00h,00h,00h
         db 035h,00h,00h,00h
         dd str_Northeast
         db 00h,00h,00h,00h
-        dd unk_CFE08
+        dd RosterNortheastMenu
         db 07h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,066h,00h,00h,00h
         db 047h,00h,00h,00h
         dd str_Atlantic
         db 00h,00h,00h,00h
-        dd unk_CFF51
+        dd RosterAtlanticMenu
         db 07h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,066h,00h,00h,00h
         db 059h,00h,00h,00h
         dd str_FreeAgents2
@@ -36,27 +36,27 @@ menu_r1_freeagents:
         dd str_FindPlayer
         dd FindPlayer
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_D01F9:
+Roster2TeamMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
         dd str_Pacific
         db 00h,00h,00h,00h
 roster2divmenus:
-        dd unk_CFBE8
+        dd RosterPacificMenu
         db 06h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,066h,00h,00h,00h
         db 023h,00h,00h,00h
         dd str_Central
         db 00h,00h,00h,00h
-        dd unk_CFCF2
+        dd RosterCentralMenu
         db 06h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h,066h,00h,00h,00h
         db 035h,00h,00h,00h
         dd str_Northeast
         db 00h,00h,00h,00h
-        dd unk_CFE08
+        dd RosterNortheastMenu
         db 07h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,066h,00h,00h,00h
         db 047h,00h,00h,00h
         dd str_Atlantic
         db 00h,00h,00h,00h
-        dd unk_CFF51
+        dd RosterAtlanticMenu
         db 07h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,066h,00h,00h,00h
         db 059h,00h,00h,00h
         dd str_FreeAgents2
@@ -82,7 +82,7 @@ str_CreateFreeAgent:
 str_EditTeamLines:
         db 045h,064h,069h,074h,020h,054h,065h,061h,06Dh,020h,04Ch,069h,06Eh,065h,073h,020h
         db 02Eh,02Eh,02Eh,00h
-unk_D031D:
+EditRoster1Menu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
         dd str_MoveToFreeAgent
 menu_r1_tofa:
@@ -100,7 +100,7 @@ menu_r1_toroster2:
 menu_r1_editlines:
         dd EditTeamLines
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_D039D:
+EditRoster2Menu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A9h,00h,00h,00h,011h,00h,00h,00h
         dd str_MoveToFreeAgent
 menu_r2_tofa:
@@ -132,33 +132,33 @@ editrostersmenubar:
         db 00h,00h,00h,00h,00h,00h,00h,00h,020h,00h,00h,00h,012h,00h,00h,00h
         dd str_File3
         db 00h,00h,00h,00h
-        dd unk_D006E
+        dd EditRostersFileMenu
         db 04h,00h,00h,00h,021h,00h,00h,00h,00h,00h,00h,00h,05Ch,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Roster12
         db 00h,00h,00h,00h
-        dd unk_D0139
+        dd Roster1TeamMenu
         db 06h,00h,00h,00h,05Dh,00h,00h,00h,00h,00h,00h,00h,09Ah,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Roster22
         db 00h,00h,00h,00h
-        dd unk_D01F9
+        dd Roster2TeamMenu
         db 06h,00h,00h,00h,09Bh,00h,00h,00h,00h,00h,00h,00h,0F4h,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_EditRoster1
         db 00h,00h,00h,00h
-        dd unk_D031D
+        dd EditRoster1Menu
         db 04h,00h,00h,00h,0F5h,00h,00h,00h,00h,00h,00h,00h,050h,01h,00h,00h
         db 012h,00h,00h,00h
         dd str_EditRoster2
         db 00h,00h,00h,00h
-        dd unk_D039D
+        dd EditRoster2Menu
         db 04h,00h,00h,00h
 str_Done5:
         db 044h,06Fh,06Eh,065h,00h
 str_Cancel8:
         db 043h,061h,06Eh,063h,065h,06Ch,00h
-unk_D04FC:
+DbLinesFileMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,034h,00h,00h,00h,011h,00h,00h,00h
         dd str_Done5
         dd LineEdDone
@@ -171,6 +171,6 @@ str_DressPlayer2:
         db 044h,072h,065h,073h,073h,020h,050h,06Ch,061h,079h,065h,072h,00h
 str_ScratchPlayer2:
         db 053h,063h,072h,061h,074h,063h,068h,020h,050h,06Ch,061h,079h,065h,072h,00h
-unk_D0558:
+DbLinesPlayerMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,068h,00h,00h,00h,011h,00h,00h,00h
         dd str_DressPlayer2

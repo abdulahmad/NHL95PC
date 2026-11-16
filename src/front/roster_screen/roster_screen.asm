@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_24453 progbits alloc exec nowrite align=1
-extern __CHK, cddriveptr, CmpGAA, CmpPoints, DrawArt, DrawShape, dword_DC734, fileoncd
+extern __CHK, cddriveptr, CmpGAA, CmpPoints, DrawArt, DrawShape, RosterFromStandings, fileoncd
 extern FindShape, FitPlayerName, fputchar, FreeMemBlock, j___close_, kaufmfont, LoadBank, lseek_
 extern mainfont, MakePath, open_, printfbuf, PrintFmt1, PrintFmt2, PrintOutlinedText, PrintShadowText
 extern qsort_, read_, SetClipWindow, SetTextColors, sprintf_, statsbgshapes, statsfromleague, statsgoaliebuf
@@ -384,7 +384,7 @@ TeamRosterScreen:
         call TextSetFont
         add esp, byte 4
         call TextGridOpen
-        cmp dword [dword_DC734], byte 0
+        cmp dword [RosterFromStandings], byte 0
         je short .15
         mov edx, 0C3h
         mov eax, 0C0h

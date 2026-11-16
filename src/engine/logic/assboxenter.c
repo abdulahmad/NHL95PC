@@ -23,7 +23,7 @@ void assboxenter(Player *p)
     if (p->temp1 == 100) {
         if (p->temp1 != doortemp1) return;
         doortemp1 = 0xC8;
-        byte_DFFE2 = 0;
+        doorpflags3 = 0;
         doorpflags |= 0x20;
         SetSPA((Player *)sortobj15, 0xEA9);
         p->attribute &= 0xF7;

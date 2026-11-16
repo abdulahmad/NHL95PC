@@ -571,8 +571,8 @@ void assrefgoalpa(Player *p)
         SetSPA(p, 0xA5B);
         if (RefPen == 4) {
             if (!QueueGoalieNote()) {
-                if (byte_DF87F[penaltysc << 7] && !SpeechPatchNext) {
-                    byte_DF87F[penaltysc << 7] = 0;
+                if (SortCordsOvlFlag[penaltysc << 7] && !SpeechPatchNext) {
+                    SortCordsOvlFlag[penaltysc << 7] = 0;
                     LoadTeamPPV(8);
                     if (ovlseq != -1) {
                         SpeechPatchNext = 1;

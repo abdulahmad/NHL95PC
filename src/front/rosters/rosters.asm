@@ -6,7 +6,7 @@ extern __CHK, AllocMemBlock, boxfillcolor, boxlitecolor, boxshadecolor, btn_Edit
 extern BuildFreeAgentList, BuildTeamRosterList, TextCharH, CarTeamRecPtr, cddriveptr, ClearInputQueue, ClearScreen, CreateBitmap
 extern curdbname, dbdirty, DbLineEditor, dblinesmenubar, divisionteams, dlgtextbg, dlgtextfg, DrawArt
 extern DrawButtons, DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, DrawScrollBar, DrawShape
-extern dword_D0C20, dword_EA2B0, editptrspr, editrosters_exit, editrostersmenubar, facount, FadePalStep, falist
+extern FaListScrolls, RosterFont, editptrspr, editrosters_exit, editrostersmenubar, facount, FadePalStep, falist
 extern falistsel, falisttop, fascrollbar, fascrollbar_count, fascrollbar_len, fascrollbar_thumb, fascrollbar_top, fileoncd
 extern FillRect, FindShape, FitPlayerName, fputchar, FreeLeagueDbsMem, FreeMemBlock, fullscrbmp, GetInputEvent
 extern GrabBlock, hmteamrec, HomeTeam, InitScrollBar, InputDialog, keydb, keydb_size, KeyDbPtr
@@ -96,7 +96,7 @@ RunEditRosters:
         movsd
         call SetScreenTarget
         mov eax, dword [mainfont]
-        mov dword [dword_EA2B0], eax
+        mov dword [RosterFont], eax
         push eax
         call TextSetFont
         add esp, byte 4
@@ -532,7 +532,7 @@ DrawRosterList:
         cmp edi, dword [facount]
         jl near DrawRosterList.7
 .12:
-        cmp dword [dword_D0C20], byte 0
+        cmp dword [FaListScrolls], byte 0
         je short .x
         mov edx, 2
         mov eax, btn_RosterList
@@ -1197,10 +1197,10 @@ LoadRosterList_faloop:
         mov dword [falisttop], edi
         cmp ecx, byte 1Ch
         jg short .5
-        mov dword [dword_D0C20], edi
+        mov dword [FaListScrolls], edi
         jmp short .6
 .5:
-        mov dword [dword_D0C20], 0FFFFFFFFh
+        mov dword [FaListScrolls], 0FFFFFFFFh
         mov ebx, ecx
         mov edx, 1Ch
         mov eax, fascrollbar
@@ -1989,7 +1989,7 @@ EditRosters:
         test byte [byte esp+078h], 2
         je short EditRosters.5
 .7:
-        cmp dword [dword_D0C20], byte 0
+        cmp dword [FaListScrolls], byte 0
         je near .13
         cmp byte [rosterisfa], 1
         je short .8

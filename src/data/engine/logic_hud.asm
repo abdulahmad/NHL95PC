@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_DF7CA nobits alloc noexec write align=1
 global awtmpbox, awtmcoach_d2, awtmcoach_d3, awtmcoachflags, awtmcoachmode, scpflags2
-global byte_DF87F, puckasslist, puckpflags2, doorZpos2, doorpflags, byte_DFFE2, refasslist, refweight
+global SortCordsOvlFlag, puckasslist, puckpflags2, doorZpos2, doorpflags, doorpflags3, refasslist, refweight
 global reflegstr, reflegspd, milestonesaid, milestonesaid_b1, milestonesaid_b3, textline1, textline2, textline3
 global textline4, textline5, PlList, LinePlayersAway, fofdata2_b3, fofdata2_b7, regd1_b1, awtmcoachenergy
 global awtmlines, awtmplattr, awtmglattr, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
 global puckcross_m2, sctemp4, puckstruct
-global sortobj15, SumCwdExciteLvl, photoptrsf, dword_E0220, dword_E0230
-global ovlartbank, ovlscript, fofdata2_m2, recbpr, replayplay, dword_E03A8
+global sortobj15, SumCwdExciteLvl, photoptrsf, RinkSideShape, RinkSideShapeFlipped
+global ovlartbank, ovlscript, fofdata2_m2, recbpr, replayplay, GameVarsClear
 global regd3_m2, regd5_m2, regd0_m3, regd1_m3, SortCords
-global sortobj11, unk_DFF5E, regd4, awtmgoaliesc, puckcross
+global sortobj11, regd4, awtmgoaliesc, puckcross
 global puckcross2, puckcross6
 global pucktemp1, pucknopuck
 global doortemp1, refYpos2, refXvel, refYvel, refframe
@@ -71,7 +71,7 @@ sctemp4:
         resb 1
 scpflags2:
         resb 30
-byte_DF87F:
+SortCordsOvlFlag:
         resb 669
         resb 640
 sortobj11:
@@ -100,7 +100,6 @@ pucktemp1:
         resb 22
 pucknopuck:
         resb 4
-unk_DFF5E:
         resb 3
 puckpflags2:
         resb 15
@@ -119,7 +118,7 @@ doortemp1:
         resb 12
 doorpflags:
         resb 2
-byte_DFFE2:
+doorpflags3:
         resb 14
         resb 44
         resb 2
@@ -155,9 +154,9 @@ SumCwdExciteLvl:
         resb 4
 photoptrsf:
         resb 384
-dword_E0220:
+RinkSideShape:
         resb 16
-dword_E0230:
+RinkSideShapeFlipped:
         resb 20
 ovlartbank:
         resb 4
@@ -216,7 +215,7 @@ LastShooterTeam:
         resb 4
 replayplay:
         resb 4
-dword_E03A8:
+GameVarsClear:
         resb 2
         resb 2
 regd2:

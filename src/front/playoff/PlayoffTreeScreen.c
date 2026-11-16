@@ -47,8 +47,8 @@ void PlayoffTreeScreen(void)
     midl = 0;
     mf = mainfont;
     kf = kaufmfont;
-    if (playofftree[0] == 0x1A) off_CF6A3 = 0;
-    else off_CF6A3 = (int)DeskSetExit3b;
+    if (playofftree[0] == 0x1A) StandingsRosterAction = 0;
+    else StandingsRosterAction = (int)DeskSetExit3b;
     SetScreenTarget();
     if (embscupbank == 0) {
         MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);

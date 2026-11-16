@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C8C26 progbits alloc noexec write align=1
 extern str_TheTradingDeadlineHas, str_NoMoreTradingIs
-global str_KbytesFreeLine, playoffbuf, leaguedbsizes, dword_C9002, msg_TradeDeadline, msg_GenSchedule, msg_NoDiskSpace, str_GeneratingRandomSchedule
+global str_KbytesFreeLine, playoffbuf, leaguedbsizes, LgGameSetFlag, msg_TradeDeadline, msg_GenSchedule, msg_NoDiskSpace, str_GeneratingRandomSchedule
 global str_PleaseWait2, str_InsufficientDiskSpaceTo4, str_ANewLeagueYou, str_DiskDriveFullCan, msg_DiskFull
 msg_TradeDeadline:
         dd str_TheTradingDeadlineHas
@@ -89,5 +89,5 @@ leaguedbsizes:
         db 023h,00h,00h,00h,08h,00h,00h,00h,026h,00h,00h,00h,01Eh,00h,00h,00h
         db 0Fh,00h,00h,00h,03h,00h,00h,00h,015h,00h,00h,00h,023h,00h,00h,00h
         db 08h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h
-dword_C9002:
+LgGameSetFlag:
         db 01h,00h,00h,00h,00h,00h,00h,00h,00h,00h

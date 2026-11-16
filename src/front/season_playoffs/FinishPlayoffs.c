@@ -29,7 +29,7 @@ int FinishPlayoffs(int fh, int a, int b, int c, char *dir, char *ext, int round)
         MakePath(path, dir, (char *)leaguedbnames[5], ext);
         WriteFile(path, seasondb, seasondb_size);
         AwardsCeremony();
-        byte_DE268 = -1;
+        MergeResult = -1;
         mark = 0x4AD;
         r = FileWriteAt(fh, &mark, 0, 2);
         break;

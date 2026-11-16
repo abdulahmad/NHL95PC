@@ -7,17 +7,17 @@ global iflags, icingPlayer, curevent, curevent_b1, curevent_b2, curevent_b3, cur
 global curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent, goalevent_b1, goalevent_b2
 global goalevent_b3, goalevent_b4, OOlist, defsort_d, dressflags, dressflags_aw, offsort_fwd
 global rpl_flip, rpl_jersey, rpl_pos, rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum
-global rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1, PenBuf_m5, PenBuf_m2, SpeechPatchNext, dword_E9AB6
-global dword_E9AB7, gwgteam, gwgplayer, startm_m2, seqtimer
+global rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1, PenBuf_m5, PenBuf_m2, SpeechPatchNext, UnusedEventWord
+global gwgteam, gwgplayer, startm_m2, seqtimer
 global rinkobjused_m2, defertab, defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6
-global defertab_fn, lineslotmark, dword_E9C85, linesortidx, dressedskaters, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16
+global defertab_fn, lineslotmark, linesortidx, dressedskaters, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16
 global rpl_y_e14_m2, rpl_y_e14, rpl_y_e16, rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3
 global rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3, rpl_objstep_m3, rpl_ysort, ltx, gsumqueue, offsort_c
 global defsort_r, offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, Ylist
-global OOlistpos, UnusedSpeechWord, joysampling_save, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, CwdExciteLvl, word_E9AAA
+global OOlistpos, UnusedSpeechWord, joysampling_save, UnusedCrowdWord, MaxCwdExciteLvl, NumCwdExciteLvl, CwdExciteLvl, UnusedCrowdWordHi
 global periodendtime, penevteam, GoalState, ovlsteptimer, ovlstepidx, PerTimeTotal, lj2, lj1
 global lasttouch, lty, startm, starpl, lastimpact, rinkobjused, dressedfwds, dresseddefs
-global rpl_x, rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9
+global rpl_x, rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, rpl_puckunused
 global rpl_camx, rpl_camy, rpl_objframe
 PenBuf_m5:
         resb 2
@@ -42,7 +42,7 @@ SpeechPatchNext:
         resb 2
 joysampling_save:
         resb 2
-word_E9AA2:
+UnusedCrowdWord:
         resb 2
 MaxCwdExciteLvl:
         resb 2
@@ -50,7 +50,7 @@ NumCwdExciteLvl:
         resb 2
 CwdExciteLvl:
         resb 2
-word_E9AAA:
+UnusedCrowdWordHi:
         resb 2
 periodendtime:
         resb 2
@@ -62,9 +62,8 @@ ovlsteptimer:
         resb 2
 ovlstepidx:
         resb 2
-dword_E9AB6:
+UnusedEventWord:
         resb 1
-dword_E9AB7:
         resb 1
 PerTimeTotal:
         resb 2
@@ -163,7 +162,6 @@ defertab_fn:
         resb 100
 lineslotmark:
         resb 97
-dword_E9C85:
         resb 3
 linesortidx:
         resb 100
@@ -245,7 +243,7 @@ rpl_puckz:
         resb 1
 rpl_c1player_m3:
         resb 1
-word_E9FA9:
+rpl_puckunused:
         resb 1
 rpl_puckc_m3:
         resb 1

@@ -4,11 +4,11 @@ bits 32
 %include "hockey.inc"
 section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, awlinetab, btn_MasterDB, btn_TradeStats, btn_WrongDisk
-extern byte_D11BC, byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, TextCharH, awayremap
-extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
+extern TeamJerseyBase, jerseyremaptrim, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, TextCharH, awayremap
+extern homeremap, lgschedrec, MergeResult, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
 extern curperiod, DeleteFiles, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol
 extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, menuwidth_trade1, menutext_trade1, menuwidth_trade2
-extern menutext_trade2, leaguestatsmode, dword_DDD34, dword_DDD3C, tradebitmap, ExportTeamToFloppy, FadePalStep, FileClose
+extern menutext_trade2, leaguestatsmode, lgoppteam, lgopphuman, tradebitmap, ExportTeamToFloppy, FadePalStep, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, GameLineEditor, GetInputEvent, hmlinetab, HomeTeam, humancount, InitMenuRemap, jerseymsg
 extern jerseyremap, leaguedbfmt, leaguedbfmt2, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams
@@ -30,8 +30,8 @@ extern TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SetPalette, 
 extern GrabBlock, DrawArtKeyColour, PrintBoxedText, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
 extern SetScreenTarget, SetColorRemap, CreateBitmap, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
 extern tradeclick, tradecursor, tradejersey, traderemap1, traderemap2, traderesult, traderoster, tradeside
-extern tradeslot, treeteamnames, unequaltrademsg, tradestatsmenubar, tradelinesmenubar, unk_D12C8, _dos_findfirst_, _dos_findnext_
-extern VisTeam, word_DDD48, word_DDD4A, WriteKeyRec, WriteLeagueTeamEntry, WriteTeamRec
+extern tradeslot, treeteamnames, unequaltrademsg, tradestatsmenubar, tradelinesmenubar, jerseyremapteam, _dos_findfirst_, _dos_findnext_
+extern VisTeam, lggamecount, lgoppgamecount, WriteKeyRec, WriteLeagueTeamEntry, WriteTeamRec
 global BuildTradeRoster, TradeShowStats, FixJerseyConflict, ExecuteTrade, DrawTradeRow, LoadTradeTeamPals, DrawTradeScreen, TradeHitTest
 global TradeHitTest_ret, TradeDone, TradeCancel, FindTradeSlot, TradeScreenLoop, TradeRosterCmp, TradeScreen, TradePlayers
 global LoadHomePals
@@ -1205,13 +1205,13 @@ DrawTradeScreen:
         mov edx, dword [nosplit ecx*4+traderemap1]
         add edx, 90h
         mov ebx, 30h
-        mov eax, unk_D12C8
+        mov eax, jerseyremapteam
         call memcpy_
         mov eax, dword [edi+ecx*4]
-        mov al, byte [nosplit eax*4+byte_D11BC]
+        mov al, byte [nosplit eax*4+TeamJerseyBase]
         and eax, 0FFh
         mov al, byte [dword eax+jerseyremap]
-        mov ah, byte [byte_D12DE]
+        mov ah, byte [jerseyremaptrim]
         xor ecx, ecx
         mov cl, ah
         xor ebx, ebx
@@ -1884,15 +1884,15 @@ TradeScreenLoop:
         mov edx, dword [nosplit eax*4+traderemap1]
         add edx, 90h
         mov ebx, 30h
-        mov eax, unk_D12C8
+        mov eax, jerseyremapteam
         call memcpy_
         mov eax, dword [tradeside]
         mov edx, dword [dword ebp-0A6h]
         mov edx, dword [edx+eax*4]
-        mov dl, byte [nosplit edx*4+byte_D11BC]
+        mov dl, byte [nosplit edx*4+TeamJerseyBase]
         and edx, 0FFh
         mov dl, byte [dword edx+jerseyremap]
-        mov dh, byte [byte_D12DE]
+        mov dh, byte [jerseyremaptrim]
         xor ecx, ecx
         mov cl, dh
         xor ebx, ebx
@@ -2676,17 +2676,17 @@ TradeScreenLoop:
         mov edx, dword [nosplit eax*4+traderemap1]
         add edx, 90h
         mov ebx, 30h
-        mov eax, unk_D12C8
+        mov eax, jerseyremapteam
         call memcpy_
         mov eax, dword [byte ebp+042h]
         sar eax, 1
         shl eax, 2
         add eax, dword [dword ebp-0A6h]
         mov eax, dword [eax]
-        mov al, byte [nosplit eax*4+byte_D11BC]
+        mov al, byte [nosplit eax*4+TeamJerseyBase]
         and eax, 0FFh
         mov al, byte [dword eax+jerseyremap]
-        mov ah, byte [byte_D12DE]
+        mov ah, byte [jerseyremaptrim]
         xor ecx, ecx
         mov cl, ah
         xor ebx, ebx
@@ -2829,15 +2829,15 @@ TradeScreenLoop:
         mov edx, dword [nosplit eax*4+traderemap1]
         add edx, 90h
         mov ebx, 30h
-        mov eax, unk_D12C8
+        mov eax, jerseyremapteam
         call memcpy_
         mov edx, dword [tradeside]
         mov eax, dword [dword ebp-0A6h]
         mov eax, dword [eax+edx*4]
-        mov al, byte [nosplit eax*4+byte_D11BC]
+        mov al, byte [nosplit eax*4+TeamJerseyBase]
         and eax, 0FFh
         mov al, byte [dword eax+jerseyremap]
-        mov ah, byte [byte_D12DE]
+        mov ah, byte [jerseyremaptrim]
         xor ecx, ecx
         mov cl, ah
         xor ebx, ebx

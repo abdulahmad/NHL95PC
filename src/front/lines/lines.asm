@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_737AA progbits alloc exec nowrite align=1
-extern __CHK, AllocMemBlock, byte_D11BC, byte_D12DE, CareerDbPtr, CareerDbPtr2, cddriveptr, ClearInputQueue
+extern __CHK, AllocMemBlock, TeamJerseyBase, jerseyremaptrim, CareerDbPtr, CareerDbPtr2, cddriveptr, ClearInputQueue
 extern ClearScreen, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol, DrawArtMasked
-extern DrawBitmap, DrawLineEditorScreen, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, DrawShape, dword_D1398
-extern dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458, dword_D145C, dword_D1468
-extern dword_D146C, editptrspr, FadeOutPalCycle, FadePalStep, fileoncd, FindShape, FitPlayerName, FreeMemBlock
+extern DrawBitmap, DrawLineEditorScreen, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, DrawShape, LineEdPairX
+extern LineEdPairY, LineEdFiveX, LineEdFiveY, LineEdFourX, LineEdFourY, LineEdExtraX, LineEdExtraY, LineEdGoalieX
+extern LineEdGoalieY, editptrspr, FadeOutPalCycle, FadePalStep, fileoncd, FindShape, FitPlayerName, FreeMemBlock
 extern fullscrbmp, GetInputEvent, GrabBlock, jerseyremap, KeyDbPtr, LineEdHitTest, lineedpanel, lineslotx
 extern linesloty, LoadBank, LoadJerseyColours, mainfont, MakeJerseyShape, MakePath, memcpy_, menuact_dbdress
 extern menuact_dbscratch, MenuHitTest, MessageBox, MouseRead, MouseSetPos, msglines, musichandle, musicon
@@ -451,13 +451,13 @@ DbLineEditorLoop:
         call LoadJerseyColours
         xor eax, eax
         mov al, byte [dword ecx+rosterteam]
-        mov al, byte [nosplit eax*4+byte_D11BC]
+        mov al, byte [nosplit eax*4+TeamJerseyBase]
         mov byte [byte ebp+06Eh], al
         xor eax, eax
         mov al, byte [byte ebp+06Eh]
         mov al, byte [dword eax+jerseyremap]
         mov byte [byte ebp+06Eh], al
-        mov al, byte [byte_D12DE]
+        mov al, byte [jerseyremaptrim]
         mov byte [byte ebp+076h], al
         mov ebx, ecx
         mov edx, dword [dword ebp-0B6h]
@@ -1457,9 +1457,9 @@ DbLineEditorLoop:
         mov eax, dword [byte ebp+042h]
         add eax, eax
         add eax, esi
-        mov edi, dword [nosplit eax*8+dword_D139C]
+        mov edi, dword [nosplit eax*8+LineEdPairY]
         push edi
-        mov edx, dword [nosplit eax*8+dword_D1398]
+        mov edx, dword [nosplit eax*8+LineEdPairX]
         push edx
         mov ebx, dword [dword ebp-0B6h]
         push ebx
@@ -1583,9 +1583,9 @@ DbLineEditorLoop:
         shl eax, 2
         add eax, edx
         add eax, esi
-        mov edx, dword [nosplit eax*8+dword_D13CC]
+        mov edx, dword [nosplit eax*8+LineEdFiveY]
         push edx
-        mov ebx, dword [nosplit eax*8+dword_D13C8]
+        mov ebx, dword [nosplit eax*8+LineEdFiveX]
         push ebx
         mov ecx, dword [dword ebp-0B6h]
         push ecx
@@ -1702,9 +1702,9 @@ DbLineEditorLoop:
         mov eax, dword [byte ebp+042h]
         shl eax, 2
         add eax, esi
-        mov ecx, dword [nosplit eax*8+dword_D141C]
+        mov ecx, dword [nosplit eax*8+LineEdFourY]
         push ecx
-        mov edi, dword [nosplit eax*8+dword_D1418]
+        mov edi, dword [nosplit eax*8+LineEdFourX]
         push edi
         mov eax, dword [dword ebp-0B6h]
         push eax
@@ -1795,9 +1795,9 @@ DbLineEditorLoop:
         push jerseyremap
         call SetColorRemap
         add esp, byte 4
-        mov edi, dword [nosplit esi*8+dword_D145C]
+        mov edi, dword [nosplit esi*8+LineEdExtraY]
         push edi
-        mov edx, dword [nosplit esi*8+dword_D1458]
+        mov edx, dword [nosplit esi*8+LineEdExtraX]
         push edx
         mov ebx, dword [dword ebp-0B6h]
         push ebx
@@ -1887,9 +1887,9 @@ DbLineEditorLoop:
         push jerseyremap
         call SetColorRemap
         add esp, byte 4
-        mov edx, dword [nosplit esi*8+dword_D146C]
+        mov edx, dword [nosplit esi*8+LineEdGoalieY]
         push edx
-        mov ebx, dword [nosplit esi*8+dword_D1468]
+        mov ebx, dword [nosplit esi*8+LineEdGoalieX]
         push ebx
         mov ecx, dword [dword ebp-0B6h]
         push ecx
@@ -2212,13 +2212,13 @@ DrawLineJerseys:
         mov al, bl
         mov al, byte [dword eax+rosterteam]
         and eax, 0FFh
-        mov al, byte [nosplit eax*4+byte_D11BC]
+        mov al, byte [nosplit eax*4+TeamJerseyBase]
         mov byte [byte esp+024h], al
         xor eax, eax
         mov al, byte [byte esp+024h]
         mov al, byte [dword eax+jerseyremap]
         mov byte [byte esp+024h], al
-        mov al, byte [byte_D12DE]
+        mov al, byte [jerseyremaptrim]
         mov byte [byte esp+028h], al
         xor esi, esi
 .1:

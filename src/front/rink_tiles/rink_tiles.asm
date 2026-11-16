@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_3377C progbits alloc exec nowrite align=1
-extern __CHK, bgscrollx, bgscrolly, cddriveptr, currink, dword_DD6A6, FadePalStep, FatalError
+extern __CHK, bgscrollx, bgscrolly, cddriveptr, currink, FadePalStep, FatalError, editx
 extern fileoncd, FreeMemBlock, GetInputEvent, GetTicks, MakePath, ptrupdatefn, rinkarenas, rinkbm
 extern rinkfileidx, rinkhtiles, rinkscrollx, rinkscrolly, rinktilebm, rinkwtiles, scrollx, scrolly
 extern SetDrawBitmap, str_CRESTS3, str_ErrorLoadingFile, str_extBIN, str_InvalidFileSize, str_Map, str_Pal16, str_Rink2

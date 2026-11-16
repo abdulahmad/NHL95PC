@@ -4,12 +4,12 @@ bits 32
 %include "hockey.inc"
 section s_767D0 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, str_PlusMinus7, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
-extern boxlitecolor, boxshadecolor, byte_D11BC, byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3
+extern boxlitecolor, boxshadecolor, TeamJerseyBase, jerseyremaptrim, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3
 extern gamelinespal, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA, CareerDbPtr, CareerDbPtr2, cddriveptr
 extern ClearInputQueue, cont2team, crestnames, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2
 extern dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel
-extern dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458, dword_D145C
-extern dword_D1468, dword_D146C, hmteamrec_skaters, hmteamrec_goalies, dword_DC734, leaguestatsmode, editptrspr, exit_
+extern LineEdPairX, LineEdPairY, LineEdFiveX, LineEdFiveY, LineEdFourX, LineEdFourY, LineEdExtraX, LineEdExtraY
+extern LineEdGoalieX, LineEdGoalieY, hmteamrec_skaters, hmteamrec_goalies, RosterFromStandings, leaguestatsmode, editptrspr, exit_
 extern fadeend, fadeend2, FadeOutPalCycle, fadepal, fadepal2, FadePalStep, fadestart, fadestart2
 extern fadestep, fadestep2, FatalError, fileoncd, FitPlayerName, fputchar, FreeMemBlock, fullscrbmp
 extern gameopts, GetInputEvent, gmroster, gmrosterjersey, gmrosterslot, hmroster, hmrosterjersey, hmteamrec
@@ -39,7 +39,7 @@ extern TextRestoreState, TextSetFont, SndQuery, SetDigiChannelVolume, SetPalette
 extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, DrawArtKeyColour, DrawArtMasked, MouseRead
 extern SetViewRect, FindShape, ClearScreen, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetraceEnd
 extern SetColorRemap, FillRectColor, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
-extern unk_DBD1C, _dos_findfirst_, vgapage, VisTeam, WaitKey, write_
+extern TeamRecLines, _dos_findfirst_, vgapage, VisTeam, WaitKey, write_
 global GameLineEditor, GameRosterCmp, GameLineEditorLoop, LineEdHitTest, LoadGameRoster, DrawGameLineJerseys_jt, DrawGameLineJerseys, DrawGameLineJerseys_st1
 global DrawGameLineJerseys_st2, DrawGameLineJerseys_st0, DrawGameLineJerseys_join, DrawLineEditorScreen, StubRet4a, LoadJerseyColours, DrawDlgFrame, StubRet4b
 global CheckGameRosterComplete, PruneGameLines, MenuUseTheseLines, MenuLineEdCancel, MenuUseOriginalLines, MenuUseOriginalLines_redraw, MenuUseOriginalLines_ret0, MenuUseOriginalLines_ret
@@ -549,13 +549,13 @@ GameLineEditorLoop:
         mov ax, word [HomeTeam]
 .13:
         cwde
-        mov al, byte [nosplit eax*4+byte_D11BC]
+        mov al, byte [nosplit eax*4+TeamJerseyBase]
         mov byte [byte ebp+06Eh], al
         xor eax, eax
         mov al, byte [byte ebp+06Eh]
         mov al, byte [dword eax+jerseyremap]
         mov byte [byte ebp+06Eh], al
-        mov al, byte [byte_D12DE]
+        mov al, byte [jerseyremaptrim]
         mov byte [byte ebp+06Ah], al
         xor ebx, ebx
         mov bl, byte [byte ebp+072h]
@@ -1471,9 +1471,9 @@ GameLineEditorLoop:
         mov eax, dword [byte ebp+036h]
         add eax, eax
         add eax, esi
-        mov edx, dword [nosplit eax*8+dword_D139C]
+        mov edx, dword [nosplit eax*8+LineEdPairY]
         push edx
-        mov ebx, dword [nosplit eax*8+dword_D1398]
+        mov ebx, dword [nosplit eax*8+LineEdPairX]
         push ebx
         mov ecx, dword [dword ebp-0AAh]
         push ecx
@@ -1558,9 +1558,9 @@ GameLineEditorLoop:
         shl eax, 2
         add eax, edx
         add eax, esi
-        mov ecx, dword [nosplit eax*8+dword_D13CC]
+        mov ecx, dword [nosplit eax*8+LineEdFiveY]
         push ecx
-        mov edi, dword [nosplit eax*8+dword_D13C8]
+        mov edi, dword [nosplit eax*8+LineEdFiveX]
         push edi
         mov eax, dword [dword ebp-0AAh]
         push eax
@@ -1638,9 +1638,9 @@ GameLineEditorLoop:
         mov eax, dword [byte ebp+036h]
         shl eax, 2
         add eax, esi
-        mov edi, dword [nosplit eax*8+dword_D141C]
+        mov edi, dword [nosplit eax*8+LineEdFourY]
         push edi
-        mov edx, dword [nosplit eax*8+dword_D1418]
+        mov edx, dword [nosplit eax*8+LineEdFourX]
         push edx
         mov ebx, dword [dword ebp-0AAh]
         push ebx
@@ -1694,9 +1694,9 @@ GameLineEditorLoop:
         push jerseyremap
         call SetColorRemap
         add esp, byte 4
-        mov edx, dword [nosplit esi*8+dword_D145C]
+        mov edx, dword [nosplit esi*8+LineEdExtraY]
         push edx
-        mov ebx, dword [nosplit esi*8+dword_D1458]
+        mov ebx, dword [nosplit esi*8+LineEdExtraX]
         push ebx
         mov ecx, dword [dword ebp-0AAh]
         push ecx
@@ -1748,9 +1748,9 @@ GameLineEditorLoop:
         push jerseyremap
         call SetColorRemap
         add esp, byte 4
-        mov ecx, dword [nosplit esi*8+dword_D146C]
+        mov ecx, dword [nosplit esi*8+LineEdGoalieY]
         push ecx
-        mov edi, dword [nosplit esi*8+dword_D1468]
+        mov edi, dword [nosplit esi*8+LineEdGoalieX]
         push edi
         mov eax, dword [dword ebp-0AAh]
         push eax
@@ -2454,13 +2454,13 @@ DrawGameLineJerseys:
         mov ax, word [HomeTeam]
 .2:
         cwde
-        mov al, byte [nosplit eax*4+byte_D11BC]
+        mov al, byte [nosplit eax*4+TeamJerseyBase]
         mov byte [byte esp+02Ch], al
         xor eax, eax
         mov al, byte [byte esp+02Ch]
         mov al, byte [dword eax+jerseyremap]
         mov byte [byte esp+02Ch], al
-        mov al, byte [byte_D12DE]
+        mov al, byte [jerseyremaptrim]
         mov byte [byte esp+028h], al
         xor esi, esi
 .3:
@@ -4179,7 +4179,7 @@ MenuSaveDefaultLines:
         lea esi, [dword esp+0BCh]
         rep movsd
         mov ecx, 0Ch
-        lea edi, [dword eax+unk_DBD1C]
+        lea edi, [dword eax+TeamRecLines]
         lea esi, [dword esp+0ECh]
         rep movsd
         mov eax, ebp
@@ -4424,7 +4424,7 @@ MenuSaveTheseLines_x:
         lea esi, [dword esp+0BCh]
         rep movsd
         mov ecx, 0Ch
-        lea edi, [dword eax+unk_DBD1C]
+        lea edi, [dword eax+TeamRecLines]
         lea esi, [dword esp+0ECh]
         rep movsd
         mov eax, ebp
@@ -4448,7 +4448,7 @@ MenuGameShowPlayerStats:
         mov esi, ecx
         mov edx, 1
         mov dword [leaguestatsmode], edx
-        mov dword [dword_DC734], edx
+        mov dword [RosterFromStandings], edx
         mov dword [statsredrawcb], TeamRosterScreen
         test bl, bl
         je short .1

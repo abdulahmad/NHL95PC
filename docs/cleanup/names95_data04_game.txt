@@ -1,0 +1,212 @@
+unk_CBC6E CoachRotateFour {source_game=96PC,confidence=medium} Coach line table rows: next-line choices for a four-line rotation
+unk_CBC7E CoachRotateThree {source_game=96PC,confidence=medium} Coach line table rows: three-line rotation with the power-play rows after it
+unk_CBC9E CoachRotateThreeTop {source_game=96PC,confidence=medium} Coach line table rows: three lines with the top line first
+unk_CBCAE CoachRotateFourEven {source_game=96PC,confidence=medium} Coach line table rows: four lines in even rotation
+unk_CBCBE CoachRotateFourMixed {source_game=96PC,confidence=medium} Coach line table rows: four lines in mixed rotation
+unk_CBCCE CoachRotateThreeEven {source_game=96PC,confidence=medium} Coach line table rows: three lines in even rotation
+unk_CBCDE CoachSpecialUnits {source_game=96PC,confidence=medium} Coach line table rows: special team units only
+unk_CBCEE CoachRotateTwo {source_game=96PC,confidence=medium} Coach line table rows: two lines only
+unk_CBCFE CoachRotateTwoDeep {source_game=96PC,confidence=medium} Coach line table rows: two lines with the third line as backup
+unk_CBD0E CoachRotateFourShort {source_game=96PC,confidence=medium} Coach line table rows: four lines with short shifts
+unk_CBD1E CoachRotateThreeShort {source_game=96PC,confidence=medium} Coach line table rows: three lines with short shifts
+word_CBD64 ObjInitFrame {source_game=96PC,confidence=medium} Object start table (18 bytes per object): frame word LoadGameState copies into the object
+word_CBD66 ObjInitAttr {source_game=96PC,confidence=medium} Object start table: attribute word LoadGameState copies into the object
+unk_C07A4 CreditBlankTitle {source_game=PC-new,confidence=medium} Empty string used as the title line of credit pages that have no title art
+unk_C588E CreditBlankLine {source_game=PC-new,confidence=medium} Empty string used as a blank line on the credit pages
+unk_C5996 str_StanleyCupIsA {source_game=PC-new,confidence=medium} Credits text: Stanley Cup registered trademark line
+unk_C5A6C str_CopyrightNHL1994 {source_game=PC-new,confidence=medium} Credits text: NHL 1994 copyright line
+unk_C5969 CreditPageNhlLicense {source_game=PC-new,confidence=medium} Credit page: NHL licence notice
+unk_C5A78 CreditPageStanleyCup {source_game=PC-new,confidence=medium} Credit page: Stanley Cup and team logo trademarks
+unk_C5B93 CreditPageNhlpaLicense {source_game=PC-new,confidence=medium} Credit page: NHLPA licence notice
+unk_C5C33 CreditPageEaSports {source_game=PC-new,confidence=medium} Credit page: EA Sports trademarks
+unk_C5CA1 CreditPagePresentedBy {source_game=PC-new,confidence=medium} Credit page: production group presentation line
+unk_C5CF4 CreditPageGameConcept {source_game=PC-new,confidence=medium} Credit page: original game concept
+unk_C5D51 CreditPagePcDesign {source_game=PC-new,confidence=medium} Credit page: original PC version game design
+unk_C5D85 CreditPageLeadProgrammer {source_game=PC-new,confidence=medium} Credit page: lead programmer
+unk_C5DB3 CreditPageProgrammerWong {source_game=PC-new,confidence=medium} Credit page: programmer
+unk_C5DE1 CreditPageProgrammerPenner {source_game=PC-new,confidence=medium} Credit page: programmer
+unk_C5E0E CreditPageProgrammerKennett {source_game=PC-new,confidence=medium} Credit page: programmer
+unk_C5E39 CreditPageArtistDeSouza {source_game=PC-new,confidence=medium} Credit page: artist
+unk_C5E5F CreditPageArtistChow {source_game=PC-new,confidence=medium} Credit page: artist
+unk_C5E99 CreditPageAnimator {source_game=PC-new,confidence=medium} Credit page: artist and 3D animations
+unk_C5ECA CreditPageComposer {source_game=PC-new,confidence=medium} Credit page: composer
+unk_C5EFD CreditPageAudioStewart {source_game=PC-new,confidence=medium} Credit page: audio programmer
+unk_C5F32 CreditPageAudioMacanulty {source_game=PC-new,confidence=medium} Credit page: audio programmer
+unk_C5F6E CreditPageAdminAssistant {source_game=PC-new,confidence=medium} Credit page: administrative assistant
+unk_C5F98 CreditPageLeadTester {source_game=PC-new,confidence=medium} Credit page: lead tester
+unk_C5FD4 CreditPageAssistantProducer {source_game=PC-new,confidence=medium} Credit page: assistant producer
+unk_C600D CreditPageDevDirector {source_game=PC-new,confidence=medium} Credit page: director of development
+unk_C603F CreditPageProducerDesign {source_game=PC-new,confidence=medium} Credit page: producer and design
+unk_C6069 CreditPageProducer {source_game=PC-new,confidence=medium} Credit page: producer
+unk_C60D7 CreditPageTesters {source_game=PC-new,confidence=medium} Credit page: testers and QA support
+unk_C619A CreditPageRosters {source_game=PC-new,confidence=medium} Credit page: roster verification and ratings
+unk_C6232 CreditPageAudioTeam {source_game=PC-new,confidence=medium} Credit page: audio technician and audio programmers
+unk_C62D3 CreditPageAnnouncers {source_game=PC-new,confidence=medium} Credit page: announcers and player photographs
+unk_C6363 CreditPageSpecialThanks {source_game=PC-new,confidence=medium} Credit page: video credit and special thanks
+unk_C638C CreditPageEnd {source_game=PC-new,confidence=medium} Empty credit page that ends the credits; ShowCredits stops when it reaches it
+unk_CEF0F DeskReplayMenu {source_game=PC-new,confidence=low} Sports desk pull-down: Go To Replay
+unk_CEF2F DeskTeamLinesMenu {source_game=PC-new,confidence=low} Sports desk pull-down: home and visitor line editors
+unk_C846A CalStatsMenu {source_game=PC-new,confidence=low} Calendar menu bar pull-down: statistics type and sort orders
+unk_C854F CalSettingsMenu {source_game=PC-new,confidence=low} Calendar menu bar pull-down: player controls and league settings
+unk_C87B8 TradeStatsMenu {source_game=PC-new,confidence=low} Trade screen pull-down under Player Statistics
+unk_C17F0 TradeLabelText {source_game=PC-new,confidence=low} Empty text of the first item of the trade screen menu bar
+unk_CE96F TeamStatsSortMenu {source_game=PC-new,confidence=low} Statistics pull-down: team sort orders (standings scoring defense penalty killing power play penalties)
+unk_CEA2F SkaterStatsSortMenu {source_game=PC-new,confidence=low} Statistics pull-down: skater sort orders (points goals assists and so on)
+unk_CEB2F GoalieStatsSortMenu {source_game=PC-new,confidence=low} Statistics pull-down: goalie sort orders (GAA wins save percentage)
+unk_CECAF DeskFileMenu {source_game=PC-new,confidence=low} Sports desk File pull-down: back to game save game sports desk exit
+unk_CED2F DeskLeagueFileMenu {source_game=PC-new,confidence=low} Sports desk File pull-down in league play: sports desk and exit
+unk_CED6F DeskSettingsMenu {source_game=PC-new,confidence=low} Sports desk Settings pull-down: player controls and home team goalie
+unk_CFBE8 RosterPacificMenu {source_game=PC-new,confidence=low} Edit rosters team pull-down: Pacific division teams
+unk_CFCF2 RosterCentralMenu {source_game=PC-new,confidence=low} Edit rosters team pull-down: Central division teams
+unk_CFE08 RosterNortheastMenu {source_game=PC-new,confidence=low} Edit rosters team pull-down: Northeast division teams
+unk_CFF51 RosterAtlanticMenu {source_game=PC-new,confidence=low} Edit rosters team pull-down: Atlantic division teams
+unk_D006E EditRostersFileMenu {source_game=PC-new,confidence=low} Edit rosters File pull-down: save load database return
+unk_D0139 Roster1TeamMenu {source_game=PC-new,confidence=low} Edit rosters pull-down for roster 1: the four division team lists
+unk_D01F9 Roster2TeamMenu {source_game=PC-new,confidence=low} Edit rosters pull-down for roster 2: the four division team lists
+unk_D031D EditRoster1Menu {source_game=PC-new,confidence=low} Edit rosters pull-down for roster 1: move to free agents or to roster 2
+unk_D039D EditRoster2Menu {source_game=PC-new,confidence=low} Edit rosters pull-down for roster 2: move to free agents or to roster 1
+unk_D05AF DbLinesStatsMenu {source_game=PC-new,confidence=low} Database line editor pull-down: show player statistics
+unk_CEF6F DeskGameStatsMenu {source_game=PC-new,confidence=low} Sports desk pull-down: game statistics and summaries
+unk_CEFEF DeskStatsTypeMenu {source_game=PC-new,confidence=low} Sports desk Statistics pull-down: statistics type
+unk_CF96F PlayoffFileMenu {source_game=PC-new,confidence=low} Playoff menu bar File pull-down: play next game and return
+unk_CF9AF PlayoffSettingsMenu {source_game=PC-new,confidence=low} Playoff menu bar Settings pull-down: player controls and playoff settings
+unk_CFA2F PlayoffStatsMenu {source_game=PC-new,confidence=low} Playoff menu bar Statistics pull-down: statistics type
+unk_D04FC DbLinesFileMenu {source_game=PC-new,confidence=low} Database line editor pull-down: done and cancel
+unk_D0558 DbLinesPlayerMenu {source_game=PC-new,confidence=low} Database line editor pull-down: dress player
+unk_D068A RosterStatsSeasonMenu {source_game=PC-new,confidence=low} Roster statistics pull-down: regular season or playoff statistics
+unk_D0720 RosterStatsReturnMenu {source_game=PC-new,confidence=low} Roster statistics pull-down: return to line editor
+unk_C8804 TradeFileMenu {source_game=PC-new,confidence=low} Trade screen pull-down: done and cancel
+unk_C88C2 TradeStatsReturnMenu {source_game=PC-new,confidence=low} Trade statistics pull-down: return to the trade screen
+unk_CF20F PregameLinesMenu {source_game=PC-new,confidence=low} Pre-game line editor pull-down: use these original or default lines
+unk_CF28F GameRosterMenu {source_game=PC-new,confidence=low} Line editor Roster pull-down: dress or scratch a player
+unk_CF2CF ShowPlayerStatsMenu {source_game=PC-new,confidence=low} Pull-down with the single Show Player Statistics item
+unk_CF32F DeskLinesEditMenu {source_game=PC-new,confidence=low} Sports desk line editor pull-down: cancel and line choices
+unk_CF42F TradeLinesMenu {source_game=PC-new,confidence=low} Trade line editor pull-down: save these lines and line choices
+unk_CF4CF GameStatsReturnMenu {source_game=PC-new,confidence=low} In-game statistics Return To pull-down
+unk_CF50F StatsReturnMenu {source_game=PC-new,confidence=low} Statistics screens Return To pull-down (screen title item)
+dword_CF517 StatsReturnRight {source_game=PC-new,confidence=low} Right edge of the Return To item; set from the screen title width
+off_CF51F StatsReturnText {source_game=PC-new,confidence=low} Text of the Return To item; set to the current screen title
+unk_CF52F PrintMenu {source_game=PC-new,confidence=low} Print pull-down: output current data
+unk_CF5CF StandingsReturnMenu {source_game=PC-new,confidence=low} Standings Return To pull-down
+dword_CF5D7 StandingsReturnRight {source_game=PC-new,confidence=low} Right edge of the standings Return To item
+off_CF5DF StandingsReturnText {source_game=PC-new,confidence=low} Text of the standings Return To item
+unk_CF5EF RosterReturnMenu {source_game=PC-new,confidence=low} Team roster Return To pull-down
+dword_CF5F7 RosterReturnStandingsRight {source_game=PC-new,confidence=low} Right edge of the roster Return To standings item
+dword_CF617 RosterReturnDeskRight {source_game=PC-new,confidence=low} Right edge of the roster Return To screen item
+off_CF61F RosterReturnDeskText {source_game=PC-new,confidence=low} Text of the roster Return To screen item
+unk_CF62F PlayerCardReturnMenu {source_game=PC-new,confidence=low} Player card Return To pull-down
+dword_CF637 PlayerCardReturnRosterRight {source_game=PC-new,confidence=low} Right edge of the player card Return To roster item
+dword_CF657 PlayerCardReturnStandingsRight {source_game=PC-new,confidence=low} Right edge of the player card Return To standings item
+dword_CF677 PlayerCardReturnDeskRight {source_game=PC-new,confidence=low} Right edge of the player card Return To screen item
+off_CF67F PlayerCardReturnDeskText {source_game=PC-new,confidence=low} Text of the player card Return To screen item
+unk_CF68F StandingsRosterMenu {source_game=PC-new,confidence=low} Standings Roster pull-down: show team roster
+off_CF6A3 StandingsRosterAction {source_game=PC-new,confidence=low} Action of the show team roster item; cleared on the playoff tree screen
+unk_CF72F RosterPlayerMenu {source_game=PC-new,confidence=low} Team roster pull-down: show player statistics and card
+unk_C67B1 StatsSourceMenu {source_game=PC-new,confidence=low} Statistics Type pull-down: 93-94 season playoffs league and playoff mode sources
+dword_C67B9 StatsSourceMenuRight {source_game=PC-new,confidence=low} Right edge of each statistics source item (32-byte stride)
+dword_C67BD StatsSourceMenuBottom {source_game=PC-new,confidence=low} Bottom edge of each statistics source item (32-byte stride)
+dword_C679D StatsSourceLastBottom {source_game=PC-new,confidence=low} Base that reaches the bottom edge of the last statistics source item when indexed by the item count
+unk_C678E str_StatsSourceDivider {source_game=PC-new,confidence=low} Dashed divider text between statistics source groups
+dword_CF00B deskstatsmenu_srccnt {source_game=PC-new,confidence=low} Item count of the statistics source pull-down under the sports desk menu
+dword_CF4CB gameplstatsmenubar_srccnt {source_game=PC-new,confidence=low} Item count of the statistics source pull-down under the in-game player statistics menu bar
+dword_CE8EB statsmenu_srccnt {source_game=PC-new,confidence=low} Item count of the statistics source pull-down under the statistics menu
+dword_C891E tradestatsmenubar_srccnt {source_game=PC-new,confidence=low} Item count of the statistics source pull-down under the trade statistics menu bar
+dword_CFA4B playoffstatsmenu_srccnt {source_game=PC-new,confidence=low} Item count of the statistics source pull-down under the playoff menu bar
+unk_CDC34 str_HomeTeamGoalie {source_game=PC-new,confidence=medium} Menu text: Home Team Goalie
+unk_CDA6E str_FileMenuDivider {source_game=PC-new,confidence=low} Dashed divider text in the File pull-downs
+unk_CDB44 str_LeagueManager {source_game=PC-new,confidence=medium} Menu text: League Manager
+unk_CDB6F str_GameLabel {source_game=PC-new,confidence=medium} Menu text: Game: prefix before the matchup
+unk_CDDF7 str_LeagueMenuDivider {source_game=PC-new,confidence=low} Dashed divider text in the league manager pull-down
+unk_C27F5 str_OneSpace {source_game=PC-new,confidence=medium} One-space string printed on the joystick calibration screen
+unk_D2A68 str_TheEliminated {source_game=PC-new,confidence=low} Message text: The (before the eliminated team name)
+unk_D2AAB str_TheContinue {source_game=PC-new,confidence=low} Message text: The (before the team that continues)
+unk_D279A str_3rdstar {source_game=PC-new,confidence=medium} Speech file name stem for the third star call
+unk_C0F89 str_BlankTeamColumn {source_game=PC-new,confidence=low} Empty team statistics column header
+unk_C11D1 str_BlankLeaderColumn {source_game=PC-new,confidence=low} Empty league leader column header
+unk_C1936 str_DriveB {source_game=PC-new,confidence=medium} Drive button text: B
+unk_C1B3E str_NoStar {source_game=PC-new,confidence=low} Empty string pushed when a three stars line has no star text
+unk_C1B49 str_NoPenalty {source_game=PC-new,confidence=low} Empty penalty name in the penalty name list
+unk_F0000 SoundDrvWorkArea {source_game=PC-new,confidence=low} Sound driver work area (no direct references)
+dword_C4B69 F64_neg1_floor_+05h {no_record}
+dword_C6E20 potreeseeds+066h {no_record}
+dword_CBEBE apl+016h {no_record}
+dword_CC0FA shotongoal+02h {no_record}
+dword_CC9AD HotStickList_y+0208h {no_record}
+dword_CCC9D playsuspended+01h {no_record}
+dword_CD41E dressbystatus+06h {no_record}
+dword_D8C72 rinkendart+02h {no_record}
+dword_D8C7A hudhundaccum+02h {no_record}
+dword_DD6A6 editx+02h {no_record}
+dword_E9C85 lineslotmark+061h {no_record}
+dword_DC23E pointerspr+06h {no_record}
+dword_DE265 tradebitmap+01h {no_record}
+dword_CCC9E Setplass_alist_m3 {source_game=PC-new,confidence=medium} Three bytes before Setplass_alist: a dword read here shifted right 24 gives the list byte
+dword_CCD4F AimArrowFrames_m2 {source_game=PC-new,confidence=low} Two bytes before the aim arrow frame table (one frame word every 4 bytes by direction; the last entry is the no-arrow frame)
+word_CC9CC RockTuneIds {source_game=PC-new,confidence=low} Word per rock tune number read by PreGameIntro from the home team's teamrocktune entry
+byte_DF87F SortCordsOvlFlag {source_game=PC-new,confidence=low} Player byte at +63h of the SortCords objects (indexed by object times 128): set by the puck physics; the referee clears it and loads overlay 8
+byte_DFFE2 doorpflags3 {source_game=94G,confidence=low} Door object pflags3 byte; cleared by assboxenter when the door closes
+unk_DFF5E puckstruct+042h {no_record}
+dword_E0220 RinkSideShape {source_game=PC-new,confidence=low} Photo bank shape (entry 96 of photoptrsf) drawn at the side object slots
+dword_E0230 RinkSideShapeFlipped {source_game=PC-new,confidence=low} Photo bank shape (entry 100 of photoptrsf) drawn flipped at the side object slots
+dword_E03A8 GameVarsClear {source_game=96PC,confidence=medium} Dword cleared first by cleargamevars; nothing else uses it
+dword_E9AB6 UnusedEventWord {source_game=96PC,confidence=medium} Word cleared by ResetGameVars and kept in saved games; dword reads shifted right 17 give half of the word after it
+word_E9AA2 UnusedCrowdWord {source_game=96PC,confidence=medium} Crowd word cleared by ResetGameVars and kept in saved games
+word_E9AAA UnusedCrowdWordHi {source_game=96PC,confidence=medium} Second crowd word cleared by ResetGameVars and kept in saved games
+dword_E9AB7 ovlstepidx+03h {no_record}
+word_E9FA9 rpl_puckunused {source_game=PC-new,confidence=low} Byte read after the puck height in each replay frame; written by ReplayStep and never read
+word_DEF84 SaveStateSpare {source_game=PC-new,confidence=low} Word only saved and restored with the game state
+word_DEF88 SaveStatePad {source_game=PC-new,confidence=low} Second word only saved and restored with the game state
+byte_DB7F1 awrosterjersey {source_game=PC-new,confidence=medium} Jersey number byte of each away roster record (39-byte records; pairs with hmrosterjersey)
+unk_DBD1C TeamRecLines {source_game=PC-new,confidence=low} Line set at +0ECh of each team record copy (stride 2E8h per side); the save lines menus write it
+byte_DC264 UnusedStateFlag {source_game=96PC,confidence=low} Byte only saved and restored with the game state
+byte_DC265 UnusedStateMode {source_game=96PC,confidence=low} Byte only saved and restored with the game state
+byte_DC266 UnusedStateSpare {source_game=PC-new,confidence=low} Byte only saved and restored with the game state
+byte_DC267 GameRecordDay {source_game=PC-new,confidence=low} Second byte of the current game record (schedule byte 1); InitGameSummary stores it and LoadTeamRoster compares injury days against it
+dword_DC2B8 PenaltyBlankDigit {source_game=PC-new,confidence=low} Shape drawn in place of the tens digit when a penalty time is under ten
+dword_DC6B4 StatsLastSel {source_game=PC-new,confidence=low} Statistics screen selection reset to -1 whenever a statistics source is chosen
+dword_DC734 RosterFromStandings {source_game=PC-new,confidence=low} Set when the team roster screen is opened from a standings or stats menu; picks the roster layout
+byte_DE268 MergeResult {source_game=PC-new,confidence=low} Result byte of the league file merge and human team dialogs
+dword_DC868 otherperiodprev {source_game=PC-new,confidence=low} Copy of otherperiod (six dwords) used by the intermission desk to spot changes
+dword_DC8C8 CurStream {source_game=PC-new,confidence=low} Stream record the CD stream service is working on
+dword_DDD34 lgoppteam {source_game=PC-new,confidence=low} Opponent of the league team being played; saved with the league game reference
+dword_DDD3C lgopphuman {source_game=PC-new,confidence=low} Non-zero when the league opponent has its own human team file; saved with the league game reference
+word_DDD48 lggamecount {source_game=PC-new,confidence=low} Number of league games played (from the league file); compared with lggameidx
+word_DDD4A lgoppgamecount {source_game=PC-new,confidence=low} Number of league games played in the opponent's file
+dword_D0C20 FaListScrolls {source_game=PC-new,confidence=low} Set when the free agent list has more than 28 players and needs a scroll bar
+dword_CDA24 InputResetWord {source_game=PC-new,confidence=low} Cleared with ptrstep when the input handler is installed or removed; never read
+dword_CDA38 InputQueueSpare {source_game=PC-new,confidence=low} Cleared with the input queue; never read
+dword_EA2B0 RosterFont {source_game=PC-new,confidence=low} Font the roster editor saves from mainfont
+dword_D2884 PoGameSetFlag {source_game=PC-new,confidence=low} Last podbsizes entry; cleared when the playoff GAMESET file already exists
+dword_C9002 LgGameSetFlag {source_game=PC-new,confidence=low} Last leaguedbsizes entry; cleared when the league GAMESET file already exists
+off_C5441 TeamAbbrevsAllStar {source_game=PC-new,confidence=low} Team abbreviation list two entries past teamabbrevs: indexed by team numbers from 24 up to reach the all-star abbreviations
+dword_D0CDA PosBitMasks {source_game=PC-new,confidence=low} One bit per position (1 2 4 8 ...) used by CheckTeamLines
+byte_D11BC TeamJerseyBase {source_game=PC-new,confidence=low} Palette index of each team's jersey base colour (dword per team)
+unk_D12C8 jerseyremapteam {source_game=PC-new,confidence=low} Team colour part of jerseyremap (entries 90h to BFh)
+byte_D12DE jerseyremaptrim {source_game=PC-new,confidence=low} jerseyremap entry A6h: the trim colour the line editors read
+dword_D122F fadestep+01h {no_record}
+dword_D1231 fadeend+01h {no_record}
+dword_D1398 LineEdPairX {source_game=PC-new,confidence=low} Line editor jersey X for the two-slot rows (two per page)
+dword_D139C LineEdPairY {source_game=PC-new,confidence=low} Line editor jersey Y for the two-slot rows
+dword_D13C8 LineEdFiveX {source_game=PC-new,confidence=low} Line editor jersey X for the five-player lines
+dword_D13CC LineEdFiveY {source_game=PC-new,confidence=low} Line editor jersey Y for the five-player lines
+dword_D1418 LineEdFourX {source_game=PC-new,confidence=low} Line editor jersey X for the four-player units
+dword_D141C LineEdFourY {source_game=PC-new,confidence=low} Line editor jersey Y for the four-player units
+dword_D1458 LineEdExtraX {source_game=PC-new,confidence=low} Line editor jersey X for the first fixed pair of slots
+dword_D145C LineEdExtraY {source_game=PC-new,confidence=low} Line editor jersey Y for the first fixed pair of slots
+dword_D1468 LineEdGoalieX {source_game=PC-new,confidence=low} Line editor jersey X for the second fixed pair of slots
+dword_D146C LineEdGoalieY {source_game=PC-new,confidence=low} Line editor jersey Y for the second fixed pair of slots
+byte_D27B6 SpeechInitMode {source_game=PC-new,confidence=low} Argument InitSpeech keeps
+dword_D2350 PcSpkSampleReady {source_game=PC-new,confidence=low} Set to -1 once the PC speaker test sample is loaded
+dword_D2423 SoundDevActive {source_game=PC-new,confidence=low} Non-zero while a sound device is set up; SetSoundDevice checks and clears it
+dword_D2427 musicdriver {source_game=PC-new,confidence=low} Music driver number chosen by SetSoundDevice (1 for the PC speaker; -1 for none)
+unk_CBEFC OvlScriptGoal {source_game=PC-new,confidence=medium} Overlay animation script for the goal overlay
+unk_CBF04 OvlScriptClap {source_game=PC-new,confidence=medium} Overlay animation script for the clapping overlay
+unk_CBF18 OvlScriptFanom {source_game=PC-new,confidence=medium} Overlay animation script for the fan overlay
+unk_CBF37 OvlScriptUflag {source_game=PC-new,confidence=medium} Overlay animation script for the uflag overlay
+unk_CBF60 OvlScriptCflag {source_game=PC-new,confidence=medium} Overlay animation script for the cflag overlay
+unk_CBF85 OvlScriptSiren {source_game=PC-new,confidence=medium} Overlay animation script for the siren overlay
+unk_CBF96 OvlScriptRuff {source_game=PC-new,confidence=medium} Overlay animation script for the roughing overlay
+unk_CBFA9 OvlScriptHook {source_game=PC-new,confidence=medium} Overlay animation script for the hooking overlay
+unk_CBFC3 OvlScriptSaved {source_game=PC-new,confidence=medium} Overlay animation script for the save overlay
+unk_CBFEB OvlScriptCross {source_game=PC-new,confidence=medium} Overlay animation script for the cross-checking overlay
+unk_CBFFA OvlScriptGuilt {source_game=PC-new,confidence=medium} Overlay animation script for the guilty player overlay

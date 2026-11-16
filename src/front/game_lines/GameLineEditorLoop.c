@@ -152,9 +152,9 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
     memcpy(pal, (unsigned char *)FindShape(blk, (char *)str_Pal28) + 0x10, 0x300);
     FreeMemBlock(blk);
     LoadJerseyColours(team, bank, pal);
-    c1 = byte_D11BC[(team ? VisTeam : HomeTeam) * 4];
+    c1 = TeamJerseyBase[(team ? VisTeam : HomeTeam) * 4];
     c1 = jerseyremap[c1];
-    c2 = byte_D12DE;
+    c2 = jerseyremaptrim;
     DrawGameLineJerseys(nums.slot, art, team);
     MakePath(path, fileoncd[0x21B] == 1 ? (char *)cddriveptr : 0, (char *)str_Lelogo2, 0);
     blk = LoadBank(path, 0);
@@ -316,7 +316,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                             for (k = 0; k < 2; k++) {
                                 MakeJerseyShape(jerseyremap, nums.g.def[i * 2 + k], c1, c2);
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1398[(i * 2 + k) * 2], dword_D139C[(i * 2 + k) * 2]);
+                                DrawArtMasked(art, LineEdPairX[(i * 2 + k) * 2], LineEdPairY[(i * 2 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x1C) {
@@ -329,7 +329,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                             for (k = 0; k < 5; k++) {
                                 MakeJerseyShape(jerseyremap, nums.g.pp[i * 5 + k], c1, c2);
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D13C8[(i * 5 + k) * 2], dword_D13CC[(i * 5 + k) * 2]);
+                                DrawArtMasked(art, LineEdFiveX[(i * 5 + k) * 2], LineEdFiveY[(i * 5 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x24) {
@@ -342,7 +342,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                             for (k = 0; k < 4; k++) {
                                 MakeJerseyShape(jerseyremap, nums.g.pk[i * 4 + k], c1, c2);
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1418[(i * 4 + k) * 2], dword_D141C[(i * 4 + k) * 2]);
+                                DrawArtMasked(art, LineEdFourX[(i * 4 + k) * 2], LineEdFourY[(i * 4 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x26) {
@@ -354,7 +354,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                             for (k = 0; k < 2; k++) {
                                 MakeJerseyShape(jerseyremap, nums.g.gl[k], c1, c2);
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1458[k * 2], dword_D145C[k * 2]);
+                                DrawArtMasked(art, LineEdExtraX[k * 2], LineEdExtraY[k * 2]);
                             }
                         }
                     } else {
@@ -366,7 +366,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                             for (k = 0; k < 2; k++) {
                                 MakeJerseyShape(jerseyremap, nums.g.ex[k], c1, c2);
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1468[k * 2], dword_D146C[k * 2]);
+                                DrawArtMasked(art, LineEdGoalieX[k * 2], LineEdGoalieY[k * 2]);
                             }
                         }
                     }

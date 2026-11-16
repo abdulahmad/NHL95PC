@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_20016 progbits alloc exec nowrite align=1
 extern __CHK, calendarshapes, cddriveptr, deskexit, DrawMenuBar, easnfontbuf, embscupbank, dword_C6D26
-extern dword_DC6B4, dword_DC734, leaguestatsmode, calredraw, FadePalStep, fileoncd, FreeDeskBuffers, FreeMemBlock
+extern StatsLastSel, RosterFromStandings, leaguestatsmode, calredraw, FadePalStep, fileoncd, FreeDeskBuffers, FreeMemBlock
 extern gamemode, GoalieStatsCard, InitMenuRemap, keepdesksong, LeadersScreen, MakePath, memcpy_, photoremap
 extern playofftree, RunMenu, RunPlayerPickMenu, RunTeamPickMenu, ShowPlayoffTree, SkaterStatsCard, standingscb, StandingsScreen
 extern statsbgnames, statsbgshapes, statscategory, statsgoaliebuf, statspal, statspalshape, statspalvalid, statsplayer
@@ -564,7 +564,7 @@ GameStandingsMenu_standings:
         jmp short GameStandingsMenu.3
 GameStandingsMenu_roster:
         xor eax, eax
-        mov dword [dword_DC734], eax
+        mov dword [RosterFromStandings], eax
         mov dword [statsredrawcb], TeamRosterScreen
         mov eax, dword [statscategory]
         call TeamRosterScreen
@@ -584,7 +584,7 @@ GameStandingsMenu_roster:
 GameStandingsMenu_player:
         mov dword [statsredrawcb], edi
         xor ebp, ebp
-        mov dword [dword_DC6B4], ebp
+        mov dword [StatsLastSel], ebp
         mov eax, statsplayer
         call GoalieStatsCard
         push byte 42h
@@ -603,7 +603,7 @@ GameStandingsMenu_player:
 GameStandingsMenu_player2:
         mov dword [statsredrawcb], SkaterStatsCard
         xor ecx, ecx
-        mov dword [dword_DC6B4], ecx
+        mov dword [StatsLastSel], ecx
         mov eax, statsplayer
         call SkaterStatsCard
         push byte 42h
@@ -1264,7 +1264,7 @@ EasnStandingsMenu_standings:
 ;-----------------------------------------------------------------------------
 EasnStandingsMenu_roster:
         xor eax, eax
-        mov dword [dword_DC734], eax
+        mov dword [RosterFromStandings], eax
         mov dword [statsredrawcb], TeamRosterScreen
         mov eax, dword [statscategory]
         call TeamRosterScreen
@@ -1288,7 +1288,7 @@ EasnStandingsMenu_roster:
 EasnStandingsMenu_player:
         mov dword [statsredrawcb], edi
         xor ebp, ebp
-        mov dword [dword_DC6B4], ebp
+        mov dword [StatsLastSel], ebp
         mov eax, statsplayer
         call GoalieStatsCard
         push byte 42h
@@ -1311,7 +1311,7 @@ EasnStandingsMenu_player:
 EasnStandingsMenu_player2:
         mov dword [statsredrawcb], SkaterStatsCard
         xor edx, edx
-        mov dword [dword_DC6B4], edx
+        mov dword [StatsLastSel], edx
         mov dword [statspalvalid], edx
         mov dword [statspal], edx
         mov eax, statsplayer
@@ -1968,7 +1968,7 @@ CalStandingsMenu_standings:
         jmp near CalStandingsMenu.4
 CalStandingsMenu_roster:
         xor esi, esi
-        mov dword [dword_DC734], esi
+        mov dword [RosterFromStandings], esi
         mov dword [statsredrawcb], edi
         mov eax, dword [statscategory]
         call TeamRosterScreen
@@ -1988,7 +1988,7 @@ CalStandingsMenu_roster:
 CalStandingsMenu_player:
         mov dword [statsredrawcb], GoalieStatsCard
         xor ecx, ecx
-        mov dword [dword_DC6B4], ecx
+        mov dword [StatsLastSel], ecx
         mov eax, statsplayer
         call GoalieStatsCard
         push byte 42h
@@ -2007,7 +2007,7 @@ CalStandingsMenu_player:
 CalStandingsMenu_player2:
         mov dword [statsredrawcb], SkaterStatsCard
         xor eax, eax
-        mov dword [dword_DC6B4], eax
+        mov dword [StatsLastSel], eax
         mov eax, statsplayer
         call SkaterStatsCard
         push byte 42h

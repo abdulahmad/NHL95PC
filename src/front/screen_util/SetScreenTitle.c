@@ -3,7 +3,7 @@
 
 /* SetScreenTitle: put the title of screen n (0 Sports Central, 1 Playoff Tree, 2 League
  Calendar, 3 Broadcast Booth, 4 Intermission Desk, 5 Rink Side) and its pixel width into the title items of
- the menu bars (off_CF51F...: text, dword_CF517 CF5D7: width); the other bars get the width clamped to at
+ the menu bars (StatsReturnText...: text, StatsReturnRight CF5D7: width); the other bars get the width clamped to at
  least 7Dh. Another n leaves the registers as they were (no default in the original). */
 void SetScreenTitle(int n)
 {
@@ -36,16 +36,16 @@ void SetScreenTitle(int n)
         width = 0x41;
         break;
     }
-    off_CF67F = (int)title;
-    off_CF61F = (int)title;
-    off_CF5DF = (int)title;
-    off_CF51F = (int)title;
-    dword_CF5D7 = width;
-    dword_CF517 = width;
+    PlayerCardReturnDeskText = (int)title;
+    RosterReturnDeskText = (int)title;
+    StandingsReturnText = (int)title;
+    StatsReturnText = (int)title;
+    StandingsReturnRight = width;
+    StatsReturnRight = width;
     if (width <= 0x7D) width = 0x7D;
-    dword_CF677 = width;
-    dword_CF657 = width;
-    dword_CF637 = width;
-    dword_CF617 = width;
-    dword_CF5F7 = width;
+    PlayerCardReturnDeskRight = width;
+    PlayerCardReturnStandingsRight = width;
+    PlayerCardReturnRosterRight = width;
+    RosterReturnDeskRight = width;
+    RosterReturnStandingsRight = width;
 }

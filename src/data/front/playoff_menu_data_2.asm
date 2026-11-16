@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_CEF43 progbits alloc noexec write align=1
-extern DeskHomeLines, DeskVisitorLines, DeskGameStats, DeskPenaltySummary, DeskScoringSummary, DeskTeamScratches, unk_C67B1, str_VisitingTeam2
+extern DeskHomeLines, DeskVisitorLines, DeskGameStats, DeskPenaltySummary, DeskScoringSummary, DeskTeamScratches, StatsSourceMenu, str_VisitingTeam2
 extern str_GameStatistics, str_PenaltySummary, str_ScoringSummary, str_TeamScratches, str_StatisticsType8
-global menuact_homelines, menuact_visitorlines, unk_CEF6F, unk_CEFEF
+global menuact_homelines, menuact_visitorlines, DeskGameStatsMenu, DeskStatsTypeMenu
 menuact_homelines:
         dd DeskHomeLines
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
@@ -13,7 +13,7 @@ menuact_homelines:
 menuact_visitorlines:
         dd DeskVisitorLines
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CEF6F:
+DeskGameStatsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_GameStatistics
         dd DeskGameStats
@@ -30,8 +30,8 @@ unk_CEF6F:
         dd str_TeamScratches
         dd DeskTeamScratches
         db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CEFEF:
+DeskStatsTypeMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_StatisticsType8
         db 00h,00h,00h,00h
-        dd unk_C67B1
+        dd StatsSourceMenu

@@ -27,7 +27,7 @@ int CheckTeamLines(int team, int *line, int *sel, int *first, int flags, int x, 
 
         ret = -2;
         if (*sel) DrawDBErrorsScreen(sel, line, first);
-        bit = flags & dword_D0CDA[i];
+        bit = flags & PosBitMasks[i];
         if (bit) {
             switch (bit) {
             case 1:

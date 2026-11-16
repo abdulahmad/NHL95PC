@@ -9,7 +9,7 @@ int LeagueCheckStub(char *dir, int mode);
 
 /* CheckMasterPassword: read the current league. When it has not been merged (leagueflags bit 2 clear),
  ask at the mouse; MergeLeagueFiles runs if that box is accepted and the check repeats. Then, unless
- the read failed, ask for the master password. byte_DE268 swaps the dialog colours around that ask.
+ the read failed, ask for the master password. MergeResult swaps the dialog colours around that ask.
  Returns the stub, read, or password result. */
 int CheckMasterPassword(void)
 {
@@ -47,7 +47,7 @@ int CheckMasterPassword(void)
         }
     } while (shown);
     if (!err) {
-        if (byte_DE268) {
+        if (MergeResult) {
             ClearScreen(shown);
             s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x17;
             VgaSetPalette(0xF8, 1, s.rgb);
@@ -58,7 +58,7 @@ int CheckMasterPassword(void)
         }
         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
         err = AskMasterPassword(leaguemaster, (char *)leagueteams, (char *)masterpw);
-        if (byte_DE268) {
+        if (MergeResult) {
             ClearScreen(0);
             s.rgb[2] = s.rgb[1] = s.rgb[0] = 0;
             VgaSetPalette(0xF8, 1, s.rgb);

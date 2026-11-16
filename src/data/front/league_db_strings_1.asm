@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_CFA4B progbits alloc noexec write align=1
 extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, MenuOpenDatabase, EasnStandingsMenu, str_Standings2, str_TeamsSortedBy2
-extern str_PlayersSortedBy2, str_GoaliesSortedBy2, unk_CE96F, unk_CEA2F, unk_CEB2F
-global str_XXXKbytesOfFree2, dword_CFA4B, dbexistsmsg, nodiskspacemsg, str_ThereIsAlreadyA2, str_DoYouWantTo5, str_InsufficientDiskSpace2, str_ToSaveTheDatabases
-global str_Anaheim, str_Calgary, str_Edmonton, str_LosAngeles, str_SanJose, str_Vancouver, unk_CFBE8, str_Chicago
-global str_Dallas, str_Detroit, str_StLouis, str_Toronto, str_Winnipeg, unk_CFCF2, str_Boston, str_Buffalo
-global str_Hartford, str_Montreal, str_Ottawa, str_Pittsburgh, str_Quebec, unk_CFE08, str_Florida, str_NewJersey
-global str_NYIslanders, str_NYRangers, str_Philadelphia, str_TampaBay, str_Washington, unk_CFF51, str_SaveToGame, str_TemporarySave
-global str_LoadDatabase, str_Return2, unk_D006E, str_FreeAgents2, str_FindPlayer, str_Pacific, str_Central, str_Northeast
-global str_Atlantic, unk_D0139
-dword_CFA4B:
+extern str_PlayersSortedBy2, str_GoaliesSortedBy2, TeamStatsSortMenu, SkaterStatsSortMenu, GoalieStatsSortMenu
+global str_XXXKbytesOfFree2, playoffstatsmenu_srccnt, dbexistsmsg, nodiskspacemsg, str_ThereIsAlreadyA2, str_DoYouWantTo5, str_InsufficientDiskSpace2, str_ToSaveTheDatabases
+global str_Anaheim, str_Calgary, str_Edmonton, str_LosAngeles, str_SanJose, str_Vancouver, RosterPacificMenu, str_Chicago
+global str_Dallas, str_Detroit, str_StLouis, str_Toronto, str_Winnipeg, RosterCentralMenu, str_Boston, str_Buffalo
+global str_Hartford, str_Montreal, str_Ottawa, str_Pittsburgh, str_Quebec, RosterNortheastMenu, str_Florida, str_NewJersey
+global str_NYIslanders, str_NYRangers, str_Philadelphia, str_TampaBay, str_Washington, RosterAtlanticMenu, str_SaveToGame, str_TemporarySave
+global str_LoadDatabase, str_Return2, EditRostersFileMenu, str_FreeAgents2, str_FindPlayer, str_Pacific, str_Central, str_Northeast
+global str_Atlantic, Roster1TeamMenu
+playoffstatsmenu_srccnt:
         db 02h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
         db 023h,00h,00h,00h
         dd str_Standings2
@@ -20,17 +20,17 @@ dword_CFA4B:
         db 08Ch,00h,00h,00h,035h,00h,00h,00h
         dd str_TeamsSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CE96F
+        dd TeamStatsSortMenu
         db 06h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
         db 047h,00h,00h,00h
         dd str_PlayersSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CEA2F
+        dd SkaterStatsSortMenu
         db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
         db 05Ah,00h,00h,00h
         dd str_GoaliesSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CEB2F
+        dd GoalieStatsSortMenu
         db 03h,00h,00h,00h,00h,02Eh,074h,078h,074h,00h
 str_ThereIsAlreadyA2:
         db 054h,068h,065h,072h,065h,020h,069h,073h,020h,061h,06Ch,072h,065h,061h,064h,079h
@@ -71,7 +71,7 @@ str_SanJose:
         db 053h,061h,06Eh,020h,04Ah,06Fh,073h,065h,020h,02Eh,02Eh,02Eh,00h
 str_Vancouver:
         db 056h,061h,06Eh,063h,06Fh,075h,076h,065h,072h,020h,02Eh,02Eh,02Eh,00h
-unk_CFBE8:
+RosterPacificMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
         dd str_Anaheim
         dd SelectRosterTeam
@@ -107,7 +107,7 @@ str_Toronto:
         db 054h,06Fh,072h,06Fh,06Eh,074h,06Fh,020h,02Eh,02Eh,02Eh,00h
 str_Winnipeg:
         db 057h,069h,06Eh,06Eh,069h,070h,065h,067h,020h,02Eh,02Eh,02Eh,00h
-unk_CFCF2:
+RosterCentralMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,053h,00h,00h,00h,011h,00h,00h,00h
         dd str_Chicago
         dd SelectRosterTeam
@@ -146,7 +146,7 @@ str_Pittsburgh:
         db 050h,069h,074h,074h,073h,062h,075h,072h,067h,068h,020h,02Eh,02Eh,02Eh,00h
 str_Quebec:
         db 051h,075h,065h,062h,065h,063h,020h,02Eh,02Eh,02Eh,00h
-unk_CFE08:
+RosterNortheastMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,05Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_Boston
         dd SelectRosterTeam
@@ -191,7 +191,7 @@ str_TampaBay:
         db 054h,061h,06Dh,070h,061h,020h,042h,061h,079h,020h,02Eh,02Eh,02Eh,00h
 str_Washington:
         db 057h,061h,073h,068h,069h,06Eh,067h,074h,06Fh,06Eh,020h,02Eh,02Eh,02Eh,00h
-unk_CFF51:
+RosterAtlanticMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_Florida
         dd SelectRosterTeam
@@ -230,7 +230,7 @@ str_LoadDatabase:
         db 02Eh,00h
 str_Return2:
         db 052h,065h,074h,075h,072h,06Eh,00h
-unk_D006E:
+EditRostersFileMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,080h,00h,00h,00h,011h,00h,00h,00h
         dd str_SaveToGame
         dd MenuSaveDbs
@@ -259,7 +259,7 @@ str_Northeast:
         db 04Eh,06Fh,072h,074h,068h,065h,061h,073h,074h,020h,03h,00h
 str_Atlantic:
         db 041h,074h,06Ch,061h,06Eh,074h,069h,063h,020h,03h,00h
-unk_D0139:
+Roster1TeamMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
         dd str_Pacific
         db 00h,00h,00h,00h

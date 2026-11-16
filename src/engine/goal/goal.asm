@@ -6,7 +6,7 @@ extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, awglattr, awglstat
 extern awplattr, awplstats, awroster, awscore, awteamrec, awtmcoach_d2, awtmcoach_d3, awtmextra
 extern awtmglattr, awtmglstats, awtmgoalie, awtmlines, awtmpbox, awtmplattr, awtmplstats, awtmptrF2
 extern awtmroster, awtmsort, awtmstruct, c1playernum, c2playernum, changeplayer_ret5, ChkShotStat, collflag
-extern cont1team, cont2team, crowdlevel, CwdExciteLvl, DrawPanelScore, dword_CCC9E, dword_E9AB6, EndPenaltyShot
+extern cont1team, cont2team, crowdlevel, CwdExciteLvl, DrawPanelScore, Setplass_alist_m3, UnusedEventWord, EndPenaltyShot
 extern findpc, findpc_ret5, findpc_ret6, fox, foy, freezewindow, gameclock, gameopts
 extern gmode, gmode2, gsp, hmglattr, hmglstats, hmlinetab, hmplattr, hmplstats
 extern hmroster, hmscore, hmteamrec, hmtmcoach_d2, hmtmcoach_d3, hmtmextra, hmtmglattr, hmtmglstats
@@ -655,7 +655,7 @@ Setplass:
         cmp dx, byte 6
         jg short .x
         movsx edx, dx
-        mov edx, dword [dword edx+dword_CCC9E]
+        mov edx, dword [dword edx+Setplass_alist_m3]
         sar edx, 18h
         call assreplace
 .x:
@@ -800,7 +800,7 @@ setplayer:
         cmp ax, 2
         jg short .17
         jne short .19
-        mov eax, dword [dword_E9AB6]
+        mov eax, dword [UnusedEventWord]
         sar eax, 11h
         mov edx, dword [gameclock-2]
         sar edx, 10h

@@ -12,7 +12,7 @@ void DrawScrollBar(int *sb);
 
 /* DrawRosterList: 28 rows of a team roster, or the free-agent list when rosterisfa[side] is 1.
  Each row is jersey, position and the fitted name. A selected row is inverted. An empty team
- slot ends the list. The free-agent list starts at falisttop and, when dword_D0C20 is set,
+ slot ends the list. The free-agent list starts at falisttop and, when FaListScrolls is set,
  draws its buttons and scroll thumb. x and y are the first row; side is 0 or 1. */
 void DrawRosterList(int x, int y, int side)
 {
@@ -52,7 +52,7 @@ void DrawRosterList(int x, int y, int side)
             if (((unsigned char *)falistsel)[n] != 0)
                 XorBar(side ? 0x15E : 0x23, TextCharH * i + 0x35, 0xF0, TextCharH, 0x80);
         }
-        if (dword_D0C20) {
+        if (FaListScrolls) {
             DrawButtons((Button *)btn_RosterList, 2);
             fascrollbar_top = falisttop;
             fascrollbar_thumb = (unsigned)((fascrollbar_len - 4) * *(volatile int *)&fascrollbar_top)

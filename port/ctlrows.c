@@ -25,7 +25,7 @@ void ctlrows_set(int *on1, int handler, int *saved, int *have, int four)
 
 #ifndef CTLROWS_TEST
 
-extern char gamemenu[], unk_C854F[], unk_CF9AF[], unk_CED6F[];
+extern char gamemenu[], CalSettingsMenu[], PlayoffSettingsMenu[], DeskSettingsMenu[];
 extern char MenuP1ControlsExh[], MenuP2ControlsExh[];
 extern char MenuP1ControlsLeague[], MenuP2ControlsLeague[];
 extern char MenuP1ControlsPlayoff[], MenuP2ControlsPlayoff[];
@@ -40,9 +40,9 @@ void ctlrows_sync(int four)
 {
     static const struct { char *menu; int index; char *fn; } row[] = {
         { gamemenu, 3, MenuP1ControlsExh }, { gamemenu, 4, MenuP2ControlsExh },
-        { unk_C854F, 0, MenuP1ControlsLeague }, { unk_C854F, 1, MenuP2ControlsLeague },
-        { unk_CF9AF, 0, MenuP1ControlsPlayoff }, { unk_CF9AF, 1, MenuP2ControlsPlayoff },
-        { unk_CED6F, 0, MenuP1ControlsInGame }, { unk_CED6F, 1, MenuP2ControlsInGame }
+        { CalSettingsMenu, 0, MenuP1ControlsLeague }, { CalSettingsMenu, 1, MenuP2ControlsLeague },
+        { PlayoffSettingsMenu, 0, MenuP1ControlsPlayoff }, { PlayoffSettingsMenu, 1, MenuP2ControlsPlayoff },
+        { DeskSettingsMenu, 0, MenuP1ControlsInGame }, { DeskSettingsMenu, 1, MenuP2ControlsInGame }
     };
     static int saved[8], have[8], complained;
     int i;

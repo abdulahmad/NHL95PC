@@ -142,9 +142,9 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     memcpy(pal, (unsigned char *)FindShape(blk, (char *)str_Pal26) + 0x10, 0x300);
     FreeMemBlock(blk);
     LoadJerseyColours(team, bank, pal);
-    c1 = byte_D11BC[rosterteam[team] * 4];
+    c1 = TeamJerseyBase[rosterteam[team] * 4];
     c1 = jerseyremap[c1];
-    c2 = byte_D12DE;
+    c2 = jerseyremaptrim;
     DrawLineJerseys(nums.slot, art, team);
     MakePath(path, fileoncd[0x21B] == 1 ? (char *)cddriveptr : 0, (char *)str_Lelogo, 0);
     blk = LoadBank(path, 0);
@@ -321,7 +321,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1398[(i * 2 + k) * 2], dword_D139C[(i * 2 + k) * 2]);
+                                DrawArtMasked(art, LineEdPairX[(i * 2 + k) * 2], LineEdPairY[(i * 2 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x1C) {
@@ -340,7 +340,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D13C8[(i * 5 + k) * 2], dword_D13CC[(i * 5 + k) * 2]);
+                                DrawArtMasked(art, LineEdFiveX[(i * 5 + k) * 2], LineEdFiveY[(i * 5 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x24) {
@@ -359,7 +359,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1418[(i * 4 + k) * 2], dword_D141C[(i * 4 + k) * 2]);
+                                DrawArtMasked(art, LineEdFourX[(i * 4 + k) * 2], LineEdFourY[(i * 4 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x26) {
@@ -376,7 +376,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1458[k * 2], dword_D145C[k * 2]);
+                                DrawArtMasked(art, LineEdExtraX[k * 2], LineEdExtraY[k * 2]);
                             }
                         }
                     } else {
@@ -393,7 +393,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
                                 SetColorRemap(jerseyremap);
-                                DrawArtMasked(art, dword_D1468[k * 2], dword_D146C[k * 2]);
+                                DrawArtMasked(art, LineEdGoalieX[k * 2], LineEdGoalieY[k * 2]);
                             }
                         }
                     }

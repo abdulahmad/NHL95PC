@@ -25,7 +25,7 @@ global lgstate
 global gameresult, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
 global ctl2side, sounddev, awardart, awardnames, awardtitles, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02
 global awardstatsptrs_e03, awardstatsptrs_e04, awardstatsptrs_e05, awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, awardscopenames, teamabbrevs
-global off_C5441, teamcitynames, blackpal, str_fmtpd, exhstate, gsumheader, gsumtail
+global TeamAbbrevsAllStar, teamcitynames, blackpal, str_fmtpd, exhstate, gsumheader, gsumtail
 global gsumcount
 joyqtick:
         db 00h,00h,00h,00h
@@ -309,7 +309,7 @@ awshotcnt:
 teamabbrevs:
         dd BOS
         dd BUF
-off_C5441:
+TeamAbbrevsAllStar:
         dd CGY
         dd CHI
         dd DET

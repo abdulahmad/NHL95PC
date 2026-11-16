@@ -82,7 +82,7 @@ void PreGameIntro(void)
 
     PlayCrowdSample(0xA);
     team = teamrocktune[HomeTeam];
-    y = word_CC9CC[teamrocktune[HomeTeam]];
+    y = RockTuneIds[teamrocktune[HomeTeam]];
     LoadTeamPPV((short)(team != 1 ? 4 : 3));
     textline5 = 0;
     textline4 = 0;
@@ -503,7 +503,7 @@ void assthreestars(Player *p)
         sprintf((char *)&textline1, (char *)str_StarFmt, starordtab[p->temp1]);
         FormatPlayerName((char *)&textline2, (char *)hmteamrec + tm * 0x2E8, hmrosterjersey[tm * 0x444 + pl * 39],
             (char *)hmroster + tm * 0x444 + pl * 39 + 7, (char *)hmroster + tm * 0x444 + pl * 39 + 0x17,
-            (char *)unk_C1B3E);
+            (char *)str_NoStar);
         w = tm ? VisTeam : HomeTeam;
         PaPlayerNumber((char *)teamabbrevs[w], p->temp1 + 1, hmrosterjersey[tm * 0x444 + pl * 39]);
     }
@@ -527,7 +527,7 @@ void assthreestars(Player *p)
         sprintf((char *)&textline1, (char *)str_StarFmt, starordtab[p->temp1]);
         FormatPlayerName((char *)&textline2, (char *)hmteamrec + tm * 0x2E8, hmrosterjersey[tm * 0x444 + pl * 39],
             (char *)hmroster + tm * 0x444 + pl * 39 + 7, (char *)hmroster + tm * 0x444 + pl * 39 + 0x17,
-            (char *)unk_C1B3E);
+            (char *)str_NoStar);
         w = tm ? VisTeam : HomeTeam;
         PaPlayerNumber((char *)teamabbrevs[w], p->temp1 + 1, hmrosterjersey[tm * 0x444 + pl * 39]);
         return;

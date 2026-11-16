@@ -5,15 +5,15 @@ bits 32
 section s_47C31 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assexit, assinsert, assreplace, awscore, awtmap
 extern awtmstruct, bannermsg, bannertimer, bgscrollx, bgscrolly, teamrocktune, starskatermin, stargoaliemin
-extern Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, byte_DF87F, byte_DFFE2, curevent, goalevent, goalevent_b1
+extern Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, SortCordsOvlFlag, doorpflags3, curevent, goalevent, goalevent_b1
 extern goalevent_b2, goalevent_b3, goalevent_b4, c1playernum, c2playernum, camx, camx_m2, camy
 extern changeplayer, check4bench, check4check, checkob, checkpuckcoll, chk4lc, chk4pass, chk4shot
 extern ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks, CloseTextOverlay, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame, doorpflags
-extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, dword_CBEBE, demoflag
-extern dword_CC9AD, introstandanims_m2, assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end
-extern dword_D8C72, dword_D8C7A, hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3
-extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, SpeechPatchNext, dword_E9AB6, dword_E9AB7
+extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, demoflag, apl
+extern introstandanims_m2, assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, HotStickList_y
+extern hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, rinkendart, hudhundaccum
+extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, SpeechPatchNext, UnusedEventWord, ovlstepidx
 extern EndPenaltyShot, energywarn, escrequest, EvadePC, EvadePlayers, exitgame, fadeinpending, FadePalette
 extern Findhittype, findpc, fodir1, fodir2, fofdata2, forcepldata, FormatPlayerName, fox
 extern foy, frameaccum, FreeMemBlock, gameclock, gameopts, gameover, gamepal, GetHot
@@ -37,9 +37,9 @@ extern skatetopuck, SkateToSpot, sopathend, sopathpoint, sopathx, sopathy, SortC
 extern sounddev, SpeechStopQueue, sprintf_, spritedrawcount, SprSort, starordtab, starpl, startm
 extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, FlushZones, SetZoneScreen, SetZoneOrigin
 extern BeginZoneFrame, ReleaseAllVoices, SetPalette, teamabbrevs, textline1, textline2, textline3, textline4
-extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, hmglstats, sortobj11, updateanim
+extern textline5, threat, TicksSinceLastCall, str_NoStar, hmplattr, hmglstats, sortobj11, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, penaltysc
-extern SortPending, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+extern SortPending, injurystop, RockTuneIds, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 extern hmplstats_w2, hmglstats_w2, hmglstats_w4, hmglstats_w8, hmglstats_w14, hmtmtouch1, puckcross2, puckcross6
 extern refYpos2, refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, reftemp5
@@ -153,7 +153,7 @@ PreGameIntro:
         mov dword [byte esp+08h], edx
         mov edi, dword [dword eax+teamrocktune-3]
         sar edi, 18h
-        mov di, word [nosplit edi*2+word_CC9CC]
+        mov di, word [nosplit edi*2+RockTuneIds]
         cmp dx, byte 1
         setne al
         and eax, 0FFh
@@ -2234,7 +2234,7 @@ assthreestars:
         push textline1
         call sprintf_
         add esp, byte 0Ch
-        push unk_C1B3E
+        push str_NoStar
         mov edx, esi
         shl edx, 4
         add edx, esi
@@ -2355,7 +2355,7 @@ assthreestars:
         push textline1
         call sprintf_
         add esp, byte 0Ch
-        push unk_C1B3E
+        push str_NoStar
         mov edx, esi
         shl edx, 4
         add edx, esi

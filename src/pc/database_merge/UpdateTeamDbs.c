@@ -85,7 +85,7 @@ done:
 }
 
 /* MergeLeagueFiles (3B25A, PC only): merge the human teams' copies of the current league back into it. Clear
- byte_DE268 and, if the league passes the stub check, read its header and note whether PLAYER.ID exists. A saved
+ MergeResult and, if the league passes the stub check, read its header and note whether PLAYER.ID exists. A saved
  game, a master team under coach control (flag 2), a PLAYER.ID or an already merged league (leagueflags bit 2)
  only get their message box. Otherwise open PINFO.DB, find the master team's copy (LocateTeamDbCopy, ext str_Xx
  "%02d" of leaguemaster) and show "merging". For each human team not yet merged (+17h is 1, flag bit 2 clear):
@@ -93,7 +93,7 @@ done:
  (MergeTeamDbs, MergeScheduleDb; not for the master team), mark it merged with its version in both headers and
  set the copy's flags to 4 and ours to 8. Then copy the three league databases from the master copy, read the
  schedule's game count, update the season schedule from there and set the flags to 4. Error 4 with flags 8
- says the merge is incomplete; another error says it failed. Restores the dialog colours. Returns byte_DE268. */
+ says the merge is incomplete; another error says it failed. Restores the dialog colours. Returns MergeResult. */
 int MergeLeagueFiles(void)
 {
     struct {
@@ -118,7 +118,7 @@ int MergeLeagueFiles(void)
     s.rdfh = s.fh2 = s.fh = -1;
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
     r = LeagueCheckStub((char *)&curleague, 2);
-    byte_DE268 = 0;
+    MergeResult = 0;
     if (r) goto done;
     err = r = ReadLeagueInfo((char *)&curleague, leagueteams, (char *)masterpw, (short *)&leaguemaster, &humancount,
         &leagueflags, &leaguesaved, (char *)&savedname);
@@ -220,7 +220,7 @@ int MergeLeagueFiles(void)
     }
 done:
     SetDialogColors(0x2A, 0x3F, 0x17, 0x3F, 0);
-    return byte_DE268;
+    return MergeResult;
 }
 
 /* RebuildLeagueDbs: ask each human team for its password, then the master password. When the stub

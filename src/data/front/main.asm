@@ -4,8 +4,8 @@ bits 32
 section s_CBED0 progbits alloc noexec write align=1
 extern str_Fanom, str_Goal, str_Clap2, str_Uflag, str_Cflag, str_Siren2, str_Ruff, str_Hook3
 extern str_Saved2, str_Cross, str_Guilt
-global ovlartnames, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60, unk_CBF85, unk_CBF96
-global unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
+global ovlartnames, OvlScriptGoal, OvlScriptClap, OvlScriptFanom, OvlScriptUflag, OvlScriptCflag, OvlScriptSiren, OvlScriptRuff
+global OvlScriptHook, OvlScriptSaved, OvlScriptCross, OvlScriptGuilt
 ovlartnames:
         dd str_Fanom
         dd str_Goal
@@ -18,38 +18,38 @@ ovlartnames:
         dd str_Saved2
         dd str_Cross
         dd str_Guilt
-unk_CBEFC:
+OvlScriptGoal:
         db 07h,00h,02h,01h,03h,01h,03h,01h
-unk_CBF04:
+OvlScriptClap:
         db 013h,00h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h
         db 02h,03h,00h,00h
-unk_CBF18:
+OvlScriptFanom:
         db 01Eh,00h,01h,02h,02h,02h,02h,03h,04h,03h,04h,03h,02h,02h,02h,02h
         db 03h,04h,03h,04h,03h,02h,02h,02h,02h,02h,02h,05h,06h,07h,08h
-unk_CBF37:
+OvlScriptUflag:
         db 028h,00h,00h,01h,01h,02h,02h,03h,03h,00h,00h,01h,01h,02h,02h,03h
         db 03h,00h,00h,01h,01h,02h,02h,03h,03h,00h,00h,01h,01h,02h,02h,03h
         db 03h,00h,00h,01h,01h,02h,02h,03h,03h
-unk_CBF60:
+OvlScriptCflag:
         db 024h,00h,00h,01h,01h,02h,02h,00h,00h,01h,01h,02h,02h,00h,00h,01h
         db 01h,02h,02h,00h,00h,01h,01h,02h,02h,00h,00h,01h,01h,02h,02h,00h
         db 00h,01h,01h,02h,02h
-unk_CBF85:
+OvlScriptSiren:
         db 010h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h
         db 03h
-unk_CBF96:
+OvlScriptRuff:
         db 012h,00h,00h,01h,02h,03h,04h,00h,01h,02h,03h,04h,00h,01h,02h,03h
         db 04h,00h,00h
-unk_CBFA9:
+OvlScriptHook:
         db 019h,00h,00h,00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch
         db 0Dh,0Eh,0Dh,0Eh,0Dh,0Eh,0Dh,0Eh,0Eh,0Eh
-unk_CBFC3:
+OvlScriptSaved:
         db 027h,00h,00h,00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch
         db 0Dh,0Eh,0Fh,010h,011h,012h,013h,014h,015h,016h,016h,016h,017h,018h,019h,017h
         db 018h,019h,017h,018h,019h,019h,019h,019h
-unk_CBFEB:
+OvlScriptCross:
         db 0Eh,09h,09h,09h,00h,01h,02h,03h,04h,05h,06h,07h,08h,08h,08h
-unk_CBFFA:
+OvlScriptGuilt:
         db 022h,00h,00h,00h,01h,02h,03h,04h,05h,06h,07h,08h,09h,0Ah,0Bh,0Ch
         db 0Dh,0Eh,0Fh,010h,011h,012h,013h,014h,015h,016h,017h,018h,019h,01Ah,01Bh,01Ch
         db 01Dh,01Dh,01Dh

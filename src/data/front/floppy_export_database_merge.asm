@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_C8445 progbits alloc noexec write align=1
 extern CalStandingsMenu, CalNextMonth, CalPrevMonth, CalReturn, TeamSelDone, TeamSelCancel, MenuLeagueSettingsEdit, MenuShowLeagueSettings
-extern MenuShowLeagueSettings2, MenuP1ControlsLeague, MenuP2ControlsLeague, unk_C67B1, str_StatisticsType8, str_Standings2, str_TeamsSortedBy2, str_PlayersSortedBy2
-extern str_GoaliesSortedBy2, unk_CE96F, unk_CEA2F, unk_CEB2F
-global monthdays, curleague, monthfirstday_m1, monthfirstday, teamselsetslot, calnextslot, calprevslot, unk_C846A
-global str_Player1Controls, str_Player2Controls, str_ShowLeagueSettings, unk_C854F, str_NextMonth, str_PrevMonth, str_ReturnToSportsCentral, calplaymenu
+extern MenuShowLeagueSettings2, MenuP1ControlsLeague, MenuP2ControlsLeague, StatsSourceMenu, str_StatisticsType8, str_Standings2, str_TeamsSortedBy2, str_PlayersSortedBy2
+extern str_GoaliesSortedBy2, TeamStatsSortMenu, SkaterStatsSortMenu, GoalieStatsSortMenu
+global monthdays, curleague, monthfirstday_m1, monthfirstday, teamselsetslot, calnextslot, calprevslot, CalStatsMenu
+global str_Player1Controls, str_Player2Controls, str_ShowLeagueSettings, CalSettingsMenu, str_NextMonth, str_PrevMonth, str_ReturnToSportsCentral, calplaymenu
 global str_Play3, str_Game5, str_Statistics2, calmenubar, str_ShowLeagueSettings2, lgsetshowmenu, str_LeagueSettings, lgsetmenu
-global str_Done3, str_Cancel3, teamselmenu, str_Select, str_Settings2, teamselmenubar, unk_C87B8
+global str_Done3, str_Cancel3, teamselmenu, str_Select, str_Settings2, teamselmenubar, TradeStatsMenu
 monthdays:
         db 01Fh,01Ch,01Fh,01Eh,01Fh,01Eh,01Fh,01Fh,01Eh,01Fh,01Eh,01Fh
 curleague:
@@ -17,11 +17,11 @@ monthfirstday_m1:
         db 00h
 monthfirstday:
         db 06h,02h,02h,05h,00h,03h,05h,01h,04h,05h,01h,03h
-unk_C846A:
+CalStatsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
         dd str_StatisticsType8
         db 00h,00h,00h,00h
-        dd unk_C67B1
+        dd StatsSourceMenu
         db 05h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
         db 023h,00h,00h,00h
         dd str_Standings2
@@ -30,17 +30,17 @@ unk_C846A:
         db 08Ch,00h,00h,00h,035h,00h,00h,00h
         dd str_TeamsSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CE96F
+        dd TeamStatsSortMenu
         db 05h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
         db 047h,00h,00h,00h
         dd str_PlayersSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CEA2F
+        dd SkaterStatsSortMenu
         db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
         db 05Ah,00h,00h,00h
         dd str_GoaliesSortedBy2
         db 00h,00h,00h,00h
-        dd unk_CEB2F
+        dd GoalieStatsSortMenu
         db 03h,00h,00h,00h
 str_Player1Controls:
         db 050h,06Ch,061h,079h,065h,072h,020h,031h,020h,043h,06Fh,06Eh,074h,072h,06Fh,06Ch
@@ -51,7 +51,7 @@ str_Player2Controls:
 str_ShowLeagueSettings:
         db 053h,068h,06Fh,077h,020h,04Ch,065h,061h,067h,075h,065h,020h,053h,065h,074h,074h
         db 069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-unk_C854F:
+CalSettingsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h,0A7h,00h,00h,00h,011h,00h,00h,00h
         dd str_Player1Controls
         dd MenuP1ControlsLeague
@@ -101,12 +101,12 @@ calmenubar:
         db 012h,00h,00h,00h
         dd str_Game5
         db 00h,00h,00h,00h
-        dd unk_C854F
+        dd CalSettingsMenu
         db 03h,00h,00h,00h,052h,00h,00h,00h,00h,00h,00h,00h,097h,00h,00h,00h
         db 012h,00h,00h,00h
         dd str_Statistics2
         db 00h,00h,00h,00h
-        dd unk_C846A
+        dd CalStatsMenu
         db 05h,00h,00h,00h
 str_ShowLeagueSettings2:
         db 053h,068h,06Fh,077h,020h,04Ch,065h,061h,067h,075h,065h,020h,073h,065h,074h,074h
@@ -152,5 +152,5 @@ teamselmenubar:
 teamselsetslot:
         dd lgsetmenu
         db 01h,00h,00h,00h
-unk_C87B8:
+TradeStatsMenu:
         db 00h,00h,00h,00h,00h,00h,00h,00h

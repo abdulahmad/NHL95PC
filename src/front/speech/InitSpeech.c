@@ -6,7 +6,7 @@
 void InitSpeech(unsigned char id, int size, int copybuf, int copylen)
 {
     if (SpeechIsInit()) return;
-    byte_D27B6 = id;
+    SpeechInitMode = id;
     speechchannel = 0;
     speechcopybuf = copybuf;
     speechcopylen = copylen;

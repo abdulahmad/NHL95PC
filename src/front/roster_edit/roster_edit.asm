@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_70E8D progbits alloc exec nowrite align=1
 extern __CHK, attdb, attdb_size, btn_LeagueExists, byte_EAC86, byte_EAF99, byte_EAFB5, careerdb
-extern careerdb_size, carteamsdb, carteamsdb_size, CountSelected, dbdirty, divisionteams, DrawEditRosters, dword_D0C20
+extern careerdb_size, carteamsdb, carteamsdb_size, CountSelected, dbdirty, divisionteams, DrawEditRosters, FaListScrolls
 extern dword_EA994, dword_EAF7C, EditTeamLines, facount, falist, falistsel, falisttop, FixJerseyNumber
 extern FreeLeagueDbsMem, GetFileSize, InputDialog, j_unlink_, keydb, keydb_size, KeyDbPtr, leaguedbnames
 extern ListDialog, LoadRosterList, MakePath, menu_r1_editlines, menu_r1_freeagents, menu_r1_tofa, menu_r1_toroster2, menu_r2_editlines
@@ -767,7 +767,7 @@ SelectMatchingPlayers:
 .8:
         cmp ecx, dword [facount]
         jl short SelectMatchingPlayers.7
-        cmp dword [dword_D0C20], byte 0
+        cmp dword [FaListScrolls], byte 0
         je short .9
         mov dword [falisttop], 0FFFFFFFFh
 .9:
@@ -812,7 +812,7 @@ SelectMatchingPlayers:
         mov dl, byte [ecx+eax]
         not dl
         mov byte [ecx+eax], dl
-        cmp dword [dword_D0C20], byte 0
+        cmp dword [FaListScrolls], byte 0
         je short .13
         cmp dword [falisttop], byte 0FFFFFFFFh
         jne short .13

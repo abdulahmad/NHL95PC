@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_4DFF7 progbits alloc exec nowrite align=1
 extern __CHK, assgoalie, assgoalie_popebp, assreplace, asswingd, asswingd_skateto, awscore, awtmap
-extern awtmstruct, byte_DF87F, camy, ChkScorerMilestone, clockticks, CloseTextOverlay, crowdlevel, deferpending
-extern demoflag, doplayeracc, SpeechPatchNext, dword_E9AB6, EvadePlayers, exitgame, fox, foy
+extern awtmstruct, SortCordsOvlFlag, camy, ChkScorerMilestone, clockticks, CloseTextOverlay, crowdlevel, deferpending
+extern demoflag, doplayeracc, SpeechPatchNext, UnusedEventWord, EvadePlayers, exitgame, fox, foy
 extern gameclock, gameopts, gmode, gmode2, goalevent, goalevent_b1, goalevent_b2, goalevent_b3
 extern goalevent_b4, gsp, hmrosterjersey, hmscore, hmtmap, hmtmstruct, HomeTeam, injurystop
 extern joysampling, joysampling_save, LoadTeamPPV, musicon, ovlseq, ovltimer, PaGoal, PaSpeechBusy
@@ -691,7 +691,7 @@ CrowdOnStoppage:
 .2:
         test eax, eax
         jne near .12
-        mov edx, dword [dword_E9AB6]
+        mov edx, dword [UnusedEventWord]
         sar edx, 11h
         mov eax, dword [gameclock-2]
         sar eax, 10h
@@ -1354,12 +1354,12 @@ assrefgoalpa:
         mov eax, dword [penaltysc-2]
         sar eax, 10h
         shl eax, 7
-        cmp byte [dword eax+byte_DF87F], 0
+        cmp byte [dword eax+SortCordsOvlFlag], 0
         je short .19
         cmp word [SpeechPatchNext], byte 0
         jne short .19
         xor dh, dh
-        mov byte [dword eax+byte_DF87F], dh
+        mov byte [dword eax+SortCordsOvlFlag], dh
         mov eax, 8
         call LoadTeamPPV
         mov eax, dword [ovlseq-2]

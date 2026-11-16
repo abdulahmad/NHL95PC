@@ -3,7 +3,7 @@
 
 /* IntermissionDesk: between periods: unless the game was quit (exitgame -1, then just fade the palette cycle),
  show the period summary; in a normal game of two real teams pick the other games after the first period
- (saving otherperiod to dword_DC868) and, unless the summary was left with bit 2, update the other scores and
+ (saving otherperiod to otherperiodprev) and, unless the summary was left with bit 2, update the other scores and
  play a random highlight with its summary. Then the sports desk, clear the per-period goal/shot counters,
  write the summary header and go back to 320x200. */
 void IntermissionDesk(void)
@@ -22,7 +22,7 @@ void IntermissionDesk(void)
             if (curperiod == 1) {
                 hlplayedmask = 0;
                 PickOtherGames(*(int *)((char *)&HomeTeam - 2) >> 16, *(int *)((char *)&VisTeam - 2) >> 16);
-                for (i = 0; i < 6; i++) dword_DC868[i] = otherperiod[i];
+                for (i = 0; i < 6; i++) otherperiodprev[i] = otherperiod[i];
             }
             if (!(r & 4)) {
                 UpdateOtherScores(curperiod);
