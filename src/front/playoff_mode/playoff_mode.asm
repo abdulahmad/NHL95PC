@@ -5,7 +5,7 @@ section s_86696 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, AllocMemBlock, AskDatabaseChoice, awscore, boxfillcolor, boxlitecolor, boxshadecolor
 extern btn_LeagueExists, btn_POHumanOut, BuildSavedGameLabels, careerdb, careerdb_size, cddriveptr, confteams, CopyFile
 extern ctl1side, ctl1team, ctl2side, ctl2team, ctlavailmask, curleague, dbextension, DeleteDir
-extern DiskSpaceShort, dlgtextbg, dlgtextfg, DrawMenuBar, DrawPlayoffTree, DrawShape, dword_C6D26, PoGameSetFlag
+extern DiskSpaceShort, dlgtextbg, dlgtextfg, DrawMenuBar, DrawPlayoffTree, DrawShape, PoStandingsMode, PoGameSetFlag
 extern EditPlayoffSettings, embscupbank, exhstate, FadePalStep, FatalError, FileClose, FileExists, fileoncd
 extern FileOpenRead, FileOpenRW, FileOpenWrite, FileWriteAt, FindShape, FreeMemBlock, gameopts, GetFileSize
 extern GetLeagueDBSizes, hmscore, hmteamrec, HomeTeam, keydb, keydb_size, leaguedbfmt, leaguedbfmt2
@@ -2464,7 +2464,7 @@ POHandleElimination:
         mov dword [byte esp+064h], 0A0h
         mov dword [byte esp+060h], 64h
         xor ecx, ecx
-        mov dword [dword_C6D26], ecx
+        mov dword [PoStandingsMode], ecx
         call DrawPlayoffTree
         mov ebx, str_Embpal
         cmp byte [fileoncd+08Eh], 1
@@ -2863,7 +2863,7 @@ POHandleElimination:
         mov dword [keydb_size], edi
         mov eax, ebp
         call SaveScheduleDB
-        mov dword [dword_C6D26], edi
+        mov dword [PoStandingsMode], edi
         call DrawPlayoffTree
         push byte 42h
         mov ecx, 41h

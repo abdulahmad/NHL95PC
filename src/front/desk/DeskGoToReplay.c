@@ -4,7 +4,7 @@
 
 /* DeskGoToReplay: sports desk instant replay: load the home team's rink (entry 12 for team 26 and up)
  and the player photos, save the palette and fade out, back to the 320x200 screen, InstantReplay(0), restore the
- s1 font, then flag a redraw (dword_C66D0 dword_C66D4). Returns 2. */
+ s1 font, then flag a redraw (DeskRedrawAll DeskRedrawFlag). Returns 2. */
 int DeskGoToReplay(void)
 {
     LoadRink(HomeTeam >= 26 ? 12 : HomeTeam);
@@ -14,7 +14,7 @@ int DeskGoToReplay(void)
     SetScreenSize(0x140, 0xC8);
     InstantReplay(0);
     TextSetFont(s1font);
-    dword_C66D0 = dword_C66D4 = 1;
+    DeskRedrawAll = DeskRedrawFlag = 1;
     return 2;
 }
 

@@ -5,7 +5,7 @@ section s_13867 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefaultLines
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
 extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
-extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, SpeechPatchNext
+extern DrawHudPanel, DeskRedrawAll, DeskRedrawFlag, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, SpeechPatchNext
 extern UnusedEventWord, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, gameover
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
@@ -372,8 +372,8 @@ LoadGameGfx_common:
         call AssetLoadNoOp
         mov word [fadeinpending], 1
         mov ecx, 1
-        mov dword [dword_C66D4], ecx
-        mov dword [dword_C66D0], ecx
+        mov dword [DeskRedrawFlag], ecx
+        mov dword [DeskRedrawAll], ecx
         add esp, byte 1Ch
         pop esi
         pop edx

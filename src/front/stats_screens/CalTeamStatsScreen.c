@@ -142,7 +142,7 @@ int CalGoalieStatsScreen(int cat)
    low, load the tstat3 / keys3 / pstat3 / gstat3 buffers, draw the standings (standingscb) with menu bar
    standingsmenubar, fade in embpal3's Pal8 and run the team pick menu. Then follow deskexit until 1 (back): 2 the
    standings again, 3 a team's roster (TeamRosterScreen, menu rostermenubar), 4 / 5 a goalie / skater card (menu
-   playercardmenubar; 5 sets dword_C6D26). On the way out free and clear the buffers, put playofftree back, fade and
+   playercardmenubar; 5 sets PoStandingsMode). On the way out free and clear the buffers, put playofftree back, fade and
    reload the calendar shapes. The exit is CalTeamStatsScreen's (CalTeamStatsScreen_x). Returns 0. */
 int CalStandingsMenu(void)
 {
@@ -164,7 +164,7 @@ int CalStandingsMenu(void)
     FadePalStep(1, s.pal, 0x10);
     FreeCalendarIfLowMem();
     z = 0;
-    dword_C6D26 = z;
+    PoStandingsMode = z;
     InitMenuRemap(1);
     statsteambuf = AllocMemBlock((char *)str_tstat3, 0x2A4, 0x20);
     statsplayerbuf = (unsigned char *)AllocMemBlock((char *)str_keys3, 0x5B0, 0x20);
@@ -193,7 +193,7 @@ int CalStandingsMenu(void)
                 FreeDeskBuffers();
                 SetScreenTarget();
             }
-            dword_C6D26 = 0;
+            PoStandingsMode = 0;
             break;
         case 3:
             RosterFromStandings = 0;
@@ -215,11 +215,11 @@ int CalStandingsMenu(void)
             ((void (*)(void *))SkaterStatsCard)(statsplayer);
             DrawMenuBar(playercardmenubar, 2, 0x40, 0x41, 0x42);
             RunMenu(playercardmenubar, 2, 0x40, 0x41, 0x42);
-            dword_C6D26 = 1;
+            PoStandingsMode = 1;
             break;
         }
     }
-    dword_C6D26 = 0;
+    PoStandingsMode = 0;
     FreeDeskBuffers();
     FreeMemBlock(statsteambuf);
     FreeMemBlock((int)statsgoaliebuf);

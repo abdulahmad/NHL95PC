@@ -12,7 +12,7 @@ global str_ANewFreeAgent, str_EnterNewPlayerName, str_EnterNewGoalieName, str_En
 global str_ForAllSelectedPlayers, str_TheNumberOfSelected, str_PlayersAndGoalies, str_Players, str_Goalies, str_MustBeTheSame, str_EnterNameOfPlayer, str_FreeAgentList
 global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, fp_1000, fp_84, fp_300
 global fp_390, fp_200, fp_100, fp_m50, fp_500, fp_90, fp_10, fp_70
-global fp_30, fp_58, fp_347, qword_C2CE0, qword_C2CE8, str_GP9, str_spG2, str_spA2
+global fp_30, fp_58, fp_347, F64_RatingNinety, F64_RatingTenth, str_GP9, str_spG2, str_spA2
 global str_Pt4, str_PIM7, str_PlusMinus6, str_PPG4, str_SHG4, str_Shots6, str_Pct8, str_Shoots3
 global str_Speed3, str_Agility3, str_Weight3, str_ShotPower2, str_Checking3, str_StickHandling2, str_Accuracy2, str_Passing3
 global str_OffensiveAwareness3, str_DefensiveAwareness3, str_Aggressiveness2, str_Endurance2, str_ShootPassBias2, str_Faceoffs2, str_Min6, str_GA6
@@ -219,9 +219,9 @@ fp_30:
         db 00h,00h,0F0h,041h
 fp_58:
         db 00h,00h,068h,042h
-qword_C2CE0:
+F64_RatingNinety:
         db 0CDh,0CCh,0CCh,0CCh,0CCh,0CCh,0ECh,03Fh
-qword_C2CE8:
+F64_RatingTenth:
         db 09Ah,099h,099h,099h,099h,099h,0B9h,03Fh
 fp_347:
         db 00h,080h,0ADh,043h

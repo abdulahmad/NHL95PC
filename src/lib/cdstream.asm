@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECCDSTREAM, str_IllegalChunkSizeD, bannertimer, CrowdNoiseOff
-extern cupseries, dword_C66B0, StreamHandle, CurStream, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
+extern cupseries, CdStreamRateFactor, StreamHandle, CurStream, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
 extern MemLargestFree, TextSetFont, FixedMulRound, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
@@ -42,7 +42,7 @@ CdStreamCreate:
         mov dword [CurStream], esi
         mov dword [StreamHandle], esi
         mov dword [byte esi+01Ch], 7
-        mov ebx, dword [dword_C66B0]
+        mov ebx, dword [CdStreamRateFactor]
         push ebx
         push eax
         call FixedMulRound
@@ -212,7 +212,7 @@ CdStreamService:
         add esp, byte 8
         mov eax, dword [StreamHandle]
         mov dword [byte eax+030h], 0
-        mov ebp, dword [dword_C66B0]
+        mov ebp, dword [CdStreamRateFactor]
         push ebp
         mov eax, dword [StreamHandle]
         mov edx, dword [byte eax+024h]
@@ -243,7 +243,7 @@ CdStreamService:
         add esp, byte 0Ch
         mov eax, dword [StreamHandle]
         mov dword [byte eax+04Ch], esi
-        mov ebx, dword [dword_C66B0]
+        mov ebx, dword [CdStreamRateFactor]
         push ebx
         mov eax, dword [StreamHandle]
         mov ecx, dword [byte eax+024h]
@@ -457,7 +457,7 @@ CdStreamService:
         mov eax, dword [StreamHandle]
         mov dword [byte eax+04Ch], esi
         mov esi, dword [StreamHandle]
-        mov ebx, dword [dword_C66B0]
+        mov ebx, dword [CdStreamRateFactor]
         push ebx
         mov ecx, dword [byte esi+024h]
         push ecx

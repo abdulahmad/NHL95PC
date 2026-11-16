@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awgoalieidx, awlinetab, awroster, awscratch, awshotcnt, awteamrec
-extern awtmap, awtmgoalie, gsumheader_b1, gsumheader_b2, gsumheader_b3, gsumheader_b4, byte_C66B4, hmrosterpos
+extern awtmap, awtmgoalie, gsumheader_b1, gsumheader_b2, gsumheader_b3, gsumheader_b4, RosterStatusByInjury, hmrosterpos
 extern GameRecordDay, UnusedStateByte, cont2team, curleague, curperiod, hmplstats, hmteamrec_skaters, hmteamrec_goalies
 extern plcareergoals, plcareerpts, plseasongoals, plseasonpts, hmtmpdst_gl_m2, FatalError, FileClose, FileCreate
 extern FileOpenRead, FileReadAt, FileWriteAt, fputchar, gameopts, gsummarypath, hmgoalcnt, hmgoalieidx
@@ -858,7 +858,7 @@ LoadTeamRoster:
         jmp short .9
 .8:
         neg eax
-        mov al, byte [nosplit eax*2+byte_C66B4]
+        mov al, byte [nosplit eax*2+RosterStatusByInjury]
         mov byte [dword esi+hmroster], al
 .9:
         mov edx, dword [dword esp+0118h]
@@ -1037,7 +1037,7 @@ LoadTeamRoster:
         jmp short .22
 .21:
         neg eax
-        mov al, byte [nosplit eax*2+byte_C66B4]
+        mov al, byte [nosplit eax*2+RosterStatusByInjury]
         mov byte [dword esi+hmroster], al
 .22:
         mov edx, dword [dword esp+0118h]

@@ -79,12 +79,12 @@ void OpenSpeechBank(char *path, int n)
             _dos_read(fh, &size, 2, &got);
             size = Swap16(size) - 5;
             SLOTD(off, 0x16) = size;
-            SLOTD(off, 0x1E) = (unsigned)((unsigned)size * DBL(qword_C37B0) / DBL(qword_C37C0));
+            SLOTD(off, 0x1E) = (unsigned)((unsigned)size * DBL(F64_BankPercent) / DBL(F64_BankRate11025));
             SLOTB(off, 0xD) = 'G';
         } else {
             size = SLOTD(off, 0x1A);
             SLOTD(off, 0x16) = size;
-            SLOTD(off, 0x1E) = (unsigned)((unsigned)size * DBL(qword_C37B0) / DBL(qword_C37B8)) - 0x1A;
+            SLOTD(off, 0x1E) = (unsigned)((unsigned)size * DBL(F64_BankPercent) / DBL(F64_BankRate5512)) - 0x1A;
             SLOTB(off, 0xD) = 0xFF;
         }
     }

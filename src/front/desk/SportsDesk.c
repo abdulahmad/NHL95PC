@@ -178,8 +178,8 @@ void SportsDesk(int mode)
             timeout -= TicksSinceLastCall();
             if (timeout < 0) {
                 if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 100);
-                dword_C66D4 = 1;
-                dword_C66D0 = 1;
+                DeskRedrawFlag = 1;
+                DeskRedrawAll = 1;
                 ClearInputQueue();
                 InputRemove();
                 TextRestoreState(txt);

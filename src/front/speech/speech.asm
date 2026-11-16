@@ -4,7 +4,7 @@ bits 32
 section s_832BC progbits alloc exec nowrite align=1
 extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
 extern addtimer, AllocMemBlock, SpeechInitMode, cursndbank, FreeClip_ret, FreeMemBlock, lseek_, musichandle
-extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RemoveTimerCallback, samplereq, SayNhlIntro
+extern F64_BankPercent, F64_BankRate5512, F64_BankRate11025, F64_SlotPercent, F64_SlotRate11025, RemoveTimerCallback, samplereq, SayNhlIntro
 extern speechbank, speechchannel, speechcopybuf, speechcopylen, speechinit, speechq, str_SampleMemMan, str_Sentence
 extern str_SpeechBank, str_Speechbuf, strncpy_, AllocMemHandleLocked, PushMemDescriptorLocked, MemDescPtr, PlayDigiPtr, PlayDigiPtrLoop
 extern StopDigiChannel, UnpackTo
@@ -793,8 +793,8 @@ OpenSpeechBank:
         xor ebp, ebp
         mov dword [byte esp+04h], ebp
         fild qword [esp]
-        fmul qword [qword_C37B0]
-        fdiv qword [qword_C37C0]
+        fmul qword [F64_BankPercent]
+        fdiv qword [F64_BankRate11025]
         call __CHP
         fistp qword [esp]
         mov edx, dword [speechbank]
@@ -812,8 +812,8 @@ OpenSpeechBank:
         xor ecx, ecx
         mov dword [byte esp+04h], ecx
         fild qword [esp]
-        fmul qword [qword_C37B0]
-        fdiv qword [qword_C37B8]
+        fmul qword [F64_BankPercent]
+        fdiv qword [F64_BankRate5512]
         call __CHP
         fistp qword [esp]
         mov edx, dword [speechbank]
@@ -1014,8 +1014,8 @@ LoadSpeechSlot:
         xor esi, esi
         mov dword [byte esp+04h], esi
         fild qword [esp]
-        fmul qword [qword_C37C8]
-        fdiv qword [qword_C37D0]
+        fmul qword [F64_SlotPercent]
+        fdiv qword [F64_SlotRate11025]
         call __CHP
         fistp qword [esp]
         mov esi, dword [esp]

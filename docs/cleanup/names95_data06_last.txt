@@ -1,0 +1,15 @@
+byte_F1D61 SeqTracks+0345h {no_record}
+byte_C66B4 RosterStatusByInjury {source_game=PC-new,confidence=low} Roster status code per injury value (word entries) used by LoadTeamRoster
+dword_C66B0 CdStreamRateFactor {source_game=PC-new,confidence=low} Rate factor (0Dh) the CD stream code scales its read sizes by
+dword_C66D0 DeskRedrawAll {source_game=PC-new,confidence=low} Flag set when the desk and replay screens must be redrawn in full
+dword_C66D4 DeskRedrawFlag {source_game=PC-new,confidence=low} Flag set after the desk photos load and fade in so the desk redraws
+dword_C6D26 PoStandingsMode {source_game=PC-new,confidence=low} Set while the standings and tree screens show playoff mode data
+dword_C71E0 EditRostersState {source_game=PC-new,confidence=low} Cleared before the roster editor runs from the central registry
+dword_D4D00 SpawnActive {source_game=PC-new,confidence=low} Set while a DOS child program runs from __dospawn
+qword_C2CE0 F64_RatingNinety {source_game=PC-new,confidence=medium} Double 0.9 used by RandomizeNewRatings
+qword_C2CE8 F64_RatingTenth {source_game=PC-new,confidence=medium} Double 0.1 used by RandomizeNewRatings
+qword_C37B0 F64_BankPercent {source_game=PC-new,confidence=medium} Double 100.0 used by OpenSpeechBank
+qword_C37B8 F64_BankRate5512 {source_game=PC-new,confidence=medium} Double 5512.0 used by OpenSpeechBank
+qword_C37C0 F64_BankRate11025 {source_game=PC-new,confidence=medium} Double 11025.0 used by OpenSpeechBank
+qword_C37C8 F64_SlotPercent {source_game=PC-new,confidence=medium} Double 100.0 used by LoadSpeechSlot
+qword_C37D0 F64_SlotRate11025 {source_game=PC-new,confidence=medium} Double 11025.0 used by LoadSpeechSlot

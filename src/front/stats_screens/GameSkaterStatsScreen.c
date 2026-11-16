@@ -60,7 +60,7 @@ int GameSkaterStatsScreen(int cat)
    files (tstat, keys, pstat, gstat) into their buffers, draw the standings (standingscb) with menu bar standingsmenubar,
    set the embpal palette and run the team pick menu. Then follow deskexit until 1 (back): 2 the standings again
    (freeing the desk buffers in the playoffs), 3 a team's roster (TeamRosterScreen, player pick menu rostermenubar),
-   4 / 5 a player's goalie / skater card (menu playercardmenubar; 5 sets dword_C6D26). On the way out fade, free the
+   4 / 5 a player's goalie / skater card (menu playercardmenubar; 5 sets PoStandingsMode). On the way out fade, free the
    buffers and clear them. No arguments. Result: 2. */
 int GameStandingsMenu(void)
 {
@@ -78,7 +78,7 @@ int GameStandingsMenu(void)
     FadePalStep(1, buf, 0x10);
     SetScreenTarget();
     ClearScreen(0);
-    dword_C6D26 = 0;
+    PoStandingsMode = 0;
     InitMenuRemap(1);
     statsteambuf = AllocMemBlock((char *)str_tstat, 0x2A4, 0x20);
     statsplayerbuf = (unsigned char *)AllocMemBlock((char *)str_keys, 0x5B0, 0x20);
@@ -105,7 +105,7 @@ int GameStandingsMenu(void)
             DrawMenuBar(standingsmenubar, 4, 0x40, 0x41, 0x42);
             ((void (*)(void *, int, int, int, int))RunTeamPickMenu)(standingsmenubar, 4, 0x40, 0x41, 0x42);
             if (statsplayoffs) FreeDeskBuffers();
-            dword_C6D26 = 0;
+            PoStandingsMode = 0;
             break;
         case 3:
             RosterFromStandings = 0;
@@ -127,12 +127,12 @@ int GameStandingsMenu(void)
             ((void (*)(void *))SkaterStatsCard)(statsplayer);
             DrawMenuBar(playercardmenubar, 2, 0x40, 0x41, 0x42);
             RunMenu(playercardmenubar, 2, 0x40, 0x41, 0x42);
-            dword_C6D26 = one;
+            PoStandingsMode = one;
             break;
         }
     }
     z = 0;
-    dword_C6D26 = z;
+    PoStandingsMode = z;
     SetPalette(z, 0x100, buf);
     FadePalStep(1, buf, 0x10);
     FreeDeskBuffers();

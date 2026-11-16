@@ -5,7 +5,7 @@
  NUMSHP.PPV number shapes (numshpbank; both from the CD when fileoncd says so), the ten digit shapes "0000".."0009"
  (numshapes), the graphics id list (ProjectPointList into gfxidlist), clear the panel penalties, load the transparent
  rink end overlay, colour 4 on FFh, the player photos; then a fade-in is pending (fadeinpending,
- dword_C66D4 dword_C66D0 = 1). */
+ DeskRedrawFlag DeskRedrawAll = 1). */
 void LoadGameGfx(void)
 {
     char path[16];
@@ -29,7 +29,7 @@ void LoadGameGfx(void)
     LoadPlayerPhotos();
     AssetLoadNoOp();
     fadeinpending = 1;
-    dword_C66D0 = dword_C66D4 = 1;
+    DeskRedrawAll = DeskRedrawFlag = 1;
 }
 
 /* ReloadGameGfx: LoadGameGfx without the SetScreenTarget call first (reload after the graphics were freed). */
@@ -55,5 +55,5 @@ void ReloadGameGfx(void)
     LoadPlayerPhotos();
     AssetLoadNoOp();
     fadeinpending = 1;
-    dword_C66D0 = dword_C66D4 = 1;
+    DeskRedrawAll = DeskRedrawFlag = 1;
 }

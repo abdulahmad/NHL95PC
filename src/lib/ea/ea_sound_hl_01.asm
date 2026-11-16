@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8EB5B progbits alloc exec nowrite align=1
 extern __GETDS, _makepath_, _splitpath_, addtimer, str_SCN, str_03sFF03dPAT, str_03sFF03dTIM, str_KMS2
-extern str_CFG2, str_VHDR, SndInitDone, SndBigEndian, SeqTracks, SeqTrackFlags, byte_F1D61, MidiChanVolume
+extern str_CFG2, str_VHDR, SndInitDone, SndBigEndian, SeqTracks, SeqTrackFlags, MidiChanVolume
 extern MidiChannelUsed, MusicBankHeader, MusicBankPatchNum, MusicBankTimbreCount, MusicBankTimbreNums, SndHandleType, SampleChunkSize, PlayPatchHandle
 extern sndhandlecount, SongReleasedFlag, MidiSfxEnabled, MidiMusicEnabled, SndTimerHandle, MidiTickCount, SampleTable, SampleTableSize
 extern SongTable, TimbreBanks, PatchFile, SongRecords, SongRelease, SeqTrackPos, DigiFadeLevel, DigiFadeAccum
@@ -1176,7 +1176,7 @@ StopSongId:
         mov byte [ecx], 0B9h
         mov byte [byte ecx+01h], 7
         mov byte [byte ecx+02h], 7Fh
-        mov al, byte [byte_F1D61]
+        mov al, byte [SeqTracks+0345h]
         and al, 7Fh
         and eax, 0FFh
         mov ebx, ecx

@@ -8,7 +8,7 @@ extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, Build
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
-extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, dword_C66D0, dword_C66D4, ovlartfiles
+extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, DeskRedrawAll, DeskRedrawFlag, ovlartfiles
 extern goalienotebits, demoflag, gfxidlist, ovlstepart, SumCwdExciteLvl, ovlartbank
 extern SpeechPatchNext, UnusedEventWord, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox

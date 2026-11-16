@@ -12,7 +12,7 @@ extern fullscrbmp, GetInputEvent, goalieratingmax, goalieratingmin, GrabBlock, I
 extern KeyDbPtr, leaguedbnames, LoadBank, LoadRosterList, LoadTempDatabases, mainfont, MakePath, memcpy_
 extern memset_, MessageBox, mousepollfn, MouseSetPos, msg_FreeAgentDiskSpace, msglines, newgoalieattrs_m3, newgoaliedefaults
 extern newgoalieglove, newgoalieratingnames, newskaterattrs_m3, newskaterdefaults, newskaterratingnames, newskatershoots, pointerspr, PrintCenteredText
-extern PrintFmt1, PrintOutlinedText, PrintShadowText, ptrupdatefn, PutBlock, qword_C2CE0, qword_C2CE8, randomd0
+extern PrintFmt1, PrintOutlinedText, PrintShadowText, ptrupdatefn, PutBlock, F64_RatingNinety, F64_RatingTenth, randomd0
 extern RemovePlayerFromTeam, rosterisfa, rosterjersey, rosterlist, rostersel, rosterslot, rosterstat, rosterteam
 extern rosterteamrec, savepal, seasondb_size, SetDrawBitmap, SetPalette, SetTextColors, skaterratingmax, skaterratingmin
 extern sprintf_, str_3dKbytesOfFree, str_AddAllSelectedPlayers, str_ANewFreeAgent, str_Center, str_CreateAPlayerOr, str_Defence, str_ea2
@@ -787,10 +787,10 @@ RandomizeNewRatings:
         call randomd0
         mov word [byte ebx+0Ah], ax
         fld dword [byte esp+03Ch]
-        fmul qword [qword_C2CE0]
+        fmul qword [F64_RatingNinety]
         fstp dword [byte esp+03Ch]
         fld dword [byte esp+02Ch]
-        fmul qword [qword_C2CE8]
+        fmul qword [F64_RatingTenth]
         fstp dword [byte esp+02Ch]
         fld dword [byte esp+03Ch]
         fadd dword [byte esp+02Ch]

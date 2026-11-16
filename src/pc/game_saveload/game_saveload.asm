@@ -8,7 +8,7 @@ extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bann
 extern rinkobjanim, UnusedStateFlag, UnusedStateMode, UnusedStateSpare, GameRecordDay, UnusedStateByte, milestonesaid, curevent
 extern goalevent, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
 extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
-extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, goalienotebits, hmplstats, hmtmplattr
+extern curperiod, CwdExciteLvl, deferpending, DeskRedrawAll, DeskRedrawFlag, goalienotebits, hmplstats, hmtmplattr
 extern hmtmglattr, awtmplattr, awtmglattr, SumCwdExciteLvl, SpeechPatchNext, UnusedEventWord, rinkobjused_m2, energywarn
 extern exhstate, exitgame, fadeinpending, FatalError, FileReadAt, FileWriteAt, fodir1, fodir2
 extern fofdata2, fox, foy, frameaccum, gameclock, gamemode, gameover, gamepal
@@ -1655,8 +1655,8 @@ LoadGameState:
         mov ebx, gamepal
         call LoadTeamPalette
         mov ebp, 1
-        mov dword [dword_C66D4], ebp
-        mov dword [dword_C66D0], ebp
+        mov dword [DeskRedrawFlag], ebp
+        mov dword [DeskRedrawAll], ebp
         xor edx, edx
         mov dword [hudhundstep], edx
         call LoadRockMusic

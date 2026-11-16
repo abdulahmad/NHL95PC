@@ -4,7 +4,7 @@ bits 32
 section s_89268 progbits alloc exec nowrite align=1
 extern __CHK, AllocMemBlock, awgoaliemenu, cddriveptr, CheckGameDiskSpace, ClearInputQueue, CountSeriesWins, ctl1side
 extern ctl1team, ctl2side, ctl2team, curleague, DeskHomeLines, DeskVisitorLines, DrawArt, DrawMenuBar
-extern DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, DrawShape, dword_C6D26, EasnGoalieStatsScreen, EasnSkaterStatsScreen, EasnStandingsMenu
+extern DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, DrawShape, PoStandingsMode, EasnGoalieStatsScreen, EasnSkaterStatsScreen, EasnStandingsMenu
 extern EasnStandingsScreen, EasnTeamStatsScreen, embscupbank, exhstate, FadePalStep, FileClose, fileoncd, FileOpenRead
 extern FindShape, fputchar, FreeMemBlock, GameGoalieStatsScreen, gamemode, gameopts, gameresult, GameSkaterStatsScreen
 extern GameStandingsMenu, GameStandingsScreen, GameTeamStatsScreen, GetInputEvent, goaliestatscb, GrabBlock, hmgoaliemenu, HomeTeam
@@ -376,7 +376,7 @@ PlayoffModeLoop:
         mov dword [menuact_playnextgame], ecx
 .24:
         xor eax, eax
-        mov dword [dword_C6D26], eax
+        mov dword [PoStandingsMode], eax
         push byte 42h
         mov ecx, 41h
         mov ebx, 40h
@@ -583,7 +583,7 @@ PlayoffModeLoop:
         call FreeMemBlock
         add esp, byte 4
         xor ecx, ecx
-        mov dword [dword_C6D26], ecx
+        mov dword [PoStandingsMode], ecx
         push byte 42h
         mov ecx, 41h
         mov ebx, 40h
@@ -1102,7 +1102,7 @@ PlayoffTreeMenu:
         lea edi, [byte eax+010h]
         call SetScreenTarget
         xor ebp, ebp
-        mov dword [dword_C6D26], ebp
+        mov dword [PoStandingsMode], ebp
         call DrawPlayoffTree
         mov eax, dword [dword esp+0E4h]
         push eax
@@ -1510,7 +1510,7 @@ DrawPlayoffTree:
         push byte 0
         call SetClipWindow
         add esp, byte 10h
-        cmp dword [dword_C6D26], byte 1
+        cmp dword [PoStandingsMode], byte 1
         jne short .3
         xor ecx, ecx
         mov ebx, str_Embpal
@@ -1543,7 +1543,7 @@ DrawPlayoffTree:
         call FreeMemBlock
         add esp, byte 4
         xor edi, edi
-        mov dword [dword_C6D26], edi
+        mov dword [PoStandingsMode], edi
 .3:
         mov ebx, 1
         mov edx, esp

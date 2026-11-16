@@ -169,7 +169,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                         bank = LoadBank(path, 0);
                         fade = (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10;
                         SetScreenTarget();
-                        dword_C6D26 = 0;
+                        PoStandingsMode = 0;
                         DrawPlayoffTree();
                         DrawMenuBar(bar, n, col1, col2, col3);
                         FadePalStep(0, fade, 0x10);

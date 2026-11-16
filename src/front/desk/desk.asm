@@ -5,7 +5,7 @@ section s_18D7F progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awlinetab, awscore, awshotcnt, bailout_vec, boxfillcolor, boxlitecolor
 extern boxshadecolor, btn_POHumanOut, cupceremony, cddriveptr, ClearInputQueue, CoachCutScene, cont2team, ctl1team
 extern ctl2team, curperiod, deferpending, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
-extern DrawMenuItemSel, msg_DeskExit, msg_DeskExit_e02, dword_C66D0, dword_C66D4, otherperiodprev, deskptry, playsuspended
+extern DrawMenuItemSel, msg_DeskExit, msg_DeskExit_e02, DeskRedrawAll, DeskRedrawFlag, otherperiodprev, deskptry, playsuspended
 extern deskptrx, escrequest, exitgame, FadeOutPalCycle, FadePalette, FadePalStep, fileoncd, FlushGSumQueue
 extern FreeBackMoment, FreeMemBlock, FreeNowBack, GameLineEditor, gamemode, gameopts, gameresult, GameStatsScreen
 extern GameSummaryScreen, GetInputEvent, hlplayedmask, hmgoalcnt, hmlinetab, hmscore, hmshotcnt, HomeTeam
@@ -899,8 +899,8 @@ SportsDesk:
         call SetDigiChannelVolume
 .25:
         mov edx, 1
-        mov dword [dword_C66D4], edx
-        mov dword [dword_C66D0], edx
+        mov dword [DeskRedrawFlag], edx
+        mov dword [DeskRedrawAll], edx
         call ClearInputQueue
         call InputRemove
         lea eax, [dword esp+0304h]
@@ -1651,8 +1651,8 @@ SportsDesk:
 ;-----------------------------------------------------------------------------
 ; DeskReloadGame                                  1A534  95 PC, low confidence
 ; Reloads the home team art (LoadRink, team 0Ch for the all-star teams) and
-; LoadPlayerPhotos, fades in and flags a desk redraw (dword_C66D4 /
-; dword_C66D0); SportsDesk
+; LoadPlayerPhotos, fades in and flags a desk redraw (DeskRedrawFlag /
+; DeskRedrawAll); SportsDesk
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskReloadGame.c
 %ifdef CBUILD
@@ -1684,8 +1684,8 @@ DeskReloadGame:
         mov eax, 1
         call FadePalStep
         mov edx, 1
-        mov dword [dword_C66D4], edx
-        mov dword [dword_C66D0], edx
+        mov dword [DeskRedrawFlag], edx
+        mov dword [DeskRedrawAll], edx
         pop edx
         pop ecx
         pop ebx
@@ -1718,8 +1718,8 @@ DeskToSportsDesk:
         call __CHK
         push edx
         mov edx, 1
-        mov dword [dword_C66D4], edx
-        mov dword [dword_C66D0], edx
+        mov dword [DeskRedrawFlag], edx
+        mov dword [DeskRedrawAll], edx
         mov eax, 5
         pop edx
         ret
@@ -1794,8 +1794,8 @@ DeskReturnConfirm:
         jmp short .x
 .5:
         mov edi, 1
-        mov dword [dword_C66D4], edi
-        mov dword [dword_C66D0], edi
+        mov dword [DeskRedrawFlag], edi
+        mov dword [DeskRedrawAll], edi
         mov eax, 5
 .x:
         add esp, byte 0Ch
@@ -1962,8 +1962,8 @@ DeskGoToReplay:
         call TextSetFont
         add esp, byte 4
         mov ebx, 1
-        mov dword [dword_C66D4], ebx
-        mov dword [dword_C66D0], ebx
+        mov dword [DeskRedrawFlag], ebx
+        mov dword [DeskRedrawAll], ebx
         jmp near DeskItem_ret2
 ;-----------------------------------------------------------------------------
 ; DeskHomeLines                                1A8AA  95 PC, medium confidence

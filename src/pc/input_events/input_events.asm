@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_6B093 progbits alloc exec nowrite align=1
 extern __CHK, addtimer, attdb, attdb_size, JoyPortMask, careerdb, careerdb_size, carteamsdb
-extern carteamsdb_size, ctlavailmask, SpeechSlotMemSize, dword_C71E0, cursndbank, InputResetWord, InputQueueSpare, enterheld
+extern carteamsdb_size, ctlavailmask, SpeechSlotMemSize, EditRostersState, cursndbank, InputResetWord, InputQueueSpare, enterheld
 extern facount, FadePalStep, falist, falistsel, FreeLeagueDbsMem, FreeMemBlock, InitSpeechSlots, inputev
 extern inputinstalled, inputpolldiv, inputqcount, inputqhead, inputqtail, inputqueue, inputrepeat, joybtnheld
 extern joycalactive, joycalposthook, joycalprehook, joycalx, joycaly, joyenablemask, keydb, keydb_size

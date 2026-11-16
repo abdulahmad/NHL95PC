@@ -86,7 +86,7 @@ void RandomizeNewRatings(unsigned char *rec, unsigned char *r, unsigned short *o
     out[3] = out[1] + b;
     out[4] = out[1] / 10;
     out[5] = randomd0(out[4]);
-    s.fc = s.fc * D(qword_C2CE0);
-    s.f5 = s.f5 * D(qword_C2CE8);
+    s.fc = s.fc * D(F64_RatingNinety);
+    s.f5 = s.f5 * D(F64_RatingTenth);
     out[6] = (s.fc + s.f5) / F(fp_100) * F(fp_347) * s.scale * s.luck;
 }

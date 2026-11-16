@@ -2,12 +2,12 @@
 #include "nhl95.h"
 
 /* DeskReloadGame: reload the game graphics after the desk: rink for the home team (team 26+ use rink 12),
- player photos, the saved palette (fade in over 16 steps); sets the reload flags dword_C66D0 dword_C66D4. */
+ player photos, the saved palette (fade in over 16 steps); sets the reload flags DeskRedrawAll DeskRedrawFlag. */
 void DeskReloadGame(void)
 {
     LoadRink(HomeTeam >= 0x1A ? 0xC : HomeTeam);
     LoadPlayerPhotos();
     SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
-    dword_C66D0 = dword_C66D4 = 1;
+    DeskRedrawAll = DeskRedrawFlag = 1;
 }

@@ -47,7 +47,7 @@ void POHandleElimination(int mode, unsigned char *po)
 
     s.x = 0xA0;
     s.y = 0x64;
-    dword_C6D26 = 0;
+    PoStandingsMode = 0;
     DrawPlayoffTree();
     MakePath(s.ppath, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
     s.bank = bank = LoadBank(s.ppath, 0);
@@ -149,7 +149,7 @@ void POHandleElimination(int mode, unsigned char *po)
     careerdb_size = z;
     keydb_size = z;
     SaveScheduleDB((char *)po);
-    dword_C6D26 = z;
+    PoStandingsMode = z;
     DrawPlayoffTree();
     DrawMenuBar(playoffmenubar, 3, 0x40, 0x41, 0x42);
     FadePalStep(0, s.pal, 0x10);

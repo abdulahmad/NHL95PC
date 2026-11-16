@@ -32,7 +32,7 @@ global str_EastsemuBar, str_EastfinuBar, str_WestquauBar, str_WestsemuBar, str_W
 global str_Rnk, str_Awa, str_Hom, str_Bar, str_Gamenum, str_SSS, str_Num, str_DS
 global str_02dS, str_Tea, str_Pen, str_Frm, str_XBRUCE2, str_GsummaryDb4, str_AGameYouRequire, str_DemoNhl
 global str_Gsummary3, str_AGameYouRequire2, str_GameSav5, str_Db4, str_Sav3, str_Pointer22, str_Savegame, str_Prmt
-global str_Dialog, str_Nhl3, str_Err1, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
+global str_Dialog, str_Nhl3, str_Err1, F64_BankPercent, F64_BankRate5512, F64_BankRate11025, F64_SlotPercent, F64_SlotRate11025
 global str_dot2, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
 global str_dot3, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
@@ -608,15 +608,15 @@ str_SampleMemMan:
         db 073h,061h,06Dh,070h,06Ch,065h,020h,06Dh,065h,06Dh,020h,06Dh,061h,06Eh,00h
 str_SpeechBank:
         db 073h,070h,065h,065h,063h,068h,020h,062h,061h,06Eh,06Bh,00h
-qword_C37B0:
+F64_BankPercent:
         db 00h,00h,00h,00h,00h,00h,059h,040h
-qword_C37B8:
+F64_BankRate5512:
         db 00h,00h,00h,00h,00h,088h,0B5h,040h
-qword_C37C0:
+F64_BankRate11025:
         db 00h,00h,00h,00h,080h,088h,0C5h,040h
-qword_C37C8:
+F64_SlotPercent:
         db 00h,00h,00h,00h,00h,00h,059h,040h
-qword_C37D0:
+F64_SlotRate11025:
         db 00h,00h,00h,00h,080h,088h,0C5h,040h
 str_Cor:
         db 063h,06Fh,072h,00h

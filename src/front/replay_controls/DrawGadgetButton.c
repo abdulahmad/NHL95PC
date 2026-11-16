@@ -107,7 +107,7 @@ void InstantReplay(int mode)
     DrawGadgetButton(6);
     DrawGadgetButton(2);
     DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
-    dword_C66D0 = dword_C66D4 = 1;
+    DeskRedrawAll = DeskRedrawFlag = 1;
     ocx = camx;
     ocy = camy;
     ox = viewscrollx;
@@ -211,7 +211,7 @@ void InstantReplay(int mode)
     viewscrolly = oy;
     crowdlevel = ocl;
     crowdsmooth = ocl;
-    dword_C66D0 = dword_C66D4 = 1;
+    DeskRedrawAll = DeskRedrawFlag = 1;
     SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     FreeMemBlock(gadgetfile);

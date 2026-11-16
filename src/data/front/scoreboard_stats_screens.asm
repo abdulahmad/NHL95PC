@@ -30,7 +30,7 @@ global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentra
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
 global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmtEmb, str_Bkgd2, str_EASNvfn
-global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, rinkarenas, byte_C66B4, mi_9394Season
+global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, rinkarenas, RosterStatusByInjury, mi_9394Season
 global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, str_Dashes, treecolslots, treecol_Wr2, treecol_Wr3, treecol_Er3
 global treecol_Er2, treecol_Er1
 global scoutcatidx, desksongalt, awlineenergies, hmlineenergies, hudclockmin, hudclocksec, hudclockhund, panelprevmin
@@ -38,12 +38,12 @@ global panelprevsec, panelprevhund, panelhund, deferpending, hmpanellines, awpan
 global hmpanelpens, awpanelpens, hmlinetimer, awlinetimer, demomatchups_m1, demomatchups, demoteammode, nhlintrosaid
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, easnfontbuf, embscupbank
 global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
-global standingsmenucb, hlplayedmask, msg_DeskExit, msg_DeskExit_e02, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
-global dword_C66D4, lastsprremap, StatsSourceLastBottom, StatsSourceMenuRight, StatsSourceMenuBottom, statsplayoffs, statsfromleague, statspalvalid
-global westconfteams, eastconfteams, dword_C6D26, potreeseeds, treerowy, divx, divy
+global standingsmenucb, hlplayedmask, msg_DeskExit, msg_DeskExit_e02, CdStreamRateFactor, screenbm, dirtyrectcount, DeskRedrawAll
+global DeskRedrawFlag, lastsprremap, StatsSourceLastBottom, StatsSourceMenuRight, StatsSourceMenuBottom, statsplayoffs, statsfromleague, statspalvalid
+global westconfteams, eastconfteams, PoStandingsMode, potreeseeds, treerowy, divx, divy
 global fdlgshapes, fdlgrects
 global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
-global dword_C71E0, dlgsavebuf, listscroll
+global EditRostersState, dlgsavebuf, listscroll
 global keepdesksong, songdata, rinktilebm
 global rinkbm, rinkfileidx, currink, rinkscrollx, rinkscrolly, msg_GameDiskSpace, perioddigits, hudotname
 global crestnames, creditpages, msg_FileExists, msg_StatsDiskSpace, menutext_statsleague, menuact_statsleague, menutext_statslgplayoffs, menuact_statslgplayoffs
@@ -850,17 +850,17 @@ msg_DeskExit:
         dd str_MayLoseThisGame
 msg_DeskExit_e02:
         db 00h,00h,00h,00h
-dword_C66B0:
+CdStreamRateFactor:
         db 0Dh,00h,00h,00h
-byte_C66B4:
+RosterStatusByInjury:
         db 07h,00h,04h,00h,03h,00h,06h,00h,01h,00h,08h,00h,02h,00h,00h,00h
 screenbm:
         db 00h,00h,00h,00h
 dirtyrectcount:
         db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_C66D0:
+DeskRedrawAll:
         db 00h,00h,00h,00h
-dword_C66D4:
+DeskRedrawFlag:
         db 00h,00h,00h,00h
         dd NullBlit
         dd NullBlit
@@ -1199,7 +1199,7 @@ off_C6D22 equ $+2
         dd str_SCHEDULEDB3
 potreeround:
         db 070h,0FFh
-dword_C6D26:
+PoStandingsMode:
         db 00h,00h,00h,00h,00h,02h,04h,06h,08h,0Ah,0Ch,0Eh,01h,05h,09h,0Dh
         db 0FFh,0FFh,0FFh,0FFh,03h,0Bh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh
         db 0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,07h,0FFh,0FFh,0FFh
@@ -1405,7 +1405,7 @@ dlgtextfg:
         db 03Fh,00h,00h,00h
 dlgtextbg:
         db 00h,00h,00h,00h
-dword_C71E0:
+EditRostersState:
         db 00h,00h,00h,00h
 dlgsavebuf:
         db 00h,00h,00h,00h

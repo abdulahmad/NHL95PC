@@ -17,7 +17,7 @@ void CountSeriesWins(int *teams, int *out, int mode);  /* 27C34 */
 
 /* PlayoffTreeScreen (27F9C, PC only): the stats desk's playoff tree, the -od twin of DrawPlayoffTree. Set the
    desk's exit action (none before the playoffs start), draw the stats background (BKGD2 from the stats bank or the
-   loaded EMBSCUP bank) and, when dword_C6D26 asks, set the PAL palette (or keep it in statspal); count the series
+   loaded EMBSCUP bank) and, when PoStandingsMode asks, set the PAL palette (or keep it in statspal); count the series
    wins (CountSeriesWins, schedule mode 0). Before the playoffs say so; otherwise draw the PSTATBAR8 bars, the title
    and conference captions and the tree from the top as DrawPlayoffTree does (seed letter, city, wins; winners lit
    44h / C4h; the SCUPARRW2 arrows between rounds). No arguments, no result. */
@@ -64,14 +64,14 @@ void PlayoffTreeScreen(void)
         DrawShape(statspalshape);
         SetClipWindow(0, 0x280, 0, 0x1E0);
     }
-    if (dword_C6D26 == 1) {
+    if (PoStandingsMode == 1) {
         MakePath(path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal2, 0);
         statsbgshapes = LoadBank(path, 0);
         statspalshape = FindShape(statsbgshapes, (char *)str_Pal9);
         if (statspalvalid == 1) memcpy((void *)statspal, (void *)(statspalshape + 0x10), 0x300);
         else VgaSetPalette(0, 0x100, (unsigned char *)statspalshape + 0x10);
         FreeMemBlock(statsbgshapes);
-        dword_C6D26 = 0;
+        PoStandingsMode = 0;
     }
     CountSeriesWins(playofftree, wins, 0);
     SetTextColors(0x40, 0x43);

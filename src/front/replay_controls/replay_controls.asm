@@ -5,7 +5,7 @@ bits 32
 section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, AllocMemBlock, bgscrollx, bgscrolly, camx, camy, cddriveptr, ClearInputQueue
 extern crowdlevel, CrowdNoiseOff, crowdsmooth, ctl1team, ctl2team, cursndbank, DrawArt, DrawFrameSprite
-extern DrawRinkSideObjects, DrawShape, dressedskaters, dword_C66D0, dword_C66D4, GadgetMovie, ReplaySpeedAccum, ReplayHoverPrev
+extern DrawRinkSideObjects, DrawShape, dressedskaters, DeskRedrawAll, DeskRedrawFlag, GadgetMovie, ReplaySpeedAccum, ReplayHoverPrev
 extern ReplayCamFree, ReplayHoverPlayer, ReplayStartRate, ReplayCtlFlags, FadePalette, fileoncd, FindShape, FreeMemBlock
 extern FreeSample, gadgetfile, gadgetptrx, gadgetptry, gadgetrect_x1, gadgetrect_y0, gadgetrect_y1, gadgetrects
 extern gadgetshape, gamemode, gamepal, GetInputEvent, GrabBlock, HilightSaveToDlg, hilightslot, HomeTeam
@@ -607,8 +607,8 @@ InstantReplay:
         call DrawArt
         add esp, byte 0Ch
         mov edx, 1
-        mov dword [dword_C66D4], edx
-        mov dword [dword_C66D0], edx
+        mov dword [DeskRedrawFlag], edx
+        mov dword [DeskRedrawAll], edx
         mov ax, word [camx]
         mov dword [byte esp+01Ch], eax
         mov ax, word [camy]
@@ -984,8 +984,8 @@ InstantReplay:
         movsx eax, si
         mov dword [crowdsmooth], eax
         mov eax, 1
-        mov dword [dword_C66D4], eax
-        mov dword [dword_C66D0], eax
+        mov dword [DeskRedrawFlag], eax
+        mov dword [DeskRedrawAll], eax
         push savepal
         push dword 100h
         push byte 0

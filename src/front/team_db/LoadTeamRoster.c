@@ -51,7 +51,7 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 if (line > 0)
                     hmroster[team * 1092 + i * 39] = 5;
                 else
-                    hmroster[team * 1092 + i * 39] = byte_C66B4[(-line) * 2];
+                    hmroster[team * 1092 + i * 39] = RosterStatusByInjury[(-line) * 2];
             }
             *(struct { unsigned char b[20]; } *)(hmplattr + team * 500 + i * 20) =
                 *(struct { unsigned char b[20]; } *)(buf + 0xC4);
@@ -95,7 +95,7 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 if (gline > 0)
                     hmroster[team * 1092 + (i + 25) * 39] = 5;
                 else
-                    hmroster[team * 1092 + (i + 25) * 39] = byte_C66B4[(-gline) * 2];
+                    hmroster[team * 1092 + (i + 25) * 39] = RosterStatusByInjury[(-gline) * 2];
             }
             *(struct { unsigned char b[16]; } *)(hmglattr + team * 48 + i * 16) =
                 *(struct { unsigned char b[16]; } *)(buf + 0xD8);

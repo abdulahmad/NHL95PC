@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_AF6D3 progbits alloc exec nowrite align=1
-extern __set_doserrno_, __set_errno_, _dosretax_, _nfree_, _nmalloc_, dword_D4D00, _Envptr, _environ
+extern __set_doserrno_, __set_errno_, _dosretax_, _nfree_, _nmalloc_, SpawnActive, _Envptr, _environ
 extern ___env_mask, __amblksiz, ExecParamBlock
 extern SpawnSavedEsp, memset_, strcpy_, strlen_, _Envptr_w4
 extern SpawnSavedSs, SpawnSavedDs
@@ -326,7 +326,7 @@ __dospawn:
         mov ah, 0Bh
         int 21h
         pop eax
-        mov dword [dword_D4D00], 1
+        mov dword [SpawnActive], 1
         mov edx, dword [byte ebp+0Ch]
         mov ah, 4Bh
         int 21h
@@ -334,7 +334,7 @@ __dospawn:
         mov esp, dword [SpawnSavedEsp]
         o16 mov ds, word [SpawnSavedDs]
         pop ds
-        mov dword [dword_D4D00], 0
+        mov dword [SpawnActive], 0
         pop es
         pop ebp
         jb short .3

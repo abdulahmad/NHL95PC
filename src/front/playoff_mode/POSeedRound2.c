@@ -912,7 +912,7 @@ int PlayoffModeLoop(int *fh)
     seriesgameno = k % 7;
     if (k / 7 < 0xF) menuact_playnextgame = (int)MenuPlayNextGame;
     else menuact_playnextgame = 0;
-    dword_C6D26 = 0;
+    PoStandingsMode = 0;
     DrawMenuBar(playoffmenubar, 3, 0x40, 0x41, 0x42);
     r = PlayoffTreeMenu(playoffmenubar, 3, 0x40, 0x41, 0x42, *(int *)(f.sched + 0x44));
     while (!r) {
@@ -984,7 +984,7 @@ int PlayoffModeLoop(int *fh)
         SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
-        dword_C6D26 = 0;
+        PoStandingsMode = 0;
         DrawMenuBar(playoffmenubar, 3, 0x40, 0x41, 0x42);
         InputInstall();
         POHandleElimination(f.r, (unsigned char *)f.sched);
@@ -1010,7 +1010,7 @@ int PlayoffModeLoop(int *fh)
 #define TX(i) (((int *)treecolx)[i])
 
 /* DrawPlayoffTree (8A652, PC only; ends in POSeedRound2_x): draw the playoff tree. The BKGD2 background (rows 13h
-   down), the BangPal palette when dword_C6D26 asks for it, the series wins (CountSeriesWins). Before the first
+   down), the BangPal palette when PoStandingsMode asks for it, the series wins (CountSeriesWins). Before the first
    round is seeded say so ("Playoffs have not been...", Kaufman font, centred). Otherwise the PSTATBAR2 bars, the
    SCUPARRW arrows bank, the title and the two conference captions; then number the first-round teams (seeds in
    potreeseeds) and draw each round from the top: the West first round (8 lines in two columns), the West second
@@ -1044,12 +1044,12 @@ void DrawPlayoffTree(void)
     SetClipWindow(0, 0x280, 0x13, 0x1E0);
     DrawShape(FindShape(embscupbank, (char *)str_Bkgd2));
     SetClipWindow(0, 0x280, 0, 0x1E0);
-    if (dword_C6D26 == 1) {
+    if (PoStandingsMode == 1) {
         MakePath(f.path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
         bank = LoadBank(f.path, 0);
         VgaSetPalette(0, 0x100, (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10);
         FreeMemBlock(bank);
-        dword_C6D26 = 0;
+        PoStandingsMode = 0;
     }
     CountSeriesWins(playofftree, f.wins, 1);
     SetTextColors(0x40, 0x43);

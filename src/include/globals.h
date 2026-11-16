@@ -1284,8 +1284,8 @@ extern int fp_10; /* C2CD0 */
 extern int fp_70; /* C2CD4 */
 extern int fp_30; /* C2CD8 */
 extern int fp_58; /* C2CDC */
-extern short qword_C2CE0; /* C2CE0 */
-extern short qword_C2CE8; /* C2CE8 */
+extern short F64_RatingNinety; /* C2CE0 */
+extern short F64_RatingTenth; /* C2CE8 */
 extern int fp_347; /* C2CF0 */
 extern unsigned char str_Shoots[]; /* C2CF4 */
 extern unsigned char str_spL[]; /* C2CFB */
@@ -1614,11 +1614,11 @@ extern unsigned char str_Speechbuf[]; /* C3782 */
 extern unsigned char str_Sentence[]; /* C378C */
 extern unsigned char str_SampleMemMan[]; /* C3795 */
 extern unsigned char str_SpeechBank[]; /* C37A4 */
-extern short qword_C37B0; /* C37B0 */
-extern short qword_C37B8; /* C37B8 */
-extern short qword_C37C0; /* C37C0 */
-extern short qword_C37C8; /* C37C8 */
-extern short qword_C37D0; /* C37D0 */
+extern short F64_BankPercent; /* C37B0 */
+extern short F64_BankRate5512; /* C37B8 */
+extern short F64_BankRate11025; /* C37C0 */
+extern short F64_SlotPercent; /* C37C8 */
+extern short F64_SlotRate11025; /* C37D0 */
 extern unsigned char str_Cor[]; /* C37D8 */
 extern unsigned char str_GamemiscS[]; /* C37DC */
 extern unsigned char str_EastquadBar[]; /* C37E8 */
@@ -2243,12 +2243,12 @@ extern unsigned char str_DoYouWishToReturn[]; /* C6678 */
 extern unsigned char str_DoYouWishToExit[]; /* C668F */
 extern int msg_DeskExit; /* C66A4 */
 extern int msg_DeskExit_e02; /* C66AC */
-extern int dword_C66B0; /* C66B0 */
-extern unsigned char byte_C66B4[]; /* C66B4 */
+extern int CdStreamRateFactor; /* C66B0 */
+extern unsigned char RosterStatusByInjury[]; /* C66B4 */
 extern int screenbm; /* C66C4 */
 extern int dirtyrectcount[]; /* C66C8 */
-extern int dword_C66D0; /* C66D0 */
-extern int dword_C66D4; /* C66D4 */
+extern int DeskRedrawAll; /* C66D0 */
+extern int DeskRedrawFlag; /* C66D4 */
 extern int lastsprremap; /* C6718 */
 extern unsigned char mi_9394Season; /* C671C */
 extern unsigned char str_9394Season[]; /* C671E */
@@ -2316,7 +2316,7 @@ extern int leadercolhdrs_c3[]; /* C6C4C */
 extern int leadercolhdrs_c4[]; /* C6C50 */
 extern unsigned char off_C6D22[]; /* C6D22 */
 extern short potreeround; /* C6D24 */
-extern int dword_C6D26; /* C6D26 */
+extern int PoStandingsMode; /* C6D26 */
 extern unsigned char treecolslots[]; /* C6D72 */
 extern unsigned char treecol_Wr2[]; /* C6D7A */
 extern unsigned char treecol_Wr3[]; /* C6D82 */
@@ -2375,7 +2375,7 @@ extern int boxlitecolor; /* C71D0 */
 extern int boxshadecolor; /* C71D4 */
 extern int dlgtextfg; /* C71D8 */
 extern int dlgtextbg; /* C71DC */
-extern int dword_C71E0; /* C71E0 */
+extern int EditRostersState; /* C71E0 */
 extern int dlgsavebuf; /* C71E4 */
 extern int listscroll[]; /* C71E8 */
 extern unsigned char desksongalt; /* C7218 */
@@ -3881,7 +3881,7 @@ extern int _STACKTOP; /* D4CEC */
 extern int CMainEnv; /* D4CF0 */
 extern int CMainResult; /* D4CF4 */
 extern int UngetChar; /* D4CF8 */
-extern int dword_D4D00; /* D4D00 */
+extern int SpawnActive; /* D4D00 */
 extern unsigned char __no87; /* D4D04 */
 extern unsigned char _Extender; /* D4D06 */
 extern unsigned char _ExtenderSubtype; /* D4D07 */

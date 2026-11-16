@@ -484,7 +484,7 @@ int LoadGameState(int fh)
     PerTimeTotal = GetPeriodTime();
     LoadGameTeams(1);
     LoadTeamPalette(HomeTeam, VisTeam, gamepal);
-    dword_C66D0 = dword_C66D4 = 1;
+    DeskRedrawAll = DeskRedrawFlag = 1;
     hudhundstep = 0;
     LoadRockMusic();
     __STOSD(photobanks, -1, 0x17);

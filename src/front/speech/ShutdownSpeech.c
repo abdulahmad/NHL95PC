@@ -96,8 +96,8 @@ int ReadBE24(int fh)
 
 /* an int field of speech slot n (26h bytes each) */
 #define SLOTD(n, off) (*(int *)((char *)speechbank + (n) * 0x26 + (off)))
-#define SLOTFREQ (*(double *)&qword_C37C8)
-#define SLOTRATE (*(double *)&qword_C37D0)
+#define SLOTFREQ (*(double *)&F64_SlotPercent)
+#define SLOTRATE (*(double *)&F64_SlotRate11025)
 
 /* LoadSpeechSlot: load sample n into the speech memory right after slot n - 1 (slot 0 at the
  memory start +3B64h): its address (+0Eh), size (ReadSpeechSample, +16h), its play time size * C37C8 C37D0 less

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_27080 progbits alloc exec nowrite align=1
 extern __CHK, cddriveptr, CmpConfStandings, DeskSetExit3b, divisionnames, divx, divy, embscupbank
-extern dword_C6D26, potreeseeds, fileoncd, fputchar, FreeMemBlock, j___close_, kaufmfont
+extern PoStandingsMode, potreeseeds, fileoncd, fputchar, FreeMemBlock, j___close_, kaufmfont
 extern LoadLeagueTree, LoadPlayoffModeTree, LoadScheduleDB, lseek_, mainfont, MakePath, MakeStatsTitle, memcpy_
 extern StandingsRosterAction, open_, OpenStatsSchedule, playofftree, PrintCenteredText, PrintFmt1, PrintFmt2, PrintOutlinedText
 extern PrintShadowText, qsort_, read_, SetTextColors, sprintf_, stand_tmpl1, stand_tmpl2, statsbgnames
@@ -1445,7 +1445,7 @@ PlayoffTreeScreen:
         call SetClipWindow
         add esp, byte 10h
 .6:
-        cmp dword [dword_C6D26], byte 1
+        cmp dword [PoStandingsMode], byte 1
         jne near .11
         mov dword [dword ebp-01D8h], 0
         mov eax, str_Embpal2
@@ -1495,7 +1495,7 @@ PlayoffTreeScreen:
         push dword [statsbgshapes]
         call FreeMemBlock
         add esp, byte 4
-        mov dword [dword_C6D26], 0
+        mov dword [PoStandingsMode], 0
 .11:
         xor ebx, ebx
         lea edx, [dword ebp-01C8h]

@@ -4951,3 +4951,17 @@ str_N,C4448,Letter N
 str_Newline,C46C0,Newline
 str_ColonSpace,C472C,Colon and space printed by perror
 str_DotBackslash,C4AB4,Current directory prefix used by spawnve
+RosterStatusByInjury,C66B4,Roster status code per injury value (word entries) used by LoadTeamRoster
+CdStreamRateFactor,C66B0,Rate factor (0Dh) the CD stream code scales its read sizes by
+DeskRedrawAll,C66D0,Flag set when the desk and replay screens must be redrawn in full
+DeskRedrawFlag,C66D4,Flag set after the desk photos load and fade in so the desk redraws
+PoStandingsMode,C6D26,Set while the standings and tree screens show playoff mode data
+EditRostersState,C71E0,Cleared before the roster editor runs from the central registry
+SpawnActive,D4D00,Set while a DOS child program runs from __dospawn
+F64_RatingNinety,C2CE0,Double 0.9 used by RandomizeNewRatings
+F64_RatingTenth,C2CE8,Double 0.1 used by RandomizeNewRatings
+F64_BankPercent,C37B0,Double 100.0 used by OpenSpeechBank
+F64_BankRate5512,C37B8,Double 5512.0 used by OpenSpeechBank
+F64_BankRate11025,C37C0,Double 11025.0 used by OpenSpeechBank
+F64_SlotPercent,C37C8,Double 100.0 used by LoadSpeechSlot
+F64_SlotRate11025,C37D0,Double 11025.0 used by LoadSpeechSlot

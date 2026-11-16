@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_20016 progbits alloc exec nowrite align=1
-extern __CHK, calendarshapes, cddriveptr, deskexit, DrawMenuBar, easnfontbuf, embscupbank, dword_C6D26
+extern __CHK, calendarshapes, cddriveptr, deskexit, DrawMenuBar, easnfontbuf, embscupbank, PoStandingsMode
 extern StatsLastSel, RosterFromStandings, leaguestatsmode, calredraw, FadePalStep, fileoncd, FreeDeskBuffers, FreeMemBlock
 extern gamemode, GoalieStatsCard, InitMenuRemap, keepdesksong, LeadersScreen, MakePath, memcpy_, photoremap
 extern playofftree, RunMenu, RunPlayerPickMenu, RunTeamPickMenu, ShowPlayoffTree, SkaterStatsCard, standingscb, StandingsScreen
@@ -452,7 +452,7 @@ GameStandingsMenu:
         call ClearScreen
         add esp, byte 4
         xor esi, esi
-        mov dword [dword_C6D26], esi
+        mov dword [PoStandingsMode], esi
         mov eax, 1
         call InitMenuRemap
         push byte 20h
@@ -560,7 +560,7 @@ GameStandingsMenu_standings:
         call FreeDeskBuffers
 .1:
         xor ecx, ecx
-        mov dword [dword_C6D26], ecx
+        mov dword [PoStandingsMode], ecx
         jmp short GameStandingsMenu.3
 GameStandingsMenu_roster:
         xor eax, eax
@@ -618,11 +618,11 @@ GameStandingsMenu_player2:
         mov edx, 2
         mov eax, playercardmenubar
         call RunMenu
-        mov dword [dword_C6D26], esi
+        mov dword [PoStandingsMode], esi
         jmp near GameStandingsMenu.3
 .1:
         xor esi, esi
-        mov dword [dword_C6D26], esi
+        mov dword [PoStandingsMode], esi
         mov eax, esp
         push eax
         push dword 100h
@@ -1128,7 +1128,7 @@ EasnStandingsMenu_m:
         xor ebx, ebx
         mov dword [statsteamsel], ebx
         mov dword [statscategory], ebx
-        mov dword [dword_C6D26], ebx
+        mov dword [PoStandingsMode], ebx
         mov edi, edx
         mov dword [keepdesksong], edx
         xor ah, ah
@@ -1255,7 +1255,7 @@ EasnStandingsMenu_standings:
         call SetScreenTarget
 .1:
         xor ecx, ecx
-        mov dword [dword_C6D26], ecx
+        mov dword [PoStandingsMode], ecx
         jmp near EasnStandingsMenu_m.4
 ;-----------------------------------------------------------------------------
 ; EasnStandingsMenu_roster                                        210FB  95 PC
@@ -1328,11 +1328,11 @@ EasnStandingsMenu_player2:
         mov edx, 2
         mov eax, playercardmenubar
         call RunMenu
-        mov dword [dword_C6D26], esi
+        mov dword [PoStandingsMode], esi
         jmp near EasnStandingsMenu_m.4
 .1:
         xor ecx, ecx
-        mov dword [dword_C6D26], ecx
+        mov dword [PoStandingsMode], ecx
         call FreeDeskBuffers
         mov esi, dword [statsteambuf]
         push esi
@@ -1857,7 +1857,7 @@ CalStandingsMenu:
         call FadePalStep
         call FreeCalendarIfLowMem
         xor esi, esi
-        mov dword [dword_C6D26], esi
+        mov dword [PoStandingsMode], esi
         mov eax, 1
         call InitMenuRemap
         push byte 20h
@@ -1964,7 +1964,7 @@ CalStandingsMenu_standings:
         call SetScreenTarget
 .1:
         xor eax, eax
-        mov dword [dword_C6D26], eax
+        mov dword [PoStandingsMode], eax
         jmp near CalStandingsMenu.4
 CalStandingsMenu_roster:
         xor esi, esi
@@ -2022,11 +2022,11 @@ CalStandingsMenu_player2:
         mov edx, 2
         mov eax, playercardmenubar
         call RunMenu
-        mov dword [dword_C6D26], 1
+        mov dword [PoStandingsMode], 1
         jmp near CalStandingsMenu.4
 .1:
         xor ebx, ebx
-        mov dword [dword_C6D26], ebx
+        mov dword [PoStandingsMode], ebx
         call FreeDeskBuffers
         mov ecx, dword [statsteambuf]
         push ecx
