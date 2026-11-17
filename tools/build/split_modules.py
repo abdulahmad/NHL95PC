@@ -10,7 +10,8 @@ Each file is src/<module>/<last part of module>.asm, as today (one asm file per 
 MAP lines ('#' starts a comment):
   cut LABEL NEWMOD [header text]   a new file starts with the routine LABEL (with its header, C switch, jump table
                                    and padding in front of it); it runs to the next start
-  rename OLDMOD NEWMOD [header]    the file that starts where OLDMOD starts today gets a new module path
+  rename OLDMOD NEWMOD [header]    the file that starts where OLDMOD starts today gets a new module path; when
+                                   NEWMOD is the module of the file just before it, the two become one file
   header MOD header text           a new header comment for MOD ('|' starts a new line)
 Module paths are like engine/goalie (the file becomes src/engine/goalie/goalie.asm).
 
@@ -74,7 +75,11 @@ def module_of(rel):
 
 
 def path_of(m, PATH):
-    return PATH.get(m) or '%s/%s.asm' % (m, os.path.basename(m))
+    """src/ path of module m: its own folder (engine/goalie/goalie.asm), except a library slice lib/<library>/<name>,
+    which is one file in its library's folder (lib/watcom/stdio.asm)"""
+    if m in PATH: return PATH[m]
+    if m.startswith('lib/') and m.count('/') >= 2: return m + '.asm'
+    return '%s/%s.asm' % (m, os.path.basename(m))
 
 
 def wrap(kw, names):
@@ -130,6 +135,9 @@ def main():
         if j >= len(stream) or stream[j][1] != om: sys.exit('cut %s: no code after it' % lab)
         starts.append((k, new, A[om][stream[j][2]], None))
     starts.sort()
+    # a file renamed to the module of the file before it joins that file (rename front/main front/link after a cut
+    # that starts front/link): drop its start
+    starts = [s for i, s in enumerate(starts) if i == 0 or s[1] != starts[i - 1][1]]
     names = [s[1] for s in starts]
     dup = {n for n in names if names.count(n) > 1}
     if dup: sys.exit('duplicate new module: %s' % ', '.join(sorted(dup)))

@@ -1,8 +1,47 @@
-; The interrupt call used by the DOS/4GW glue.
+; DOS/4GW glue: intr and _DoINTR, interrupt calls through a register block.
 bits 32
 %include "hockey.inc"
-section s_A1948 progbits alloc exec nowrite align=1
-global IntrLoadRegs, IntrStubs, __Slash_C_
+section s_A18FB progbits alloc exec nowrite align=1
+global _DoINTR_, IntrLoadRegs, IntrStubs, __Slash_C_
+;-----------------------------------------------------------------------------
+; _DoINTR_                                                      A18FB  library
+; Run-time library: the intr call helper
+;-----------------------------------------------------------------------------
+_DoINTR_:
+        pusha
+        push gs
+        push fs
+        push es
+        push ds
+        push edx
+        call IntrLoadRegs
+        push ebx
+        push ds
+        push ebp
+        mov ebp, esp
+        mov ebx, dword [byte ebp+0Ch]
+        mov ds, word [byte ebp+010h]
+        mov dword [ebx], eax
+        pushf
+        pop eax
+        mov word [byte ebx+024h], ax
+        mov dword [byte ebx+08h], ecx
+        mov dword [byte ebx+0Ch], edx
+        mov dword [byte ebx+014h], esi
+        mov dword [byte ebx+018h], edi
+        pop dword [byte ebx+010h]
+        pop eax
+        mov word [byte ebx+01Ch], ax
+        pop dword [byte ebx+04h]
+        o16 mov word [byte ebx+01Eh], es
+        o16 mov word [byte ebx+020h], fs
+        o16 mov word [byte ebx+022h], gs
+        add esp, byte 8
+        pop es
+        pop fs
+        pop gs
+        popa
+        ret
 ;-----------------------------------------------------------------------------
 ; IntrLoadRegs                                                    A1948  95 PC
 ; Loads the full register set from a REGPACK and selects the interrupt stub

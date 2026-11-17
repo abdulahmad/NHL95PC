@@ -814,7 +814,7 @@ LoadGameTeams,1BBCC,817,front/team_db,src/front/team_db/LoadGameTeams.c,matched,
 LoadTeamRoster,1C3F6,1041,front/team_db,src/front/team_db/LoadTeamRoster.c,nonmatching,"926 vs 1041. Frame is sub esp,0F4h (cookie 134h); the team index is eax at esp+11Ch. team*186 is add esi,esi where the original shifts the *744 byte offset with shl eax,3. Do not retry explicit shift statements for that index.",size 10/17
 MakeGSummaryPath,1C807,75,front/team_db,src/front/team_db/MakeGSummaryPath.c,matched,,
 OpenPlayerDBs,1C26C,394,front/team_db,src/front/team_db/OpenPlayerDBs.c,matched,,
-ReadPlayerRecs,1C0AF,445,front/team_db,src/front/team_db/ReadPlayerRecs.c,matched,,
+ReadPlayerRecord,1C0AF,445,front/team_db,src/front/team_db/ReadPlayerRecord.c,matched,,
 ResetGoalieMenu,1CB7F,89,front/team_db,src/front/team_db/ResetGoalieMenu.c,matched,,
 SetupGoalieMenu,1C852,813,front/team_db,src/front/team_db/SetupGoalieMenu.c,matched,"draft: 797 vs 813 (best of 2). Cookie 0x38 and sub esp,20h match. The roster index is mov al / and eax,0ffh (original xor edx,edx / mov dl) and the tens-digit store is sunk to the join so the add stays in eax. An int dig pushes edi and grows the cookie to 0x3c. Do not retry a named int for that add.",
 AnyInputPressed,1600C,102,front/title,src/front/title/AnyInputPressed.c,matched,draft: asm keeps result in esi and saves 4 regs; ours uses edx,

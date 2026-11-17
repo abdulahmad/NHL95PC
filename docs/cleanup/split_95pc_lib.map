@@ -1,0 +1,102 @@
+# Library files named by what they hold (folder layout plan, 2026-11-17)
+rename lib/dos4gw/dos4gw_dpmi_glue_01 lib/dos4gw/dos4gw_int386 DOS/4GW glue: int386, a real-mode interrupt call from protected mode.
+rename lib/watcom/watcom_clib_04 lib/dos4gw/dos4gw_int386
+rename lib/dos4gw/dos4gw_dpmi_glue_02 lib/dos4gw/dos4gw_int386x DOS/4GW glue: segread and int386x, interrupt calls with segment registers.
+rename lib/dos4gw/dos4gw_dpmi_glue_03 lib/dos4gw/dos4gw_dos_vect DOS/4GW glue: get and set an interrupt vector.
+rename lib/watcom/watcom_clib_29 lib/dos4gw/dos4gw_dos_vect
+rename lib/dos4gw/dos4gw_dpmi_glue_04 lib/dos4gw/dos4gw_dpmi_heap DOS/4GW heap: DPMI memory blocks for the near heap, sbrk growth.
+rename lib/dos4gw/dos4gw_dpmi_glue_05 lib/dos4gw/dos4gw_wvideo_hook DOS/4GW glue: the debugger (WVIDEO) entry hook.
+rename lib/watcom/watcom_clib_38 lib/dos4gw/dos4gw_wvideo_hook
+rename lib/dos4gw/dos4gw_dpmi_glue_06 lib/dos4gw/dos4gw_int386x_core DOS/4GW glue: the shared body of int386x.
+rename lib/dos4gw/dos4gw_dpmi_glue_07 lib/dos4gw/dos4gw_intr DOS/4GW glue: intr and _DoINTR, interrupt calls through a register block.
+rename lib/dos4gw/dos4gw_dpmi_glue_08 lib/dos4gw/dos4gw_sbrk DOS/4GW heap: sbrk and brk.
+rename lib/ea/ea_gfx_01 lib/ea/ea_put_block EA graphics: put and grab blocks, XOR, AND and OR art drawing.
+rename lib/ea/ea_gfx_02 lib/ea/ea_text_width EA graphics: the width of a text string.
+rename lib/ea/ea_gfx_03 lib/ea/ea_shape_list EA graphics: shape lists and projected point lists.
+rename lib/ea/ea_gfx_04 lib/ea/ea_copy_dta EA file helpers: copy a DOS find record in.
+rename lib/ea/ea_gfx_05 lib/ea/ea_fill_rect EA graphics: filled and XOR rectangles, clear screen, opaque art.
+rename lib/ea/ea_gfx_06 lib/ea/ea_draw_art EA graphics: draw art and shapes, grab blocks, print strings.
+rename lib/ea/ea_gfx_07 lib/watcom/watcom_freopen Watcom C runtime: freopen.
+rename lib/ea/ea_gfx_08 lib/ea/ea_draw_art_key EA graphics: art drawn with a key colour.
+rename lib/ea/ea_gfx_09 lib/ea/ea_text_print EA graphics: text printing at a position.
+rename lib/ea/ea_gfx_10 lib/ea/ea_file_load EA file helpers: file size and loading a file into a block.
+rename lib/ea/ea_gfx_11 lib/ea/ea_rect_outline EA graphics: rectangle outlines and clipped frames.
+rename lib/ea/ea_gfx_12 lib/ea/ea_boxed_text EA graphics: boxed text, keyed row remap and masked art.
+rename lib/ea/ea_gfx_13 lib/ea/ea_write_file EA file helpers: writing a file.
+rename lib/ea/ea_kbd_exit_01 lib/ea/ea_prompt_box EA helpers: message and prompt boxes, exit to DOS, interrupt vectors.
+rename lib/ea/ea_kbd_exit_02 lib/ea/ea_mem_lock_flag EA helpers: test-and-set flag and memory unlock.
+rename lib/ea/ea_kbd_exit_03 lib/ea/ea_dos_file_info EA file helpers: DOS file information.
+rename lib/ea/ea_mcga_window_01 lib/ea/ea_mcga_window EA graphics: the MCGA screen window.
+rename lib/ea/ea_mcga_window_02 lib/ea/ea_mcga_no_window EA graphics: the MCGA no-window stub.
+rename lib/ea/ea_memman_01 lib/ea/ea_memman_alloc EA memory manager: memory lists, handles and block allocation.
+rename lib/ea/ea_memman_02 lib/ea/ea_memman_free EA memory manager: freeing, merging and purging blocks.
+rename lib/ea/ea_memman_03 lib/ea/ea_memman_largest EA memory manager: grab the largest free block.
+rename lib/ea/ea_misc_01 lib/ea/ea_fill_rect_spans EA graphics: rectangle fill by spans.
+rename lib/ea/ea_misc_02 lib/watcom/watcom_scanf C runtime: the scanf engine.
+rename lib/ea/ea_snap_01 lib/ea/ea_snap_screen EA graphics: snap the screen into a shape, select a bitmap.
+rename lib/ea/ea_snap_02 lib/ea/ea_fpu_setup EA helpers: FPU detection flags and the coprocessor vector.
+rename lib/ea/ea_snap_03 lib/ea/ea_fpu_restore EA helpers: restore the FPU vectors, save the 8087 state.
+rename lib/ea/ea_sound_hl_01 lib/ea/ea_sound_banks EA sound: start-up, music banks, patches, timbres and songs.
+rename lib/ea/ea_sound_hl_02 lib/ea/ea_shape_bank EA graphics: shape bank entries.
+rename lib/input/input_keyboard_01 lib/input/input_int_hook Input: the big interrupt call hook.
+rename lib/input/input_keyboard_02 lib/input/input_keyboard Input: the keyboard interrupt handler and BIOS key calls.
+rename lib/sound/snd_gus_sdk_01 lib/sound/snd_gus_patch Gravis UltraSound: patches, card open and close, IRQ hooks.
+rename lib/sound/snd_gus_sdk_02 lib/sound/snd_gus_stream Gravis UltraSound: audio streams.
+rename lib/sound/snd_gus_sdk_03 lib/video/video_mapped_triangle Graphics: the texture-mapped triangle rasterizer.
+rename lib/sound/snd_gus_sdk_04 lib/ea/ea_byte_order_remap EA helpers: byte-order reads and writes, keyed remap drawing.
+rename lib/sound/snd_gus_sdk_05 lib/sound/snd_gus_dma Gravis UltraSound: DMA channels and DOS file calls.
+rename lib/sound/snd_gus_sdk_06 lib/sound/snd_gus_irq Gravis UltraSound: IRQ handlers and callbacks.
+rename lib/sound/snd_gus_sdk_07 lib/sound/snd_gus_init_table Gravis UltraSound: run the init table.
+rename lib/sound/snd_gus_sdk_08 lib/sound/snd_gus_timer_voice Gravis UltraSound: timers and voice allocation.
+rename lib/sound/snd_gus_sdk_09 lib/sound/snd_gus_addr Gravis UltraSound: DRAM address conversion.
+rename lib/watcom/watcom_clib_01 lib/watcom/watcom_stack_check Watcom C runtime: stack checks.
+rename lib/watcom/watcom_clib_02 lib/ea/ea_free_mem_block EA memory manager: free a memory block.
+rename lib/watcom/watcom_clib_03 lib/watcom/watcom_exit Watcom C runtime: drives, printf, exit.
+rename lib/watcom/watcom_clib_05 lib/watcom/watcom_os_handle Watcom C runtime: OS file handles.
+rename lib/watcom/watcom_clib_06 lib/watcom/watcom_date_rand Watcom C runtime: DOS date and time, rand and srand.
+rename lib/watcom/watcom_clib_07 lib/watcom/watcom_startup Watcom C runtime: program start and console messages.
+rename lib/watcom/watcom_clib_08 lib/watcom/watcom_strcpy Watcom C runtime: strcpy, strcat, unlink jump.
+rename lib/watcom/watcom_clib_09 lib/watcom/watcom_strnicmp Watcom C runtime: strnicmp.
+rename lib/watcom/watcom_clib_10 lib/watcom/watcom_sprintf Watcom C runtime: sprintf, memcpy, putc.
+rename lib/watcom/watcom_clib_11 lib/watcom/watcom_dos_find Watcom C runtime: DOS find first and next.
+rename lib/watcom/watcom_clib_12 lib/watcom/watcom_dos_file Watcom C runtime: DOS file open, read, seek and close.
+rename lib/watcom/watcom_clib_13 lib/watcom/watcom_memset Watcom C runtime: memset.
+rename lib/watcom/watcom_clib_14 lib/watcom/watcom_fopen Watcom C runtime: malloc, strlen, fopen.
+rename lib/watcom/watcom_clib_15 lib/watcom/watcom_fclose Watcom C runtime: fclose, temporary files, string copies.
+rename lib/watcom/watcom_clib_16 lib/watcom/watcom_open_qsort Watcom C runtime: open, read, qsort.
+rename lib/watcom/watcom_clib_17 lib/watcom/watcom_stricmp Watcom C runtime: stricmp, unlink, atoi.
+rename lib/watcom/watcom_clib_18 lib/watcom/watcom_fstrcspn Watcom C runtime: far strcspn.
+rename lib/watcom/watcom_clib_19 lib/watcom/watcom_fscanf Watcom C runtime: mkdir, fscanf.
+rename lib/watcom/watcom_clib_20 lib/watcom/watcom_strcspn Watcom C runtime: strcspn.
+rename lib/watcom/watcom_clib_21 lib/watcom/watcom_fprintf Watcom C runtime: fprintf, strupr, strlwr, perror.
+rename lib/watcom/watcom_clib_22 lib/watcom/watcom_ios_failure Watcom C++ runtime: ios failure cause.
+rename lib/watcom/watcom_clib_23 lib/watcom/watcom_os_handle_stub Watcom C runtime: OS file handle stub.
+rename lib/watcom/watcom_clib_24 lib/watcom/watcom_itoa Watcom C runtime: far memmove, itoa, fgets.
+rename lib/watcom/watcom_clib_25 lib/watcom/watcom_fatal_error Watcom C runtime: fatal errors, the FPE handler, memory lock.
+rename lib/watcom/watcom_clib_26 lib/watcom/watcom_errno Watcom C runtime: errno setters and file putc.
+rename lib/watcom/watcom_clib_27 lib/watcom/watcom_heap_expand Watcom C runtime: heap expand and block size.
+rename lib/watcom/watcom_clib_28 lib/watcom/watcom_spawnl Watcom C runtime: spawnl, strncmp.
+rename lib/watcom/watcom_clib_30 lib/watcom/watcom_main Watcom C runtime: path split, atexit, the C main and init routines.
+rename lib/watcom/watcom_clib_31 lib/watcom/watcom_mem_allocator Watcom C runtime: the memory allocator.
+rename lib/watcom/watcom_clib_32 lib/watcom/watcom_fseek Watcom C runtime: stream buffers, fseek, flush.
+rename lib/watcom/watcom_clib_33 lib/watcom/watcom_fgetc Watcom C runtime: isatty, IO modes, fgetc.
+rename lib/watcom/watcom_clib_34 lib/watcom/watcom_vsprintf Watcom C runtime: vsprintf.
+rename lib/watcom/watcom_clib_35 lib/watcom/watcom_emu387_init Watcom C runtime: float format set-up and 387 emulator start.
+rename lib/watcom/watcom_clib_36 lib/watcom/watcom_emu387_fini Watcom C runtime: 387 emulator shut-down.
+rename lib/watcom/watcom_clib_37 lib/watcom/watcom_fpu_delay Watcom C runtime: 8087 set-up, delay, errno pointers, strerror.
+rename lib/watcom/watcom_clib_39 lib/watcom/watcom_intr_segregs Watcom C runtime: segment register load for intr.
+rename lib/watcom/watcom_clib_40 lib/watcom/watcom_ltoa Watcom C runtime: abs, ltoa, toupper, heap enable.
+rename lib/watcom/watcom_clib_41 lib/watcom/watcom_file_exit Watcom C runtime: tell, file init and close all at exit.
+rename lib/watcom/watcom_clib_42 lib/watcom/watcom_cnvs2d Watcom C runtime: string to double.
+rename lib/watcom/watcom_clib_43 lib/watcom/watcom_getenv Watcom C runtime: getenv.
+rename lib/watcom/watcom_clib_44 lib/watcom/watcom_outp Watcom C runtime: outp.
+rename lib/watcom/watcom_clib_45 lib/sound/snd_gus_stream_noop Gravis UltraSound: the empty stream callback.
+rename lib/watcom/watcom_clib_46 lib/watcom/watcom_spawn_env Watcom C runtime: spawn environment and command line.
+rename lib/watcom/watcom_clib_47 lib/watcom/watcom_strrchr Watcom C runtime: strrchr.
+rename lib/watcom/watcom_clib_48 lib/watcom/watcom_float_format Watcom C runtime: E and F float formats, strtod.
+rename lib/watcom/watcom_clib_49 lib/watcom/watcom_inp Watcom C runtime: inp.
+rename lib/watcom/watcom_clib_50 lib/watcom/watcom_inpw Watcom C runtime: inpw.
+rename lib/watcom/watcom_clib_51 lib/watcom/watcom_outpw Watcom C runtime: outpw.
+rename lib/watcom/watcom_clib_52 lib/watcom/watcom_float_convert Watcom C runtime: floor, scaling and double conversion.
+rename lib/watcom/watcom_clib_53 lib/watcom/watcom_modf Watcom C runtime: modf and big integer helpers.
+rename lib/watcom/watcom_clib_54 lib/watcom/watcom_frexp Watcom C runtime: frexp.

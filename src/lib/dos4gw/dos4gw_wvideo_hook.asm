@@ -1,0 +1,33 @@
+; DOS/4GW glue: the debugger (WVIDEO) entry hook.
+bits 32
+%include "hockey.inc"
+section s_A1877 progbits alloc exec nowrite align=1
+extern WVideoActive
+global __EnterWVIDEO_
+;-----------------------------------------------------------------------------
+; __EnterWVIDEO_                                                A1877  library
+; Run-time library: debugger hook (WVIDEO entry)
+;-----------------------------------------------------------------------------
+__EnterWVIDEO_:
+        cmp byte [WVideoActive], 0
+        je short .2
+        and edx, 0FFFFh
+        push edx
+        push eax
+        int3
+        jmp short .1
+        push edi
+        push esi
+        dec ecx
+        inc esp
+        inc ebp
+        dec edi
+.1:
+        mov eax, 1
+        add esp, byte 8
+        ret
+.2:
+        xor eax, eax
+        ret
+; alignment padding
+        db 00h
