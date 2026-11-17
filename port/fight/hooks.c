@@ -25,6 +25,7 @@
 #include "../feel.h"
 #include "../sides.h"
 #include "../pads4.h"
+#include "../snap.h"
 
 #ifdef _WIN32
 #define SYM(s) "_" s
@@ -1216,3 +1217,23 @@ void fight_install(void)
         } else if (ok_check) fprintf(stderr, "Fights: FallDown is not the expected code, a check is counted on every hit\n");
     }
 }
+
+/* online rollback: the fight's state that the game's data does not hold. A state taken and loaded again must bring
+ * these back with the game, or a fight replayed after a late input goes on from where the newer one was. The sprite
+ * caches (spr, lut, the injury luts) are only drawings, built the same from the same frames. */
+int fight_sim_regions(snap_region *r, int max)
+{
+    int n = 0;
+#define X(v) do { if (n < max) { r[n].p = (void *)&(v); r[n].n = sizeof (v); } n++; } while (0)
+    X(ft); X(who); X(checks); X(chkcnt); X(last_gsp); X(fall_h); X(fall_checks); X(frame_no); X(pair_seen);
+    X(saved_frame); X(drawing); X(replay_frame); X(post); X(post_timer); X(gloves); X(glove_x); X(glove_y);
+    X(pile_on); X(pile_k); X(pile_side); X(whistled); X(evmap); X(nevmap); X(coin); X(cue); X(cue_seen); X(cue_time);
+    X(ref_time); X(pad_dir); X(pad_new); X(fight_on_now); X(watcher); X(watch_t); X(watch_x); X(watch_y); X(nwatch);
+    X(pen_wait); X(hold_lines); X(inj_state); X(inj_saved); X(inj_drawing); X(inj_rng);
+#undef X
+    return n <= max ? n : -1;
+}
+
+/* the NHLPA 93 cartridge was found: its frames are drawn into the game's player data, and the referee's glove
+ * pick-up runs, so both machines of an online game must agree on it */
+int fight_have_rom(void) { return have_rom && !no_draw; }

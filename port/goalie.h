@@ -20,4 +20,7 @@ int goalie_slot(int sc);
 /* 94G crease: a human goalie here turns to the puck (goalieacc). */
 int goalie_in_crease(int x, int y);
 
+struct snap_region;
+int goalie_sim_regions(struct snap_region *r, int max);  /* online rollback: the B-hold timers */
+
 #endif

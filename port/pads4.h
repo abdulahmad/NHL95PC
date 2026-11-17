@@ -90,4 +90,7 @@ enum { PADS4_PIN_UP = 1, PADS4_PIN_DOWN = 2, PADS4_PIN_RIGHT = 4 };
 void pads4_arrow_hot(int pin, int vflip, int x0, int y0, int w, int h,
                      int xmin, int ymin, int xmax, int ymax, int *hx, int *hy);
 
+struct snap_region;
+int pads4_sim_regions(struct snap_region *r, int max);   /* online rollback: replay players, pretend pads */
+
 #endif

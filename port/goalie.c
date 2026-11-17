@@ -21,6 +21,7 @@
 #ifndef GOALIE_TEST
 #include "feel.h"
 #include "host.h"
+#include "snap.h"
 #endif
 
 #ifdef _WIN32
@@ -399,4 +400,13 @@ void goalie_install(void)
     }
 }
 
+/* online rollback: the B-hold timers live here, not in the game's data */
+int goalie_sim_regions(snap_region *r, int max)
+{
+    if (max < 1) return -1;
+    r[0].p = bhold; r[0].n = sizeof bhold;
+    return 1;
+}
+
 #endif /* !GOALIE_TEST */
+
