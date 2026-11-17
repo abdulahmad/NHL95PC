@@ -93,7 +93,9 @@ static void detect_cpu(void)
  * block, so the host builds the same table from the flat block. The sound drivers find the cards through BLASTER and ULTRASND
  * there. Nothing in the game adds variables, so the table can stay in static storage. */
 extern char __setenvp_[];
-extern uint32_t _Envptr, _environ, ___env_mask;
+extern uint32_t _Envptr, ___env_mask;
+/* the game's _environ (mingw's stdlib.h makes the C name _environ a macro of its own) */
+extern uint32_t game_environ __asm__(SYM("_environ"));
 
 void host_setenvp(void)
 {
@@ -101,10 +103,10 @@ void host_setenvp(void)
     static uint8_t flags[64];
     char *p = (char *)_Envptr;
     int n = 0;
-    if (_environ) return;
+    if (game_environ) return;
     for (; *p && n < 64; p += strlen(p) + 1) env[n++] = p;
     env[n] = 0;
-    _environ = (uint32_t)env;
+    game_environ = (uint32_t)env;
     ___env_mask = (uint32_t)flags;
 }
 

@@ -125,8 +125,11 @@ void pads4_arrow_hot(int pin, int vflip, int x0, int y0, int w, int h,
         maxr = ymax - y0;
     }
     if (pin & PADS4_PIN_RIGHT) *hx = xmax - x0;         /* the tip column; a left flip keeps it on the edge */
-    if (pin & PADS4_PIN_UP) *hy = minr;
-    if (pin & PADS4_PIN_DOWN) *hy = maxr;
+    /* DrawRinkOverlays' top and bottom draw points are a row outside the 168 rows of the view (rink y 140h - vy + 1
+     * is view row -1, 140h - (vy + A8h) is row A8h), where 95 PC's own arrow frames have a row of room: the 94 tip
+     * goes on the first row inside. Right (view column 13Fh) and left (column 0) are inside already. */
+    if (pin & PADS4_PIN_UP) *hy = minr - 1;
+    if (pin & PADS4_PIN_DOWN) *hy = maxr + 1;
 }
 
 #ifndef PADS4_TEST
