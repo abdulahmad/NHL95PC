@@ -80,6 +80,7 @@ int irq_try_deliver(ctx_t *c)
         __sync_fetch_and_and(&pending, ~(1u << irq));
     }
     if (!pm_vec[vec].off) return 0;
+    { extern uint16_t KbdDataSelector; if (irq == 1 && !KbdDataSelector) return 0; }   /* the game's keyboard handler loads DS from this: 0 once the game has uninstalled it (at exit), so an IRQ1 still pending then is dropped */
     {
         int cl = irq > 1;
         int64_t now = plat_now_ns();
