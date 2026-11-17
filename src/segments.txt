@@ -143,7 +143,10 @@
 1 93284 932D0 76 watcom_clib_20 lib/watcom/watcom_strcspn.asm
 1 932D0 93308 56 ea_gfx_13 lib/ea/ea_write_file.asm
 1 93308 93938 1584 ea_fileblock lib/ea/ea_fileblock.asm
-1 93938 96185 10317 ea_debug lib/ea/ea_debug.asm
+1 93938 93CB5 893 ea_debug lib/ea/ea_debug.asm
+1 93CB5 95147 5266 lib_ea_ea_mem_viewer lib/ea/ea_mem_viewer.asm
+1 95147 9602E 3815 lib_ea_ea_shape_viewer lib/ea/ea_shape_viewer.asm
+1 9602E 96185 343 lib_ea_ea_debug_keys lib/ea/ea_debug_keys.asm
 1 96185 96440 699 watcom_clib_21 lib/watcom/watcom_fprintf.asm
 1 96440 96A58 1560 ea_mvi lib/ea/ea_mvi.asm
 1 96A58 96A60 8 watcom_clib_22 lib/watcom/watcom_ios_failure.asm
@@ -197,7 +200,8 @@
 1 A3274 A65E8 13172 watcom_emu387 lib/watcom/watcom_emu387.asm
 1 A65E8 A6B87 1439 snd_hw_pcspk_opl lib/sound/snd_hw_pcspk_opl.asm
 1 A6B87 A6BE1 90 watcom_clib_43 lib/watcom/watcom_getenv.asm
-1 A6BE1 A9C9C 12475 snd_hw_sb lib/sound/snd_hw_sb.asm
+1 A6BE1 A6D81 416 snd_hw_sb lib/watcom/watcom_strtol.asm
+1 A6D81 A9C9C 12059 lib_sound_snd_sb_stream lib/sound/snd_sb_stream.asm
 1 A9C9C AA200 1380 snd_hw_irq_dma lib/sound/snd_hw_irq_dma.asm
 1 AA200 AA210 16 watcom_clib_44 lib/watcom/watcom_outp.asm
 1 AA210 ADEE8 15576 snd_gus_sdk_01 lib/sound/snd_gus_patch.asm

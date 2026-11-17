@@ -1,0 +1,6 @@
+# Split the library files that hold several modules (folder layout plan, 2026-11-17)
+cut MemViewerGetMode lib/ea/ea_mem_viewer EA debug console: the memory viewer, block list, hex dump and memory map.
+cut ShapeViewerFindShape lib/ea/ea_shape_viewer EA debug console: the shape and palette viewers and screenshots.
+cut FormatDateTime lib/ea/ea_debug_keys EA debug console: date stamps, free file names and debug key input.
+rename lib/sound/snd_hw_sb lib/watcom/watcom_strtol Watcom C runtime: strtol and strtoul.
+cut SbStreamCheck lib/sound/snd_sb_stream Sound Blaster: digital streams, the mixer and DMA output.
