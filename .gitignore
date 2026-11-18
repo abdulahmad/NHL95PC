@@ -3,7 +3,7 @@
 *.exe
 *.EXP
 *.exp
-!HOCKEY.EXE
+!/HOCKEY.EXE
 HOCKEY.EXE.lst
 *.lst
 FUNCTION_MAPPINGS95.md
