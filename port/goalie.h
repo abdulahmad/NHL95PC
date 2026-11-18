@@ -28,4 +28,7 @@ int goalie_zone(int y, int attack_up);
 void goalie_button_press(int slot);
 int goalie_button_pull(int slot);
 
+struct snap_region;
+int goalie_sim_regions(struct snap_region *r, int max);  /* online rollback: the B-hold timers */
+
 #endif

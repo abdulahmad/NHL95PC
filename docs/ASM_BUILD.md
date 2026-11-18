@@ -12,7 +12,7 @@ the third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE hea
 ## 0. Committed source tree and one-command build
 
 ```
-# retail/HOCKEY.EXE is committed (sha1 3961e0eb…); root HOCKEY.EXE is a pointer
+# your own retail/HOCKEY.EXE (sha1 3961e0eb…, not in the repo); root HOCKEY.EXE is a pointer
 make -j8                        # or: ./build.sh [path/to/HOCKEY.EXE]
 # ... MATCH: build/HOCKEY.EXE is byte-identical to the retail HOCKEY.EXE
 ```
