@@ -40,6 +40,8 @@
 #include "season.h"
 #include "sides.h"
 #include "pads4.h"
+#include "goalie.h"
+#include "fight/hooks.h"
 #include "overbar/sides.h"
 #include <SDL.h>
 #include <time.h>
@@ -231,10 +233,23 @@ static uint64_t st_sim, st_all;
 static int st_vif;
 static uint8_t *st_copy;                         /* the game's data as it was at the second record, the first time */
 #define ST_DATA_HI 0xFAB90u
-static snap_region st_extra[16];
+static snap_region st_extra[96];
 static int st_nextra;
 extern volatile int vif;
 static uint64_t sim_hash(void);
+
+/* the state the port's own gameplay code keeps outside the game's data (fights, the manual goalie, pads 3 and 4):
+ * a rollback state without it brings the game back but not them, and the two machines part */
+static int features_regions(snap_region *r, int max)
+{
+    int n = 0, k;
+    if ((k = fight_sim_regions(r + n, max - n)) < 0) return n;
+    n += k;
+    if ((k = goalie_sim_regions(r + n, max - n)) < 0) return n;
+    n += k;
+    if ((k = pads4_sim_regions(r + n, max - n)) < 0) return n;
+    return n + k;
+}
 
 static void st_regions(void)
 {
@@ -243,6 +258,7 @@ static void st_regions(void)
     X(nh_ring); X(pads4); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_cadence); X(nh_pending); X(nh_local); X(nh_loop_mark);
     X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
 #undef X
+    n += features_regions(st_extra + n, (int)(sizeof st_extra / sizeof st_extra[0]) - n - 1);
     st_extra[n].p = begtext_forever; st_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
     st_nextra = n;
 }
@@ -456,7 +472,7 @@ static uint32_t rb_gen[RB_SLOTS], rb_genc, rb_next, rb_target;
 static int rb_slot_vif[RB_SLOTS];
 static void *rb_jb[5];
 static char *rb_low;
-static snap_region rb_extra[16];
+static snap_region rb_extra[96];
 static int rb_nextra;
 static uint32_t rb_timing_n;
 static int64_t rb_timing_ns;
@@ -468,6 +484,7 @@ static void rb_regions(void)
     X(nh_ring); X(pads4); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_loop_mark);
     X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
 #undef X
+    n += features_regions(rb_extra + n, (int)(sizeof rb_extra / sizeof rb_extra[0]) - n - 1);
     rb_extra[n].p = begtext_forever; rb_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
     rb_nextra = n;
 }
@@ -753,7 +770,10 @@ static int poll_nets_locked(void)
 static void fill_game(ob_net_game *g, char *identity, size_t idsz)
 {
     nh_rb = getenv("NHL95_LOCKSTEP") == NULL;
-    snprintf(identity, idsz, "nhl95pc %s %s sound %02x/%u", NHL95_BUILD, nh_rb ? "rollback2" : "lockstep2",
+    /* the fights' NHLPA 93 cartridge: with it the fighters' frames are written into the players and the referee picks
+       up the gloves, so a machine without it would play another game */
+    snprintf(identity, idsz, "nhl95pc %s %s %s sound %02x/%u", NHL95_BUILD,
+             fight_have_rom() ? "fights93" : "no-93-cart", nh_rb ? "rollback3" : "lockstep3",
              (unsigned)(sounddev & 0xFF), (unsigned)MusicOn);
     memset(g, 0, sizeof *g);
     g->identity = identity;

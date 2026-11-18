@@ -138,6 +138,7 @@ void pads4_arrow_hot(int pin, int vflip, int x0, int y0, int w, int h,
 #include "goalie.h"
 #include "host.h"
 #include "rom94.h"
+#include "snap.h"
 
 #ifdef _WIN32
 #define SYM(s) "_" s
@@ -889,4 +890,15 @@ void pads4_install(void)
     if (!patch_marks(DrawRinkOverlays, 0x9E0, mark_thunk)) fprintf(stderr, "Four players: DrawRinkOverlays' star call is not the expected code, pads 1 and 2 keep 95 PC's stars\n");
 }
 
+/* online rollback: what pads 3 and 4 keep outside the game's data and the pads4 record (saved by netplay.c) */
+int pads4_sim_regions(snap_region *r, int max)
+{
+    int n = 0;
+#define X(v) do { if (n < max) { r[n].p = (void *)&(v); r[n].n = sizeof (v); } n++; } while (0)
+    X(rp_pl); X(fake_done); X(rp_team); X(guard_sc); X(guard_n);
+#undef X
+    return n <= max ? n : -1;
+}
+
 #endif /* !PADS4_TEST */
+

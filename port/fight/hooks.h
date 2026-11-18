@@ -15,4 +15,8 @@ void fight_after(void);                         /* and after it */
 /* SortCords number sc is in a fight, or held after it until he is sent off (port/pads4.c: pad 3 or 4 keeps him) */
 int fight_holds(int sc);
 
+struct snap_region;
+int fight_sim_regions(struct snap_region *r, int max);   /* online rollback: the fight's own state */
+int fight_have_rom(void);                            /* the 93 cartridge draws the fighters (both machines must agree) */
+
 #endif
