@@ -31,7 +31,7 @@ void assepen(Player *p)
         HIWORD(p->Xpos) = 0x9E;
         p->facedir = 2;
         p->pflags |= 0x20;
-        SetSPA(p, 0x7BF);
+        SetSPA(p, SPAwallleft);
         SprSort();
         return;
     }

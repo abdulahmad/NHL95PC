@@ -1,6 +1,7 @@
 ; The game loop: clock, periods, frame, crowd, sprite sort, intermission, game over.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_5B9D1 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, assinsert, assreplace, asstab, awscore, awtmgoaliesc, awtmnear
 extern awtmnearpl, awtmstruct, bannermsg, bannertimer, LinePlayersAway, c1playernum, c2playernum, camx
@@ -1179,11 +1180,11 @@ updateplayers:
         inc word [edx+eax*2]
 .15:
         mov cx, word [byte esi+SPA]
-        cmp cx, 0A0Bh
+        cmp cx, SPAinjury1
         je near .35
-        cmp cx, 0F0Fh
+        cmp cx, SPAboardback
         jl short .16
-        cmp cx, 1055h
+        cmp cx, SPAbenchcheckl
         jle near .35
 .16:
         mov word [regd4], 10h
@@ -1599,9 +1600,9 @@ updateanim:
         and byte [byte ebx+pflags], 0DFh
         and byte [byte ebx+pflags2], 0FDh
         mov si, word [byte ebx+SPA]
-        cmp si, 1027h
+        cmp si, SPAbenchcheckr
         jl short .7
-        cmp si, 1055h
+        cmp si, SPAbenchcheckl
         jg short .7
         mov word [byte ebx+Yvel], 0
         mov ax, word [byte ebx+Yvel]
@@ -1609,7 +1610,7 @@ updateanim:
         mov word [byte ebx+Xpos+2], 0FF60h
         mov word [byte ebx+facedir], 2
         or byte [byte ebx+pflags], 20h
-        mov edx, 7A1h
+        mov edx, SPAwallright
         mov eax, ebx
         call SetSPA
         jmp near findpc_ret5
@@ -3341,7 +3342,7 @@ resetplstuff:
         mov byte [byte ebx+pflags2], 0
         cmp word [byte ebx+position], byte 0
         jl short .3
-        mov edx, 289h
+        mov edx, SPAglide
         mov eax, ebx
         call SetSPA
         mov word [byte ebx+03Eh], 0

@@ -1,6 +1,7 @@
 ; Puck physics: puck against bodies, sticks and goalies, shot modes, deflections, the shot.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_56D06 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, assreplace, ChkShotStat, Crowdlevel, CwdExciteLvl, dopass_ret6, SpeechPatchNext
 extern EndPenaltyShot, FallDown, GetHot, GiveControl, gmode, gmode2, iflags, imul32
@@ -80,7 +81,7 @@ puckbody:
         call puckflip
         cmp word [byte ebx+0Ah], byte 8
         jg short .5
-        cmp word [byte ecx+SPA], 84Bh
+        cmp word [byte ecx+SPA], SPAcatch
         je near .x
         mov eax, 0A3h
         call sfx
@@ -106,7 +107,7 @@ puckbody:
         mov eax, ebx
         call FallDown
 .6:
-        cmp word [byte ecx+SPA], 84Bh
+        cmp word [byte ecx+SPA], SPAcatch
         je short .7
         movsx eax, si
         call sfx
@@ -119,7 +120,7 @@ puckbody:
         mov dh, dl
         or dh, 20h
         mov byte [byte ecx+pflags], dh
-        mov edx, 84Bh
+        mov edx, SPAcatch
         mov eax, ecx
         call SetSPA
 .x:
@@ -218,7 +219,7 @@ puckshadow:
         sar edx, 10h
         cmp edx, byte 0FFFFFFFFh
         je short .x
-        cmp word [byte eax+SPA], 7FDh
+        cmp word [byte eax+SPA], SPAsiren
         jne short .x
         mov word [byte eax+Xpos+2], 0
         mov word [byte eax+Ypos+2], 122h
@@ -330,7 +331,7 @@ puckglue:
         jne short .9
         call ChkShotStat
         call EndPenaltyShot
-        cmp word [byte edx+SPA], 181h
+        cmp word [byte edx+SPA], SPAgdive
         jne short .8
         mov word [byte edx+temp5], 5
         jmp short .9
@@ -508,9 +509,9 @@ puckgoalie:
         cmp ax, 1770h
         jle short .12
         mov ax, word [byte ebx+SPA]
-        cmp ax, 119Dh
+        cmp ax, SPAgofallback
         jl short .12
-        cmp ax, 121Dh
+        cmp ax, SPAgofallstick
         jg short .12
 .11:
         mov word [esp], 1
@@ -802,9 +803,9 @@ puckstick:
         cmp eax, 1770h
         jle short .8
         mov bx, word [byte esi+SPA]
-        cmp bx, 119Dh
+        cmp bx, SPAgofallback
         jl short .8
-        cmp bx, 121Dh
+        cmp bx, SPAgofallstick
         jg short .8
 .7:
         mov edx, 1
@@ -816,9 +817,9 @@ puckstick:
         cmp byte [eax], 0
         jl near .13
         mov di, word [byte esi+SPA]
-        cmp di, 13C5h
+        cmp di, SPAblockleft
         jl short .10
-        cmp di, 14ADh
+        cmp di, SPAblockknee
         jle near PassLaneChk_ret5a
 .10:
         mov edx, dword [puckc]
@@ -961,9 +962,9 @@ puckstick:
         imul ebx, ebx
         mov dword [regd1], ebx
         mov cx, word [byte esi+SPA]
-        cmp cx, 13C5h
+        cmp cx, SPAblockleft
         jl short .16
-        cmp cx, 14ADh
+        cmp cx, SPAblockknee
         jle near .19
 .16:
         mov eax, dword [regd0]
@@ -997,7 +998,7 @@ puckstick:
 .19:
         mov word [byte esi+03Eh], 8
 .20:
-        mov eax, 99h
+        mov eax, SPAgready2
         call sfx
         mov eax, esi
         call a2touchpuck
@@ -1049,10 +1050,10 @@ SetShotMode:
         call Findhittype
         test ax, ax
         je short .3
-        mov edx, 491h
+        mov edx, SPAshotb
         jmp short .4
 .3:
-        mov edx, 3F9h
+        mov edx, SPAshotf
 .4:
         mov eax, ebx
         call SetSPA
@@ -1114,13 +1115,13 @@ ShotMode:
         and byte [sflags], 0F7h
         or byte [byte edx+pflags], 20h
         mov ax, word [byte edx+SPA]
-        cmp ax, 491h
+        cmp ax, SPAshotb
         jb short .4
         jbe short .5
-        cmp ax, 0DD3h
+        cmp ax, SPAonetimef
         jb near .x
         jbe short .6
-        cmp ax, 0E2Bh
+        cmp ax, SPAonetimeb
         je short .7
         pop esi
         pop edx
@@ -1128,30 +1129,30 @@ ShotMode:
         pop ebx
         ret
 .4:
-        cmp ax, 3F9h
+        cmp ax, SPAshotf
         jne short .x
-        mov word [byte edx+SPA], 1265h
+        mov word [byte edx+SPA], SPAfakeshotf
         pop esi
         pop edx
         pop ecx
         pop ebx
         ret
 .5:
-        mov word [byte edx+SPA], 12DDh
+        mov word [byte edx+SPA], SPAfakeshotb
         pop esi
         pop edx
         pop ecx
         pop ebx
         ret
 .6:
-        mov word [byte edx+SPA], 1355h
+        mov word [byte edx+SPA], SPAfakeonetimef
         pop esi
         pop edx
         pop ecx
         pop ebx
         ret
 .7:
-        mov word [byte edx+SPA], 138Dh
+        mov word [byte edx+SPA], SPAfakeonetimeb
         pop esi
         pop edx
         pop ecx
@@ -1418,19 +1419,19 @@ doshot:
         cmp ax, word [byte esi+SCnum]
         je short .1
         mov bx, word [byte esi+SPA]
-        cmp bx, 0DD3h
+        cmp bx, SPAonetimef
         je short .1
-        cmp bx, 0E2Bh
+        cmp bx, SPAonetimeb
         je short .1
-        mov eax, 99h
+        mov eax, SPAgready2
         call sfx
         jmp near .40
 .1:
         or byte [gmode2], 10h
         mov di, word [byte esi+SPA]
-        cmp di, 491h
+        cmp di, SPAshotb
         je short .2
-        cmp di, 0E2Bh
+        cmp di, SPAonetimeb
         jne short .3
 .2:
         mov word [byte esp+0Ch], 0AAh

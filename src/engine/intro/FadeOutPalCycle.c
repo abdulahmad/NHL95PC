@@ -119,7 +119,7 @@ void PreGameIntro(void)
                 p->Yvel = 0;
                 p->Xvel = p->Yvel;
                 p->facedir = (p->pflags & 0x80) ? 0 : 4;
-                SetSPA(p, 0x99);
+                SetSPA(p, SPAgready2);
             } else {
                 lane = randomd0(5);
                 while (used[lane]) lane = (lane + 1) % 5;

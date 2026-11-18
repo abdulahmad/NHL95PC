@@ -9,7 +9,7 @@ void Holdplayer(Player *p)
     p->pflags |= 0x20;
     if (!p->impact) {
         if (OppInReach(p) == 1) {
-            SetSPA(p, 0x873);
+            SetSPA(p, SPAhook);
             return;
         }
         if (CanBlockShot(p)) {

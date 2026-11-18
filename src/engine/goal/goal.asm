@@ -1,6 +1,7 @@
 ; Goal scored: control, pass assignment, team energy, team resets.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_5AAAE progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, awglattr, awglstats, awlinetab
 extern awplattr, awplstats, awroster, awscore, awteamrec, awtmcoach_d2, awtmcoach_d3, awtmextra
@@ -473,7 +474,7 @@ Goal:
         mov eax, edi
         call assreplace
         lea eax, [dword edi+080h]
-        mov edx, 7FDh
+        mov edx, SPAsiren
         call SetSPA
         mov eax, dword [dword ebp+tmsort]
         mov edx, 7

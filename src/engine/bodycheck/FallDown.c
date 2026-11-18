@@ -37,7 +37,7 @@ void FallDown(Player *h, Player *p)
     if (p->SCnum == 0x10) {
         if (s == 0xB13) return;
         p->pflags |= 0x20;
-        SetSPA(p, 0xB13);
+        SetSPA(p, SPAreffallback);
         if (Crowdlevel <= 0x3E8) {
             Crowdlevel += 0x1F4;
             if (Crowdlevel > 0x3E8) Crowdlevel = 0x3E8;
@@ -137,7 +137,7 @@ pick:
             }
             CwdExciteLvl += 0xF;
             p->pflags |= 0x20;
-            SetSPA(p, 0xA0B);
+            SetSPA(p, SPAinjury1);
             setInjuryType(p);
             AddPenalty2(h, 0xA);
             return;
@@ -168,11 +168,11 @@ fall:
         return;
     }
     *puckc = -1;
-    if (penshotplayer < 0 && !(gmode & 0x10) && gameopts.optbit4 && p->SPA == 0x6D9 && !(p->facedir & 3)
+    if (penshotplayer < 0 && !(gmode & 0x10) && gameopts.optbit4 && p->SPA == SPAfallback && !(p->facedir & 3)
         && !(p->pflags2 & 0x10) && randomd0((p->pflags & 8) ? 0xC8 : 0xA0) <= p->impact && !(gmode & 1)
         && CanRemovePlayer(p)) {
         p->pflags |= 0x20;
-        SetSPA(p, 0xA0B);
+        SetSPA(p, SPAinjury1);
         setInjuryType(p);
         if (h->position == 0 || !gameopts.optbit0 || PBnum[(h->pflags & 0x40) != 0] >= 8 || !CanRemovePlayer(h)) {
             AddPenalty2(h, 0xA);

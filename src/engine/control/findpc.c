@@ -213,7 +213,7 @@ void Goal(Player *net)
     ((signed char *)puckcross)[7] = ((signed char *)puckcross)[3] = -1;
     pk->pflags |= 4;
     assreplace(pk, 0x1A);
-    SetSPA(pk + 1, 0x7FD);
+    SetSPA(pk + 1, SPAsiren);
     AddPenalty2(o->tmsort, 7);
     if (!(gmode & 0x10)) {
         EndPenaltyShot();
@@ -563,7 +563,7 @@ void updateplayers(void)
             t = p->tmptr;
             if (p->position == 0 && p->pnum >= 0x19 && !(gmode & 0x10)) ((GlStat *)t->tmglstats)[p->pnum - 0x19].min++;
         }
-        if (p->SPA != 0xA0B && (p->SPA < 0xF0F || p->SPA > 0x1055)) {
+        if (p->SPA != SPAinjury1 && (p->SPA < SPAboardback || p->SPA > SPAbenchcheckl)) {
             regd4.w = 0x10;
             if (HIWORD(p->Zpos) == 0) {
                 if (p->pflags & 1) regd2.l = 9;
@@ -712,13 +712,13 @@ void updateanim(Player *p)
             d = p->SPAnum;
             p->pflags &= ~pfalock;
             p->pflags2 &= ~pf2aip;
-            if (p->SPA >= 0x1027 && p->SPA <= 0x1055) {
+            if (p->SPA >= SPAbenchcheckr && p->SPA <= SPAbenchcheckl) {
                 p->Yvel = 0;
                 p->Xvel = p->Yvel;
                 HIWORD(p->Xpos) = -0xA0;
                 p->facedir = 2;
                 p->pflags |= pfalock;
-                SetSPA(p, 0x7A1);
+                SetSPA(p, SPAwallright);
                 return;
             }
             if (!loop) p->SPA = loop;

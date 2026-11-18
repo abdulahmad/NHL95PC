@@ -1,6 +1,7 @@
 ; Passing: open-man check, pass lanes, the pass itself and the computer's pass decision.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_53F8C progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, assexit, assinsert, AvgCline, awtmap, awtmstruct, bannermsg
 extern bannertimer, c1playernum, c2playernum, changeplayer, clockticks, CompLine, CompShoot, dirtab
@@ -174,28 +175,28 @@ SkillForAnim:
         call __CHK
         push edx
         mov dx, word [byte eax+038h]
-        cmp dx, 101h
+        cmp dx, SPAgstickr
         jb short .2
         jbe near .11
-        cmp dx, 11D5h
+        cmp dx, SPAgofallglove
         jb short .1
         jbe short .4
-        cmp dx, 121Dh
+        cmp dx, SPAgofallstick
         je near .11
         jmp near .12
 .1:
-        cmp dx, 119h
+        cmp dx, SPAgstickl
         je short .8
         jmp near .12
 .2:
-        cmp dx, 0C9h
+        cmp dx, SPAgglovel
         jb short .3
         jbe short .4
-        cmp dx, 0E1h
+        cmp dx, SPAgglovel2
         je short .4
         jmp short .12
 .3:
-        cmp dx, 0B1h
+        cmp dx, SPAgglover
         je short .7
         jmp short .12
 .4:
@@ -1514,7 +1515,7 @@ dopass:
         neg edx
         mov word [eax], dx
 .15:
-        mov word [byte esp+08h], 1B9h
+        mov word [byte esp+08h], SPAgswing
         or byte [byte ecx+pflags2], 2
         test byte [byte ecx+pflags], 8
         je near .22
@@ -1570,10 +1571,10 @@ dopass:
         call Findhittype
         test ax, ax
         jne short .21
-        mov word [byte esp+08h], 389h
+        mov word [byte esp+08h], SPApassf
         jmp short .22
 .21:
-        mov word [byte esp+08h], 3C1h
+        mov word [byte esp+08h], SPApassb
 .22:
         mov edx, dword [byte esp+06h]
         sar edx, 10h

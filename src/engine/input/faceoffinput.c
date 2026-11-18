@@ -12,15 +12,15 @@ void faceoffinput(Player *p)
     else fodir1 = regd0.w;
     if (p->pflags2 & 2) return;
     if (!(regd1.w & 0x10)) {
-        if (--p->temp5 < 0) SetSPA(p, 0x7F1);
+        if (--p->temp5 < 0) SetSPA(p, SPAfaceoffr);
         return;
     }
     p->pflags2 = p->pflags2 | 2;
     if (pucktemp1 < 0x11) {
         p->pflags |= 0x20;
-        SetSPA(p, 0x7DD);
+        SetSPA(p, SPAfaceoff);
     } else {
-        SetSPA(p, 0xD05);
+        SetSPA(p, SPAfaceoffpoke);
     }
     p->temp5 = -1;
 }

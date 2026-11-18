@@ -25,13 +25,13 @@ void assboxenter(Player *p)
         doortemp1 = 0xC8;
         doorpflags3 = 0;
         doorpflags |= 0x20;
-        SetSPA((Player *)sortobj15, 0xEA9);
+        SetSPA((Player *)sortobj15, SPAgvcup);
         p->attribute &= 0xF7;
         p->frame = 0x165;
         p->facedir = 2;
         ((unsigned char *)p)[0x46] = 0;
         p->pflags |= 0x20;
-        SetSPA(p, 0xE83);
+        SetSPA(p, SPAgetcup);
         p->tmptr->tmpde[p->pnum] = 0x800;
         assexit(p);
         SetBoxDoorObject((p->pflags & 0x40) != 0);
@@ -46,7 +46,7 @@ void assboxenter(Player *p)
             HIWORD(p->Xpos) = p->temp3;
             p->Yvel = 0;
             p->Xvel = 0;
-            SetSPA(p, 0x289);
+            SetSPA(p, SPAglide);
             p->pflags |= 4;
             if (p->facedir != 6) p->facedir = ((p->facedir < 7 && p->facedir > 2 ? 1 : -1) + p->facedir) & 7;
             if (p->facedir == 6) p->temp1 = 100;

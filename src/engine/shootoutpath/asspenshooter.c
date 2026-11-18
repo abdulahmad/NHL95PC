@@ -22,7 +22,7 @@ void asspenshooter(Player *p)
     }
     if (p->pflags & 0x20) return;
     if (gmode & 1) {
-        SetSPA(p, 0x289);
+        SetSPA(p, SPAglide);
         p->nopuck = 0x3C;
         donothing(p);
         return;
@@ -50,7 +50,7 @@ void asspenshooter(Player *p)
                 regd0.w = -HIWORD(p->Xpos);
                 regd1.w = (!(p->pflags & 0x80) ? -0xE8 : 0xE8) - (p->Ypos >> 16);
                 y = vtoa(regd0.w, regd1.w);
-                SetSPA(p, Findhittype(p, y) ? 0xDD3 : 0xE2B);
+                SetSPA(p, Findhittype(p, y) ? SPAonetimef : SPAonetimeb);
                 updateanim(p);
                 p->SPAcnt = 2;
                 doshot(p);

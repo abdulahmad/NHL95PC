@@ -379,7 +379,7 @@ void puckfaceoff2(Player *p)
         q->Xvel = 0;
         q->Yvel = 0;
         q->pflags &= 0xDF;
-        SetSPA(q, 0xC57);
+        SetSPA(q, SPAreffowait);
         SprSort();
         c2playernum[0] = c1playernum[0] = -1;
         if (cont1team) changeplayer(p, regd4.w = 0);
@@ -403,7 +403,7 @@ void puckfaceoff2(Player *p)
         return;
     }
     if ((k = --p->temp1) >= 0) {
-        if (k == 0x11) SetSPA(&SortCords[0x10], 0xC43);
+        if (k == 0x11) SetSPA(&SortCords[0x10], SPArefdrop);
         if (p->temp1 == 0) return;
         regd0.w = (p->temp1 + 6) >> 3;
         if (regd0.w > 2) return;

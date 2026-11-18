@@ -302,7 +302,7 @@ void asspenalty(Player *p)
     if (--p->temp1 >= 0) return;
     p->temp1 += 8;
     p->pflags |= 4;
-    SetSPA(p, 0x289);
+    SetSPA(p, SPAglide);
     regd2.w = 4;
     if (p->facedir != regd2.w) {
         regd2.w = (regd2.w - p->facedir) & 7;
@@ -315,7 +315,7 @@ void asspenalty(Player *p)
     if (regd2.w != p->facedir) return;
     p->pflags |= 0x20;
     p->facedir = 2;
-    SetSPA(p, 0x7A1);
+    SetSPA(p, SPAwallright);
     p->pflags2 &= 0xEF;
     if (p->tmptr->tmap > 4) p->tmptr->tmap--;
     assreplace(p, 0xD);
@@ -528,7 +528,7 @@ void assreffollow(Player *p)
     }
     if (p->pflags & 2) {
         p->pflags &= 0xFD;
-        SetSPA(p, 0xA5B);
+        SetSPA(p, SPArefglide);
     }
     if ((*puckx < 0 ? -*puckx : *puckx) < 0x32 && (*pucky < 0 ? -*pucky : *pucky) > 0xAC
         && (*pucky < 0 ? -*pucky : *pucky) < 0xE8) {
@@ -582,7 +582,7 @@ void assrefwhistle(Player *p)
         p->pflags2 |= 0x20;
         p->Wallcos = 0;
         p->Wallsin = 0;
-        SetSPA(p, 0xA5B);
+        SetSPA(p, SPArefglide);
         if (CrowdOnStoppage()) return;
         if (ovltimer == 0x100) ovltimer = 0x258;
     }
@@ -592,7 +592,7 @@ void assrefwhistle(Player *p)
     if (regd0.w < -10) goto skate;
     if (--p->temp1 >= 0) return;
     p->temp1 += 8;
-    SetSPA(p, 0xA5B);
+    SetSPA(p, SPArefglide);
     regd2.l = 2;
     if (regd2.w != p->facedir) {
         regd2.w = (regd2.w - p->facedir) & 7;
@@ -602,7 +602,7 @@ void assrefwhistle(Player *p)
     p->Xvel = 0;
     if (regd2.w != p->facedir) return;
     p->pflags |= 0x20;
-    SetSPA(p, 0xC1B);
+    SetSPA(p, SPArefpointgoa);
     assreplace(p, 0x22);
     return;
 skate:
@@ -642,7 +642,7 @@ void assrefdrop(Player *p)
         *puckvy = 0;
         *(short *)puckvz = 0;
         *(short *)puckz = -100;
-        SetSPA(p, 0xA5B);
+        SetSPA(p, SPArefglide);
     }
     dx = HIWORD(p->Xpos) - p->temp3;
     dy = HIWORD(p->Ypos) - p->temp4;
@@ -653,7 +653,7 @@ void assrefdrop(Player *p)
     HIWORD(p->Ypos) = p->temp4;
     if (--p->temp1 >= 0) return;
     p->temp1 += 8;
-    SetSPA(p, 0xA5B);
+    SetSPA(p, SPArefglide);
     regd2.l = fox <= 0 ? 2 : 6;
     if (regd2.w != p->facedir) {
         regd2.w = (regd2.w - p->facedir) & 7;
@@ -699,7 +699,7 @@ void assrefgoalline(Player *p)
     if ((regd0.w < 0 ? -regd0.w : regd0.w) > 0xC) goto skate;
     if (--p->temp1 >= 0) return;
     p->temp1 += 8;
-    SetSPA(p, 0xA5B);
+    SetSPA(p, SPArefglide);
     regd2.l = (short)vtoa((short)-HIWORD(p->Xpos), (short)(p->temp4 - HIWORD(p->Ypos)));
     if (regd2.w != p->facedir) {
         regd2.w = (regd2.w - p->facedir) & 7;
@@ -709,7 +709,7 @@ void assrefgoalline(Player *p)
     p->Yvel = 0;
     p->Xvel = p->Yvel;
     p->pflags |= 0x20;
-    SetSPA(p, 0xC1B);
+    SetSPA(p, SPArefpointgoa);
     assreplace(p, 0x20);
     return;
 skate:

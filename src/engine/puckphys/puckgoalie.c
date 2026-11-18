@@ -36,7 +36,7 @@ void puckgoalie(Player *pk, Player *p)
         && ABS(HIWORD(SortCords[shotplayer].Ypos)) > 0x58
         && ((HIWORD(SortCords[shotplayer].Ypos) > 0) ^ ((p->pflags & 0x80) != 0))) {
         v = ABS(*puckvy) + ABS(*puckvx);
-        if (v > 0x4268 || (v > 0x1770 && p->SPA >= 0x119D && p->SPA <= 0x121D)) save = 1;
+        if (v > 0x4268 || (v > 0x1770 && p->SPA >= SPAgofallback && p->SPA <= SPAgofallstick)) save = 1;
     }
     ChkShotStat();
     a2touchpuck(p);

@@ -302,13 +302,13 @@ void puckstick(Player *puck, Player *p)
             && ABS(HIWORD(SortCords[shotplayer].Ypos)) > 0x58
             && ((HIWORD(SortCords[shotplayer].Ypos) > 0) ^ ((p->pflags & 0x80) != 0))) {
             if (ABS(*puckvy) > 0x2EE0) flag = 1;
-            else if (ABS(*puckvy) > 0x1770 && p->SPA >= 0x119D && p->SPA <= 0x121D) flag = 1;
+            else if (ABS(*puckvy) > 0x1770 && p->SPA >= SPAgofallback && p->SPA <= SPAgofallstick) flag = 1;
         }
         ChkShotStat();
     }
     p->pflags &= ~1;
     if (*puckc >= 0) {
-        if (p->SPA >= 0x13C5 && p->SPA <= 0x14AD) return;
+        if (p->SPA >= SPAblockleft && p->SPA <= SPAblockknee) return;
         q = &SortCords[*puckc];
         if (!(((unsigned char)p->pflags ^ (unsigned char)q->pflags) & 0x40)) return;
         if (regd0.ul > 0x24) return;
@@ -332,7 +332,7 @@ void puckstick(Player *puck, Player *p)
         if (!(gmode2 & 0x10)) regd1.w = p->stickhand * 0x2BC;
         regd1.w += 0x32C8;
         regd1.l = regd1.w * regd1.w;
-        if ((p->SPA < 0x13C5 || p->SPA > 0x14AD)
+        if ((p->SPA < SPAblockleft || p->SPA > SPAblockknee)
             && (regd0.ul <= regd1.ul || p->SCnum == passplayer && randomd0(2))) {
             *(short *)puckvz = 0;
             puckglue(p);

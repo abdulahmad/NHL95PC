@@ -221,12 +221,12 @@ void doshot(Player *p)
     shotplayer = p->SCnum;
     sflags &= 0xF7;
     p->pflags |= 0x20;
-    if (*puckc != p->SCnum && p->SPA != 0xDD3 && p->SPA != 0xE2B) {
+    if (*puckc != p->SCnum && p->SPA != SPAonetimef && p->SPA != SPAonetimeb) {
         sfx(0x99);
         return;
     }
     gmode2 |= 0x10;
-    if (p->SPA == 0x491 || p->SPA == 0xE2B) {
+    if (p->SPA == SPAshotb || p->SPA == SPAonetimeb) {
         snd = 0xAA;
         passspeed -= passspeed >> 2;
     } else {

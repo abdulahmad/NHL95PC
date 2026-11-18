@@ -39,7 +39,7 @@ void noturn0(Player *p, short chg, short dir)
         if (p->pflags & pfrev) spa = SPAglideback;
         else if (p->SCnum == SCref) {
             if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
-                spa = SPArefglidesig;
+                spa = SPAarmupglide;
             else spa = SPArefglide;
         } else spa = SPAglide;
         SetSPA(p, spa);
@@ -48,10 +48,10 @@ void noturn0(Player *p, short chg, short dir)
     if (!(p->pflags & pfrev)) {
         if (p->SCnum == SCref) {
             if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
-                spa = SPArefskatesig;               /* referee skate, signalling */
+                spa = SPAarmupskate;               /* referee skate, signalling */
             else spa = SPArefskate;
         } else if (*puckc == p->SCnum) spa = SPAskatewp;
-        else if (p->pflags2 & 0x40) spa = 0x8D3;    /* pflags2 bit 6 */
+        else if (p->pflags2 & 0x40) spa = SPAstumble;    /* pflags2 bit 6 */
         else spa = SPAskate;
     } else spa = SPAskateback;
     if (!(p->pflags2 & pf2aip)) SetSPA(p, spa);     /* pf2aip */

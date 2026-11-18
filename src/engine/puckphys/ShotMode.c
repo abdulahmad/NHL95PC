@@ -19,16 +19,16 @@ void ShotMode(Player *p)
         p->pflags |= 0x20;
         switch ((unsigned short)p->SPA) {
         case 0x3F9:
-            p->SPA = 0x1265;
+            p->SPA = SPAfakeshotf;
             break;
         case 0x491:
-            p->SPA = 0x12DD;
+            p->SPA = SPAfakeshotb;
             break;
         case 0xDD3:
-            p->SPA = 0x1355;
+            p->SPA = SPAfakeonetimef;
             break;
         case 0xE2B:
-            p->SPA = 0x138D;
+            p->SPA = SPAfakeonetimeb;
             break;
         }
         return;

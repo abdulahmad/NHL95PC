@@ -21,7 +21,7 @@ void asseben(Player *p)
         p->facedir = 2;
         p->pflags &= 0xCF;
         p->pflags |= 0x20;
-        SetSPA(p, p->position == 0 ? 0xD15 : 0x7A1);
+        SetSPA(p, p->position == 0 ? SPAgwallright : SPAwallright);
         return;
     }
     p->facedir = 4;

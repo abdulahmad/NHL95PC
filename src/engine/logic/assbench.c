@@ -67,7 +67,7 @@ void assbench(Player *p)
                 if (p->facedir != 4) return;
                 p->Xvel = -0x800;
                 p->facedir = 2;
-                SetSPA(p, p->position == 0 ? 0xD2D : 0x7BF);
+                SetSPA(p, p->position == 0 ? SPAgwallleft : SPAwallleft);
                 p->pflags |= 0x20;
                 p->temp1 = 0x64;
                 return;

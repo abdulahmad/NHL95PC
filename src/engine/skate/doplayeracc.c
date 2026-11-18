@@ -28,7 +28,7 @@ void doplayeracc(Player *p, short dir)
     if (p->pflags & pfrev) spa = SPAglideback;
     else if (p->SCnum == SCref) {
         if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
-            spa = SPArefglidesig;
+            spa = SPAarmupglide;
         else spa = SPArefglide;
     } else spa = SPAglide;
     dir &= 0xF;
@@ -82,15 +82,15 @@ done:
         if ((doplayeracc_ftab[t] < 0) ^ ((p->attribute & 8) != 0)) {
             if (p->SCnum == SCref) {
                 if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
-                    spa = 0xBAB;
-                else spa = 0xABB;
-            } else spa = 0x331;                     /* SPAturnl */
+                    spa = SPAarmupturnl;
+                else spa = SPArefturnl;
+            } else spa = SPAturnl;                     /* SPAturnl */
         } else {
             if (p->SCnum == SCref) {
                 if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
-                    spa = 0xBC3;
-                else spa = 0xAD3;
-            } else spa = 0x349;                     /* SPAturnr */
+                    spa = SPAarmupturnr;
+                else spa = SPArefturnr;
+            } else spa = SPAturnr;                     /* SPAturnr */
         }
         p->pflags2 |= pf2aip;
     }

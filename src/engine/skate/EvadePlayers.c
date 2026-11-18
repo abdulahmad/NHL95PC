@@ -498,13 +498,13 @@ void dostop(Player *p)
             p->pflags2 |= pf2aip;
             if (p->SCnum == SCref) {
                 if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
-                    spa = SPArefstopsig;
+                    spa = SPAarmupstop;
                 else spa = SPArefstop;
             } else spa = SPAstop;
         } else {
             if (p->SCnum == SCref) {
                 if (refsignal != 0 || ((gmode & gmclock) == 0 && ((gmode2 & 0x80) || (gmode & 8))))
-                    spa = SPArefglidesig;
+                    spa = SPAarmupglide;
                 else spa = SPArefglide;
             } else spa = SPAglide;
         }

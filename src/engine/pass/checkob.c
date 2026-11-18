@@ -468,7 +468,7 @@ void burst(Player *p)
     p->Xvel += dirtab[p->facedir * 2] * regd0.w;
     p->Yvel += dirtab_y[p->facedir * 2] * regd0.w;
     p->pflags |= pfalock;
-    SetSPA(p, 0x621);
+    SetSPA(p, SPAburst);
 }
 
 /* check4check (53537; 93G logic93 check4check, "look for good opportunity for checking opponent"): the odds are

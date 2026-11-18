@@ -1,6 +1,7 @@
 ; Shootout skate paths and the penalty shooter.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_4F990 progbits alloc exec nowrite align=1
 extern __CHK, assexit, donothing, doshot, Findhittype, gmode, passdir, passspeed
 extern pspathdir, pspathside, puckc, randomd0, regd0, regd1, SetSPA, ShootoutPathData
@@ -182,7 +183,7 @@ asspenshooter:
         jne near .x
         test byte [gmode], 1
         je short .3
-        mov edx, 289h
+        mov edx, SPAglide
         mov eax, ebx
         call SetSPA
         mov word [byte ebx+03Eh], 3Ch
@@ -276,10 +277,10 @@ asspenshooter:
         call Findhittype
         test ax, ax
         je short .11
-        mov eax, 0DD3h
+        mov eax, SPAonetimef
         jmp short .12
 .11:
-        mov eax, 0E2Bh
+        mov eax, SPAonetimeb
 .12:
         movsx edx, ax
         mov eax, ebx

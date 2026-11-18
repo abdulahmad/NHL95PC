@@ -2,19 +2,126 @@
 #ifndef CONSTS_H
 #define CONSTS_H
 
-/* SPAtab animation numbers */
+
+/* SPAtab animation numbers: one per sequence of SPAtab (src/data/engine/faceoff_hockey.asm), named as the labels there */
+#define SPAgready       0x1
+#define SPAgready2      0x99
+#define SPAgglover      0xB1
+#define SPAgglovel      0xC9
+#define SPAgglovel2     0xE1
+#define SPAgstickr      0x101
+#define SPAgstickl      0x119
+#define SPAgstackr      0x131
+#define SPAgstackl      0x159
+#define SPAgdive        0x181
+#define SPAgswing       0x1B9
+#define SPAgskate       0x1F1
+#define SPApflip        0x239
 #define SPAglide        0x289
-#define SPAstop         0x361
-#define SPArefglide     0xA5B   /* referee glide */
-#define SPArefstop      0xAEB   /* referee stop */
-#define SPArefglidesig  0xB4B   /* referee glide, signalling */
-#define SPArefstopsig   0xBDB   /* referee stop, signalling */
+#define SPAskatewp      0x2A1
 #define SPAskate        0x2E9
-#define SPAskatewp      0x2A1   /* skating with the puck */
+#define SPAturnl        0x331
+#define SPAturnr        0x349
+#define SPAstop         0x361
+#define SPApassf        0x389
+#define SPApassb        0x3C1
+#define SPAshotf        0x3F9
+#define SPAshotb        0x491
 #define SPAglideback    0x529
 #define SPAskateback    0x541
-#define SPArefskate     0xA73   /* referee skate */
-#define SPArefskatesig  0xB63   /* referee skate, signalling */
+#define SPAsweepchk     0x589
+#define SPAshoulderchkl 0x5C1
+#define SPAshoulderchkr 0x5D9
+#define SPAhipchkl      0x5F1
+#define SPAhipchkr      0x609
+#define SPAburst        0x621
+#define SPAHold         0x639
+#define SPAHold2        0x651
+#define SPAflail        0x669
+#define SPAfallfwd      0x681
+#define SPAfallback     0x6D9
+#define SPAcelebrate    0x731
+#define SPApump         0x769
+#define SPAwallright    0x7A1
+#define SPAwallleft     0x7BF
+#define SPAfaceoff      0x7DD
+#define SPAfaceoffr     0x7F1
+#define SPAsiren        0x7FD
+#define SPAbglass       0x821
+#define SPAstanley      0x833
+#define SPAcatch        0x84B
+#define SPAhook         0x873
+#define SPAhook2        0x88B
+#define SPAstumble      0x8D3
+#define SPAfake         0x92B
+#define SPAflip         0x993
+#define SPAinjury1      0xA0B
+#define SPArefglide     0xA5B
+#define SPArefskate     0xA73
+#define SPArefturnl     0xABB
+#define SPArefturnr     0xAD3
+#define SPArefstop      0xAEB
+#define SPAreffallback  0xB13
+#define SPAarmupglide   0xB4B
+#define SPAarmupskate   0xB63
+#define SPAarmupturnl   0xBAB
+#define SPAarmupturnr   0xBC3
+#define SPAarmupstop    0xBDB
+#define SPArefpickup    0xC03
+#define SPArefpointgoa  0xC1B
+#define SPArefdrop      0xC43
+#define SPAreffowait    0xC57
+#define SPArefrough     0xC63
+#define SPArefcharge    0xC73
+#define SPArefslash     0xC8B
+#define SPArefxcheck    0xC9B
+#define SPArefhook      0xCAB
+#define SPAreftrip      0xCBB
+#define SPArefinterfer  0xCCB
+#define SPArefhold      0xCD9
+#define SPArefabuseoff  0xCE7
+#define SPArefbehind    0xCF5
+#define SPAfaceoffpoke  0xD05
+#define SPAgwallright   0xD15
+#define SPAgwallleft    0xD2D
+#define SPAanthem1      0xD45
+#define SPAanthem2      0xD57
+#define SPAanthem3      0xD67
+#define SPAanthem4      0xD7B
+#define SPAanthem5      0xD89
+#define SPAdrink        0xD97
+#define SPArefanthem1   0xDAB
+#define SPArefanthem2   0xDC3
+#define SPAonetimef     0xDD3
+#define SPAonetimeb     0xE2B
+#define SPAgetcup       0xE83
+#define SPAbrcup        0xE97
+#define SPAgvcup        0xEA9
+#define SPAclap         0xEB5
+#define SPAstansk       0xECB
+#define SPAcrosscheck   0xED7
+#define SPAboardback    0xF0F
+#define SPAboardfront   0xF55
+#define SPAboardright   0xF9B
+#define SPAboardleft    0xFE1
+#define SPAbenchcheckr  0x1027
+#define SPAbenchcheckl  0x1055
+#define SPArefpenshot   0x1083
+#define SPAgoaliepoke   0x1095
+#define SPAgoalieknee   0x10CD
+#define SPAgokneehold   0x1135
+#define SPAgofallback   0x119D
+#define SPAgofallglove  0x11D5
+#define SPAgofallstick  0x121D
+#define SPAfakeshotf    0x1265
+#define SPAfakeshotb    0x12DD
+#define SPAfakeonetimef 0x1355
+#define SPAfakeonetimeb 0x138D
+#define SPAblockleft    0x13C5
+#define SPAblockright   0x141D
+#define SPAblockfront   0x1475
+#define SPAblockknee    0x14AD
+#define SPArefelbow     0x14E5
 
 /* player structure flag bits */
 #define pfrev           0x10    /* pflags bit 4: skating backwards */
@@ -27,17 +134,6 @@
 #define tmflcm          0x02    /* tmflags bit 1: line change mode is on for the team */
 #define pf2lcm          0x08    /* pflags2 bit 3: line change mode, keeps the joystick */
 
-#define SPAgready       0x001   /* goalie ready stance */
-#define SPAgskate       0x1F1   /* goalie skate */
-#define SPAsweep        0x589   /* sweep check */
-#define SPApflip        0x239   /* puck flip */
-#define SPAholdchk      0x873   /* hold check */
-#define SPAholdchkair   0x639   /* hold check, stick in the air */
-/* Shot-block animations: two slides that fall, and two high poses. */
-#define SPAblockslide   0x13C5  /* sliding shot block; hand and dive side disagree */
-#define SPAblockslide2  0x141D  /* sliding shot block */
-#define SPAblockhigh    0x1475  /* high shot block; puck is high or rising fast */
-#define SPAblocklow     0x14AD  /* high shot block; puck is low and not rising fast */
 #define sfwrap          0x10    /* sflags bit 4: the replay buffer has wrapped */
 #define sfpz            0x01    /* sflags bit 0: pause mode */
 #define REPLAYSIZE      0x9600  /* replay buffer bytes, 80h per frame */

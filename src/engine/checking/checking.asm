@@ -1,6 +1,7 @@
 ; Body checks: sweep check, burst, shot blocks, check aggression and the check decision.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_53294 progbits alloc exec nowrite align=1
 extern __CHK, Acheck, AddPenalty, Bcheck, blockspd, blockspd_y, c1playernum, CanBlockShot
 extern CheckBump, checkinglist_m2, checkob, checkob_ret5, dirtab, dirtab_y, FallDown, gameopts
@@ -37,7 +38,7 @@ Sweepcheck:
         call __CHK
         push edx
         or byte [byte eax+044h], 20h
-        mov edx, 589h
+        mov edx, SPAsweepchk
         call SetSPA
         pop edx
         ret
@@ -101,7 +102,7 @@ burst:
         imul dx, word [regd0]
         add word [byte eax+Yvel], dx
         or byte [byte eax+pflags], 20h
-        mov edx, 621h
+        mov edx, SPAburst
         call SetSPA
         jmp near checkob_ret5
 %endif ; C
@@ -136,10 +137,10 @@ BlockShotDive:
         mov ebx, dword [puckvz]
         cmp word [ebx], 7D0h
         jge short .2
-        mov ebx, 14ADh
+        mov ebx, SPAblockknee
         jmp near .19
 .2:
-        mov ebx, 1475h
+        mov ebx, SPAblockfront
         jmp near .19
 .3:
         mov dx, word [byte eax+04Ah]
@@ -192,10 +193,10 @@ BlockShotDive:
         and ebx, 0FFh
         xor ebx, ecx
         je short .11
-        mov ebx, 13C5h
+        mov ebx, SPAblockleft
         jmp short .12
 .11:
-        mov ebx, 141Dh
+        mov ebx, SPAblockright
 .12:
         mov ecx, dword [byte eax+Xvel-2]
         sar ecx, 10h
@@ -622,9 +623,9 @@ checkcheck:
         jmp near .46
 .1:
         mov dx, word [byte ecx+SPA]
-        cmp dx, 639h
+        cmp dx, SPAHold
         je short .2
-        cmp dx, 873h
+        cmp dx, SPAhook
         jne short .3
 .2:
         mov edx, ecx
@@ -632,14 +633,14 @@ checkcheck:
         call holdcheck
         jmp near .45
 .3:
-        cmp dx, 589h
+        cmp dx, SPAsweepchk
         jne short .4
         mov edx, ecx
         mov eax, esi
         call Bcheck
         jmp near .45
 .4:
-        cmp word [byte esi+SPA], 621h
+        cmp word [byte esi+SPA], SPAburst
         jne near .45
         test byte [gmode], 1
         je short .5
@@ -795,7 +796,7 @@ checkcheck:
         test al, 3
         je short .24
 .23:
-        mov edx, 0ED7h
+        mov edx, SPAcrosscheck
         jmp short .25
 .24:
         movsx eax, bx
@@ -950,7 +951,7 @@ checkcheck:
         call checkagr
         cmp ax, 3
         jg near .44
-        cmp word [byte esi+SPA], 0ED7h
+        cmp word [byte esi+SPA], SPAcrosscheck
         jne short .39
         mov eax, 0Ah
         call randomd0

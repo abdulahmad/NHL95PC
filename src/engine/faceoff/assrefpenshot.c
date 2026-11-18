@@ -89,7 +89,7 @@ void assrefpenshot(Player *p)
             p->Xvel = p->Yvel;
             if (p->temp5 == 0) {
                 p->pflags |= pfalock;
-                SetSPA(p, 0xC03);
+                SetSPA(p, SPArefpickup);
                 p->temp3 = 0x96;
                 {
                     int spot;

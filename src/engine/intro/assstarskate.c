@@ -51,7 +51,7 @@ void assstarskate(Player *p)
         p->temp4 = PATHY(side, p->temp5);
         if (p->temp1 == p->temp5) {
             p->pflags |= 0x20;
-            SetSPA(p, 0x731);
+            SetSPA(p, SPAcelebrate);
             return;
         }
     }

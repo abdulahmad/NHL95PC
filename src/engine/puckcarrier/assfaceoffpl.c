@@ -43,13 +43,13 @@ void assfaceoffpl(Player *p)
     if (p->temp5 >= 0 || ((unsigned short)pucktemp1 > 0x10 && randomd0(8))) {
         t = --p->temp5;
         if (t >= 0) return;
-        spa = 0x7F1;
+        spa = SPAfaceoffr;
     } else {
         p->temp5 = -1;
         if (pucktemp1 < 0x11) {
             p->pflags |= 0x20;
-            spa = 0x7DD;
-        } else spa = 0xD05;
+            spa = SPAfaceoff;
+        } else spa = SPAfaceoffpoke;
     }
     SetSPA(p, spa);
 }
