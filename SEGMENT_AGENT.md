@@ -42,7 +42,7 @@ Name preference (since 2 Nov 2026): the current 94G name when the body is the sa
 ## Build
 
 ```
-make            # or ./build.sh; needs nasm, python3 (retail/HOCKEY.EXE is committed; root HOCKEY.EXE is a pointer)
+make            # or ./build.sh; needs nasm, python3 (your own retail/HOCKEY.EXE, not in the repo; root HOCKEY.EXE is a pointer)
 ```
 `make` assembles every `src/` file, links (`tools/build/link_src.py`) and writes `build/HOCKEY.EXE`. It must end with `MATCH: build/HOCKEY.EXE is byte-identical to the retail HOCKEY.EXE`. On a mismatch the link prints the first differing addresses (built byte, retail byte) and any extra or missing fixups, then fails. Find the address with `python3 tools/build/asmaddr.py <address>`.
 

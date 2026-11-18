@@ -1,6 +1,6 @@
 # NHL 95 PC (HOCKEY.EXE) – rebuild + toolchain notes
 
-All paths are relative to the repo root. The retail `HOCKEY.EXE` is committed at `retail/HOCKEY.EXE`; root `HOCKEY.EXE` is a pointer. The three Watcom binaries for C matching are committed under `tools/watcom/` (`$WATCOM_ROOT` defaults there; override with the env var). Optional full historic installs for experiments still live outside the repo (e.g. `~/watcom`).
+All paths are relative to the repo root. The retail `HOCKEY.EXE` is not in the repo: put your own copy at `retail/HOCKEY.EXE` (gitignored); root `HOCKEY.EXE` is a pointer to it. The three Watcom binaries for C matching are committed under `tools/watcom/` (`$WATCOM_ROOT` defaults there; override with the env var). Optional full historic installs for experiments still live outside the repo (e.g. `~/watcom`).
 
 ## 1. Byte-exact rebuild (`tools/build/rebuild_exe.py`)
 
