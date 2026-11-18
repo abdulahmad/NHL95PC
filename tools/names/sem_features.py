@@ -91,8 +91,8 @@ def parse_game(game, files):
         out.append(L)
     return out
 G = []
-G += parse_game('93G', [f for f in sorted(glob.glob('ref/93/src/*.asm')) if not f.endswith(('_stub.asm', 'ram93.asm'))])
-G += parse_game('94G', [f for f in sorted(glob.glob('ref/94/src/*.asm')) if os.path.basename(f) not in ('nhl94.asm', 'ram94.asm')])
+G += parse_game('93G', [f for f in sorted(glob.glob('ref/93/src/**/*.asm', recursive=True)) if not f.endswith(('_stub.asm', 'ram93.asm'))])
+G += parse_game('94G', [f for f in sorted(f for f in glob.glob('ref/94/src/**/*.asm', recursive=True) if '/segacd/' not in f.replace(os.sep, '/')) if os.path.basename(f) not in ('nhl94.asm', 'ram94.asm')])
 # ---- PC side
 idx = pickle.load(open('tools/lst_index.pkl', 'rb')); items = idx['items']
 FD = pickle.load(open('tools/funcs.pkl', 'rb')); F = FD['funcs']; n2a = FD['name2addr']; S = FD['strings']

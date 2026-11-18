@@ -36,7 +36,7 @@ def _labels(globpat):
             if m: out.setdefault(m.group(1).lower(), os.path.basename(fn))
     return out
 L92 = _labels('ref/92/**/*.asm') if os.path.isdir('ref/92') else {}
-L95 = _labels('ref/95/src/*.asm')
+L95 = _labels('ref/95/src/**/*.asm')
 for u in json.load(open('ref/95/units95.json')):
     L95.setdefault(str(u[3]).split('+')[0].split('/')[0].lower(), str(u[5]))
 def lineage(n):

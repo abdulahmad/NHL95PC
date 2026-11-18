@@ -11,7 +11,7 @@ for ln in open('ref/94/src/nhl94.asm', encoding='latin1'):
     if m: ORDER.append(os.path.basename(m.group(1).replace('\\', '/')))
 LBL = re.compile(r'^([A-Za-z_][\w]*):?(?=\s|;|$)')
 labels = []
-for path in sorted(glob.glob(SRC + '/*.asm')):
+for path in sorted(f for f in glob.glob(SRC + '/**/*.asm', recursive=True) if '/segacd/' not in f.replace(os.sep, '/')):
     fn = os.path.basename(path)
     if fn in ('nhl94.asm', 'ram94.asm'): continue
     cur = None
