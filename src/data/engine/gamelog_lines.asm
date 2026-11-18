@@ -1,6 +1,7 @@
 ; Replay bookkeeping, and the name lists the debug dump prints.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_CD34C progbits alloc noexec write align=1
 extern str_pen, str_NoPenalty, str_Roughing, str_Charging2, str_Slashing2, str_Xcheck, str_Hooking2, str_Tripping2
 extern str_Interfer, str_Holding2, str_Histick, str_Boarding2, str_Elbowing2, str_Abuse, str_Checkbnd, str_Penshot
@@ -127,38 +128,23 @@ replaysfx:                                      ; sfx number kept from the off t
                                                 ; ReplayRecordReset, updatereplay
         db 0FFh,0FFh,00h,00h
 dbg_spalist:                                    ; 78h dword SPA values: DebugMonitor searches it for the
-                                                ; object's SPA to find its name in dbg_spanames; used by
-                                                ; DebugMonitor
-        db 01h,00h,00h,00h,099h,00h,00h,00h,0B1h,00h,00h,00h,0C9h,00h,00h,00h
-        db 0E1h,00h,00h,00h,01h,01h,00h,00h,019h,01h,00h,00h,031h,01h,00h,00h
-        db 059h,01h,00h,00h,081h,01h,00h,00h,0B9h,01h,00h,00h,0F1h,01h,00h,00h
-        db 039h,02h,00h,00h,089h,02h,00h,00h,0A1h,02h,00h,00h,0E9h,02h,00h,00h
-        db 031h,03h,00h,00h,049h,03h,00h,00h,061h,03h,00h,00h,089h,03h,00h,00h
-        db 0C1h,03h,00h,00h,0F9h,03h,00h,00h,091h,04h,00h,00h,029h,05h,00h,00h
-        db 041h,05h,00h,00h,089h,05h,00h,00h,0C1h,05h,00h,00h,0D9h,05h,00h,00h
-        db 0F1h,05h,00h,00h,09h,06h,00h,00h,021h,06h,00h,00h,039h,06h,00h,00h
-        db 051h,06h,00h,00h,069h,06h,00h,00h,081h,06h,00h,00h,0D9h,06h,00h,00h
-        db 031h,07h,00h,00h,069h,07h,00h,00h,0A1h,07h,00h,00h,0BFh,07h,00h,00h
-        db 0DDh,07h,00h,00h,0F1h,07h,00h,00h,0FDh,07h,00h,00h,021h,08h,00h,00h
-        db 033h,08h,00h,00h,04Bh,08h,00h,00h,073h,08h,00h,00h,08Bh,08h,00h,00h
-        db 0D3h,08h,00h,00h,02Bh,09h,00h,00h,093h,09h,00h,00h,0Bh,0Ah,00h,00h
-        db 05Bh,0Ah,00h,00h,073h,0Ah,00h,00h,0BBh,0Ah,00h,00h,0D3h,0Ah,00h,00h
-        db 0EBh,0Ah,00h,00h,013h,0Bh,00h,00h,04Bh,0Bh,00h,00h,063h,0Bh,00h,00h
-        db 0ABh,0Bh,00h,00h,0C3h,0Bh,00h,00h,0DBh,0Bh,00h,00h,03h,0Ch,00h,00h
-        db 01Bh,0Ch,00h,00h,043h,0Ch,00h,00h,057h,0Ch,00h,00h,063h,0Ch,00h,00h
-        db 073h,0Ch,00h,00h,08Bh,0Ch,00h,00h,09Bh,0Ch,00h,00h,0ABh,0Ch,00h,00h
-        db 0BBh,0Ch,00h,00h,0CBh,0Ch,00h,00h,0D9h,0Ch,00h,00h,0E7h,0Ch,00h,00h
-        db 0F5h,0Ch,00h,00h,05h,0Dh,00h,00h,015h,0Dh,00h,00h,02Dh,0Dh,00h,00h
-        db 045h,0Dh,00h,00h,057h,0Dh,00h,00h,067h,0Dh,00h,00h,07Bh,0Dh,00h,00h
-        db 089h,0Dh,00h,00h,097h,0Dh,00h,00h,0ABh,0Dh,00h,00h,0C3h,0Dh,00h,00h
-        db 0D3h,0Dh,00h,00h,02Bh,0Eh,00h,00h,083h,0Eh,00h,00h,097h,0Eh,00h,00h
-        db 0A9h,0Eh,00h,00h,0B5h,0Eh,00h,00h,0CBh,0Eh,00h,00h,0D7h,0Eh,00h,00h
-        db 0Fh,0Fh,00h,00h,055h,0Fh,00h,00h,09Bh,0Fh,00h,00h,0E1h,0Fh,00h,00h
-        db 027h,010h,00h,00h,055h,010h,00h,00h,083h,010h,00h,00h,095h,010h,00h,00h
-        db 0CDh,010h,00h,00h,035h,011h,00h,00h,09Dh,011h,00h,00h,0D5h,011h,00h,00h
-        db 01Dh,012h,00h,00h,065h,012h,00h,00h,0DDh,012h,00h,00h,055h,013h,00h,00h
-        db 08Dh,013h,00h,00h,0C5h,013h,00h,00h,01Dh,014h,00h,00h,075h,014h,00h,00h
-        db 0ADh,014h,00h,00h,0E5h,014h,00h,00h,0F9h,014h,00h,00h,0Dh,015h,00h,00h
+                                                ; object's SPA to find its name in dbg_spanames; the last is
+                                                ; the end of the SPA table (name ERROR); used by DebugMonitor
+        dd SPAgready,SPAgready2,SPAgglover,SPAgglovel,SPAgglovel2,SPAgstickr,SPAgstickl,SPAgstackr,SPAgstackl
+        dd SPAgdive,SPAgswing,SPAgskate,SPApflip,SPAglide,SPAskatewp,SPAskate,SPAturnl,SPAturnr,SPAstop
+        dd SPApassf,SPApassb,SPAshotf,SPAshotb,SPAglideback,SPAskateback,SPAsweepchk,SPAshoulderchkl
+        dd SPAshoulderchkr,SPAhipchkl,SPAhipchkr,SPAburst,SPAHold,SPAHold2,SPAflail,SPAfallfwd,SPAfallback
+        dd SPAcelebrate,SPApump,SPAwallright,SPAwallleft,SPAfaceoff,SPAfaceoffr,SPAsiren,SPAbglass,SPAstanley
+        dd SPAcatch,SPAhook,SPAhook2,SPAstumble,SPAfake,SPAflip,SPAinjury1,SPArefglide,SPArefskate,SPArefturnl
+        dd SPArefturnr,SPArefstop,SPAreffallback,SPAarmupglide,SPAarmupskate,SPAarmupturnl,SPAarmupturnr
+        dd SPAarmupstop,SPArefpickup,SPArefpointgoa,SPArefdrop,SPAreffowait,SPArefrough,SPArefcharge
+        dd SPArefslash,SPArefxcheck,SPArefhook,SPAreftrip,SPArefinterfer,SPArefhold,SPArefabuseoff
+        dd SPArefbehind,SPAfaceoffpoke,SPAgwallright,SPAgwallleft,SPAanthem1,SPAanthem2,SPAanthem3,SPAanthem4
+        dd SPAanthem5,SPAdrink,SPArefanthem1,SPArefanthem2,SPAonetimef,SPAonetimeb,SPAgetcup,SPAbrcup,SPAgvcup
+        dd SPAclap,SPAstansk,SPAcrosscheck,SPAboardback,SPAboardfront,SPAboardright,SPAboardleft
+        dd SPAbenchcheckr,SPAbenchcheckl,SPArefpenshot,SPAgoaliepoke,SPAgoalieknee,SPAgokneehold,SPAgofallback
+        dd SPAgofallglove,SPAgofallstick,SPAfakeshotf,SPAfakeshotb,SPAfakeonetimef,SPAfakeonetimeb
+        dd SPAblockleft,SPAblockright,SPAblockfront,SPAblockknee,SPArefelbow,SPArefhistick,150Dh
 dbg_spanames:                                   ; used by DebugMonitor
         dd str_Gready
         dd str_Gready2
