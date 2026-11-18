@@ -25,7 +25,7 @@ extern PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArtKeyFFAtOwnPos, Gr
 extern MouseRead, FindShape, VgaSetPalette, SetScreenTarget, SetColorRemap, FillRectColor, PlotPixel, teamcitynames
 extern teamdivflags, titlebckspr, visbckspr, visnamebckspr, VisTeam, WriteCurModeState
 global LoadSettingsShapes, DrawSettingsHeading_jt, DrawSettingsHeading, DrawSettingsHeading_n0, DrawSettingsHeading_n1, SetModeMenuLabels, DrawPanel3D, DrawPanel3D_ret
-global LockerRoomScreen, LockerStub, DrawLockerRoom, LockerHitTest, DrawLockerJersey, LockerRoomLoop_jt, LockerRoomLoop, LockerRoomLoop_n2
+global LockerRoomScreen, LockerRoomScreenEpilogue, DrawLockerRoom, LockerHitTest, DrawLockerJersey, LockerRoomLoop_jt, LockerRoomLoop, LockerRoomLoop_n2
 global LockerRoomLoop_n0, LockerRoomLoop_n4, LockerRoomLoop_n1, LockerRoomLoop_n6, LockerRoomLoop_n7, DrawSelBoxOn, DrawSelBox_common, DrawSelBoxOff
 ;-----------------------------------------------------------------------------
 ; LoadSettingsShapes                           8034B  95 PC, medium confidence
@@ -679,10 +679,10 @@ LockerRoomScreen:
 .5:
         add esp, 340h
 ;-----------------------------------------------------------------------------
-; LockerStub                                                      80A9D  95 PC
+; LockerRoomScreenEpilogue                                                      80A9D  95 PC
 ; Lone ret
 ;-----------------------------------------------------------------------------
-LockerStub:
+LockerRoomScreenEpilogue:
         pop ebp
         pop edi
         pop esi
@@ -1401,7 +1401,7 @@ DrawLockerRoom:
         call SetColorRemap
         add esp, byte 4
         add esp, 354h
-        jmp near LockerStub
+        jmp near LockerRoomScreenEpilogue
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LockerHitTest                                81520  95 PC, medium confidence
@@ -2488,7 +2488,7 @@ LockerRoomLoop_n6:
         xor eax, eax
 .14:
         add esp, 320h
-        jmp near LockerStub
+        jmp near LockerRoomScreenEpilogue
 LockerRoomLoop_n7:
         cmp byte [MusicOn], 0
         je short .1

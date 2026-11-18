@@ -14,7 +14,7 @@ extern InputInstall, InputRemove, keepdesksong, leaguedbfmt, leaguedbfmt2, leagu
 extern mainmenubar, MakePath, memcpy_, menuact_export, menuact_nextlg, MenuHitTest, menusub_lgmgr, MergeLeagueFiles
 extern MergeUpdateDbs, MessageBox, mousepollfn, MouseSetPos, musichandle, MusicOn, musicslot, PlayGame
 extern PlayLeagueGame, pointerspr, PreGameScreen, ptrupdatefn, RebuildLeagueDbs, RemoveHumanTeam, rinkbm, rinktilebm
-extern schedgameidx, scrpitch, setdiskmsg, SetLeagueSetImage, SetScreenTitle, SetSideControls, SettingsStub, SetupControllers
+extern schedgameidx, scrpitch, setdiskmsg, SetLeagueSetImage, SetScreenTitle, SetSideControls, NullModeSettingsHook, SetupControllers
 extern SetupStatsSourceMenu, ShowLoadingScreen, skaterstatscb, songdata, standingscb, standingsmenucb, str_Desk2, str_Easndesk
 extern str_fee2, str_fee3, str_fee4, str_Game, str_GameSav4, str_GameSet4, str_Iff8, str_LAAtMTL
 extern str_Maindesk, str_Menubuff4, str_Pal15, str_Palette2, str_Pointer7, str_Set, str_Temp4, str_Tonights2
@@ -25,7 +25,7 @@ extern teamstatscb, TradePlayers, UpdateTeamDbs, ViewHilights, VisTeam
 global MainDeskLoop, MainDeskLoop_x, MainDeskLoop_x2, MenuExit, SaveModeState, LoadModeState, WriteModeState, CopyGameSettings
 global MenuNewExhibition, MenuNewLeague, MenuAddTeam, MenuAddTeam_common, MenuAddTeam_ret2, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs
 global MenuRebuildDbs_x, MenuMergeUpdateDbs, MenuMergeUpdateDbs_ret, MenuMergeLeagueFiles, MenuUpdateTeamDbs, MenuTradePlayers, MenuNextLeagueGame, MenuLeagueHilights
-global MenuImportDbs, MenuExportDbs, DemoSetupStub, FreeRinkGfx
+global MenuImportDbs, MenuExportDbs, NullDemoSetup, FreeRinkGfx
 ;-----------------------------------------------------------------------------
 ; MainDeskLoop                                                    31AB5  95 PC
 ; Front-end top level called from main: maindesk / tonights music alternation,
@@ -1685,7 +1685,7 @@ MenuNewLeague:
         xor eax, eax
         call SetLeagueSetImage
         call CreateNewLeague
-        call SettingsStub
+        call NullModeSettingsHook
         cmp byte [lgstate+4], 0
         je short .10
         call BuildSavedGameLabels
@@ -2234,14 +2234,14 @@ MenuExportDbs:
         jmp near MenuAddTeam_common
 %endif ; C
 ;-----------------------------------------------------------------------------
-; DemoSetupStub                                                   3371C  95 PC
+; NullDemoSetup                                                   3371C  95 PC
 ; Empty; called before the scoreboard demo starts
 ;-----------------------------------------------------------------------------
-; C: src/front/desk_main/DemoSetupStub.c
+; C: src/front/desk_main/NullDemoSetup.c
 %ifdef CBUILD
-%include "c/front/desk_main/DemoSetupStub.inc"
+%include "c/front/desk_main/NullDemoSetup.inc"
 %else
-DemoSetupStub:
+NullDemoSetup:
         push dword 4
         call __CHK
         ret

@@ -18,7 +18,7 @@ extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, AllocMe
 extern OpenArtArchiveErr, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt, GrabBlock
 extern PrintString, TextPrintAt, GetFileSize, KeyDown, MouseRead, FindShape, SetScreenTarget, FillRectColor
 extern teamsdb, teamsdb_size, _dos_findfirst_, _dos_findnext_, atoi_
-global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
+global InputDialog, EmptyPathTemplate13, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
 global DrawDbDialog, DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1, DbDialogHitTest
 global DrawDbList_jt, DrawDbList, DrawDbList_n6, DrawDbList_n5, DrawDbList_n4, DrawDbList_n3, DrawDbList_n2, DrawDbList_n1
 global DbDialogLoop, OpenSelectedDb, LoadDbsFromDir, DeleteSelectedDb, MenuOpenDatabase
@@ -369,7 +369,7 @@ InputDialog:
         pop esi
         ret 14h
 %endif ; C
-unk13_722FE:                                    ; 13 zero bytes in code (empty path template); used by
+EmptyPathTemplate13:                                    ; 13 zero bytes in code (empty path template); used by
                                                 ; OpenSelectedDb
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 ;-----------------------------------------------------------------------------
@@ -1826,7 +1826,7 @@ OpenSelectedDb:
         push edi
         sub esp, byte 10h
         mov edi, esp
-        mov esi, unk13_722FE
+        mov esi, EmptyPathTemplate13
         movsd
         movsd
         movsd

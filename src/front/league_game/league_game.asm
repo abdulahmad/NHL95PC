@@ -9,7 +9,7 @@ extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, FindLea
 extern FmtFromLeague, FreeMemBlock, GameGoalieStatsScreen, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu, GameStandingsScreen
 extern GameTeamStatsScreen, GetLeagueId, goaliestatscb, hmglstats, hmglstats_w2, hmglstats_w4, hmlinetab, hmplstats
 extern hmplstats_w10, hmplstats_w14, hmplstats_w2, hmplstats_w4, hmplstats_w6, hmplstats_w8, hmscore, hmtmgoalie
-extern hmtmlines, hmtmstruct, HomeTeam, humancount, InitGameSummary, InputInstall, InputRemove, LeagueCheckStub
+extern hmtmlines, hmtmstruct, HomeTeam, humancount, InitGameSummary, InputInstall, InputRemove, LeagueCheckAlwaysZero
 extern leaguedbfmt, leaguedbfmt2, leaguedbnames, leaguediskmsg, leagueflags, leaguemaster, leaguesaved, leagueteams
 extern LeagueTeamSelect, lggameidx, lgplayteam, lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3, lgschedrec_b4
 extern lgschedrec_b5, lgteam_17, lgteamflags, LoadBank, LoadLeagueGameRef, MakePath, masterpw, MergeLeagueFiles
@@ -883,7 +883,7 @@ PlayLeagueGame:
 .1:
         mov edx, 3
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         mov esi, eax
 .2:
         xor eax, eax

@@ -1,12 +1,12 @@
 function,address,size,segment,c_file,status,notes,cause
 PlayMVI,8BEDB,732,engine/asm_helpers,src/engine/asm_helpers/PlayMVI.c,matched,,
 SelectScreenBM SelectRinkBM,8C1C2,53,engine/asm_helpers,src/engine/asm_helpers/SelectScreenBM.c,matched,,
-stub_8C1B7,8C1B7,11,engine/asm_helpers,src/engine/asm_helpers/stub_8C1B7.c,matched,,
-stub_8C1F7,8C1F7,11,engine/asm_helpers,src/engine/asm_helpers/stub_8C1F7.c,matched,,
-stub_8C202,8C202,11,engine/asm_helpers,src/engine/asm_helpers/stub_8C202.c,matched,,
-stub_8C20D,8C20D,11,engine/asm_helpers,src/engine/asm_helpers/stub_8C20D.c,matched,,
-stub_8C218,8C218,11,engine/asm_helpers,src/engine/asm_helpers/stub_8C218.c,matched,,
-stub_8C223,8C223,11,engine/asm_helpers,src/engine/asm_helpers/stub_8C223.c,matched,,
+NullAfterPlayMVI,8C1B7,11,engine/asm_helpers,src/engine/asm_helpers/NullAfterPlayMVI.c,matched,,
+NullAfterSelectRinkBM,8C1F7,11,engine/asm_helpers,src/engine/asm_helpers/NullAfterSelectRinkBM.c,matched,,
+NullScreenBMHook,8C202,11,engine/asm_helpers,src/engine/asm_helpers/NullScreenBMHook.c,matched,,
+NullDrawBMHook,8C20D,11,engine/asm_helpers,src/engine/asm_helpers/NullDrawBMHook.c,matched,,
+BlitRectToPage,8C218,11,engine/asm_helpers,src/engine/asm_helpers/BlitRectToPage.c,matched,,
+NullBlitPageHook,8C223,11,engine/asm_helpers,src/engine/asm_helpers/NullBlitPageHook.c,matched,,
 Bcheck,56A54,293,engine/bodycheck,src/engine/bodycheck/Bcheck.c,matched,,
 BlockShotDive,53387,308,engine/checking,src/engine/checking/BlockShotDive.c,matched,,
 CPgoalie,591C7,158,engine/goaliepull,src/engine/goaliepull/CPgoalie.c,matched,,
@@ -480,7 +480,7 @@ PlayRandomHighlight,18F8D,305,front/desk,src/front/desk/PlayRandomHighlight.c,ma
 PostGameDesk,1920F,334,front/desk,src/front/desk/PostGameDesk.c,matched,,
 SportsDesk,1935D,4567,front/desk,src/front/desk/SportsDesk.c,nonmatching,"first pass (Ghidra, MainDeskLoop menu loop): 3,422 of 4,567 bytes, code still missing",slot 100/263
 CopyGameSettings,32C9E,267,front/desk_main,src/front/desk_main/CopyGameSettings.c,matched,,
-DemoSetupStub,3371C,11,front/desk_main,src/front/desk_main/DemoSetupStub.c,matched,,
+NullDemoSetup,3371C,11,front/desk_main,src/front/desk_main/NullDemoSetup.c,matched,,
 FreeRinkGfx,33727,85,front/desk_main,src/front/desk_main/FreeRinkGfx.c,matched,,
 MainDeskLoop,31AB5,3158,front/desk_main,src/front/desk_main/MainDeskLoop.c,matched,,
 LoadModeState,327A1,892,front/desk_main,src/front/desk_main/MainDeskLoop.c,matched,,
@@ -551,7 +551,7 @@ MenuSaveDefaultLines,79484,816,front/game_lines,src/front/game_lines/MenuSaveDef
 MenuSaveTheseLines,797FE,715,front/game_lines,src/front/game_lines/MenuSaveDefaultLines.c,nonmatching,,register 11/13
 MenuGameShowPlayerStats,79AC9,776,front/game_lines,src/front/game_lines/MenuSaveDefaultLines.c,nonmatching,,register 6/9
 PruneGameLines,79090,248,front/game_lines,src/front/game_lines/PruneGameLines.c,matched,C folds the side * 444h * 4 step into the hmroster address ([edi+edx*4]); the EXE adds it first and reads the status into ch,
-StubRet4b,78E29,13,front/game_lines,src/front/game_lines/StubRet4b.c,matched,,
+NullGameLinesHook,78E29,13,front/game_lines,src/front/game_lines/NullGameLinesHook.c,matched,,
 AskExportToFloppy,38386,306,front/league_setup,src/front/league_setup/AskExportToFloppy.c,matched,,
 AskTeamPassword,3A395,265,front/league_setup,src/front/league_setup/AskTeamPassword.c,matched,,
 AskMasterPassword,3A49E,249,front/league_setup,src/front/league_setup/AskTeamPassword.c,matched,,
@@ -572,7 +572,7 @@ CheckMasterPassword,40F4E,547,front/league_teams,src/front/league_teams/CheckMas
 CopyHumanTeamDBs,41516,1122,front/league_teams,src/front/league_teams/CopyHumanTeamDBs.c,nonmatching,,register 6/7
 FmtFromLeague,41171,87,front/league_teams,src/front/league_teams/FmtFromLeague.c,matched,,
 GetLeagueId,41344,137,front/league_teams,src/front/league_teams/GetLeagueId.c,matched,,
-LeagueCheckStub,41337,13,front/league_teams,src/front/league_teams/LeagueCheckStub.c,matched,,
+LeagueCheckAlwaysZero,41337,13,front/league_teams,src/front/league_teams/LeagueCheckAlwaysZero.c,matched,,
 MsgCopyingDatabases,414E0,54,front/league_teams,src/front/league_teams/MsgCopyingDatabases.c,matched,,
 SaveLeagueGameRef,41978,520,front/league_teams,src/front/league_teams/SaveLeagueGameRef.c,matched,"draft: 483 vs 520. Frame is 38h and the handle is at esp+30h. Each FileWriteAt result is tested in eax; the original copies it to edx first (mov edx, eax) and the next block tests edx. register, declaration order, and goto labels did not move it.",
 WriteLeagueInfo,413CD,275,front/league_teams,src/front/league_teams/WriteLeagueInfo.c,matched,,
@@ -730,7 +730,7 @@ BuildSavedGameLabels,1D518,189,front/screen_util,src/front/screen_util/BuildSave
 DrawSprite,1CD73,678,front/screen_util,src/front/screen_util/DrawSprite.c,nonmatching,,register 65/66
 LoadScoreboardGfx,1CC3D,278,front/screen_util,src/front/screen_util/LoadScoreboardGfx.c,matched,,
 NullBlit,1D019,11,front/screen_util,src/front/screen_util/NullBlit.c,matched,,
-NullFunc_1D024,1D024,11,front/screen_util,src/front/screen_util/NullFunc_1D024.c,matched,,
+NullFrontEndCallback,1D024,11,front/screen_util,src/front/screen_util/NullFrontEndCallback.c,matched,,
 SetScreenTitle,1D610,174,front/screen_util,src/front/screen_util/SetScreenTitle.c,matched,,
 SetupStatsSourceMenu,1D100,1048,front/screen_util,src/front/screen_util/SetupStatsSourceMenu.c,nonmatching,,register 39/51
 StrLenToDot,1D5D5,34,front/screen_util,src/front/screen_util/StrLenToDot.c,matched,,
@@ -1028,7 +1028,7 @@ ModeOptsToBits,7B604,304,pc/mode_settings,src/pc/mode_settings/ModeOptsToBits.c,
 ModeSetHitTest,7B734,138,pc/mode_settings,src/pc/mode_settings/ModeSetHitTest.c,matched,,
 SetCtlTeams,7DB67,292,pc/controls_dlg,src/pc/controls_dlg/SetCtlTeams.c,matched,,
 SetLeagueSetImage,7A6AD,16,pc/league_settings,src/pc/league_settings/SetLeagueSetImage.c,matched,,
-SettingsStub,7B39C,11,pc/mode_settings,src/pc/mode_settings/SettingsStub.c,matched,,
+NullModeSettingsHook,7B39C,11,pc/mode_settings,src/pc/mode_settings/NullModeSettingsHook.c,matched,,
 DrawSoundCardDlg,8261C,116,pc/sound_config,src/pc/sound_config/DrawSoundCardDlg.c,matched,,
 DrawSoundCardOpts,82690,291,pc/sound_config,src/pc/sound_config/DrawSoundCardOpts.c,matched,,
 MenuSoundSettings,82579,163,pc/sound_config,src/pc/sound_config/MenuSoundSettings.c,matched,the EXE does not save edx (only ebx/ecx/esi/edi/ebp) though cdecl calls clobber it; C pushes edx too - some callee pragma differs,

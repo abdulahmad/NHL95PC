@@ -4,9 +4,9 @@
  * NHL 96 PC auto line changes, hooked into 95 PC (the Game page's Auto line changes row).
  *
  * 96 PC (HOCKEY.EXE listing, 2026-11-10): gameopts byte 1 bits 4-5 are Off 00 / On 10h / Auto 20h.
- *   - Faceoff CompLine (sub_46A9D): Auto always; On only when that team has no human controller.
- *   - Computer chk4lc (sub_40189, from asspuckc): On or Auto (test 30h). 95 PC already does this.
- *   - Human chk4lc (sub_402AD, from the joystick puck-carrier path after checkob): Auto only, and
+ *   - Faceoff CompLine (CompLine): Auto always; On only when that team has no human controller.
+ *   - Computer chk4lc (chk4lc, from asspuckc): On or Auto (test 30h). 95 PC already does this.
+ *   - Human chk4lc (chk4lcauto, from the joystick puck-carrier path after checkob): Auto only, and
  *     pflags bit 3 (joystick). If it takes, that path returns.
  *   - SetLCmode / the faceoff line-change box: Auto does not open it (96 Genesis sflags7 bit 4; 96 PC
  *     only starts the box when the bits are 10h). F1-F8 still go through lcselect.

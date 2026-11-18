@@ -17,7 +17,7 @@ extern str_SportsCentral, str_VisLineTags, str_Visp, strcpy_, strncpy_, MarkZone
 extern FindShape, VgaBlitKeyed, SetColorRemap, VgaBlitRemap, VgaBlitKeyedFlipV, VgaBlitRemapFlipV, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHV
 extern VgaBlitRemapFlipH, VgaBlitRemapFlipHV, awayremap_eC0, homeremap_eC0, vgapage
 global LoadScoreboardGfx, DrawSprite_jt, DrawSprite, DrawSprite_b0, DrawSprite_b1, DrawSprite_b2, DrawSprite_b3, DrawSprite_b4
-global DrawSprite_b5, DrawSprite_b6, DrawSprite_b7, NullBlit, NullFunc_1D024, AddDirtyRect, SetupStatsSourceMenu_jt, SetupStatsSourceMenu
+global DrawSprite_b5, DrawSprite_b6, DrawSprite_b7, NullBlit, NullFrontEndCallback, AddDirtyRect, SetupStatsSourceMenu_jt, SetupStatsSourceMenu
 global SetupStatsSourceMenu_lg, SetupStatsSourceMenu_po, SetupStatsSourceMenu_exh, SetupStatsSourceMenu_all, BuildSavedGameLabels, StrLenToDot, SetScreenTitle_jt, SetScreenTitle
 global SetScreenTitle_central, SetScreenTitle_calendar, SetScreenTitle_tree, SetScreenTitle_booth, SetScreenTitle_desk, SetScreenTitle_rink, StrPrefixDiffers
 ;-----------------------------------------------------------------------------
@@ -374,14 +374,14 @@ NullBlit:
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; NullFunc_1D024                                                  1D024  95 PC
+; NullFrontEndCallback                                                  1D024  95 PC
 ; Empty fn, no refs
 ;-----------------------------------------------------------------------------
-; C: src/front/screen_util/NullFunc_1D024.c
+; C: src/front/screen_util/NullFrontEndCallback.c
 %ifdef CBUILD
-%include "c/front/screen_util/NullFunc_1D024.inc"
+%include "c/front/screen_util/NullFrontEndCallback.inc"
 %else
-NullFunc_1D024:
+NullFrontEndCallback:
         push dword 4
         call __CHK
         ret

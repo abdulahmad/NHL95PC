@@ -11,7 +11,7 @@ extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt
 extern FreeMemBlock, humancount, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams, LeagueTeamSelect
 extern lggameidx, lgplayteam, MakePath, masterpw, memset_, MergeLeagueFiles, MessageBox, msg_AllHuman
 extern msg_Copying, msg_Copying_arg, msg_InsertDisk, msg_InsertDisk_arg, msg_MasterDB, msg_MasterDB_arg, msg_OneHuman, msg_SavedGame
-extern msg_SavedGame_arg, msg_TradeDeadline, msg_TradeError, msg_WrongDisk, msg_WrongDisk_arg, negone_3DC28, ReadLeagueInfo, ReadSchedGame
+extern msg_SavedGame_arg, msg_TradeDeadline, msg_TradeError, msg_WrongDisk, msg_WrongDisk_arg, NoSelectionMinusOne, ReadLeagueInfo, ReadSchedGame
 extern ReadTeamNames, RestoreDialogBg, savedname, savleague1, savleague2, SelectFloppyDrive, SetDialogColors, sprintf_
 extern str_bangpal, str_dot, str_easndesk, str_extBIN, str_extDB, str_extID, str_extLP, str_extnum
 extern str_extxx, str_floppydrv, str_FromLeague, str_HOMEPALS, str_LLSN, str_LLST, str_PINFO, str_PLAYER
@@ -19,7 +19,7 @@ extern str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Sh
 extern strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, OpenArtArchiveErr, MouseRead
 extern FindShape, ClearScreen, VgaSetPalette, CreateBitmap, teamcitynames, TradeScreen, treeteamnames, _dos_findfirst_
 extern _dos_findnext_, lggamecount, lgoppgamecount, WriteLeagueTeamEntry
-global AddHumanTeam, AddHumanTeam_msgbox, AddHumanTeam_exit, RemoveHumanTeam, CheckMasterPassword, FmtFromLeague, BuildLeagueList, LeagueCheckStub
+global AddHumanTeam, AddHumanTeam_msgbox, AddHumanTeam_exit, RemoveHumanTeam, CheckMasterPassword, FmtFromLeague, BuildLeagueList, LeagueCheckAlwaysZero
 global GetLeagueId, WriteLeagueInfo, MsgCopyingDatabases, CopyHumanTeamDBs, SaveLeagueGameRef
 ;-----------------------------------------------------------------------------
 ; AddHumanTeam                                                    408F5  95 PC
@@ -47,7 +47,7 @@ AddHumanTeam:
         mov byte [MergeResult], ah
         mov edx, 2
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         mov esi, eax
 .1:
         xor edi, edi
@@ -305,7 +305,7 @@ RemoveHumanTeam:
         mov byte [MergeResult], ah
         mov edx, 2
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         mov esi, eax
 .1:
         xor edi, edi
@@ -548,7 +548,7 @@ CheckMasterPassword:
         sub esp, byte 20h
         mov edx, 2
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         mov esi, eax
 .1:
         xor edi, edi
@@ -899,17 +899,17 @@ BuildLeagueList:
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; LeagueCheckStub                              41337  95 PC, medium confidence
+; LeagueCheckAlwaysZero                              41337  95 PC, medium confidence
 ; Returns 0; called (league path, 2) before ReadLeagueInfo by
 ; AddHumanTeam/RemoveHumanTeam/CheckMasterPassword
 ;
 ; and in database_merge/import_export (stubbed-out check)
 ;-----------------------------------------------------------------------------
-; C: src/front/league_teams/LeagueCheckStub.c
+; C: src/front/league_teams/LeagueCheckAlwaysZero.c
 %ifdef CBUILD
-%include "c/front/league_teams/LeagueCheckStub.inc"
+%include "c/front/league_teams/LeagueCheckAlwaysZero.inc"
 %else
-LeagueCheckStub:
+LeagueCheckAlwaysZero:
         push dword 4
         call __CHK
         xor eax, eax

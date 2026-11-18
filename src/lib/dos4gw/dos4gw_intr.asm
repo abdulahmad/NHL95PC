@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A18FB progbits alloc exec nowrite align=1
-global _DoINTR_, IntrLoadRegs, IntrStubs, __Slash_C_
+global _DoINTR_, IntrLoadRegs, IntrOpcodeTable, __Slash_C_
 ;-----------------------------------------------------------------------------
 ; _DoINTR_                                                      A18FB  library
 ; Run-time library: the intr call helper
@@ -51,7 +51,7 @@ IntrLoadRegs:
         and eax, 0FFh
         lea eax, [eax+eax*2]
         db 02Eh,08Dh,080h
-        dd IntrStubs
+        dd IntrOpcodeTable
         push eax
         mov ebx, edx
         push dword [byte ebx+01Ch]
@@ -67,7 +67,7 @@ IntrLoadRegs:
         mov ebx, dword [byte ebx+04h]
         pop ds
         ret
-IntrStubs:                                      ; used by IntrLoadRegs, IntrLoadSegRegs
+IntrOpcodeTable:                                      ; used by IntrLoadRegs, IntrLoadSegRegs
         db 0CDh,00h,0C3h,0CDh,01h,0C3h,0CDh,02h,0C3h,0CCh,090h,0C3h,0CDh,04h,0C3h,0CDh
         db 05h,0C3h,0CDh,06h,0C3h,0CDh,07h,0C3h,0CDh,08h,0C3h,0CDh,09h,0C3h,0CDh,0Ah
         db 0C3h,0CDh,0Bh,0C3h,0CDh,0Ch,0C3h,0CDh,0Dh,0C3h,0CDh,0Eh,0C3h,0CDh,0Fh,0C3h

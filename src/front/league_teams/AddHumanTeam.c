@@ -1,23 +1,23 @@
 /* Trades: adding a human team to a league. */
 #define AddHumanTeam AddHumanTeam_decl
 #define RemoveHumanTeam RemoveHumanTeam_decl
-#define LeagueCheckStub LeagueCheckStub_decl
+#define LeagueCheckAlwaysZero LeagueCheckAlwaysZero_decl
 #define LeagueTeamSelect LeagueTeamSelect_decl
 #define CopyHumanTeamDBs CopyHumanTeamDBs_decl
 #include "nhl95.h"
 #undef AddHumanTeam
 #undef RemoveHumanTeam
-#undef LeagueCheckStub
+#undef LeagueCheckAlwaysZero
 #undef LeagueTeamSelect
 #undef CopyHumanTeamDBs
 
-int LeagueCheckStub(char *dir, int mode);
+int LeagueCheckAlwaysZero(char *dir, int mode);
 int LeagueTeamSelect(char *dir, int *count, unsigned char *names, unsigned char *teams, int mode, char *title,
     int *sel);
 int CopyHumanTeamDBs(char *dir, void *teams, int which);
 
 /* AddHumanTeam (408F5, PC only; owner of AddHumanTeam_exit / AddHumanTeam_msgbox): let one more team of the
-   current league be human controlled. Read the league (LeagueCheckStub, ReadLeagueInfo); a league with a saved
+   current league be human controlled. Read the league (LeagueCheckAlwaysZero, ReadLeagueInfo); a league with a saved
    game in progress says so (msg_SavedGame) and stops; one not merged yet asks (msg_MasterDB) and merges
    (MergeLeagueFiles) before reading it again. With MergeResult set the desk palette (EASNDESK, BANGPAL) and the
    three dialog colours are restored. With all 1Ah teams human say so (msg_AllHuman); else pick the new human
@@ -40,7 +40,7 @@ void AddHumanTeam(void)
     int n;
 
     MergeResult = 0;
-    err = LeagueCheckStub((char *)&curleague, 2);
+    err = LeagueCheckAlwaysZero((char *)&curleague, 2);
     do {
         shown = 0;
         if (!err)
@@ -120,7 +120,7 @@ void RemoveHumanTeam(void)
     int n;
 
     MergeResult = 0;
-    err = LeagueCheckStub((char *)&curleague, 2);
+    err = LeagueCheckAlwaysZero((char *)&curleague, 2);
     do {
         shown = 0;
         if (!err)

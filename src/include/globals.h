@@ -1942,7 +1942,6 @@ extern unsigned char str_ULTRASND[]; /* C4B50 */
 extern int str_Inf; /* C4B5C */
 extern int str_Nan; /* C4B60 */
 extern short F64_neg1_floor_; /* C4B64 */
-extern int dword_C4B69[]; /* C4B69 */
 extern unsigned char CharClassTable[]; /* C4B6C */
 extern unsigned char CLibBitMasks[]; /* C4C70 */
 extern unsigned char ScanBitMasks[]; /* C4C78 */
@@ -2324,7 +2323,6 @@ extern unsigned char treecol_Er3[]; /* C6DA2 */
 extern unsigned char treecol_Er2[]; /* C6DAA */
 extern unsigned char treecol_Er1[]; /* C6DB2 */
 extern int potreeseeds[]; /* C6DBA */
-extern int dword_C6E20[]; /* C6E20 */
 extern short treecolx[]; /* C6E22 */
 extern int treerowy[]; /* C6E32 */
 extern int divx[]; /* C6E3A */
@@ -2780,7 +2778,6 @@ extern short ObjInitAttr[]; /* CBD66 */
 extern short puckfaceoff2_ptab[]; /* CBE8C */
 extern short puckfaceoff2_ptab_y[]; /* CBE8E */
 extern signed char apl[]; /* CBEA8 */
-extern int dword_CBEBE[]; /* CBEBE */
 extern short ovltimer; /* CBEC0 */
 extern short refhitcount; /* CBEC2 */
 extern short fadeinpending; /* CBEC4 */
@@ -2818,7 +2815,6 @@ extern int demoflag; /* CC0EC */
 extern int introskipped; /* CC0F0 */
 extern int onetimerflag; /* CC0F4 */
 extern int shotongoal; /* CC0F8 */
-extern int dword_CC0FA[]; /* CC0FA */
 extern int penshotplayer; /* CC0FC */
 extern int penshotpnum; /* CC100 */
 extern int penshotteam; /* CC104 */
@@ -2842,7 +2838,6 @@ extern signed char HotList[]; /* CC148 */
 extern signed char HotList_y[]; /* CC149 */
 extern signed char HotStickList[]; /* CC7A4 */
 extern signed char HotStickList_y[]; /* CC7A5 */
-extern int dword_CC9AD[]; /* CC9AD */
 extern signed char teamrocktune[]; /* CC9B0 */
 extern short RockTuneIds[]; /* CC9CC */
 extern int introstandanims_m2[]; /* CC9CE */
@@ -2892,7 +2887,6 @@ extern int crowdvol7; /* CCC90 */
 extern int cursndbank; /* CCC94 */
 extern int oneminsaid; /* CCC98 */
 extern int playsuspended; /* CCC9C */
-extern int dword_CCC9D[]; /* CCC9D */
 extern int Setplass_alist_m3[]; /* CCC9E */
 extern signed char cupceremony; /* CCCA0 */
 extern short restoreteams_pdsttab[]; /* CCCA8 */
@@ -2915,7 +2909,6 @@ extern int defercount; /* CD350 */
 extern int pennametab[]; /* CD354 */
 extern int penbannertab[]; /* CD39C */
 extern signed char dressbystatus[]; /* CD418 */
-extern int dword_CD41E[]; /* CD41E */
 extern signed char lineslotgroups[]; /* CD421 */
 extern signed char lineslotgroupstart[]; /* CD473 */
 extern int goaliemenuflags[]; /* CD498 */
@@ -3347,13 +3340,9 @@ extern int dbtablists[]; /* D1184 */
 extern unsigned char str_ConfirmDeletionOfThe2[]; /* D1190 */
 extern unsigned char deldbmsg[]; /* D11B2 */
 extern unsigned char TeamJerseyBase[]; /* D11BC */
-extern int dword_D1229[]; /* D1229 */
-extern int dword_D122B[]; /* D122B */
 extern unsigned char fadestart[]; /* D122C */
 extern unsigned char fadestep[]; /* D122E */
-extern int dword_D122F[]; /* D122F */
 extern unsigned char fadeend[]; /* D1230 */
-extern int dword_D1231[]; /* D1231 */
 extern unsigned char fadestart2[]; /* D1232 */
 extern unsigned char fadestep2[]; /* D1234 */
 extern unsigned char fadeend2[]; /* D1236 */
@@ -3626,11 +3615,6 @@ extern int KeyBufferTail; /* D2CD0 */
 extern unsigned char CapsLockState; /* D2CD4 */
 extern int KeyBufferMask; /* D2CD8 */
 extern unsigned char KeyStateTable[]; /* D2CDC */
-extern unsigned char byte_D2CF9; /* D2CF9 */
-extern unsigned char byte_D2D06; /* D2D06 */
-extern unsigned char byte_D2D12; /* D2D12 */
-extern unsigned char byte_D2D14; /* D2D14 */
-extern unsigned char byte_D2D2F; /* D2D2F */
 extern int SavedKbdVecOffset; /* D2D5C */
 extern short SavedKbdVecSelector; /* D2D60 */
 extern int SavedInt16Offset; /* D2D62 */
@@ -3870,7 +3854,6 @@ extern unsigned char DefaultFontWidths[]; /* D47B4 */
 extern unsigned char __8087; /* D4B9C */
 extern unsigned char FpuType; /* D4B9D */
 extern unsigned char SndDriverTable[]; /* D4BA0 */
-extern int dword_D4BC8[]; /* D4BC8 */
 extern int _dynend; /* D4CD4 */
 extern int _curbrk; /* D4CD8 */
 extern int _LpCmdLine; /* D4CDC */
@@ -3990,53 +3973,7 @@ extern int RectFillMaxShades; /* D5678 */
 extern int RectFillPatternPtrs[]; /* D567C */
 extern unsigned char RectFillPatterns_m2[]; /* D5742 */
 extern unsigned char RectFillPatterns[]; /* D5744 */
-extern unsigned char unk_D5748[]; /* D5748 */
-extern unsigned char unk_D574E[]; /* D574E */
-extern unsigned char unk_D5756[]; /* D5756 */
-extern unsigned char unk_D5760[]; /* D5760 */
-extern unsigned char unk_D576C[]; /* D576C */
-extern unsigned char unk_D577A[]; /* D577A */
-extern unsigned char unk_D578A[]; /* D578A */
-extern unsigned char unk_D579C[]; /* D579C */
-extern unsigned char unk_D57B0[]; /* D57B0 */
-extern unsigned char unk_D57C6[]; /* D57C6 */
-extern unsigned char unk_D57DE[]; /* D57DE */
-extern unsigned char unk_D57F8[]; /* D57F8 */
-extern unsigned char unk_D5814[]; /* D5814 */
-extern unsigned char unk_D5832[]; /* D5832 */
-extern unsigned char unk_D5852[]; /* D5852 */
-extern unsigned char unk_D5874[]; /* D5874 */
-extern unsigned char unk_D5898[]; /* D5898 */
-extern unsigned char unk_D58BE[]; /* D58BE */
-extern unsigned char unk_D58E6[]; /* D58E6 */
-extern unsigned char unk_D5910[]; /* D5910 */
-extern unsigned char unk_D593C[]; /* D593C */
-extern unsigned char unk_D596A[]; /* D596A */
-extern unsigned char unk_D599A[]; /* D599A */
-extern unsigned char unk_D59CC[]; /* D59CC */
-extern unsigned char unk_D5A00[]; /* D5A00 */
-extern unsigned char unk_D5A36[]; /* D5A36 */
-extern unsigned char unk_D5A6E[]; /* D5A6E */
-extern unsigned char unk_D5AA8[]; /* D5AA8 */
-extern unsigned char unk_D5AE4[]; /* D5AE4 */
-extern unsigned char unk_D5B22[]; /* D5B22 */
-extern unsigned char unk_D5B62[]; /* D5B62 */
-extern unsigned char unk_D5BA4[]; /* D5BA4 */
-extern unsigned char unk_D5BE8[]; /* D5BE8 */
-extern unsigned char unk_D5C2E[]; /* D5C2E */
-extern unsigned char unk_D5C76[]; /* D5C76 */
-extern unsigned char unk_D5CC0[]; /* D5CC0 */
-extern unsigned char unk_D5D0C[]; /* D5D0C */
-extern unsigned char unk_D5D5A[]; /* D5D5A */
 extern int CosTable[]; /* D5D78 */
-extern unsigned char unk_D5DAA[]; /* D5DAA */
-extern unsigned char unk_D5DFC[]; /* D5DFC */
-extern unsigned char unk_D5E50[]; /* D5E50 */
-extern unsigned char unk_D5EA6[]; /* D5EA6 */
-extern unsigned char unk_D5EFE[]; /* D5EFE */
-extern unsigned char unk_D5F58[]; /* D5F58 */
-extern unsigned char unk_D5FB4[]; /* D5FB4 */
-extern unsigned char unk_D6012[]; /* D6012 */
 extern unsigned char AngleOctantTable[]; /* D6074 */
 extern int CosTableFine[]; /* D6178 */
 extern int CosTableEnd[]; /* D6578 */
@@ -4049,26 +3986,7 @@ extern int EmuFiniHook; /* D6604 */
 extern unsigned short PcSpkVoiceTable[]; /* D6608 */
 extern unsigned char PcSpkState; /* D6770 */
 extern unsigned char PcSpkVoiceLevel[]; /* D6774 */
-extern unsigned char byte_D6775; /* D6775 */
-extern unsigned char byte_D6776; /* D6776 */
-extern unsigned char byte_D6777; /* D6777 */
-extern unsigned char byte_D6778; /* D6778 */
-extern short word_D677B[]; /* D677B */
-extern short word_D677D; /* D677D */
-extern short word_D677F; /* D677F */
-extern short word_D6781; /* D6781 */
-extern short word_D6783; /* D6783 */
-extern unsigned char byte_D6785[]; /* D6785 */
-extern unsigned char byte_D6786; /* D6786 */
-extern unsigned char byte_D6787; /* D6787 */
-extern unsigned char byte_D6788; /* D6788 */
-extern unsigned char byte_D6789; /* D6789 */
 extern unsigned char PcSpkOutLevel[]; /* D678C */
-extern unsigned char byte_D678D; /* D678D */
-extern unsigned char byte_D678E; /* D678E */
-extern unsigned char byte_D678F; /* D678F */
-extern unsigned char byte_D6790; /* D6790 */
-extern unsigned char byte_D679A; /* D679A */
 extern short OplPort; /* D679C */
 extern int OplRegDelay; /* D67A0 */
 extern int OplDataDelay; /* D67A4 */
@@ -4078,74 +3996,8 @@ extern unsigned short OplFNumTable[]; /* D67F4 */
 extern unsigned short OplVolumeTable[]; /* D683C */
 extern unsigned short OplVelocityTable[]; /* D687C */
 extern unsigned char OplRegShadow[]; /* D68FC */
-extern unsigned char unk_D691C[]; /* D691C */
-extern unsigned char unk_D699C[]; /* D699C */
-extern unsigned char unk_D69B9[]; /* D69B9 */
-extern unsigned char unk_D69FF[]; /* D69FF */
-extern unsigned char unk_D6A1F[]; /* D6A1F */
-extern unsigned char unk_D6A9F[]; /* D6A9F */
-extern unsigned char unk_D6ABC[]; /* D6ABC */
 extern int NotePitchTable[]; /* D6B00 */
 extern unsigned char SbStreamChannels; /* D6CE0 */
-extern unsigned char byte_D6CE1; /* D6CE1 */
-extern unsigned char byte_D6CE3; /* D6CE3 */
-extern int dword_D6CE4; /* D6CE4 */
-extern int dword_D6CF8; /* D6CF8 */
-extern int dword_D6CFC; /* D6CFC */
-extern int dword_D6D00; /* D6D00 */
-extern int dword_D6D0C; /* D6D0C */
-extern int dword_D6D10; /* D6D10 */
-extern int dword_D6D14; /* D6D14 */
-extern int dword_D6D18; /* D6D18 */
-extern unsigned char byte_D6D1E; /* D6D1E */
-extern unsigned char byte_D6D1F; /* D6D1F */
-extern int dword_D6D20; /* D6D20 */
-extern signed char byte_D6D24[]; /* D6D24 */
-extern unsigned char byte_D6E24; /* D6E24 */
-extern unsigned char byte_D6E25; /* D6E25 */
-extern unsigned char byte_D6E27; /* D6E27 */
-extern int dword_D6E28; /* D6E28 */
-extern int dword_D6E3C; /* D6E3C */
-extern int dword_D6E40; /* D6E40 */
-extern int dword_D6E44; /* D6E44 */
-extern int dword_D6E50; /* D6E50 */
-extern int dword_D6E54; /* D6E54 */
-extern int dword_D6E58; /* D6E58 */
-extern int dword_D6E5C; /* D6E5C */
-extern unsigned char byte_D6E62; /* D6E62 */
-extern unsigned char byte_D6E63; /* D6E63 */
-extern int dword_D6E64; /* D6E64 */
-extern signed char byte_D6E68[]; /* D6E68 */
-extern unsigned char byte_D6F68; /* D6F68 */
-extern unsigned char byte_D6F69; /* D6F69 */
-extern unsigned char byte_D6F6B; /* D6F6B */
-extern int dword_D6F6C; /* D6F6C */
-extern int dword_D6F80; /* D6F80 */
-extern int dword_D6F84; /* D6F84 */
-extern int dword_D6F88; /* D6F88 */
-extern int dword_D6F94; /* D6F94 */
-extern int dword_D6F98; /* D6F98 */
-extern int dword_D6F9C; /* D6F9C */
-extern int dword_D6FA0; /* D6FA0 */
-extern unsigned char byte_D6FA6; /* D6FA6 */
-extern unsigned char byte_D6FA7; /* D6FA7 */
-extern int dword_D6FA8; /* D6FA8 */
-extern signed char byte_D6FAC[]; /* D6FAC */
-extern unsigned char byte_D70AC; /* D70AC */
-extern unsigned char byte_D70AD; /* D70AD */
-extern unsigned char byte_D70AF; /* D70AF */
-extern int dword_D70B0; /* D70B0 */
-extern int dword_D70C4; /* D70C4 */
-extern int dword_D70C8; /* D70C8 */
-extern int dword_D70CC; /* D70CC */
-extern int dword_D70D8; /* D70D8 */
-extern int dword_D70DC; /* D70DC */
-extern int dword_D70E0; /* D70E0 */
-extern int dword_D70E4; /* D70E4 */
-extern unsigned char byte_D70EA; /* D70EA */
-extern unsigned char byte_D70EB; /* D70EB */
-extern int dword_D70EC; /* D70EC */
-extern signed char byte_D70F0[]; /* D70F0 */
 extern int CosTableTail[]; /* D7178 */
 extern int SbStreamTable[]; /* D71F0 */
 extern int SbMixSrcPos; /* D7200 */
@@ -4153,261 +4005,6 @@ extern int SbMixStep; /* D7204 */
 extern int SbMixSrcEnd; /* D7208 */
 extern int SbMixCount; /* D720C */
 extern short SbMixBuffer[]; /* D7214 */
-extern short word_D7216; /* D7216 */
-extern short word_D7218; /* D7218 */
-extern short word_D721A; /* D721A */
-extern short word_D721C; /* D721C */
-extern short word_D721E; /* D721E */
-extern short word_D7220; /* D7220 */
-extern short word_D7222; /* D7222 */
-extern short word_D7224; /* D7224 */
-extern short word_D7226; /* D7226 */
-extern short word_D7228; /* D7228 */
-extern short word_D722A; /* D722A */
-extern short word_D722C; /* D722C */
-extern short word_D722E; /* D722E */
-extern short word_D7230; /* D7230 */
-extern short word_D7232; /* D7232 */
-extern short word_D7234; /* D7234 */
-extern short word_D7236; /* D7236 */
-extern short word_D7238; /* D7238 */
-extern short word_D723A; /* D723A */
-extern short word_D723C; /* D723C */
-extern short word_D723E; /* D723E */
-extern short word_D7240; /* D7240 */
-extern short word_D7242; /* D7242 */
-extern short word_D7244; /* D7244 */
-extern short word_D7246; /* D7246 */
-extern short word_D7248; /* D7248 */
-extern short word_D724A; /* D724A */
-extern short word_D724C; /* D724C */
-extern short word_D724E; /* D724E */
-extern short word_D7250; /* D7250 */
-extern short word_D7252; /* D7252 */
-extern short word_D7254; /* D7254 */
-extern short word_D7256; /* D7256 */
-extern short word_D7258; /* D7258 */
-extern short word_D725A; /* D725A */
-extern short word_D725C; /* D725C */
-extern short word_D725E; /* D725E */
-extern short word_D7260; /* D7260 */
-extern short word_D7262; /* D7262 */
-extern short word_D7264; /* D7264 */
-extern short word_D7266; /* D7266 */
-extern short word_D7268; /* D7268 */
-extern short word_D726A; /* D726A */
-extern short word_D726C; /* D726C */
-extern short word_D726E; /* D726E */
-extern short word_D7270; /* D7270 */
-extern short word_D7272; /* D7272 */
-extern short word_D7274; /* D7274 */
-extern short word_D7276; /* D7276 */
-extern short word_D7278; /* D7278 */
-extern short word_D727A; /* D727A */
-extern short word_D727C; /* D727C */
-extern short word_D727E; /* D727E */
-extern short word_D7280; /* D7280 */
-extern short word_D7282; /* D7282 */
-extern short word_D7284; /* D7284 */
-extern short word_D7286; /* D7286 */
-extern short word_D7288; /* D7288 */
-extern short word_D728A; /* D728A */
-extern short word_D728C; /* D728C */
-extern short word_D728E; /* D728E */
-extern short word_D7290; /* D7290 */
-extern short word_D7292; /* D7292 */
-extern short word_D7294; /* D7294 */
-extern short word_D7296; /* D7296 */
-extern short word_D7298; /* D7298 */
-extern short word_D729A; /* D729A */
-extern short word_D729C; /* D729C */
-extern short word_D729E; /* D729E */
-extern short word_D72A0; /* D72A0 */
-extern short word_D72A2; /* D72A2 */
-extern short word_D72A4; /* D72A4 */
-extern short word_D72A6; /* D72A6 */
-extern short word_D72A8; /* D72A8 */
-extern short word_D72AA; /* D72AA */
-extern short word_D72AC; /* D72AC */
-extern short word_D72AE; /* D72AE */
-extern short word_D72B0; /* D72B0 */
-extern short word_D72B2; /* D72B2 */
-extern short word_D72B4; /* D72B4 */
-extern short word_D72B6; /* D72B6 */
-extern short word_D72B8; /* D72B8 */
-extern short word_D72BA; /* D72BA */
-extern short word_D72BC; /* D72BC */
-extern short word_D72BE; /* D72BE */
-extern short word_D72C0; /* D72C0 */
-extern short word_D72C2; /* D72C2 */
-extern short word_D72C4; /* D72C4 */
-extern short word_D72C6; /* D72C6 */
-extern short word_D72C8; /* D72C8 */
-extern short word_D72CA; /* D72CA */
-extern short word_D72CC; /* D72CC */
-extern short word_D72CE; /* D72CE */
-extern short word_D72D0; /* D72D0 */
-extern short word_D72D2; /* D72D2 */
-extern short word_D72D4; /* D72D4 */
-extern short word_D72D6; /* D72D6 */
-extern short word_D72D8; /* D72D8 */
-extern short word_D72DA; /* D72DA */
-extern short word_D72DC; /* D72DC */
-extern short word_D72DE; /* D72DE */
-extern short word_D72E0; /* D72E0 */
-extern short word_D72E2; /* D72E2 */
-extern short word_D72E4; /* D72E4 */
-extern short word_D72E6; /* D72E6 */
-extern short word_D72E8; /* D72E8 */
-extern short word_D72EA; /* D72EA */
-extern short word_D72EC; /* D72EC */
-extern short word_D72EE; /* D72EE */
-extern short word_D72F0; /* D72F0 */
-extern short word_D72F2; /* D72F2 */
-extern short word_D72F4; /* D72F4 */
-extern short word_D72F6; /* D72F6 */
-extern short word_D72F8; /* D72F8 */
-extern short word_D72FA; /* D72FA */
-extern short word_D72FC; /* D72FC */
-extern short word_D72FE; /* D72FE */
-extern short word_D7300; /* D7300 */
-extern short word_D7302; /* D7302 */
-extern short word_D7304; /* D7304 */
-extern short word_D7306; /* D7306 */
-extern short word_D7308; /* D7308 */
-extern short word_D730A; /* D730A */
-extern short word_D730C; /* D730C */
-extern short word_D730E; /* D730E */
-extern short word_D7310; /* D7310 */
-extern short word_D7312; /* D7312 */
-extern short word_D7314; /* D7314 */
-extern short word_D7316; /* D7316 */
-extern short word_D7318; /* D7318 */
-extern short word_D731A; /* D731A */
-extern short word_D731C; /* D731C */
-extern short word_D731E; /* D731E */
-extern short word_D7320; /* D7320 */
-extern short word_D7322; /* D7322 */
-extern short word_D7324; /* D7324 */
-extern short word_D7326; /* D7326 */
-extern short word_D7328; /* D7328 */
-extern short word_D732A; /* D732A */
-extern short word_D732C; /* D732C */
-extern short word_D732E; /* D732E */
-extern short word_D7330; /* D7330 */
-extern short word_D7332; /* D7332 */
-extern short word_D7334; /* D7334 */
-extern short word_D7336; /* D7336 */
-extern short word_D7338; /* D7338 */
-extern short word_D733A; /* D733A */
-extern short word_D733C; /* D733C */
-extern short word_D733E; /* D733E */
-extern short word_D7340; /* D7340 */
-extern short word_D7342; /* D7342 */
-extern short word_D7344; /* D7344 */
-extern short word_D7346; /* D7346 */
-extern short word_D7348; /* D7348 */
-extern short word_D734A; /* D734A */
-extern short word_D734C; /* D734C */
-extern short word_D734E; /* D734E */
-extern short word_D7350; /* D7350 */
-extern short word_D7352; /* D7352 */
-extern short word_D7354; /* D7354 */
-extern short word_D7356; /* D7356 */
-extern short word_D7358; /* D7358 */
-extern short word_D735A; /* D735A */
-extern short word_D735C; /* D735C */
-extern short word_D735E; /* D735E */
-extern short word_D7360; /* D7360 */
-extern short word_D7362; /* D7362 */
-extern short word_D7364; /* D7364 */
-extern short word_D7366; /* D7366 */
-extern short word_D7368; /* D7368 */
-extern short word_D736A; /* D736A */
-extern short word_D736C; /* D736C */
-extern short word_D736E; /* D736E */
-extern short word_D7370; /* D7370 */
-extern short word_D7372; /* D7372 */
-extern short word_D7374; /* D7374 */
-extern short word_D7376; /* D7376 */
-extern short word_D7378; /* D7378 */
-extern short word_D737A; /* D737A */
-extern short word_D737C; /* D737C */
-extern short word_D737E; /* D737E */
-extern short word_D7380; /* D7380 */
-extern short word_D7382; /* D7382 */
-extern short word_D7384; /* D7384 */
-extern short word_D7386; /* D7386 */
-extern short word_D7388; /* D7388 */
-extern short word_D738A; /* D738A */
-extern short word_D738C; /* D738C */
-extern short word_D738E; /* D738E */
-extern short word_D7390; /* D7390 */
-extern short word_D7392; /* D7392 */
-extern short word_D7394; /* D7394 */
-extern short word_D7396; /* D7396 */
-extern short word_D7398; /* D7398 */
-extern short word_D739A; /* D739A */
-extern short word_D739C; /* D739C */
-extern short word_D739E; /* D739E */
-extern short word_D73A0; /* D73A0 */
-extern short word_D73A2; /* D73A2 */
-extern short word_D73A4; /* D73A4 */
-extern short word_D73A6; /* D73A6 */
-extern short word_D73A8; /* D73A8 */
-extern short word_D73AA; /* D73AA */
-extern short word_D73AC; /* D73AC */
-extern short word_D73AE; /* D73AE */
-extern short word_D73B0; /* D73B0 */
-extern short word_D73B2; /* D73B2 */
-extern short word_D73B4; /* D73B4 */
-extern short word_D73B6; /* D73B6 */
-extern short word_D73B8; /* D73B8 */
-extern short word_D73BA; /* D73BA */
-extern short word_D73BC; /* D73BC */
-extern short word_D73BE; /* D73BE */
-extern short word_D73C0; /* D73C0 */
-extern short word_D73C2; /* D73C2 */
-extern short word_D73C4; /* D73C4 */
-extern short word_D73C6; /* D73C6 */
-extern short word_D73C8; /* D73C8 */
-extern short word_D73CA; /* D73CA */
-extern short word_D73CC; /* D73CC */
-extern short word_D73CE; /* D73CE */
-extern short word_D73D0; /* D73D0 */
-extern short word_D73D2; /* D73D2 */
-extern short word_D73D4; /* D73D4 */
-extern short word_D73D6; /* D73D6 */
-extern short word_D73D8; /* D73D8 */
-extern short word_D73DA; /* D73DA */
-extern short word_D73DC; /* D73DC */
-extern short word_D73DE; /* D73DE */
-extern short word_D73E0; /* D73E0 */
-extern short word_D73E2; /* D73E2 */
-extern short word_D73E4; /* D73E4 */
-extern short word_D73E6; /* D73E6 */
-extern short word_D73E8; /* D73E8 */
-extern short word_D73EA; /* D73EA */
-extern short word_D73EC; /* D73EC */
-extern short word_D73EE; /* D73EE */
-extern short word_D73F0; /* D73F0 */
-extern short word_D73F2; /* D73F2 */
-extern short word_D73F4; /* D73F4 */
-extern short word_D73F6; /* D73F6 */
-extern short word_D73F8; /* D73F8 */
-extern short word_D73FA; /* D73FA */
-extern short word_D73FC; /* D73FC */
-extern short word_D73FE; /* D73FE */
-extern short word_D7400; /* D7400 */
-extern short word_D7402; /* D7402 */
-extern short word_D7404; /* D7404 */
-extern short word_D7406; /* D7406 */
-extern short word_D7408; /* D7408 */
-extern short word_D740A; /* D740A */
-extern short word_D740C; /* D740C */
-extern short word_D740E; /* D740E */
-extern short word_D7410; /* D7410 */
-extern short word_D7412; /* D7412 */
 extern short MixVolumeTable[]; /* D7414 */
 extern int SbMixReadPos; /* D7614 */
 extern unsigned char SbDmaRunning; /* D7618 */
@@ -4428,60 +4025,9 @@ extern int GusStreamRightBuf; /* D7B00 */
 extern int GusStreamRightPending; /* D7B04 */
 extern int GusStreamBusyRight; /* D7B08 */
 extern int GusStreamChannels; /* D7B0C */
-extern unsigned char byte_D7B18; /* D7B18 */
-extern int dword_D7B1C; /* D7B1C */
-extern int dword_D7B30; /* D7B30 */
-extern int dword_D7B34; /* D7B34 */
-extern int dword_D7B38; /* D7B38 */
-extern int dword_D7B44; /* D7B44 */
-extern int dword_D7B48; /* D7B48 */
-extern int dword_D7B4C; /* D7B4C */
-extern int dword_D7B50; /* D7B50 */
-extern unsigned char byte_D7B58; /* D7B58 */
-extern unsigned char byte_D7B5C; /* D7B5C */
-extern int dword_D7B60; /* D7B60 */
 extern short GusStreamStepsChan0[]; /* D7B64 */
-extern int dword_D7D64; /* D7D64 */
-extern unsigned char byte_D7D70; /* D7D70 */
-extern int dword_D7D74; /* D7D74 */
-extern int dword_D7D88; /* D7D88 */
-extern int dword_D7D8C; /* D7D8C */
-extern int dword_D7D90; /* D7D90 */
-extern int dword_D7D9C; /* D7D9C */
-extern int dword_D7DA0; /* D7DA0 */
-extern int dword_D7DA4; /* D7DA4 */
-extern int dword_D7DA8; /* D7DA8 */
-extern unsigned char byte_D7DB0; /* D7DB0 */
-extern unsigned char byte_D7DB4; /* D7DB4 */
-extern int dword_D7DB8; /* D7DB8 */
 extern short GusStreamStepsChan1[]; /* D7DBC */
-extern int dword_D7FBC; /* D7FBC */
-extern unsigned char byte_D7FC8; /* D7FC8 */
-extern int dword_D7FCC; /* D7FCC */
-extern int dword_D7FE0; /* D7FE0 */
-extern int dword_D7FE4; /* D7FE4 */
-extern int dword_D7FE8; /* D7FE8 */
-extern int dword_D7FF4; /* D7FF4 */
-extern int dword_D7FF8; /* D7FF8 */
-extern int dword_D7FFC; /* D7FFC */
-extern int dword_D8000; /* D8000 */
-extern unsigned char byte_D8008; /* D8008 */
-extern unsigned char byte_D800C; /* D800C */
-extern int dword_D8010; /* D8010 */
 extern short GusStreamStepsChan2[]; /* D8014 */
-extern int dword_D8214; /* D8214 */
-extern unsigned char byte_D8220; /* D8220 */
-extern int dword_D8224; /* D8224 */
-extern int dword_D8238; /* D8238 */
-extern int dword_D823C; /* D823C */
-extern int dword_D8240; /* D8240 */
-extern int dword_D824C; /* D824C */
-extern int dword_D8250; /* D8250 */
-extern int dword_D8254; /* D8254 */
-extern int dword_D8258; /* D8258 */
-extern unsigned char byte_D8260; /* D8260 */
-extern unsigned char byte_D8264; /* D8264 */
-extern int dword_D8268; /* D8268 */
 extern short GusStreamStepsChan3[]; /* D826C */
 extern int GusStreamTable[]; /* D846C */
 extern int GusStreamBufSize; /* D847C */
@@ -4513,15 +4059,6 @@ extern int GusChanRpnLsb[]; /* D8590 */
 extern int GusChanVolume[]; /* D85D0 */
 extern int GusChanExpression[]; /* D8610 */
 extern int ExecParamBlock; /* D8690 */
-extern short word_D8694; /* D8694 */
-extern int dword_D8696; /* D8696 */
-extern short word_D869A; /* D869A */
-extern int dword_D869C; /* D869C */
-extern short word_D86A0; /* D86A0 */
-extern int dword_D86A2; /* D86A2 */
-extern short word_D86A6; /* D86A6 */
-extern int dword_D86A8; /* D86A8 */
-extern int dword_D86AC; /* D86AC */
 extern int SpawnSavedEsp; /* D86B0 */
 extern short SpawnSavedSs; /* D86B4 */
 extern short SpawnSavedDs; /* D86B6 */
@@ -4588,17 +4125,14 @@ extern int gfxidlist[]; /* D8C4C */
 extern int rinkendbank; /* D8C68 */
 extern int frameaccum; /* D8C6C */
 extern int rinkendart; /* D8C70 */
-extern int dword_D8C72[]; /* D8C72 */
 extern int viewscrolly; /* D8C74 */
 extern int hudhundaccum; /* D8C78 */
-extern int dword_D8C7A[]; /* D8C7A */
 extern int viewscrollx; /* D8C7C */
 extern int numshpbank; /* D8C80 */
 extern int curperiod; /* D8C84 */
 extern unsigned char fadepalbuf[]; /* D8C88 */
 extern unsigned char cupteam[]; /* D8F88 */
 extern unsigned char presidentsteam[]; /* D9270 */
-extern unsigned char byte_D9299; /* D9299 */
 extern unsigned char awardwinners[]; /* D9558 */
 extern unsigned char awardwinners_e01[]; /* D958C */
 extern unsigned char awardwinners_e02[]; /* D95C0 */
@@ -4656,7 +4190,6 @@ extern unsigned char hmscratch[]; /* DC228 */
 extern int s1font; /* DC230 */
 extern int schedgameidx; /* DC234 */
 extern int pointerspr; /* DC238 */
-extern int dword_DC23E[]; /* DC23E */
 extern short hmglstats[]; /* DC240 */
 extern short hmglstats_w2[]; /* DC242 */
 extern short hmglstats_w4[]; /* DC244 */
@@ -4769,7 +4302,6 @@ extern int editmaxw; /* DD694 */
 extern int editcuron; /* DD69C */
 extern int edity; /* DD6A0 */
 extern int editx; /* DD6A4 */
-extern int dword_DD6A6[]; /* DD6A6 */
 extern short rinkwtiles; /* DD6A8 */
 extern short scrolly; /* DD6AA */
 extern short scrollx; /* DD6AC */
@@ -4838,7 +4370,6 @@ extern unsigned char tradeslot[]; /* DDD8E */
 extern int jerseymsg; /* DE25C */
 extern int tradeside; /* DE260 */
 extern int tradebitmap; /* DE264 */
-extern int dword_DE265[]; /* DE265 */
 extern signed char MergeResult; /* DE268 */
 extern unsigned char loadpals[]; /* DE26C */
 extern int palcyclelock; /* DEB6C */
@@ -4934,7 +4465,6 @@ extern int puckstruct[]; /* DFF1C */
 extern unsigned char puckasslist[]; /* DFF3A */
 extern short pucktemp1; /* DFF42 */
 extern short pucknopuck; /* DFF5A */
-extern unsigned char unk_DFF5E[]; /* DFF5E */
 extern unsigned char puckpflags2; /* DFF61 */
 extern int sortobj15[]; /* DFF9C */
 extern unsigned char doorZpos2; /* DFFA6 */
@@ -5015,7 +4545,6 @@ extern short GoalState; /* E9AB0 */
 extern short ovlsteptimer; /* E9AB2 */
 extern short ovlstepidx; /* E9AB4 */
 extern short UnusedEventWord; /* E9AB6 */
-extern int dword_E9AB7[]; /* E9AB7 */
 extern short PerTimeTotal; /* E9AB8 */
 extern signed char PBnum[]; /* E9ABA */
 extern short lj2; /* E9ABC */
@@ -5061,7 +4590,6 @@ extern int defertab_a5[]; /* E9BB8 */
 extern int defertab_a6[]; /* E9BBC */
 extern int defertab_fn[]; /* E9BC0 */
 extern int lineslotmark[]; /* E9C24 */
-extern int dword_E9C85[]; /* E9C85 */
 extern int linesortidx[]; /* E9C88 */
 extern unsigned char offsort_c[]; /* E9CEC */
 extern unsigned char defsort_r[]; /* E9D1E */
@@ -5228,7 +4756,6 @@ extern int ReplayCamFree; /* ED70C */
 extern int ReplayHoverPlayer; /* ED74C */
 extern int ReplayStartRate; /* ED750 */
 extern int ReplayCtlFlags; /* ED754 */
-extern int dword_ED756[]; /* ED756 */
 extern short replayfrac; /* ED758 */
 extern int pl20spr; /* ED75C */
 extern int pl05spr; /* ED760 */
@@ -5263,17 +4790,10 @@ extern int MemDescriptorTop; /* EDAAC */
 extern int MemLockHandle; /* EDAB0 */
 extern int MemFreeBytes; /* EDAB4 */
 extern unsigned char vesamodeinfo[]; /* EDAB8 */
-extern int dword_EDABA; /* EDABA */
-extern unsigned char byte_EDABB; /* EDABB */
 extern unsigned char vesainfo[]; /* EDBB8 */
-extern short word_EDBCA; /* EDBCA */
 extern int vesapresent; /* EDCB8 */
 extern int ScreenWidthPtr; /* EDCBC */
 extern unsigned char vesamodeok; /* EDCC0 */
-extern unsigned char byte_EDCC1; /* EDCC1 */
-extern unsigned char byte_EDCC3; /* EDCC3 */
-extern unsigned char byte_EDCC5; /* EDCC5 */
-extern unsigned char byte_EDCC7; /* EDCC7 */
 extern int timercallbacks[]; /* EDCDC */
 extern int SampleTable[]; /* EDCFC */
 extern int SampleTableSize[]; /* EDD00 */
@@ -5292,16 +4812,6 @@ extern unsigned char MemViewAttrFlags; /* EDE7D */
 extern int MemViewMode; /* EDE80 */
 extern int MemViewPrevSel; /* EDE84 */
 extern int SndHandleTable[]; /* EDE88 */
-extern int dword_EDE8C[]; /* EDE8C */
-extern int dword_EDE90[]; /* EDE90 */
-extern int dword_EDE94[]; /* EDE94 */
-extern int dword_EDE98[]; /* EDE98 */
-extern int dword_EDE9C[]; /* EDE9C */
-extern int dword_EDEA0[]; /* EDEA0 */
-extern int dword_EDEA4[]; /* EDEA4 */
-extern int dword_EDEA8[]; /* EDEA8 */
-extern unsigned char byte_EDEAC[]; /* EDEAC */
-extern int dword_EDEB0[]; /* EDEB0 */
 extern int HuffBitBuffer; /* EDEE0 */
 extern int HuffBitCount; /* EDEE4 */
 extern int UnpackSrcPtr; /* EDEE8 */
@@ -5327,7 +4837,6 @@ extern int SongRelease[]; /* F18A4 */
 extern unsigned char SeqTracks[]; /* F1A1C */
 extern unsigned char SeqTrackFlags[]; /* F1A1D */
 extern int SeqTrackPos[]; /* F1A1E */
-extern unsigned char byte_F1D61; /* F1D61 */
 extern unsigned char MidiOutQueue[]; /* F21FC */
 extern int DigiFadeLevel[]; /* F22FC */
 extern int DigiFadeAccum[]; /* F2300 */
@@ -5355,62 +4864,17 @@ extern int delaycount; /* F24CC */
 extern unsigned char _doserrno[]; /* F24D0 */
 extern unsigned char ErrnoVar[]; /* F24D4 */
 extern unsigned char PcSpkVoices[]; /* F24D8 */
-extern unsigned char byte_F24D9[]; /* F24D9 */
-extern unsigned char unk_F27D8[]; /* F27D8 */
-extern unsigned char byte_F27EE[]; /* F27EE */
-extern unsigned char byte_F27EF[]; /* F27EF */
-extern int dword_F27F6[]; /* F27F6 */
-extern unsigned char byte_F27FD[]; /* F27FD */
 extern int AdlibVoices[]; /* F2F28 */
-extern short word_F2F3C[]; /* F2F3C */
-extern short word_F2F3E[]; /* F2F3E */
-extern short word_F2F40[]; /* F2F40 */
-extern unsigned char byte_F2F42[]; /* F2F42 */
-extern unsigned char byte_F2F43[]; /* F2F43 */
-extern short word_F2F44[]; /* F2F44 */
 extern int AdlibChanState[]; /* F3108 */
-extern unsigned char unk_F3148[]; /* F3148 */
-extern short word_F3150[]; /* F3150 */
-extern unsigned char byte_F3196[]; /* F3196 */
-extern unsigned char byte_F3197[]; /* F3197 */
-extern short word_F344E; /* F344E */
-extern short word_F3450; /* F3450 */
-extern short word_F3452; /* F3452 */
 extern short SbMidiVoices[]; /* F3454 */
 extern short SbVoiceRate[]; /* F3456 */
 extern short SbChanVolume[]; /* F345C */
 extern int SbVoiceSample[]; /* F3462 */
-extern int dword_F34DC[]; /* F34DC */
 extern unsigned char SbChanRecords[]; /* F3534 */
 extern short SbChanTrack[]; /* F3538 */
 extern short SbChanBend[]; /* F354A */
-extern short word_F3714; /* F3714 */
-extern short word_F3716; /* F3716 */
-extern short word_F3718; /* F3718 */
 extern short GusPatchState[]; /* F371C */
-extern int dword_F371E[]; /* F371E */
-extern short word_F531C; /* F531C */
 extern short GusDriverBasePort; /* F531E */
-extern unsigned char byte_F5320; /* F5320 */
-extern unsigned char byte_F5321; /* F5321 */
-extern short word_F5324[]; /* F5324 */
-extern short word_F5326[]; /* F5326 */
-extern int dword_F532A[]; /* F532A */
-extern int dword_F5332[]; /* F5332 */
-extern unsigned char unk_F53AC[]; /* F53AC */
-extern short word_F53B0[]; /* F53B0 */
-extern short word_F53C2[]; /* F53C2 */
-extern int dword_F558C[]; /* F558C */
-extern int dword_F55E4; /* F55E4 */
-extern int dword_F55E8; /* F55E8 */
-extern int dword_F55EC; /* F55EC */
-extern int dword_F55F0; /* F55F0 */
-extern int dword_F55F4; /* F55F4 */
-extern unsigned char unk_F55F8[]; /* F55F8 */
-extern int dword_F58D0[]; /* F58D0 */
-extern short word_F58D2; /* F58D2 */
-extern short word_F58D4; /* F58D4 */
-extern short word_F58D6; /* F58D6 */
 extern int CMainArgc; /* F58D8 */
 extern int CMainArgv; /* F58DC */
 extern int RationalAllocLimit; /* F58E0 */
@@ -5419,20 +4883,8 @@ extern unsigned char Hook387Save[]; /* F58E4 */
 extern unsigned char GusMidiVoices[]; /* F5978 */
 extern unsigned char GusMidiVoiceNote[]; /* F5979 */
 extern unsigned char GusMidiVoiceVelocity[]; /* F597A */
-extern unsigned char byte_F59F8[]; /* F59F8 */
-extern unsigned char byte_F59F9[]; /* F59F9 */
-extern short word_F59FA[]; /* F59FA */
-extern int dword_F59FC[]; /* F59FC */
-extern unsigned char byte_F5A00[]; /* F5A00 */
-extern unsigned char byte_F5A01[]; /* F5A01 */
-extern unsigned char byte_F5A04[]; /* F5A04 */
 extern unsigned char GusWaveVoices[]; /* F5BF8 */
 extern unsigned char GusWaveVoiceFlags[]; /* F5C0B */
-extern int dword_F6016[]; /* F6016 */
-extern short word_F6018[]; /* F6018 */
-extern int dword_F6116[]; /* F6116 */
-extern short word_F6118; /* F6118 */
-extern short word_F611A; /* F611A */
 extern short GusDramSize; /* F6128 */
 extern int GusEnvConfig; /* F612C */
 extern int ScaledRowBuffer[]; /* F6138 */

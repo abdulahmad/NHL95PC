@@ -151,7 +151,7 @@
 1 96440 96A58 1560 ea_mvi lib/ea/ea_mvi.asm
 1 96A58 96A60 8 watcom_clib_22 lib/watcom/watcom_ios_failure.asm
 1 96A60 972F0 2192 eacsndf_core lib/sound/eacsndf_core.asm
-1 972F0 97300 16 watcom_clib_23 lib/watcom/watcom_os_handle_stub.asm
+1 972F0 97300 16 watcom_clib_23 lib/watcom/watcom_os_handle_get.asm
 1 97300 9805E 3422 ea_unpack lib/ea/ea_unpack.asm
 1 9805E 981AD 335 watcom_clib_24 lib/watcom/watcom_itoa.asm
 1 981AD 98683 1238 ea_kbd_exit_01 lib/ea/ea_prompt_box.asm

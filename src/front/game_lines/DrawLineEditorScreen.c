@@ -1,5 +1,5 @@
 /* Team select: drawing the line editor screen and its dialog frames, in address order. DrawDlgFrame ends in
-   DrawLineEditorScreen's exit (StubRet4a) and matches only in one file with it (found by tools/module_try.py). */
+   DrawLineEditorScreen's exit (DrawLineEditorScreenEpilogue) and matches only in one file with it (found by tools/module_try.py). */
 #define DrawDlgFrame DrawDlgFrame_decl
 #include "nhl95.h"
 #undef DrawDlgFrame
@@ -90,7 +90,7 @@ void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n)
     PrintString((char *)str_Attackers, 0x17D, 0x17A);
 }
 
-/* DrawDlgFrame (78BE7, PC only; ends in StubRet4a, DrawLineEditorScreen's exit): draw a dialog frame from x1 y1
+/* DrawDlgFrame (78BE7, PC only; ends in DrawLineEditorScreenEpilogue, DrawLineEditorScreen's exit): draw a dialog frame from x1 y1
    to x2 y2: the fill (dlgfillcol), the top and left edges in dlgedgecol1, the right and bottom edges in
    dlgedgecol2, the two other corners in dlgedgecol3; with bevel a 2 x 2 pixel bevel inside each corner
    (dlgbevelcol1 / 2). No result. */

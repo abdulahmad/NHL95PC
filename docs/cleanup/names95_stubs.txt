@@ -1,0 +1,10 @@
+stub_8C1B7 NullAfterPlayMVI {source_game=PC-new,confidence=low} empty library routine (no body, no callers) that sits right after PlayMVI; a compiled-out debug hook
+stub_8C1F7 NullAfterSelectRinkBM {source_game=PC-new,confidence=low} empty library routine (no body, no callers) that sits right after SelectRinkBM; a compiled-out debug hook
+stub_8C202 NullScreenBMHook {source_game=PC-new,confidence=low} empty library routine (no body, no callers) in the screen bitmap helper group; a compiled-out debug hook
+stub_8C20D NullDrawBMHook {source_game=PC-new,confidence=low} empty library routine (no body, no callers) in the screen bitmap helper group; a compiled-out debug hook
+stub_8C218 BlitRectToPage {source_game=PC-new,confidence=medium} the page copy of a clipped rectangle with its body compiled out: BlitClipRect and the line editor call it with (vgapage==0, x, y, w, h, 0) and it returns at once
+stub_8C223 NullBlitPageHook {source_game=PC-new,confidence=low} empty library routine (no body, no callers) at the end of the screen bitmap helper group; a compiled-out debug hook
+NullFunc_1D024 NullFrontEndCallback {source_game=PC-new,confidence=high} front-end callback that does nothing; not referenced
+negone_3DC28 NoSelectionMinusOne {source_game=PC-new,confidence=medium} code-segment dword -1 that TradePlayers loads as its initial selection (no row picked)
+unk13_6BF3D EmptyEventName13 {source_game=PC-new,confidence=medium} 13 zero bytes in the code segment: the empty event name that the database save copies
+unk13_722FE EmptyPathTemplate13 {source_game=PC-new,confidence=medium} 13 zero bytes in the code segment: the empty path template that the database dialog copies

@@ -1,0 +1,9 @@
+LeagueCheckStub LeagueCheckAlwaysZero {source_game=PC-new,confidence=medium} returns 0: the league-path check that AddHumanTeam, RemoveHumanTeam, CheckMasterPassword and the database merge call before ReadLeagueInfo, with its body removed
+DemoSetupStub NullDemoSetup {source_game=PC-new,confidence=medium} empty routine called before the scoreboard demo starts
+SettingsStub NullModeSettingsHook {source_game=PC-new,confidence=low} empty routine in front of MenuModeSettings; not referenced
+LockerStub LockerRoomScreenEpilogue {source_game=PC-new,confidence=high} the register-restoring return at the end of LockerRoomScreen (a lone ret after the routine)
+SaveGameStub MenuSaveGameEpilogue {source_game=PC-new,confidence=high} the register-restoring return at the end of MenuSaveGame (a lone ret after the routine)
+StubRet4a DrawLineEditorScreenEpilogue {source_game=PC-new,confidence=high} the register-restoring ret 4 at the end of DrawLineEditorScreen
+StubRet4b NullGameLinesHook {source_game=PC-new,confidence=low} empty routine (ret 4) in the line editor code; not referenced
+IretStub IretHandler {source_game=PC-new,confidence=high} a single iret instruction that InstallKeyboardHandler uses as the do-nothing interrupt handler
+IntrStubs IntrOpcodeTable {source_game=PC-new,confidence=high} the 256 three-byte int N / ret opcodes that IntrLoadRegs and IntrLoadSegRegs call to issue a software interrupt by number

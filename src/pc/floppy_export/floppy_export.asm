@@ -6,7 +6,7 @@ extern __CHK, _dos_getdiskfree_, _fstrcspn_, AskMasterPassword, btn_MasterDB, bt
 extern CopyGameSettings, CopyHumanTeamDBs, criterrflag, curleague, DeleteDir, DeleteFiles, drivebtns, exporterrmsg
 extern FatalError, FileClose, FileCreate, FileExists, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt
 extern FileWriteAt, floppyok, floppyprobe, FmtFromLeague, forceexportbtns, forceexportmsg, GetLeagueId, humancount
-extern importdiskmsg, importerrmsg, importmastermsg, importtypebtns, importtypemsg, insavegamemsg, insertfloppymsg, LeagueCheckStub
+extern importdiskmsg, importerrmsg, importmastermsg, importtypebtns, importtypemsg, insavegamemsg, insertfloppymsg, LeagueCheckAlwaysZero
 extern leaguedbnames, leagueflags, leaguemaster, leaguemgrmenu, leaguesaved, leagueteams, LeagueTeamSelect, lgexistsformsg
 extern lgexistsmsg, lgreaderrmsg, lgstate, lgteamflags, lgteamver, lgteamver_hi, LoadModeState, MakePath
 extern masterpw, menuact_export, menuact_nextlg, MenuExportDbs, MenuNextLeagueGame, menusub_lgmgr, MessageBox, mkdir_
@@ -1592,7 +1592,7 @@ ExportDbs:
         sub esp, byte 48h
         mov edx, 3
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         mov esi, eax
 .1:
         xor edi, edi

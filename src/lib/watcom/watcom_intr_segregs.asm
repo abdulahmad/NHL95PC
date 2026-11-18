@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A18D6 progbits alloc exec nowrite align=1
-extern IntrStubs
+extern IntrOpcodeTable
 global IntrLoadSegRegs
 ;-----------------------------------------------------------------------------
 ; IntrLoadSegRegs                              A18D6  95 PC, medium confidence
@@ -11,7 +11,7 @@ global IntrLoadSegRegs
 ;-----------------------------------------------------------------------------
 IntrLoadSegRegs:
         lea esi, [esi+esi*2]
-        lea eax, [dword cs:esi+IntrStubs]
+        lea eax, [dword cs:esi+IntrOpcodeTable]
         push eax
         mov es, word [ebx]
         mov bp, word [byte ebx+06h]

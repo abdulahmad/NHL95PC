@@ -10,17 +10,17 @@ extern MusicOn, musicslot, pointerspr, PrintString, ptrupdatefn, PutBlock, scpfl
 extern settingsfile, SndQuery, songdata, sounddev, str_BKGD2, str_Dbox3, str_DigitizedSpeech2, str_Music2
 extern str_Pointer16, str_Setting4, str_Setting7, str_Sound2, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic, DisableMidiMusic
 extern PlayDigiBlockLoop, SetDigiChannelVolume, DrawArtKeyFF, SetScreenTarget, TextSetColors, VgaSetPalette, WriteCurModeState
-global SettingsStub, MenuModeSettings, ModeSettings_epilogue, DrawModeSetDlg, ModeOptsToBits, ModeSetHitTest, DrawModeSetChecks, ModeSetViewLoop
+global NullModeSettingsHook, MenuModeSettings, ModeSettings_epilogue, DrawModeSetDlg, ModeOptsToBits, ModeSetHitTest, DrawModeSetChecks, ModeSetViewLoop
 global ModeSetEditLoop
 ;-----------------------------------------------------------------------------
-; SettingsStub                                                    7B39C  95 PC
+; NullModeSettingsHook                                                    7B39C  95 PC
 ; Empty __CHK/ret, unreferenced
 ;-----------------------------------------------------------------------------
-; C: src/pc/mode_settings/SettingsStub.c
+; C: src/pc/mode_settings/NullModeSettingsHook.c
 %ifdef CBUILD
-%include "c/pc/mode_settings/SettingsStub.inc"
+%include "c/pc/mode_settings/NullModeSettingsHook.inc"
 %else
-SettingsStub:
+NullModeSettingsHook:
         push dword 4
         call __CHK
         ret

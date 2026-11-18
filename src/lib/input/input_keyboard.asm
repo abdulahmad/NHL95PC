@@ -6,7 +6,7 @@ extern __GETDS, AddExitHandler, bailout_vec, BiosKeyFunc, CapsLockState, DosGetV
 extern GraphicsReady, KbdDataSelector, KeyBuffer, KeyBufferHead, KeyBufferMask, KeyBufferTail, KeyMapAlt, KeyMapCaps
 extern KeyMapCtrl, KeyMapNormal, KeyMapShift, KeyReleaseBase, KeyStateTable, PrintBoxedText, PrintfSaveRegs, RestoreTextMode
 extern SavedInt16Offset, SavedInt16Selector, SavedKbdVecOffset, SavedKbdVecSelector, SavedRealKbdOffset, SavedRealKbdSegment, SetScreenTarget, WaitKey
-global InstallKeyboardHandler, RemoveKeyboardHandler, KeyboardIrqHandler, IretStub, Int16Handler, Int16Service, KeyDown, BiosKeyCall
+global InstallKeyboardHandler, RemoveKeyboardHandler, KeyboardIrqHandler, IretHandler, Int16Handler, Int16Service, KeyDown, BiosKeyCall
 global FatalError, FatalErrorEnd
 ;-----------------------------------------------------------------------------
 ; InstallKeyboardHandler                       B29F0  95 PC, medium confidence
@@ -41,7 +41,7 @@ InstallKeyboardHandler:
         mov eax, Int16Handler
         mov dx, cs
         mov ebx, 23h
-        mov eax, IretStub
+        mov eax, IretHandler
         call DosSetVector
         pop eax
         out 21h, al
@@ -178,7 +178,7 @@ KeyboardIrqHandler:
         test byte [KeyStateTable+053h], 1
         je short .11
         jmp short .9
-IretStub:                                       ; used by InstallKeyboardHandler
+IretHandler:                                       ; used by InstallKeyboardHandler
         db 0CFh
 ;-----------------------------------------------------------------------------
 ; Int16Handler                                                    B2C01  95 PC

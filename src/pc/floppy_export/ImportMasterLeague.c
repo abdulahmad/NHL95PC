@@ -1,6 +1,6 @@
 /* Database merge: importing a master league from the floppy. */
 #define CopyHumanTeamDBs CopyHumanTeamDBs_decl
-#define LeagueCheckStub LeagueCheckStub_decl
+#define LeagueCheckAlwaysZero LeagueCheckAlwaysZero_decl
 #define LeagueTeamSelect LeagueTeamSelect_decl
 #define ExportTeamToFloppy ExportTeamToFloppy_decl
 #define ReadLeagueTeamEntry ReadLeagueTeamEntry_decl
@@ -8,7 +8,7 @@
 #define UpdateTeamDbs UpdateTeamDbs_decl
 #include "nhl95.h"
 #undef CopyHumanTeamDBs
-#undef LeagueCheckStub
+#undef LeagueCheckAlwaysZero
 #undef LeagueTeamSelect
 #undef ExportTeamToFloppy
 #undef ReadLeagueTeamEntry
@@ -17,7 +17,7 @@
 
 int mkdir(const char *path);  /* Watcom CRT mkdir_ */
 int CopyHumanTeamDBs(char *dir, void *teams, int which);
-int LeagueCheckStub(char *dir, int mode);
+int LeagueCheckAlwaysZero(char *dir, int mode);
 int LeagueTeamSelect(char *dir, int *count, unsigned char *names, unsigned char *teams, int mode, char *title,
     int *sel);
 void ExportTeamToFloppy(char *dir, char *ext, char *ext2, int t, unsigned char *teams, int full, int a);
@@ -302,7 +302,7 @@ done:
 }
 
 /* ExportDbs (3D108, PC only; ends in ImportMasterLeague_ret): export a human team's databases from the current
-   league to the floppy. Read the league (LeagueCheckStub 3, ReadLeagueInfo); with team databases waiting
+   league to the floppy. Read the league (LeagueCheckAlwaysZero 3, ReadLeagueInfo); with team databases waiting
    (leagueflags bits 2 / 3) offer to update them first (playerdbsmsg, UpdateTeamDbs) and read again; a saved
    game in progress stops it (msg_SavedGame). With the team names read, the team is the one this machine plays
    (GetLeagueId) or one picked (LeagueTeamSelect); a team that has already exported (lgteamflags 2) may only
@@ -327,7 +327,7 @@ void ExportDbs(void)
     int ask;
     char *e;
 
-    err = LeagueCheckStub((char *)&curleague, 3);
+    err = LeagueCheckAlwaysZero((char *)&curleague, 3);
     do {
         shown = 0;
         if (!err) {
