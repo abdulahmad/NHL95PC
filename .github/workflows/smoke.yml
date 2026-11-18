@@ -1,0 +1,77 @@
+# Smoke test: does the port still build, and does the bit-perfect DOS EXE still MATCH?
+# Added by the smoke-test plan (project files smoke-test/plan.md). Retail files are never in this repo;
+# the MATCH job reads them from the private EA-NHL-Disassembly-Project with the VAULT_TOKEN secret and skips if it is missing.
+name: smoke
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 9 * * *'
+  repository_dispatch:
+    types: [overbar-changed, disasm-changed]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: use the Overbar commit that triggered this run
+        if: github.event_name == 'repository_dispatch' && github.event.client_payload.overbar_sha
+        run: |
+          git -C port/overbar fetch origin main
+          git -C port/overbar checkout ${{ github.event.client_payload.overbar_sha }}
+      - name: tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q gcc-mingw-w64-i686 g++-mingw-w64-i686 nasm python3
+          mkdir -p "$RUNNER_TEMP/sdl"
+          curl -sSLf https://github.com/libsdl-org/SDL/releases/download/release-2.30.9/SDL2-devel-2.30.9-mingw.tar.gz | tar xz -C "$RUNNER_TEMP/sdl"
+      - name: build the Windows port
+        run: SDL2_MINGW="$RUNNER_TEMP/sdl/SDL2-2.30.9/i686-w64-mingw32" sh port/build-win.sh
+      - name: the exe exists
+        run: test -s build/win/hockey-win32.exe
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: the Overbar pin is a commit on Overbar main
+        run: |
+          pin=$(git rev-parse HEAD:port/overbar)
+          git -C port/overbar fetch -q origin main
+          git -C port/overbar merge-base --is-ancestor "$pin" origin/main || { echo "pin $pin is not on Overbar main"; exit 1; }
+      - name: no retail files in the repo
+        run: |
+          bad=$(git ls-files -s | awk '$1!="120000"{print $4}' | grep -iE '\.(sfc|smc|bin|iso|exe|gen|md|wad|cmv)$' | while read -r f; do s=$(stat -c %s "$f" 2>/dev/null || echo 0); [ "$s" -gt 200000 ] && echo "$f"; done)
+          [ -z "$bad" ] || { echo "retail-sized files tracked:"; echo "$bad"; exit 1; }
+  match:
+    runs-on: ubuntu-latest
+    env:
+      VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+    steps:
+      - name: skip without vault access
+        if: env.VAULT_TOKEN == ''
+        run: echo "VAULT_TOKEN not set, MATCH check skipped"
+      - uses: actions/checkout@v4
+        if: env.VAULT_TOKEN != ''
+        with:
+          submodules: recursive
+      - uses: actions/checkout@v4
+        if: env.VAULT_TOKEN != ''
+        with:
+          repository: abdulahmad/EA-NHL-Disassembly-Project
+          token: ${{ secrets.VAULT_TOKEN }}
+          path: vault
+          sparse-checkout: |
+            NHL95-PC/HOCKEY.EXE
+          sparse-checkout-cone-mode: false
+      - name: build the DOS EXE and compare
+        if: env.VAULT_TOKEN != ''
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q nasm python3
+          ./build.sh vault/NHL95-PC/HOCKEY.EXE 2>&1 | tee build.log
+          tail -1 build.log | grep -q '^MATCH'
