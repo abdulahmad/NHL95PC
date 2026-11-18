@@ -6,7 +6,7 @@
   rebuild_exe.py extract [HOCKEY.EXE] [build/parts]    check the EXE's sha1, then split (same as split)
   rebuild_exe.py verify                                 extract + build + sha1/byte compare + fixup experiments
 
-The committed retail binary is retail/HOCKEY.EXE (1,179,067 bytes, sha1
+The retail binary is your own retail/HOCKEY.EXE (not in the repo; 1,179,067 bytes, sha1
 3961e0eba6b0338fad1613bb534efafd9406ed4a). A root HOCKEY.EXE pointer follows it so older
 tool defaults still resolve.
 
@@ -49,7 +49,7 @@ def default_exe():
 
 def check_exe(exe):
     if not os.path.isfile(exe):
-        sys.exit('%s not found. The committed retail binary is retail/HOCKEY.EXE (root HOCKEY.EXE is a pointer).' % exe)
+        sys.exit('%s not found. Put your own NHL 95 HOCKEY.EXE at retail/HOCKEY.EXE (1,179,067 bytes, sha1 3961e0eba6b0338fad1613bb534efafd9406ed4a); it is not in the repo.' % exe)
     d = open(exe, 'rb').read(); h = hashlib.sha1(d).hexdigest()
     if len(d) != EXPECTED_SIZE or h != EXPECTED_SHA1:
         sys.exit('%s: %d bytes, sha1 %s. Expected %d bytes, sha1 %s.' % (exe, len(d), h, EXPECTED_SIZE, EXPECTED_SHA1))

@@ -26,7 +26,7 @@ Sister projects: [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis),
 
 ## Retail EXE
 
-The retail `HOCKEY.EXE` is committed at `retail/HOCKEY.EXE`. Root `HOCKEY.EXE` is a pointer so older tool defaults still resolve:
+The retail `HOCKEY.EXE` is not included. Copy it from your own NHL 95 install to `retail/HOCKEY.EXE` (gitignored), or pass its path to `./build.sh`. Root `HOCKEY.EXE` is a pointer to it so older tool defaults still resolve. It must be exactly:
 
 | | |
 | --- | --- |
