@@ -53,6 +53,12 @@ def main():
                 bad['addr'].append((rel, i, m.group(0)))
             for m in PLACE.finditer(code):
                 if re.search(r'\d', m.group(0)) and m.group(0) not in ALLOW: bad['place'].append((rel, i, m.group(0)))
+    # info only: numeric local labels (.1 .2) inside routines; not a failure (12k+ of them, local to one routine)
+    nloc = 0
+    for d, f in files():
+        if f.endswith(('.asm', '.inc')):
+            nloc += sum(1 for ln in open(os.path.join(d, f), errors='replace') if re.match(r'^\.\d+:', ln))
+    print('info: %d numeric local labels (.N) in routines, not counted as problems' % nloc)
     n = 0
     for rule, items in sorted(bad.items()):
         n += len(items)
