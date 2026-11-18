@@ -34,8 +34,8 @@ def tables(game, files):
                 else: cur['bad'] = True; continue
                 cur[sz].append(x); cur['order'].append(sz)
     return [t for t in out if (len(t['b']) + len(t['w']) + len(t['l'])) >= 6]
-T = tables('93G', [f for f in glob.glob('ref/93/src/*.asm') if not f.endswith('_stub.asm')]) + \
-    tables('94G', [f for f in glob.glob('ref/94/src/*.asm') if not f.endswith(('nhl94.asm',))])
+T = tables('93G', [f for f in glob.glob('ref/93/src/**/*.asm', recursive=True) if not f.endswith('_stub.asm')]) + \
+    tables('94G', [f for f in glob.glob('ref/94/src/**/*.asm', recursive=True) if not f.endswith(('nhl94.asm',)) and '/segacd/' not in f])
 def enc(vals, width):
     m = (1 << (8 * width)) - 1
     return b''.join((v & m).to_bytes(width, 'little') for v in vals)
