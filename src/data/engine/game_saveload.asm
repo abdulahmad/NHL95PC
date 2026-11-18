@@ -1,6 +1,7 @@
 ; Save and load errors, the penalty-shot state, and the one-timer and shot flags.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_CC01D progbits alloc noexec write align=1
 extern str_1st, str_2nd, str_3rd, OvlScriptGoal, OvlScriptClap, OvlScriptFanom, OvlScriptUflag, OvlScriptCflag
 extern OvlScriptSiren, OvlScriptRuff, OvlScriptHook, OvlScriptSaved, OvlScriptCross, OvlScriptGuilt
@@ -305,8 +306,8 @@ RockTuneIds:                                    ; Word per rock tune number read
         db 0FEh,01h
 introstandanims_m2:                             ; assintrostand: five standing animations (SPA in the high
                                                 ; word of each dword load), -2; used by assintrostand
-        db 03Ah,02h,067h,0Dh,00h,00h,07Bh,0Dh,00h,00h,057h,0Dh,00h,00h,089h,0Dh
-        db 00h,00h,045h,0Dh,00h,00h
+        dw 023Ah
+        dd SPAanthem3,SPAanthem4,SPAanthem2,SPAanthem5,SPAanthem1
 starskatermin:                                  ; PickThreeStars: skater stat minimum by period length
                                                 ; (gameopts.pertime); used by PickThreeStars
         db 0Ah,0Fh,014h
@@ -347,8 +348,8 @@ assscore_dancecnt:                              ; assscore: count of the scorer 
                                                 ; scorer; used by assscore
         db 00h,00h
 goaliesave_saveanim_m2:                         ; used by assgoalie
-        db 00h,00h,0B1h,00h,0C9h,00h,031h,01h,059h,01h,01h,01h,019h,01h,01Dh,012h
-        db 0D5h,011h,09Dh,011h
+        dw 0,SPAgglover,SPAgglovel,SPAgstackr,SPAgstackl,SPAgstickr,SPAgstickl,SPAgofallstick,SPAgofallglove
+        dw SPAgofallback
 asspuckc_postab2:                               ; used by asspuckc
         db 092h,0FFh
 asspuckc_postab2_y:                             ; asspuckc_postab2+2: the y column; used by asspuckc
@@ -365,10 +366,10 @@ refsigdir:                                      ; assrefsignal: direction the re
         db 04h,00h,04h,00h,04h,00h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
 refsigspa_m2:                                   ; assrefsignal: signal SPA of each call (RefPen), read as
                                                 ; words at +2; used by assrefsignal
-        db 0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-        db 00h,00h,00h,00h,063h,0Ch,00h,00h,073h,0Ch,08Bh,0Ch,063h,0Ch,09Bh,0Ch
-        db 0ABh,0Ch,0BBh,0Ch,0CBh,0Ch,0D9h,0Ch,0F9h,014h,0F5h,0Ch,0E5h,014h,0E7h,0Ch
-        db 0F5h,0Ch,0F5h,0Ch,0E5h,014h,083h,010h,00h,00h,00h,00h,00h,00h,00h,00h
+        dw 0FFFFh,0,0,0,0,0,0,0,0,0,SPArefrough,0,SPArefcharge,SPArefslash,SPArefrough,SPArefxcheck,SPArefhook
+        dw SPAreftrip,SPArefinterfer,SPArefhold,SPArefhistick,SPArefbehind,SPArefelbow,SPArefabuseoff
+        dw SPArefbehind
+        dw SPArefbehind,SPArefelbow,SPArefpenshot,0,0,0,0
 ShootoutPathData:                               ; used by NextPathPoint
         db 028h,00h,00h,00h
 ShootoutPathData_y:                             ; ShootoutPathData+4: the y column; used by NextPathPoint
@@ -429,8 +430,8 @@ blockspd_y:                                     ; Y column of the shot-block sli
         db 00h,00h,0B8h,0Bh,048h,0F4h,00h,00h,06Eh,0EFh,048h,0F4h,048h,0F4h,06Eh,0EFh
         db 00h,00h,048h,0F4h,0B8h,0Bh,00h,00h,092h,010h,0B8h,0Bh
 checkinglist_m2:                                ; used by checkcheck
-        db 0B8h,0Bh,0C1h,05h,0D9h,05h,09h,06h,09h,06h,09h,06h,0F1h,05h,0F1h,05h
-        db 0C1h,05h
+        dw 0BB8h,SPAshoulderchkl,SPAshoulderchkr,SPAhipchkr,SPAhipchkr,SPAhipchkr,SPAhipchkl,SPAhipchkl
+        dw SPAshoulderchkl
 shotsets:                                       ; used by doshot
         db 00h,00h
 shotsetz:                                       ; z word of each shotsets entry (shotsets+2); kept as its own

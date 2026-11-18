@@ -1,5 +1,7 @@
 ; NHL 95 PC: SPA numbers (SPAtab sequence numbers) by name, for the code files. The labels with the same names
 ; are the sequences in src/data/engine/faceoff_hockey.asm (SPAtab); this include is NOT used there. Equates only.
+; The SPA number tables in src/data/engine (goalie saves, referee signals, checking, debug list, intro stands) use them.
+; tables in src/data/engine (goalie saves, referee signals, checking, debug list, intro stands) use them.
 SPAgready       equ 01h
 SPAgready2      equ 099h
 SPAgglover      equ 0B1h
@@ -118,3 +120,4 @@ SPAblockright   equ 0141Dh
 SPAblockfront   equ 01475h
 SPAblockknee    equ 014ADh
 SPArefelbow     equ 014E5h
+SPArefhistick   equ 014F9h
