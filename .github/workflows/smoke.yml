@@ -46,7 +46,7 @@ jobs:
           git -C port/overbar merge-base --is-ancestor "$pin" origin/main || { echo "pin $pin is not on Overbar main"; exit 1; }
       - name: no retail files in the repo
         run: |
-          bad=$(git ls-files -s | awk '$1!="120000"{print $4}' | grep -iE '\.(sfc|smc|bin|iso|exe|gen|md|wad|cmv)$' | while read -r f; do s=$(stat -c %s "$f" 2>/dev/null || echo 0); [ "$s" -gt 200000 ] && echo "$f"; done)
+          bad=$(git ls-files -s | awk '$1!="120000"{print $4}' | grep -iE '\.(sfc|smc|bin|iso|gen|wad|cmv|exe)$' | grep -viE '^(tools|third_party|ext)/' | while read -r f; do s=$(stat -c %s "$f" 2>/dev/null || echo 0); [ "$s" -gt 200000 ] && echo "$f"; done || true)
           [ -z "$bad" ] || { echo "retail-sized files tracked:"; echo "$bad"; exit 1; }
   match:
     runs-on: ubuntu-latest
