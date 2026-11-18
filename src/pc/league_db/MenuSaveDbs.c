@@ -24,7 +24,7 @@ void MenuSaveDbs(int unused, int x, int y)
     int ok;
 
     (void)unused;
-    copy13(&unk13_6BF3D, dir);
+    copy13(&EmptyEventName13, dir);
     msglines[0] = (int)str_SaveAsGameDatabases;
     if (MessageBox(-1, -1, (char *)msglines, 1, (int)savedbbtns, 2, x, y, -1) != 1) return;
     ok = CheckDatabases(x, y);

@@ -258,7 +258,7 @@ int MenuNewLeague(void)
     LoadModeState(lgstate);
     SetLeagueSetImage(0);
     CreateNewLeague();
-    SettingsStub();
+    NullModeSettingsHook();
     if (((unsigned char *)lgstate)[4]) {
         BuildSavedGameLabels();
         SetupStatsSourceMenu(0);

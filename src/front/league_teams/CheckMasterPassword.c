@@ -1,11 +1,11 @@
 /* Trades: ask for the league master password before a merge. */
 #define CheckMasterPassword CheckMasterPassword_decl
-#define LeagueCheckStub LeagueCheckStub_decl
+#define LeagueCheckAlwaysZero LeagueCheckAlwaysZero_decl
 #include "nhl95.h"
 #undef CheckMasterPassword
-#undef LeagueCheckStub
+#undef LeagueCheckAlwaysZero
 
-int LeagueCheckStub(char *dir, int mode);
+int LeagueCheckAlwaysZero(char *dir, int mode);
 
 /* CheckMasterPassword: read the current league. When it has not been merged (leagueflags bit 2 clear),
  ask at the mouse; MergeLeagueFiles runs if that box is accepted and the check repeats. Then, unless
@@ -23,7 +23,7 @@ int CheckMasterPassword(void)
     int shown;
     int err;
 
-    err = LeagueCheckStub((char *)&curleague, 2);
+    err = LeagueCheckAlwaysZero((char *)&curleague, 2);
     do {
         shown = 0;
         if (!err)

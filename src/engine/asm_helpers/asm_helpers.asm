@@ -9,8 +9,8 @@ extern seed, SetDrawBitmap, SetTickDeadline, songdata, CmvCreate, CmvDestroy, Cm
 extern CmvFrameCount, CmvFrameRate, CmvPaletteFirst, CmvPaletteCount, CmvPalette, CdStreamCreate, CdStreamClose, CdStreamOpen
 extern CdStreamService, CdStreamNextChunk, CdStreamReleaseChunk, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, FillRect, DrawArtOpaque
 extern VgaSetPalette, SetScreenTarget, TickDeadlinePassed, vgapage, vtoa_dt, WaitClickTimeout
-global PlayMVI, stub_8C1B7, SelectScreenBM, SelectScreenBM_set, SelectRinkBM, stub_8C1F7, stub_8C202, stub_8C20D
-global stub_8C218, stub_8C223, randomd0, vgacopy_bg, vtoa, SaveSS
+global PlayMVI, NullAfterPlayMVI, SelectScreenBM, SelectScreenBM_set, SelectRinkBM, NullAfterSelectRinkBM, NullScreenBMHook, NullDrawBMHook
+global BlitRectToPage, NullBlitPageHook, randomd0, vgacopy_bg, vtoa, SaveSS
 ;-----------------------------------------------------------------------------
 ; PlayMVI                                                         8BEDB  95 PC
 ; PlayMVI(eax=path, edx=x, ebx=y) -> eax key. (CD movie player).
@@ -262,15 +262,15 @@ PlayMVI:
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; stub_8C1B7                                   8C1B7  95 PC, medium confidence
-; stub_8C1B7..stub_8C223: empty functions (__CHK; ret). Only stub_8C218
+; NullAfterPlayMVI                                   8C1B7  95 PC, medium confidence
+; NullAfterPlayMVI..NullBlitPageHook: empty functions (__CHK; ret). Only BlitRectToPage
 ; has a caller (line_editor_rosters, 6 stack args): removed routines.
 ;-----------------------------------------------------------------------------
-; C: src/engine/asm_helpers/stub_8C1B7.c
+; C: src/engine/asm_helpers/NullAfterPlayMVI.c
 %ifdef CBUILD
-%include "c/engine/asm_helpers/stub_8C1B7.inc"
+%include "c/engine/asm_helpers/NullAfterPlayMVI.inc"
 %else
-stub_8C1B7:
+NullAfterPlayMVI:
         push dword 4
         call __CHK
         ret
@@ -314,67 +314,67 @@ SelectRinkBM:
         jmp short SelectScreenBM_set
 %endif ; C
 ;-----------------------------------------------------------------------------
-; stub_8C1F7                                   8C1F7  95 PC, medium confidence
+; NullAfterSelectRinkBM                                   8C1F7  95 PC, medium confidence
 ; Empty function, no callers
 ;-----------------------------------------------------------------------------
-; C: src/engine/asm_helpers/stub_8C1F7.c
+; C: src/engine/asm_helpers/NullAfterSelectRinkBM.c
 %ifdef CBUILD
-%include "c/engine/asm_helpers/stub_8C1F7.inc"
+%include "c/engine/asm_helpers/NullAfterSelectRinkBM.inc"
 %else
-stub_8C1F7:
+NullAfterSelectRinkBM:
         push dword 4
         call __CHK
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; stub_8C202                                   8C202  95 PC, medium confidence
+; NullScreenBMHook                                   8C202  95 PC, medium confidence
 ; Empty function, no callers
 ;-----------------------------------------------------------------------------
-; C: src/engine/asm_helpers/stub_8C202.c
+; C: src/engine/asm_helpers/NullScreenBMHook.c
 %ifdef CBUILD
-%include "c/engine/asm_helpers/stub_8C202.inc"
+%include "c/engine/asm_helpers/NullScreenBMHook.inc"
 %else
-stub_8C202:
+NullScreenBMHook:
         push dword 4
         call __CHK
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; stub_8C20D                                   8C20D  95 PC, medium confidence
+; NullDrawBMHook                                   8C20D  95 PC, medium confidence
 ; Empty function, no callers
 ;-----------------------------------------------------------------------------
-; C: src/engine/asm_helpers/stub_8C20D.c
+; C: src/engine/asm_helpers/NullDrawBMHook.c
 %ifdef CBUILD
-%include "c/engine/asm_helpers/stub_8C20D.inc"
+%include "c/engine/asm_helpers/NullDrawBMHook.inc"
 %else
-stub_8C20D:
+NullDrawBMHook:
         push dword 4
         call __CHK
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; stub_8C218                                   8C218  95 PC, medium confidence
+; BlitRectToPage                                   8C218  95 PC, medium confidence
 ; Empty function; line_editor_rosters calls it with 6 stack args (vgapage==0,
 ; ...) and pops them: a removed routine
 ;-----------------------------------------------------------------------------
-; C: src/engine/asm_helpers/stub_8C218.c
+; C: src/engine/asm_helpers/BlitRectToPage.c
 %ifdef CBUILD
-%include "c/engine/asm_helpers/stub_8C218.inc"
+%include "c/engine/asm_helpers/BlitRectToPage.inc"
 %else
-stub_8C218:
+BlitRectToPage:
         push dword 4
         call __CHK
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; stub_8C223                                   8C223  95 PC, medium confidence
+; NullBlitPageHook                                   8C223  95 PC, medium confidence
 ; Empty function, no callers
 ;-----------------------------------------------------------------------------
-; C: src/engine/asm_helpers/stub_8C223.c
+; C: src/engine/asm_helpers/NullBlitPageHook.c
 %ifdef CBUILD
-%include "c/engine/asm_helpers/stub_8C223.inc"
+%include "c/engine/asm_helpers/NullBlitPageHook.inc"
 %else
-stub_8C223:
+NullBlitPageHook:
         push dword 4
         call __CHK
         ret

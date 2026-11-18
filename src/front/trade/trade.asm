@@ -15,7 +15,7 @@ extern jerseyremap, leaguedbfmt, leaguedbfmt2, leaguedbnames, leagueflags, leagu
 extern LeagueTeamSelect, lggameidx, lgplayteam, LoadGameTeams, MakeJerseyShape, MakePath, masterpw, memcpy_
 extern memset_, menuact_gamedress, menuact_gamescratch, MenuHitTest, MergeLeagueFiles, MessageBox, MouseSetPos, msg_AllHuman
 extern msg_Copying, msg_Copying_arg, msg_InsertDisk, msg_InsertDisk_arg, msg_MasterDB, msg_MasterDB_arg, msg_OneHuman, msg_SavedGame
-extern msg_SavedGame_arg, msg_TradeDeadline, msg_TradeError, msg_WrongDisk, msg_WrongDisk_arg, negone_3DC28, pointerspr, ptrupdatefn
+extern msg_SavedGame_arg, msg_TradeDeadline, msg_TradeError, msg_WrongDisk, msg_WrongDisk_arg, NoSelectionMinusOne, pointerspr, ptrupdatefn
 extern qsort_, ReadKeyRec, ReadLeagueInfo, ReadSchedGame, ReadTeamNames, ReadTeamRec, RestoreDialogBg, RunMenu
 extern savedname, savleague1, savleague2, SelectFloppyDrive, SetDialogColors, SetDrawBitmap, sprintf_, statsbgshapes
 extern statscategory, statsgoaliebuf, statspalshape, statsplayerbuf, statsredrawcb, statsskaterbuf, statsteambuf, str_backslash2
@@ -3167,7 +3167,7 @@ TradePlayers:
         sub esp, 0D8h
         mov dword [dword esp+0B8h], 0FFFFFFFFh
         xor ebp, ebp
-        mov eax, dword [negone_3DC28]
+        mov eax, dword [NoSelectionMinusOne]
         mov dword [dword esp+0ACh], eax
         push ebp
         push dword 1E0h

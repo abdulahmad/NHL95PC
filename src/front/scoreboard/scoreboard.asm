@@ -6,7 +6,7 @@ section s_14A20 progbits alloc exec nowrite align=1
 extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, awlineind
 extern awpanelspr, awscore, awtmline, awtmstruct, awayremap, awayremap_e43, awayremap_eFF, homeremap
 extern homeremap_e43, homeremap_eFF, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
-extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, awlineenergies, hmlineenergies, panelprevmin
+extern cupseries, curleague, demomode, NullDemoSetup, demoteammode, awlineenergies, hmlineenergies, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines, hmpanelpens, awpanelpens, hmlinetimer
 extern awlinetimer, demomatchups_m1, demomatchups, demoflag, PenaltyBlankDigit, energywarn, exhstate, FadeOutPalCycle
 extern FatalError, fileoncd, FreeMemBlock, Gameloop, gamemode, gameopts, gamepal, gameresult

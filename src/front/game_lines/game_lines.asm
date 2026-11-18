@@ -34,14 +34,14 @@ extern str_Pal27, str_Pal28, str_PCT2, str_Penalty, str_PIM4, str_Play1, str_Pla
 extern str_Pntr3, str_Pntr4, str_Pointer13, str_Pointer14, str_Pos2, str_Power, str_Pstat3, str_Pstat4
 extern str_PT2, str_RosterIncomplete2, str_S2dSS, str_S2dSS2, str_S6, str_S7, str_SA3, str_Scratch2
 extern str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_Teams2, str_Tstat2, str_W6
-extern strcmp_, stub_8C218, AllocMemBlock, PushMemDescriptorLocked, LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState
+extern strcmp_, BlitRectToPage, AllocMemBlock, PushMemDescriptorLocked, LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, SndQuery, SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect
 extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, DrawArtKeyColour, DrawArtMasked, MouseRead
 extern SetViewRect, FindShape, ClearScreen, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetraceEnd
 extern SetColorRemap, FillRectColor, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
 extern TeamRecLines, _dos_findfirst_, vgapage, VisTeam, WaitKey, write_
 global GameLineEditor, GameRosterCmp, GameLineEditorLoop, LineEdHitTest, LoadGameRoster, DrawGameLineJerseys_jt, DrawGameLineJerseys, DrawGameLineJerseys_st1
-global DrawGameLineJerseys_st2, DrawGameLineJerseys_st0, DrawGameLineJerseys_join, DrawLineEditorScreen, StubRet4a, LoadJerseyColours, DrawDlgFrame, StubRet4b
+global DrawGameLineJerseys_st2, DrawGameLineJerseys_st0, DrawGameLineJerseys_join, DrawLineEditorScreen, DrawLineEditorScreenEpilogue, LoadJerseyColours, DrawDlgFrame, NullGameLinesHook
 global CheckGameRosterComplete, PruneGameLines, MenuUseTheseLines, MenuLineEdCancel, MenuUseOriginalLines, MenuUseOriginalLines_redraw, MenuUseOriginalLines_ret0, MenuUseOriginalLines_ret
 global MenuUseDefaultLines, MenuSaveDefaultLines, MenuSaveDefaultLines_ret, MenuSaveDefaultLines_pop, MenuSaveTheseLines, MenuSaveTheseLines_x, MenuGameShowPlayerStats, MenuReturnToLineEditor
 global GameScratchPlayer, GameDressPlayer, BlitJerseyDigit, MakeJerseyShape
@@ -2955,10 +2955,10 @@ DrawLineEditorScreen:
         add esp, byte 0Ch
         add esp, 15Ch
 ;-----------------------------------------------------------------------------
-; StubRet4a                                                       78A81  95 PC
+; DrawLineEditorScreenEpilogue                                                       78A81  95 PC
 ; Empty function (ret 4)
 ;-----------------------------------------------------------------------------
-StubRet4a:
+DrawLineEditorScreenEpilogue:
         pop ebp
         pop edi
         pop esi
@@ -3292,17 +3292,17 @@ DrawDlgFrame:
         add esp, byte 0Ch
 .1:
         add esp, byte 14h
-        jmp near StubRet4a
+        jmp near DrawLineEditorScreenEpilogue
 %endif ; C
 ;-----------------------------------------------------------------------------
-; StubRet4b                                                       78E29  95 PC
+; NullGameLinesHook                                                       78E29  95 PC
 ; Empty function (ret 4)
 ;-----------------------------------------------------------------------------
-; C: src/front/game_lines/StubRet4b.c
+; C: src/front/game_lines/NullGameLinesHook.c
 %ifdef CBUILD
-%include "c/front/game_lines/StubRet4b.inc"
+%include "c/front/game_lines/NullGameLinesHook.inc"
 %else
-StubRet4b:
+NullGameLinesHook:
         push dword 10h
         call __CHK
         ret 4

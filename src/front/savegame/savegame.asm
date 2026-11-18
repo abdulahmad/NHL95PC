@@ -13,7 +13,7 @@ extern str_Sav3, str_Savegame, strcat_, AllocMemBlock, LoadBank, OpenArtArchiveE
 extern TextRestoreState, TextSetFont, PutBlock, DrawArtOpaque, DrawArtKeyFF, DrawArt, GrabBlock, TextPrintAt
 extern GetFileSize, MouseRead, FindShape, SetScreenTarget, str_H2, str_h3, str_H4, str_h5
 extern str_h6, str_h7, str_H1, str_A32, _dos_findfirst_, ViewHilights, WaitTickDeadline, WriteModeState
-global MenuSaveGame, SaveGameStub, SaveGameNameDlg, savenamedefault, MenuPlayNextGame, MenuReturnToSportsCentral, ViewPlayoffHilights
+global MenuSaveGame, MenuSaveGameEpilogue, SaveGameNameDlg, savenamedefault, MenuPlayNextGame, MenuReturnToSportsCentral, ViewPlayoffHilights
 ;-----------------------------------------------------------------------------
 ; MenuSaveGame                                 85924  95 PC, medium confidence
 ; Menu action "Save Game ...": disk-space check (msg_NoSaveSpace),
@@ -319,10 +319,10 @@ MenuSaveGame:
         mov eax, ebp
         add esp, 9Ch
 ;-----------------------------------------------------------------------------
-; SaveGameStub                                                    85D65  95 PC
+; MenuSaveGameEpilogue                                                    85D65  95 PC
 ; Lone ret
 ;-----------------------------------------------------------------------------
-SaveGameStub:
+MenuSaveGameEpilogue:
         pop ebp
         pop edi
         pop esi
@@ -1030,7 +1030,7 @@ SaveGameNameDlg:
         xor eax, eax
 .23:
         add esp, 94h
-        jmp near SaveGameStub
+        jmp near MenuSaveGameEpilogue
 %endif ; C
 savenamedefault:                                ; used by CreatePlayoffs
         db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

@@ -56,7 +56,7 @@ def labels():
     out = {}
     for p in glob.glob(os.path.join(ROOT, 'build/obj/**/*.o'), recursive=True):
         d, secs, syms, rels = read_elf(p)
-        kind = os.path.relpath(p, os.path.join(ROOT, 'build/obj')).split(os.sep)[0]
+        kind = 'dseg02' if os.path.relpath(p, os.path.join(ROOT, 'build/obj')).split(os.sep)[0] == 'data' else 'cseg01'
         for i, s in enumerate(secs):
             if s['name'].startswith('s_'): base = int(s['name'][2:], 16); si = i
         for sy in syms:

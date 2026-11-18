@@ -23,5 +23,5 @@ void BlitClipRect(int x, int y, int w, int h)
     w = x2 - x;
     h = y2 - y;
     SetScreenTarget();
-    stub_8C218(vgapage == 0, x, y, w, h, 0);
+    BlitRectToPage(vgapage == 0, x, y, w, h, 0);
 }

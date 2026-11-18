@@ -16,7 +16,7 @@ void SaveLeagueGameRef(int h);
 typedef struct { char c[9]; } Str9;
 typedef struct { char c[17]; } Hdr17;
 
-/* MenuSaveGame (85924, PC only; owner of the SaveGameStub tail SaveGameNameDlg ends in): menu callback that
+/* MenuSaveGame (85924, PC only; owner of the MenuSaveGameEpilogue tail SaveGameNameDlg ends in): menu callback that
    saves the game in progress. An exhibition (gamemode 0) needs room for GSUMMARY.DB plus 1328h bytes, then is
    saved under the name from SaveGameNameDlg (DEMO.NHL in demo mode): exhstate, the GSUMMARY.DB bank, the other
    games' teams / scores / periods and the game state (SaveGameState). A league or playoff game needs room for
@@ -111,7 +111,7 @@ out:
     return r;
 }
 
-/* SaveGameNameDlg (85D6C, PC only; its exit jumps into SaveGameStub, MenuSaveGame's pops, so it lives in this
+/* SaveGameNameDlg (85D6C, PC only; its exit jumps into MenuSaveGameEpilogue, MenuSaveGame's pops, so it lives in this
    file): ask for the saved game's name.
    Save the screen under the mouse pointer (a POINTER block, the pointer's width + 8 by its height) and draw the
    pointer, load the SAVEGAME bank and show its PRMT box in the middle of the screen (the screen under it kept in a

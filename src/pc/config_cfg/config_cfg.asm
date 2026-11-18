@@ -5,7 +5,7 @@ section s_3DB41 progbits alloc exec nowrite align=1
 extern __CHK, FatalError, fclose_, fopen_, fscanf_, greyramp, MakePath, MouseSetPos
 extern SetDialogColors, SetSoundDevice, sounddevids, str_CannotOpenNhlCfg, str_CFG, str_fmt4x, str_NHL2, str_R3
 extern SndShutdown, SetSoundByteOrder, AddExitHandler, VgaSetPalette
-global LoadNhlCfg, negone_3DC28
+global LoadNhlCfg, NoSelectionMinusOne
 ;-----------------------------------------------------------------------------
 ; LoadNhlCfg                                                      3DB41  95 PC
 ; Startup: opens NHL.CFG ("cannot open nhl.cfg" fatal), fscanf "%4x" sound
@@ -98,6 +98,6 @@ LoadNhlCfg:
         pop ebx
         ret
 %endif ; C
-negone_3DC28:                                   ; code-segment dword -1 (TradePlayers initial selection); used
+NoSelectionMinusOne:                                   ; code-segment dword -1 (TradePlayers initial selection); used
                                                 ; by TradePlayers
         db 0FFh,0FFh,0FFh,0FFh

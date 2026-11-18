@@ -12,7 +12,7 @@ void OpenSelectedDb(void)
 {
     char buf[16];
 
-    copy13(&unk13_722FE, buf);
+    copy13(&EmptyPathTemplate13, buf);
     switch (fdlgtab) {
     case 0:
         *(struct { char b[8]; } *)curdbname = *(struct { char b[8]; } *)str_Current4;

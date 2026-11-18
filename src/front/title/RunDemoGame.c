@@ -117,7 +117,7 @@ int RunDemoGame(void)
     ShowLoadingScreen();
     InputRemove();
     PerTimeTab[0] = 0x3C;
-    DemoSetupStub();
+    NullDemoSetup();
     demomode = 1;
     seed[0] = (rand() << 16) + rand();
     demoteammode = (demoteammode + 1) % 3;

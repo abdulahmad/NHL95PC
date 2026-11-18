@@ -1,6 +1,6 @@
 /* Import/export: playing a league game and posting its result to the league files. */
 #define CheckLeagueDiskSync CheckLeagueDiskSync_decl
-#define LeagueCheckStub LeagueCheckStub_decl
+#define LeagueCheckAlwaysZero LeagueCheckAlwaysZero_decl
 #define LeagueTeamSelect LeagueTeamSelect_decl
 #define UpdateTeamDbs UpdateTeamDbs_decl
 #define CalendarScreen CalendarScreen_decl
@@ -10,7 +10,7 @@
 #define PostGameToTeamDb PostGameToTeamDb_decl
 #include "nhl95.h"
 #undef CheckLeagueDiskSync
-#undef LeagueCheckStub
+#undef LeagueCheckAlwaysZero
 #undef LeagueTeamSelect
 #undef UpdateTeamDbs
 #undef CalendarScreen
@@ -20,7 +20,7 @@
 #undef PostGameToTeamDb
 
 int CheckLeagueDiskSync(char *dir, char *teams, int team, int sync, int probe);
-int LeagueCheckStub(char *dir, int mode);
+int LeagueCheckAlwaysZero(char *dir, int mode);
 int LeagueTeamSelect(char *dir, int *count, unsigned char *names, unsigned char *teams, int mode, char *title,
     int *sel);
 void UpdateTeamDbs(void);
@@ -97,7 +97,7 @@ void PlayLeagueGame(int *fh)
     lggameidx = -1;
     SetViewRect(0, 0, 0x280, 0x1E0);
     if (*fh >= 0) LoadLeagueGameRef(*fh);
-    err = LeagueCheckStub((char *)&curleague, 3);
+    err = LeagueCheckAlwaysZero((char *)&curleague, 3);
     do {
         s.retry = 0;
         if (!err)

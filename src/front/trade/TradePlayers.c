@@ -1,11 +1,11 @@
 /* Trades: the trade players menu entry. */
-#define negone_3DC28 negone_3DC28_decl
+#define NoSelectionMinusOne negone_3DC28_decl
 #define ExecuteTrade ExecuteTrade_decl
 #include "nhl95.h"
-#undef negone_3DC28
+#undef NoSelectionMinusOne
 #undef ExecuteTrade
 
-extern int negone_3DC28;  /* 3DC28: a -1 dword in the code segment */
+extern int NoSelectionMinusOne;  /* 3DC28: a -1 dword in the code segment */
 int ExecuteTrade(char *dir, int *teams, unsigned char *sel);
 unsigned strcspn(const char *s, const char *set);  /* Watcom CRT strcspn_ */
 
@@ -50,7 +50,7 @@ void TradePlayers(void)
 
     s.fh = -1;
     err = 0;
-    s.negone = negone_3DC28;
+    s.negone = NoSelectionMinusOne;
     tradebitmap = CreateBitmap(0x280, 0x1E0, err);
     s.fill = dlgfillcol;
     s.edge1 = dlgedgecol1;

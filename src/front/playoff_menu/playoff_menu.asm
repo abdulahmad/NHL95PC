@@ -2668,7 +2668,7 @@ DrawPlayoffTree:
 ;-----------------------------------------------------------------------------
 ; SetSideControls                              8B85B  95 PC, medium confidence
 ; Installs the home / away input handlers (menuact_homelines /
-; menuact_visitorlines, code_1A8AA / code_1A922)
+; menuact_visitorlines, DeskHomeLines / DeskVisitorLines)
 ;
 ; from the controller sides ctl1side / ctl2side and teams (-1 none, -2
 ; eliminated)

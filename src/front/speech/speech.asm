@@ -477,7 +477,7 @@ SpeechStopQueue:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; MusicChanCmd3                                8378C  95 PC, medium confidence
-; Sub_8FCAC(musichandle, 3)
+; StopDigiChannel(musichandle, 3)
 ;-----------------------------------------------------------------------------
 ; C: src/front/speech/MusicChanCmd3.c
 %ifdef CBUILD

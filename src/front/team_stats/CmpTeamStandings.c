@@ -10,7 +10,7 @@
    killing, +10h penalty minutes (words). Points are 2 * wins + ties. */
 
 /* CmpTeamStandings (22DDE, PC only): qsort comparator of two team indexes for the Team Standings table
-   (off_C6AE0[5]): more points first, then fewer losses, more wins, more goals for (+4), fewer goals against (+6);
+   (teamsortfns[5]): more points first, then fewer losses, more wins, more goals for (+4), fewer goals against (+6);
    else by team index. a, b: pointers to the team indexes. Result: <0 / 0 / >0 as for qsort. */
 int CmpTeamStandings(int *a, int *b)
 {
@@ -31,7 +31,7 @@ int CmpTeamStandings(int *a, int *b)
     return *a - *b;
 }
 
-/* CmpTeamScoring (22F2E, PC only): comparator for Team Scoring (off_C6AE0[0]): more goals for (+4) first, then
+/* CmpTeamScoring (22F2E, PC only): comparator for Team Scoring (teamsortfns[0]): more goals for (+4) first, then
    fewer losses, more points, more wins; else by team index. a, b: pointers to the team indexes. Result: as qsort. */
 int CmpTeamScoring(int *a, int *b)
 {
@@ -51,7 +51,7 @@ int CmpTeamScoring(int *a, int *b)
     return *a - *b;
 }
 
-/* CmpTeamDefense (23051, PC only): comparator for Team Defense (off_C6AE0[1]): fewer goals against (+6) first,
+/* CmpTeamDefense (23051, PC only): comparator for Team Defense (teamsortfns[1]): fewer goals against (+6) first,
    then more losses (sic), more points, more wins; else by team index. a, b: pointers to the team indexes.
    Result: as qsort. */
 int CmpTeamDefense(int *a, int *b)
@@ -72,7 +72,7 @@ int CmpTeamDefense(int *a, int *b)
     return *a - *b;
 }
 
-/* CmpTeamPP (2312D, PC only): comparator for Team Power Play (off_C6AE0[3]): the precomputed sort key
+/* CmpTeamPP (2312D, PC only): comparator for Team Power Play (teamsortfns[3]): the precomputed sort key
    (statssortkeys) first, then the better ratio of words +8 / +0Ah, more of +0Ah, more losses, more points, more
    wins; else by team index. a, b: pointers to the team indexes. Result: as qsort. */
 int CmpTeamPP(int *a, int *b)
@@ -96,7 +96,7 @@ int CmpTeamPP(int *a, int *b)
     return *a - *b;
 }
 
-/* CmpTeamPK (232B7, PC only): comparator for Team Penalty Killing (off_C6AE0[2]): the sort key first, then the
+/* CmpTeamPK (232B7, PC only): comparator for Team Penalty Killing (teamsortfns[2]): the sort key first, then the
    ratio of words +0Ch / +0Eh (smaller first), more of +0Eh, more losses, more points, more wins; else by team
    index. a, b: pointers to the team indexes. Result: as qsort. */
 int CmpTeamPK(int *a, int *b)
@@ -120,7 +120,7 @@ int CmpTeamPK(int *a, int *b)
     return *a - *b;
 }
 
-/* CmpTeamPenalties (23437, PC only): comparator for Team Penalties (off_C6AE0[4]): the smaller sort key first, then
+/* CmpTeamPenalties (23437, PC only): comparator for Team Penalties (teamsortfns[4]): the smaller sort key first, then
    more losses, fewer penalty minutes (+10h), more points, more wins; else by team index. a, b: pointers to the
    team indexes. Result: as qsort. */
 int CmpTeamPenalties(int *a, int *b)

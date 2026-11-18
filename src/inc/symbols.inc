@@ -268,7 +268,7 @@
 ;  3366F  MenuLeagueHilights                       front/desk_main/desk_main.asm                1
 ;  336BE  MenuImportDbs                            front/desk_main/desk_main.asm                1
 ;  336E6  MenuExportDbs                            front/desk_main/desk_main.asm                2
-;  3371C  DemoSetupStub                            front/desk_main/desk_main.asm                2
+;  3371C  NullDemoSetup                            front/desk_main/desk_main.asm                2
 ;  33727  FreeRinkGfx                              front/desk_main/desk_main.asm                2
 ;  3377C  LoadRink                                 front/rink_tiles/rink_tiles.asm              7
 ;  33DD3  SetRinkScroll                            front/rink_tiles/rink_tiles.asm              5
@@ -314,7 +314,7 @@
 ;  3D8DD  ReadLeagueInfo                           pc/floppy_export/floppy_export.asm           4
 ;  3DAB9  ReadTeamNames                            pc/floppy_export/floppy_export.asm           7
 ;  3DB41  LoadNhlCfg                               pc/config_cfg/config_cfg.asm                 1
-;  3DC28  negone_3DC28                             pc/config_cfg/config_cfg.asm                 2
+;  3DC28  NoSelectionMinusOne                      pc/config_cfg/config_cfg.asm                 2
 ;  3DE05  TradeShowStats                           front/trade/trade.asm                        1
 ;  3E390  ExecuteTrade                             front/trade/trade.asm                        1
 ;  3EDAA  TradeDone                                front/trade/trade.asm                        1
@@ -325,7 +325,7 @@
 ;  40C29  RemoveHumanTeam                          front/league_teams/league_teams.asm          1
 ;  40F4E  CheckMasterPassword                      front/league_teams/league_teams.asm          1
 ;  41171  FmtFromLeague                            front/league_teams/league_teams.asm          2
-;  41337  LeagueCheckStub                          front/league_teams/league_teams.asm          3
+;  41337  LeagueCheckAlwaysZero                    front/league_teams/league_teams.asm          3
 ;  41344  GetLeagueId                              front/league_teams/league_teams.asm          3
 ;  413CD  WriteLeagueInfo                          front/league_teams/league_teams.asm          1
 ;  414E0  MsgCopyingDatabases                      front/league_teams/league_teams.asm          1
@@ -695,7 +695,7 @@
 ;  7A39F  MenuShowLeagueSettings                   pc/league_settings/league_settings.asm       1
 ;  7A404  MenuShowLeagueSettings2                  pc/league_settings/league_settings.asm       1
 ;  7A6AD  SetLeagueSetImage                        pc/league_settings/league_settings.asm       1
-;  7B39C  SettingsStub                             pc/mode_settings/mode_settings.asm           1
+;  7B39C  NullModeSettingsHook                     pc/mode_settings/mode_settings.asm           1
 ;  7B3A7  MenuModeSettings                         pc/mode_settings/mode_settings.asm           1
 ;  7BEBB  MenuExhibitionSettings                   pc/exh_settings/exh_settings.asm             1
 ;  7C993  MenuP1ControlsExh                        pc/controls_dlg/controls_dlg.asm             1
@@ -797,7 +797,7 @@
 ;  8BEDB  PlayMVI                                  engine/asm_helpers/asm_helpers.asm           1
 ;  8C1C2  SelectScreenBM                           engine/asm_helpers/asm_helpers.asm           7
 ;  8C1E2  SelectRinkBM                             engine/asm_helpers/asm_helpers.asm           3
-;  8C218  stub_8C218                               engine/asm_helpers/asm_helpers.asm           2
+;  8C218  BlitRectToPage                           engine/asm_helpers/asm_helpers.asm           2
 ;  8C230  randomd0                                 engine/asm_helpers/asm_helpers.asm           28
 ;  8C8E8  vtoa                                     engine/asm_helpers/asm_helpers.asm           20
 ;  8C944  SaveSS                                   engine/asm_helpers/asm_helpers.asm           1
@@ -1033,7 +1033,7 @@
 ;  972D5  NullDriverSetTrack                       lib/sound/eacsndf_core.asm                   1
 ;  972DD  NullDriverMidi                           lib/sound/eacsndf_core.asm                   1
 ;  972E5  NullDriverPlayDigi                       lib/sound/eacsndf_core.asm                   1
-;  972F0  _os_handle_3                             lib/watcom/watcom_os_handle_stub.asm         3
+;  972F0  _os_handle_3                             lib/watcom/watcom_os_handle_get.asm          3
 ;  9762C  UnpackedSize                             lib/ea/ea_unpack.asm                         1
 ;  97EB8  unpack                                   lib/ea/ea_unpack.asm                         1
 ;  98028  UnpackTo                                 lib/ea/ea_unpack.asm                         1
@@ -1181,7 +1181,7 @@
 ;  A1877  __EnterWVIDEO_                           lib/dos4gw/dos4gw_wvideo_hook.asm            1
 ;  A189E  __int386x_                               lib/dos4gw/dos4gw_int386x_core.asm           1
 ;  A18D6  IntrLoadSegRegs                          lib/watcom/watcom_intr_segregs.asm           1
-;  A197C  IntrStubs                                lib/dos4gw/dos4gw_intr.asm                   1
+;  A197C  IntrOpcodeTable                          lib/dos4gw/dos4gw_intr.asm                   1
 ;  A1C7C  __Slash_C_                               lib/dos4gw/dos4gw_intr.asm                   1
 ;  A1CF4  spawnve_                                 lib/watcom/clib_spawn_system.asm             1
 ;  A2000  DrawShapeQuad                            lib/ea/ea_shpi.asm                           1

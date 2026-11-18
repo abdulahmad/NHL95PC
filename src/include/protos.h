@@ -164,19 +164,19 @@ int CanBlockShot(Player *p);  /* 4FFEE */
 void burst(Player *p);  /* 532BD */
 void BlockShotDive(Player *p, int dir);  /* 53387 */
 void NullBlit(void);  /* 1D019 */
-void NullFunc_1D024(void);  /* 1D024 */
-void DemoSetupStub(void);  /* 3371C */
+void NullFrontEndCallback(void);  /* 1D024 */
+void NullDemoSetup(void);  /* 3371C */
 void rtss(void);  /* 4F990 */
 void CreatePlayerNop(void);  /* 6FA72 */
-void SettingsStub(void);  /* 7B39C */
-void stub_8C1B7(void);  /* 8C1B7 */
-void stub_8C1F7(void);  /* 8C1F7 */
-void stub_8C202(void);  /* 8C202 */
-void stub_8C20D(void);  /* 8C20D */
-void __cdecl stub_8C218(int page, int x, int y, int w, int h, int zero);  /* 8C218: empty; the line editor pushes a clip blit */
+void NullModeSettingsHook(void);  /* 7B39C */
+void NullAfterPlayMVI(void);  /* 8C1B7 */
+void NullAfterSelectRinkBM(void);  /* 8C1F7 */
+void NullScreenBMHook(void);  /* 8C202 */
+void NullDrawBMHook(void);  /* 8C20D */
+void __cdecl BlitRectToPage(int page, int x, int y, int w, int h, int zero);  /* 8C218: empty; the line editor pushes a clip blit */
 int DlgReturnZero(void);  /* 2FED2 */
 int GadgetNullCallback(void);  /* 7E032 */
-int LeagueCheckStub(void);  /* 41337 */
+int LeagueCheckAlwaysZero(void);  /* 41337 */
 int POReturnZero(void);  /* 89B5C */
 int DeskBackToGame(void);  /* 1A5A1 */
 int MenuExit(void);  /* 3270B */
@@ -787,7 +787,7 @@ void FreeCoachClip(void);  /* 8474E */
 int SayElseNhl(void);  /* 847BA */
 int CmpFileNames(const void *a, const void *b);  /* 2BEEA */
 int NullCallback0C(int a, int b, int c, int d, int e, int f, int g);  /* 627F8 */
-void StubRet4b(int a, int b, int c, int d, int e);  /* 78E29 */
+void NullGameLinesHook(int a, int b, int c, int d, int e);  /* 78E29 */
 int MenuLineEdCancel(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j);  /* 7928A */
 int DeskSetExit2(void);  /* 179D0 */
 int DeskSetExit3(void);  /* 179E6 */

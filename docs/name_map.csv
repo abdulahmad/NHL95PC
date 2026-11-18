@@ -192,7 +192,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001CC3D,sub_1CC3D,LoadScoreboardGfx,PC-new,,,,high,"loads scrbrd1.PPV, gets scoredigits/clockdigits/penalty digits, line indicator and visp/homp sprites; called from LoadGameTeams",frontend_labels,manual-trace
 0001CD73,sub_1CD73,DrawSprite,PC-new,,,,medium,"233 callers; clips sprite rect against cliprect_*, optional hflip, team palette remap, dispatches to 8 blitters B4CD8..B5AC8",frontend_labels,manual-trace
 0001D019,sub_1D019,NullBlit,PC-new,,,,medium,empty fn filling first 8 slots of the blitter table at C66D8,frontend_labels,manual-trace
-0001D024,sub_1D024,NullFunc_1D024,PC-new,,,,high,"empty fn, no refs [reviewed: whole body is the stub/flag-set described, no other behaviour]",frontend_labels,manual-trace
+0001D024,sub_1D024,NullFrontEndCallback,PC-new,,,,high,front-end callback that does nothing; not referenced,frontend_labels,manual-trace
 0001D02F,code_1D02F,AddDirtyRect,PC-new,,,,medium,"appends x/4,y,w/4,h 16-byte rect to dirtyrectptr[page], bumps dirtyrectcount[page]; no direct refs [reviewed: body re-read]",frontend_labels,manual-trace
 0001D100,sub_1D100,SetupStatsSourceMenu,PC-new,,,,medium,"picks Exhibition/League/Playoffs stats source items from lgstate/postate, copies name to statsleague, sets item count",frontend_labels,manual-trace
 0001D518,sub_1D518,BuildSavedGameLabels,PC-new,,,,high,copies postate/lgstate names (dot-stripped) into the label strings and appends Play-Offs / Season suffixes to mi_ items,frontend_labels,manual-trace
@@ -1179,14 +1179,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008BAAF,sub_8BAAF,InitFileLocations,PC-new,,,,medium,"from main_: reads nhl.cfg (2nd line = CD drive letter into cddrivestr), opens <drive>:ALLFILES.TXT (or local), marks all 549 fileoncd entries 1 then clears those listed as installed",allfiles_coach,manual-trace
 0008BC15,sub_8BC15,CoachCutScene,PC-new,,,,medium,"from PostGameDesk: coachcut scrn / !pal, SayCoachClip, random clip%04d.cmv via PlayMVI, FreeCoachClip",allfiles_coach,manual-trace
 0008BEDB,sub_8BEDB,PlayMVI,PC-new,,,,high,"plays an MVI movie (eax=path, edx/ebx=screen x/y 161h/54h from the coach/allfiles screen): opens the CD stream (cdstream sub_1B0F3), loops over chunks 'MVIh' header (sets frame delay 100/fps), 'MVIf' frame (decode + wait for the frame time), 'MVIe' end; a key press aborts (sub_1600C); fades/restarts the music around it. Returns the key",asm_helpers,manual-trace
-0008C1B7,sub_8C1B7,stub_8C1B7,PC-new,,,,medium,"empty function (__CHK; ret), no callers",asm_helpers,manual-trace
+0008C1B7,sub_8C1B7,NullAfterPlayMVI,PC-new,,,,low,"empty library routine (no body, no callers) that sits right after PlayMVI; a compiled-out debug hook",asm_helpers,manual-trace
 0008C1C2,sub_8C1C2,SelectScreenBM,PC-new,,,,medium,SetDrawBitmap(*screenbm): makes the screen bitmap descriptor current (48-byte copy into D30A4); called by file_utils/engine_init,asm_helpers,manual-trace
 0008C1E2,sub_8C1E2,SelectRinkBM,PC-new,,,,medium,SetDrawBitmap(*rinkbm): makes the rink tile buffer bitmap current; called by file_utils/gadgets_replay,asm_helpers,manual-trace
-0008C1F7,sub_8C1F7,stub_8C1F7,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
-0008C202,sub_8C202,stub_8C202,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
-0008C20D,sub_8C20D,stub_8C20D,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
-0008C218,sub_8C218,stub_8C218,PC-new,,,,medium,"empty function; line_editor_rosters calls it with 6 stack args (vgapage==0, ...) and pops them: a removed routine",asm_helpers,manual-trace
-0008C223,sub_8C223,stub_8C223,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
+0008C1F7,sub_8C1F7,NullAfterSelectRinkBM,PC-new,,,,low,"empty library routine (no body, no callers) that sits right after SelectRinkBM; a compiled-out debug hook",asm_helpers,manual-trace
+0008C202,sub_8C202,NullScreenBMHook,PC-new,,,,low,"empty library routine (no body, no callers) in the screen bitmap helper group; a compiled-out debug hook",asm_helpers,manual-trace
+0008C20D,sub_8C20D,NullDrawBMHook,PC-new,,,,low,"empty library routine (no body, no callers) in the screen bitmap helper group; a compiled-out debug hook",asm_helpers,manual-trace
+0008C218,sub_8C218,BlitRectToPage,PC-new,,,,medium,"the page copy of a clipped rectangle with its body compiled out: BlitClipRect and the line editor call it with (vgapage==0, x, y, w, h, 0) and it returns at once",asm_helpers,manual-trace
+0008C223,sub_8C223,NullBlitPageHook,PC-new,,,,low,"empty library routine (no body, no callers) at the end of the screen bitmap helper group; a compiled-out debug hook",asm_helpers,manual-trace
 0008C230,sub_8C230,randomd0,93G,middle93_1.asm,middle94.asm,92G randomd0; 95G randomd0,high,LCG multiplier E62D/BB40 identical to 93G randomd0 (seed),asm_helpers,manual+constants
 0008C290,sub_8C290,vgacopy_bg,PC-new,,,,medium,"unreferenced 16-bit-frame VGA routine: write mode 1 latched copy of rows from the circular background buffer in VRAM (86A0h + bgscrolly8*8 rows, wrap C8A0h->4200h) to the screen at (x,y) [bp+6..0Eh]",asm_helpers,manual-trace
 0008C8E8,sub_8C8E8,vtoa,93G,logic93_5.asm,logic94.asm,92G vtoa; 95G vtoa,high,"returns 8 for x|y==0, same octant logic; 94G vtoa byte table found at D2C75 (data_tables)",asm_helpers,manual+constants

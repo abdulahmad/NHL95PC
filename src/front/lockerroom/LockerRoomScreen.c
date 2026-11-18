@@ -1,4 +1,4 @@
-/* Settings: locker room screen; DrawLockerRoom follows it (it ends in LockerStub, this file's epilogue),
+/* Settings: locker room screen; DrawLockerRoom follows it (it ends in LockerRoomScreenEpilogue, this file's epilogue),
    and LockerRoomLoop ends there too. */
 #define LockerRoomScreen LockerRoomScreen_decl
 #define LockerRoomLoop LockerRoomLoop_decl
@@ -77,7 +77,7 @@ int LockerRoomScreen(void)
     return r;
 }
 
-/* DrawLockerRoom (80AA4, PC only; ends in LockerStub): draw the locker room. Load LOCKROOM (from the CD when
+/* DrawLockerRoom (80AA4, PC only; ends in LockerRoomScreenEpilogue): draw the locker room. Load LOCKROOM (from the CD when
    listed): its palette entries 0-167h brightened (+5, at most 3Fh, the rest as they are), the palette cycle faded
    out, the ROOM art; the frame panels (DrawPanel3D) and the background plates saved (GrabBlock). Both teams'
    jersey banks (JERSH / JERSV + the team file name; palette entries 240h-2FFh home, 180h-23Fh visitors,
@@ -239,7 +239,7 @@ void DrawLockerRoom(void)
     SetColorRemap(homeremap);
 }
 
-/* LockerRoomLoop (81C4E, PC only; ends in LockerStub): the locker room. Start from the home and visiting teams'
+/* LockerRoomLoop (81C4E, PC only; ends in LockerRoomScreenEpilogue): the locker room. Start from the home and visiting teams'
    locker indexes (lockerindex), draw the mouse pointer (DrawArtKeyColour) over a saved POINTER block and follow it.
    A click (event bit 2) on a box (LockerHitTest): 0 / 3 and 2 step the home team forward and back, 1 / 5 and 4
    the visitors (28 teams in exhibition mode, where the two extra teams may not meet themselves, else 26 and the

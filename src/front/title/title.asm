@@ -6,7 +6,7 @@ section s_15D6B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, awscore, awtmline, awtmstruct
 extern TextCharH, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap_e43, homeremap_eFF, cddriveptr
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
-extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, SpeechSlotMemSize, panelprevmin
+extern NullDemoSetup, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, SpeechSlotMemSize, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines, hmpanelpens, awpanelpens, hmlinetimer
 extern awlinetimer, demomatchups_m1, demomatchups, nhlintrosaid, demoflag, cursndbank, PenaltyBlankDigit, titlesample
 extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
@@ -61,7 +61,7 @@ RunDemoGame:
         call ShowLoadingScreen
         call InputRemove
         mov word [PerTimeTab], 3Ch
-        call DemoSetupStub
+        call NullDemoSetup
         mov dword [demomode], 1
         call rand_
         mov edx, eax

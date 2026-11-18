@@ -1,4 +1,4 @@
-; Watcom C runtime: OS file handle stub.
+; Watcom C runtime: the operating system handle of a file handle.
 bits 32
 %include "hockey.inc"
 section s_972F0 progbits alloc exec nowrite align=1

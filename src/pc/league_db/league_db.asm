@@ -28,7 +28,7 @@ extern InstallKeyboardHandler, KeyDown, InitMouse, FindShape, CalibrateJoystick,
 extern JoyDefaultCalib2, ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, WaitRetraceStart, CreateBitmap, FillRectColor
 extern teamsdb, teamsdb_size, TextInputDialog, str_OneSpace, editrostersmenubar, btn_RosterList, fascrollbar, DefaultFont
 extern _dos_findfirst_
-global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
+global MenuCentralRegistry, EmptyEventName13, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
 global SaveDbsToDir, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr, TeamRecPtr, KeyDbPtr, SeasonDbPtr, SeasonDbPtr_common
 global SeasonDbPtr2, CareerDbPtr, CareerDbPtr_common, CareerDbPtr2, AttDbPtr
 ;-----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ MenuCentralRegistry:
         pop ebx
         ret
 %endif ; C
-unk13_6BF3D:                                    ; 13 zero bytes in code (empty event, used by database_save)
+EmptyEventName13:                                    ; 13 zero bytes in code (empty event, used by database_save)
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 ;-----------------------------------------------------------------------------
 ; BuildFreeAgentList                                              6BF4A  95 PC
@@ -473,7 +473,7 @@ MenuSaveDbs:
         push edx
         mov ebp, ebx
         lea edi, [byte esp+04h]
-        mov esi, unk13_6BF3D
+        mov esi, EmptyEventName13
         movsd
         movsd
         movsd

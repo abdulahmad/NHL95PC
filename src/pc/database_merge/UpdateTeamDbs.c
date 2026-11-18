@@ -1,5 +1,5 @@
 /* Database merge: refresh the human team databases from the current league. */
-#define LeagueCheckStub LeagueCheckStub_decl
+#define LeagueCheckAlwaysZero LeagueCheckAlwaysZero_decl
 #define CopyHumanTeamDBs CopyHumanTeamDBs_decl
 #define RebuildLeagueDbs RebuildLeagueDbs_decl
 #define MergeLeagueFiles MergeLeagueFiles_decl
@@ -7,7 +7,7 @@
 #define MergeScheduleDb MergeScheduleDb_decl
 #define UpdateSeasonSchedule UpdateSeasonSchedule_decl
 #include "nhl95.h"
-#undef LeagueCheckStub
+#undef LeagueCheckAlwaysZero
 #undef CopyHumanTeamDBs
 #undef RebuildLeagueDbs
 #undef MergeLeagueFiles
@@ -15,13 +15,13 @@
 #undef MergeScheduleDb
 #undef UpdateSeasonSchedule
 
-int LeagueCheckStub(char *dir, int mode);
+int LeagueCheckAlwaysZero(char *dir, int mode);
 int CopyHumanTeamDBs(char *dir, void *teams, int which);
 int MergeTeamDbs(char *odir, char *ndir, char *mdir, char *next, char *mext, int who);
 int MergeScheduleDb(char *sdir, char *ddir, char *sext, char *dext, int team, int *count);
 int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, int team, int flags);
 
-/* UpdateTeamDbs: highlight the dialog, and if this league passes the stub check, read its header.
+/* UpdateTeamDbs: highlight the dialog, and if this league passes the league check, read its header.
  When that fails and a saved game exists, say so at the mouse and stop. Otherwise open PINFO.DB, read
  the word at 13h, and if bit 2 is set copy the human team databases (which == -1). If the bit is clear,
  say the league has not been merged. Any error on that path is the update-error box. Restore the dialog
@@ -44,7 +44,7 @@ void UpdateTeamDbs(void)
     s.fh = -1;
     shown = 0;
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, shown);
-    if (LeagueCheckStub((char *)&curleague, 2))
+    if (LeagueCheckAlwaysZero((char *)&curleague, 2))
         goto done;
     err = ReadLeagueInfo((char *)&curleague, leagueteams, (char *)masterpw,
         (short *)&leaguemaster, &humancount, &leagueflags, &leaguesaved, (char *)&savedname);
@@ -85,7 +85,7 @@ done:
 }
 
 /* MergeLeagueFiles (3B25A, PC only): merge the human teams' copies of the current league back into it. Clear
- MergeResult and, if the league passes the stub check, read its header and note whether PLAYER.ID exists. A saved
+ MergeResult and, if the league passes the league check, read its header and note whether PLAYER.ID exists. A saved
  game, a master team under coach control (flag 2), a PLAYER.ID or an already merged league (leagueflags bit 2)
  only get their message box. Otherwise open PINFO.DB, find the master team's copy (LocateTeamDbCopy, ext str_Xx
  "%02d" of leaguemaster) and show "merging". For each human team not yet merged (+17h is 1, flag bit 2 clear):
@@ -117,7 +117,7 @@ int MergeLeagueFiles(void)
 
     s.rdfh = s.fh2 = s.fh = -1;
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
-    r = LeagueCheckStub((char *)&curleague, 2);
+    r = LeagueCheckAlwaysZero((char *)&curleague, 2);
     MergeResult = 0;
     if (r) goto done;
     err = r = ReadLeagueInfo((char *)&curleague, leagueteams, (char *)masterpw, (short *)&leaguemaster, &humancount,
@@ -242,7 +242,7 @@ void RebuildLeagueDbs(void)
 
     s.fh = -1;
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
-    err = LeagueCheckStub((char *)&curleague, 2);
+    err = LeagueCheckAlwaysZero((char *)&curleague, 2);
     if (!err) {
         err = ReadLeagueInfo((char *)&curleague, leagueteams, (char *)masterpw,
             (short *)&leaguemaster, &humancount, &leagueflags, &leaguesaved, (char *)&savedname);

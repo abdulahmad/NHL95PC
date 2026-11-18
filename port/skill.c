@@ -3,18 +3,18 @@
  *
  * NHL 96 PC main-menu LEVEL, hooked into 95 PC (the Game page's Skill level row).
  *
- * 96 PC GAME SETUP (sub_66589, MAINMENU.FSH resource 4Ch). Widget 1 is LEVEL at (1BCh, 99h),
+ * 96 PC GAME SETUP (MainMenuScreen, MAINMENU.FSH resource 4Ch). Widget 1 is LEVEL at (1BCh, 99h),
  * FSH bb01/bb02 (Rookie), bb10/bb11 (Pro), bb19/bb20 (All-Star). Click cycles
- * dword_17C9A8 bits 7-8: 00 -> 80h -> 100h -> 00. Cold start ors 80h (Pro). Screenshot LEVEL: PRO.
+ * optflags bits 7-8: 00 -> 80h -> 100h -> 00. Cold start ors 80h (Pro). Screenshot LEVEL: PRO.
  * Not User Setup, not 96 Genesis SkillLevelTbl ($15,$15,$14). The EXE does not contain that table.
  *
  * Engine (every player, no human/CPU test on the playeracc path):
- *   sub_4C860 is 96 PC playeracc: skill-scales (legstr+30h) before dirtab/64 (3/4 Rookie+Pro, 9/8 All-Star)
- *     and the MaxSpeed cap after legspd*energy>>12 (same factors). Tiny *63/64 on another vel path (sub_4DD1B)
+ *   playeracc is 96 PC playeracc: skill-scales (legstr+30h) before dirtab/64 (3/4 Rookie+Pro, 9/8 All-Star)
+ *     and the MaxSpeed cap after legspd*energy>>12 (same factors). Tiny *63/64 on another vel path (BurstDrainEnergy)
  *     is not hooked (Rookie and Pro share it; it is 96 PC's 3/4 family).
- *   checkcheck (sub_3EC30): hit base 64h All-Star / 96h Pro and Rookie, then the same
+ *   checkcheck (checkcheck): hit base 64h All-Star / 96h Pro and Rookie, then the same
  *     ((base - p.weight + q.weight)>>1) - q.impact as 95 PC.
- *   sub_43605: AI range 3 Rookie, 4 Pro/All-Star — 95 PC has no matching immediate to patch.
+ *   PickPuckRebound: AI range 3 Rookie, 4 Pro/All-Star — 95 PC has no matching immediate to patch.
  *
  * Live: Pro is 1× the current feel. feel_playeracc already built 94G or 95 PC stock; skill_scale_action
  * leaves that for Pro and Rookie and takes All-Star at 3/2 (96 PC 9/8 over Pro's 3/4). Do not apply

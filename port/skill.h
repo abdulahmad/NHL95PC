@@ -12,7 +12,7 @@
 
 void skill_install(void);
 
-/* 96 PC dword_17C9A8 bits 7-8: 0 Rookie, 1 Pro (default), 2 All-Star. */
+/* 96 PC optflags bits 7-8: 0 Rookie, 1 Pro (default), 2 All-Star. */
 enum { SKILL_ROOKIE = 0, SKILL_PRO = 1, SKILL_ALLSTAR = 2 };
 
 /* Exact 96 PC playeracc scales (documentation / tests only, not live):
@@ -35,7 +35,7 @@ int skill_hit_pro_base(int feel94);
 /* All-Star is 100/150 of pro_base; Rookie equals Pro. */
 int skill_hit_base_on(int skill, int pro_base);
 
-/* 96 PC AI proximity (sub_43605): 3 Rookie, 4 Pro/All-Star. Not hooked. */
+/* 96 PC AI proximity (PickPuckRebound): 3 Rookie, 4 Pro/All-Star. Not hooked. */
 int skill_ai_near(int skill);
 
 #endif

@@ -4,7 +4,7 @@ bits 32
 section s_3A9AA progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, MergeResult, ClearScreen, CopyFile, CopyHumanTeamDBs
 extern curleague, DeleteFiles, dlgsavebuf, FileClose, FileExists, FileOpenRead, FileOpenRW, FileReadAt
-extern FileWriteAt, GetLeagueId, humancount, LeagueCheckStub, leaguedbnames, leagueflags, leaguemaster, leaguesaved
+extern FileWriteAt, GetLeagueId, humancount, LeagueCheckAlwaysZero, leaguedbnames, leagueflags, leaguemaster, leaguesaved
 extern leagueteams, lgplayeridfile, lgteam_17, lgteamflags, lgteamver, MakePath, masterctlmsg, masteronlymsg
 extern masterpw, mergeerrmsg, MergeGoalieRecDelta, mergeincompletemsg, MergeSeasonRecDelta, mergestatemsg, MergeTeamRecDelta, mergingmsg
 extern MessageBox, MouseRead, msg_SavedGame, msg_SavedGame_arg, oldcopymsg, ReadGoalieSeasonRec, ReadKeyRec, ReadLeagueInfo
@@ -551,7 +551,7 @@ UpdateTeamDbs:
         call SetDialogColors
         mov edx, 2
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         test eax, eax
         jne near .6
         push savedname
@@ -736,7 +736,7 @@ MergeLeagueFiles:
         call SetDialogColors
         mov edx, 2
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         xor dl, dl
         mov byte [MergeResult], dl
         test eax, eax
@@ -1331,7 +1331,7 @@ RebuildLeagueDbs:
         call SetDialogColors
         mov edx, 2
         mov eax, curleague
-        call LeagueCheckStub
+        call LeagueCheckAlwaysZero
         mov ecx, eax
         test eax, eax
         jne near .5
