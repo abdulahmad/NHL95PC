@@ -38,7 +38,7 @@ void assintroline(Player *p)
                 HIWORD(p->Xpos) = p->temp3 + randomd0(2);
             if (p->pflags2 & 2) return;
             if (randomd0(0x50) != 0) return;
-            SetSPA(p, randomd0(2) ? 0xDAB : 0xDC3);
+            SetSPA(p, randomd0(2) ? SPArefanthem1 : SPArefanthem2);
             p->pflags2 |= 2;
             return;
         }
@@ -52,7 +52,7 @@ void assintroline(Player *p)
         p->pflags2 |= 0x20;
         p->Wallcos = 0;
         p->Wallsin = 0;
-        SetSPA(p, 0xA5B);
+        SetSPA(p, SPArefglide);
         z = 0;
         yc1 = z;
         RefStep[0] = 1;
@@ -77,7 +77,7 @@ void assintroline(Player *p)
                 --p->temp1;
                 if (p->temp1 >= 0) return;
                 p->temp1 += 8;
-                SetSPA(p, 0xA5B);
+                SetSPA(p, SPArefglide);
                 regd2.l = (short)vtoa((short)-HIWORD(p->Xpos), (short)-HIWORD(p->Ypos));
                 if (regd2.w != p->facedir) {
                     regd2.w = (regd2.w - p->facedir) & 7;
@@ -87,7 +87,7 @@ void assintroline(Player *p)
                 p->Yvel = 0;
                 p->Xvel = p->Yvel;
                 p->temp5 = -100;
-                SetSPA(p, 0xC57);
+                SetSPA(p, SPAreffowait);
                 return;
             }
         }

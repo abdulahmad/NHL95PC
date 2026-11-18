@@ -24,7 +24,7 @@ void assbenchside(Player *p)
         p->Xvel = p->Yvel = 0;
         ((unsigned char *)p)[0x46] = 0;
         p->frame = 0x362;
-        SetSPA(p, 0xE97);
+        SetSPA(p, SPAbrcup);
     }
     if (p->temp1 < 100) {
         if (!p->SPA) {
@@ -34,5 +34,5 @@ void assbenchside(Player *p)
         if (p->SPAnum >= 4 && p->SPAcnt <= 0xB) HIWORD(p->Xpos) = -0xAF;
         return;
     }
-    if (p->temp1 == 200 && p->frame == 0x365 && !p->SPA && !randomd0(0x28)) SetSPA(p, 0xEB5);
+    if (p->temp1 == 200 && p->frame == 0x365 && !p->SPA && !randomd0(0x28)) SetSPA(p, SPAclap);
 }

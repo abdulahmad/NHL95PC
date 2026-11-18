@@ -26,9 +26,9 @@ void holdcheck(Player *a, Player *b)
     a->Yvel = v;
     b->Yvel = v;
     a->pflags |= 0x20;
-    SetSPA(a, 0x669);
+    SetSPA(a, SPAflail);
     b->pflags |= 0x20;
-    SetSPA(b, b->SPA == 0x639 ? 0x651 : 0x88B);
+    SetSPA(b, b->SPA == SPAHold ? SPAHold2 : SPAhook2);
     if (QuickShotChk(a)) {
         if (penshotplayer < 0) {
             penshotplayer = a->SCnum;
@@ -40,7 +40,7 @@ void holdcheck(Player *a, Player *b)
             b->nopuck = 0x20;
         }
     } else if (checkagr(b) <= 6) {
-        AddPenalty(b, b->SPA == 0x651 ? 0x12 : 0xF);
+        AddPenalty(b, b->SPA == SPAHold2 ? 0x12 : 0xF);
     }
     collflag = 0xFF;
 }

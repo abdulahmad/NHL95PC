@@ -32,7 +32,7 @@ void puckbody(Player *pk, Player *p)
     HIBYTE(pk->Yvel) = *(signed char *)&regd1;
     puckflip(pk);
     if (HIWORD(pk->Zpos) <= 8) {    /* puck low: no effect on p */
-        if (p->SPA != 0x84B) sfx(0xA3);
+        if (p->SPA != SPAcatch) sfx(0xA3);
         return;
     }
     snd = 0xA3;
@@ -40,9 +40,9 @@ void puckbody(Player *pk, Player *p)
         snd = 0xA2;
         FallDown(pk, p);
     }
-    if (p->SPA != 0x84B) sfx(snd);
+    if (p->SPA != SPAcatch) sfx(snd);
     if ((p->pflags & 0x20) == 0 && p->SCnum != 0x10) {
         p->pflags |= 0x20;          /* bset #pfalock */
-        SetSPA(p, 0x84B);
+        SetSPA(p, SPAcatch);
     }
 }

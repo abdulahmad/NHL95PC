@@ -12,7 +12,7 @@ void assrefatdot(Player *p)
     if (p->pflags & 2) {
         p->pflags &= 0xFD;
         p->facedir = fox <= 0 ? 2 : 6;
-        SetSPA(p, 0xC57);
+        SetSPA(p, SPAreffowait);
         p->pflags &= 0xFB;
         p->pflags2 &= 0xDF;
     }

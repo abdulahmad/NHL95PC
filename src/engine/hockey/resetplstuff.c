@@ -19,7 +19,7 @@ void resetplstuff(void)
         for (i = 0; i < 6; i++) {
             p->pflags2 = 0;
             if (p->position >= 0) {
-                SetSPA(p, 0x289);
+                SetSPA(p, SPAglide);
                 p->impact = p->nopuck = 0;
                 p->pflags &= 0xC2;
             }

@@ -1,6 +1,7 @@
 ; Net collisions, falls, body and hold checks.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_5601D progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assexit, c1playernum, CanRemovePlayer, checkagr, collflag
 extern Crowdlevel, CwdExciteLvl, FallDown_pinxl, FallDown_pinxl2, FallDown_pinxr, FallDown_pinxr2, FallDown_pinyb, FallDown_pinyt
@@ -123,7 +124,7 @@ NetCollide:
         mov ax, word [nosplit eax*2+FallDown_pinyt]
         db 081h,0E8h,08h,01h,00h,00h            ; insn: sub eax,108h
         add word [byte esi+Ypos+2], ax
-        mov eax, 0F0Fh
+        mov eax, SPAboardback
         jmp near .25
 .11:
         inc ebp
@@ -142,7 +143,7 @@ NetCollide:
         mov ax, word [nosplit eax*2+FallDown_pinyb]
         add eax, 108h
         add word [byte esi+Ypos+2], ax
-        mov eax, 0F55h
+        mov eax, SPAboardfront
         jmp near .25
 .12:
         cmp dword [byte esp+08h], byte 0
@@ -187,7 +188,7 @@ NetCollide:
         test byte [byte esi+055h], 8
         jne near .23
 .17:
-        mov eax, 0F9Bh
+        mov eax, SPAboardright
         jmp near .25
 .18:
         test ebp, ebp
@@ -233,7 +234,7 @@ NetCollide:
         test byte [byte esi+055h], 8
         jne near NetCollide.17
 .23:
-        mov eax, 0FE1h
+        mov eax, SPAboardleft
         jmp short .25
 .24:
         mov eax, dword [byte esi+SPA-2]
@@ -267,26 +268,26 @@ FallDown:
         test byte [byte ebx+pflags2], 1
         jne near .x
         mov si, word [byte ebx+SPA]
-        cmp si, 0A0Bh
+        cmp si, SPAinjury1
         je near .x
-        cmp si, 8D3h
+        cmp si, SPAstumble
         je near .x
-        cmp si, 681h
+        cmp si, SPAfallfwd
         je near .x
-        cmp si, 6D9h
+        cmp si, SPAfallback
         je near .x
-        cmp si, 993h
+        cmp si, SPAflip
         je near .x
-        cmp si, 13C5h
+        cmp si, SPAblockleft
         je near .x
-        cmp si, 141Dh
+        cmp si, SPAblockright
         je near .x
         cmp word [byte ebx+SCnum], byte 10h
         jne short .4
-        cmp si, 0B13h
+        cmp si, SPAreffallback
         je near .x
         or byte [byte ebx+pflags], 20h
-        mov edx, 0B13h
+        mov edx, SPAreffallback
         mov eax, ebx
         call SetSPA
         mov di, word [Crowdlevel]
@@ -317,7 +318,7 @@ FallDown:
         cmp eax, edx
         jle short .5
         mov word [byte ebx+040h], 3Ch
-        mov esi, 8D3h
+        mov esi, SPAstumble
         jmp near .38
 .5:
         cmp word [byte ecx+position], byte 0
@@ -405,7 +406,7 @@ FallDown:
         mov word [byte ebx+Xvel], 0
         test byte [byte ebx+055h], 8
         je short .18
-        mov esi, 0FE1h
+        mov esi, SPAboardleft
         mov eax, dword [byte ebx+facedir-2]
         sar eax, 10h
         mov edx, 8
@@ -419,7 +420,7 @@ FallDown:
         mov word [byte ebx+Xpos+2], ax
         jmp near .27
 .18:
-        mov esi, 0F9Bh
+        mov esi, SPAboardright
         mov eax, dword [byte ebx+facedir-2]
         sar eax, 10h
         mov ax, word [nosplit eax*2+FallDown_pinxr]
@@ -455,7 +456,7 @@ FallDown:
 .21:
         test byte [byte ebx+055h], 8
         je short .22
-        mov esi, 1027h
+        mov esi, SPAbenchcheckr
         mov eax, dword [byte ebx+facedir-2]
         sar eax, 10h
         mov edx, 8
@@ -465,7 +466,7 @@ FallDown:
         mov ax, word [nosplit eax*2+FallDown_pinxr2]
         jmp near FallDown.16
 .22:
-        mov esi, 1055h
+        mov esi, SPAbenchcheckl
         mov eax, dword [byte ebx+facedir-2]
         sar eax, 10h
         mov ax, word [nosplit eax*2+FallDown_pinxl2]
@@ -473,7 +474,7 @@ FallDown:
 .23:
         test byte [byte ebx+055h], 8
         je short .24
-        mov esi, 0F9Bh
+        mov esi, SPAboardright
         mov eax, dword [byte ebx+facedir-2]
         sar eax, 10h
         mov edx, 8
@@ -483,7 +484,7 @@ FallDown:
         mov ax, word [nosplit eax*2+FallDown_pinxr]
         jmp near FallDown.16
 .24:
-        mov esi, 0FE1h
+        mov esi, SPAboardleft
         mov eax, dword [byte ebx+facedir-2]
         sar eax, 10h
         mov ax, word [nosplit eax*2+FallDown_pinxl]
@@ -505,7 +506,7 @@ FallDown:
         mov ax, word [nosplit eax*2+FallDown_pinyt]
         mov word [byte ebx+Ypos+2], ax
         mov word [byte ebx+Yvel], 0
-        mov esi, 0F0Fh
+        mov esi, SPAboardback
         jmp short .27
 .26:
         mov edx, dword [byte ebx+Ypos]
@@ -526,7 +527,7 @@ FallDown:
         mov ax, word [nosplit eax*2+FallDown_pinyb]
         mov word [byte ebx+Ypos+2], ax
         mov word [byte ebx+Yvel], 0
-        mov esi, 0F55h
+        mov esi, SPAboardfront
 .27:
         cmp si, word [byte ebx+SPA]
         jne near .35
@@ -535,7 +536,7 @@ FallDown:
         and edi, byte 7
         cmp di, byte 2
         ja short .28
-        mov esi, 6D9h
+        mov esi, SPAfallback
         jmp near .38
 .28:
         cmp word [byte ecx+SCnum], byte 0Eh
@@ -545,7 +546,7 @@ FallDown:
         cmp di, byte 7
         jne near .33
 .29:
-        mov esi, 6D9h
+        mov esi, SPAfallback
         mov di, word [byte ecx+012h]
         cmp di, 44Fh
         jg near .38
@@ -591,7 +592,7 @@ FallDown:
 .32:
         add word [CwdExciteLvl], byte 0Fh
         or byte [byte ebx+pflags], 20h
-        mov edx, 0A0Bh
+        mov edx, SPAinjury1
         mov eax, ebx
         call SetSPA
         mov eax, ebx
@@ -611,14 +612,14 @@ FallDown:
         jb short .34
         cmp word [byte ecx+SCnum], byte 0Bh
         jg short .34
-        mov esi, 993h
+        mov esi, SPAflip
         test byte [byte ecx+pflags], 40h
         setne al
         and eax, 0FFh
         call SetBoxDoorObject
         jmp short .38
 .34:
-        mov esi, 681h
+        mov esi, SPAfallfwd
         jmp short .38
 .35:
         mov eax, dword [puckc]
@@ -630,9 +631,9 @@ FallDown:
         call checkagr
         cmp ax, 3
         jg short .38
-        cmp si, 0F0Fh
+        cmp si, SPAboardback
         jl short .38
-        cmp si, 0FE1h
+        cmp si, SPAboardleft
         jg short .38
         cmp word [byte ebx+018h], byte 23h
         jle short .36
@@ -675,9 +676,9 @@ FallDown:
         cmp dx, word [byte ebx+SCnum]
         je short .44
 .41:
-        cmp si, 0F0Fh
+        cmp si, SPAboardback
         jl short .43
-        cmp si, 1055h
+        cmp si, SPAbenchcheckl
         jg short .43
         mov eax, 2
 .42:
@@ -698,7 +699,7 @@ FallDown:
         jne near .54
         test byte [gameopts], 10h
         je near .54
-        cmp word [byte ebx+SPA], 6D9h
+        cmp word [byte ebx+SPA], SPAfallback
         jne near .54
         test byte [byte ebx+036h], 3
         jne near .54
@@ -722,7 +723,7 @@ FallDown:
         test eax, eax
         je near .54
         or byte [byte ebx+pflags], 20h
-        mov edx, 0A0Bh
+        mov edx, SPAinjury1
         mov eax, ebx
         call SetSPA
         mov eax, ebx
@@ -981,16 +982,16 @@ holdcheck:
         mov word [byte ebx+Yvel], ax
         mov word [byte ecx+Yvel], ax
         or byte [byte ebx+pflags], 20h
-        mov edx, 669h
+        mov edx, SPAflail
         mov eax, ebx
         call SetSPA
         or byte [byte ecx+pflags], 20h
-        cmp word [byte ecx+SPA], 639h
+        cmp word [byte ecx+SPA], SPAHold
         jne short .2
-        mov eax, 651h
+        mov eax, SPAHold2
         jmp short .3
 .2:
-        mov eax, 88Bh
+        mov eax, SPAhook2
 .3:
         movsx edx, ax
         mov eax, ecx
@@ -1030,7 +1031,7 @@ holdcheck:
         call checkagr
         cmp ax, 6
         jg short .10
-        cmp word [byte ecx+SPA], 651h
+        cmp word [byte ecx+SPA], SPAHold2
         jne short .8
         mov eax, 12h
         jmp short .9

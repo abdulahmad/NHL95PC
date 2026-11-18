@@ -16,10 +16,10 @@ void MoveInDir(Player *p, short dir)
             stopna(p);
             return;
         }
-        if (!(p->pflags2 & 2)) SetSPA(p, 0x289);
+        if (!(p->pflags2 & 2)) SetSPA(p, SPAglide);
         return;
     }
     if (dir -= p->facedir) p->facedir = ((((-dir) & 4) >> 1) - 1 + p->facedir) & 7;
-    SetSPA(p, 0x2E9);
+    SetSPA(p, SPAskate);
     playeracc(p, p->facedir);
 }

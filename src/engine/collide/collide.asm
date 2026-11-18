@@ -1,6 +1,7 @@
 ; Collision tests: players, boards, goal, the wall bounce.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_58084 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, checkcheck, checkgoalp, checkint, collflag, Crowdlevel, CwdExciteLvl
 extern dopass_ret6, doplayeracc, EndPenaltyShot, GetHot, gmode, gmode2, Goal, lastimpact
@@ -125,9 +126,9 @@ checkcoll:
         cmp byte [collflag], 0
         je short .5
         mov bx, word [byte ecx+SPA]
-        cmp bx, 0F0Fh
+        cmp bx, SPAboardback
         jl short .4
-        cmp bx, 1055h
+        cmp bx, SPAbenchcheckl
         jle near .x
 .4:
         mov ax, word [byte ecx+OldXpos+2]
@@ -917,7 +918,7 @@ wallcollb:
         sar di, 1
         mov word [byte ebx+Yvel], di
         lea eax, [dword ebx+080h]
-        mov edx, 821h
+        mov edx, SPAbglass
         call SetSPA
         cmp word [byte ebx+Xpos+2], byte 0
         jge short .9

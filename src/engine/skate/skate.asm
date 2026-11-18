@@ -2,6 +2,7 @@
 ; and how he picks a path around other players and the net.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_5E16D progbits alloc exec nowrite align=1
 extern __CHK, dirtab, dirtab_y, doplayeracc_ftab, gameopts, GetHot, gmode, gmode2
 extern imul32, MaxSpeed, puckc, puckpflags2, puckvx, puckvy, puckx, pucky
@@ -42,7 +43,7 @@ doplayeracc:
 .1:
         test byte [byte eax+pflags], 10h
         je short .2
-        mov esi, 529h                           ; SPAglideback
+        mov esi, SPAglideback                           ; SPAglideback
         jmp short .d0
 .2:
         cmp word [byte ecx+SCnum], byte 10h
@@ -57,13 +58,13 @@ doplayeracc:
         test dl, 8
         je short .4
 .3:
-        mov esi, 0B4Bh                          ; referee glide, signalling
+        mov esi, SPAarmupglide                          ; referee glide, signalling
         jmp short .d0
 .4:
-        mov esi, 0A5Bh                          ; referee glide
+        mov esi, SPArefglide                          ; referee glide
         jmp short .d0
 .5:
-        mov esi, 289h                           ; SPAglide
+        mov esi, SPAglide                           ; SPAglide
 .d0:
         xor bh, bh
         and bl, 0Fh
@@ -242,13 +243,13 @@ doplayeracc:
         test bh, 8
         je short .8
 .7:
-        mov esi, 0BABh                          ; referee turn, signalling
+        mov esi, SPAarmupturnl                          ; referee turn, signalling
         jmp short .13
 .8:
-        mov esi, 0ABBh
+        mov esi, SPArefturnl
         jmp short .13
 .9:
-        mov esi, 331h                           ; SPAturnl
+        mov esi, SPAturnl                           ; SPAturnl
         jmp short .13
 .s2:
         cmp word [byte ecx+SCnum], byte 10h
@@ -263,13 +264,13 @@ doplayeracc:
         test dl, 8
         je short .11
 .10:
-        mov esi, 0BC3h
+        mov esi, SPAarmupturnr
         jmp short .13
 .11:
-        mov esi, 0AD3h
+        mov esi, SPArefturnr
         jmp short .13
 .12:
-        mov esi, 349h                           ; SPAturnr
+        mov esi, SPAturnr                           ; SPAturnr
 .13:
         or byte [byte ecx+pflags2], 2           ; bset pf2aip
 .s3:
@@ -2001,13 +2002,13 @@ dostop:
         test al, 8
         je short .6
 .5:
-        mov eax, 0BDBh                          ; referee stop, signalling
+        mov eax, SPAarmupstop                          ; referee stop, signalling
         jmp short .0
 .6:
-        mov eax, 0AEBh                          ; referee stop
+        mov eax, SPArefstop                          ; referee stop
         jmp short .0
 .7:
-        mov eax, 361h                           ; SPAstop
+        mov eax, SPAstop                           ; SPAstop
         jmp short .0
 .8:
         cmp word [byte ebx+SCnum], byte 10h
@@ -2022,13 +2023,13 @@ dostop:
         test dl, 8
         je short .10
 .9:
-        mov eax, 0B4Bh
+        mov eax, SPAarmupglide
         jmp short .0
 .10:
-        mov eax, 0A5Bh
+        mov eax, SPArefglide
         jmp short .0
 .11:
-        mov eax, 289h                           ; SPAglide
+        mov eax, SPAglide                           ; SPAglide
 .0:
         movsx edx, ax
         mov eax, ebx
@@ -2186,7 +2187,7 @@ goalieacc:
         and eax, byte 7
         mov word [byte ebx+facedir], ax
 .spa:
-        mov edx, 1F1h                           ; SPAgskate
+        mov edx, SPAgskate                           ; SPAgskate
         mov eax, ebx
         call SetSPA
         mov edx, dword [byte ebx+facedir-2]
@@ -2257,7 +2258,7 @@ noturn0:
         mov word [byte ecx+facedir], ax
         test byte [byte ecx+pflags], 10h
         je short .2
-        mov eax, 529h                           ; SPAglideback
+        mov eax, SPAglideback                           ; SPAglideback
         jmp short .6
 .2:
         cmp word [byte ecx+SCnum], byte 10h
@@ -2272,13 +2273,13 @@ noturn0:
         test dh, 8
         je short .4
 .3:
-        mov eax, 0B4Bh
+        mov eax, SPAarmupglide
         jmp short .6
 .4:
-        mov eax, 0A5Bh
+        mov eax, SPArefglide
         jmp short .6
 .5:
-        mov eax, 289h                           ; SPAglide
+        mov eax, SPAglide                           ; SPAglide
 .6:
         movsx edx, ax
         mov eax, ecx
@@ -2300,28 +2301,28 @@ noturn0:
         test al, 8
         je short .8
 .7:
-        mov eax, 0B63h                          ; referee skate, signalling
+        mov eax, SPAarmupskate                          ; referee skate, signalling
         jmp short .ns
 .8:
-        mov eax, 0A73h
+        mov eax, SPArefskate
         jmp short .ns
 .9:
         mov edx, dword [puckc]
         movsx ax, byte [edx]
         cmp ax, word [byte ecx+SCnum]
         jne short .10
-        mov eax, 2A1h                           ; SPAskatewp
+        mov eax, SPAskatewp                           ; SPAskatewp
         jmp short .ns
 .10:
         test byte [byte ecx+pflags2], 40h
         je short .11
-        mov eax, 8D3h                           ; (pflags2 bit 6)
+        mov eax, SPAstumble                           ; (pflags2 bit 6)
         jmp short .ns
 .11:
-        mov eax, 2E9h                           ; SPAskate
+        mov eax, SPAskate                           ; SPAskate
         jmp short .ns
 .12:
-        mov eax, 541h                           ; SPAskateback
+        mov eax, SPAskateback                           ; SPAskateback
 .ns:
         test byte [byte ecx+pflags2], 2         ; pf2aip
         jne short .noturn

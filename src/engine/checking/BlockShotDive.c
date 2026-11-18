@@ -3,11 +3,11 @@
 
 /* BlockShotDive: player p dives to block a shot. dir is the dive direction from CanBlockShot.
  Lock the current animation (pflags bit 5) and turn to face the puck. Directions 3 and 10 are the
- high blocks: SPAblocklow while the puck is low and not rising fast, otherwise SPAblockhigh. Any
+ high blocks: SPAblockknee while the puck is low and not rising fast, otherwise SPAblockfront. Any
  other direction is a slide. slideface is the word at player+4Ah. newspd is the Y speed from
  blockspd_y, then the X speed from blockspd (both indexed by slide2, twice that facing, and
- negated when dir < 3). Damp oldvel, then add newspd. The slide is SPAblockslide when handedness
- and "dir < 3" disagree, otherwise SPAblockslide2. */
+ negated when dir < 3). Damp oldvel, then add newspd. The slide is SPAblockleft when handedness
+ and "dir < 3" disagree, otherwise SPAblockright. */
 void BlockShotDive(Player *p, int dir)
 {
     int oldvel;
@@ -19,9 +19,9 @@ void BlockShotDive(Player *p, int dir)
     p->facedir = p->puckdir;       /* start by facing the puck */
     if (dir == 10 || dir == 3) {
         /* High block. dir is reused as the puckvz pointer so that load stays in ebx, the
-         register dir already occupies; both failing tests share SPAblockhigh. */
-        if (*(short *)puckz < 3 && *(short *)(dir = puckvz) < 0x7D0) dir = SPAblocklow;
-        else dir = SPAblockhigh;
+         register dir already occupies; both failing tests share SPAblockfront. */
+        if (*(short *)puckz < 3 && *(short *)(dir = puckvz) < 0x7D0) dir = SPAblockknee;
+        else dir = SPAblockfront;
     } else {
         /* Slide. +4Ah is the facing used for the speed tables; facedir follows it. */
         slideface = *(short *)((char *)p + 0x4A);
@@ -48,8 +48,8 @@ void BlockShotDive(Player *p, int dir)
         if (dir < 3) newspd = -newspd;
         /* handed == 0 is one hand. Disagreeing with dir < 3 picks the other slide animation.
          This overwrites dir; the speed is already in newspd. */
-        if ((p->handed == 0) ^ (dir < 3)) dir = SPAblockslide;
-        else dir = SPAblockslide2;
+        if ((p->handed == 0) ^ (dir < 3)) dir = SPAblockleft;
+        else dir = SPAblockright;
         oldvel = p->Xvel;
         /* Same damping rule as Y. The absolutes are copied into absvel and absspd (velocity, then
          speed) instead of negating oldvel in place, which is what the X registers do. */

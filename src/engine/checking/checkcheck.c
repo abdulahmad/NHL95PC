@@ -33,11 +33,11 @@ void checkcheck(Player *p, Player *q, short force)
     Player *t;
 
     for (k = 0; k < 2; k++) {
-        if (q->SPA == 0x639 || q->SPA == 0x873) {
+        if (q->SPA == SPAHold || q->SPA == SPAhook) {
             holdcheck(p, q);
-        } else if (q->SPA == 0x589) {
+        } else if (q->SPA == SPAsweepchk) {
             Bcheck(p, q);
-        } else if (p->SPA == 0x621) {
+        } else if (p->SPA == SPAburst) {
             if (gmode & 1) {
                 p->impact = 0x100;
                 q->impact = 0x100;
@@ -88,7 +88,7 @@ void checkcheck(Player *p, Player *q, short force)
                                    && FacingBoards(q) && checkagr(p) < 0x14) {
                             AddPenalty(p, 0x17);
                         } else if (checkagr(p) <= 3) {
-                            if (p->SPA == 0xED7) AddPenalty(p, randomd0(10) > 8 ? 0x13 : 0xE);
+                            if (p->SPA == SPAcrosscheck) AddPenalty(p, randomd0(10) > 8 ? 0x13 : 0xE);
                             else if (q->impact > 0x23 && randomd0(4) == 0) AddPenalty(p, 0x19);
                             else AddPenalty(p, randomd0(10) > 6 ? 0x15 : 0xD);
                         }

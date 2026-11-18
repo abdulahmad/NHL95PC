@@ -10,15 +10,15 @@ void Acheck(Player *p, Player *q)
 
     p->pflags |= pfalock;                       /* lock animation */
     if (p->impact == 0) {
-        SetSPA(p, SPAholdchk);                  /* normal hold check */
+        SetSPA(p, SPAhook);                  /* normal hold check */
         return;
     }
     dy = HIWORD(p->Ypos) - HIWORD(q->Ypos);
     if (p->pflags & pfgoal)                     /* goal to shoot at: top */
         dy = -dy;
     if (dy < 0) {
-        SetSPA(p, SPAholdchk);
+        SetSPA(p, SPAhook);
         return;
     }
-    SetSPA(p, SPAholdchkair);                   /* hold check, stick in the air */
+    SetSPA(p, SPAHold);                   /* hold check, stick in the air */
 }

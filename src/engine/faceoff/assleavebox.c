@@ -48,7 +48,7 @@ void assleavebox(Player *p)
                 p->Xvel = 0;
                 if (p->facedir != 6) return;
                 p->temp1 = 100;
-                SetSPA(p, 0x289);
+                SetSPA(p, SPAglide);
                 TakePlayerFromBox(p);
                 return;
             }
@@ -60,9 +60,9 @@ void assleavebox(Player *p)
         return;
     }
     if (p->position > 0 && p->facedir == 6 && !randomd0((short)(p->tmptr->tmpde[p->pnum] / 32 + 0x50))) {
-        SetSPA(p, 0xD97);
+        SetSPA(p, SPAdrink);
         p->pflags |= 0x20;
         return;
     }
-    if (p->SPA == 0) SetSPA(p, 0x289);
+    if (p->SPA == 0) SetSPA(p, SPAglide);
 }

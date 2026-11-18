@@ -16,6 +16,6 @@ void SetShotMode(Player *p)
     regd1.w = !(p->pflags & pfgoal) ? -0xF0 : 0xF0;
     regd0.w = vtoa((short)(regd0.w - HIWORD(p->Xpos)), (short)(regd1.w - HIWORD(p->Ypos)));
     passspeed = 0xF;
-    if (Findhittype(p, (short)regd0.w)) SetSPA(p, 0x491);
-    else SetSPA(p, 0x3F9);
+    if (Findhittype(p, (short)regd0.w)) SetSPA(p, SPAshotb);
+    else SetSPA(p, SPAshotf);
 }

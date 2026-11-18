@@ -1,6 +1,7 @@
 ; Goalie assignments: where the goalie stands, when he comes out for the puck, puck threat.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_4B467 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, ass_popx, assexit, assinsert, assrefwhistle, check4bench, chk4pass
 extern Crowdlevel, gmode, goaliesave_saveanim_m2, iflags, imul32, playeracc, puckc, puckcross
@@ -481,7 +482,7 @@ assgoalie:
         movsx ax, byte [eax]
         cmp ax, word [byte esi+SCnum]
         jne short .22
-        mov eax, 99h
+        mov eax, SPAgready2
         jmp short .23
 .22:
         mov eax, 1
@@ -597,7 +598,7 @@ assgoalie:
         jge short .37
         or byte [byte esi+pflags], 20h
         or byte [byte esi+pflags2], 2
-        mov edx, 1135h
+        mov edx, SPAgokneehold
         mov eax, esi
         call SetSPA
         jmp near assgoalie_popebp
@@ -682,7 +683,7 @@ assgoalie:
         mov word [byte esi+facedir], ax
         or byte [byte esi+pflags], 20h
         or byte [byte esi+pflags2], 2
-        mov edx, 1095h
+        mov edx, SPAgoaliepoke
         mov eax, esi
         call SetSPA
         mov word [byte esi+04Ah], 0F0h
@@ -719,7 +720,7 @@ assgoalie:
         mov word [byte esi+03Eh], 8
         or byte [byte esi+pflags], 20h
         or byte [byte esi+pflags2], 2
-        mov edx, 181h
+        mov edx, SPAgdive
         mov eax, esi
         call SetSPA
         mov word [byte esi+04Ah], 168h

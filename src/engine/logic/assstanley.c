@@ -13,12 +13,12 @@ void assstanley(Player *p)
         p->temp4 = 0;
         p->temp1 = 0;
         ((unsigned char *)p)[0x46] = 0;
-        SetSPA(p, 0xECB);
+        SetSPA(p, SPAstansk);
         PenCntDwn = 0x100;
     }
     if (!p->SPA) {
         p->tmptr->tmpde[p->pnum] = 0x300;
-        SetSPA(p, 0x833);
+        SetSPA(p, SPAstanley);
     }
     regd0.w = vtoa((short)(p->temp3 - HIWORD(p->Xpos)), (short)(p->temp4 - HIWORD(p->Ypos)));
     if (regd0.w > 7) return;

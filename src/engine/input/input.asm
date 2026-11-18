@@ -2,6 +2,7 @@
 ; passing and shooting input, line changes, the one-timer and receiving a pass.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_4FCE8 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, assonetimer_blade
@@ -275,7 +276,7 @@ faceoffinput:
         mov word [byte ebx+temp5], cx
         test cx, cx
         jge short .x
-        mov edx, 7F1h
+        mov edx, SPAfaceoffr
         mov eax, ebx
         call SetSPA
         pop edx
@@ -289,10 +290,10 @@ faceoffinput:
         cmp word [pucktemp1], byte 11h
         jge short .3
         or byte [byte ebx+pflags], 20h
-        mov edx, 7DDh
+        mov edx, SPAfaceoff
         jmp short .4
 .3:
-        mov edx, 0D05h
+        mov edx, SPAfaceoffpoke
 .4:
         mov eax, ebx
         call SetSPA
@@ -325,7 +326,7 @@ Acheck:
         cmp word [byte eax+impact], byte 0
         jne short .0
 .hold:
-        mov edx, 873h
+        mov edx, SPAhook
         jmp short .set
 .0:
         mov dx, word [byte eax+Ypos+2]
@@ -336,7 +337,7 @@ Acheck:
 .1:
         test dx, dx
         jl short Acheck.hold
-        mov edx, 639h
+        mov edx, SPAHold
 .set:
         call SetSPA
         pop ebx
@@ -456,21 +457,21 @@ CanBlockShot:
         add eax, SortCords
         mov eax, dword [byte eax+SPA-2]
         sar eax, 10h
-        cmp eax, 3F9h
+        cmp eax, SPAshotf
         je short .shooting
-        cmp eax, 491h
+        cmp eax, SPAshotb
         je short .shooting
-        cmp eax, 0DD3h
+        cmp eax, SPAonetimef
         je short .shooting
-        cmp eax, 0E2Bh
+        cmp eax, SPAonetimeb
         je short .shooting
-        cmp eax, 1265h
+        cmp eax, SPAfakeshotf
         je short .shooting
-        cmp eax, 12DDh
+        cmp eax, SPAfakeshotb
         je short .shooting
-        cmp eax, 1355h
+        cmp eax, SPAfakeonetimef
         je short .shooting
-        cmp eax, 138Dh
+        cmp eax, SPAfakeonetimeb
         jne near .no
 .shooting:
         mov edx, dword [byte esp+0Ch]
@@ -740,7 +741,7 @@ Holdplayer:
         call OppInReach
         cmp eax, byte 1
         jne short .1
-        mov edx, 873h
+        mov edx, SPAhook
         mov eax, ebx
         call SetSPA
         pop edx
@@ -1484,9 +1485,9 @@ assonetimer:
         cmp dword [onetimerflag], byte 0
         je near CanBlockShot_ret5
         mov dx, word [byte ebx+SPA]
-        cmp dx, 0DD3h
+        cmp dx, SPAonetimef
         je short .4
-        cmp dx, 0E2Bh
+        cmp dx, SPAonetimeb
         jne near .16
 .4:
         cmp word [byte ebx+SPAnum], byte 2
@@ -1499,12 +1500,12 @@ assonetimer:
 .5:
         and byte [sflags], 0F7h
         or byte [byte ebx+pflags], 20h
-        cmp word [byte ebx+SPA], 0DD3h
+        cmp word [byte ebx+SPA], SPAonetimef
         jne short .6
-        mov word [byte ebx+SPA], 1355h
+        mov word [byte ebx+SPA], SPAfakeonetimef
         jmp short .7
 .6:
-        mov word [byte ebx+SPA], 138Dh
+        mov word [byte ebx+SPA], SPAfakeonetimeb
 .7:
         xor ecx, ecx
         mov dword [onetimerflag], ecx
@@ -1668,10 +1669,10 @@ assonetimer:
         call Findhittype
         test ax, ax
         je short .21
-        mov edx, 0E2Bh
+        mov edx, SPAonetimeb
         jmp short .22
 .21:
-        mov edx, 0DD3h
+        mov edx, SPAonetimef
 .22:
         mov eax, ebx
         call SetSPA

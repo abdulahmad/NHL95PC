@@ -51,7 +51,7 @@ void puckglue(Player *p)
     if (p->position == 0) {         /* goalie */
         ChkShotStat();
         EndPenaltyShot();
-        if (p->SPA == 0x181) p->temp5 = 5; /* SPAgdive */
+        if (p->SPA == SPAgdive) p->temp5 = 5; /* SPAgdive */
         else p->temp5 = 0x8C;
     }
     GiveControl(regd0.w);           /* setd0player */

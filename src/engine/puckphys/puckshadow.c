@@ -15,7 +15,7 @@ void puckshadow(Player *p)
         return;
     }
     if (p->frame == -1) return;
-    if (p->SPA != 0x7FD) return;
+    if (p->SPA != SPAsiren) return;
     HIWORD(p->Xpos) = 0;
     HIWORD(p->Ypos) = 0x122;
     HIWORD(p->Zpos) = 0xE;

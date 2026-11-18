@@ -2,6 +2,7 @@
 ; share PreGameIntro's exits.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_47C31 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assexit, assinsert, assreplace, awscore, awtmap
 extern awtmstruct, bannermsg, bannertimer, bgscrollx, bgscrolly, teamrocktune, starskatermin, stargoaliemin
@@ -247,7 +248,7 @@ PreGameIntro:
         mov eax, 4
 .8:
         mov word [byte ebx+facedir], ax
-        mov edx, 99h
+        mov edx, SPAgready2
         mov eax, ebx
         call SetSPA
         jmp near .14
@@ -346,7 +347,7 @@ PreGameIntro:
         xor edx, edx
         mov eax, SortCords+800h
         call SetSPA
-        mov word [refframe], 289h
+        mov word [refframe], SPAglide
         mov edx, 26h
         mov eax, SortCords+800h
         call assreplace
@@ -800,10 +801,10 @@ assintroline:
         call randomd0
         test ax, ax
         je short .5
-        mov eax, 0DABh
+        mov eax, SPArefanthem1
         jmp short .6
 .5:
-        mov eax, 0DC3h
+        mov eax, SPArefanthem2
 .6:
         movsx edx, ax
         mov eax, ebx
@@ -828,7 +829,7 @@ assintroline:
         or byte [byte ebx+pflags2], 20h
         mov word [byte ebx+Wallcos], 0
         mov word [byte ebx+Wallsin], 0
-        mov edx, 0A5Bh
+        mov edx, SPArefglide
         mov eax, ebx
         call SetSPA
         xor edi, edi
@@ -891,7 +892,7 @@ assintroline:
         mov edx, edi
         add edx, byte 8
         mov word [byte ebx+temp1], dx
-        mov edx, 0A5Bh
+        mov edx, SPArefglide
         mov eax, ebx
         call SetSPA
         mov ax, word [byte ebx+Ypos+2]
@@ -933,7 +934,7 @@ assintroline:
         mov ax, word [byte ebx+Yvel]
         mov word [byte ebx+Xvel], ax
         mov word [byte ebx+temp5], 0FF9Ch
-        mov edx, 0C57h
+        mov edx, SPAreffowait
         mov eax, ebx
         call SetSPA
         pop edi
@@ -1898,7 +1899,7 @@ MoveInDir:
 .2:
         test byte [byte ebx+pflags2], 2
         jne short .x
-        mov edx, 289h
+        mov edx, SPAglide
         mov eax, ebx
         call SetSPA
         pop ebx
@@ -1918,7 +1919,7 @@ MoveInDir:
         and eax, byte 7
         mov word [byte ebx+facedir], ax
 .4:
-        mov edx, 2E9h
+        mov edx, SPAskate
         mov eax, ebx
         call SetSPA
         mov edx, dword [byte ebx+facedir-2]
@@ -2158,7 +2159,7 @@ assstarskate:
         cmp ax, word [byte ebx+temp5]
         jne short .5
         or byte [byte ebx+pflags], 20h
-        mov edx, 731h
+        mov edx, SPAcelebrate
         mov eax, ebx
         call SetSPA
         pop edi

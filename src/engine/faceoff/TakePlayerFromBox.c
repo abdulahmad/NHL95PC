@@ -16,7 +16,7 @@ void TakePlayerFromBox(Player *p)
         r = side * 0x444 + i * 39;
         if (hmroster[r] == 7) {
             p->facedir = 4;
-            SetSPA(p, 0x7BF);
+            SetSPA(p, SPAwallleft);
             p->pflags |= 0x20;
             p->temp1 = 0x5A;
             p->temp5 = i;
@@ -117,7 +117,7 @@ void asstakeposition(Player *p)
         p->pflags2 |= 0x20;
         p->Wallcos = 0;
         p->Wallsin = 0;
-        SetSPA(p, p->position == 0 ? 0x99 : 0x289);
+        SetSPA(p, p->position == 0 ? SPAgready2 : SPAglide);
     }
     dx = HIWORD(p->Xpos) - p->temp3;
     dy = HIWORD(p->Ypos) - p->temp4;
@@ -127,7 +127,7 @@ void asstakeposition(Player *p)
         HIWORD(p->Ypos) = p->temp4;
         if (--p->temp1 >= 0) return;
         p->temp1 += 8;
-        SetSPA(p, p->position == 0 ? 0x99 : 0x289);
+        SetSPA(p, p->position == 0 ? SPAgready2 : SPAglide);
         regd2.l = vtoa((short)(fox - HIWORD(p->Xpos)), (short)(foy - HIWORD(p->Ypos)));
         if (p->position == 0) {
             if (regd2.w == 2) regd2.w = (p->pflags & 0x80) ? 1 : 3;

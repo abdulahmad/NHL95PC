@@ -84,7 +84,7 @@ void assgoalie(Player *p)
             skateto(p, 0);
             return;
         }
-        if (!(p->pflags2 & 2) && !(p->pflags & 0x20)) SetSPA(p, *puckc == p->SCnum ? 0x99 : 1);
+        if (!(p->pflags2 & 2) && !(p->pflags & 0x20)) SetSPA(p, *puckc == p->SCnum ? SPAgready2 : SPAgready);
         if (gmode & 1) return;
         if (p->temp5 >= 0) {
             if (*puckc == p->SCnum) {
@@ -119,7 +119,7 @@ void assgoalie(Player *p)
                         if (!(q->pflags2 & 4) && q->position > 0 && q->puckdist < 0x23 && q->puckdist < 0x14) {
                             p->pflags |= 0x20;
                             p->pflags2 |= 2;
-                            SetSPA(p, 0x1135);
+                            SetSPA(p, SPAgokneehold);
                             return;
                         }
                     }
@@ -137,7 +137,7 @@ void assgoalie(Player *p)
                 p->facedir = vtoa(regd0.w, regd1.w);
                 p->pflags |= 0x20;
                 p->pflags2 |= 2;
-                SetSPA(p, 0x1095);
+                SetSPA(p, SPAgoaliepoke);
                 *(short *)((char *)p + 0x4A) = 0xF0;
                 return;
             }
@@ -148,7 +148,7 @@ void assgoalie(Player *p)
                 p->nopuck = 8;
                 p->pflags |= 0x20;
                 p->pflags2 |= 2;
-                SetSPA(p, 0x181);
+                SetSPA(p, SPAgdive);
                 *(short *)((char *)p + 0x4A) = 0x168;
                 CROWDUP();
                 return;
@@ -469,7 +469,7 @@ void assrefsignal(Player *p)
         if (regd0.w >= -0x14) {
             if (--p->temp1 >= 0) return;
             p->temp1 += 8;
-            SetSPA(p, 0xA5B);
+            SetSPA(p, SPArefglide);
             regd2.w = refsigdir[RefPen];
             if (regd2.w != p->facedir) {
                 regd2.w = (regd2.w - p->facedir) & 7;
@@ -522,7 +522,7 @@ void assrefgoalpa(Player *p)
 
     if (p->pflags & 0x20) return;
     if (ovlseq != 2 && ovlseq != 0 && ovltimer >= 0 && ovltimer < 0x100) {
-        SetSPA(p, 0xA5B);
+        SetSPA(p, SPArefglide);
         if (ovltimer < 0xEC) return;
         if (goalevent != 1) return;
         side = goalevent_b1;
@@ -543,7 +543,7 @@ void assrefgoalpa(Player *p)
         return;
     }
     if (PenBuf[0]) {
-        SetSPA(p, 0xA5B);
+        SetSPA(p, SPArefglide);
         RefStep[0] = -1;
         return;
     }
@@ -568,7 +568,7 @@ void assrefgoalpa(Player *p)
         p->pflags2 |= 0x20;
         p->Wallcos = 0;
         p->Wallsin = 0;
-        SetSPA(p, 0xA5B);
+        SetSPA(p, SPArefglide);
         if (RefPen == 4) {
             if (!QueueGoalieNote()) {
                 if (SortCordsOvlFlag[penaltysc << 7] && !SpeechPatchNext) {
@@ -648,7 +648,7 @@ void assrefgoalpa(Player *p)
         if (ok) {
             if (--p->temp1 >= 0) return;
             p->temp1 += 8;
-            SetSPA(p, 0xA5B);
+            SetSPA(p, SPArefglide);
             regd2.w = vtoa((short)(*puckx - HIWORD(p->Xpos)), (short)(*pucky - HIWORD(p->Ypos)));
             if (regd2.w < 8 && (regd2.w - p->facedir + 1 & 7) > 2) {
                 regd2.w = (regd2.w - p->facedir) & 7;
@@ -662,7 +662,7 @@ void assrefgoalpa(Player *p)
                 *(short *)puckz = -100;
                 if (regd2.w < 8) p->facedir = regd2.w;
                 p->pflags |= 0x20;
-                SetSPA(p, 0xC03);
+                SetSPA(p, SPArefpickup);
                 assreplace(p, 0x22);
                 return;
             }

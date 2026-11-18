@@ -33,7 +33,7 @@ void checkcoll(Player *p, short x, short y)
         checkplcoll(p, x, y);
     }
     if (collflag) {
-        if (p->SPA < 0xF0F || p->SPA > 0x1055) {
+        if (p->SPA < SPAboardback || p->SPA > SPAbenchcheckl) {
             *(short *)((char *)&p->Xpos + 2) = *(short *)((char *)&p->OldXpos + 2);
             *(short *)((char *)&p->Ypos + 2) = *(short *)((char *)&p->OldXpos + 6);
         }

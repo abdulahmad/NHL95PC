@@ -5,5 +5,5 @@
 void Sweepcheck(Player *p)
 {
     p->pflags |= pfalock;
-    SetSPA(p, SPAsweep);
+    SetSPA(p, SPAsweepchk);
 }

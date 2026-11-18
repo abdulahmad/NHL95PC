@@ -1,6 +1,7 @@
 ; Offsides and two-line pass at the blue and red lines, the puck flip.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_4DCDD progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, awtmap, gameopts, gmode, gmode2, hmtmap, icingPlayer
 extern iflags, lasttouch, ltx, lty, penshotlive, penshotstart, puckunflip, pucky
@@ -312,7 +313,7 @@ puckflip:
         and dl, 3
         mov word [byte eax+facedir], dx
         mov word [byte eax+SPAcnt], 0FFFFh
-        mov edx, 239h
+        mov edx, SPApflip
         call SetSPA
         pop edx
         pop ebx

@@ -27,7 +27,7 @@ void wallcollb(Player *pk)
                 return;
             }
             pk->Yvel >>= 1;         /* asr.w Yvel */
-            SetSPA(pk + 1, 0x821);  /* next struct (SCstruct) */
+            SetSPA(pk + 1, SPAbglass);  /* next struct (SCstruct) */
             HIWORD(pk[1].Xpos) = HIWORD(pk->Xpos) < 0 ? -0x40 : 0x3F;
             HIWORD(pk[1].Ypos) = 0x10B;
             sfx(0xAE);

@@ -2,6 +2,7 @@
 ; assignments.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_51115 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, assonetimer_blade, assonetimer_blade_y, fofdata2_b3
@@ -69,7 +70,7 @@ TakePlayerFromBox:
         cmp byte [dword ecx+hmroster], 7
         jne short .2
         mov word [byte ebp+facedir], 4
-        mov edx, 7BFh
+        mov edx, SPAwallleft
         mov eax, ebp
         call SetSPA
         or byte [byte ebp+pflags], 20h
@@ -491,7 +492,7 @@ assleavebox:
         mov eax, 1
         jmp short .10
 .9:
-        mov eax, 289h
+        mov eax, SPAglide
 .10:
         mov word [regd1], ax
         mov edx, dword [regd1-2]
@@ -525,7 +526,7 @@ assleavebox:
         cmp word [byte ebx+facedir], byte 6
         jne near .x
         mov word [byte ebx+temp1], 64h
-        mov edx, 289h
+        mov edx, SPAglide
         mov eax, ebx
         call SetSPA
         mov eax, ebx
@@ -570,7 +571,7 @@ assleavebox:
         call randomd0
         test ax, ax
         jne short .16
-        mov edx, 0D97h
+        mov edx, SPAdrink
         mov eax, ebx
         call SetSPA
         or byte [byte ebx+pflags], 20h
@@ -582,7 +583,7 @@ assleavebox:
 .16:
         cmp word [byte ebx+SPA], byte 0
         jne short .x
-        mov edx, 289h
+        mov edx, SPAglide
         mov eax, ebx
         call SetSPA
 .x:
@@ -1544,7 +1545,7 @@ puckfaceoff2:
         shl eax, 2
         add eax, edx
         mov word [byte ebx+012h], ax
-        mov word [regd1], 289h
+        mov word [regd1], SPAglide
 .55:
         and byte [byte ebx+pflags2], 0FBh
         and byte [byte ebx+pflags], 0DFh
@@ -1589,7 +1590,7 @@ puckfaceoff2:
         mov word [byte ebx+Xvel], 0
         mov word [byte ebx+Yvel], 0
         and byte [byte ebx+pflags], 0DFh
-        mov edx, 0C57h
+        mov edx, SPAreffowait
         mov eax, ebx
         call SetSPA
         call SprSort
@@ -1641,7 +1642,7 @@ puckfaceoff2:
         jl short .66
         cmp dx, byte 11h
         jne short .65
-        mov edx, 0C43h
+        mov edx, SPArefdrop
         mov eax, SortCords+800h
         call SetSPA
 .65:
@@ -1902,10 +1903,10 @@ asstakeposition:
         mov word [byte ebx+Wallsin], 0
         cmp word [byte ebx+position], byte 0
         jne short .19
-        mov eax, 99h
+        mov eax, SPAgready2
         jmp short .20
 .19:
-        mov eax, 289h
+        mov eax, SPAglide
 .20:
         movsx edx, ax
         mov eax, ebx
@@ -1966,10 +1967,10 @@ asstakeposition:
         mov word [byte ebx+temp1], ax
         cmp word [byte ebx+position], byte 0
         jne short .26
-        mov eax, 99h
+        mov eax, SPAgready2
         jmp short .27
 .26:
-        mov eax, 289h
+        mov eax, SPAglide
 .27:
         movsx edx, ax
         mov eax, ebx
@@ -2331,7 +2332,7 @@ asspsclear:
         mov edx, 1
         jmp short .7
 .6:
-        mov edx, 289h
+        mov edx, SPAglide
 .7:
         mov word [regd1], dx
         mov edx, dword [regd1-2]
@@ -2365,10 +2366,10 @@ asspsclear:
         mov word [byte ebx+facedir], 2
         cmp word [byte ebx+position], byte 0
         jne short .11
-        mov edx, 0D2Dh
+        mov edx, SPAgwallleft
         jmp short .12
 .11:
-        mov edx, 7BFh
+        mov edx, SPAwallleft
 .12:
         movsx edx, dx
         mov eax, ebx
@@ -2466,7 +2467,7 @@ assrefpenshot:
         mov word [eax], 0
         mov eax, dword [puckz]
         mov word [eax], 0FF9Ch
-        mov edx, 0A5Bh
+        mov edx, SPArefglide
         mov eax, ebx
         call SetSPA
 .1:
@@ -2564,7 +2565,7 @@ assrefpenshot:
         mov ah, ch
         add ah, 8
         mov byte [byte ebx+026h], ah
-        mov edx, 0A5Bh
+        mov edx, SPArefglide
         mov eax, ebx
         call SetSPA
         mov ax, word [regd2]
@@ -2598,7 +2599,7 @@ assrefpenshot:
         cmp word [byte ebx+temp5], byte 0
         jne short .15
         or byte [byte ebx+pflags], 20h
-        mov edx, 0C03h
+        mov edx, SPArefpickup
         mov eax, ebx
         call SetSPA
         mov word [byte ebx+temp3], 96h

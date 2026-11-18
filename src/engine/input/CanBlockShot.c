@@ -51,8 +51,8 @@ int CanBlockShot(Player *p)
         k = shotplayer;
     }
     spa = SortCords[k].SPA;
-    if (spa != 0x3F9 && spa != 0x491 && spa != 0xDD3 && spa != 0xE2B && spa != 0x1265 && spa != 0x12DD
-        && spa != 0x1355 && spa != 0x138D) return 0;
+    if (spa != SPAshotf && spa != SPAshotb && spa != SPAonetimef && spa != SPAonetimeb && spa != SPAfakeshotf && spa != SPAfakeshotb
+        && spa != SPAfakeonetimef && spa != SPAfakeonetimeb) return 0;
     dx = *puckx - HIWORD(g->Xpos);
     y = *pucky - HIWORD(g->Ypos);
     dist = vecdist(dx, y);
@@ -235,12 +235,12 @@ void assonetimer(Player *p)
         return;
     }
     if (!onetimerflag) return;
-    if (p->SPA == 0xDD3 || p->SPA == 0xE2B) {
+    if (p->SPA == SPAonetimef || p->SPA == SPAonetimeb) {
         if (p->SPAnum <= 2 && (*(unsigned char *)&regd1 & 0x10 || *(unsigned char *)&regd1 & 0x40)) {
             sflags &= 0xF7;
             p->pflags |= 0x20;
-            if (p->SPA == 0xDD3) p->SPA = 0x1355;
-            else p->SPA = 0x138D;
+            if (p->SPA == SPAonetimef) p->SPA = SPAfakeonetimef;
+            else p->SPA = SPAfakeonetimeb;
             onetimerflag = 0;
         }
         p->nopuck = 5;
@@ -283,6 +283,6 @@ void assonetimer(Player *p)
     d = -(short)((*puckvx * t >> 16) + *puckx);
     t = (short)(t * *puckvy >> 16);
     c = (short)(((p->pflags & 0x80) ? 0xE8 : -0xE8) - (t + *pucky));
-    if (Findhittype(p, vtoa((short)d, c))) SetSPA(p, 0xE2B);
-    else SetSPA(p, 0xDD3);
+    if (Findhittype(p, vtoa((short)d, c))) SetSPA(p, SPAonetimeb);
+    else SetSPA(p, SPAonetimef);
 }

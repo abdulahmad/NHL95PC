@@ -72,14 +72,14 @@ void SkateToSpot(Player *p, int evade)
     {
         short spa1;
         if (p->SCnum == 0x10) {
-            spa1 = 0xA5B;
-            spa2 = 0xA73;
+            spa1 = SPArefglide;
+            spa2 = SPArefskate;
         } else if (p->position == 0) {
-            spa1 = 0x99;
-            spa2 = 0x1F1;
+            spa1 = SPAgready2;
+            spa2 = SPAgskate;
         } else {
-            spa1 = 0x289;
-            spa2 = 0x2E9;
+            spa1 = SPAglide;
+            spa2 = SPAskate;
         }
         if (adx >= 8 && ABS(p->Xvel) < 0x640) {
             if (p->Xvel == 0 && spa1 == p->SPA) SetSPA(p, spa2);

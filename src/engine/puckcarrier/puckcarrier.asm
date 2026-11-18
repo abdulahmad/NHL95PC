@@ -1,6 +1,7 @@
 ; Puck carrier assignments: carry, pass or shoot, nearest player, faceoff entry.
 bits 32
 %include "hockey.inc"
+%include "spa.inc"
 section s_4C6F3 progbits alloc exec nowrite align=1
 extern __CHK, assgoalie, assgoalie_popebp, assinsert, asspuckc_postab2, asspuckc_postab2_y, assreplace, check4bench
 extern check4check, checkob, chk4lc, chk4pass, chk4shot, donothing, fofdata2, GetHot
@@ -1380,17 +1381,17 @@ assfaceoffpl:
         mov word [byte ebx+temp5], dx
         test dx, dx
         jge short .x
-        mov eax, 7F1h
+        mov eax, SPAfaceoffr
         jmp short .17
 .15:
         mov word [byte ebx+temp5], 0FFFFh
         cmp word [pucktemp1], byte 11h
         jge short .16
         or byte [byte ebx+pflags], 20h
-        mov eax, 7DDh
+        mov eax, SPAfaceoff
         jmp short .17
 .16:
-        mov eax, 0D05h
+        mov eax, SPAfaceoffpoke
 .17:
         movsx edx, ax
         mov eax, ebx
