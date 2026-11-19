@@ -59,8 +59,8 @@ static void title_refresh(void);
 static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
 #define NHIRES NHIRES_ITEMS
 #define NLORES NLORES_ITEMS
-static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom" };
-static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom" };
+static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom", "ntsc" };
+static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom", "ntsc" };
 static const float scan_strength[3] = { 0.80f, 0.60f, 0.45f };   /* the sigma of the scanline profile: the smaller, the darker the gaps */
 static const char *ptr_names[3] = { "auto", "show", "hide" };
 static int ptr_mode;
@@ -278,15 +278,15 @@ static void look(int w, int *pre, float *scan, int *period, int *style)
     *scan = 0; *period = 1; *style = 0;
     if (w == 320) {
         int m = lores_mode;
-        *pre = m < 4 ? sharp_pre[1] : 3;
-        if (m >= 4) *period = lores_khz31 ? 2 : 1;      /* the CRT looks (not the plain scales): 31 kHz is every line twice, a 320x400 picture */
+        *pre = (m < 4 || m == 11) ? sharp_pre[1] : 3;
+        if (m >= 4 && m != 11) *period = lores_khz31 ? 2 : 1;      /* the CRT looks (not the plain scales): 31 kHz is every line twice, a 320x400 picture */
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
         if (m == 7 || m == 8) { *style = m - 6; *pre = 1; }
         if (m == 9) { *style = 3; *pre = 1; }
         if (m == 10) { *style = 4; *pre = 3; }
     } else {
         int m = hires_mode;
-        *pre = m < 4 ? sharp_pre[0] : 1;
+        *pre = (m < 4 || m == 11) ? sharp_pre[0] : 1;
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
         if (m >= 7 && m < 9) *style = 1 + (m - 7);
         if (m == 9) *style = 3;
@@ -460,6 +460,7 @@ static void scan_rows(float sigma, int rows, float *center, float *gain)
 /* Overbar dual-write: overlay Scale Mode / refresh / stats map onto the existing commands. */
 static int ob_look_to_mode(const ob_look *l, int hires)
 {
+    if (l->mode == OB_MODE_NTSC) return 11;   /* CRT TV colors */
     if (l->mode == OB_MODE_MISTER) return 9;
     if (l->mode == OB_MODE_CRT) return l->crt >= OB_CRT_CUSTOM ? 10 : 4 + (int)l->crt;
     {   /* Sharp: hi-res steps 1x-4x are the first four menu steps; lo-res maps to the nearest of 3x, 5x, 7x, 11x */
@@ -473,6 +474,7 @@ static void ob_mode_to_look(ob_look *l, int mode, int height)
 {
     l->height = (ob_picture_height)height;
     if (mode < 4) { l->mode = OB_MODE_SHARP; l->sharp = mode; }
+    else if (mode == 11) l->mode = OB_MODE_NTSC;
     else if (mode == 9) l->mode = OB_MODE_MISTER;
     else if (mode == 10) { l->mode = OB_MODE_CRT; l->crt = OB_CRT_CUSTOM; }
     else { l->mode = OB_MODE_CRT; l->crt = (ob_crt_look)(mode - 4); }
@@ -581,13 +583,13 @@ void video_command(int id)
     else if (id == CMD_VSYNC) vsync_on = !vsync_on;
     else if (id == CMD_STATS) osd_on = !osd_on;
     else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) {
-        hires_mode = id - CMD_HIRES; vscale_hi = hires_mode >= 4 ? 3 : 0;   /* scanlines: auto crop; a plain scale: fit */
+        hires_mode = id - CMD_HIRES; vscale_hi = hires_mode >= 4 && hires_mode != 11 ? 3 : 0;   /* scanlines: auto crop; a plain scale: fit */
         if (hires_mode < 4) sharp_pre[0] = hires_mode + 1;
         if (hires_mode == 9) m_dirty[0] = 1;
     }
     else if (id >= CMD_LORES && id < CMD_LORES + NLORES) {
         static const int lo_pre[4] = { 3, 5, 7, 11 };
-        lores_mode = id - CMD_LORES; vscale_lo = lores_mode >= 4 ? 3 : 0;
+        lores_mode = id - CMD_LORES; vscale_lo = lores_mode >= 4 && lores_mode != 11 ? 3 : 0;
         if (lores_mode < 4) sharp_pre[1] = lo_pre[lores_mode];
         if (lores_mode == 9) m_dirty[1] = 1;
     }
@@ -1009,6 +1011,7 @@ void video_present(void)
         unsigned r = dac[x][0] << 2 | dac[x][0] >> 4, g = dac[x][1] << 2 | dac[x][1] >> 4, b = dac[x][2] << 2 | dac[x][2] >> 4;
         pal[x] = 0xFF000000u | r << 16 | g << 8 | b;
     }
+    if ((w == 320 ? lores_mode : hires_mode) == 11) for (x = 0; x < 256; x++) pal[x] = ob_ntsc_color(pal[x]);   /* CRT TV colors */
     for (y = 0; y < h; y++) {
         const uint8_t *src = vram + (size_t)(y + disp_y) * w + disp_x;
         uint32_t *dst = argb + y * w;
