@@ -86,3 +86,12 @@ Layout (the 2026-11-15 cleanup layout, not the SNES tabs):
   is a block header for the steps below it.
 - A header or block comment has paragraphs of at most 3 lines, separated by a `;` line. Keep headers short: what
   the routine is for, its inputs and result, and the few notes nobody could guess.
+
+## Netplay security
+
+Everything that comes over the network is hostile. The rules and a review checklist are in Overbar's
+`port/overbar/docs/NETPLAY_SECURITY.md`; read them before changing netplay, a saved state, a file route or the season code. In short:
+never run, load or write code from network data; a peer never chooses an address; check every length before use
+(`len > size - at`, never `at + len > size`); validate a state before it is applied and clean it after; a peer's names are text, not paths.
+`sh port/overbar/tests/netsec.sh .` must print `netsec ok` (CI runs it in the `netsec` job). When a change adds a network path or a state field,
+add a hostile test for it.
