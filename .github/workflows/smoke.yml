@@ -75,3 +75,11 @@ jobs:
           sudo apt-get update -q && sudo apt-get install -y -q nasm python3
           ./build.sh vault/NHL95-PC/HOCKEY.EXE 2>&1 | tee build.log
           tail -1 build.log | grep -q '^MATCH'
+  netsec:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: netplay security rules (Overbar docs/NETPLAY_SECURITY.md)
+        run: sh port/overbar/tests/netsec.sh .
