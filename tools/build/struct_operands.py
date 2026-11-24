@@ -22,7 +22,11 @@ Team structure: fields with a 'tsize' tag (b/w/d, 'w array' for the per-player w
 register only while it holds a team pointer: after mov REG, hmtmstruct / awtmstruct or mov REG, [x+tmptr] /
 [x+optmptr] (also the raw 06Ch / 070h), until REG is written again, a call (eax), or any label (merging control
 flow). Those accesses are left out of the player pass, so a team access no longer passes as a player field.
---no-team turns this off."""
+--no-team turns this off.
+
+Source format (2026-11-15 on): instructions indented, comments after ';', no address column; labels at column 0.
+A function starts at a column-0 label that docs/name_map.csv lists as a function (proposed_name, method not
+'data') or a sub_ name."""
 import os, re, sys, argparse, subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
 _td = HERE
@@ -36,7 +40,16 @@ ROOT = paths.ROOT
 from link_src import read_layout
 SRC = os.path.join(ROOT, 'src')
 ACC = re.compile(r'(?:(byte|word|dword) )?\[byte (e[a-z]{2})\+0([0-9A-F]+)h\]')
-INSN = re.compile(r'^([a-z]+) (.*?)\t; ([0-9A-F]{5})')
+INSN = re.compile(r'^\s+(?!(?:db|dw|dd|dq|dt|times|res[bwdq])\b)([a-z]+)\b *([^;]*?)\s*(?:;.*)?$')   # mnemonic, operands
+
+def code_of(ln):
+    """the line without its ';' comment"""
+    return ln.split(';', 1)[0]
+
+def shift16(lines, i, e, dst):
+    """the next instruction after lines[i] (within 3 lines) is sar/shr dst, 10h"""
+    mm = next((m for k in range(i + 1, min(i + 4, e)) if (m := INSN.match(lines[k]))), None)
+    return bool(mm) and mm.group(1) in ('sar', 'shr') and re.fullmatch(r'%s, 10h' % re.escape(dst), mm.group(2)) is not None
 LABEL = re.compile(r'^([A-Za-z_?][\w$#@~?.]*):')
 
 def fields():
@@ -68,20 +81,18 @@ WRITES = {'mov', 'movsx', 'movzx', 'lea', 'add', 'sub', 'xor', 'and', 'or', 'inc
 NAMED = re.compile(r'\[(?:byte |dword )?(e[a-z]{2})(?:\+e[a-z]{2}(?:\*[1248])?)?\+([A-Za-z_]\w*)(?:[-+]\w+)?\]')
 SUSPECT = []; TNAMES = set()
 
-def team_plan(lines, s, e, TF):
+def team_plan(lines, s, e, TF, where=''):
     """team-struct accesses in lines[s:e]: ({line: [(a0, a1, old, new)]}, set of (line, a0) taken)"""
     edits = {}; taken = set(); tp = set()
     for i in range(s, e):
         ln = lines[i]
         if ANYLABEL.match(ln): tp.clear(); continue
         mi = INSN.match(ln)
-        if not mi:
-            m0 = re.match(r'^([a-z]+)\b', ln); mn = m0.group(1) if m0 else ''
-            if mn in ('cwde', 'cdq', 'cwd'): tp.discard('eax' if mn == 'cwde' else 'edx')
-            continue
+        if not mi: continue
         mn, ops_s = mi.group(1), mi.group(2)
-        code = ln.split('\t;')[0]
-        ops = [o.strip() for o in ops_s.split(',')]
+        if mn in ('cwde', 'cdq', 'cwd'): tp.discard('eax' if mn == 'cwde' else 'edx'); continue
+        code = code_of(ln)
+        ops = [o.strip() for o in ops_s.split(',')] if ops_s else []
         for m in TACC.finditer(code):
             sz, reg, idx, off = m.group(1), m.group(2), m.group(3), int(m.group(4), 16)
             if reg not in tp: continue
@@ -98,8 +109,7 @@ def team_plan(lines, s, e, TF):
                 if cand: break
             if cand is None and sz_ == 'd' and mn in ('mov', 'movsx'):
                 dst = ops[0]
-                nxt = next((lines[k] for k in range(i + 1, min(i + 4, e)) if INSN.match(lines[k])), '')
-                if re.match(r'^(sar|shr) %s, 10h\t' % re.escape(dst), nxt):
+                if shift16(lines, i, e, dst):
                     for name, fo, fs, arr in TF:
                         if fs == 'w' and (fo == off + 2 or (arr and fo <= off + 2 < fo + 0x38)):
                             k = off + 2 - fo; cand = name + ('+%Xh' % k if k > 9 else '+%d' % k if k else '') + '-2'; break
@@ -109,7 +119,7 @@ def team_plan(lines, s, e, TF):
                 edits.setdefault(i, []).append((m.start(), m.end(), txt, new))
         for m in NAMED.finditer(code):
             if m.group(1) in tp and m.group(2) not in TNAMES and m.group(2) not in ('tmptr', 'optmptr'):
-                SUSPECT.append('%s: %s' % (mi.group(3), code.strip()))
+                SUSPECT.append('%s:%d: %s' % (where, i + 1, code.strip()))
         # register state after the instruction
         dst = ops[0] if ops and mn in WRITES else None
         if mn == 'call': tp.discard('eax')
@@ -130,22 +140,10 @@ def functions(lines, fentry):
     return [(LABEL.match(lines[s]).group(1), s, (starts[k + 1] if k + 1 < len(starts) else len(lines))) for k, s in enumerate(starts)]
 
 def function_entries(text):
-    """function entry labels: sub_ names plus every label docs/name_map.csv lists as a function"""
+    """function entry labels: sub_ names plus every label docs/name_map.csv lists as a function (by name)"""
     import csv
-    nm = {r['pc_address'].lstrip('0') for r in csv.DictReader(open(os.path.join(ROOT, 'docs/name_map.csv'))) if r['method'] != 'data'}
-    lines = text.split('\n'); out = set()
-    for i, l in enumerate(lines):
-        m = LABEL.match(l)
-        if not m: continue
-        n = m.group(1)
-        if n.startswith('sub_'): out.add(n); continue
-        for j in range(i + 1, min(i + 6, len(lines))):
-            mm = INSN.match(lines[j])
-            if mm:
-                if mm.group(3).lstrip('0') in nm: out.add(n)
-                break
-            if LABEL.match(lines[j]) and not lines[j].split(':')[0].startswith('.'): continue
-    return out
+    nm = {r['proposed_name'] for r in csv.DictReader(open(os.path.join(ROOT, 'docs/name_map.csv'))) if r['method'] != 'data'}
+    return {n for l in text.split('\n') if (m := LABEL.match(l)) and ((n := m.group(1)) in nm or n.startswith('sub_'))}
 
 def plan(path, F, min_fields, verbose=False, TF=None):
     text = open(path).read(); lines = text.split('\n')
@@ -154,13 +152,13 @@ def plan(path, F, min_fields, verbose=False, TF=None):
     for fname, s, e in functions(lines, fe):
         taken = set()
         if TF:
-            te, taken = team_plan(lines, s, e, TF)
+            te, taken = team_plan(lines, s, e, TF, os.path.relpath(path, ROOT))
             nt = sum(len(v) for v in te.values())
             if nt or (verbose and taken): report.append('%-28s team %3d accesses, %3d named' % (fname, len(taken), nt))
             for i, es in te.items(): edits.setdefault(i, []).extend(es)
         per = {}
         for i in range(s, e):
-            code = lines[i].split('\t;')[0]
+            code = code_of(lines[i])
             for m in ACC.finditer(code):
                 if (i, m.start()) in taken or (i, m.start() - 5) in taken or (i, m.start() - 6) in taken: continue
                 sz, reg, off = m.group(1), m.group(2), int(m.group(3), 16)
@@ -168,7 +166,7 @@ def plan(path, F, min_fields, verbose=False, TF=None):
                 mi = INSN.match(lines[i]); mn = mi.group(1) if mi else ''
                 if sz is None:   # size from the register operand (lea has none)
                     if mn == 'lea': continue
-                    ops = [o.strip() for o in code.split(' ', 1)[1].split(',')] if ' ' in code else []
+                    ops = [o.strip() for o in mi.group(2).split(',')] if mi and mi.group(2) else []
                     other = [o for o in ops if not o.startswith(('[', 'byte', 'word', 'dword'))]
                     if not other or not re.fullmatch(r'e?[a-d][xlh]|e?[sd]i|e?bp', other[0]): continue
                     s_ = reg_size(other[0])
@@ -178,9 +176,8 @@ def plan(path, F, min_fields, verbose=False, TF=None):
                     if fs == s_: cand = name
                 if cand is None and s_ == 'd' and (off + 2) in F and mn in ('mov', 'movsx'):
                     # -5r short load: mov r32, [REG+field-2] / sar r32, 10h
-                    dst = code.split(' ', 1)[1].split(',')[0].strip()
-                    nxt = next((lines[k] for k in range(i + 1, min(i + 4, e)) if INSN.match(lines[k])), '')
-                    if re.match(r'^(sar|shr) %s, 10h\t' % re.escape(dst), nxt):
+                    dst = mi.group(2).split(',')[0].strip()
+                    if shift16(lines, i, e, dst):
                         ws = [n for n, fs in F[off + 2] if fs == 'w']
                         if ws: cand = ws[0] + '-2'
                 per.setdefault(reg, []).append((i, m.start(), m.end(), off, cand, m.group(0)))
@@ -197,7 +194,7 @@ def plan(path, F, min_fields, verbose=False, TF=None):
 def apply_edits(lines, edits):
     n = 0
     for i, es in edits.items():
-        code, sep, com = lines[i].partition('\t;')
+        code, sep, com = lines[i].partition(';')
         for a0, a1, old, new in sorted(es, reverse=True):
             assert code[a0:a1] == old, (lines[i], old)
             code = code[:a0] + new + code[a1:]; n += 1
