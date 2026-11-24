@@ -849,7 +849,7 @@ setplayer:
         shl eax, 2
         add eax, esi
         shl eax, 2
-        mov edx, dword [dword ecx+0DEh]
+        mov edx, dword [dword ecx+tmplattr]
         add eax, edx
         mov dl, byte [eax]
         mov byte [byte ebx+handed], dl
@@ -1048,7 +1048,7 @@ setplayer:
         mov al, byte [byte edx+eax+05h]
         mov byte [byte ebx+rostnum], al
         shl esi, 4
-        mov edx, dword [dword ecx+0E2h]
+        mov edx, dword [dword ecx+tmglattr]
         lea eax, [dword esi-0190h]
         add eax, edx
         mov dl, byte [eax]
@@ -1064,16 +1064,16 @@ setplayer:
         mov byte [byte ebx+attribute], cl
 .40:
         mov dl, byte [eax]
-        mov byte [byte ebx+aggress], dl
+        mov byte [byte ebx+GGSleft], dl
         inc eax
         mov dl, byte [eax]
-        mov byte [byte ebx+passacc], dl
+        mov byte [byte ebx+GGSright], dl
         inc eax
         mov dl, byte [eax]
-        mov byte [byte ebx+spodds], dl
+        mov byte [byte ebx+GSSleft], dl
         inc eax
         mov dl, byte [eax]
-        mov byte [byte ebx+endurance], dl
+        mov byte [byte ebx+GSSright], dl
         inc eax
         mov dl, byte [eax]
         mov byte [byte ebx+shotspd], dl

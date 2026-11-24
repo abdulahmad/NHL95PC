@@ -584,7 +584,7 @@ setInjuryType:
         mov ebx, eax
         shl ebx, 2
         add ebx, eax
-        mov eax, dword [dword edx+0DEh]
+        mov eax, dword [dword edx+tmplattr]
         mov al, byte [byte eax+ebx*4+0Fh]
         xor ah, ah
         add eax, 8
