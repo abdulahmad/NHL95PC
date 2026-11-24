@@ -325,7 +325,7 @@ The table gives each part's 95 PC routine and address, then the 94 PC address of
 - **95 PC:** the same modes as 94 PC ("'93 - '94 Season"), plus a free-agent roster editor: "Edit Roster 1" / "Edit
   Roster 2", "Free Agents ...", "Find Player ...", "Move to Free Agent List" (release, `MoveToFreeAgents`,
   src/front/roster_edit/MoveToFreeAgents.c) and "Create Free Agent ..." (`CreateFreeAgent` / `CreatePlayerLoop`,
-  src/front/create/, ratings from a "Rating Units" pool, src/data/front/create_free_agent_messages.asm,
+  src/front/create/, ratings from a "Rating Units" pool, src/data/front/create_const.asm,
   create_data.asm).
 - **vs 94 PC: free agents, create player and release are new;** exhibition games and trades are unchanged. 94 PC has
   league, season, playoffs, Exhibition Game, Trade Players, dress / scratch players, import / export databases and
@@ -401,7 +401,7 @@ All from `TEAMS.DB`, `KEY.DB` and name lists (Data):
 - **95 PC:** 49 announcer routines (`Pa` / `Say`), against 61 in 94 PC. CD video clips (54 `.CMV`, "Video Provided
   By: NHL Productions") and a VESA high-resolution mode (`VSAHKY50`) (data files and strings; Data).
 - **vs the consoles: 94 and 95 PC only.** No play-by-play code found in 94G or 95G.
-- **Credits** (credit pages in src/data/front/scoreboard_stats_screens.asm): Lead Programmer Lance Wall; Programmers
+- **Credits** (credit pages in src/data/front/scoreboard_data.asm): Lead Programmer Lance Wall; Programmers
   Victoria Wong, Robert Penner, Kurt Kennett; Producer & Design Ken Sayler; Composer Michael J. Sokyrka; Audio
   Programmers Alan Stewart, Iain Macanulty; a SportsDesk announcer (Michael Donovan) and a rink announcer (Bruce
   Jamieson); "Ratings by John Rosasco and Neil Smith of the New York Rangers".
@@ -511,7 +511,7 @@ boards, blue lines 60 ft out from them):
   name Michael J. Sokyrka (composer) and Alan Stewart, Iain Macanulty (audio programmers), even though the 94 PC organ
   tunes are kept byte for byte.
 - **Organ cue per team: a 95 PC only reshuffle.** `teamrockcuetbl` has 6 cues per team; names are in `rockcuefiles`
-  (src/data/front/lockerroom_announcer.asm), loaded by `LoadRockMusic` (7DC8B). 7 of 53 file names changed. BUF1,
+  (src/data/front/replay_controls_data.asm), loaded by `LoadRockMusic` (7DC8B). 7 of 53 file names changed. BUF1,
   NJER1, PHIL3, SHK3, SHK5, SHK6 and TB1 are no longer named (the files are still shipped). HART2, MON1, MON3, LA4 and
   BOS2 now appear twice. One slot names CGY2, which has no file, and no team row or random pick uses it. Team rows:
   BUF, NYI, OTT and WPG BUF1 → HART2; NJ and NYR NJER1 → HART2; PHI PHIL3 → CAL2; SJ SHK3 / 5 / 6 → MON1 / MON3 / LA4;
