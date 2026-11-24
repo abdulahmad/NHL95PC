@@ -3794,7 +3794,7 @@ sar eax, 18h	; 55F01
 mov ebx, eax	; 55F04
 shl ebx, 2	; 55F06
 add ebx, eax	; 55F09
-mov eax, dword [dword edx+0DEh]	; 55F0B
+mov eax, dword [dword edx+tmplattr]	; 55F0B
 mov al, byte [byte eax+ebx*4+0Fh]	; 55F11
 xor ah, ah	; 55F15
 add eax, 8	; 55F17
