@@ -1,6 +1,6 @@
 # Fight hooks: what 95 PC still has, and how hooks.c joins rules.c to the game
 
-Notes for `port/fight/hooks.c` (not written yet). Found 2026-11-09 by reading the asm and C in `src/`.
+Notes behind `port/fight/hooks.c` (stage 1 below is in the build; see `port/fight/README.md`). Found 2026-11-09 by reading the asm and C in `src/`.
 
 ## What 95 PC kept from 93's fights
 

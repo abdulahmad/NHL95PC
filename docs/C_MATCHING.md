@@ -6,19 +6,19 @@ function, while the EXE keeps building byte-identical. Progress: [C_PROGRESS.md]
 ## How a C function replaces its asm
 
 ```
-src/c/<segment>/<Func>.c ──wcc386 10.0 GA (DOSBox)──▶ build/c/<segment>/<Func>.obj (OMF)
+src/<segment>/<Func>.c ──wcc386 10.0 GA (DOSBox)──▶ build/c/<segment>/<Func>.obj (OMF)
         tools/match/cc.py compile                                   │ tools/match/cc.py frag (tools/match/cobj.py reads the OMF)
                                                               ▼
-src/cseg01/<segment>.asm  %include "c/<segment>/<Func>.inc" ◀── build/c/<segment>/<Func>.inc  (db + dd label fixups)
+src/<segment>/<mod>.asm %include "c/<segment>/<Func>.inc" ◀── build/c/<segment>/<Func>.inc  (db + dd label fixups)
         │ nasm -DCBUILD
         ▼
 build/obj → tools/build/link_src.py → build/HOCKEY.EXE → sha1 check (the same check as the asm build)
 ```
 
-* `<segment>` is the stem of the asm file (`engine/hockey`); `<Func>` is the asm label of the first function.
+* `<segment>` is the module folder under `src/` (`engine/hockey`), where the module's `.asm` and its `.c` files live; `<Func>` is the asm label of the first function.
 * In the asm, the function is wrapped (by `tools/match/cc.py mark`):
   ```
-  ; C: src/c/engine/chgplayer/SetSPA.c
+  ; C: src/engine/chgplayer/SetSPA.c
   %ifdef CBUILD
   %include "c/engine/chgplayer/SetSPA.inc"
   %else
@@ -39,7 +39,7 @@ build/obj → tools/build/link_src.py → build/HOCKEY.EXE → sha1 check (the s
 * Name decoration: wcc386 emits functions as `Name_` and data as `_Name`; `tools/match/cobj.py` maps them back to the asm
   labels (a decorated name that exists as an asm label, such as the library's `strcpy_`, is kept).
 * Limits today: the C file may only produce code (`_TEXT`). String literals, `static` data and switch tables in
-  `CONST`/`_DATA` are refused by `cobj.py` (they live in dseg02, not next to the code). Jump tables that Watcom puts
+  `CONST`/`_DATA` are refused by `cobj.py` (they live in `src/data/`, not next to the code). Jump tables that Watcom puts
   in `_TEXT` work (fixups to the block itself).
 
 ## Headers (`src/include`, 8.3 names: the compiler runs under DOS)
@@ -52,7 +52,7 @@ build/obj → tools/build/link_src.py → build/HOCKEY.EXE → sha1 check (the s
 | `vars.h` | typed globals that override the inferred type (`gameopts` bitfields, `hmtmstruct`/`awtmstruct` as `Team`, replay pointers ...) | hand |
 | `protos.h` | prototypes: every matched function, and asm functions whose signature is known | hand |
 | `structs.h` | `Player` (80h) and `Team` (100h) from `src/inc/structs.inc`; gaps are `pad_XX` bytes; `OFS_*` macros | `tools/match/gen_cheaders.py` |
-| `globals.h` | `extern` for every dseg02 label (type inferred from the asm accesses; `[]` when indexed) | `tools/match/gen_cheaders.py` |
+| `globals.h` | `extern` for every data label (`src/data/`) (type inferred from the asm accesses; `[]` when indexed) | `tools/match/gen_cheaders.py` |
 | `asmfuncs.h` | `extern void Name();` for every code label (unprototyped: register args still work) | `tools/match/gen_cheaders.py` |
 
 Run `python3 tools/match/gen_cheaders.py` (after `make`, it reads `build/obj`) whenever a label is renamed, a field is added
@@ -65,7 +65,7 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
    `vtoa`). Check its block has no jumps into other functions (shared tails) and that the previous function does
    not fall into it (see "Tail calls" below); otherwise take the whole group into one file.
 2. Read the asm, its comment, its `docs/name_map.csv` row and the Genesis routine (93G, else 94G; not 95G). Write
-   `src/c/<segment>/<Func>.c`:
+   `src/<segment>/<Func>.c`:
    * `#include "nhl95.h"`, then a comment on **every** function: address, Genesis name and file (or "PC only"),
      what it does, arguments and result. Bring the asm comments over (block comment and the per-line ones).
    * Names: the asm labels for functions and globals, the `structs.inc` field names, Genesis names for constants
@@ -76,10 +76,10 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
      field takes that field's name (`pucktemp1` is `puckstruct+temp1`). A nosplit column keeps its own label.
      Do not fold a label that `globals.h` declares into `BASE+k`.
    * Add the prototype to `protos.h` (grouped by segment, address in the comment).
-3. `python3 tools/match/cdiff.py src/c/<segment>/<Func>.c` compiles it and prints compiled vs original side by side
+3. `python3 tools/match/cdiff.py src/<segment>/<Func>.c` compiles it and prints compiled vs original side by side
    (`!` differs, `~` same instruction but a different relocation target or immediate); exit 0 and `MATCH` when
    the bytes, the fixup targets and the size agree. Iterate.
-4. `python3 tools/match/cc.py mark src/c/<segment>/<Func>.c [--end NextLabel]` (`--end` for a multi-function file; a
+4. `python3 tools/match/cc.py mark src/<segment>/<Func>.c [--end NextLabel]` (`--end` for a multi-function file; a
    label that does not exist runs to the end of the segment). `make` must MATCH, and `make CBUILD=0` too.
 5. `python3 tools/match/c_progress.py` (updates `C_PROGRESS.md` and `tools/match/c_functions.csv`; keep a reason in the notes
    column for a non-matching draft). Commit the C file, the asm marker, the headers, the progress files.
