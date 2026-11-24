@@ -832,7 +832,7 @@ setplayer:
         mov word [byte ebx+048h], 0
         mov word [byte ebx+04Ch], 0
         mov word [byte ebx+04Ah], 0
-        mov byte [byte ebx+053h], 0
+        mov byte [byte ebx+passlane], 0
         cmp word [byte esp+08h], byte 19h
         jge near .39
         mov esi, dword [byte esp+06h]
@@ -844,7 +844,7 @@ setplayer:
         sub eax, esi
         mov edx, dword [dword ecx+tmroster]
         mov al, byte [byte edx+eax+05h]
-        mov byte [byte ebx+05Eh], al
+        mov byte [byte ebx+rostnum], al
         mov eax, esi
         shl eax, 2
         add eax, esi
@@ -852,12 +852,12 @@ setplayer:
         mov edx, dword [dword ecx+0DEh]
         add eax, edx
         mov dl, byte [eax]
-        mov byte [byte ebx+065h], dl
+        mov byte [byte ebx+handed], dl
         mov cl, byte [byte ebx+attribute]
         and cl, 0F7h
         mov byte [byte ebx+attribute], cl
         inc eax
-        cmp byte [byte ebx+065h], 0
+        cmp byte [byte ebx+handed], 0
         jne short .20
         mov dl, cl
         or dl, 8
@@ -904,7 +904,7 @@ setplayer:
         mov byte [byte ebx+weight], dl
         inc eax
         mov dl, byte [eax]
-        mov byte [byte ebx+05Bh], dl
+        mov byte [byte ebx+shotspd], dl
         inc eax
         xor ecx, ecx
         mov cl, byte [eax]
@@ -919,7 +919,7 @@ setplayer:
         jle short .26
         mov edx, 0Fh
 .26:
-        mov byte [byte ebx+064h], dl
+        mov byte [byte ebx+checking], dl
         xor ecx, ecx
         mov cl, byte [eax]
         movsx dx, byte [byte esp+014h]
@@ -937,7 +937,7 @@ setplayer:
         jle short .28
         mov edx, 0Fh
 .28:
-        mov byte [byte ebx+060h], dl
+        mov byte [byte ebx+stickhand], dl
         xor edx, edx
         mov dl, byte [eax]
         movsx cx, byte [byte esp+014h]
@@ -955,7 +955,7 @@ setplayer:
         jle short .30
         mov edx, 0Fh
 .30:
-        mov byte [byte ebx+05Ch], dl
+        mov byte [byte ebx+shotacc], dl
         inc eax
         xor ecx, ecx
         mov cl, byte [eax]
@@ -972,7 +972,7 @@ setplayer:
         jle short .32
         mov edx, 0Fh
 .32:
-        mov byte [byte ebx+05Dh], dl
+        mov byte [byte ebx+passacc], dl
         xor ecx, ecx
         mov cl, byte [eax]
         movsx dx, byte [byte esp+014h]
@@ -996,7 +996,7 @@ setplayer:
         movsx edx, dx
         add edx, byte 0Fh
         sar edx, 1
-        mov byte [byte ebx+059h], dl
+        mov byte [byte ebx+aioff], dl
         xor ecx, ecx
         mov cl, byte [eax]
         movsx dx, byte [byte esp+010h]
@@ -1014,9 +1014,9 @@ setplayer:
         movsx edx, dx
         add edx, byte 0Fh
         sar edx, 1
-        mov byte [byte ebx+05Ah], dl
+        mov byte [byte ebx+aidef], dl
         mov dl, byte [eax]
-        mov byte [byte ebx+062h], dl
+        mov byte [byte ebx+aggress], dl
         inc eax
         mov dl, byte [eax]
         mov byte [byte ebx+endurance], dl
@@ -1034,7 +1034,7 @@ setplayer:
         jle short .38
         mov edx, 0Fh
 .38:
-        mov byte [byte ebx+05Fh], dl
+        mov byte [byte ebx+spodds], dl
         jmp near .49
 .39:
         mov esi, dword [byte esp+06h]
@@ -1046,37 +1046,37 @@ setplayer:
         sub eax, esi
         mov edx, dword [dword ecx+tmroster]
         mov al, byte [byte edx+eax+05h]
-        mov byte [byte ebx+05Eh], al
+        mov byte [byte ebx+rostnum], al
         shl esi, 4
         mov edx, dword [dword ecx+0E2h]
         lea eax, [dword esi-0190h]
         add eax, edx
         mov dl, byte [eax]
-        mov byte [byte ebx+065h], dl
+        mov byte [byte ebx+handed], dl
         mov dl, byte [byte ebx+attribute]
         and dl, 0F7h
         mov byte [byte ebx+attribute], dl
         inc eax
-        cmp byte [byte ebx+065h], 0
+        cmp byte [byte ebx+handed], 0
         jne short .40
         mov cl, dl
         or cl, 8
         mov byte [byte ebx+attribute], cl
 .40:
         mov dl, byte [eax]
-        mov byte [byte ebx+062h], dl
+        mov byte [byte ebx+aggress], dl
         inc eax
         mov dl, byte [eax]
-        mov byte [byte ebx+05Dh], dl
+        mov byte [byte ebx+passacc], dl
         inc eax
         mov dl, byte [eax]
-        mov byte [byte ebx+05Fh], dl
+        mov byte [byte ebx+spodds], dl
         inc eax
         mov dl, byte [eax]
         mov byte [byte ebx+endurance], dl
         inc eax
         mov dl, byte [eax]
-        mov byte [byte ebx+05Bh], dl
+        mov byte [byte ebx+shotspd], dl
         inc eax
         mov dl, byte [eax]
         mov byte [byte ebx+legspd], dl
@@ -1141,7 +1141,7 @@ setplayer:
         movsx edx, dx
         add edx, byte 0Fh
         sar edx, 1
-        mov byte [byte ebx+059h], dl
+        mov byte [byte ebx+aioff], dl
         mov al, byte [eax]
         xor ah, ah
         movsx dx, byte [byte esp+010h]
@@ -1158,7 +1158,7 @@ setplayer:
         movsx eax, dx
         add eax, byte 0Fh
         sar eax, 1
-        mov byte [byte ebx+05Ah], al
+        mov byte [byte ebx+aidef], al
 .49:
         add esp, byte 1Ch
         jmp near changeplayer_ret5

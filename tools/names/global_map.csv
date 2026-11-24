@@ -2254,8 +2254,8 @@ HotList,CC148,"GetHot reads the hot-spot x byte at frame*2, the 95 HotList"
 HotList_y,CC149,"GetHot y byte, the HotList column at +1; its own label so the indexed operand stays a symbol"
 hmtmpde,DF65A,hmtmstruct+tmpde; MenuModeSettings refills the 1Ch energy words to 1000h
 awtmpde,DF75A,awtmstruct+tmpde
-hmtmpbox,DF6CA,"hmtmstruct+tmpbox; clearteams stores FF, the empty penalty-box list"
-awtmpbox,DF7CA,awtmstruct+tmpbox
+hmtmpbox,DF6CA,"hmtmstruct+tmboxlist; clearteams stores FF, the empty penalty-box list"
+awtmpbox,DF7CA,awtmstruct+tmboxlist
 hmtmglstats,DF6FE,"hmtmstruct+tmglstats; clearteams stores the goalie-stats pointer, next to hmtmplstats"
 awtmglstats,DF7FE,awtmstruct+tmglstats
 scpflags2,DF861,"SortCords+pflags2; MenuModeSettings clears bit 3 of each of the 12 players, stride 80h"

@@ -587,11 +587,11 @@ assgoalie:
         xor edx, edx
         jmp short .38
 .36:
-        test byte [byte eax+045h], 4
+        test byte [byte eax+pflags2], 4
         jne short .37
-        cmp word [byte eax+01Ah], byte 0
+        cmp word [byte eax+position], byte 0
         jle short .37
-        mov di, word [byte eax+04Eh]
+        mov di, word [byte eax+puckdist]
         cmp di, byte 23h
         jge short .37
         cmp di, byte 14h

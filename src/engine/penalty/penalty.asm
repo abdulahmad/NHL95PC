@@ -299,7 +299,7 @@ InProgress:
         movsx eax, dx
         add eax, eax
         add eax, edi
-        cmp word [byte eax+07Eh], byte 0
+        cmp word [byte eax+OldZpos+2], byte 0
         jle short .5
         mov cl, byte [byte eax+07Fh]
         and cl, 0DFh
@@ -324,7 +324,7 @@ InProgress:
         mov eax, dword [puckstruct+1Ah]
         sar eax, 10h
         add eax, puckstruct
-        movsx si, byte [byte eax+01Eh]
+        movsx si, byte [byte eax+asslist]
         cmp si, byte 1Bh
         je near .33
         cmp si, byte 1Ch
@@ -409,7 +409,7 @@ InProgress:
         mov edx, dword [byte edx+044h]
         sar edx, 18h
         mov eax, dword [byte ebp-014h]
-        test byte [byte eax+044h], 40h
+        test byte [byte eax+pflags], 40h
         setne al
         and eax, 0FFh
         call PostPenaltyEvent
@@ -485,7 +485,7 @@ InProgress:
         mov edx, dword [byte edx+044h]
         sar edx, 18h
         mov eax, dword [byte ebp-014h]
-        test byte [byte eax+044h], 40h
+        test byte [byte eax+pflags], 40h
         setne al
         and eax, 0FFh
         call PostPenaltyEvent
@@ -518,9 +518,9 @@ InProgress:
         add edx, eax
         mov dword [byte ebp-014h], edx
         mov edi, dword [byte edx+06Ch]
-        inc word [byte edi+0Ah]
+        inc word [byte edi+tmPenalties]
         mov eax, dword [byte ebp-010h]
-        add word [byte edi+0Ch], ax
+        add word [byte edi+tmPenmin], ax
         movsx ax, byte [byte edx+047h]
         mov word [byte ebp-0Ch], ax
         cmp ax, 19h
@@ -528,7 +528,7 @@ InProgress:
         mov edx, dword [byte ebp-0Eh]
         sar edx, 10h
         shl edx, 4
-        mov eax, dword [dword edi+0E6h]
+        mov eax, dword [dword edi+tmplstats]
         add eax, edx
         mov edx, dword [byte ebp-010h]
         add word [byte eax+04h], dx
@@ -537,8 +537,8 @@ InProgress:
         sar ebx, 10h
         xor edx, edx
         mov eax, dword [byte ebp-014h]
-        mov dl, byte [byte eax+05Eh]
-        test byte [byte eax+044h], 40h
+        mov dl, byte [byte eax+rostnum]
+        test byte [byte eax+pflags], 40h
         setne al
         xor ah, ah
         cwde
@@ -575,7 +575,7 @@ InProgress:
         mov edx, dword [byte edx+044h]
         sar edx, 18h
         mov eax, dword [byte ebp-014h]
-        test byte [byte eax+044h], 40h
+        test byte [byte eax+pflags], 40h
         setne byte [byte ebp-04h]
         xor eax, eax
         mov al, byte [byte ebp-04h]
@@ -603,7 +603,7 @@ InProgress:
         jmp short .25
 .23:
         mov eax, dword [byte ebp-014h]
-        cmp word [byte eax+01Ah], byte 0
+        cmp word [byte eax+position], byte 0
         jle short .24
         mov eax, dword [byte eax+044h]
         sar eax, 18h
@@ -612,7 +612,7 @@ InProgress:
         cmp eax, byte 0FFFFFFFFh
         jne short .24
         mov eax, dword [byte ebp-014h]
-        test byte [byte eax+045h], 10h
+        test byte [byte eax+pflags2], 10h
         je short .26
 .24:
         inc edx
@@ -624,7 +624,7 @@ InProgress:
         cmp dx, byte 6
         je near .33
         mov eax, dword [byte ebp-014h]
-        movsx ax, byte [byte eax+047h]
+        movsx ax, byte [byte eax+pnum]
         mov word [byte ebp-0Ch], ax
         movsx eax, si
         mov dl, byte [nosplit eax*2+PenBuf_pl]
@@ -645,7 +645,7 @@ InProgress:
         sar eax, 10h
         add eax, eax
         add eax, edi
-        cmp word [byte eax+07Eh], byte 0
+        cmp word [byte eax+OldZpos+2], byte 0
         jl short .28
         test byte [byte eax+07Fh], 10h
         je short .28
@@ -682,7 +682,7 @@ InProgress:
         mov eax, dword [byte ebp-014h]
         call assreplace
         mov eax, dword [byte ebp-014h]
-        mov ax, word [byte eax+06Ah]
+        mov ax, word [byte eax+SCnum]
         mov word [penaltysc], ax
 .32:
         mov eax, dword [byte ebp-0Ah]
@@ -1211,7 +1211,7 @@ updatepentime_ut:
         jmp near .5
 .1:
         movsx eax, bx
-        movsx ax, byte [dword ecx+eax+tmpbox]
+        movsx ax, byte [dword ecx+eax+tmboxlist]
         test ax, ax
         jl near .6
         mov dx, word [regd1]
@@ -1245,7 +1245,7 @@ updatepentime_ut:
         sar eax, 10h
         movsx edx, bx
         add eax, edx
-        mov dl, byte [dword ecx+eax+tmpbox]
+        mov dl, byte [dword ecx+eax+tmboxlist]
         mov byte [dword ecx+eax+0B5h], dl
         test dl, dl
         jl short .3
@@ -1305,11 +1305,11 @@ updatePPTeamTime:
         test ah, 40h
         jne short .1
         mov eax, hmtmstruct
-        inc word [byte eax+08h]
+        inc word [byte eax+tmpptime]
         ret
 .1:
         mov eax, awtmstruct
-        inc word [byte eax+08h]
+        inc word [byte eax+tmpptime]
 .x:
         ret
 %endif ; C
@@ -1779,7 +1779,7 @@ SetupPenaltyShot:
         mov word [byte ebx+034h], 0FFFFh
         mov ax, word [byte ebx+034h]
         mov word [byte ebx+032h], ax
-        mov word [byte ebx+030h], ax
+        mov word [byte ebx+tmpsplayer], ax
         mov edx, dword [puckc]
         add word [Crowdlevel], byte 64h
         mov al, byte [penshotplayer]

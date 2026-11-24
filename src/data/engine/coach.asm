@@ -59,7 +59,7 @@ hmtmpdst_gl_m2:                                 ; hmtmpdst + 2*19h - 2: -5r shor
                                                 ; tmpdst words (roster 19h up), LoadTeamRoster indexes it
                                                 ; [team*100h + goalie*2]; used by LoadTeamRoster
         resb 8
-hmtmpbox:                                       ; hmtmstruct+tmpbox; clearteams stores FF, the empty
+hmtmpbox:                                       ; hmtmstruct+tmboxlist; clearteams stores FF, the empty
                                                 ; penalty-box list; used by clearteams
         resb 28
 hmtmcoach_d2:                                   ; hmtmstruct+D2h: coach AI byte (default 3, raised to 4 by

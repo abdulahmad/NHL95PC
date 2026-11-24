@@ -626,7 +626,7 @@ assnearest:
         mov byte [byte ebx+027h], dh
         test dh, dh
         jge near .33
-        mov al, byte [byte ebx+059h]
+        mov al, byte [byte ebx+aioff]
         mov byte [byte ebx+027h], al
         mov eax, dword [byte esp+04h]
         mov dword [byte eax+03Ah], 0
@@ -838,15 +838,15 @@ assnearest:
         cmp ax, word [byte esp+08h]
         je near .33
         xor eax, eax
-        mov al, byte [byte ebx+062h]
+        mov al, byte [byte ebx+aggress]
         mov edx, 32h
         sub edx, eax
         xor eax, eax
-        mov al, byte [byte ebx+064h]
+        mov al, byte [byte ebx+checking]
         sub edx, eax
         mov eax, edx
         xor edx, edx
-        mov dl, byte [byte ebx+05Ah]
+        mov dl, byte [byte ebx+aidef]
         sub eax, edx
         mov edx, eax
         sar edx, 1Fh
@@ -901,7 +901,7 @@ assnearest:
         cmp word [regd1], byte 0
         jge short .31
         xor eax, eax
-        mov al, byte [byte ebx+064h]
+        mov al, byte [byte ebx+checking]
         mov edx, 14h
         sub edx, eax
         mov eax, edx
@@ -912,7 +912,7 @@ assnearest:
         jmp short .32
 .31:
         xor eax, eax
-        mov al, byte [byte ebx+064h]
+        mov al, byte [byte ebx+checking]
         mov edx, 14h
         sub edx, eax
         mov eax, edx
@@ -1284,7 +1284,7 @@ assfaceoffpl:
         jne near .x
         test byte [gmode2], 1
         jne short .1
-        mov word [byte ebx+03Eh], 14h
+        mov word [byte ebx+nopuck], 14h
         mov eax, ebx
         call assexit
         pop edx
@@ -1306,7 +1306,7 @@ assfaceoffpl:
 .2:
         mov eax, 16Ch
 .3:
-        mov word [byte ebx+012h], ax
+        mov word [byte ebx+frame], ax
         xor edx, edx
         mov eax, ebx
         call SetSPA
@@ -1325,7 +1325,7 @@ assfaceoffpl:
         je short .6
         add edx, byte 4
 .6:
-        mov cx, word [byte ebx+012h]
+        mov cx, word [byte ebx+frame]
         cmp cx, 169h
         je short .7
         cmp cx, 16Eh
@@ -1353,7 +1353,7 @@ assfaceoffpl:
 .11:
         mov word [regd0], 1
 .12:
-        cmp byte [byte ebx+065h], 0
+        cmp byte [byte ebx+handed], 0
         jne short .13
         add word [regd0], byte 3
 .13:

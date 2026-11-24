@@ -18,7 +18,7 @@ global doortemp1, refYpos2, refXvel, refYvel, refframe
 global refposition, reftemp1, reftemp3, reftemp4, reftemp5, milestonesaid_b2, lcrequest
 global lcreqchoice, fofdata2, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata
 global fofdata_w2, LastShooterTeam, regd2, regd3, regd5, regd0, regd1
-awtmpbox:                                       ; awtmstruct+tmpbox; used by clearteams
+awtmpbox:                                       ; awtmstruct+tmboxlist; used by clearteams
         resb 28
 awtmcoach_d2:                                   ; awtmstruct+D2h; used by Goal, InitCoachModes, SetCoachMode
                                                 ; ...

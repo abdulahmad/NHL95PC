@@ -1439,7 +1439,7 @@ PassCompleted:
         test byte [gmode], 10h
         jne short .1
         mov eax, dword [byte eax+06Ch]
-        inc word [byte eax+028h]
+        inc word [byte eax+tmpasscomp]
 .1:
         mov word [passplayer], 0FFFFh
         pop edx
@@ -1510,12 +1510,12 @@ assonetimer:
         xor ecx, ecx
         mov dword [onetimerflag], ecx
 .8:
-        mov word [byte ebx+03Eh], 5
+        mov word [byte ebx+nopuck], 5
         mov ax, word [byte ebx+facedir]
         xor ah, ah
         and al, 7
         mov word [regd0], ax
-        test byte [byte ebx+055h], 8
+        test byte [byte ebx+attribute], 8
         je short .9
         mov eax, 8
         sub ax, word [regd0]
@@ -1529,7 +1529,7 @@ assonetimer:
         mov word [regd1], dx
         movsx ax, byte [nosplit eax*2+assonetimer_blade]
         mov word [regd0], ax
-        test byte [byte ebx+055h], 8
+        test byte [byte ebx+attribute], 8
         je short .10
         mov ecx, eax
         neg ecx
@@ -1583,7 +1583,7 @@ assonetimer:
         mov word [passdir], 8
 .15:
         xor edx, edx
-        mov dl, byte [byte ebx+05Bh]
+        mov dl, byte [byte ebx+shotspd]
         mov eax, edx
         sar edx, 1Fh
         LD sub, eax, edx
@@ -1595,7 +1595,7 @@ assonetimer:
         mov byte [byte ebx+046h], 0
         mov eax, ebx
         call updateanim
-        mov eax, dword [byte ebx+06Ch]
+        mov eax, dword [byte ebx+tmptr]
         inc word [byte eax+018h]
         add word [Crowdlevel], byte 64h
         mov eax, ebx
@@ -1630,7 +1630,7 @@ assonetimer:
         cmp eax, byte 0FFFFFFBAh
         jg near CanBlockShot_ret5
 .18:
-        mov eax, dword [byte ebx+06Ch]
+        mov eax, dword [byte ebx+tmptr]
         inc word [byte eax+016h]
         movsx ax, byte [byte ebx+027h]
         add eax, 0Ah

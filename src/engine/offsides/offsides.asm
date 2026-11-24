@@ -172,7 +172,7 @@ a2touchpuck:
 .1:
         mov eax, dword [byte ebx+06Ch]
         movsx dx, byte [byte ebx+047h]
-        cmp dx, word [byte eax+030h]
+        cmp dx, word [byte eax+tmpsplayer]
         je short .4
         mov dl, byte [byte eax+tmflags]
         test dl, 8

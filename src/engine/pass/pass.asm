@@ -174,7 +174,7 @@ SkillForAnim:
         push dword 8
         call __CHK
         push edx
-        mov dx, word [byte eax+038h]
+        mov dx, word [byte eax+SPA]
         cmp dx, SPAgstickr
         jb short .2
         jbe near .11
@@ -200,33 +200,33 @@ SkillForAnim:
         je short .7
         jmp short .12
 .4:
-        cmp byte [byte eax+065h], 0
+        cmp byte [byte eax+handed], 0
         jne short .6
 .5:
-        mov al, byte [byte eax+05Dh]
+        mov al, byte [byte eax+passacc]
         jmp short .13
 .6:
-        mov al, byte [byte eax+062h]
+        mov al, byte [byte eax+aggress]
         jmp short .13
 .7:
-        cmp byte [byte eax+065h], 0
+        cmp byte [byte eax+handed], 0
         jne short SkillForAnim.5
         jmp short SkillForAnim.6
 .8:
-        cmp byte [byte eax+065h], 0
+        cmp byte [byte eax+handed], 0
         jne short .10
 .9:
-        mov al, byte [byte eax+061h]
+        mov al, byte [byte eax+endurance]
         jmp short .13
 .10:
-        mov al, byte [byte eax+05Fh]
+        mov al, byte [byte eax+spodds]
         jmp short .13
 .11:
-        cmp byte [byte eax+065h], 0
+        cmp byte [byte eax+handed], 0
         jne short SkillForAnim.9
         jmp short SkillForAnim.10
 .12:
-        mov al, byte [byte eax+05Bh]
+        mov al, byte [byte eax+shotspd]
 .13:
         and eax, 0FFh
         pop edx
@@ -500,7 +500,7 @@ checkpuckcoll_ccx:
         sar eax, 10h
         imul eax, eax
         mov dword [regd1], eax
-        cmp word [byte ecx+03Eh], byte 0
+        cmp word [byte ecx+nopuck], byte 0
         jle short .20
         mov ebp, eax
         sar ebp, 2
@@ -518,7 +518,7 @@ checkpuckcoll_ccx:
         cmp word [byte ebx+position], byte 0
         jne near .33
         mov ax, word [byte ebx+Xpos+2]
-        mov dx, word [byte ecx+02h]
+        mov dx, word [byte ecx+Xpos+2]
         sub eax, edx
         mov word [regd0], ax
         test ax, ax
@@ -534,14 +534,14 @@ checkpuckcoll_ccx:
         jl short checkpuckcoll_ccx.21
         cmp dx, byte 10h
         je short checkpuckcoll_ccx.21
-        cmp word [byte ecx+0Ah], byte 5
+        cmp word [byte ecx+Zpos+2], byte 5
         jg short checkpuckcoll_ccx.21
-        cmp word [byte ecx+010h], 200h
+        cmp word [byte ecx+Zvel], 200h
         jg short checkpuckcoll_ccx.21
         mov eax, ebx
         call GetHot
         mov ax, word [byte ebx+Xpos+2]
-        sub ax, word [byte ecx+02h]
+        sub ax, word [byte ecx+Xpos+2]
         mov dx, word [regd0]
         add edx, eax
         mov word [regd0], dx
@@ -558,7 +558,7 @@ checkpuckcoll_ccx:
         cmp eax, byte 0Eh
         jg near checkpuckcoll_ccx.21
         mov ax, word [byte ebx+Ypos+2]
-        sub ax, word [byte ecx+06h]
+        sub ax, word [byte ecx+Ypos+2]
         mov dx, word [regd1]
         add edx, eax
         mov word [regd1], dx
@@ -583,7 +583,7 @@ checkpuckcoll_ccx:
         add edx, eax
         mov dword [regd0], edx
         mov dword [regd1], 0C4h
-        cmp word [byte ecx+03Eh], byte 0
+        cmp word [byte ecx+nopuck], byte 0
         jle short .27
         sar word [regd1], 2
 .27:
@@ -609,7 +609,7 @@ checkpuckcoll_ccx:
         cmp eax, byte 0Ah
         jg near PassLaneChk_ret5
         mov ax, word [byte ebx+Ypos+2]
-        mov di, word [byte ecx+06h]
+        mov di, word [byte ecx+Ypos+2]
         sub eax, edi
         mov word [regd1], ax
         test ax, ax
@@ -667,7 +667,7 @@ checkpuckcoll_ccx:
         sar edi, 10h
 .35:
         mov ax, word [byte ebx+Xpos+2]
-        sub ax, word [byte ecx+02h]
+        sub ax, word [byte ecx+Xpos+2]
         mov si, word [regd0]
         add esi, eax
         mov word [regd0], si
@@ -685,7 +685,7 @@ checkpuckcoll_ccx:
         cmp eax, esi
         jg short .40
         mov ax, word [byte ebx+Ypos+2]
-        sub ax, word [byte ecx+06h]
+        sub ax, word [byte ecx+Ypos+2]
         mov si, word [regd1]
         add esi, eax
         mov word [regd1], si
@@ -722,7 +722,7 @@ checkpuckcoll_ccx:
         mov esi, 100h
 .41:
         mov ax, word [byte ebx+Xpos+2]
-        mov dx, word [byte ecx+02h]
+        mov dx, word [byte ecx+Xpos+2]
         sub eax, edx
         mov word [regd0], ax
         test ax, ax
@@ -739,7 +739,7 @@ checkpuckcoll_ccx:
         cmp eax, edx
         jg near PassLaneChk_ret5
         mov ax, word [byte ebx+Ypos+2]
-        mov dx, word [byte ecx+06h]
+        mov dx, word [byte ecx+Ypos+2]
         sub eax, edx
         mov word [regd1], ax
         test ax, ax
@@ -1293,21 +1293,21 @@ ScatterPass:
         push esi
         mov ebx, eax
         mov eax, edx
-        mov word [byte ebx+03Eh], 28h
+        mov word [byte ebx+nopuck], 28h
         test byte [gmode], 10h
         jne short .1
-        mov edx, dword [byte ebx+06Ch]
-        inc word [byte edx+026h]
+        mov edx, dword [byte ebx+tmptr]
+        inc word [byte edx+tmpasses]
 .1:
         mov dx, word [byte eax+06Ah]
         mov word [passplayer], dx
-        mov byte [byte ebx+053h], 0
+        mov byte [byte ebx+passlane], 0
         mov edx, 13h
         call assinsert
         mov eax, dword [puckvz]
         mov word [eax], 0
         xor eax, eax
-        mov al, byte [byte ebx+05Dh]
+        mov al, byte [byte ebx+passacc]
         mov edx, 12h
         sub edx, eax
         imul eax, edx, byte 14h
@@ -1316,7 +1316,7 @@ ScatterPass:
         mov edx, dword [puckvx]
         mov word [edx], ax
         xor eax, eax
-        mov al, byte [byte ebx+05Dh]
+        mov al, byte [byte ebx+passacc]
         mov edx, 12h
         sub edx, eax
         imul eax, edx, byte 14h
@@ -1351,12 +1351,12 @@ dopass:
         and byte [sflags], 0FBh
         mov eax, dword [puckc]
         mov byte [eax], 0FFh
-        mov word [byte ecx+03Eh], 10h
+        mov word [byte ecx+nopuck], 10h
         mov ax, word [byte ecx+SCnum]
         mov word [lastplayer], ax
         test byte [byte ecx+pflags], 8
         jne short .2
-        cmp byte [byte ecx+053h], 0
+        cmp byte [byte ecx+passlane], 0
         je short .2
         mov eax, dword [byte ecx+046h]
         sar eax, 10h
@@ -1374,7 +1374,7 @@ dopass:
         jmp short .4
 .3:
         xor eax, eax
-        mov al, byte [byte ecx+05Dh]
+        mov al, byte [byte ecx+passacc]
         mov word [byte esp+08h], ax
 .4:
         mov eax, dword [byte esp+08h]
@@ -1664,7 +1664,7 @@ passtoa0:
         test byte [gmode], 10h
         jne short .1
         mov eax, dword [byte esi+06Ch]
-        inc word [byte eax+026h]
+        inc word [byte eax+tmpasses]
 .1:
         mov ax, word [byte esi+SCnum]
         mov word [passplayer], ax

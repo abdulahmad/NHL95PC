@@ -307,12 +307,12 @@ FallDown:
         mov eax, 7Dh
         jmp near .55
 .4:
-        cmp byte [byte ebx+060h], 0Ch
+        cmp byte [byte ebx+stickhand], 0Ch
         jb short .5
         mov eax, 10h
         call randomd0
         cwde
-        mov edx, dword [byte ebx+016h]
+        mov edx, dword [byte ebx+impact-2]
         sar edx, 10h
         add eax, byte 10h
         cmp eax, edx
@@ -323,7 +323,7 @@ FallDown:
 .5:
         cmp word [byte ecx+position], byte 0
         je short .6
-        mov eax, dword [byte ecx+06Ch]
+        mov eax, dword [byte ecx+tmptr]
         mov dh, byte [gmode]
         test dh, 10h
         jne short .6
@@ -331,7 +331,7 @@ FallDown:
         jne short .6
         inc word [byte eax+024h]
 .6:
-        mov word [byte ebx+03Eh], 78h
+        mov word [byte ebx+nopuck], 78h
         mov ax, word [byte ecx+Ypos+2]
         sub ax, word [byte ebx+Ypos+2]
         movsx edx, ax
@@ -404,7 +404,7 @@ FallDown:
         cmp di, byte 5
         jl near .27
         mov word [byte ebx+Xvel], 0
-        test byte [byte ebx+055h], 8
+        test byte [byte ebx+attribute], 8
         je short .18
         mov esi, SPAboardleft
         mov eax, dword [byte ebx+facedir-2]
@@ -454,7 +454,7 @@ FallDown:
         cmp dx, byte 75h
         jge short .23
 .21:
-        test byte [byte ebx+055h], 8
+        test byte [byte ebx+attribute], 8
         je short .22
         mov esi, SPAbenchcheckr
         mov eax, dword [byte ebx+facedir-2]
@@ -472,7 +472,7 @@ FallDown:
         mov ax, word [nosplit eax*2+FallDown_pinxl2]
         jmp near FallDown.17
 .23:
-        test byte [byte ebx+055h], 8
+        test byte [byte ebx+attribute], 8
         je short .24
         mov esi, SPAboardright
         mov eax, dword [byte ebx+facedir-2]
@@ -547,7 +547,7 @@ FallDown:
         jne near .33
 .29:
         mov esi, SPAfallback
-        mov di, word [byte ecx+012h]
+        mov di, word [byte ecx+frame]
         cmp di, 44Fh
         jg near .38
         cmp di, 467h
@@ -608,7 +608,7 @@ FallDown:
 .33:
         test byte [byte ebx+036h], 3
         jne short .34
-        cmp byte [byte ecx+064h], 0Ah
+        cmp byte [byte ecx+checking], 0Ah
         jb short .34
         cmp word [byte ecx+SCnum], byte 0Bh
         jg short .34
@@ -635,7 +635,7 @@ FallDown:
         jl short .38
         cmp si, SPAboardleft
         jg short .38
-        cmp word [byte ebx+018h], byte 23h
+        cmp word [byte ebx+impact], byte 23h
         jle short .36
         mov eax, 18h
         jmp short .37
@@ -714,7 +714,7 @@ FallDown:
 .46:
         cwde
         call randomd0
-        cmp ax, word [byte ebx+018h]
+        cmp ax, word [byte ebx+impact]
         jg near .54
         test byte [gmode], 1
         jne near .54

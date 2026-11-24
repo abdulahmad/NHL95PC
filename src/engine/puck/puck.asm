@@ -149,7 +149,7 @@ pucknorm_body:
         cmp ax, word [byte ebx+OldXpos+2]
         jne short pucknorm_body.3
         mov ax, word [byte ebx+Ypos+2]
-        cmp ax, word [byte ebx+07Ah]
+        cmp ax, word [byte ebx+OldYpos+2]
         jne short pucknorm_body.3
         mov edx, dword [puckx]
         mov cx, word [edx]
@@ -189,19 +189,19 @@ pucknorm_body:
         mov eax, ebx
         call AddPenalty2
 .14:
-        cmp word [byte ebx+010h], byte 0
+        cmp word [byte ebx+Zvel], byte 0
         jge short .15
-        mov eax, dword [byte ebx+0Eh]
+        mov eax, dword [byte ebx+Zvel-2]
         sar eax, 10h
         neg eax
         jmp short .16
 .15:
-        mov eax, dword [byte ebx+0Eh]
+        mov eax, dword [byte ebx+Zvel-2]
         sar eax, 10h
 .16:
         cmp eax, 100h
         jge short .17
-        cmp word [byte ebx+0Ah], byte 0
+        cmp word [byte ebx+Zpos+2], byte 0
         jne short .17
         mov eax, ebx
         call puckunflip

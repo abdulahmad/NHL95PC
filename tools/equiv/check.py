@@ -765,7 +765,7 @@ def plant_leftover(func, img, buf, patches, seed=0):
         if hm:
             overlay_patch(patches, hm + 0x36, struct.pack('<h', 6))  # tmap
             overlay_patch(patches, hm + 0x7E, b'\x02\x00' * 28)     # tmpdst
-            overlay_patch(patches, hm + 0xB6, bytes([0, 0xFF]) + bytes(34))  # tmpbox
+            overlay_patch(patches, hm + 0xB6, bytes([0, 0xFF]) + bytes(34))  # tmboxlist
         aw = img.labels().get('awtmstruct')
         if aw:
             overlay_patch(patches, aw + 0x36, struct.pack('<h', 4))

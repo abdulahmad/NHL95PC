@@ -104,8 +104,8 @@ void InProgress(void)
         }
         pl = &SortCords[PenBuf_pl[i * 2]];
         tm = pl->tmptr;
-        tm->tmpen++;
-        tm->tmpenmin += mins;
+        tm->tmPenalties++;
+        tm->tmPenmin += mins;
         pnum = pl->pnum;
         if (pnum < 0x19) tm->tmplstats[pnum * 8 + 2] += mins;
         PanelAddPenalty((pl->pflags & 0x40) != 0, pl->rostnum, mins);
@@ -128,9 +128,9 @@ void InProgress(void)
         tm->tmpdst[pnum] = mins;
         tm->tmroster[pnum * 0x27] = 5;
         for (i = 0; i < 0x1C; i++)
-            if (tm->tmpbox[i] < 0) break;
-        tm->tmpbox[i] = pnum;
-        tm->tmpbox[i + 1] = -1;
+            if (tm->tmboxlist[i] < 0) break;
+        tm->tmboxlist[i] = pnum;
+        tm->tmboxlist[i + 1] = -1;
         assreplace(pl, 0xC);
         penaltysc = pl->SCnum;
         break;
@@ -183,7 +183,7 @@ void chkprogress(void)
 
 
 /* updatepentime_ut (63A37, PC only; ends in InProgress_popx): once a second, count down the penalties of team
-   tm's players in the box (tmpbox, ended by a negative byte): only the first two (regd1 from 2) serve time; a
+   tm's players in the box (tmboxlist, ended by a negative byte): only the first two (regd1 from 2) serve time; a
    player whose minutes (tmpdst, low 14 bits) run out is back on the bench (roster status 7, tmpdst bit 14
    cleared) and the box list shifts down over him. Then the first one or two of them (by how many served) may be
    released onto the ice (updatepentime_ut_chk). tm: the team. No result. */
@@ -198,7 +198,7 @@ void updatepentime_ut(Team *tm)
     regd1.l = 2;
     regd3.l = 2;
     for (n = 0, i = 0; i < 0x1C; i++) {
-        k = tm->tmpbox[i];
+        k = tm->tmboxlist[i];
         if (k < 0) break;
         if (--regd1.w < 0) continue;
         out[n++] = k;
@@ -207,7 +207,7 @@ void updatepentime_ut(Team *tm)
         tm->tmroster[k * 0x27] = 7;
         ((unsigned char *)&tm->tmpdst[k])[1] &= 0xBF;
         for (regd2.w = 1;; regd2.w++) {
-            if ((((signed char *)tm)[0xB5 + regd2.w + i] = tm->tmpbox[regd2.w + i]) < 0) break;
+            if ((((signed char *)tm)[0xB5 + regd2.w + i] = tm->tmboxlist[regd2.w + i]) < 0) break;
         }
         i--;
     }
@@ -293,7 +293,7 @@ int ShotLaneOpen(void)
    cleared for the skaters). With nothing left the "penalty" banner (6) goes. When the scoring team had the
    advantage (tmap above the other's), the first player in the other team's box serving a minor (tmpdst bit 14
    clear) comes out: tmpdst 0, roster status 7, released (releasepl), off the panel (PanelRemovePenalty), the box
-   list shifted down; the scoring team counts a power-play goal (tmppg) and both teams' flags bit 0 are set.
+   list shifted down; the scoring team counts a power-play goal (tmPwrGoals) and both teams' flags bit 0 are set.
    side: 0 home, 1 away. No result. */
 void PenGoalStuff(short side)
 {
@@ -326,7 +326,7 @@ void PenGoalStuff(short side)
     if (!PenBuf[0] && bannermsg == 6) bannermsg = -1;
     if (st->tmap <= ot->tmap) return;
     for (i = 0; i < 0x1C; i++) {
-        n = ot->tmpbox[i];
+        n = ot->tmboxlist[i];
         if (n < 0) return;
         if (!(((unsigned char *)&ot->tmpdst[n])[1] & 0x40)) break;
     }
@@ -335,9 +335,9 @@ void PenGoalStuff(short side)
     releasepl(ot, n);
     PanelRemovePenalty(side == 0, ot->tmroster[n * 0x27 + 5]);
     for (n = 1;; n++) {
-        if ((((signed char *)ot)[0xB5 + n + i] = ot->tmpbox[n + i]) < 0) break;
+        if ((((signed char *)ot)[0xB5 + n + i] = ot->tmboxlist[n + i]) < 0) break;
     }
-    st->tmppg++;
+    st->tmPwrGoals++;
     hmtmflags[0] |= 1;
     awtmflags |= 1;
 }
