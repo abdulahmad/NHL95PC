@@ -291,29 +291,32 @@ Open: speeds are compared per game step, not per real second (frame rates and d7
 
 The `.IFF` tunes weren't compared note for note with the `.KMS` tunes.
 
-## What the 95 PC manual says
+## What the 95 PC manual says, against the code
 
 The public scan of the 95 PC manual (archive.org item ea-nhl94-nhl95-nhl96-nhl97-ibm-pc-dos-win-scans), cited by printed
-page where its contents page gives one:
+page where its contents page gives one. Each line says whether the code confirms it.
 
-- **Players:** Head to Head Competition and Two Player Cooperative, two humans on the same team (p.5).
-- **The AI the manual describes:** "The center fills the middle lane, the wings stay to their respective sides, and the
-  defensemen hang back" (Controlling Your Team, p.6-7). That is the baseline the 96 PC cover-D and penalty-kill code
-  changes.
-- **Fake shot:** hold BUTTON 2, then press BUTTON 1 (Controlling Your Team).
-- **Shot block:** "press BUTTONS 1&2 simultaneously when the active defender is in front of the shooter. If the shooter
-  does not actually shoot the puck, the defender performs a hook or a hold" (Controlling Your Team). The keyboard page
-  gives ALT + SPACEBAR while the shooter is in his windup.
-- **Penalty shot:** a player on a breakaway brought down from behind gets a penalty shot; "No penalty box time is
-  assessed against the offending team" (Penalty Shots, p.12).
-- **Lines:** the Line Editor (p.12-13) offers four forward lines, three defence pairs, two penalty-killing and two
-  power-play lines. A roster must hold four forward lines, three defensive lines, two power play lines, two penalty
-  killing lines, two extra attackers and two goalies (Central Registry, p.21).
+- **Players:** Head to Head and Two Player Cooperative, two humans on the same team (p.5). Code: `StartPer`
+  (src/engine/hockey/findpc.c) gives pad 2 a player on pad 1's team.
+- **The AI:** "The center fills the middle lane, the wings stay to their respective sides, and the defensemen hang
+  back" (p.6-7). The role routines are `asscentero`, `asswingo` and the defence ones (src/engine/logic/logic.asm); the lanes as
+  described: not confirmed in code.
+- **Fake shot:** hold BUTTON 2, then press BUTTON 1. Code: `ShotMode` (src/engine/collide/ShotMode.c) cancels the shot
+  on a new BUTTON 1 press before wind-up frame 10 (see the table above).
+- **Shot block:** BUTTONS 1 and 2 with the defender in front of the shooter; with no shot it becomes a hook or hold.
+  Code: `Holdplayer` (src/engine/input/Holdplayer.c) holds an opponent in reach, else dives (`CanBlockShot`,
+  `BlockShotDive`), else checks. The ALT + SPACEBAR key: not confirmed in code.
+- **Penalty shot:** a breakaway player brought down from behind; no box time (p.12). Code: `QuickShotChk` makes the
+  penalty type 1Ah "Penalty Shot" instead of the foul (see the table above). "From behind": not confirmed in code.
+- **Lines:** four forward lines, three defence pairs, two PK and two PP lines (p.12-13); a roster also holds two extra
+  attackers and two goalies (p.21). Code: `lcselect` (src/engine/input/lcselect.c) picks lines 0-3, or 0-1 mapped to
+  the PK (+4) and PP (+6) lines. The defence pairs and extra attackers: not confirmed in code.
 - **Credits:** Lead Programmer Lance Wall; Programmers Victoria Wong, Robert Penner, Kurt Kennett; Producer & Design
-  Ken Sayler; Composer Michael J. Sokyrka. The same core programmers are credited on 96 PC.
-- **Drop pass:** "A pass to a trailing teammate is executed as a 'drop' pass" (Controlling Your Team, p.6-7). That
-  is the contextual `PassLaneChk` / `ScatterPass` drop described above, not a separate button.
-- The manual has no shootout, practice mode, fighting, skill level or manual goalie.
+  Ken Sayler; Composer Michael J. Sokyrka. The same core programmers are credited in the 96 PC manual.
+- **Drop pass:** "A pass to a trailing teammate is executed as a 'drop' pass" (p.6-7). Code: the contextual
+  `PassLaneChk` / `ScatterPass` drop described above, not a separate button.
+- The manual has no shootout, practice mode, fighting, skill level or manual goalie; the code has none either (see the
+  tables above).
 
 ## What this means
 
