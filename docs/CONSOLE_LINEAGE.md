@@ -90,7 +90,7 @@ Confidence levels:
 
 Units are as on the 94 PC page. Both PC games run 24 game steps per game second, one `DoGameFrame` per step
 (`ClockTick` 5DC10 counts 0x18 steps per clock second; `RunGameFrames` 1149A). The consoles multiply by a frame-step factor `d7`;
-the PC games don't. (`docs/SKATING_AND_RINK.md` says 95 PC uses a "fixed 60 Hz step"; the clock code shows 24 steps per game second.)
+the PC games don't.
 
 The 93 / 94 console and 94 PC values come from the 94 PC page. The 95G values come from the 95G disassembly
 (`skate95.asm`, `puckphys95.asm`) and were only compared where listed. 95S physics weren't traced.

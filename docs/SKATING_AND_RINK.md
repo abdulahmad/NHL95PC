@@ -27,9 +27,9 @@ object (cseg01, base `0x10000`), the same ones used in `EXE_SEGMAP95PC.md` and `
 | Stop deceleration | `200 + agility` | `150` |
 | Velocity cap | ±16000 | none |
 | Fatigue | 40 | 33 |
-| Timing | fixed 60 Hz step | variable step: 16 × vblanks elapsed per loop (`d7`) |
+| Timing | fixed step, no frame multiplier; 24 game steps per game-clock second, same as 94 PC (`ClockTick` `5DC10` reloads `clockticks` with `0x18` per second; `RunGameFrames` `1149A` runs one `ClockTick` per `DoGameFrame`) | variable step: 16 × vblanks elapsed per loop (`d7`) |
 
-PC top speeds are lower and in a narrower band than 93G. On PC, acceleration is scaled by an extra `(agility + 48) / 64` factor and stopping scales with agility. Genesis has no speed cap, and it scales each step by the number of vblanks that passed. PC always steps at 60 Hz.
+PC top speeds are lower and in a narrower band than 93G. On PC, acceleration is scaled by an extra `(agility + 48) / 64` factor and stopping scales with agility. Genesis has no speed cap, and it scales each step by the number of vblanks that passed. PC uses the same step every frame and runs 24 game steps per game-clock second, as 94 PC does.
 
 ## Rink geometry
 
