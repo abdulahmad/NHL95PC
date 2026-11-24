@@ -150,11 +150,9 @@ typedef struct Team {
     short tmline;                /* 02Ah; getlchoice adds tmline*4 to the choice index; lcfound/lcselect store the new line, then setpersonel */
     short tmlcnt;                /* 02Ch none; lcfound/lcselect: when the new line is < 4 it is incremented and wrapped at 3 (even-strength line rotation count) */
     short tmextra;               /* 02Eh none; SetPlList: pnum of the extra attacker (position 6) it lists, -1 with the goalie in */
-    short tmpsplayer;            /* 030h puckglue ends a live penalty shot when the player with this roster index (pnum) takes the puck */
-    unsigned char pad_32[0x1];
-    signed char tmast1;          /* 033h (assist 1, st): puckglue sets it to -1 in the other team's structure */
-    unsigned char pad_34[0x1];
-    signed char tmast2;          /* 035h (assist 2, st): puckglue sets it to -1 in the other team's structure */
+    short tmtouch1;              /* 030h (93G name) last touch, the scorer: puckglue ends a live penalty shot when the shooter takes the puck again */
+    short tmtouch2;              /* 032h (93G name) second last touch (first assist); -1 in its high byte clears it */
+    short tmtouch3;              /* 034h (93G name) third last touch (second assist); -1 in its high byte clears it */
     short tmap;                  /* 036h; getlchoice/lcselect: other tmap - own tmap selects the even short-handed power-play choices */
     short tmgoalie;              /* 038h (goalie 1/2/none): releasepl picks the priolist_m1 row by its sign */
     unsigned char pad_3A[0xA];
@@ -188,9 +186,9 @@ typedef struct Team {
 #define OFS_Team_tmline 0x2A
 #define OFS_Team_tmlcnt 0x2C
 #define OFS_Team_tmextra 0x2E
-#define OFS_Team_tmpsplayer 0x30
-#define OFS_Team_tmast1 0x33
-#define OFS_Team_tmast2 0x35
+#define OFS_Team_tmtouch1 0x30
+#define OFS_Team_tmtouch2 0x32
+#define OFS_Team_tmtouch3 0x34
 #define OFS_Team_tmap 0x36
 #define OFS_Team_tmgoalie 0x38
 #define OFS_Team_tmflags 0x44

@@ -5716,7 +5716,7 @@ mov word [lasttouch], ax	; 4DE51
 .1:
 mov eax, dword [byte ebx+06Ch]	; 4DE57
 movsx dx, byte [byte ebx+047h]	; 4DE5A
-cmp dx, word [byte eax+tmpsplayer]	; 4DE5F
+cmp dx, word [byte eax+tmtouch1]	; 4DE5F
 je short .4	; 4DE63
 mov dl, byte [byte eax+tmflags]	; 4DE65
 test dl, 8	; 4DE68

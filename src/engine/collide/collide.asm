@@ -5116,7 +5116,7 @@ mov ecx, dword [byte edx+optmptr]	; 56F84
 cmp dword [penshotlive], byte 0	; 56F87
 je short .1	; 56F8E
 movsx ax, byte [byte edx+pnum]	; 56F90
-cmp ax, word [byte ebx+tmpsplayer]	; 56F95
+cmp ax, word [byte ebx+tmtouch1]	; 56F95
 jne short .1	; 56F99
 call EndPenaltyShot	; 56F9B
 xor edi, edi	; 56FA0

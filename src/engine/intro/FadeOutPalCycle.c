@@ -288,7 +288,7 @@ int StartPreGame(int skip)
 
 /* PickThreeStars (48AC8, PC only; ends in PreGameIntro_popebp): pick the three stars. Clear the three star slots
    (startm / starpl) and the game winner (gwgteam / gwgplayer). In overtime (curperiod beyond 3) with a winner whose
-   team touched the puck last, the winning team's scorer (tmpsplayer) is the game-winning scorer, and when the goal
+   team touched the puck last, the winning team's scorer (tmtouch1) is the game-winning scorer, and when the goal
    clinched the cup he is the first star (AddStar). A goalie with a shutout (his opponents' score 0; the goalie of
    the three with the most of the first stats word) gets a star when he faced more shots than the period length's
    minimum (starskatermin). Then the skaters with stats (not position 0 or 2; a position 1 player only with one of the

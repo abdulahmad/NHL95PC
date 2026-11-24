@@ -1275,9 +1275,9 @@ cmp di, byte 4	; 521CB
 jne short .28	; 521CF
 mov eax, dword [byte ebx+tmptr]	; 521D1
 movsx dx, byte [byte ebx+pnum]	; 521D4
-mov word [byte eax+tmpsplayer], dx	; 521D9
-mov byte [byte eax+tmast1], 0FFh	; 521DD
-mov byte [byte eax+tmast2], 0FFh	; 521E1
+mov word [byte eax+tmtouch1], dx	; 521D9
+mov byte [byte eax+tmtouch2+1], 0FFh	; 521DD
+mov byte [byte eax+tmtouch3+1], 0FFh	; 521E1
 and byte [byte eax+tmflags], 0F7h	; 521E5
 mov word [regd0], 17h	; 521E9
 jmp short .29	; 521F2

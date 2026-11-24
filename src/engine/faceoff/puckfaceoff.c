@@ -304,9 +304,9 @@ void puckfaceoff2(Player *p)
                 if (regd1.w) {
                     if (regd1.w == 4) {
                         t = q->tmptr;
-                        t->tmpsplayer = q->pnum;
-                        t->tmast1 = -1;
-                        t->tmast2 = -1;
+                        t->tmtouch1 = q->pnum;
+                        ((signed char *)&t->tmtouch2)[1] = -1;
+                        ((signed char *)&t->tmtouch3)[1] = -1;
                         t->tmflags &= 0xF7;
                         regd0.w = 0x17;
                     } else {

@@ -1637,7 +1637,7 @@ mov ebx, dword [byte ebx+06Ch]	; 640B4
 mov word [byte ebx+034h], 0FFFFh	; 640B7
 mov ax, word [byte ebx+034h]	; 640BD
 mov word [byte ebx+032h], ax	; 640C1
-mov word [byte ebx+tmpsplayer], ax	; 640C5
+mov word [byte ebx+tmtouch1], ax	; 640C5
 mov edx, dword [puckc]	; 640C9
 add word [crowdlevel], byte 64h	; 640CF
 mov al, byte [penshotplayer]	; 640D7
