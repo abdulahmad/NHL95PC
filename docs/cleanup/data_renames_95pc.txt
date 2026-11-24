@@ -12,8 +12,8 @@ data/front/frontend_10.asm data/pc/database_dialogs_const.asm
 data/front/season95_11.asm data/front/playoff_mode_const.asm
 data/front/frontend_12.asm data/pc/file_locations_const.asm
 data/front/frontend_16.asm data/front/desk_main_main.asm
-data/front/season95_17.asm data/front/playoff_mode_data.asm
-data/front/frontend_18.asm data/front/scoreboard_stats_screens.asm
+data/front/season95_17.asm data/front/team_divisions.asm
+data/front/frontend_18.asm data/front/scoreboard_data.asm
 data/front/season95_19.asm data/front/league_teams_strings_1.asm
 data/front/frontend_20.asm data/front/floppy_export_strings_1.asm
 data/front/season95_21.asm data/front/season_playoffs_strings_1.asm
@@ -51,10 +51,10 @@ data/front/frontend_52.asm data/front/game_lines.asm
 data/front/season95_53.asm data/front/create_strings_2.asm
 data/front/frontend_54.asm data/front/league_db_strings_2.asm
 data/front/season95_55.asm data/front/create_data.asm
-data/front/frontend_56.asm data/front/lockerroom_announcer.asm
-data/front/season95_57.asm data/front/playoff_mode_strings.asm
-data/front/frontend_58.asm data/front/league_settings.asm
-data/front/season95_59.asm data/front/stats_screens_title.asm
+data/front/frontend_56.asm data/pc/database_dialogs_data.asm
+data/front/season95_57.asm data/front/playoff_mode_data.asm
+data/front/frontend_58.asm data/front/playoff_mode_data.asm
+data/front/season95_59.asm data/front/playoff_mode_data.asm
 data/front/frontend_72.asm data/front/main_replay_controls.asm
 data/front/frontend_74.asm data/front/team_db_lines.asm
 data/engine/engine_75.asm data/engine/game_saveload_intro.asm
