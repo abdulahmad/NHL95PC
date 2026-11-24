@@ -2577,7 +2577,7 @@ mov eax, dword [puckvy]	; 54FAC
 mov word [eax], dx	; 54FB1
 mov esi, dword [passdir-2]	; 54FB4
 sar esi, 10h	; 54FBA
-mov esi, dword [nosplit esi*4+clockticks]	; 54FBD
+mov esi, dword [nosplit esi*4+dirtab-2]	; 54FBD
 sar esi, 10h	; 54FC4
 imul esi, edi	; 54FC7
 shl esi, 0Ah	; 54FCA
