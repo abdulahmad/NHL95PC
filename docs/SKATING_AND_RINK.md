@@ -39,10 +39,15 @@ PC top speeds are lower and in a narrower band than 93G. On PC, acceleration is 
 | End boards | 264 | 298 |
 | Goal lines | 232 | 264 |
 | Blue lines | 78 | 88 |
-| Horizontal shot speed multiplier | x59 | x68 |
-| Passing | unchanged | |
+| Shot vector multiplier (x and y alike) | x59 (0x3B) | x68 ($44) |
+| Passing | as 93G: $78 to a teammate, `dirtab` 200 with no receiver | |
+| Playfield on screen | 320 x 168 (score bar below) | 256 x 224 |
 
 The PC rink is wider and shorter than 93G in game units. These are true world coordinates. There is
-no display scaling layer between the simulation and the screen.
+no display scaling layer between the simulation and the screen: one unit is one pixel on both axes on PC and on
+Genesis (`DrawFrameSprite`: x + 0xC0, 0x140 - y; Genesis `find3d`), and the physics treat x and y alike. The shot
+multiplier was cut by about the length ratio (59/68 = 0.868; 264/298 = 0.886), the same on both axes. Against the
+1992-93 rink (200 x 85 ft) that is 3.76 units per foot across and 2.64 along on PC, 3.20 and 2.98 on 93G. See
+`docs/CONSOLE_LINEAGE.md`, "Rink size, aspect ratio and per-axis scale".
 
 Credits: see README.

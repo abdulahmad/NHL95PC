@@ -119,6 +119,49 @@ The 93 / 94 console and 94 PC values come from the 94 PC page. The 95G values co
 
 94 PC formerly labelled these tables `AccelFactors` and `ShotSpeeds`; it now uses the same names as 95 PC, `MaxSpeed` and `shotsets` ([NHL94PC PR #83](https://github.com/abdulahmad/NHL94PC/pull/83)).
 
+## Rink size, aspect ratio and per-axis scale
+
+The 94 PC page has the full workings
+([Rink size, aspect ratio and per-axis scale](https://github.com/abdulahmad/NHL94PC/blob/main/docs/CONSOLE_LINEAGE.md#rink-size-aspect-ratio-and-per-axis-scale)).
+In short: on the Genesis and on both PC games one game unit is one pixel on both axes, and the physics treat x
+(across the rink) and y (along it) the same. Nothing scales by feet or by pixel aspect ratio per axis. The PC rink was
+redrawn wider and shorter in pixels, and the PC speeds were rescaled the same way on both axes. 95 PC keeps the 94 PC
+rink and the per-pixel rule, and undoes part of 94 PC's speed cut. Everything here is **Code** unless marked.
+
+- Drawing: `DrawFrameSprite` (`src/front/main/DrawFrameSprite.c`) puts a sprite at x + 0xC0, 0x140 - y, minus the
+  scroll; `DrawRinkOverlays` (5CE12) lifts the puck by z x 3 / 2, as the Genesis does.
+- Playfield: `ThreeStarsLoop` (48333) sets the zone screen to 0x140 x 0xA8, so it's 320 x 168 above a 32-line score
+  bar, with scroll y = 0x140 - 0x54 - camy, as in 94 PC.
+- Rink: `checkwallcoll` (582C9) 0xA0 / 0x108 / corner 0x40; blue line 0x4E and goal line 0xE8 (`CanBlockShot.c`,
+  `dopass.c`), all as in 94 PC.
+
+| | 93G / 94G | 95 PC | 95 PC / Gen |
+|---|---|---|---|
+| Side boards (x) | ±136 | ±160 | 1.176 |
+| End boards (y) | ±298 | ±264 | 0.886 |
+| Units per foot, x | 3.20 | 3.76 | 1.18 |
+| Units per foot, y | 2.98 | 2.64 | 0.89 |
+| One screen shows | 256 x 224 | 320 x 168 | |
+| Push (`dirtab`) | 200 | 200 | 1 |
+| Top speed | 5500-9625 | 5400-8400 | 0.98-0.87 |
+| Shot vector | $44 | 0x3B | 0.868 |
+| Pass, no receiver | from `dirtab` | from `dirtab` | 1 |
+| Pass to a teammate | $78 | $78 | 1 |
+
+Feet are from the 1992-93 NHL rink (200 x 85 ft; goal lines 11 ft from the boards, blue lines 60 ft out from them).
+The pass rows: `dopass` (54DF4) sets pass speed (passing x 4) + 0xA0 as on the Genesis. A pass with no receiver
+multiplies it by `dirtab`, which is now 200 (94 PC: 175, so 0.875). `passtoa0` (551CF) uses the $78 time factor.
+
+What it means: at top speed, skating end to end takes 0.90-1.02 times as many game steps as on the Genesis, and board
+to board 1.20-1.35 times (94 PC: 1.02-1.08 and 1.35-1.44). For the same speed a PC skater still covers 30% fewer feet
+across the ice than along it (2.64 / 3.76 units per foot); on the Genesis it's 7%. Stopping (200 + agility) and the
+velocity cap are new values, not a rescale. Shots keep 94 PC's 0x3B (0.868).
+
+For comparison, 95G has its own rink (152 / 312, corner 0x4C; 3.58 and 3.12 units per foot), still one unit per pixel
+(`find3d`, `middle95.asm`).
+
+Open: speeds are compared per game step, not per real second (frame rates and d7 weren't measured).
+
 ## Music
 
 | Item | 94 PC | 95 PC | Follows | Evidence | Confidence |
