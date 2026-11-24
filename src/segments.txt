@@ -266,7 +266,9 @@
 2 C88E2 C8C26 836 data_frontend_32 data/front/calendar.asm
 2 C8C26 C900C 998 data_season95_33 data/front/trade_deadline_messages.asm
 2 C900C C9078 108 data_frontend_34 data/front/simgame_data.asm
-2 C9078 CBED0 11864 data_engine_35 data/engine/faceoff_hockey.asm
+2 C9078 C921D 421 data_engine_35 data/engine/faceoff_hockey.asm
+2 C921D CBC36 10777 data_engine_C921D data/engine/frames.asm
+2 CBC36 CBED0 666 data_engine_CBC36 data/engine/game_state.asm
 2 CBED0 CC01D 333 data_frontend_36 data/front/main.asm
 2 CC01D CD304 4839 data_engine_37 data/engine/game_saveload.asm
 2 CD304 CD34C 72 data_frontend_38 data/front/summary.asm
