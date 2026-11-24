@@ -65,6 +65,12 @@ stickhand  equ 60h   ; size b; inc offset - 11h, the shift of the whole weight..
 aggress    equ 62h   ; size b; inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
 checking   equ 64h   ; size b; (no equate); inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record
 handed     equ 65h   ; size b; inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record; setplayer clears attribute bit 3 and sets it again from handed
+; goalie save ratings on the skater bytes (92G / 94G names, 95G collide's save list GGSleft, GGSright, GSSleft,
+; GSSright = aggress, passacc, spodds, endurance; setplayer reads a goalie's four save bytes into them in that order)
+GGSleft    equ aggress
+GGSright   equ passacc
+GSSleft    equ spodds
+GSSright   equ endurance
 
 ; ---- team structure (away DF714, 100h apart). No 'size' tag on purpose:
 ; these offsets collide with player fields. They carry a 'tsize' tag instead (b/w/d, 'w array' for per-player word
@@ -94,6 +100,8 @@ tmpasses   equ 26h   ; tsize w; passes: DumpStatsLog 'pass' column
 tmpasscomp equ 28h   ; tsize w; completed passes: DumpStatsLog 'passcomp' column
 tmplstats  equ 0E6h  ; tsize d; pointer to skater stats, 10h bytes per roster player 0-18h (words g, a, pen, +/-, ppg, shg, eng, sht): DumpStatsLog
 tmglstats  equ 0EAh  ; tsize d; pointer to goalie stats, 6 bytes per goalie (roster 19h-1Bh; words min, sht, sav): DumpStatsLog
+tmplattr   equ 0DEh  ; tsize d; hmtmplattr: pointer to the skater attribute records, 14h bytes each; setplayer reads a skater's ratings from it
+tmglattr   equ 0E2h  ; tsize d; hmtmglattr: pointer to the goalie attribute records, 10h bytes each from roster 19h; setplayer reads a goalie's from it
 tmfowon    equ 12h   ; tsize w; (faceoffs won): puckglue adds 1 when the player takes the puck off a faceoff (sflags3 bit 4)
 tmfowonoz  equ 14h   ; tsize w; puckglue adds 1 too when that faceoff was in the attacking end (puck y beyond 4Eh toward the team's net side by pflags bit 7)
 tmpsplayer equ 30h   ; tsize w; puckglue ends a live penalty shot when the player with this roster index (pnum) takes the puck
