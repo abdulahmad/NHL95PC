@@ -3914,7 +3914,7 @@
 ;  C90D8  penaltysc                                data/engine/faceoff_hockey.asm               10
 ;  C90DA  gsp                                      data/engine/faceoff_hockey.asm               21
 ;  C90DC  gameclock                                data/engine/faceoff_hockey.asm               21
-;  C90DE  clockticks                               data/engine/faceoff_hockey.asm               17
+;  C90DE  clockticks                               data/engine/faceoff_hockey.asm               16
 ;  C90E0  dirtab                                   data/engine/faceoff_hockey.asm               5
 ;  C90E2  dirtab_y                                 data/engine/faceoff_hockey.asm               4
 ;  C9100  seed                                     data/engine/faceoff_hockey.asm               5

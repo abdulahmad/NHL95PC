@@ -4,7 +4,7 @@ bits 32
 %include "spa.inc"
 section s_53F8C progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty2, assexit, assinsert, AvgCline, awtmap, awtmstruct, bannermsg
-extern bannertimer, c1playernum, c2playernum, changeplayer, clockticks, CompLine, CompShoot, dirtab
+extern bannertimer, c1playernum, c2playernum, changeplayer, CompLine, CompShoot, dirtab
 extern Findhittype, gameclock, gameopts, GetHot, GetHotOrStick, GetHotStick, gmode, gmode2
 extern hmtmap, hmtmstruct, lastplayer, lasttouch, onetimerflag, OOlist, OOlistpos, pad1dev
 extern passdir, passplayer, passspeed, penshotlive, penshotstart, puckbody, puckc, puckcross
@@ -1125,11 +1125,12 @@ chk4lc_shoot:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; PassLaneChk                                     54C09  95 PC, low confidence
-; Pass target check for passer eax / receiver edx: 0 when the passer is the
-; goalie, when ShotLaneOpen says no, or
+; Drop-pass check for passer eax / receiver edx: 1 makes dopass call
+; ScatterPass. 0 when the passer is the goalie, when ShotLaneOpen reports the
+; shooting lane open, or when the passer is not past the attacking blue line
 ;
-; when the receiver is on the wrong side of the blue line (4Eh by pfgoal);
-; then a vtoa lane test; used by chk4pass and dopass
+; (4Eh by pfgoal); then the trailing-receiver, gap and vtoa lane tests (see
+; PassLaneChk.c); used by chk4pass and dopass
 ;-----------------------------------------------------------------------------
 PassLaneChk:
         push dword 1Ch
@@ -1478,7 +1479,7 @@ dopass:
         mov word [eax], dx
         mov esi, dword [passdir-2]
         sar esi, 10h
-        mov esi, dword [nosplit esi*4+clockticks]
+        mov esi, dword [nosplit esi*4+dirtab-2]
         sar esi, 10h
         imul esi, edi
         shl esi, 0Ah

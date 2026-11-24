@@ -117,9 +117,8 @@ The pass path, all in `src/engine/pass/` (Code):
 | Receiver's heading | Within one 45° step of the direction to the passer |
 
 It also compares the signs of (passer y - 4Eh) and (receiver y + the high byte of his y velocity - 4Eh). Both ends use
-+4Eh, so this only rules anything out at the +y end. Whether that was meant wasn't checked (Inferred). The routine
-header in `PassLaneChk.c` says `ShotLaneOpen` must report the lane clear; the code exits when it returns 1, and
-`ShotLaneOpen` returns 1 for an open lane.
++4Eh, so this only rules anything out at the +y end. Whether that was meant wasn't checked (Inferred). The check
+exits when `ShotLaneOpen` returns 1, which it does for an open lane, so a drop pass needs the lane blocked.
 
 `ScatterPass` is the drop:
 
