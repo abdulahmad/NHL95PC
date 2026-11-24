@@ -1,0 +1,114 @@
+; BSS of front/playoff_mode (src/front/playoff_mode).
+bits 32
+%include "hockey.inc"
+section s_ED7BC nobits alloc noexec write align=1
+global poseriesbuf, fileoncd, portraitoncd
+poseriesbuf:                                    ; POAfterGame: buffer the series score is formatted into; used
+                                                ; by POAfterGame
+        resb 16
+fileoncd:                                       ; 549 per-file flags: 1 = load from CD (MakePath prefix
+                                                ; cddriveptr), 0 = installed locally (from ALLFILES.TXT); used
+                                                ; by AddHumanTeam, AwardsCeremony, CalGoalieStatsScreen ...
+        resb 1
+        resb 23
+        resb 2
+        resb 5
+        resb 2
+        resb 3
+        resb 3
+        resb 4
+        resb 42
+        resb 2
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 7
+        resb 1
+        resb 3
+        resb 1
+        resb 2
+        resb 6
+        resb 28
+        resb 1
+        resb 1
+        resb 2
+        resb 6
+        resb 10
+        resb 1
+        resb 70
+        resb 1
+        resb 1
+        resb 14
+        resb 3
+        resb 2
+        resb 4
+        resb 2
+        resb 2
+        resb 7
+        resb 28
+        resb 1
+        resb 2
+        resb 1
+        resb 1
+        resb 12
+        resb 2
+        resb 2
+        resb 1
+portraitoncd:                                   ; player cards: 1 when the portrait of the player is read from
+                                                ; the CD; used by GoalieStatsCard, SkaterStatsCard
+        resb 30
+        resb 4
+        resb 2
+        resb 1
+        resb 1
+        resb 3
+        resb 3
+        resb 1
+        resb 2
+        resb 1
+        resb 1
+        resb 5
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 24
+        resb 2
+        resb 25
+        resb 3
+        resb 19
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 18
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 2
+        resb 1
+        resb 50
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 2
+        resb 1
+        resb 1
+        resb 20

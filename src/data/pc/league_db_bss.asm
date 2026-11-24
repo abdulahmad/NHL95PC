@@ -1,10 +1,9 @@
-; The roster the line editor is showing, and the queue of mouse and key events.
+; BSS of pc/league_db (src/pc/league_db).
 bits 32
 %include "hockey.inc"
 section s_EA0DC nobits alloc noexec write align=1
-global ctlavailmask, rosterlist, rosterjersey, rosterslot
-global rosterstat, ptrupdatefn, inputqueue, lastinputdir, inputrepeat, inputev
-global RosterFont, fullscrbmp, rosterteamptr, tmpdbpath
+global ptrupdatefn, ctlavailmask, inputqueue, lastinputdir, inputrepeat, inputev, RosterFont, fullscrbmp
+global tmpdbpath, rosterteamptr, rosterlist, rosterjersey
 ptrupdatefn:                                    ; event -> pointer callback (EventToPointer); used by
                                                 ; CalendarScreen, ControlsDlgLoop, CreatePlayerLoop ...
         resb 24
@@ -48,10 +47,4 @@ rosterlist:                                     ; player lists of the two team p
         resb 1
 rosterjersey:                                   ; rosterlist entry +1 jersey; used by DbLineEditorLoop,
                                                 ; DrawLineJerseys, DrawRosterList ...
-        resb 1
-rosterslot:                                     ; rosterlist entry +2 roster slot; used by FindRosterSlot,
-                                                ; FixJerseyNumber, LineEdDone ...
-        resb 1
-rosterstat:                                     ; rosterlist entry +3: 2 scratched, 3 dressed; used by
-                                                ; CheckRosterComplete, DbLineEditorLoop, DrawLineJerseys ...
         resb 1
