@@ -9,6 +9,7 @@
 #include "sides.h"
 #include <SDL.h>
 #include <overbar/plat.h>
+#include <overbar/screen.h>
 #include "mdrt/menu.h"
 
 #define QSIZE 256
@@ -315,7 +316,7 @@ static void cursor_update(void)
     video_confine_mouse(active && (fs || play_mouse));
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
-    if (overbar_client_open()) hide = 0;
+    if (overbar_client_open() || ob_screen_up()) hide = 0;
     else {
         hide = over && (video_pointer_mode() == 0 ? drawn : video_pointer_mode() == 2);
         if (video_pointer_mode() == 0 && active && fs && curperiod != -1) hide = 1;    /* automatic: always hidden during a game in fullscreen */
@@ -346,6 +347,7 @@ static void overlay_mouse(int wx, int wy, int what)
     if (!overbar_client_open() || what < 0) return;
     video_view(&vx, &vy, &vw, &vh);
     video_mode_size(&mw, &mh);
+    if (ob_screen_up()) { video_client_size(&mw, &mh); vx = vy = 0; vw = mw; vh = mh; }   /* the overlay over a full-window screen: window pixels */
     if (vw <= 0 || vh <= 0 || mw <= 0 || mh <= 0) return;
     if (wx < vx || wy < vy || wx >= vx + vw || wy >= vy + vh) return;
     r = overbar_client_pointer((wx - vx) * mw / vw, (wy - vy) * mh / vh, mw, mh, what);
