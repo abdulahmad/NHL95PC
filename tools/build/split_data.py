@@ -255,9 +255,9 @@ def main():
     json.dump(sm, open(smp, 'w'), indent=1)
     # rewrite old paths of renamed / joined files in the other text files
     moved = {}
-    for n in out:
-        for o in n['oms']:
-            if o != n['path'] and o not in {x['path'] for x in out}: moved[o] = n['path']
+    paths = {x['path'] for x in out}
+    for o, p in REN.items():                       # the file that starts where o started (or that o joined)
+        if o != p and o not in paths: moved[o] = p
     if moved:
         pat = re.compile('|'.join(re.escape(k) for k in sorted(moved, key=len, reverse=True)))
         for f in git('ls-files').split('\n'):
