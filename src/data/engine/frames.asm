@@ -1,10 +1,10 @@
-; Sprite animation tables: SPAtab and one sequence per animation, in SPA number order.
+; Sprite animation tables: SPAlist and one sequence per animation, in SPA number order.
 ; The high byte of the last sequence's final time is priolist_m1 in data/engine/game_state.asm.
 bits 32
 %include "hockey.inc"
 section s_C921D progbits alloc noexec write align=1
-global SPAtab
-SPAtab:                                         ; the SPA table, used by updateanim: a word 0, then each sequence (flags and 7 direction offsets, then frame/time pairs); a sequence number is its byte offset / 2
+global SPAlist
+SPAlist:                                         ; the SPA table, used by updateanim: a word 0, then each sequence (flags and 7 direction offsets, then frame/time pairs); a sequence number is its byte offset / 2
         db 00h,00h
 SPAgready:                                        ; SPA number 0x1
         db 00h,080h,012h,00h,024h,00h,036h,00h,048h,00h,05Ah,00h,06Ch,00h,07Eh,00h

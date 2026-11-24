@@ -2743,7 +2743,7 @@ extern signed char penmintab[]; /* C9123 */
 extern signed char pendelay2tab[]; /* C9142 */
 extern signed char pendelay2tab_e4; /* C9146 */
 extern int asstab[]; /* C9161 */
-extern unsigned char SPAtab[]; /* C921D */
+extern unsigned char SPAlist[]; /* C921D */
 extern signed char priolist_m1[]; /* CBC36 */
 extern signed char priolist[]; /* CBC37 */
 extern int shownumbers; /* CBC3E */

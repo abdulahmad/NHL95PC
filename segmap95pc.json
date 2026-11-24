@@ -4820,7 +4820,7 @@
    "obj": 2,
    "group": "engine",
    "lineage": "93G via 94 PC (+94G additions)",
-   "desc": "Sprite animation tables: SPAtab and one sequence per animation, in SPA number order. The high byte of the last sequence's final time is priolist_m1 in data/engine/game_state.asm.",
+   "desc": "Sprite animation tables: SPAlist and one sequence per animation, in SPA number order. The high byte of the last sequence's final time is priolist_m1 in data/engine/game_state.asm.",
    "conf": "data split by subject",
    "start": 823837,
    "end": 834614,
