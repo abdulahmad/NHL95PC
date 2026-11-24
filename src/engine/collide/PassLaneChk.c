@@ -149,10 +149,12 @@ void checkpuckcoll_ccx(Player *pk, short n)
     puckbody(pk, p);
 }
 
-/* PassLaneChk: 1 when team-mate o is ahead of p toward p's goal. p's position must be set and
- ShotLaneOpen must report the lane clear. o is deeper than p, inside the 4Eh line, within 3Ch in
- y and 28h in x, both skate toward that goal, and the pass direction is within a step of the way
- o is travelling (or the way it faces, when that direction is 8). */
+/* PassLaneChk: 1 when p's pass to team-mate o is a drop pass (dopass then calls ScatterPass). p is not the
+ goalie, and ShotLaneOpen must report the shooting lane blocked (it returns 1 for an open lane, which ends
+ the check). p is past the 4Eh line toward the goal he attacks (pfgoal picks the end), no deeper than 76h;
+ o trails him (nearer the blue line); both skate toward that goal; p's y and o's y one step ahead
+ (+ HIBYTE(Yvel)) are on the same side of +4Eh; o is within 3Ch in y and 28h in x; and the way o is
+ travelling (or the way it faces, when that direction is 8) is within a step of the way from o to p. */
 int PassLaneChk(Player *p, Player *o)
 {
     int limit;
