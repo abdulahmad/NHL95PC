@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* puckglue: (92 puckstick.glue): player p takes the puck. puckc gets his SCnum
- a live penalty shot ends when his team's tmpsplayer takes it. The other team's assist slots are cleared and
+ a live penalty shot ends when his team's tmtouch1 takes it. The other team's assist slots are cleared and
  its tmflags bit 3 set. After a faceoff (sflags3 bit 4) count a faceoff won (and one won in the attacking
  end), raise Crowdlevel by 200 (max 1000) and the home crowd's CwdExciteLvl by 10; otherwise play sfx 9Bh
 . Then the pass completion, clear the pass/shot dir modes (sflags bits 2-3); a goalie
@@ -23,13 +23,13 @@ void puckglue(Player *p)
     }
     tm = p->tmptr;
     op = p->optmptr;
-    if (penshotlive && p->pnum == tm->tmpsplayer) {
+    if (penshotlive && p->pnum == tm->tmtouch1) {
         EndPenaltyShot();
         onetimerflag = 0;
         shotongoal = 0;
     }
-    op->tmast1 = -1;                /* st (a0): assist 1 */
-    op->tmast2 = -1;                /* st (a0): assist 2 */
+    ((signed char *)&op->tmtouch2)[1] = -1; /* st (a0): assist 1 */
+    ((signed char *)&op->tmtouch3)[1] = -1; /* st (a0): assist 2 */
     op->tmflags |= 8;               /* bset #3,tmflags(a0) */
     if (sflags3 & 0x10) {           /* bclr #4,(sflags3).w */
         sflags3 &= ~0x10;

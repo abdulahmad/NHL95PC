@@ -237,7 +237,7 @@ puckshadow:
 ;-----------------------------------------------------------------------------
 ; puckglue                         56F5A  94G collide94.asm, medium confidence
 ; (92 puckstick.glue): player p takes the puck. puckc gets his SCnum a live
-; penalty shot ends when his team's tmpsplayer takes it. The other team's
+; penalty shot ends when his team's tmtouch1 takes it. The other team's
 ;
 ; assist slots are cleared and its tmflags bit 3 set. After a faceoff
 ; (sflags3 bit 4) count a faceoff won (and one won in the attacking end),
@@ -272,7 +272,7 @@ puckglue:
         cmp dword [penshotlive], byte 0
         je short .1
         movsx ax, byte [byte edx+pnum]
-        cmp ax, word [byte ebx+tmpsplayer]
+        cmp ax, word [byte ebx+tmtouch1]
         jne short .1
         call EndPenaltyShot
         xor edi, edi

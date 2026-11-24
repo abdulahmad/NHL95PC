@@ -1779,7 +1779,7 @@ SetupPenaltyShot:
         mov word [byte ebx+034h], 0FFFFh
         mov ax, word [byte ebx+034h]
         mov word [byte ebx+032h], ax
-        mov word [byte ebx+tmpsplayer], ax
+        mov word [byte ebx+tmtouch1], ax
         mov edx, dword [puckc]
         add word [Crowdlevel], byte 64h
         mov al, byte [penshotplayer]
