@@ -356,7 +356,7 @@ The table gives each part's 95 PC routine and address, then the 94 PC address of
 
 - **95 PC:** the same 10 awards as 94 PC, each now with a subtitle: Most Valuable Player, Points Leader, Best
   Defenseman, Best Defensive Forward, Best Goalkeeper, Best Goals Against Average, Best Rookie, Best Regular Season
-  Record, Most Valuable Player in the Playoffs, Most 3 Star Selections (src/data/front/awards_title.asm;
+  Record, Most Valuable Player in the Playoffs, Most 3 Star Selections (src/data/front/main_const.asm;
   `PickAwardWinners` 1205D). Whether the winner rules changed wasn't compared.
 - **vs 94 PC: same list, subtitles new.** 94 PC has Hart, Art Ross, Norris, Selke, Vezina, Jennings, Calder,
   Presidents, Conn Smythe, EA Sports Cup (NHL94PC `AwardNamePtrs`, `AwardKinds`, `AwardWinner`..`AwardWinner9`,

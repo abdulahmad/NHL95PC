@@ -1,16 +1,16 @@
 # Source cleanup phase 2 (2026-11-15): the numbered data files renamed after the code that uses their labels most
 # (one owner when it has half the uses, else the top two; _strings / _data / _bss and a number only to tell same-owner files apart).
 # old path (src/) -> new path. The module ids in src/segments.txt (data_frontend_01 ...) stay.
-data/front/frontend_01.asm data/front/awards_title.asm
-data/front/frontend_03.asm data/front/summary_file_dialogs.asm
-data/front/season95_04.asm data/front/league_teams_trade.asm
-data/front/frontend_05.asm data/front/simgame_strings.asm
-data/engine/engine_06.asm data/engine/debug_dump.asm
-data/front/frontend_08.asm data/front/input_events_league_db.asm
+data/front/frontend_01.asm data/front/main_const.asm
+data/front/frontend_03.asm data/front/team_db_const.asm
+data/front/season95_04.asm data/front/trade_const.asm
+data/front/frontend_05.asm data/front/simgame_const.asm
+data/engine/engine_06.asm data/engine/intro_const.asm
+data/front/frontend_08.asm data/pc/league_db_const.asm
 data/front/season95_09.asm data/front/create_strings_1.asm
-data/front/frontend_10.asm data/front/game_lines_announcer.asm
-data/front/season95_11.asm data/front/playoff_menu_strings.asm
-data/front/frontend_12.asm data/front/file_locations.asm
+data/front/frontend_10.asm data/pc/database_dialogs_const.asm
+data/front/season95_11.asm data/front/playoff_mode_const.asm
+data/front/frontend_12.asm data/pc/file_locations_const.asm
 data/front/frontend_16.asm data/front/desk_main_main.asm
 data/front/season95_17.asm data/front/playoff_mode_data.asm
 data/front/frontend_18.asm data/front/scoreboard_stats_screens.asm

@@ -1,9 +1,9 @@
-; NHL.CFG, ALLFILES.TXT, and the file names for the coach's cut scene.
+; Strings and constants of pc/file_locations (src/pc/file_locations), in link order.
 bits 32
 %include "hockey.inc"
 section s_C3B0C progbits alloc noexec write align=1
-global str_NhlCfg, str_CantOpenNhlCfg2, str_ALLFILESTXT, str_ALLFILESTXT2, str_CouldNotOpenALLFILES, str_S9, str_Coachcut, str_Scrn4
-global str_Pal29, str_Iff13, str_Coach, str_Clip04d, str_Cmv2, str_ModeR
+global str_ModeR, str_NhlCfg, str_CantOpenNhlCfg2, str_ALLFILESTXT, str_ALLFILESTXT2, str_CouldNotOpenALLFILES, str_S9, str_Coachcut
+global str_Scrn4, str_Pal29, str_Iff13, str_Coach, str_Clip04d, str_Cmv2
 str_ModeR:                                      ; string 'r': fopen mode InitFileLocations opens NHL.CFG with;
                                                 ; used by InitFileLocations
         db 072h,00h

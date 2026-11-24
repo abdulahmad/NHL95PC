@@ -1,4 +1,4 @@
-; Zone manager messages for a missing window.
+; Strings and constants of src/lib/zonemgr.asm, in link order.
 bits 32
 %include "hockey.inc"
 section s_C2778 progbits alloc noexec write align=1

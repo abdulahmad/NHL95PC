@@ -1,10 +1,10 @@
-; Joystick calibration text, and the Edit Rosters prompts for saving and for free agents.
+; Strings and constants of pc/league_db (src/pc/league_db), in link order.
 bits 32
 %include "hockey.inc"
 section s_C27CC progbits alloc noexec write align=1
-global str_Joycal, str_Scrn3, str_Rite, str_Left, str_Pal24, str_Puck, str_PuckBack, str_LEFTJOYSTICK
-global str_RIGHTJOYSTICK, str_SaveAsGameDatabases, str_Current2, str_EnterANewDatabase, str_DBX, str_ErrorGettingDiskSpace, str_3dKbytesOfFree2, str_Temp7
-global str_Current3, str_Pointer11, str_FreeAgents, str_DATABASE, str_OneSpace, str_S5
+global str_Joycal, str_Scrn3, str_Rite, str_Left, str_Pal24, str_Puck, str_PuckBack, str_OneSpace
+global str_LEFTJOYSTICK, str_RIGHTJOYSTICK, str_SaveAsGameDatabases, str_Current2, str_EnterANewDatabase, str_DBX, str_ErrorGettingDiskSpace, str_3dKbytesOfFree2
+global str_Temp7, str_Current3, str_Pointer11, str_S5, str_FreeAgents, str_DATABASE
 str_Joycal:                                     ; string 'joycal'; used by JoystickCalScreen
         db 06Ah,06Fh,079h,063h,061h,06Ch,00h
 str_Scrn3:                                      ; string 'scrn'; used by JoystickCalScreen

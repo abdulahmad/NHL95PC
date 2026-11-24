@@ -1,12 +1,8 @@
-; Error text for the movie player and the CD stream.
+; Strings and constants of src/lib/cdstream.asm, in link order.
 bits 32
 %include "hockey.inc"
-section s_C09A0 progbits alloc noexec write align=1
-global str_CmvMemBlock, str_CmvPalette, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECCDSTREAM, str_IllegalChunkSizeD
-str_CmvMemBlock:                                ; "cmv mem block" string literal; used by CmvCreate
-        db 063h,06Dh,076h,020h,06Dh,065h,06Dh,020h,062h,06Ch,06Fh,063h,06Bh,00h
-str_CmvPalette:                                 ; "cmv palette" string literal; used by CmvReadHeader
-        db 063h,06Dh,076h,020h,070h,061h,06Ch,065h,074h,074h,065h,00h,00h,00h
+section s_C09BC progbits alloc noexec write align=1
+global str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECCDSTREAM, str_IllegalChunkSizeD
 str_CDSTREAM:                                   ; "CDSTREAM" string literal; used by CdStreamCreate
         db 043h,044h,053h,054h,052h,045h,041h,04Dh,00h
 str_IllegalSecondaryStreamNumber:               ; "Illegal Secondary Stream Number\n" string literal; used by

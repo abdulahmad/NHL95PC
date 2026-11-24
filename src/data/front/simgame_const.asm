@@ -1,9 +1,9 @@
-; Allocation tags for the player and goalie stat blocks, and the names of the periods.
+; Strings and constants of front/simgame (src/front/simgame), in link order.
 bits 32
 %include "hockey.inc"
 section s_C1AA4 progbits alloc noexec write align=1
-global tag_pset, tag_aps, tag_apset, tag_gset, tag_ags, tag_agset, str_LoadPic, str_Pal23
-global tag_t, tag_at, tag_pk, tag_ps, tag_gk, tag_gs, str_Fanom, str_Goal
+global tag_t, tag_at, tag_pk, tag_ps, tag_pset, tag_aps, tag_apset, tag_gk
+global tag_gs, tag_gset, tag_ags, tag_agset, str_LoadPic, str_Pal23, str_Fanom, str_Goal
 global str_Clap2, str_Uflag, str_Cflag, str_Siren2, str_Ruff, str_Hook3, str_Saved2, str_Cross
 global str_Guilt, str_1st, str_2nd, str_3rd
 tag_t:                                          ; allocation tag "t" (team record, 2E8h); used by SimulateGame
