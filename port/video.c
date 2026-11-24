@@ -36,18 +36,22 @@ static int use_gl;                              /* the OpenGL path (video_gl.c) 
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static const char *ob_gl_filter;
 static int ob_gl_init(SDL_Window *win) { (void)win; return 0; }
-static void ob_gl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh)
-{ (void)win; (void)argb; (void)w; (void)h; (void)vx; (void)vy; (void)vw; (void)vh; }
+static void ob_gl_render(SDL_Window *win, const ob_look *look, ob_class cls, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh)
+{ (void)win; (void)look; (void)cls; (void)argb; (void)w; (void)h; (void)vx; (void)vy; (void)vw; (void)vh; }
 static void ob_gl_quit(void) {}
 static void ob_gl_set_vsync(int on) { (void)on; }
-static void ob_gl_set_look(int pre, float sigma, float gain, float center, int period, int style) { (void)pre; (void)sigma; (void)gain; (void)center; (void)period; (void)style; }
 static void ob_gl_set_target(int w, int h) { (void)w; (void)h; }
-static void ob_gl_mister_tables(const float horiz[64][4], const float vert[2][256][4], const float gamma[256]) { (void)horiz; (void)vert; (void)gamma; }
-static void ob_gl_mister_mask(const float *rgb, int w, int h) { (void)rgb; (void)w; (void)h; }
-static void ob_gl_set_custom(float dark, float gamma, float mask, float sharp) { (void)dark; (void)gamma; (void)mask; (void)sharp; }
-static void ob_gl_set_bright(float b, float maskscale) { (void)b; (void)maskscale; }
 static void ob_gl_osd_set(const char *l1, const char *l2, const char *l3) { (void)l1; (void)l2; (void)l3; }
 #endif
+
+/* The look Overbar draws this screen with: the game's settings are mirrored into the Overbar host (overbar_capture_host), and Overbar's
+ * one rendering path (ob_render_plan_get, ob_gl_render, ob_render_cpu) does all the scaling and the looks. */
+static const ob_look *cur_look(int w, ob_class *cls)
+{
+    ob_host *h = overbar_client_host();
+    *cls = w < 512 ? OB_CLASS_LORES : OB_CLASS_HIRES;
+    return *cls == OB_CLASS_LORES ? &h->lores : &h->hires;
+}
 static uint32_t argb[1280 * 1024];
 
 /* ---- the settings: how often the window is drawn, vsync, the numbers on the picture, and how the picture is scaled ----
@@ -62,7 +66,6 @@ static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the sca
 #define NLORES NLORES_ITEMS
 static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom" };
 static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom" };
-static const float scan_strength[3] = { 0.80f, 0.60f, 0.45f };   /* the sigma of the scanline profile: the smaller, the darker the gaps */
 static const char *ptr_names[3] = { "auto", "show", "hide" };
 static int ptr_mode;
 static const char *vscale_names[4] = { "fit", "integer", "overscan", "auto-crop" };
@@ -80,9 +83,6 @@ static const char *vscale_names[4] = { "fit", "integer", "overscan", "auto-crop"
 static struct { char horiz[260], vert[260], gamma[260], mask[260]; int mask_scale; float bright; } mcfg[2];
 static int lores_khz31;                          /* the game screens: 0 single scan (15 kHz, TV), 1 double scan (31 kHz, VGA) for every CRT look */
 static float c_dark = 0.30f, c_gamma = 1.13f, c_mask = 0.12f, c_sharp = 0.60f;   /* the custom look: in the ini */
-static float m_horiz[2][64][4], m_vert[2][2][256][4], m_gamma[2][256];
-static struct { int res, w, h; float rgb[16 * 16 * 3]; } m_masks[2][8];
-static int m_nmasks[2], m_dirty[2] = { 1, 1 }, m_mask_for = -1, m_class_up = -1;
 static int sharp_pre[2] = { 1, 3 };          /* integer scale before the window fit: hi-res 1x, lo-res 3x by default */
 
 static void mister_defaults(int c)
@@ -90,7 +90,6 @@ static void mister_defaults(int c)
     snprintf(mcfg[c].horiz, sizeof mcfg[c].horiz, "%s", DEF_HORIZ); snprintf(mcfg[c].vert, sizeof mcfg[c].vert, "%s", DEF_VERT);
     snprintf(mcfg[c].gamma, sizeof mcfg[c].gamma, "%s", DEF_GAMMA); snprintf(mcfg[c].mask, sizeof mcfg[c].mask, "%s", DEF_MASK);
     mcfg[c].mask_scale = 1; mcfg[c].bright = 1.0f;
-    m_dirty[c] = 1;
 }
 
 static FILE *open_rel(const char *path)
@@ -106,142 +105,7 @@ static FILE *open_rel(const char *path)
     return f;
 }
 
-/* the numbers of a coefficient file (lines starting with # are comments; the words 10bit and adaptive set flags) */
-static int read_numbers(const char *path, float *vals, int max, int *adaptive, int *tenbit)
-{
-    char line[512];
-    int n = 0;
-    FILE *f = open_rel(path);
-    if (!f) return 0;
-    *adaptive = *tenbit = 0;
-    while (fgets(line, sizeof line, f)) {
-        char *q = line;
-        while (*q == ' ' || *q == '\t') q++;
-        if (*q == '#' || *q == '\n' || *q == '\r' || !*q) continue;
-        if (!strncmp(q, "10bit", 5)) { *tenbit = 1; continue; }       /* (it starts with a digit: not a number) */
-        if (isalpha((unsigned char)*q)) { if (!strncmp(q, "adaptive", 8)) *adaptive = 1; if (!strncmp(q, "10bit", 5)) *tenbit = 1; continue; }
-        while (*q) {
-            char *e;
-            long v;
-            while (*q && *q != '-' && !isdigit((unsigned char)*q)) q++;
-            if (!*q) break;
-            v = strtol(q, &e, 10);
-            if (e == q) break;
-            if (n < max) vals[n++] = (float)v;
-            q = e;
-        }
-    }
-    fclose(f);
-    return n;
-}
 
-static void load_mask(const char *path, int cls)
-{
-    char line[512];
-    int res = 0, w = 0, h = 0, y = 0, want = 0;
-    FILE *f = open_rel(path);
-    m_nmasks[cls] = 0;
-    if (f) {
-        while (fgets(line, sizeof line, f) && m_nmasks[cls] < 8) {
-            char *q = line;
-            while (*q == ' ' || *q == '\t') q++;
-            if (*q == '#' || *q == '\n' || *q == '\r' || !*q) continue;
-            if (!strncmp(q, "Resolution=", 11)) { res = atoi(q + 11); want = 0; continue; }
-            if (!strncmp(q, "v2", 2)) { want = 1; continue; }
-            if (want == 1) {                     /* the size of the pattern */
-                if (sscanf(q, "%d,%d", &w, &h) != 2 || w < 1 || h < 1 || w > 16 || h > 16) { want = 0; continue; }
-                m_masks[cls][m_nmasks[cls]].res = res; m_masks[cls][m_nmasks[cls]].w = w; m_masks[cls][m_nmasks[cls]].h = h;
-                y = 0; want = 2;
-                continue;
-            }
-            if (want == 2) {                     /* a row of cells: colour (0-7: bit 1 blue, 2 green, 4 red), intensity on, intensity off */
-                int x;
-                for (x = 0; x < w; x++) {
-                    unsigned c = 0, on = 0, off = 0;
-                    int ch;
-                    if (sscanf(q, "%1x%1x%1x", &c, &on, &off) != 3) break;
-                    for (ch = 0; ch < 3; ch++) {
-                        int bit = ch == 0 ? 4 : ch == 1 ? 2 : 1;
-                        m_masks[cls][m_nmasks[cls]].rgb[(y * w + x) * 3 + ch] = (c & bit) ? 1.0f + on / 16.0f : off / 16.0f;
-                    }
-                    q = strchr(q, ',');
-                    if (!q) { x++; break; }
-                    q++;
-                }
-                if (++y == h) { m_nmasks[cls]++; want = 0; }
-            }
-        }
-        fclose(f);
-    }
-    if (!m_nmasks[cls]) {                             /* no mask file: none */
-        m_masks[cls][0].res = 0; m_masks[cls][0].w = m_masks[cls][0].h = 1;
-        m_masks[cls][0].rgb[0] = m_masks[cls][0].rgb[1] = m_masks[cls][0].rgb[2] = 1.0f;
-        m_nmasks[cls] = 1;
-    }
-}
-
-static void mister_load(int cls)
-{
-    float v[2 * 256 * 4 + 16];
-    int n, ad, tb, i, p, k;
-    m_dirty[cls] = 0; m_class_up = -1;
-    n = read_numbers(mcfg[cls].horiz, v, 2 * 256 * 4, &ad, &tb);
-    if (n == 64 * 4 || n == 256 * 4 || n == 2 * 256 * 4) {      /* 64 or 256 phases (the first set of an adaptive file) */
-        int phases = n == 64 * 4 ? 64 : 256;
-        for (p = 0; p < 64; p++) {
-            const float *r = v + (size_t)(p * phases / 64) * 4;
-            float sum = r[0] + r[1] + r[2] + r[3];
-            for (k = 0; k < 4; k++) m_horiz[cls][p][k] = sum > 0 ? r[k] / sum : 0;
-        }
-    } else {                                     /* a Gaussian, sigma 0.42 pixels: what GS_Sharpness_060 is */
-        for (p = 0; p < 64; p++) {
-            float sum = 0;
-            for (k = 0; k < 4; k++) { float d = (k - 1) - p / 64.0f; m_horiz[cls][p][k] = expf(-d * d / (2 * 0.42f * 0.42f)); sum += m_horiz[cls][p][k]; }
-            for (k = 0; k < 4; k++) m_horiz[cls][p][k] /= sum;
-        }
-    }
-    n = read_numbers(mcfg[cls].vert, v, 2 * 256 * 4, &ad, &tb);
-    if (n == 2 * 256 * 4 || n == 256 * 4 || n == 64 * 4) {      /* adaptive (dark and bright sets), one set of 256 phases, or one of 64 */
-        float div = tb ? 256.0f : 128.0f;
-        int phases = n == 64 * 4 ? 64 : 256;
-        for (i = 0; i < 2; i++)
-            for (p = 0; p < 256; p++)
-                for (k = 0; k < 4; k++) m_vert[cls][i][p][k] = v[(((n == 2 * 256 * 4 ? i : 0) * 256) + p * phases / 256) * 4 + k] / div;
-    } else {                                     /* stand-ins: a beam over the two nearest lines, deeper gaps for dark pixels */
-        for (i = 0; i < 2; i++)
-            for (p = 0; p < 256; p++) {
-                float f = p / 256.0f, s = i ? 0.457f : 0.337f, a = i ? 0.97f : 1.1f;
-                m_vert[cls][i][p][0] = m_vert[cls][i][p][3] = 0;
-                m_vert[cls][i][p][1] = a * expf(-powf(f / s, 1.5f));
-                m_vert[cls][i][p][2] = a * expf(-powf((1 - f) / s, 1.5f));
-            }
-    }
-    n = read_numbers(mcfg[cls].gamma, v, 256, &ad, &tb);
-    if (n == 256) for (i = 0; i < 256; i++) m_gamma[cls][i] = v[i] / 255.0f;
-    else for (i = 0; i < 256; i++) m_gamma[cls][i] = mcfg[cls].gamma[0] ? powf(i / 255.0f, 2.5f / 2.2f) : i / 255.0f;       /* no file: none (or the gamma of gamma_113 if the file is missing) */
-    load_mask(mcfg[cls].mask, cls);
-}
-
-/* the mask pattern for this output height: the largest resolution that is not above it */
-static void mister_mask_for(int height, int cls)
-{
-    int i, best = 0;
-    if (height == m_mask_for && cls == m_class_up) return;
-    m_mask_for = height;
-    for (i = 0; i < m_nmasks[cls]; i++) if (m_masks[cls][i].res <= height && m_masks[cls][i].res >= m_masks[cls][best].res) best = i;
-    ob_gl_mister_mask(m_masks[cls][best].rgb, m_masks[cls][best].w, m_masks[cls][best].h);
-}
-
-/* the tables of this class are on the GPU, and the mask pattern for this output height */
-static void mister_upload(int cls, int height)
-{
-    if (m_class_up != cls) {
-        ob_gl_mister_tables((const float (*)[4])m_horiz[cls], (const float (*)[256][4])m_vert[cls], m_gamma[cls]);
-        m_class_up = cls;
-        m_mask_for = -1;
-    }
-    mister_mask_for(height, cls);
-}
 
 /* a preset of the MiSTer scaler (an .ini: hfilter, vfilter, sfilter, gamma, mask, maskmode), paths relative to its Filters, Gamma and Shadow_Masks folders */
 static void apply_preset(int cls, const char *rel)
@@ -270,30 +134,6 @@ static void apply_preset(int cls, const char *rel)
 }
 
 
-
-/* The integer scale taken before the window's bicubic scaling, the width of the scanlines (0: none), how many scanlines there are per source line,
- * and the look: 0 the plain scaling or the scanline filter above, 1 a soft CRT (a Gaussian beam over the neighbouring lines and pixels, blended
- * in linear light, after Timothy Lottes' CRT shader), 2 the same with an aperture grille mask. */
-static void look(int w, int *pre, float *scan, int *period, int *style)
-{
-    *scan = 0; *period = 1; *style = 0;
-    if (w == 320) {
-        int m = lores_mode;
-        *pre = m < 4 ? sharp_pre[1] : 3;
-        if (m >= 4) *period = lores_khz31 ? 2 : 1;      /* the CRT looks (not the plain scales): 31 kHz is every line twice, a 320x400 picture */
-        if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
-        if (m == 7 || m == 8) { *style = m - 6; *pre = 1; }
-        if (m == 9) { *style = 3; *pre = 1; }
-        if (m == 10) { *style = 4; *pre = 3; }
-    } else {
-        int m = hires_mode;
-        *pre = m < 4 ? sharp_pre[0] : 1;
-        if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
-        if (m >= 7 && m < 9) *style = 1 + (m - 7);
-        if (m == 9) *style = 3;
-        if (m == 10) *style = 4;
-    }
-}
 
 #ifdef _WIN32
 #define INI_NAME "hockey-win32.ini"
@@ -439,25 +279,10 @@ void video_mister_pick(int cls, int kind, const char *rel)
 {
     if (kind == 4) apply_preset(cls, rel);
     else snprintf(kind == 0 ? mcfg[cls].horiz : kind == 1 ? mcfg[cls].vert : kind == 2 ? mcfg[cls].gamma : mcfg[cls].mask, 260, "%s", rel);
-    m_dirty[cls] = 1;
     mister_on(cls);
     settings_save();
     if (!overbar_busy) overbar_capture_host();
     if (!overbar_busy) menu_sync();
-}
-
-/* A scanline is drawn over `rows` window rows. Its brightest row is the middle one (the one above the middle when there is an even number),
- * and the gain keeps the average brightness. center is the brightest position within the source line (0..1). */
-static void scan_rows(float sigma, int rows, float *center, float *gain)
-{
-    float sum = 0;
-    int r;
-    if (rows < 1) rows = 1;
-    *center = ((rows - 1) / 2 + 0.5f) / rows;
-    *gain = 1;
-    if (sigma <= 0) return;
-    for (r = 0; r < rows; r++) { float d = ((r + 0.5f) / rows - *center) / sigma; sum += expf(-d * d); }
-    *gain = rows / sum;
 }
 
 /* Overbar dual-write: overlay Scale Mode / refresh / stats map onto the existing commands. */
@@ -495,6 +320,10 @@ static void overbar_capture_host(void)
     h->lores.sharp = ob_sharp_index(sharp_pre[1]);
     h->lores.khz31 = lores_khz31;
     h->hires.ntsc = h->lores.ntsc = ntsc_on;
+    h->hires.c_dark = h->lores.c_dark = c_dark;              /* the custom look (in the ini only) */
+    h->hires.c_gamma = h->lores.c_gamma = c_gamma;
+    h->hires.c_mask = h->lores.c_mask = c_mask;
+    h->hires.c_sharp = h->lores.c_sharp = c_sharp;
     h->hires.mask_scale = mcfg[0].mask_scale;
     h->lores.mask_scale = mcfg[1].mask_scale;
     h->hires.bright = (int)(mcfg[0].bright * 100.0f + 0.5f);
@@ -588,13 +417,11 @@ void video_command(int id)
     else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) {
         hires_mode = id - CMD_HIRES; vscale_hi = hires_mode >= 4 ? 3 : 0;   /* scanlines: auto crop; a plain scale: fit */
         if (hires_mode < 4) sharp_pre[0] = hires_mode + 1;
-        if (hires_mode == 9) m_dirty[0] = 1;
     }
     else if (id >= CMD_LORES && id < CMD_LORES + NLORES) {
         static const int lo_pre[4] = { 3, 5, 7, 11 };
         lores_mode = id - CMD_LORES; vscale_lo = lores_mode >= 4 ? 3 : 0;
         if (lores_mode < 4) sharp_pre[1] = lo_pre[lores_mode];
-        if (lores_mode == 9) m_dirty[1] = 1;
     }
     else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
     else if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 9) { mcfg[0].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_HI); mister_on(0); }
@@ -824,12 +651,14 @@ static void client_size(int *w, int *h)
 void video_view(int *vx, int *vy, int *vw, int *vh)
 {
     int ww = 640, wh = 480, vs = mode_w == 320 ? vscale_lo : vscale_hi;
-    int pre, period, style, line_double = 0;
-    float scan;
+    int line_double;
+    ob_class cls;
+    const ob_look *lk;
+    ob_render_plan plan;
     if (win) client_size(&ww, &wh);
-    look(mode_w, &pre, &scan, &period, &style);
-    (void)pre; (void)scan; (void)style;
-    line_double = period == 2;
+    lk = cur_look(mode_w, &cls);
+    ob_render_plan_get(lk, cls, mode_w, mode_h, ww, wh, &plan);
+    line_double = plan.period == 2;
     overbar_client_set_class(mode_w == 320);
     overbar_client_view(mode_w, mode_h, ww, wh, vs, line_double, vx, vy, vw, vh);
 }
@@ -928,6 +757,7 @@ void video_init(void)
     overbar_capture_host();
     if (getenv("NHL95_PRESET")) { const char *t = getenv("NHL95_PRESET"); apply_preset(t[0] == 'l', t + 2); settings_save(); }      /* a test aid: h:path or l:path of a preset */
     ob_gl_filter = getenv("NHL95_FILTER");
+    ob_render_set_filter(ob_gl_filter);
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     ww = getenv("NHL95_WINDOW_W") ? atoi(getenv("NHL95_WINDOW_W")) : (handheld ? 640 : 960);
     wh = getenv("NHL95_WINDOW_H") ? atoi(getenv("NHL95_WINDOW_H")) : (handheld ? 480 : 720);
@@ -1058,24 +888,30 @@ void video_present(void)
             dw = ww; dh = wh;
             if (getenv("NHL95_SIZES")) { static int n; if (++n % 60 == 0) { int a, b, c, d; SDL_GetWindowSize(win, &a, &b); SDL_GL_GetDrawableSize(win, &c, &d); fprintf(stderr, "sizes: client %dx%d, SDL window %dx%d, GL drawable %dx%d\n", ww, wh, a, b, c, d); } }
             {
-                int pre, period, style, unit, rows;
-                float scan, center, gain;
-                look(w, &pre, &scan, &period, &style);
-                unit = h * (period == 2 ? 2 : 1);
-                rows = (vh * dh / wh + unit / 2) / unit;
-                scan_rows(scan, rows, &center, &gain);
+                ob_class cls;
+                const ob_look *lk = cur_look(w, &cls);
                 ob_gl_set_target(dw, dh);
-                ob_gl_set_look(pre, scan, gain, center, period, style);
-                if (style == 3) { int c = w == 320; if (m_dirty[c]) mister_load(c); mister_upload(c, wh); }
-                ob_gl_set_custom(c_dark, c_gamma, c_mask, c_sharp);
-                ob_gl_set_bright(mcfg[w == 320].bright, (float)mcfg[w == 320].mask_scale);
+                ob_gl_render(win, lk, cls, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
             }
-            ob_gl_draw(win, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
         } else {
             SDL_Rect dst = { vx, vy, vw, vh };
-            SDL_UpdateTexture(tex, 0, argb, w * 4);
+            static SDL_Texture *rtex;              /* the software renderer's picture, at the view's size */
+            static int rw, rh;
+            ob_class cls;
+            const ob_look *lk = cur_look(w, &cls);
+            uint32_t *px = NULL;
+            int pw = 0, ph = 0;
             SDL_RenderClear(ren);
-            SDL_RenderCopy(ren, tex, 0, &dst);
+            if (vw > 0 && vh > 0 && ob_render_cpu(lk, cls, argb, w, h, w, vw, vh, &px, &pw, &ph)) {
+                if (!rtex || rw != pw || rh != ph) {
+                    if (rtex) SDL_DestroyTexture(rtex);
+                    rtex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, pw, ph);
+                    rw = pw; rh = ph;
+                    if (rtex) SDL_SetTextureScaleMode(rtex, SDL_ScaleModeLinear);
+                }
+            }
+            if (rtex && px && rw == pw && rh == ph) { SDL_UpdateTexture(rtex, 0, px, pw * 4); SDL_RenderCopy(ren, rtex, 0, &dst); }
+            else { SDL_UpdateTexture(tex, 0, argb, w * 4); SDL_RenderCopy(ren, tex, 0, &dst); }
             SDL_RenderPresent(ren);
         }
     }
