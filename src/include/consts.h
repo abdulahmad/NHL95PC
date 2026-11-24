@@ -3,7 +3,7 @@
 #define CONSTS_H
 
 
-/* SPAtab animation numbers: one per sequence of SPAtab (src/data/engine/frames.asm), named as the labels there */
+/* SPAlist animation numbers: one per sequence of SPAlist (src/data/engine/frames.asm), named as the labels there */
 #define SPAgready       0x1
 #define SPAgready2      0x99
 #define SPAgglover      0xB1

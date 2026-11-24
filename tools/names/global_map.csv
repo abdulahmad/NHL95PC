@@ -105,7 +105,7 @@ gameover,CBC48,main-loop request flag set by GameOver
 PerTimeTab,CBC4A,period length table read by GetPeriodTime
 PlList,E0384,player list built by SetPlList / TryAddPlayerToList
 ds2list,CBD5A,93G defaultsprites2 .list: initial values of the 17 sort objects
-SPAtab,C921D,93G SPA animation table read by updateanim
+SPAlist,C921D,"the console and 94 PC name of the SPA table base (93G/94G frames, 94 PC frames.asm)"
 camx,C9098,camera x (LockScroll copies it into xc1)
 camy,C909A,camera y (LockScroll copies it into yc1)
 camx_m2,C9096,camx-2 (equ): the -5r load dword [camx_m2] / sar 10h reads camx

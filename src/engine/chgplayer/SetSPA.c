@@ -1,4 +1,4 @@
-/* SetSPA: start sprite animation 'spa' (an SPAtab index) on player p, unless it is
+/* SetSPA: start sprite animation 'spa' (an SPAlist index) on player p, unless it is
  already playing. Restarting clears the frame number and sets the frame counter to -1 so the next updateanim
  loads the first frame. Callers: assignments, skating, faceoffs, input. */
 #include "nhl95.h"

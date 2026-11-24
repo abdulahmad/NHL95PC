@@ -672,7 +672,7 @@ void ResetBench(void)
 }
 
 /* updateanim (5CAEF; 93G hockey93 updateanim, "frame switch control on struct a3"; ends in findpc_ret5):
-   step p's animation. No SPA: unlock (pfalock, pf2aip) and stop. The SPA's table (SPAtab + SPA; attribute word
+   step p's animation. No SPA: unlock (pfalock, pf2aip) and stop. The SPA's table (SPAlist + SPA; attribute word
    first, bit 15 = loops) gives per facing (facedir; on the horizontal rink, sflags bit 7, 2 less for the skaters
    and object 10h; mirrored when the x-flip attribute bit 3 is set) a list of frame / time pairs. When the time
    (SPAcnt) runs out, step to the next pair; at the end of the list start over, unlock and (not looping) clear the
@@ -695,7 +695,7 @@ void updateanim(Player *p)
     d = p->facedir;
     if ((sflags & 0x80) && (p->SCnum < 0xC || p->SCnum == 0x10)) d = d - 2 & 7;
     if (p->attribute & 8) d = 8 - d & 7;
-    t = (short *)SPAtab + p->SPA;
+    t = (short *)SPAlist + p->SPA;
     loop = *t & 0x8000;
     if (d) c = t[d];
     else c = *t & 0x7FFF;

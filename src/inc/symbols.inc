@@ -3925,7 +3925,7 @@
 ;  C9142  pendelay2tab                             data/engine/faceoff_hockey.asm               2
 ;  C9146  pendelay2tab_e4                          data/engine/faceoff_hockey.asm               2
 ;  C9161  asstab                                   data/engine/faceoff_hockey.asm               1
-;  C921D  SPAtab                                   data/engine/frames.asm                       1
+;  C921D  SPAlist                                  data/engine/frames.asm                       1
 ;  CBC36  priolist_m1                              data/engine/game_state.asm                   3
 ;  CBC37  priolist                                 data/engine/game_state.asm                   1
 ;  CBC3E  shownumbers                              data/engine/game_state.asm                   7
