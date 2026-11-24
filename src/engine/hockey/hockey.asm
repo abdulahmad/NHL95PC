@@ -1989,7 +1989,7 @@ mov eax, esi	; 5B4EB
 shl eax, 2	; 5B4ED
 add eax, esi	; 5B4F0
 shl eax, 2	; 5B4F2
-mov edx, dword [dword ecx+0DEh]	; 5B4F5
+mov edx, dword [dword ecx+tmplattr]	; 5B4F5
 add eax, edx	; 5B4FB
 mov dl, byte [eax]	; 5B4FD
 mov byte [byte ebx+handed], dl	; 5B4FF
@@ -2188,7 +2188,7 @@ mov edx, dword [dword ecx+tmroster]	; 5B6EE
 mov al, byte [byte edx+eax+05h]	; 5B6F4
 mov byte [byte ebx+rostnum], al	; 5B6F8
 shl esi, 4	; 5B6FB
-mov edx, dword [dword ecx+0E2h]	; 5B6FE
+mov edx, dword [dword ecx+tmglattr]	; 5B6FE
 lea eax, [dword esi-0190h]	; 5B704
 add eax, edx	; 5B70A
 mov dl, byte [eax]	; 5B70C
@@ -2204,16 +2204,16 @@ or cl, 8	; 5B723
 mov byte [byte ebx+attribute], cl	; 5B726
 .40:
 mov dl, byte [eax]	; 5B729
-mov byte [byte ebx+aggress], dl	; 5B72B
+mov byte [byte ebx+GGSleft], dl	; 5B72B
 inc eax	; 5B72E
 mov dl, byte [eax]	; 5B72F
-mov byte [byte ebx+passacc], dl	; 5B731
+mov byte [byte ebx+GGSright], dl	; 5B731
 inc eax	; 5B734
 mov dl, byte [eax]	; 5B735
-mov byte [byte ebx+spodds], dl	; 5B737
+mov byte [byte ebx+GSSleft], dl	; 5B737
 inc eax	; 5B73A
 mov dl, byte [eax]	; 5B73B
-mov byte [byte ebx+endurance], dl	; 5B73D
+mov byte [byte ebx+GSSright], dl	; 5B73D
 inc eax	; 5B740
 mov dl, byte [eax]	; 5B741
 mov byte [byte ebx+shotspd], dl	; 5B743
