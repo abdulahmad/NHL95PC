@@ -12,6 +12,7 @@
 #include <string.h>
 #include <SDL.h>
 #include <overbar/plat.h>
+#include <overbar/screen.h>
 
 #define WINDOW ((uint8_t *)0xA0000)
 
@@ -833,6 +834,44 @@ static void dump_frame(int w, int h)
 }
 
 extern volatile int nh_quiet;
+/* a full-window screen an add-on put up (overbar/screen.h, the box): drawn at the window's size, the overlay over it, the game held */
+static int screen_present(void)
+{
+    static uint32_t *px;
+    static long cap;
+    static SDL_Texture *stex;
+    static int sw, sh;
+    int ww = 0, wh = 0;
+    client_size(&ww, &wh);
+    if (ww < 16 || wh < 16) return 0;
+    if ((long)ww * wh > cap) {
+        uint32_t *n = (uint32_t *)realloc(px, (size_t)ww * wh * 4);
+        if (!n) return 0;
+        px = n; cap = (long)ww * wh;
+    }
+    ob_screen_draw(px, ww, wh, ww);
+    if (overbar_client_open()) overbar_client_draw(px, ww, wh, ww);
+    if (use_gl) {
+        ob_gl_set_target(ww, wh);
+        ob_gl_render(win, ob_screen_look(), OB_CLASS_HIRES, px, ww, wh, 0, 0, ww, wh);
+    } else {
+        if (!stex || sw != ww || sh != wh) {
+            if (stex) SDL_DestroyTexture(stex);
+            stex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, ww, wh);
+            sw = ww; sh = wh;
+            if (!stex) return 0;
+            SDL_SetTextureScaleMode(stex, SDL_ScaleModeLinear);
+        }
+        SDL_UpdateTexture(stex, 0, px, ww * 4);
+        SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+        SDL_RenderClear(ren);
+        SDL_RenderCopy(ren, stex, 0, 0);
+        SDL_RenderPresent(ren);
+    }
+    return 1;
+}
+void video_client_size(int *w, int *h) { *w = *h = 0; if (win) client_size(w, h); }
+
 void video_present(void)
 {
     if (nh_quiet) return;                           /* a rollback is playing steps again: nothing of it is shown */
@@ -840,6 +879,7 @@ void video_present(void)
     int w, h, x, y;
     uint32_t pal[256];
     if (!ren && !use_gl) return;
+    if (ob_screen_up() && screen_present()) return;
     SDL_LockMutex(lock);
     window_save();
     w = mode_w; h = mode_h;

@@ -9,6 +9,8 @@
 #include "feel.h"
 #include "season.h"
 #include "sides.h"
+#include <overbar/box_cd.h>
+extern const bx_cd_game BOX_PC95;
 
 #include <string.h>
 
@@ -27,6 +29,7 @@ void overbar_client_init(ob_profile profile, void (*apply)(ob_host *h))
     netplay_online_setup(&host);        /* the Online page (netplay.c); before the menu bar, which greys it out otherwise */
     port_season_setup(&host);           /* Season: the game's league folder, after Online so the player's name is in */
     port_sides_init();                  /* Overbar's select-sides screen: every controller, the same module online */
+    ob_box_init(&host, bx_cd_scene(&BOX_PC95));   /* the box on the first launch, and View Manual & Materials (experimental; box_pc95.c) */
 }
 
 void overbar_client_free(void)
