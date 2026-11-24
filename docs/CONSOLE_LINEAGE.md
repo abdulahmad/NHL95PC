@@ -47,7 +47,7 @@ Confidence levels:
 | **Fake / aborted slap shot** | None: a wind-up always ends in a shot | **New:** releasing before wind-up frame 10 cancels the shot and plays `SPAfakeshotf` / `SPAfakeshotb` | **95** in effect (95G has a fake shot, "A released in the attacking zone" in `input95.asm`, with the same `SPAfakeshotf` name; 94G / 94S / 94 PC have none). The PC trigger is its own: the manual says hold BUTTON 2 (shoot), then press BUTTON 1 before the wind-up completes. The 95 PC and 95G boxes both list fake shots as new. 95S has none, and its box doesn't claim one: its `ShotMode` (`assshoot.asm`) has no exit without `doshot` | `ShotMode` (578FA): a new BUTTON 1 press (`regd1` bit 0x10, or 0x40) before wind-up frame 10 clears the shot mode, never reaches `doshot`, and switches the slap-shot animations to these. The routine header calls them the follow-through, so the "fake" is an early abort of the wind-up rather than a separate deke animation. See [Passing, shooting and line changes](#passing-shooting-and-line-changes). How it looks in play wasn't checked | Code (logic); Inferred (that it copies 95G) |
 | **Shot blocking** | None | **New:** players dive or drop to block shots | **95** (95G has `CanBlock` / `chkblock` / `SPAblock`; 94G / 94S have no shot blocking; 95S not found by name). This is what the 95 PC and 95G boxes call "laying down on D" | `CanBlockShot` (4FFEE), `TryBlockShot`, `BlockShotDive` (53387) and four animations `SPAblockfront`, `SPAblockknee`, `SPAblockleft`, `SPAblockright`. 95G has one block animation; the PC's four and its routines are its own | Code; Inferred (the 95G likeness) |
 | **Drop pass** | **None.** `dopass` (28BB:0B96) always passes to a teammate or along `passdir`; no branch leaves the puck behind | **Yes, contextual.** Aim a pass at a teammate trailing the carrier in the attacking zone and the puck is left almost dead on the ice. The manual: "A pass to a trailing teammate is executed as a 'drop' pass, where the puck simply remains stationary on the ice." | **PC-only.** The box is right to list "drop passes" as new. 95G's drop pass is a different move: A with the d-pad back (`GameFlags` bit 1, `input95.asm`) makes a flat, quarter-speed pass with its own animation (`SPAdroppass` / `SPApassb2`). 95S has none: its `dopass` has no drop branch | `dopass` (54DF4) calls `PassLaneChk` (54C09) for a human passer's target and, when it passes, `ScatterPass` (54D63) instead of `passtoa0`. The puck gets no lift and x / y speeds below 360, against 5400-8400 skater top speeds. No new animation (`SPApassf` / `SPApassb`). See [Passing, shooting and line changes](#passing-shooting-and-line-changes). Not checked in play | Code |
-| **Practice mode / 2-on-2 ("Jam")** | None | **None** (no practice string or label) | Not taken from the consoles | The 95G box says "new play modes: play 2 on 2 'Jam' with just 4 skaters". In the code this is **Practice Mode** (`setup95.asm` play modes; `sflags9` bit 7). Each side gets 0, 1 or 2 skaters (`PracticePlayersTbl`, `PrintPracticePlayers`), and `PullPracticePlayers` (`goal95.asm`) takes the rest off the ice. There is no icing, every rush counts as a breakaway, and `PracticeGoalies` sets the goalie mode for a side with a pad and no skaters. The word "Jam" wasn't found in 95G's strings. 95S has the same mode (`PracticeOptions`: Home Players / Visitor Players). 94G and 94S have none | Code (95G); Data (95S) |
+| **Practice mode / 2-on-2 ("Jam")** | None | **None** (no practice string or label) | Not taken from the consoles | The 95G box says "new play modes: play 2 on 2 'Jam' with just 4 skaters". In the code this is **Practice Mode** (`setup95.asm` play modes; `sflags9` bit 7). Each side gets 0, 1 or 2 skaters (`PracticePlayersTbl`, `PrintPracticePlayers`), and `PullPracticePlayers` (`goal95.asm`) takes the rest off the ice. There is no icing, every rush counts as a breakaway, and `PracticeGoalies` sets the goalie mode for a side with a pad and no skaters. The word "Jam" wasn't found in 95G's strings. 95S has the same mode (`PracticeOptions`: Home Players / Visitor Players). 94G and 94S have none. The manuals confirm 0-2: "up to two skaters (plus goalie) per side" (95G manual PDF p.8; 95S manual PDF p.5) | Code (95G); Data (95S); Manual |
 | **Penalty shots** | None (`checkcheck` calls `AddPenalty` with no breakaway test) | **Yes** | **94** (94G / 94S `PenShotChk`; 95G / 95S too), with a PC trigger. The box says "New in 95: get caught dropping an opponent to the ice on a break and he'll go one-on-one with your goalie". That's new for the PC, but the 94G, 94S and 94 Sega CD boxes already list penalty shots | `holdcheck` (56B79) and `Bcheck` (56A54) call `QuickShotChk` (6427F): if the fouled player is a human puck carrier with a shot on goal from near the net, `AddPenalty` gets type 0x1A "Penalty Shot" instead of the foul. `InProgress` then runs `StartPenaltyShot` (64398) and `SetupPenaltyShot` (63F72). The shooter is `asspenshooter` (4FAE8) on the 94G path code (`ShootoutPathData`, `StartShootoutPath`, `NextPathPoint`). The clock is held (`ClockTick` 5DC10, `penshottimer`). `doshot` gives the shot at least skater speed + 0x1F4 while `penshotlive` is set. The referee has `SPArefpenshot` / `assrefpenshot` and the announcer `SayPenaltyShot` / `PaPenaltyShot`. 94G instead uses a breakaway flag and penalty-shot forms of each penalty; 95 PC uses one penalty type | Code |
 | **Shootout** | None | **Not found** | Not taken from the consoles, which all have one: 94G (`shootout94.asm`), 94S, 95G (`shootout95.asm`) and 95S (`ShootoutWonBy`) | No "Shootout" string. `PeriodOver` (`src/engine/hockey/PeriodOver.c`): game state 3 is sudden-death overtime and 4 is game over; `gameopts.fullot` makes overtime full length. The labels and comments that say shootout (`clockcont_0`, the `checkwindow` "gsp 4 shootout" comment, the `shootoutpath` module) are names carried over from 94G. That path code runs the penalty shot | Code (absence) |
 | **Goalie poke check (CPU)** | None | **New:** `SPAgoaliepoke` | **94** (94S / 95S `assgoalie` has `SPAgpoke`; 94G / 95G don't) | `assgoalie` (`src/engine/goalie/assgoalie.c`) pokes when the puck carrier is within 0x23 and a random byte is under 10 | Code; Inferred (the 94S likeness) |
@@ -285,11 +285,38 @@ Open: speeds are compared per game step, not per real second (frame rates and d7
 | Item | 94 PC | 95 PC | Follows | Evidence | Confidence |
 |---|---|---|---|---|---|
 | Organ tunes and menu songs (`.KMS` / `.CFG`) | 71 tunes: the Dieter Ruehle organ set (the 94 SNES set, per the 94 PC page) and the FM / MT-32 menu songs | **All 71 `.KMS` and their `.CFG` files are byte-identical to 94 PC.** Only `SND.CFG` differs | Unchanged (94S organ set) | File comparison, 142 files | Data |
-| Ruehle credit | "Organ Music / Dieter Ruehle" string | No Ruehle credit string found (the music credit is Alan Stewart) | — | Strings | Not found |
+| Ruehle credit | "Organ Music / Dieter Ruehle" string | No Ruehle credit string found (the music credit is Alan Stewart). The manual's credits don't name him either: "Composer: Michael J. Sokyrka", "Audio Programmers: Alan Stewart, Iain Macanulty" | — | Strings; Manual (credits) | Not credited |
 | Which organ cue plays for each team (`teamrockcuetbl`, 6 cues per team; names in `rockcuefiles`, `src/data/front/lockerroom_announcer.asm`, loaded by `LoadRockMusic` 7DC8B) | 94 PC table | **7 of 53 file names changed.** BUF1, NJER1, PHIL3, SHK3, SHK5, SHK6 and TB1 are no longer named (the files are still shipped). HART2, MON1, MON3, LA4 and BOS2 now appear twice. One slot names CGY2, which has no file and no team row or random pick uses it. Team rows: BUF, NYI, OTT and WPG BUF1 → HART2; NJ and NYR NJER1 → HART2; PHI PHIL3 → CAL2; SJ SHK3 / 5 / 6 → MON1 / MON3 / LA4; TB TB1 → BOS2. New ANA row LA1, TOR1, VAN3, none, CAL2, SHK7. New FLA row HART2, PITTS3, VAN3, none, PITTS2, MON1. Other teams unchanged | PC-only reshuffle | Table comparison | Data |
 | Digitized music | None | **New: 22 digitized `.IFF` recordings (8SVX, 22050 Hz).** With music on, `TITLE30.IFF` replaces `ADTITLE.KMS` at the title (`RunDemoGame` 15D6B) and `AWASONG.IFF` replaces `ADAWARDS` at the awards (`PickAwardWinners` 1205D). Others include GAMESUM, MAINDESK and CALENDAR | PC-only | Code and data files | Code / Data |
 
 The `.IFF` tunes weren't compared note for note with the `.KMS` tunes.
+
+## What the 95 PC manual says, against the code
+
+The public scan of the 95 PC manual (archive.org item ea-nhl94-nhl95-nhl96-nhl97-ibm-pc-dos-win-scans), cited by printed
+page where its contents page gives one. Each line says whether the code confirms it.
+
+- **Players:** Head to Head and Two Player Cooperative, two humans on the same team (p.5). Code: `StartPer`
+  (src/engine/control/findpc.c) gives pad 2 a player on pad 1's team.
+- **The AI:** "The center fills the middle lane, the wings stay to their respective sides, and the defensemen hang
+  back" (p.6-7). The role routines are `asscentero`, `asswingo` and the defence ones (src/engine/logic/logic.asm); the lanes as
+  described: not confirmed in code.
+- **Fake shot:** hold BUTTON 2, then press BUTTON 1. Code: `ShotMode` (src/engine/puckphys/ShotMode.c) cancels the shot
+  on a new BUTTON 1 press before wind-up frame 10 (see the table above).
+- **Shot block:** BUTTONS 1 and 2 with the defender in front of the shooter; with no shot it becomes a hook or hold.
+  Code: `Holdplayer` (src/engine/input/Holdplayer.c) holds an opponent in reach, else dives (`CanBlockShot`,
+  `BlockShotDive`), else checks. The ALT + SPACEBAR key: not confirmed in code.
+- **Penalty shot:** a breakaway player brought down from behind; no box time (p.12). Code: `QuickShotChk` makes the
+  penalty type 1Ah "Penalty Shot" instead of the foul (see the table above). "From behind": not confirmed in code.
+- **Lines:** four forward lines, three defence pairs, two PK and two PP lines (p.12-13); a roster also holds two extra
+  attackers and two goalies (p.21). Code: `lcselect` (src/engine/input/lcselect.c) picks lines 0-3, or 0-1 mapped to
+  the PK (+4) and PP (+6) lines. The defence pairs and extra attackers: not confirmed in code.
+- **Credits:** Lead Programmer Lance Wall; Programmers Victoria Wong, Robert Penner, Kurt Kennett; Producer & Design
+  Ken Sayler; Composer Michael J. Sokyrka. The same core programmers are credited in the 96 PC manual.
+- **Drop pass:** "A pass to a trailing teammate is executed as a 'drop' pass" (p.6-7). Code: the contextual
+  `PassLaneChk` / `ScatterPass` drop described above, not a separate button.
+- The manual has no shootout, practice mode, fighting, skill level or manual goalie; the code has none either (see the
+  tables above).
 
 ## What this means
 
@@ -314,7 +341,7 @@ The `.IFF` tunes weren't compared note for note with the `.KMS` tunes.
 - 95G physics were compared only for the rows listed.
 - `ATT.DB` (rating values) isn't mapped, so ratings weren't compared player by player.
 - The roster overlap uses fuzzy name matching (a subsequence or a similarity ratio over 0.85), so a percentage can be off by a few players.
-- The `.IFF` music wasn't compared with the `.KMS` tunes. The Ruehle credit wasn't found as text in 95 PC, which doesn't prove
-  he wasn't credited somewhere else, such as the manual.
+- The `.IFF` music wasn't compared with the `.KMS` tunes. Ruehle isn't credited in the 95 PC strings or in the manual's
+  credits, even though the 94 PC organ tunes are kept byte for byte.
 - The drop pass and the fake shot were traced in code, not played. Whether the fake shot plays as a fake in a real game, and how often the CPU goalie's poke check and knee hold fire, wasn't
   measured.
