@@ -832,13 +832,13 @@ void clockcont_0(void)
             }
         } else if (p->position < 0) {
             t = p->tmptr;
-            c = t->tmpbox[0];
+            c = t->tmboxlist[0];
             if (c >= 0) {
                 p->position = regd1.w ? 3 : 5;
                 regd1.w++;
                 assinsert(p, 7);
                 setplayer(p, c);
-                for (c = 1; ; c++) if ((t->tmpbox[c - 1] = t->tmpbox[c]) < 0) break;
+                for (c = 1; ; c++) if ((t->tmboxlist[c - 1] = t->tmboxlist[c]) < 0) break;
             }
         }
         p++;

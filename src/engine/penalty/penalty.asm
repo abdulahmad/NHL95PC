@@ -256,7 +256,7 @@ jmp short .6	; 62F59
 movsx eax, dx	; 62F5B
 add eax, eax	; 62F5E
 add eax, edi	; 62F60
-cmp word [byte eax+07Eh], byte 0	; 62F62
+cmp word [byte eax+OldZpos+2], byte 0	; 62F62
 jle short .5	; 62F67
 mov cl, byte [byte eax+07Fh]	; 62F69
 and cl, 0DFh	; 62F6C
@@ -281,7 +281,7 @@ and byte [gmode], 0FBh	; 62F94
 mov eax, dword [puckstruct+1Ah]	; 62F9B
 sar eax, 10h	; 62FA0
 add eax, puckstruct	; 62FA3
-movsx si, byte [byte eax+01Eh]	; 62FA8
+movsx si, byte [byte eax+asslist]	; 62FA8
 cmp si, byte 1Bh	; 62FAD
 je near .33	; 62FB1
 cmp si, byte 1Ch	; 62FB7
@@ -366,7 +366,7 @@ mov edx, dword [byte ebp-014h]	; 630C9
 mov edx, dword [byte edx+044h]	; 630CC
 sar edx, 18h	; 630CF
 mov eax, dword [byte ebp-014h]	; 630D2
-test byte [byte eax+044h], 40h	; 630D5
+test byte [byte eax+pflags], 40h	; 630D5
 setne al	; 630D9
 and eax, 0FFh	; 630DC
 call PostPenaltyEvent	; 630E1
@@ -442,7 +442,7 @@ mov edx, dword [byte ebp-014h]	; 631C3
 mov edx, dword [byte edx+044h]	; 631C6
 sar edx, 18h	; 631C9
 mov eax, dword [byte ebp-014h]	; 631CC
-test byte [byte eax+044h], 40h	; 631CF
+test byte [byte eax+pflags], 40h	; 631CF
 setne al	; 631D3
 and eax, 0FFh	; 631D6
 call PostPenaltyEvent	; 631DB
@@ -475,9 +475,9 @@ mov edx, SortCords	; 63254
 add edx, eax	; 63259
 mov dword [byte ebp-014h], edx	; 6325B
 mov edi, dword [byte edx+06Ch]	; 6325E
-inc word [byte edi+0Ah]	; 63261
+inc word [byte edi+tmPenalties]	; 63261
 mov eax, dword [byte ebp-010h]	; 63265
-add word [byte edi+0Ch], ax	; 63268
+add word [byte edi+tmPenmin], ax	; 63268
 movsx ax, byte [byte edx+047h]	; 6326C
 mov word [byte ebp-0Ch], ax	; 63271
 cmp ax, 19h	; 63275
@@ -485,7 +485,7 @@ jge short .19	; 63279
 mov edx, dword [byte ebp-0Eh]	; 6327B
 sar edx, 10h	; 6327E
 shl edx, 4	; 63281
-mov eax, dword [dword edi+0E6h]	; 63284
+mov eax, dword [dword edi+tmplstats]	; 63284
 add eax, edx	; 6328A
 mov edx, dword [byte ebp-010h]	; 6328C
 add word [byte eax+04h], dx	; 6328F
@@ -494,8 +494,8 @@ mov ebx, dword [byte ebp-012h]	; 63293
 sar ebx, 10h	; 63296
 xor edx, edx	; 63299
 mov eax, dword [byte ebp-014h]	; 6329B
-mov dl, byte [byte eax+05Eh]	; 6329E
-test byte [byte eax+044h], 40h	; 632A1
+mov dl, byte [byte eax+rostnum]	; 6329E
+test byte [byte eax+pflags], 40h	; 632A1
 setne al	; 632A5
 xor ah, ah	; 632A8
 cwde	; 632AA
@@ -532,7 +532,7 @@ mov edx, dword [byte ebp-014h]	; 63300
 mov edx, dword [byte edx+044h]	; 63303
 sar edx, 18h	; 63306
 mov eax, dword [byte ebp-014h]	; 63309
-test byte [byte eax+044h], 40h	; 6330C
+test byte [byte eax+pflags], 40h	; 6330C
 setne byte [byte ebp-04h]	; 63310
 xor eax, eax	; 63314
 mov al, byte [byte ebp-04h]	; 63316
@@ -560,7 +560,7 @@ xor edx, edx	; 6335A
 jmp short .25	; 6335C
 .23:
 mov eax, dword [byte ebp-014h]	; 6335E
-cmp word [byte eax+01Ah], byte 0	; 63361
+cmp word [byte eax+position], byte 0	; 63361
 jle short .24	; 63366
 mov eax, dword [byte eax+044h]	; 63368
 sar eax, 18h	; 6336B
@@ -569,7 +569,7 @@ sar eax, 10h	; 63372
 cmp eax, byte 0FFFFFFFFh	; 63375
 jne short .24	; 63378
 mov eax, dword [byte ebp-014h]	; 6337A
-test byte [byte eax+045h], 10h	; 6337D
+test byte [byte eax+pflags2], 10h	; 6337D
 je short .26	; 63381
 .24:
 inc edx	; 63383
@@ -581,7 +581,7 @@ jl short InProgress.23	; 6338F
 cmp dx, byte 6	; 63391
 je near .33	; 63395
 mov eax, dword [byte ebp-014h]	; 6339B
-movsx ax, byte [byte eax+047h]	; 6339E
+movsx ax, byte [byte eax+pnum]	; 6339E
 mov word [byte ebp-0Ch], ax	; 633A3
 movsx eax, si	; 633A7
 mov dl, byte [nosplit eax*2+PenBuf_pl]	; 633AA
@@ -602,7 +602,7 @@ mov eax, dword [byte ebp-0Eh]	; 633DB
 sar eax, 10h	; 633DE
 add eax, eax	; 633E1
 add eax, edi	; 633E3
-cmp word [byte eax+07Eh], byte 0	; 633E5
+cmp word [byte eax+OldZpos+2], byte 0	; 633E5
 jl short .28	; 633EA
 test byte [byte eax+07Fh], 10h	; 633EC
 je short .28	; 633F0
@@ -639,7 +639,7 @@ mov edx, 0Ch	; 63447
 mov eax, dword [byte ebp-014h]	; 6344C
 call assreplace	; 6344F
 mov eax, dword [byte ebp-014h]	; 63454
-mov ax, word [byte eax+06Ah]	; 63457
+mov ax, word [byte eax+SCnum]	; 63457
 mov word [penaltysc], ax	; 6345B
 .32:
 mov eax, dword [byte ebp-0Ah]	; 63461
@@ -1117,7 +1117,7 @@ xor ebx, edx	; 63A60
 jmp near .5	; 63A62
 .1:
 movsx eax, bx	; 63A67
-movsx ax, byte [dword ecx+eax+tmpbox]	; 63A6A
+movsx ax, byte [dword ecx+eax+tmboxlist]	; 63A6A
 test ax, ax	; 63A73
 jl near .6	; 63A76
 mov dx, word [regd1]	; 63A7C
@@ -1151,7 +1151,7 @@ mov eax, dword [regd2-2]	; 63AD4
 sar eax, 10h	; 63AD9
 movsx edx, bx	; 63ADC
 add eax, edx	; 63ADF
-mov dl, byte [dword ecx+eax+tmpbox]	; 63AE1
+mov dl, byte [dword ecx+eax+tmboxlist]	; 63AE1
 mov byte [dword ecx+eax+0B5h], dl	; 63AE8
 test dl, dl	; 63AEF
 jl short .3	; 63AF1
@@ -1206,11 +1206,11 @@ je short .x	; 63B6A
 test ah, 40h	; 63B6C
 jne short .1	; 63B6F
 mov eax, hmtmstruct	; 63B71
-inc word [byte eax+08h]	; 63B76
+inc word [byte eax+tmpptime]	; 63B76
 ret	; 63B7A
 .1:
 mov eax, awtmstruct	; 63B7B
-inc word [byte eax+08h]	; 63B80
+inc word [byte eax+tmpptime]	; 63B80
 .x:
 ret	; 63B84
 %endif ; C
@@ -1637,7 +1637,7 @@ mov ebx, dword [byte ebx+06Ch]	; 640B4
 mov word [byte ebx+034h], 0FFFFh	; 640B7
 mov ax, word [byte ebx+034h]	; 640BD
 mov word [byte ebx+032h], ax	; 640C1
-mov word [byte ebx+030h], ax	; 640C5
+mov word [byte ebx+tmpsplayer], ax	; 640C5
 mov edx, dword [puckc]	; 640C9
 add word [crowdlevel], byte 64h	; 640CF
 mov al, byte [penshotplayer]	; 640D7

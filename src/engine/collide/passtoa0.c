@@ -32,7 +32,7 @@ void passtoa0(Player *p)
     short n;
     int r;
 
-    if (!(gmode & gmhl)) p->tmptr->tmpass++;
+    if (!(gmode & gmhl)) p->tmptr->tmpasses++;
     passplayer = p->SCnum;
     assinsert(p, 0x13);
     GetHot(p);

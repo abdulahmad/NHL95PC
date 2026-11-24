@@ -1350,7 +1350,7 @@ jne short .1	; 50B37
 test byte [gmode], 10h	; 50B39
 jne short .1	; 50B40
 mov eax, dword [byte eax+06Ch]	; 50B42
-inc word [byte eax+028h]	; 50B45
+inc word [byte eax+tmpasscomp]	; 50B45
 .1:
 mov word [passplayer], 0FFFFh	; 50B49
 pop edx	; 50B52
@@ -1417,12 +1417,12 @@ mov word [byte ebx+SPA], 138Dh	; 50C07
 xor ecx, ecx	; 50C0D
 mov dword [onetimerflag], ecx	; 50C0F
 .8:
-mov word [byte ebx+03Eh], 5	; 50C15
+mov word [byte ebx+nopuck], 5	; 50C15
 mov ax, word [byte ebx+facedir]	; 50C1B
 xor ah, ah	; 50C1F
 and al, 7	; 50C21
 mov word [regd0], ax	; 50C23
-test byte [byte ebx+055h], 8	; 50C29
+test byte [byte ebx+attribute], 8	; 50C29
 je short .9	; 50C2D
 mov eax, 8	; 50C2F
 sub ax, word [regd0]	; 50C34
@@ -1436,7 +1436,7 @@ movsx dx, byte [nosplit eax*2+assonetimer_blade_y]	; 50C4D
 mov word [regd1], dx	; 50C56
 movsx ax, byte [nosplit eax*2+assonetimer_blade]	; 50C5D
 mov word [regd0], ax	; 50C66
-test byte [byte ebx+055h], 8	; 50C6C
+test byte [byte ebx+attribute], 8	; 50C6C
 je short .10	; 50C70
 mov ecx, eax	; 50C72
 neg ecx	; 50C74
@@ -1490,7 +1490,7 @@ jle short .15	; 50D13
 mov word [passdir], 8	; 50D15
 .15:
 xor edx, edx	; 50D1E
-mov dl, byte [byte ebx+05Bh]	; 50D20
+mov dl, byte [byte ebx+shotspd]	; 50D20
 mov eax, edx	; 50D23
 sar edx, 1Fh	; 50D25
 LD sub, eax, edx	; 50D28
@@ -1502,7 +1502,7 @@ mov word [byte ebx+SPAcnt], 4	; 50D3B
 mov byte [byte ebx+046h], 0	; 50D41
 mov eax, ebx	; 50D45
 call updateanim	; 50D47
-mov eax, dword [byte ebx+06Ch]	; 50D4C
+mov eax, dword [byte ebx+tmptr]	; 50D4C
 inc word [byte eax+018h]	; 50D4F
 add word [crowdlevel], byte 64h	; 50D53
 mov eax, ebx	; 50D5B
@@ -1537,7 +1537,7 @@ sar eax, 10h	; 50DBC
 cmp eax, byte 0FFFFFFBAh	; 50DBF
 jg near CanBlockShot_ret5	; 50DC2
 .18:
-mov eax, dword [byte ebx+06Ch]	; 50DC8
+mov eax, dword [byte ebx+tmptr]	; 50DC8
 inc word [byte eax+016h]	; 50DCB
 movsx ax, byte [byte ebx+027h]	; 50DCF
 add eax, 0Ah	; 50DD4

@@ -92,7 +92,7 @@ int SkillForAnim(Player *p)
 }
 
 /* GetLowestPen (54A53; 93G penalty93 GetLowestPen, "power play time left from the penalty box times"): when the
-   score sides differ (hmtmap[0] - awtmap), sum trail's penalty times (tmpdst, low 14 bits, by the tmpbox list
+   score sides differ (hmtmap[0] - awtmap), sum trail's penalty times (tmpdst, low 14 bits, by the tmboxlist list
    up to a negative index), each less the one before. No arguments. Result: 0 when the sides are level; the sum
    when lead's tmap is 6; else the sum less the last time, or the full sum when the first penalty on lead's list
    is not longer than that. The unsigned short result and short sum and prev were found by
@@ -120,7 +120,7 @@ unsigned short GetLowestPen(void)
     }
     prev = 0;
     sum = 0;
-    box = trail->tmpbox;
+    box = trail->tmboxlist;
     for (;;) {
         idx = *box++;
         if (idx < 0)
@@ -138,7 +138,7 @@ unsigned short GetLowestPen(void)
     return sum;
 box2:
     sum -= prev;
-    box = lead->tmpbox;
+    box = lead->tmboxlist;
     for (;;) {
         idx = *box++;
         if (idx < 0)
