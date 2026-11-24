@@ -1,4 +1,5 @@
-/* Engine physics AI: is the pass lane to a team-mate open; NetCollide and puckstick (matched) end in its pops. */
+/* Engine physics AI: the drop pass check: 1 when dopass should drop the puck to a trailing team-mate
+ (ScatterPass); NetCollide and puckstick (matched) end in its pops. */
 /* DRAFT (PassLaneChk, 10.0 GA, 12 differing, same size): the direction is kept in oy (dead by then), the x gap in
  its own dx; the wrap goes through y (`y = oy + 1`, the EXE's lea eax,[esi+1]). With dx the two ABS temporaries of
  ABS(y) <= ABS(oy) get the EXE's edi / ebp; left: dx in eax (EXE esi, where the y gap dy was: the x gap through dy
