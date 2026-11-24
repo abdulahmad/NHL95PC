@@ -122,6 +122,7 @@
 #define SPAblockfront   0x1475
 #define SPAblockknee    0x14AD
 #define SPArefelbow     0x14E5
+#define SPArefhistick   0x14F9
 
 /* player structure flag bits */
 #define pfrev           0x10    /* pflags bit 4: skating backwards */

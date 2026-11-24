@@ -7,8 +7,9 @@
 #   make CBUILD=0             asm only (default: C sources are compiled when the Watcom toolchain is found)
 #   make FAST=1               C objects depend only on their .c file, not on src/include/*.h (quick loop while
 #                             adding functions; header edits do not recompile every C file)
-#   make fullcheck            from scratch: both builds (CBUILD=1 and CBUILD=0) with every C file recompiled;
-#                             run this before every push
+#   make fullcheck            from scratch: both builds (CBUILD=1 and CBUILD=0) with all C recompiled, then
+#                             tools/build/check_spa.py (spa.inc and consts.h against frames.asm); run this
+#                             before every push
 #   make WATCOM_VER=la        compile the C with the 10.0 LA wcc386 instead of 10.0 GA (the default and the
 #                             compiler HOCKEY.EXE was built with); the matched C is tuned for GA, so an LA build
 #                             of CBUILD=1 is not expected to be byte-identical (BUILD_NOTES.md)
@@ -104,6 +105,7 @@ fullcheck:
 	rm -rf build/obj build/obj0 build/c build/HOCKEY.EXE build/cbuild.* build/watcom.*
 	$(MAKE) -j$$(nproc) CBUILD=1
 	$(MAKE) -j$$(nproc) CBUILD=0
+	$(PYTHON) tools/build/check_spa.py
 
 clean:
 	rm -rf build/obj build/obj0 build/link build/c build/HOCKEY.EXE build/cbuild.* build/watcom.*
