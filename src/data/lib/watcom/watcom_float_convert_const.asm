@@ -1,10 +1,16 @@
-; Whether a joystick is plugged in, and the queue of pad samples.
+; Strings and constants of src/lib/watcom/watcom_float_convert.asm, in link order.
 bits 32
 %include "hockey.inc"
-section s_C4B6C progbits alloc noexec write align=1
-global CharClassTable, CLibBitMasks, ScanBitMasks, DblMaxLow, DblMaxHigh, DblMinusMaxLow, DblMinusMaxHigh, HugeValLo
-global HugeValHi, SpeechSlotMemSize, joypresent, inputticks, joysampling, joyqhead, joyqcount
-global F64_Scale10Max, F64_Scale10Min, Pow10Table, Scale10Count
+section s_C4B5C progbits alloc noexec write align=1
+global str_Inf, str_Nan, F64_neg1_floor_, CharClassTable, CLibBitMasks, ScanBitMasks, F64_Scale10Max, F64_Scale10Min
+global DblMaxLow, DblMaxHigh, DblMinusMaxLow, DblMinusMaxHigh, HugeValLo, HugeValHi, Scale10Count, Pow10Table
+str_Inf:                                        ; "inf" string literal; used by __Nan_Inf_
+        db 069h,06Eh,066h,00h
+str_Nan:                                        ; "nan" string literal; used by __Nan_Inf_
+        db 06Eh,061h,06Eh,00h
+F64_neg1_floor_:                                ; double constant -1; used by floor_
+        db 00h,00h,00h,00h,00h
+        db 00h,0F0h,0BFh
 CharClassTable:                                 ; Run-time library character classes; used by EditTextField,
                                                 ; InputDialog, ScanChars ...
         db 00h,01h,01h,01h,01h,01h,01h,01h,01h,01h,03h,03h,03h,03h,03h,01h
@@ -54,25 +60,3 @@ Pow10Table:                                     ; used by _Scale10V_
         db 08h,00h,00h,00h,00h,00h,084h,0D7h,097h,041h,04h,00h,00h,00h,00h,00h
         db 00h,088h,0C3h,040h,01h,00h,00h,00h,00h,00h,00h,00h,024h,040h,00h,00h
         db 00h,00h
-SpeechSlotMemSize:                              ; used by MenuCentralRegistry, RunIntro, SetSoundDevice ...
-        db 00h,00h,00h,00h
-joypresent:                                     ; used by ReadJoyPad, main_
-        db 00h,00h,00h,00h
-        db 00h,00h,00h,00h
-inputticks:                                     ; SampleInputTick tick counter (capped at 1000), cleared by
-                                                ; ResetInputSampling; used by ResetInputSampling,
-                                                ; SampleInputTick
-        db 00h,00h,00h,00h
-joysampling:                                    ; timer ISR SampleInputTick samples the pads into joyqueue
-                                                ; only while this is non-zero; joyq_pop and the sound calls
-                                                ; save it in joysampling_save, clear it and restore it; used
-                                                ; by ClockTick, FreeGameMemory, Gameloop ...
-        db 00h,00h,00h,00h
-joyqhead:                                       ; input queue read index 0-49 (joyq_pop wraps it at 32h; ISR
-                                                ; writes at (head+count) mod 50); used by SampleInputTick,
-                                                ; joyq_peek, joyq_pop
-        db 00h,00h,00h,00h
-joyqcount:                                      ; input queue entries (ISR increments up to 50, joyq_pop
-                                                ; decrements); used by SampleInputTick, joyq_flush, joyq_peek
-                                                ; ...
-        db 00h,00h,00h,00h
