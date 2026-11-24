@@ -19,35 +19,36 @@ it but the logic wasn't traced. Written 2026-11-24.
 
 ## At a glance
 
-"New" means 95 PC has it and 94 PC doesn't. "PC only" means none of the four console games has it. "Missing on PC"
-means the console games have it and 95 PC doesn't. Where 94G and 94S (or 95G and 95S) differ, the section says which.
+"New" means 95 PC has it and 94 PC doesn't. "95 PC only" means none of the four console games has it
+(and 94 PC doesn't either); "94 and 95 PC only" means both PC games have it and no console game does. "Missing on
+95 PC" means the console games have it and 95 PC doesn't. Where 94G and 94S (or 95G and 95S) differ, the section says which.
 
 | Feature | 94 PC | 94 consoles | 95 consoles |
 |---|---|---|---|
 | Fighting | Same (none) | Same (none) | Same (none) |
 | Board, bench, cross-checks | New | Same idea | Same idea |
 | One-timers | Same | Same as 94S | Not compared |
-| Fake one-timer | New | PC only | PC only |
-| Fake shot | New | PC only | Different |
-| Shot blocking | New | PC only | Different |
-| Drop pass | New | PC only | Different |
-| Practice (2-on-2) | Same (none) | Same (none) | Missing on PC |
+| Fake one-timer | New | 95 PC only | 95 PC only |
+| Fake shot | New | 95 PC only | Different |
+| Shot blocking | New | 95 PC only | Different |
+| Drop pass | New | 95 PC only | Different |
+| Practice (2-on-2) | Same (none) | Same (none) | Missing on 95 PC |
 | Penalty shots | New | Same idea | Same idea |
-| Shootout | Same (none) | Missing on PC | Missing on PC |
+| Shootout | Same (none) | Missing on 95 PC | Missing on 95 PC |
 | Goalie poke check | New | Same idea as 94S | Same idea as 95S |
-| Goalie knee hold | New | PC only | PC only |
-| Goalie falls | New | PC only | Same (two of three) |
-| Manual goalie | Same | Missing on PC | Missing on PC |
-| More than 2 players | Same (none) | Missing on PC | Different |
+| Goalie knee hold | New | 95 PC only | 95 PC only |
+| Goalie falls | New | 95 PC only | Same (two of three) |
+| Manual goalie | Same | Missing on 95 PC | Missing on 95 PC |
+| More than 2 players | Same (none) | Missing on 95 PC | Different |
 | Penalties | Adds 4 | Different | Different |
 | Line changes | Same | Not compared | Not compared |
 | In-game team stats | Changed | Different | Different |
-| Roster tools | New | PC only | Same idea |
+| Roster tools | New | 95 PC only | Same idea |
 | Trades | Same | Not compared | Different |
-| Awards | Same, subtitles new | PC only | Different |
+| Awards | Same, subtitles new | 94 and 95 PC only | Different |
 | Divisions, rosters | Changed | Different | Same |
 | Skating physics | Changed | Different | Different |
-| Announcer, video | Changed | PC only | PC only |
+| Announcer, video | Changed | 94 and 95 PC only | 94 and 95 PC only |
 | Music | Same, adds `.IFF` | Same as 94S | Not compared |
 
 ## Fighting
@@ -84,7 +85,7 @@ means the console games have it and 95 PC doesn't. Where 94G and 94S (or 95G and
   frame 10 of a one-timer switches to `SPAfakeonetimef` / `SPAfakeonetimeb` and no shot is taken (the same abort as
   the fake shot below).
 - **vs 94 PC: new.**
-- **vs the consoles: PC only.** No console game has a fake one-timer animation.
+- **vs the consoles: 95 PC only.** No console game has a fake one-timer animation.
 
 ## Fake shot
 
@@ -95,7 +96,7 @@ means the console games have it and 95 PC doesn't. Where 94G and 94S (or 95G and
   the follow-through, so the "fake" is an early abort of the wind-up rather than a separate deke animation. How it
   looks in a real game wasn't checked.
 - **vs 94 PC: new.** A wind-up always ends in a shot.
-- **vs 94 consoles: PC only.** 94G and 94S have none.
+- **vs 94 consoles: 95 PC only.** 94G and 94S have none.
 - **vs 95 Genesis: same idea, different trigger.** 95G's fake shot is "A released in the attacking zone"
   (`input95.asm`), with the same `SPAfakeshotf` name. That 95 PC copies 95G is inferred from the name.
 - **vs 95 SNES: missing there.** 95S's `ShotMode` (src/routines/engine/logic/assshoot.asm) has no exit without a shot:
@@ -110,8 +111,8 @@ means the console games have it and 95 PC doesn't. Where 94G and 94S (or 95G and
   (src/engine/input/Holdplayer.c) holds an opponent in reach, else dives (`CanBlockShot`, `BlockShotDive`), else
   checks.
 - **vs 94 PC: new.**
-- **vs 94 consoles: PC only.** 94G and 94S have no shot blocking.
-- **vs 95 Genesis: different.** 95G has `CanBlock` / `chkblock` and one block animation (`SPAblock`); the PC's four
+- **vs 94 consoles: 95 PC only.** 94G and 94S have no shot blocking.
+- **vs 95 Genesis: different.** 95G has `CanBlock` / `chkblock` and one block animation (`SPAblock`); 95 PC's four
   animations and its routines are its own. 95S: not found by name.
 
 ## Drop pass
@@ -122,7 +123,7 @@ means the console games have it and 95 PC doesn't. Where 94G and 94S (or 95G and
   in code, not played. Details below.
 - **vs 94 PC: new.** 94 PC's `dopass` (28BB:0B96, NHL94PC src/engine/physics.asm) goes straight from the receiver search
   to `passtoa0` or the `passdir` pass. It has no lane check, no `passlane` byte and no `ScatterPass`.
-- **vs 94 consoles: PC only.**
+- **vs 94 consoles: 95 PC only.**
 - **vs 95 Genesis: different.** 95G's drop pass is a button move, A with the d-pad back (`GameFlags` bit 1,
   `input95.asm` `dopass`): a flat pass at a quarter of the speed, with `nopuck` 18h and its own animation
   (`SPAdroppass` / `SPApassb2`).
@@ -175,11 +176,11 @@ each bit: not confirmed in code.
 
 - **95 PC: none.** No practice string or label.
 - **vs 94 PC and 94 consoles: same (none).** 94G and 94S have none.
-- **vs 95 Genesis: missing on PC.** 95G has Practice Mode (`setup95.asm` play modes; `sflags9` bit 7). Each side gets
+- **vs 95 Genesis: missing on 95 PC.** 95G has Practice Mode (`setup95.asm` play modes; `sflags9` bit 7). Each side gets
   0, 1 or 2 skaters (`PracticePlayersTbl`, `PrintPracticePlayers`), and `PullPracticePlayers` (`goal95.asm`) takes the
   rest off the ice. There is no icing, every rush counts as a breakaway, and `PracticeGoalies` sets the goalie mode
   for a side with a pad and no skaters. The word "Jam" wasn't found in 95G's strings.
-- **vs 95 SNES: missing on PC.** 95S has the same mode (`PracticeOptions`: Home Players / Visitor Players; Data).
+- **vs 95 SNES: missing on 95 PC.** 95S has the same mode (`PracticeOptions`: Home Players / Visitor Players; Data).
 
 ## Penalty shots
 
@@ -203,7 +204,7 @@ each bit: not confirmed in code.
   (`clockcont_0`, the `checkwindow` "gsp 4 shootout" comment, the `shootoutpath` module) are names carried over from
   94G. That path code runs the penalty shot.
 - **vs 94 PC: same (none).**
-- **vs 94 consoles and 95 consoles: missing on PC.** They all have one: 94G (`shootout94.asm`), 94S, 95G
+- **vs 94 consoles and 95 consoles: missing on 95 PC.** They all have one: 94G (`shootout94.asm`), 94S, 95G
   (`shootout95.asm`) and 95S (`ShootoutWonBy`).
 
 ## Goalie AI and animations
@@ -212,10 +213,10 @@ each bit: not confirmed in code.
   within 0x23 and a random byte is under 10. **vs 94 PC: new.** **vs 94S and 95S: same idea** (their `assgoalie` has
   `SPAgpoke`; the likeness is inferred). **vs 94G and 95G:** missing there.
 - **Knee hold, 95 PC:** `assgoalie` holds the puck on the knee when an attacker is close (`SPAgokneehold`,
-  `SPAgoalieknee`). **vs 94 PC: new. vs the consoles: PC only.**
+  `SPAgoalieknee`). **vs 94 PC: new. vs the consoles: 95 PC only.**
 - **Falls on hard shots, 95 PC:** `puckgoalie` (57096, src/engine/puckphys/puckgoalie.c) picks from the `gofallback` ..
   `gofallstick` range on hard shots (`SPAgofallback`, `SPAgofallglove`, `SPAgofallstick`). **vs 94 PC: new. vs 95G:
-  same for the first two** (same names in 95G); `gofallstick` is PC only.
+  same for the first two** (same names in 95G); `gofallstick` is 95 PC only.
 - **Wall animations:** `SPAgwallleft` / `SPAgwallright` are still in the SPA list (Data). **vs 94 PC and 94S: same.**
 - **94G's goalie animations** (`SPAghighl/r`, `SPAgslambot/top`, `SPAgstick2l/r`) are in neither PC game's SPA list.
 - How often the CPU goalie's poke check and knee hold fire wasn't measured.
@@ -224,9 +225,9 @@ each bit: not confirmed in code.
 
 - **95 PC:** a human takes the goalie only while he holds the puck (`dopass`, 54DF4). No manual-goalie menu string.
 - **vs 94 PC: same.**
-- **vs 94 consoles: missing on PC.** 94G has a "Manual Goalie" option (`menu94.asm`); 94S an Automatic / Manual goalie
+- **vs 94 consoles: missing on 95 PC.** 94G has a "Manual Goalie" option (`menu94.asm`); 94S an Automatic / Manual goalie
   option (`GoalieOptionText`).
-- **vs 95 Genesis: missing on PC.** 95G has a MANUAL GOALIE / AUTO GOALIE pause option (`pause95.asm`). 95S: not
+- **vs 95 Genesis: missing on 95 PC.** 95G has a MANUAL GOALIE / AUTO GOALIE pause option (`pause95.asm`). 95S: not
   checked.
 
 ## Number of players
@@ -235,9 +236,9 @@ each bit: not confirmed in code.
   (src/engine/control/findpc.c) gives pad 2 the player before pad 1's when `cont2team` equals `cont1team`. A league can
   have several human teams ("Select human controlled teams" in the league setup; Data).
 - **vs 94 PC: same.**
-- **vs 94 consoles: missing on PC.** 94G has "4 Way" play (`optsetup94.asm`); 94S up to five pads with the MultiPlayer
+- **vs 94 consoles: missing on 95 PC.** 94G has "4 Way" play (`optsetup94.asm`); 94S up to five pads with the MultiPlayer
   5 multitap (`Multi5ConnectCheck`, `cont1team`-`cont5team`).
-- **vs 95 Genesis: missing on PC.** 95G has `FourWayPlay`.
+- **vs 95 Genesis: missing on 95 PC.** 95G has `FourWayPlay`.
 - **vs 95 SNES: same in effect.** 95S has all the multitap code but switches it off (below).
 
 ### 95S multitap
@@ -332,7 +333,7 @@ The table gives each part's 95 PC routine and address, then the 94 PC address of
   "Team Scratches ...", "Import Databases ..." in NHL94PC src/data/far/menu_text.asm and team_choice_text.asm). It has
   no free-agent, create-player, release or rating-units string or label (`HOCKEY.EXE` holds the strings; its overlays
   hold none). (Data)
-- **vs 94 consoles: PC only.** None of these is in 94G or 94S.
+- **vs 94 consoles: 95 PC only.** None of these is in 94G or 94S.
 - **vs 95 Genesis: same idea, own code.** 95G has the same set (`create95.asm`: "Create Player, Sign Free Agents,
   Release Players", also from a points pool); 95 PC's code is its own (`docs/RULES.md` F3).
 
@@ -360,10 +361,10 @@ The table gives each part's 95 PC routine and address, then the 94 PC address of
 - **vs 94 PC: same list, subtitles new.** 94 PC has Hart, Art Ross, Norris, Selke, Vezina, Jennings, Calder,
   Presidents, Conn Smythe, EA Sports Cup (NHL94PC `AwardNamePtrs`, `AwardKinds`, `AwardWinner`..`AwardWinner9`,
   `ShowAwardScreens`, src/data/dgroup.asm), and no subtitle strings.
-- **vs 94 consoles: PC only.** 94G and 94S have no awards; 94 PC had season awards first.
+- **vs 94 consoles: 94 and 95 PC only.** 94G and 94S have no awards; 94 PC had season awards first.
 - **vs 95 Genesis: different.** 95G's awards are new in 95 (`awards95.asm`): 9 awards, Hart, Norris, Vezina, Art Ross,
   Jennings, Pearson, Selke, Presidents, Conn Smythe, with no Calder or EA Sports Cup. 95G also prints a description
-  under each award ("Most Valuable Player", "Best Defenseman", "Best Goalkeeper", "Best Defensive Forward"), so the PC
+  under each award ("Most Valuable Player", "Best Defenseman", "Best Goalkeeper", "Best Defensive Forward"), so the 95 PC
   subtitles look like 95G's (inferred). The wording differs in places (95G "Most Points", 95 PC "Points Leader").
 
 ## Teams, divisions and rosters
@@ -399,7 +400,7 @@ All from `TEAMS.DB`, `KEY.DB` and name lists (Data):
 
 - **95 PC:** 49 announcer routines (`Pa` / `Say`), against 61 in 94 PC. CD video clips (54 `.CMV`, "Video Provided
   By: NHL Productions") and a VESA high-resolution mode (`VSAHKY50`) (data files and strings; Data).
-- **vs the consoles: PC only.** No play-by-play code found in 94G or 95G.
+- **vs the consoles: 94 and 95 PC only.** No play-by-play code found in 94G or 95G.
 - **Credits** (credit pages in src/data/front/scoreboard_stats_screens.asm): Lead Programmer Lance Wall; Programmers
   Victoria Wong, Robert Penner, Kurt Kennett; Producer & Design Ken Sayler; Composer Michael J. Sokyrka; Audio
   Programmers Alan Stewart, Iain Macanulty; a SportsDesk announcer (Michael Donovan) and a rink announcer (Bruce
@@ -413,7 +414,7 @@ The groups below are 95 PC's animations that 94 PC doesn't have, plus 94G's that
 |---|---|---|
 | New, also in 94G / 94S / 95G / 95S | `SPAbenchcheckl/r`, `SPAboardfront/back/left/right`, `SPAcrosscheck` | 94 |
 | New, also in 95G | `SPAfakeshotf/b`, `SPAgofallback`, `SPAgofallglove` | 95 |
-| New, PC only | `SPAblockfront/knee/left/right`, `SPAfakeonetimef/b`, `SPAgoalieknee`, `SPAgoaliepoke`, `SPAgofallstick`, `SPAgokneehold`, `SPArefelbow`, `SPArefhistick`, `SPArefpenshot` | none (the poke check matches 94S `SPAgpoke` in purpose, not by name) |
+| New, 95 PC only | `SPAblockfront/knee/left/right`, `SPAfakeonetimef/b`, `SPAgoalieknee`, `SPAgoaliepoke`, `SPAgofallstick`, `SPAgokneehold`, `SPArefelbow`, `SPArefhistick`, `SPArefpenshot` | none (the poke check matches 94S `SPAgpoke` in purpose, not by name) |
 | In 94G but in neither PC game | `SPAghighl/r`, `SPAgslambot/top`, `SPAgstick2l/r`, `SPAinjuryfall` | — |
 
 ## Skating and shooting physics
@@ -451,8 +452,8 @@ The 93 / 94 console and 94 PC values are from the 94 PC page. The 95G column is 
 - The velocity cap is above every top speed in the table, so it probably only catches collision kicks (inferred).
 - Top speed is faster: +12.5% at the bottom, +6.7% at the top. The index is still (leg speed x energy) >> 12; injured
   1/8.
-- Stopping that scales with agility is like 94S's ($70 + agility) x d7 (inferred); the values are PC only. The
-  referee index and the goalie acceleration change are PC only.
+- Stopping that scales with agility is like 94S's ($70 + agility) x d7 (inferred); the values are 95 PC only. The
+  referee index and the goalie acceleration change are 95 PC only.
 - The shot, the same in both PC games: a $5249 constant; backhand -25%; shot-power boosts (+2 above 12 when closer
   than 500; +1 above 14 / 13 / 10); a perfect shot at distance ≤ 200 when rnd(16 + accuracy) > 14 (accuracy +1 above
   14 / 13); always perfect in highlight mode; aim error ((speed / 16 - accuracy + 16) x distance) >> 6, halved inside
@@ -465,7 +466,7 @@ The 93 / 94 console and 94 PC values are from the 94 PC page. The 95G column is 
 
 - **95 PC: the 94 PC rink and the per-pixel rule.** On the Genesis and on both PC games one game unit is one pixel on
   both axes, and the physics treat x (across the rink) and y (along it) the same. Nothing scales by feet or by pixel
-  aspect ratio per axis. The PC rink was redrawn wider and shorter in pixels, and the PC speeds were rescaled the same
+  aspect ratio per axis. The 94 PC rink was redrawn wider and shorter in pixels, and the 94 PC speeds were rescaled the same
   way on both axes; 95 PC undoes part of 94 PC's speed cut. The full workings are on the 94 PC page
   ([Rink size, aspect ratio and per-axis scale](https://github.com/abdulahmad/NHL94PC/blob/main/docs/CONSOLE_LINEAGE.md#rink-size-aspect-ratio-and-per-axis-scale)).
 - Drawing: `DrawFrameSprite` (src/front/main/DrawFrameSprite.c) puts a sprite at x + 0xC0, 0x140 - y, minus the
@@ -496,7 +497,7 @@ boards, blue lines 60 ft out from them):
 - The pass rows: `dopass` (54DF4) sets pass speed (passing x 4) + 0xA0 as on the Genesis. A pass with no receiver
   multiplies it by `dirtab`, which is now 200 (94 PC: 175, so 0.875). `passtoa0` (551CF) uses the $78 time factor.
 - At top speed, skating end to end takes 0.90-1.02 times as many game steps as on the Genesis, and board to board
-  1.20-1.35 times (94 PC: 1.02-1.08 and 1.35-1.44). For the same speed a PC skater still covers 30% fewer feet across
+  1.20-1.35 times (94 PC: 1.02-1.08 and 1.35-1.44). For the same speed a 95 PC skater still covers 30% fewer feet across
   the ice than along it (2.64 / 3.76 units per foot); on the Genesis it's 7%. Stopping (200 + agility) and the
   velocity cap are new values, not a rescale. Shots keep 94 PC's 0x3B (0.868).
 - Open: speeds are compared per game step, not per real second (frame rates and d7 weren't measured).
@@ -509,14 +510,14 @@ boards, blue lines 60 ft out from them):
 - **Ruehle credit:** no Ruehle credit string found in 95 PC (94 PC has "Organ Music / Dieter Ruehle"); the credit pages
   name Michael J. Sokyrka (composer) and Alan Stewart, Iain Macanulty (audio programmers), even though the 94 PC organ
   tunes are kept byte for byte.
-- **Organ cue per team: a PC-only reshuffle.** `teamrockcuetbl` has 6 cues per team; names are in `rockcuefiles`
+- **Organ cue per team: a 95 PC only reshuffle.** `teamrockcuetbl` has 6 cues per team; names are in `rockcuefiles`
   (src/data/front/lockerroom_announcer.asm), loaded by `LoadRockMusic` (7DC8B). 7 of 53 file names changed. BUF1,
   NJER1, PHIL3, SHK3, SHK5, SHK6 and TB1 are no longer named (the files are still shipped). HART2, MON1, MON3, LA4 and
   BOS2 now appear twice. One slot names CGY2, which has no file, and no team row or random pick uses it. Team rows:
   BUF, NYI, OTT and WPG BUF1 → HART2; NJ and NYR NJER1 → HART2; PHI PHIL3 → CAL2; SJ SHK3 / 5 / 6 → MON1 / MON3 / LA4;
   TB TB1 → BOS2. New ANA row LA1, TOR1, VAN3, none, CAL2, SHK7. New FLA row HART2, PITTS3, VAN3, none, PITTS2, MON1.
   Other teams unchanged. (Data)
-- **Digitized music: new, PC only.** 22 digitized `.IFF` recordings (8SVX, 22050 Hz). With music on, `TITLE30.IFF`
+- **Digitized music: new, 95 PC only.** 22 digitized `.IFF` recordings (8SVX, 22050 Hz). With music on, `TITLE30.IFF`
   replaces `ADTITLE.KMS` at the title (`RunDemoGame` 15D6B) and `AWASONG.IFF` replaces `ADAWARDS` at the awards
   (`PickAwardWinners` 1205D). Others include GAMESUM, MAINDESK and CALENDAR. The `.IFF` tunes weren't compared note
   for note with the `.KMS` tunes.
@@ -526,9 +527,9 @@ boards, blue lines 60 ft out from them):
 What the code has for each line on the 95 PC box (and the console boxes where they bear on it):
 
 - **"New moves: fake shots, drop passes, laying down on D":** all in the code. Fake shot and shot blocking, as on the
-  95G box (see Fake shot, Shot blocking); the drop pass is PC only (see Drop pass).
+  95G box (see Fake shot, Shot blocking); the drop pass is 95 PC only (see Drop pass).
 - **Penalty shots ("get caught dropping an opponent to the ice on a break and he'll go one-on-one with your
-  goalie"):** new for the PC, in code (see Penalty shots). The 94G, 94S and 94 Sega CD boxes already list penalty
+  goalie"):** new for 95 PC, in code (see Penalty shots). The 94G, 94S and 94 Sega CD boxes already list penalty
   shots, and 94G / 94S have `PenShotChk`.
 - **"Line changes", "line change over the bench", "set starting lines":** in the code, all already in 94 PC (see Line
   changes).
@@ -548,7 +549,7 @@ What the code has for each line on the 95 PC box (and the console boxes where th
   but neither do the 94 / 95 consoles.
 - From the 95 consoles it gets the 1993-94 season: Anaheim, Florida and Dallas, the new divisions and conferences,
   near-95G rosters and the 95G All-Stars. It also gets a fake / aborted shot, shot blocking, goalie falls and the
-  95G-style roster tools (create player, free agents, release). The code for all of these is PC's own. The season,
+  95G-style roster tools (create player, free agents, release). The code for all of these is 95 PC's own. The season,
   playoffs, exhibition games, trades and the 10-award list were already in 94 PC; 95 PC only adds 95G-style
   subtitles to the award screens.
 - Its own additions: the contextual drop pass, the fake one-timer, four shot-block animations, the goalie knee hold,
