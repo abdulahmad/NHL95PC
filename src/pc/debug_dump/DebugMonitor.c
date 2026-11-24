@@ -153,8 +153,8 @@ void DumpStatsLog(char *name)
     tm = &hmtmstruct;
     fprintf(f, (char *)str_dumpRule);
     fprintf(f, (char *)str_dumpTeamHdrH);
-    fprintf(f, (char *)str_dumpHome, hmtmstruct.tmshots, hmscore[0], hmshotcnt, hmgoalcnt, hmtmstruct.tmppg,
-        hmtmstruct.tmpp, hmtmstruct.tmpen, hmtmstruct.tmpenmin, hmtmstruct.tmATOP, hmtmstruct.tmpass,
+    fprintf(f, (char *)str_dumpHome, hmtmstruct.tmshots, hmscore[0], hmshotcnt, hmgoalcnt, hmtmstruct.tmPwrGoals,
+        hmtmstruct.tmPwrPlays, hmtmstruct.tmPenalties, hmtmstruct.tmPenmin, hmtmstruct.tmATOP, hmtmstruct.tmpasses,
         hmtmstruct.tmpasscomp);
     st = (short *)hmtmplstats;
     fprintf(f, (char *)str_dumpPlHdrH);
@@ -172,8 +172,8 @@ void DumpStatsLog(char *name)
     }
     tm = &awtmstruct;
     fprintf(f, (char *)str_dumpTeamHdrA);
-    fprintf(f, (char *)str_dumpAway, awtmstruct.tmshots, awscore, awshotcnt, awgoalcnt, awtmstruct.tmppg,
-        awtmstruct.tmpp, awtmstruct.tmpen, awtmstruct.tmpenmin, awtmstruct.tmATOP, awtmstruct.tmpass,
+    fprintf(f, (char *)str_dumpAway, awtmstruct.tmshots, awscore, awshotcnt, awgoalcnt, awtmstruct.tmPwrGoals,
+        awtmstruct.tmPwrPlays, awtmstruct.tmPenalties, awtmstruct.tmPenmin, awtmstruct.tmATOP, awtmstruct.tmpasses,
         awtmstruct.tmpasscomp);
     st = (short *)awtmplstats;
     fprintf(f, (char *)str_dumpPlHdrA);

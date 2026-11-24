@@ -7,7 +7,7 @@
 void ScatterPass(Player *p, Player *to)
 {
     p->nopuck = 0x28;
-    if (!(gmode & 0x10)) p->tmptr->tmpass++;
+    if (!(gmode & 0x10)) p->tmptr->tmpasses++;
     passplayer = to->SCnum;
     p->passlane = 0;
     assinsert(to, 0x13);

@@ -1235,7 +1235,7 @@ puckfaceoff2:
         mov word [byte ebx+048h], 0
         mov word [byte ebx+04Ch], 0
         mov word [byte ebx+04Ah], 0
-        mov byte [byte ebx+053h], 0
+        mov byte [byte ebx+passlane], 0
         and byte [byte ebx+pflags2], 0DBh
         and byte [byte ebx+pflags], 0FBh
         mov edi, dword [penshotteam]
@@ -1314,11 +1314,11 @@ puckfaceoff2:
         je short .30
         cmp di, byte 4
         jne short .28
-        mov eax, dword [byte ebx+06Ch]
-        movsx dx, byte [byte ebx+047h]
-        mov word [byte eax+030h], dx
-        mov byte [byte eax+033h], 0FFh
-        mov byte [byte eax+035h], 0FFh
+        mov eax, dword [byte ebx+tmptr]
+        movsx dx, byte [byte ebx+pnum]
+        mov word [byte eax+tmpsplayer], dx
+        mov byte [byte eax+tmast1], 0FFh
+        mov byte [byte eax+tmast2], 0FFh
         and byte [byte eax+tmflags], 0F7h
         mov word [regd0], 17h
         jmp short .29
@@ -1330,7 +1330,7 @@ puckfaceoff2:
         mov eax, ebx
         call assinsert
 .30:
-        mov eax, dword [byte ebx+06Ch]
+        mov eax, dword [byte ebx+tmptr]
         mov ax, word [byte eax+tmap]
         neg eax
         mov word [regd4], ax
@@ -1338,7 +1338,7 @@ puckfaceoff2:
         sar eax, 10h
         cmp eax, byte 0FFFFFFFAh
         jle short .31
-        mov eax, dword [byte ebx+06Ch]
+        mov eax, dword [byte ebx+tmptr]
         cmp word [byte eax+tmgoalie], byte 0
         jge short .31
         dec word [regd4]
@@ -1473,7 +1473,7 @@ puckfaceoff2:
         mov ax, word [byte ebx+position]
         test ax, ax
         jne near .49
-        cmp byte [byte ebx+065h], 0
+        cmp byte [byte ebx+handed], 0
         je short .43
         mov edx, dword [byte ebx+facedir-2]
         sar edx, 10h
@@ -1490,7 +1490,7 @@ puckfaceoff2:
         shl eax, 2
         sub eax, edx
         add eax, 196h
-        mov word [byte ebx+012h], ax
+        mov word [byte ebx+frame], ax
         mov word [regd1], 1
         mov cx, word [byte ebx+facedir]
         cmp cx, byte 2
@@ -1524,12 +1524,12 @@ puckfaceoff2:
 .50:
         mov eax, 16Ch
 .51:
-        mov word [byte ebx+012h], ax
+        mov word [byte ebx+frame], ax
         xor eax, eax
         mov word [regd1], ax
         jmp short .55
 .52:
-        cmp byte [byte ebx+065h], 0
+        cmp byte [byte ebx+handed], 0
         je short .53
         mov edx, dword [byte ebx+facedir-2]
         sar edx, 10h
@@ -1544,7 +1544,7 @@ puckfaceoff2:
         mov eax, edx
         shl eax, 2
         add eax, edx
-        mov word [byte ebx+012h], ax
+        mov word [byte ebx+frame], ax
         mov word [regd1], SPAglide
 .55:
         and byte [byte ebx+pflags2], 0FBh
@@ -1583,7 +1583,7 @@ puckfaceoff2:
 .59:
         mov eax, 2BFh
 .60:
-        mov word [byte ebx+012h], ax
+        mov word [byte ebx+frame], ax
         mov edx, 1Eh
         mov eax, ebx
         call assinsert
@@ -1679,13 +1679,13 @@ assbenchwait:
         mov edx, eax
         test byte [byte eax+044h], 20h
         jne short .x
-        mov word [byte edx+012h], 0FFFFh
+        mov word [byte edx+frame], 0FFFFh
         mov eax, edx
         call check4bench
         test ax, ax
         je short .x
-        mov word [byte edx+026h], 64h
-        mov word [byte edx+02Eh], 0
+        mov word [byte edx+temp1], 64h
+        mov word [byte edx+temp5], 0
 .x:
         pop edx
         ret

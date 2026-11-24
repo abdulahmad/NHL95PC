@@ -446,7 +446,7 @@ checkagr:
         push edx
         mov edx, eax
         xor eax, eax
-        mov al, byte [byte edx+062h]
+        mov al, byte [byte edx+aggress]
         mov ebx, 14h
         sub ebx, eax
         mov eax, ebx
@@ -489,8 +489,8 @@ checkagr:
         jne short .6
         add eax, eax
 .6:
-        mov ebx, dword [byte edx+070h]
-        mov ecx, dword [byte edx+06Ch]
+        mov ebx, dword [byte edx+optmptr]
+        mov ecx, dword [byte edx+tmptr]
         mov bx, word [byte ebx+tmap]
         sub bx, word [byte ecx+tmap]
         cmp bx, byte 1

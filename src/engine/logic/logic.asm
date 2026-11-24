@@ -61,8 +61,8 @@ assboxenter:
         mov edx, SPAgvcup
         mov eax, sortobj15
         call SetSPA
-        and byte [byte ebx+055h], 0F7h
-        mov word [byte ebx+012h], 165h
+        and byte [byte ebx+attribute], 0F7h
+        mov word [byte ebx+frame], 165h
         mov word [byte ebx+facedir], 2
         mov byte [byte ebx+046h], 0
         or byte [byte ebx+pflags], 20h
@@ -71,7 +71,7 @@ assboxenter:
         call SetSPA
         mov eax, dword [byte ebx+044h]
         sar eax, 18h
-        mov edx, dword [byte ebx+06Ch]
+        mov edx, dword [byte ebx+tmptr]
         mov word [byte edx+eax*2+tmpde], 800h
         mov eax, ebx
         call assexit
@@ -1986,7 +1986,7 @@ assbench:
         je short .3
         cmp word [byte ebx+position], byte 0
         jne short .3
-        mov eax, dword [byte ebx+06Ch]
+        mov eax, dword [byte ebx+tmptr]
         mov eax, dword [byte eax+tmgoalie-2]
         sar eax, 10h
         and eax, 0FFF0h
@@ -2029,7 +2029,7 @@ assbench:
         mov word [byte ebx+temp1], 0
 .6:
         mov al, byte [byte ebx+newpnum]
-        cmp al, byte [byte ebx+047h]
+        cmp al, byte [byte ebx+pnum]
         jne short .8
         and byte [byte ebx+pflags2], 0FBh
         cmp byte [byte ebx+newpnum], 19h
@@ -2164,8 +2164,8 @@ assbench:
         pop ebx
         ret
 .23:
-        mov word [byte ebx+012h], 0FFFFh
-        mov ecx, dword [byte ebx+06Ch]
+        mov word [byte ebx+frame], 0FFFFh
+        mov ecx, dword [byte ebx+tmptr]
         mov eax, dword [byte ebx+044h]
         sar eax, 18h
         add eax, eax

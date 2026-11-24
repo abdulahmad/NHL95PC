@@ -735,22 +735,22 @@ DumpStatsLog:
         mov eax, dword [hmtmstruct+tmpasscomp-2]
         sar eax, 10h
         push eax
-        mov eax, dword [hmtmstruct+tmpass-2]
+        mov eax, dword [hmtmstruct+tmpasses-2]
         sar eax, 10h
         push eax
         mov eax, dword [hmtmstruct+tmATOP-2]
         sar eax, 10h
         push eax
-        mov eax, dword [hmtmstruct+tmpenmin-2]
+        mov eax, dword [hmtmstruct+tmPenmin-2]
         sar eax, 10h
         push eax
-        mov eax, dword [hmtmstruct+tmpen-2]
+        mov eax, dword [hmtmstruct+tmPenalties-2]
         sar eax, 10h
         push eax
-        mov eax, dword [hmtmstruct+tmpp-2]
+        mov eax, dword [hmtmstruct+tmPwrPlays-2]
         sar eax, 10h
         push eax
-        mov eax, dword [hmtmstruct+tmppg-2]
+        mov eax, dword [hmtmstruct+tmPwrGoals-2]
         sar eax, 10h
         push eax
         xor eax, eax
@@ -873,22 +873,22 @@ DumpStatsLog:
         mov eax, dword [awtmstruct+tmpasscomp-2]
         sar eax, 10h
         push eax
-        mov eax, dword [awtmstruct+tmpass-2]
+        mov eax, dword [awtmstruct+tmpasses-2]
         sar eax, 10h
         push eax
         mov eax, dword [awtmstruct+tmATOP-2]
         sar eax, 10h
         push eax
-        mov eax, dword [awtmstruct+tmpenmin-2]
+        mov eax, dword [awtmstruct+tmPenmin-2]
         sar eax, 10h
         push eax
-        mov eax, dword [awtmstruct+tmpen-2]
+        mov eax, dword [awtmstruct+tmPenalties-2]
         sar eax, 10h
         push eax
-        mov eax, dword [awtmstruct+tmpp-2]
+        mov eax, dword [awtmstruct+tmPwrPlays-2]
         sar eax, 10h
         push eax
-        mov eax, dword [awtmstruct+tmppg-2]
+        mov eax, dword [awtmstruct+tmPwrGoals-2]
         sar eax, 10h
         push eax
         xor eax, eax

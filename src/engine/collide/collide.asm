@@ -86,9 +86,9 @@ checkcoll:
 .1:
         test byte [byte ecx+pflags], 4
         jne near .3
-        mov ax, word [byte ecx+066h]
+        mov ax, word [byte ecx+radiusx]
         mov word [wcradiusx], ax
-        mov ax, word [byte ecx+068h]
+        mov ax, word [byte ecx+radiusy]
         mov word [wcradiusy], ax
         mov ebx, dword [byte ecx+Ypos]
         sar ebx, 10h
@@ -133,7 +133,7 @@ checkcoll:
 .4:
         mov ax, word [byte ecx+OldXpos+2]
         mov word [byte ecx+Xpos+2], ax
-        mov ax, word [byte ecx+07Ah]
+        mov ax, word [byte ecx+OldYpos+2]
         mov word [byte ecx+Ypos+2], ax
         jmp near .x
 .5:
@@ -349,7 +349,7 @@ checkgoal:
         mov esi, eax
         mov edi, edx
         mov eax, ecx
-        cmp word [byte esi+0Ah], byte 0Dh
+        cmp word [byte esi+Zpos+2], byte 0Dh
         jg near .x
         cmp word [byte esi+SCnum], byte 0Eh
         je short .1
@@ -383,18 +383,18 @@ checkgoal:
         mov word [regd5], dx
         cmp ax, dx
         jl near .x
-        mov dx, word [byte esi+07Eh]
+        mov dx, word [byte esi+OldZpos+2]
         cmp dx, byte 0Dh
         jl short .2
-        mov word [byte esi+0Ah], dx
-        mov ax, word [byte esi+010h]
+        mov word [byte esi+Zpos+2], dx
+        mov ax, word [byte esi+Zvel]
         test ax, ax
         jge near .x
         mov edx, eax
         neg edx
         mov ebx, edx
         sar bx, 1
-        mov word [byte esi+010h], bx
+        mov word [byte esi+Zvel], bx
         pop ebp
         pop edi
         pop esi
@@ -424,7 +424,7 @@ checkgoal:
 .4:
         mov word [regd0], 0FF00h
         mov edx, dword [byte esi+Ypos]
-        sub edx, dword [byte esi+078h]
+        sub edx, dword [byte esi+OldYpos]
         sar edx, 8
         mov dword [regd1], edx
         test edx, edx
@@ -473,7 +473,7 @@ checkgoal:
         mov word [regd0], ax
         test byte [byte esi+pflags], 80h
         jne near .11
-        cmp word [byte esi+0Ah], byte 0Dh
+        cmp word [byte esi+Zpos+2], byte 0Dh
         je short .6
         mov cx, word [regd4]
         dec ecx
@@ -526,7 +526,7 @@ checkgoal:
         mov eax, 2000h
         call randomd0
         db 081h,0E8h,00h,010h,00h,00h           ; insn: sub eax,1000h
-        mov word [byte esi+010h], ax
+        mov word [byte esi+Zvel], ax
         mov eax, esi
         call puckflip
         call EndPenaltyShot
@@ -620,7 +620,7 @@ wallcoll:
         mov eax, 800h
         call randomd0
         neg eax
-        mov word [byte ebx+010h], ax
+        mov word [byte ebx+Zvel], ax
         mov eax, ebx
         call puckflip
         cmp dword [nethit], byte 0
@@ -632,7 +632,7 @@ wallcoll:
         jge short .2
         xor eax, eax
 .2:
-        cmp word [byte ebx+0Ah], byte 0Ah
+        cmp word [byte ebx+Zpos+2], byte 0Ah
         ja short .5
         mov edx, dword [puckc]
         cmp byte [edx], 0
@@ -741,7 +741,7 @@ wallcoll:
         sar eax, 10h
         cmp eax, 0FFFFF000h
         jg short .16
-        cmp word [byte ebx+018h], byte 0Ah
+        cmp word [byte ebx+impact], byte 0Ah
         jl short .16
         cmp dword [nethit], byte 0
         jne short .16
@@ -800,14 +800,14 @@ wallcoll:
         mov ax, word [byte ebx+OldXpos+2]
         mov word [byte ebx+Xpos+2], ax
 .20:
-        cmp word [byte ebx+07Ah], byte 0
+        cmp word [byte ebx+OldYpos+2], byte 0
         jge short .21
         mov eax, 0FFFFFF14h
         jmp short .22
 .21:
         mov eax, 0ECh
 .22:
-        mov ecx, dword [byte ebx+078h]
+        mov ecx, dword [byte ebx+OldYpos]
         sar ecx, 10h
         movsx edx, ax
         add edx, byte 0Ah
@@ -816,7 +816,7 @@ wallcoll:
         cmp word [byte ebx+Yvel], byte 0
         jl short .24
 .23:
-        mov edx, dword [byte ebx+078h]
+        mov edx, dword [byte ebx+OldYpos]
         sar edx, 10h
         cwde
         sub eax, byte 6
@@ -826,14 +826,14 @@ wallcoll:
         jle short .25
 .24:
         mov word [byte ebx+Yvel], 0
-        mov ax, word [byte ebx+07Ah]
+        mov ax, word [byte ebx+OldYpos+2]
         mov word [byte ebx+Ypos+2], ax
 .25:
         xor edx, edx
         mov dword [nethit], edx
-        cmp word [byte ebx+010h], byte 0
+        cmp word [byte ebx+Zvel], byte 0
         jle near dopass_ret6
-        mov word [byte ebx+010h], 0
+        mov word [byte ebx+Zvel], 0
         jmp near dopass_ret6
 ;-----------------------------------------------------------------------------
 ; wallcollb                        58B7F  94G collide94.asm, medium confidence
