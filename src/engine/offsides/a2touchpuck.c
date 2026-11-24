@@ -29,7 +29,7 @@ void a2touchpuck(Player *p)
             TW(t, 0x32) = TW(t, 0x30);
         }
         TW(t, 0x30) = p->pnum;
-        if (TW(t, 0x30) == TW(t, 0x34)) t->tmast2 = -1;
+        if (TW(t, 0x30) == TW(t, 0x34)) ((signed char *)&t->tmtouch3)[1] = -1;
     } else if (*((signed char *)t + 0x44) & 8) {
         *((signed char *)t + 0x44) &= 0xF7;
     }

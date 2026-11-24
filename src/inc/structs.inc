@@ -104,6 +104,6 @@ tmplattr   equ 0DEh  ; tsize d; hmtmplattr: pointer to the skater attribute reco
 tmglattr   equ 0E2h  ; tsize d; hmtmglattr: pointer to the goalie attribute records, 10h bytes each from roster 19h; setplayer reads a goalie's from it
 tmfowon    equ 12h   ; tsize w; (faceoffs won): puckglue adds 1 when the player takes the puck off a faceoff (sflags3 bit 4)
 tmfowonoz  equ 14h   ; tsize w; puckglue adds 1 too when that faceoff was in the attacking end (puck y beyond 4Eh toward the team's net side by pflags bit 7)
-tmpsplayer equ 30h   ; tsize w; puckglue ends a live penalty shot when the player with this roster index (pnum) takes the puck
-tmast1     equ 33h   ; tsize b; (assist 1, st): puckglue sets it to -1 in the other team's structure
-tmast2     equ 35h   ; tsize b; (assist 2, st): puckglue sets it to -1 in the other team's structure
+tmtouch1   equ 30h   ; tsize w; (93G name; data label hmtmtouch1): last touch, the scorer; puckglue ends a live penalty shot when the shooter (the team's last touch) takes the puck again; a2touchpuck shifts 30h -> 32h -> 34h
+tmtouch2   equ 32h   ; tsize w; (93G name; data label hmtmtouch2): second last touch, first assist; puckglue and the faceoff code store -1 in its high byte (tmtouch2+1, 93G st $1A(a0) on the 68000's high byte) to clear it
+tmtouch3   equ 34h   ; tsize w; (93G name; data label hmtmtouch3): third last touch, second assist; cleared the same way (tmtouch3+1)

@@ -1316,9 +1316,9 @@ puckfaceoff2:
         jne short .28
         mov eax, dword [byte ebx+tmptr]
         movsx dx, byte [byte ebx+pnum]
-        mov word [byte eax+tmpsplayer], dx
-        mov byte [byte eax+tmast1], 0FFh
-        mov byte [byte eax+tmast2], 0FFh
+        mov word [byte eax+tmtouch1], dx
+        mov byte [byte eax+tmtouch2+1], 0FFh
+        mov byte [byte eax+tmtouch3+1], 0FFh
         and byte [byte eax+tmflags], 0F7h
         mov word [regd0], 17h
         jmp short .29
