@@ -1972,7 +1972,7 @@ mov byte [byte esp+018h], 2	; 5B4A4
 mov word [byte ebx+048h], 0	; 5B4A9
 mov word [byte ebx+04Ch], 0	; 5B4AF
 mov word [byte ebx+04Ah], 0	; 5B4B5
-mov byte [byte ebx+053h], 0	; 5B4BB
+mov byte [byte ebx+passlane], 0	; 5B4BB
 cmp word [byte esp+08h], byte 19h	; 5B4BF
 jge near .39	; 5B4C5
 mov esi, dword [byte esp+06h]	; 5B4CB
@@ -1984,7 +1984,7 @@ shl eax, 3	; 5B4D9
 sub eax, esi	; 5B4DC
 mov edx, dword [dword ecx+tmroster]	; 5B4DE
 mov al, byte [byte edx+eax+05h]	; 5B4E4
-mov byte [byte ebx+05Eh], al	; 5B4E8
+mov byte [byte ebx+rostnum], al	; 5B4E8
 mov eax, esi	; 5B4EB
 shl eax, 2	; 5B4ED
 add eax, esi	; 5B4F0
@@ -1992,12 +1992,12 @@ shl eax, 2	; 5B4F2
 mov edx, dword [dword ecx+0DEh]	; 5B4F5
 add eax, edx	; 5B4FB
 mov dl, byte [eax]	; 5B4FD
-mov byte [byte ebx+065h], dl	; 5B4FF
+mov byte [byte ebx+handed], dl	; 5B4FF
 mov cl, byte [byte ebx+attribute]	; 5B502
 and cl, 0F7h	; 5B505
 mov byte [byte ebx+attribute], cl	; 5B508
 inc eax	; 5B50B
-cmp byte [byte ebx+065h], 0	; 5B50C
+cmp byte [byte ebx+handed], 0	; 5B50C
 jne short .20	; 5B510
 mov dl, cl	; 5B512
 or dl, 8	; 5B514
@@ -2044,7 +2044,7 @@ mov dl, byte [eax]	; 5B578
 mov byte [byte ebx+weight], dl	; 5B57A
 inc eax	; 5B57D
 mov dl, byte [eax]	; 5B57E
-mov byte [byte ebx+05Bh], dl	; 5B580
+mov byte [byte ebx+shotspd], dl	; 5B580
 inc eax	; 5B583
 xor ecx, ecx	; 5B584
 mov cl, byte [eax]	; 5B586
@@ -2059,7 +2059,7 @@ cmp dx, byte 0Fh	; 5B598
 jle short .26	; 5B59C
 mov edx, 0Fh	; 5B59E
 .26:
-mov byte [byte ebx+064h], dl	; 5B5A3
+mov byte [byte ebx+checking], dl	; 5B5A3
 xor ecx, ecx	; 5B5A6
 mov cl, byte [eax]	; 5B5A8
 movsx dx, byte [byte esp+014h]	; 5B5AA
@@ -2077,7 +2077,7 @@ cmp dx, byte 0Fh	; 5B5CA
 jle short .28	; 5B5CE
 mov edx, 0Fh	; 5B5D0
 .28:
-mov byte [byte ebx+060h], dl	; 5B5D5
+mov byte [byte ebx+stickhand], dl	; 5B5D5
 xor edx, edx	; 5B5D8
 mov dl, byte [eax]	; 5B5DA
 movsx cx, byte [byte esp+014h]	; 5B5DC
@@ -2095,7 +2095,7 @@ cmp dx, byte 0Fh	; 5B5FC
 jle short .30	; 5B600
 mov edx, 0Fh	; 5B602
 .30:
-mov byte [byte ebx+05Ch], dl	; 5B607
+mov byte [byte ebx+shotacc], dl	; 5B607
 inc eax	; 5B60A
 xor ecx, ecx	; 5B60B
 mov cl, byte [eax]	; 5B60D
@@ -2112,7 +2112,7 @@ cmp dx, byte 0Fh	; 5B627
 jle short .32	; 5B62B
 mov edx, 0Fh	; 5B62D
 .32:
-mov byte [byte ebx+05Dh], dl	; 5B632
+mov byte [byte ebx+passacc], dl	; 5B632
 xor ecx, ecx	; 5B635
 mov cl, byte [eax]	; 5B637
 movsx dx, byte [byte esp+014h]	; 5B639
@@ -2136,7 +2136,7 @@ xor dl, 0Fh	; 5B66C
 movsx edx, dx	; 5B66F
 add edx, byte 0Fh	; 5B672
 sar edx, 1	; 5B675
-mov byte [byte ebx+059h], dl	; 5B677
+mov byte [byte ebx+aioff], dl	; 5B677
 xor ecx, ecx	; 5B67A
 mov cl, byte [eax]	; 5B67C
 movsx dx, byte [byte esp+010h]	; 5B67E
@@ -2154,9 +2154,9 @@ xor dl, 0Fh	; 5B699
 movsx edx, dx	; 5B69C
 add edx, byte 0Fh	; 5B69F
 sar edx, 1	; 5B6A2
-mov byte [byte ebx+05Ah], dl	; 5B6A4
+mov byte [byte ebx+aidef], dl	; 5B6A4
 mov dl, byte [eax]	; 5B6A7
-mov byte [byte ebx+062h], dl	; 5B6A9
+mov byte [byte ebx+aggress], dl	; 5B6A9
 inc eax	; 5B6AC
 mov dl, byte [eax]	; 5B6AD
 mov byte [byte ebx+endurance], dl	; 5B6AF
@@ -2174,7 +2174,7 @@ cmp dx, byte 0Fh	; 5B6C8
 jle short .38	; 5B6CC
 mov edx, 0Fh	; 5B6CE
 .38:
-mov byte [byte ebx+05Fh], dl	; 5B6D3
+mov byte [byte ebx+spodds], dl	; 5B6D3
 jmp near .49	; 5B6D6
 .39:
 mov esi, dword [byte esp+06h]	; 5B6DB
@@ -2186,37 +2186,37 @@ shl eax, 3	; 5B6E9
 sub eax, esi	; 5B6EC
 mov edx, dword [dword ecx+tmroster]	; 5B6EE
 mov al, byte [byte edx+eax+05h]	; 5B6F4
-mov byte [byte ebx+05Eh], al	; 5B6F8
+mov byte [byte ebx+rostnum], al	; 5B6F8
 shl esi, 4	; 5B6FB
 mov edx, dword [dword ecx+0E2h]	; 5B6FE
 lea eax, [dword esi-0190h]	; 5B704
 add eax, edx	; 5B70A
 mov dl, byte [eax]	; 5B70C
-mov byte [byte ebx+065h], dl	; 5B70E
+mov byte [byte ebx+handed], dl	; 5B70E
 mov dl, byte [byte ebx+attribute]	; 5B711
 and dl, 0F7h	; 5B714
 mov byte [byte ebx+attribute], dl	; 5B717
 inc eax	; 5B71A
-cmp byte [byte ebx+065h], 0	; 5B71B
+cmp byte [byte ebx+handed], 0	; 5B71B
 jne short .40	; 5B71F
 mov cl, dl	; 5B721
 or cl, 8	; 5B723
 mov byte [byte ebx+attribute], cl	; 5B726
 .40:
 mov dl, byte [eax]	; 5B729
-mov byte [byte ebx+062h], dl	; 5B72B
+mov byte [byte ebx+aggress], dl	; 5B72B
 inc eax	; 5B72E
 mov dl, byte [eax]	; 5B72F
-mov byte [byte ebx+05Dh], dl	; 5B731
+mov byte [byte ebx+passacc], dl	; 5B731
 inc eax	; 5B734
 mov dl, byte [eax]	; 5B735
-mov byte [byte ebx+05Fh], dl	; 5B737
+mov byte [byte ebx+spodds], dl	; 5B737
 inc eax	; 5B73A
 mov dl, byte [eax]	; 5B73B
 mov byte [byte ebx+endurance], dl	; 5B73D
 inc eax	; 5B740
 mov dl, byte [eax]	; 5B741
-mov byte [byte ebx+05Bh], dl	; 5B743
+mov byte [byte ebx+shotspd], dl	; 5B743
 inc eax	; 5B746
 mov dl, byte [eax]	; 5B747
 mov byte [byte ebx+legspd], dl	; 5B749
@@ -2281,7 +2281,7 @@ xor dl, 0Fh	; 5B7E4
 movsx edx, dx	; 5B7E7
 add edx, byte 0Fh	; 5B7EA
 sar edx, 1	; 5B7ED
-mov byte [byte ebx+059h], dl	; 5B7EF
+mov byte [byte ebx+aioff], dl	; 5B7EF
 mov al, byte [eax]	; 5B7F2
 xor ah, ah	; 5B7F4
 movsx dx, byte [byte esp+010h]	; 5B7F6
@@ -2298,7 +2298,7 @@ xor dl, 0Fh	; 5B810
 movsx eax, dx	; 5B813
 add eax, byte 0Fh	; 5B816
 sar eax, 1	; 5B819
-mov byte [byte ebx+05Ah], al	; 5B81B
+mov byte [byte ebx+aidef], al	; 5B81B
 .49:
 add esp, byte 1Ch	; 5B81E
 jmp near changeplayer_ret5	; 5B821
@@ -2536,7 +2536,7 @@ mov edi, OOlistpos	; 5BAAC
 xor ebx, ebx	; 5BAB1
 .1:
 mov word [byte eax+SCnum], bx	; 5BAB3
-mov byte [byte eax+047h], 0FFh	; 5BAB7
+mov byte [byte eax+pnum], 0FFh	; 5BAB7
 mov byte [byte eax+newpos], 0FFh	; 5BABB
 mov cl, byte [byte eax+newpos]	; 5BABF
 mov byte [byte eax+newpnum], cl	; 5BAC2
@@ -2547,22 +2547,22 @@ mov cx, word [edx]	; 5BACF
 mov word [byte eax+Ypos+2], cx	; 5BAD2
 add edx, byte 2	; 5BAD6
 mov cx, word [edx]	; 5BAD9
-mov word [byte eax+0Ah], cx	; 5BADC
+mov word [byte eax+Zpos+2], cx	; 5BADC
 add edx, byte 2	; 5BAE0
 mov cx, word [edx]	; 5BAE3
-mov word [byte eax+012h], cx	; 5BAE6
+mov word [byte eax+frame], cx	; 5BAE6
 add edx, byte 2	; 5BAEA
 mov cx, word [edx]	; 5BAED
 mov word [byte eax+054h], cx	; 5BAF0
 add edx, byte 2	; 5BAF4
 mov cx, word [edx]	; 5BAF7
-mov word [byte eax+066h], cx	; 5BAFA
+mov word [byte eax+radiusx], cx	; 5BAFA
 add edx, byte 2	; 5BAFE
 mov cx, word [edx]	; 5BB01
-mov word [byte eax+068h], cx	; 5BB04
+mov word [byte eax+radiusy], cx	; 5BB04
 add edx, byte 2	; 5BB08
 mov cl, byte [edx]	; 5BB0B
-mov byte [byte eax+01Eh], cl	; 5BB0D
+mov byte [byte eax+asslist], cl	; 5BB0D
 add edx, byte 2	; 5BB10
 mov cl, byte [edx]	; 5BB13
 mov byte [byte eax+pflags], cl	; 5BB15
@@ -2574,7 +2574,7 @@ jmp short .3	; 5BB25
 .2:
 mov ecx, hmtmstruct	; 5BB27
 .3:
-mov dword [byte eax+06Ch], ecx	; 5BB2C
+mov dword [byte eax+tmptr], ecx	; 5BB2C
 test byte [byte eax+pflags], 40h	; 5BB2F
 jne short .4	; 5BB33
 mov ecx, awtmstruct	; 5BB35
@@ -2582,7 +2582,7 @@ jmp short .5	; 5BB3A
 .4:
 mov ecx, hmtmstruct	; 5BB3C
 .5:
-mov dword [byte eax+070h], ecx	; 5BB41
+mov dword [byte eax+optmptr], ecx	; 5BB41
 mov word [byte eax+temp5], 0	; 5BB44
 mov byte [esi], bl	; 5BB4A
 mov word [edi], bx	; 5BB4C
@@ -3380,7 +3380,7 @@ xor edx, edx	; 5C4F3
 mov dword [byte esp+08h], edx	; 5C4F5
 jmp near .10	; 5C4F9
 .7:
-mov edi, dword [byte esi+06Ch]	; 5C4FE
+mov edi, dword [byte esi+tmptr]	; 5C4FE
 mov edx, dword [esi]	; 5C501
 sar edx, 10h	; 5C503
 mov eax, dword [puckx]	; 5C506
@@ -3398,13 +3398,13 @@ mov ebp, dword [byte esp+08h]	; 5C528
 push ebp	; 5C52C
 call vecdist	; 5C52D
 add esp, byte 8	; 5C532
-mov word [byte esi+04Eh], ax	; 5C535
+mov word [byte esi+puckdist], ax	; 5C535
 mov edx, dword [byte esp-02h]	; 5C539
 sar edx, 10h	; 5C53D
 mov eax, dword [byte esp+02h]	; 5C540
 sar eax, 10h	; 5C544
 call vtoa	; 5C547
-mov byte [byte esi+052h], al	; 5C54C
+mov byte [byte esi+puckdir], al	; 5C54C
 mov eax, ebp	; 5C54F
 sar eax, 2	; 5C551
 mov dword [byte esp+04h], eax	; 5C554
@@ -3449,9 +3449,9 @@ jmp near .49	; 5C5CF
 mov eax, dword [esi]	; 5C5D4
 mov dword [byte esi+OldXpos], eax	; 5C5D6
 mov eax, dword [byte esi+Ypos]	; 5C5D9
-mov dword [byte esi+078h], eax	; 5C5DC
-mov eax, dword [byte esi+08h]	; 5C5DF
-mov dword [byte esi+07Ch], eax	; 5C5E2
+mov dword [byte esi+OldYpos], eax	; 5C5DC
+mov eax, dword [byte esi+Zpos]	; 5C5DF
+mov dword [byte esi+OldZpos], eax	; 5C5E2
 cmp word [byte esi+position], byte 0	; 5C5E5
 jge short .12	; 5C5EA
 cmp word [byte esi+SCnum], byte 10h	; 5C5EC
@@ -3459,12 +3459,12 @@ jne near .48	; 5C5F1
 .12:
 mov eax, esi	; 5C5F7
 call updateanim	; 5C5F9
-mov dx, word [byte esi+03Eh]	; 5C5FE
+mov dx, word [byte esi+nopuck]	; 5C5FE
 dec edx	; 5C602
-mov word [byte esi+03Eh], dx	; 5C603
+mov word [byte esi+nopuck], dx	; 5C603
 test dx, dx	; 5C607
 jge short .13	; 5C60A
-mov word [byte esi+03Eh], 0	; 5C60C
+mov word [byte esi+nopuck], 0	; 5C60C
 .13:
 mov cx, word [byte esi+040h]	; 5C612
 dec ecx	; 5C616
@@ -3477,10 +3477,10 @@ cmp word [byte esi+SCnum], byte 10h	; 5C626
 je short .15	; 5C62B
 test byte [sflags3], 40h	; 5C62D
 je short .15	; 5C634
-mov bl, byte [byte esi+047h]	; 5C636
+mov bl, byte [byte esi+pnum]	; 5C636
 test bl, bl	; 5C639
 jl short .15	; 5C63B
-mov edi, dword [byte esi+06Ch]	; 5C63D
+mov edi, dword [byte esi+tmptr]	; 5C63D
 cmp word [byte esi+position], byte 0	; 5C640
 jne short .15	; 5C645
 cmp bl, 19h	; 5C647
@@ -3493,7 +3493,7 @@ sub edx, byte 19h	; 5C65B
 mov eax, edx	; 5C65E
 shl eax, 2	; 5C660
 sub eax, edx	; 5C663
-mov edx, dword [dword edi+0EAh]	; 5C665
+mov edx, dword [dword edi+tmglstats]	; 5C665
 inc word [edx+eax*2]	; 5C66B
 .15:
 mov cx, word [byte esi+SPA]	; 5C66F
@@ -3505,7 +3505,7 @@ cmp cx, 1055h	; 5C685
 jle near .35	; 5C68A
 .16:
 mov word [regd4], 10h	; 5C690
-cmp word [byte esi+0Ah], byte 0	; 5C699
+cmp word [byte esi+Zpos+2], byte 0	; 5C699
 jne near .30	; 5C69E
 test byte [byte esi+pflags], 1	; 5C6A4
 je short .17	; 5C6A8
@@ -3616,32 +3616,32 @@ sar eax, 10h	; 5C800
 imul eax, edx	; 5C803
 add dword [byte esi+Ypos], eax	; 5C806
 .32:
-mov di, word [byte esi+0Ah]	; 5C809
+mov di, word [byte esi+Zpos+2]	; 5C809
 test di, di	; 5C80D
 jl near .35	; 5C810
 jne short .33	; 5C816
-cmp word [byte esi+010h], byte 0	; 5C818
+cmp word [byte esi+Zvel], byte 0	; 5C818
 je near .35	; 5C81D
 .33:
 imul ax, word [regd4], byte 6	; 5C823
-sub word [byte esi+010h], ax	; 5C82B
-mov eax, dword [byte esi+0Eh]	; 5C82F
+sub word [byte esi+Zvel], ax	; 5C82B
+mov eax, dword [byte esi+Zvel-2]	; 5C82F
 sar eax, 10h	; 5C832
 mov edx, dword [regd4-2]	; 5C835
 sar edx, 10h	; 5C83B
 imul edx, eax	; 5C83E
 mov dword [regd0], edx	; 5C841
-mov ecx, dword [byte esi+08h]	; 5C847
+mov ecx, dword [byte esi+Zpos]	; 5C847
 add ecx, edx	; 5C84A
-mov dword [byte esi+08h], ecx	; 5C84C
+mov dword [byte esi+Zpos], ecx	; 5C84C
 test ecx, ecx	; 5C84F
 jge short .35	; 5C851
-mov dword [byte esi+08h], 0	; 5C853
-mov di, word [byte esi+010h]	; 5C85A
+mov dword [byte esi+Zpos], 0	; 5C853
+mov di, word [byte esi+Zvel]	; 5C85A
 neg edi	; 5C85E
 mov eax, edi	; 5C860
 sar ax, 1	; 5C862
-mov word [byte esi+010h], ax	; 5C865
+mov word [byte esi+Zvel], ax	; 5C865
 movsx ax, byte [byte esi+011h]	; 5C869
 mov edx, 5	; 5C86E
 sub edx, eax	; 5C873
@@ -3744,7 +3744,7 @@ mov word [regd3], ax	; 5C9C0
 mov ax, word [byte esi+OldXpos+2]	; 5C9C6
 cmp ax, word [regd2]	; 5C9CA
 jne short .46	; 5C9D1
-mov ax, word [byte esi+07Ah]	; 5C9D3
+mov ax, word [byte esi+OldYpos+2]	; 5C9D3
 cmp ax, word [regd3]	; 5C9D7
 jne short .46	; 5C9DE
 cmp word [byte esi+SCnum], byte 0Eh	; 5C9E0
@@ -3757,15 +3757,15 @@ sar edx, 10h	; 5C9F6
 mov eax, esi	; 5C9F9
 call checkcoll	; 5C9FB
 .47:
-mov di, word [byte esi+018h]	; 5CA00
+mov di, word [byte esi+impact]	; 5CA00
 sub edi, byte 2	; 5CA04
-mov word [byte esi+018h], di	; 5CA07
+mov word [byte esi+impact], di	; 5CA07
 test di, di	; 5CA0B
 jge short .48	; 5CA0E
-mov word [byte esi+018h], 0	; 5CA10
+mov word [byte esi+impact], 0	; 5CA10
 .48:
-mov ax, word [byte esi+018h]	; 5CA16
-mov word [byte esi+016h], ax	; 5CA1A
+mov ax, word [byte esi+impact]	; 5CA16
+mov word [byte esi+limpact], ax	; 5CA1A
 inc dword [byte esp+08h]	; 5CA1E
 add esi, 80h	; 5CA22
 .49:
@@ -4267,7 +4267,7 @@ cwde	; 5D03F
 shl eax, 7	; 5D040
 mov esi, SortCords	; 5D043
 add esi, eax	; 5D048
-mov eax, dword [byte esi+010h]	; 5D04A
+mov eax, dword [byte esi+frame-2]	; 5D04A
 sar eax, 10h	; 5D04D
 cmp eax, byte 0FFFFFFFFh	; 5D050
 je near .29	; 5D053
@@ -4416,11 +4416,11 @@ mov ebx, dword [byte esi+Ypos]	; 5D209
 sar ebx, 10h	; 5D20C
 mov edx, dword [esi]	; 5D20F
 sar edx, 10h	; 5D211
-mov eax, dword [byte esi+010h]	; 5D214
+mov eax, dword [byte esi+frame-2]	; 5D214
 sar eax, 10h	; 5D217
 jmp short .34	; 5D21A
 .31:
-cmp word [byte esi+012h], 189h	; 5D21C
+cmp word [byte esi+frame], 189h	; 5D21C
 jne short .32	; 5D222
 mov eax, dword [puckz]	; 5D224
 cmp word [eax], byte 0	; 5D229
@@ -4431,7 +4431,7 @@ jne short .33	; 5D237
 .32:
 cmp word [byte esi+Ypos+2], byte 0	; 5D239
 jl short .35	; 5D23E
-mov cx, word [byte esi+012h]	; 5D240
+mov cx, word [byte esi+frame]	; 5D240
 cmp cx, 22Ah	; 5D244
 jl short .35	; 5D249
 cmp cx, 237h	; 5D24B
@@ -4442,7 +4442,7 @@ mov ebx, dword [byte esi+Ypos]	; 5D254
 sar ebx, 10h	; 5D257
 mov edx, dword [esi]	; 5D25A
 sar edx, 10h	; 5D25C
-mov eax, dword [byte esi+010h]	; 5D25F
+mov eax, dword [byte esi+frame-2]	; 5D25F
 sar eax, 10h	; 5D262
 xor ecx, ecx	; 5D265
 .34:
@@ -4452,7 +4452,7 @@ mov eax, dword [puckc]	; 5D26C
 cmp byte [eax], 10h	; 5D271
 je short .38	; 5D274
 sub esi, 80h	; 5D276
-mov bx, word [byte esi+0Ah]	; 5D27C
+mov bx, word [byte esi+Zpos+2]	; 5D27C
 test bx, bx	; 5D280
 jne short .36	; 5D283
 push byte 0	; 5D285
@@ -4462,7 +4462,7 @@ jmp short .37	; 5D28D
 .36:
 jle short .38	; 5D28F
 push byte 0	; 5D291
-mov edx, dword [byte esi+08h]	; 5D293
+mov edx, dword [byte esi+Zpos]	; 5D293
 sar edx, 10h	; 5D296
 mov eax, edx	; 5D299
 shl eax, 2	; 5D29B
@@ -4478,7 +4478,7 @@ movsx ebx, ax	; 5D2B1
 .37:
 mov edx, dword [esi]	; 5D2B4
 sar edx, 10h	; 5D2B6
-mov eax, dword [byte esi+010h]	; 5D2B9
+mov eax, dword [byte esi+frame-2]	; 5D2B9
 sar eax, 10h	; 5D2BC
 xor ecx, ecx	; 5D2BF
 call DrawFrameSprite	; 5D2C1
@@ -4529,7 +4529,7 @@ cmp word [eax], byte 0Dh	; 5D360
 jl near .57	; 5D364
 .42:
 push byte 0	; 5D36A
-mov edx, dword [byte esi+08h]	; 5D36C
+mov edx, dword [byte esi+Zpos]	; 5D36C
 sar edx, 10h	; 5D36F
 mov eax, edx	; 5D372
 shl eax, 2	; 5D374
@@ -4552,7 +4552,7 @@ jge short .44	; 5D39F
 cmp ax, 10h	; 5D3A1
 jne near .57	; 5D3A5
 .44:
-mov eax, dword [byte esi+010h]	; 5D3AB
+mov eax, dword [byte esi+frame-2]	; 5D3AB
 sar eax, 10h	; 5D3AE
 cmp eax, byte 0FFFFFFFFh	; 5D3B1
 je short .48	; 5D3B4
@@ -4571,7 +4571,7 @@ jne short .46	; 5D3D9
 mov ecx, dword [byte esi+position-2]	; 5D3DB
 sar ecx, 10h	; 5D3DE
 xor ebx, ebx	; 5D3E1
-mov bl, byte [byte esi+05Eh]	; 5D3E3
+mov bl, byte [byte esi+rostnum]	; 5D3E3
 mov edx, dword [byte esi+Ypos]	; 5D3E6
 sar edx, 10h	; 5D3E9
 mov eax, dword [esi]	; 5D3EC
@@ -4581,7 +4581,7 @@ jmp short .47	; 5D3F1
 cmp dword [shownumbers], byte 0	; 5D3F3
 je short .48	; 5D3FA
 xor ebx, ebx	; 5D3FC
-mov bl, byte [byte esi+05Eh]	; 5D3FE
+mov bl, byte [byte esi+rostnum]	; 5D3FE
 mov edx, dword [byte esi+Ypos]	; 5D401
 sar edx, 10h	; 5D404
 mov eax, dword [esi]	; 5D407
@@ -4597,7 +4597,7 @@ jmp short .50	; 5D41F
 .49:
 push byte 1	; 5D421
 .50:
-test byte [byte esi+055h], 8	; 5D423
+test byte [byte esi+attribute], 8	; 5D423
 setne al	; 5D427
 xor ah, ah	; 5D42A
 movsx ecx, ax	; 5D42C
@@ -4605,7 +4605,7 @@ mov ebx, dword [byte esi+Ypos]	; 5D42F
 sar ebx, 10h	; 5D432
 mov edx, dword [esi]	; 5D435
 sar edx, 10h	; 5D437
-mov eax, dword [byte esi+010h]	; 5D43A
+mov eax, dword [byte esi+frame-2]	; 5D43A
 sar eax, 10h	; 5D43D
 call DrawFrameSprite	; 5D440
 cmp word [byte esi+SCnum], byte 0Ch	; 5D445
@@ -5127,7 +5127,7 @@ jmp short clockcont_0.21	; 5DB06
 .23:
 jge short .27	; 5DB08
 mov esi, dword [byte ecx+06Ch]	; 5DB0A
-movsx bx, byte [dword esi+tmpbox]	; 5DB0D
+movsx bx, byte [dword esi+tmboxlist]	; 5DB0D
 test bx, bx	; 5DB15
 jl short .27	; 5DB18
 cmp word [regd1], byte 0	; 5DB1A

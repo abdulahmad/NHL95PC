@@ -134,18 +134,18 @@ typedef struct Player {
 /* team structure (away DF714), 100h bytes */
 typedef struct Team {
     short tmshots;               /* 000h team shots: the stats.log dump (DumpStatsLog) prints it under 'shts' */
-    short tmppg;                 /* 002h power-play goals: DumpStatsLog 'ppg' column */
-    short tmpp;                  /* 004h power plays: DumpStatsLog 'pp' column */
+    short tmPwrGoals;            /* 002h power-play goals: DumpStatsLog 'ppg' column */
+    short tmPwrPlays;            /* 004h power plays: DumpStatsLog 'pp' column */
     unsigned char pad_06[0x2];
     short tmpptime;              /* 008h (power-play seconds): updatePPTeamTime adds 1 for the team on the power play (gmode2 bits 5/6) */
-    short tmpen;                 /* 00Ah penalties: DumpStatsLog 'pen' column */
-    short tmpenmin;              /* 00Ch penalty minutes: DumpStatsLog 'penmin' column */
+    short tmPenalties;           /* 00Ah penalties: DumpStatsLog 'pen' column */
+    short tmPenmin;              /* 00Ch penalty minutes: DumpStatsLog 'penmin' column */
     short tmATOP;                /* 00Eh (attack time of possession stat): chkatop adds 1 once a second for the team with the puck past the blue line */
     short tmscore;               /* 010h; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont_0 compare hmscore with awscore */
     short tmfowon;               /* 012h (faceoffs won): puckglue adds 1 when the player takes the puck off a faceoff (sflags3 bit 4) */
     short tmfowonoz;             /* 014h puckglue adds 1 too when that faceoff was in the attacking end (puck y beyond 4Eh toward the team's net side by pflags bit 7) */
     unsigned char pad_16[0x10];
-    short tmpass;                /* 026h passes: DumpStatsLog 'pass' column */
+    short tmpasses;              /* 026h passes: DumpStatsLog 'pass' column */
     short tmpasscomp;            /* 028h completed passes: DumpStatsLog 'passcomp' column */
     short tmline;                /* 02Ah; getlchoice adds tmline*4 to the choice index; lcfound/lcselect store the new line, then setpersonel */
     short tmlcnt;                /* 02Ch none; lcfound/lcselect: when the new line is < 4 it is incremented and wrapped at 3 (even-strength line rotation count) */
@@ -162,7 +162,7 @@ typedef struct Team {
     unsigned char pad_45[0x1];
     short tmpde[28];             /* 046h (energy word per roster player, 1000h = full); burst subtracts 0CCh from [tmptr+pnum*2+46h]; reenergizeteam refills 1000h */
     short tmpdst[28];            /* 07Eh (-2 bench -1 ice 0+ box): word per roster player: -2 bench, -1 on ice (setplayer, forcepldata), >0 penalty box time; restoreteams sets all */
-    signed char tmpbox[36];      /* 0B6h (penalty box list: roster indexes, ends with a negative byte): updatepentime_ut walks it and shifts it down */
+    signed char tmboxlist[36];   /* 0B6h (penalty box list: roster indexes, ends with a negative byte): updatepentime_ut walks it and shifts it down */
     unsigned char * tmlines;     /* 0DAh none; pointer to the team's line table (clearteams: home hmlinetab, away awlinetab); getlinee and setpersonel read it */
     unsigned char pad_DE[0x8];
     short * tmplstats;           /* 0E6h pointer to skater stats, 10h bytes per roster player 0-18h (words g, a, pen, +/-, ppg, shg, eng, sht): DumpStatsLog */

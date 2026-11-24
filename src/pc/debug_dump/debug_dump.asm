@@ -717,22 +717,22 @@ add esp, byte 8	; 69043
 mov eax, dword [hmtmstruct+tmpasscomp-2]	; 69046
 sar eax, 10h	; 6904B
 push eax	; 6904E
-mov eax, dword [hmtmstruct+tmpass-2]	; 6904F
+mov eax, dword [hmtmstruct+tmpasses-2]	; 6904F
 sar eax, 10h	; 69054
 push eax	; 69057
 mov eax, dword [hmtmstruct+tmATOP-2]	; 69058
 sar eax, 10h	; 6905D
 push eax	; 69060
-mov eax, dword [hmtmstruct+tmpenmin-2]	; 69061
+mov eax, dword [hmtmstruct+tmPenmin-2]	; 69061
 sar eax, 10h	; 69066
 push eax	; 69069
-mov eax, dword [hmtmstruct+tmpen-2]	; 6906A
+mov eax, dword [hmtmstruct+tmPenalties-2]	; 6906A
 sar eax, 10h	; 6906F
 push eax	; 69072
-mov eax, dword [hmtmstruct+tmpp-2]	; 69073
+mov eax, dword [hmtmstruct+tmPwrPlays-2]	; 69073
 sar eax, 10h	; 69078
 push eax	; 6907B
-mov eax, dword [hmtmstruct+tmppg-2]	; 6907C
+mov eax, dword [hmtmstruct+tmPwrGoals-2]	; 6907C
 sar eax, 10h	; 69081
 push eax	; 69084
 xor eax, eax	; 69085
@@ -855,22 +855,22 @@ add esp, byte 8	; 691BF
 mov eax, dword [awtmstruct+tmpasscomp-2]	; 691C2
 sar eax, 10h	; 691C7
 push eax	; 691CA
-mov eax, dword [awtmstruct+tmpass-2]	; 691CB
+mov eax, dword [awtmstruct+tmpasses-2]	; 691CB
 sar eax, 10h	; 691D0
 push eax	; 691D3
 mov eax, dword [awtmstruct+tmATOP-2]	; 691D4
 sar eax, 10h	; 691D9
 push eax	; 691DC
-mov eax, dword [awtmstruct+tmpenmin-2]	; 691DD
+mov eax, dword [awtmstruct+tmPenmin-2]	; 691DD
 sar eax, 10h	; 691E2
 push eax	; 691E5
-mov eax, dword [awtmstruct+tmpen-2]	; 691E6
+mov eax, dword [awtmstruct+tmPenalties-2]	; 691E6
 sar eax, 10h	; 691EB
 push eax	; 691EE
-mov eax, dword [awtmstruct+tmpp-2]	; 691EF
+mov eax, dword [awtmstruct+tmPwrPlays-2]	; 691EF
 sar eax, 10h	; 691F4
 push eax	; 691F7
-mov eax, dword [awtmstruct+tmppg-2]	; 691F8
+mov eax, dword [awtmstruct+tmPwrGoals-2]	; 691F8
 sar eax, 10h	; 691FD
 push eax	; 69200
 xor eax, eax	; 69201
