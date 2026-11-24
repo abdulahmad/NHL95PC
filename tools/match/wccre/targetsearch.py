@@ -141,10 +141,14 @@ def main():
     while time.time() - t0 < a.minutes * 60 and best[0][0]:
         pool = []
         for key, text, path in beam:
-            rw = set(x[1] for x in rewrites.neighbours(text, func))
-            nb = [x for x in permute.neighbours(text, func, tiesearch.NATURAL) + rewrites.neighbours(text, func)
+            edits = rewrites.neighbours(text, func, target=pairs, source=src)
+            rw = set(x[1] for x in edits)
+            nb = [x for x in permute.neighbours(text, func, tiesearch.NATURAL) + edits
                   if permute.fsha(x[1], func) not in seen]
             rnd.shuffle(nb)
+            # Preserve the target-aware declaration model preference after randomizing the other edits.
+            nb.sort(key=lambda x: int(x[0].rsplit(':target=', 1)[1]) if
+                    x[0].startswith('declorder:') and ':target=' in x[0] else len(pairs) + 1)
             todo = [(name, t, path, 0) for name, t in nb]
             while todo:
                 name, t, base_path, depth = todo.pop(0)
@@ -162,7 +166,7 @@ def main():
                 # a rewrite that leaves the score as it was (or better) may enable another: look one step further
                 # at once, so the neutral step is judged by what it leads to
                 if is_rw and depth == 0 and r[0] <= key:
-                    kids = [x for x in rewrites.neighbours(t, func) if permute.fsha(x[1], func) not in seen][:a.lookahead]
+                    kids = [x for x in rewrites.neighbours(t, func, target=pairs, source=src) if permute.fsha(x[1], func) not in seen][:a.lookahead]
                     todo[0:0] = [(kn, kt, p_, 1) for kn, kt in kids]
             if pool and min(pool)[0][0] == 0: break
         if not pool: print('no unvisited neighbours'); break
