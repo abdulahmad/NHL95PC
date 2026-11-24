@@ -105,15 +105,15 @@ The 93 / 94 console and 94 PC values come from the 94 PC page. The 95G values co
 | Acceleration base (`dirtab`) | 175 (124 diagonal) | **200 (141 diagonal)** | Now the 93 / 94 console `runspeed` | 240 | Code |
 | Agility pre-factor | (agility + 48) >> 6 | **Same** | Unchanged | — | Code |
 | Acceleration factor (`playeracc` 5EDAD) | Skater 32 - weight/8 + agility; goalie + agility + 8 | **Skater same; goalie + agility + 0x14 (20)** | PC-only goalie change | (96 - weight/4 + agility) / 2, >> 5; halved for a goalie unless joystick-driven or skating | Code |
-| Top-speed table | `AccelFactors` (94 PC name): sqrt of 4800 + 220n - n², 4800 to 7875 | **`MaxSpeed`: sqrt of exactly 5400 + 230n - 2n², 5400 to 8400** | Faster: +12.5% at the bottom, +6.7% at the top. Index is still (leg speed x energy) >> 12; injured 1/8 | ((n + 20) x 325)², 6500 to 11375 (94G uses x 275) | Code |
+| Top-speed table | `MaxSpeed` (with `MaxSpeed_w2` for the high word): sqrt of 4800 + 220n - n², 4800 to 7875 | **`MaxSpeed`: sqrt of exactly 5400 + 230n - 2n², 5400 to 8400** | Faster: +12.5% at the bottom, +6.7% at the top. Index is still (leg speed x energy) >> 12; injured 1/8 | ((n + 20) x 325)², 6500 to 11375 (94G uses x 275) | Code |
 | Referee top-speed index | Fixed 0xF | **0xF, or 0xC while play is on and the referee is at \|y\| ≥ 0x74** | PC-only | — | Code |
 | Stopping (`stopna`) | 150 | **200 + agility; goalie 200 + 3 x agility** | PC-only values. Scaling with agility is like 94S ($70 + agility) x d7 | 150 | Code; Inferred (the 94S likeness) |
 | Turning (`doplayeracc.c`) | $300 - speed², minimum $180 | **Same** | Unchanged | — | Code |
 | Energy drain | 1 tick in 128, -33 | **1 in 128, -40 (0x28)**. Above 0xC00 it is topped up by endurance (unsigned) and capped at 0x1000; below 0xC00 it is clamped at 0 | Bigger drain | -33 + endurance / 2, none with line changes off | Code |
 | Shot (`doshot` 57C0B) | $5249 constant; backhand -25%; shot-power boosts (+2 above 12 when closer than 500; +1 above 14 / 13 / 10); perfect shot at distance ≤ 200 when rnd(16 + accuracy) > 14 (accuracy +1 above 14 / 13); always perfect in highlight mode; aim error ((speed / 16 - accuracy + 16) x distance) >> 6, halved inside 250; x error cap 0xA0 (160), y 0x3C; aim vector x 0x3B (59); target y 0xE8 (232); lift $B33, cap $1800 | **Identical**, except the penalty-shot speed floor (skater speed + 0x1F4) | Unchanged | Shot power halved with an odd-value interpolation, one-timer minimum $1F, x cap $98, vector $44, target y $10B; also perfect with the goalie pulled or in a shootout | Code |
-| Shot x-offset table | `ShotSpeeds` (94 PC name) | **`shotsets`: identical** (0, $C, $10, …, the 93 `.shotsets` values) | Unchanged | ±$E | Code |
+| Shot x-offset table | `shotsets` | **`shotsets`: identical** (0, $C, $10, …, the 93 `.shotsets` values) | Unchanged | ±$E | Code |
 
-The labels `AccelFactors` and `ShotSpeeds` in 94 PC are a top-speed table and a shot aim-offset table, as described above.
+94 PC formerly labelled these tables `AccelFactors` and `ShotSpeeds`; it now uses the same names as 95 PC, `MaxSpeed` and `shotsets` ([NHL94PC PR #83](https://github.com/abdulahmad/NHL94PC/pull/83)).
 
 ## Music
 
