@@ -1,14 +1,9 @@
-; Which roster rows are selected, whether the database needs saving, and the edit-rosters messages.
+; BSS of front/roster_edit (src/front/roster_edit).
 bits 32
 %include "hockey.inc"
-section s_EA994 nobits alloc noexec write align=1
-global roster2slot, rostersel, rosterselgoalies, roster2selgoalies, rosterlistkeys, rosterteamrec, roster2teamrec
-global dbdirty, rostergstat, rosterpstat, msglines, falisttop, editptrspr
-global editrosters_exit, roster2list, rosterteamcopy
-rosterlistkeys:                                 ; Player key table read by the roster move and create routines
-                                                ; (indexed by two registers); used by MoveToFreeAgents,
-                                                ; MoveToOtherRoster, SelectMatchingPlayers
-        resb 752
+section s_EAC84 nobits alloc noexec write align=1
+global roster2list, roster2slot, rosterteamrec, roster2teamrec, rostersel, rosterselgoalies, roster2selgoalies, rosterteamcopy
+global dbdirty, rostergstat, rosterpstat, msglines, falisttop, editptrspr, editrosters_exit
 roster2list:                                    ; Second roster list (4-byte records like rosterlist); used by
                                                 ; SwapSelectedPlayers
         resb 2

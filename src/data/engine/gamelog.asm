@@ -1,9 +1,13 @@
 ; Tables the scoring text adds up, and the picture list the animation player steps through.
 bits 32
 %include "hockey.inc"
-section s_DEB78 nobits alloc noexec write align=1
-global rinkobjs_b3, plcareerpts, plseasongoals, plseasonpts, ovlstepart, ovlstepart_e21, ovlstepart_e30, rinkobjs
-global rinkobjs_w2, SaveStateSpare, SaveStatePad
+section s_DEB74 nobits alloc noexec write align=1
+global plcareergoals, plcareerpts, plseasongoals, plseasonpts, rinkobjs, rinkobjs_w2, rinkobjs_b3, SaveStateSpare
+global SaveStatePad, ovlstepart, ovlstepart_e21, ovlstepart_e30
+plcareergoals:                                  ; per player (10h each, 25 a team): career goals before this
+                                                ; game (LoadTeamRoster); ChkScorerMilestone; used by
+                                                ; ChkScorerMilestone, LoadTeamRoster
+        resb 4
 plcareerpts:                                    ; per player +4: career points before this game; used by
                                                 ; ChkScorerMilestone, LoadTeamRoster
         resb 4
