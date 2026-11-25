@@ -96,12 +96,25 @@ int main(int argc, char **argv)
     for (;;) {
         int64_t now = plat_now_ns();
         input_poll();
-        if (video_vrr()) {                      /* key 6: when the game's screen has changed (and now and then for the pointer and the window) */
-            if (video_changed() || now >= next_frame) { video_present(); next_frame = now + 100000000LL; }
-        } else if (now >= next_frame) {           /* on schedule, not "a period after this one": late frames do not lower the rate */
-            video_present();
-            next_frame += video_present_ns();
-            if (now - next_frame > 100000000) next_frame = now;
+        if (ob_screen_up()) {                   /* the box: once per refresh of the display. A swap that waited for the display (vsync)
+                                                   paces it; when the driver does not wait, the clock does */
+            video_box_vsync(1);
+            if (now >= next_frame) {
+                int64_t p = video_box_ns();
+                video_present();
+                int64_t after = plat_now_ns();
+                if (after - now > p / 2) next_frame = after;
+                else { next_frame += p; if (next_frame < now) next_frame = now + p; }
+            }
+        } else {
+            video_box_vsync(0);
+            if (video_vrr()) {                      /* key 6: when the game's screen has changed (and now and then for the pointer and the window) */
+                if (video_changed() || now >= next_frame) { video_present(); next_frame = now + 100000000LL; }
+            } else if (now >= next_frame) {           /* on schedule, not "a period after this one": late frames do not lower the rate */
+                video_present();
+                next_frame += video_present_ns();
+                if (now - next_frame > 100000000) next_frame = now;
+            }
         }
         /* one tick per period that has passed: a sleep that lasted longer than asked (Windows rounds it to 15.6 ms when it does not
          * treat the process as in the foreground) must not lose ticks. They queue in irq.c. */

@@ -253,6 +253,17 @@ void settings_save_all(void) { settings_save(); }
 
 int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
+/* the box (a full-window screen) is drawn once per refresh of the display, vsync on, whatever the refresh and vsync settings say
+   (they are kept, not saved over, and come back when it closes) */
+static int box_vsync;
+int64_t video_box_ns(void) { return 1000000000LL / ob_window_hz(win); }
+void video_box_vsync(int on)
+{
+    if (on == box_vsync) return;
+    box_vsync = on;
+    if (use_gl) ob_gl_set_vsync(on || vsync_on);
+    else if (ren) SDL_RenderSetVSync(ren, on || vsync_on);
+}
 int video_pointer_mode(void) { return ptr_mode; }
 
 /* does the current setting of this kind of screen equal what the preset sets? (the menu marks the presets that do) */

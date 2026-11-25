@@ -132,6 +132,8 @@ union SDL_Event;
 void input_osk_key(int scancode, int down);            /* input.c: a key typed on the on-screen keyboard */
 void input_event(const union SDL_Event *e);            /* input.c: an event the layer did not use (the game's keys, mouse, joystick scan) */
 int video_vrr(void);
+int64_t video_box_ns(void);                           /* one refresh of the display, for the box */
+void video_box_vsync(int on);                         /* vsync on while the box is up */
 void video_mister_pick(int cls, int kind, const char *rel);  /* a MiSTer look file chosen from the menu, for the menus (cls 0) or the game (1): 0 horizontal filter, 1 vertical filter, 2 gamma, 3 shadow mask, 4 preset */
 const char *video_mister_path(int cls, int kind);
 int video_mister_preset_active(int cls, const char *rel);
