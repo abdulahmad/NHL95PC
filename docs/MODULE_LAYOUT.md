@@ -1,11 +1,11 @@
 # Module layout: how the NHL 95 PC programmers probably laid out their source
 
-The analysis behind the file layout of `src/cseg01` (step F4).
+The analysis behind the code layout under `src/engine/`, `src/front/`, `src/pc/` and `src/lib/` (step F4; written when the code was in `src/cseg01`, before the data re-split into `src/data/`). Some module names below have moved since; `src/segments.txt` is the current list.
 
 ## Short answer
 
 * **Yes, bigger groups make sense, but they should be the PC's own groups, not 95G's.** The EXE was linked from Watcom C modules, and each module is still one unbroken stretch of code. The compiler left clues that show which functions shared a `.c` file. Those clues prove 84 multi-function modules in the game code, holding 821 of its 1,163 functions. The largest one has 57 functions.
-* **The PC modules don't follow the 95G files.** For example, the proven module `burst` .. `ReturnGoalies` (now `engine/collide.asm`) is one C file. It holds routines that 95G keeps in `collide95` (20), `input95` (10), `logic95` (7) and `penalty95` (4). If we filed each function under its 95G (or 94G) file, as on the card I sent earlier, we would tear real modules apart. That's why I'm changing my recommendation (see the end).
+* **The PC modules don't follow the 95G files.** For example, the proven module `burst` .. `ReturnGoalies` (now `src/engine/collide/collide.asm`) is one C file. It holds routines that 95G keeps in `collide95` (20), `input95` (10), `logic95` (7) and `penalty95` (4). If we filed each function under its 95G (or 94G) file, as on the card I sent earlier, we would tear real modules apart. That's why I'm changing my recommendation (see the end).
 * **The current 95PC files are cut in the wrong places in 17 spots.** In each spot, one proven module runs across two files, so 12 groups of current files should be joined. Several other files hold more than one module.
 
 ## The clues

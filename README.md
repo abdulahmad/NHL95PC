@@ -10,15 +10,15 @@
 
 - Abdul is working on the C decompilation.
 - <!-- nhl95-readme-count:start -->977 of 1084 functions are a bit-perfect match.<!-- nhl95-readme-count:end -->
-- <!-- nhl95-readme-functional:start -->82 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
+- <!-- nhl95-readme-functional:start -->82 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_PLAN.md](docs/FUNCTIONAL_PLAN.md#handoff))
   - <!-- nhl95-readme-functional-total:start -->1059 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
 - The 107 leftover MATCH functions plus two db-entry drafts (`MenuSaveDefaultLines`, `MenuSaveTheseLines`) are the 109 unmarked compiled-C drafts ([C_PROGRESS.md](C_PROGRESS.md)). 13 hand-asm stay asm.
-- Leftover functional drafts (**109**): **82 PASS**, 0 FAIL, 27 NEEDS-REVIEW. Leftover NR **paused** 2026-11-07. Keep plants: StarCompare / assonetimer PASS 3000. H6 closed until 109/109. No dumps. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_LEFTOVERS.md](docs/FUNCTIONAL_LEFTOVERS.md))
+- Leftover functional drafts (**109**): **82 PASS**, 0 FAIL, 27 NEEDS-REVIEW. Leftover NR **paused** 2026-11-07. Keep plants: StarCompare / assonetimer PASS 3000. H6 closed until 109/109. No dumps. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_PLAN.md](docs/FUNCTIONAL_PLAN.md#leftovers))
 - Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
 
-Reverse engineered source of NHL 95 for DOS (`HOCKEY.EXE`, EA Sports 1994). The retail EXE is in the repo. The whole EXE builds byte-exact from the NASM sources in `src/`. C matching is in progress: see [C_PROGRESS.md](C_PROGRESS.md).
+Reverse engineered source of NHL 95 for DOS (`HOCKEY.EXE`, EA Sports 1994). The retail EXE is not included (see below). The whole EXE builds byte-exact from the NASM sources in `src/`. C matching is in progress: see [C_PROGRESS.md](C_PROGRESS.md).
 
 `HOCKEY.EXE` is a Watcom C/C++32 10.0 program linked as a Linear Executable (LE) and bound to the DOS/4GW Professional extender (Rational DOS/16M loader, then a Watcom wstub, then the LE). The goal is a bit-perfect assembly rebuild first, then a matching C decompilation built with the same compiler.
 
@@ -41,18 +41,18 @@ The retail `HOCKEY.EXE` is not included. Copy it from your own NHL 95 install to
 
 The segment naming queue is finished. The main work is **C matching**: start with [HANDOFF.md](HANDOFF.md) and [docs/C_MATCHING.md](docs/C_MATCHING.md) (progress in [C_PROGRESS.md](C_PROGRESS.md)). Agent standing rules: [AGENTS.md](AGENTS.md).
 
-`python3 tools/build/rebuild_exe.py verify` needs **Python 3 only** (the committed `HOCKEY.EXE` is enough). Full `make` needs **nasm** (2.15+) and **make**. Matched C (`CBUILD=1`) also needs **DOSBox**; the three Watcom files are already in `tools/watcom/` (see [HANDOFF.md](HANDOFF.md)). Without DOSBox, `make` uses the asm and still matches.
+`python3 tools/build/rebuild_exe.py verify` needs **Python 3 only** (and your `retail/HOCKEY.EXE`). Full `make` needs **nasm** (2.15+) and **make**. Matched C (`CBUILD=1`) also needs **DOSBox**; the three Watcom files are already in `tools/watcom/` (see [HANDOFF.md](HANDOFF.md)). Without DOSBox, `make` uses the asm and still matches.
 
 ```
 make -j8            # or ./build.sh [path/to/HOCKEY.EXE]
 ```
 
-This assembles the 304 files in `src/` (one per segment: 198 code, 106 data), links them with `tools/build/link_src.py`, and writes `build/HOCKEY.EXE`. It ends with `MATCH` when the result is byte-identical to the retail EXE; otherwise it fails. From the committed EXE the build takes only the three third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order. Code, data and the fixups themselves come from `src/`. Layout, editing rules and how `src/` is regenerated (`tools/build/gen_src.py`): [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
+This assembles the `.asm` files under `src/` (code by module in `src/engine/`, `src/front/`, `src/pc/` and `src/lib/`; data by owner in `src/data/`, in link order in `src/segments.txt`), links them with `tools/build/link_src.py`, and writes `build/HOCKEY.EXE`. It ends with `MATCH` when the result is byte-identical to the retail EXE; otherwise it fails. From your retail EXE the build takes only the three third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order. Code, data and the fixups themselves come from `src/`. Layout, editing rules and how `src/` is regenerated (`tools/build/gen_src.py`): [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
 
 ## Running the game on a modern PC (SDL2 port)
 
-The branch `sdl2-port` runs the game's own code natively, with the DOS, BIOS, sound, video and input hardware emulated by the host
-(`port/`). Build and details: [docs/SDL2_PORT.md](docs/SDL2_PORT.md); state and open items: [docs/SDL2_HANDOFF.md](docs/SDL2_HANDOFF.md).
+The port (`port/`, on `main`) runs the game's own code natively, with the DOS, BIOS, sound, video and input hardware emulated by the
+host. Build, state and open items: [docs/SDL2_PORT.md](docs/SDL2_PORT.md).
 `src/` is untouched, so `make` still ends with `MATCH`.
 
 * **PortMaster / RG35XX**: zip layout and launch script are in [`portmaster/`](portmaster/). **PortMaster** package, docs optimized for **Knulli** (Plus is the hard control case). Handheld first launch is **60 Hz** (not VRR), overlay only (no menu bar; **Online stays listed**), SDL_Renderer / KMSDRM, `NHL95_NOGL=1`. Pad drives the desk glove (gptk mouse). Copy the install into `gamedata/` and CD files into `cd/`. `./portmaster/pack.sh` builds `nhl95pc.zip`. **No aarch64 binary yet:** the desktop trap host is i386 (`gcc -m32`) and cannot be renamed `.aarch64`; native HAL is a later build. Private zip; `HOCKEY.EXE` is never included. On Windows, leftover `PORTMASTER` / `CFW_NAME` is scrubbed (`win32_scrub_portmaster_env`); Overbar `ob_handheld_env()` is 0 on Win32 so packing a zip does not force GLES2.
@@ -92,12 +92,12 @@ python3 tools/build/rebuild_exe.py verify    # extract + build + sha1 compare (+
 
 ## Segment map
 
-* [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md) is the segment map of the code and data objects, with module boundaries, Genesis counterparts and the evidence for each.
+* [docs/archive/EXE_SEGMAP95PC.md](docs/archive/EXE_SEGMAP95PC.md) is the old segment map (2026-11-04, before the module re-cut and data re-split; `src/segments.txt` is current) of the code and data objects, with module boundaries, Genesis counterparts and the evidence for each.
 * [segmap95pc.json](segmap95pc.json) is the same map in machine-readable form. `rebuild_exe.py` uses it to slice segments.
 * [docs/name_map.csv](docs/name_map.csv) maps each function to a name and source file in the 93/94 Genesis sources, with confidence and evidence. It is generated by `tools/names/matcher.py`; hand-traced rows live in [tools/names/manual_names.csv](tools/names/manual_names.csv) (same columns) and override the generated row at that address, so put manual edits there, not in the CSV. Without a local `FUNCTION_MAPPINGS95.md` the unmatched-row universe is every code function from the listing (`--universe funcs`, 2,577 rows; the named rows are identical).
 * `tools/names/struct_fieldmap.csv` and `tools/names/global_map.csv` map player-struct fields and globals to their Genesis names.
 
-The analysis scripts in `tools/build/` and `tools/names/` (`le_parse.py`, `lst_parse.py`, `build_funcs.py`, `features.py`, `ref93_index.py`, `ref94_index.py`, `segdef.py`, `build_segmap.py`, `sem_features.py`, `sem_match.py`, `matcher.py`, `write_md.py`) regenerate the map. They also need an IDA listing `HOCKEY.EXE.lst` that you make yourself, plus the Genesis sources cloned into `ref/93`, `ref/94` and `ref/95`. Their intermediate `.pkl` caches are not committed. Run order is listed at the top of `EXE_SEGMAP95PC.md`.
+The analysis scripts in `tools/build/` and `tools/names/` (`le_parse.py`, `lst_parse.py`, `build_funcs.py`, `features.py`, `ref93_index.py`, `ref94_index.py`, `segdef.py`, `build_segmap.py`, `sem_features.py`, `sem_match.py`, `matcher.py`, `write_md.py`) regenerate the map. They also need an IDA listing `HOCKEY.EXE.lst` that you make yourself, plus the Genesis sources cloned into `ref/93`, `ref/94` and `ref/95`. Their intermediate `.pkl` caches are not committed. Run order is listed at the top of `docs/archive/EXE_SEGMAP95PC.md`.
 
 ## Compiler findings
 
@@ -120,12 +120,12 @@ python3 tools/build/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB  
 * [AGENTS.md](AGENTS.md): standing rules for contributors and agents
 * [HANDOFF.md](HANDOFF.md): setup, verify, current state, Next, Unsure plan
 * [BUILD_NOTES.md](BUILD_NOTES.md): rebuild format, fixup ordering (wlink algorithm), compiler fingerprint, next steps
-* [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md): segment map
+* [docs/archive/EXE_SEGMAP95PC.md](docs/archive/EXE_SEGMAP95PC.md): old segment map (archived)
 * [docs/SKATING_AND_RINK.md](docs/SKATING_AND_RINK.md): skating physics and rink geometry vs. 93 Genesis
 * [docs/C_MATCHING.md](docs/C_MATCHING.md): C matching decompilation (wcc386 10.0 GA → OMF → spliced into the asm build), headers, workflow, compiler learnings; progress in [C_PROGRESS.md](C_PROGRESS.md)
 * [docs/ASM_BUILD.md](docs/ASM_BUILD.md): the `src/` tree and `make` build, LE fixups as symbolic labels (`tools/build/fixup_labels.py`), the NASM toolchain, and the asm emitter (`tools/build/asm_proto.py`, `tools/build/gen_src.py`)
 * [docs/UNSURE.md](docs/UNSURE.md): capped drafts and what was tried
-* [docs/SESSION_LOG.md](docs/SESSION_LOG.md): archived session diary from earlier HANDOFF updates
+* [docs/archive/SESSION_LOG.md](docs/archive/SESSION_LOG.md): archived session diary from earlier HANDOFF updates
 
 ## Segment naming (queue finished)
 

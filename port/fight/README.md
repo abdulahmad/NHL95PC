@@ -12,7 +12,9 @@ chaos, StaticEck, McMarkis (Mhopkinsinc) and Drezz, and special thanks to smozom
 - `rules.c`: a C copy of 93's checkfight, SetInst, fightinput, assfight and chkhit and the fight animations, on two
   fighters of its own; the game's random numbers drive it, so fights replay the same and online play stays in step.
 
-Not yet in the build: the hooks that start a fight from a check in 95 PC, draw the frames (in true colour, over a
-marker colour in the game's picture), call the penalties and pick the bloody injury. Those need the game running.
+- `hooks.c`: stage 1 of [HOOKS.md](HOOKS.md) is in the build. A fight starts where 93's checkfight did (after checkcheck in
+  checkcx), `rules.c` runs it once a frame before updateplayers, and it ends with a penalty for both; a fighter on a team with a
+  controller is played from the pad. Not yet: 93's frames drawn in true colour and the bloody injury (stage 2), and the Fighting
+  and Instigator penalties with their own names (stage 3).
 
 Tests: `sh port/fight_test.sh <folder with your NHLPA 93 ROMs>` (the ROM tests skip without one).

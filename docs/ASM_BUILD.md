@@ -1,7 +1,7 @@
 # Assembly build: symbolic labels for the LE fixups, and the asm toolchain
 
-Status (Oct 2026): **the EXE builds from committed NASM sources.** All 304 segments (198 code, 106 data, of which
-72 have initialised bytes and 34 are BSS only) are in `src/` as NASM source with symbolic labels. `make` (or
+Status (Nov 2026): **the EXE builds from committed NASM sources.** All 472 segments (230 code, 242 data, of which
+171 have initialised bytes and 71 are BSS only; `src/segments.txt`) are in `src/` as NASM source with symbolic labels. `make` (or
 `./build.sh`) assembles them, links them with a small Python linker, re-orders the harvested fixups like wlink and
 writes a `HOCKEY.EXE` with the original sha1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`.
 
@@ -16,12 +16,12 @@ the third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE hea
 make -j8                        # or: ./build.sh [path/to/HOCKEY.EXE]
 # ... MATCH: build/HOCKEY.EXE is byte-identical to the retail HOCKEY.EXE
 ```
-Needs `nasm` (2.15 or newer; tested with 2.16.03) and Python 3. No iced-x86, no listing, no Genesis sources.
+Needs `nasm` (2.15 or newer; `make fullcheck` MATCHes with 2.16.03 and 2.15.05) and Python 3. No iced-x86, no listing, no Genesis sources.
 
 | path | what |
 |---|---|
-| `src/cseg01/<group>/<module>.asm` (198) | code object, one file per segment of `segmap95pc.json`, one NASM section `s_<ADDR>` per file. `<group>` is `engine`, `front`, `pc` or `lib`; the names are in `docs/module_map.csv` and the link order in `src/segments.txt` |
-| `src/dseg02/NNN_ADDR_module.asm` (106) | data object: `db`/`dd sym` for initialised data, `resb` (nobits section) for BSS, labels in both |
+| `src/<group>/<mod>/<mod>.asm` and the other `.asm` files there (230) | code object, one file per module (the module re-cut, `docs/MODULE_LAYOUT.md`), with the module's matched `.c` files beside it, one NASM section `s_<ADDR>` per file. `<group>` is `engine`, `front`, `pc` or `lib`; the names are in `docs/module_map.csv` and the link order in `src/segments.txt` |
+| `src/data/<group>/<owner>*.asm` (242) | data object, grouped by owner (`_const`, `_data`, `_bss` files; `src/data/ram.asm` is the Watcom stack): `db`/`dd sym` for initialised data, `resb` (nobits section) for BSS, labels in both |
 | `src/inc/hockey.inc` | included by every file: `x86enc.inc` + `structs.inc` (equates and macros only, no bytes) |
 | `src/inc/x86enc.inc` | the `LD op, dst, src` macro (load-form reg,reg encodings) |
 | `src/inc/structs.inc` | structure field offsets with the Genesis names (player struct), from `tools/names/struct_fieldmap.csv` |

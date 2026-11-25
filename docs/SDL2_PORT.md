@@ -1,4 +1,4 @@
-# SDL2 port (branch `sdl2-port`)
+# SDL2 port
 
 The game runs through SDL2 on Linux and on Windows without changing the byte-exact sources in `src/`. `make sdl2` assembles the same
 NASM sources (`make CBUILD=0`, as `elf32` objects) and links them with the host in `port/` into `build/hockey-linux`, a 32-bit Linux
@@ -140,6 +140,10 @@ MPU-401, Gravis UltraSound) run unchanged and the device you pick in the game's 
 * `NHL95_WAV=file.wav` records the mix. `NHL95_SOUNDTEST=1` drives AdLib, Sound Blaster and the GUS through their ports and exits,
   printing PASS/FAIL (useful without the game's data files).
 * Not yet verified against the game itself (the data files aren't in the repository): in particular the GUS and MT-32 paths.
+
+Sound delay: sound effects (a slapshot, for one) are heard 5-10 frames after the animation. DOSBox-X plays them with the same delay, so it
+comes from the game's own sound driver (it mixes well ahead of the play position), not from the port. The port's audio buffer is 512
+frames (11.6 ms, `NHL95_AUDIO_FRAMES`).
 
 ## Mouse behaviour
 

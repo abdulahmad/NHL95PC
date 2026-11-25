@@ -2,11 +2,11 @@
 
 Leftover NR drafts need real entry states. Synthetic cases and `--callers` already ran; many added 0 snapshots. This file is the capture recipe. The dumps live **outside git** (they contain RAM from a running retail EXE). Unit 7 left **53 NR** (0 FAIL); still wait on these dumps — do not accept-for-link.
 
-This VM has no play session. Abdul captures on his machine. The agent consumes the JSONL with `check.py --play-snaps`.
+Status: paused with the leftover NR track (2026-11-07, HANDOFF Now); no dumps have been captured. Capturing needs a person playing under DOSBox-X; agents do not run DOSBox on the owner's PC. The agent consumes the JSONL with `check.py --play-snaps`.
 
 ## Capture
 
-1. Run retail `HOCKEY.EXE` under DOSBox-X so linear addresses match `tools/equiv/image.py` (DOS/4GW, the committed EXE).
+1. Run retail `HOCKEY.EXE` under DOSBox-X so linear addresses match `tools/equiv/image.py` (DOS/4GW, your retail `retail/HOCKEY.EXE`).
 2. Print the queue and a breakpoint script:
 
 ```
@@ -46,4 +46,4 @@ Near-miss engine first (`SkateToSpot` 82, `checkpuckcoll_ccx` 84, `DrawRinkOverl
 
 ## Dead ranges
 
-If a snapshot set still leaves a range uncovered, disasm it. Only a range unreachable under every retail invariant for that entry goes in `tools/equiv/dead_ranges.txt` with a proof, and `check.py` then treats those insns as covered. Live uncovered ranges go to the advisor, not to accept-for-link.
+If a snapshot set still leaves a range uncovered, disasm it. Only a range unreachable under every retail invariant for that entry goes in `tools/equiv/dead_ranges.txt` (not created yet) with a proof, and `check.py` then treats those insns as covered. Live uncovered ranges go to the advisor, not to accept-for-link.
